@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "YAML Application Description",
+  "description": "A full description of a YAML application AICA framework.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "on_start": {
+      "title": "On Start",
+      "description": "on start",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "load_controller": {
+          "$ref": "load_controller.schema.json"
+        },
+        "switch_controllers": {
+          "$ref": "switch_controllers.schema.json"
+        },
+        "load": {
+          "$ref": "load.schema.json"
+        }
+      }
+    },
+    "hardware_interfaces": {
+      "title": "Hardware Interfaces",
+      "description": "hardware interfaces",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "hardware_interfaces.schema.json"
+          }
+        },
+        {
+          "$ref": "hardware_interfaces.schema.json"
+        }
+      ]
+    },
+    "components": {
+      "title": "Components",
+      "description": "components",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "components.schema.json"
+          }
+        },
+        {
+          "$ref": "components.schema.json"
+        }
+      ]
+    }
+  },
+  "required": [
+    "components"
+  ]
+}
