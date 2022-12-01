@@ -3,7 +3,6 @@
   "title": "YAML Application Description",
   "description": "A full description of a YAML application AICA framework.",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "on_start": {
       "title": "On Start",
