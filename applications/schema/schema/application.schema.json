@@ -22,36 +22,10 @@
       }
     },
     "hardware_interfaces": {
-      "title": "Hardware Interfaces",
-      "description": "hardware interfaces",
-      "additionalProperties": false,
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "$ref": "hardware_interfaces.schema.json"
-          }
-        },
-        {
-          "$ref": "hardware_interfaces.schema.json"
-        }
-      ]
+      "$ref": "hardware_interfaces.schema.json"
     },
     "components": {
-      "title": "Components",
-      "description": "components",
-      "additionalProperties": false,
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "$ref": "components.schema.json"
-          }
-        },
-        {
-          "$ref": "components.schema.json"
-        }
-      ]
+      "$ref": "components.schema.json"
     }
   },
   "required": [

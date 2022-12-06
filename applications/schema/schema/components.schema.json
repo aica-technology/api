@@ -19,17 +19,7 @@
         "parameters": {
           "title": "Parameters",
           "description": "Parameters of the component",
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "type": "object"
-              }
-            },
-            {
-              "type": "object"
-            }
-          ]
+          "type": "object"
         }
       }
     }

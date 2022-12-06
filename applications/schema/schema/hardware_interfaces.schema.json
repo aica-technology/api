@@ -22,17 +22,7 @@
             "parameters": {
               "title": "Parameters",
               "description": "Parameters of the controller plugin",
-              "oneOf": [
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                },
-                {
-                  "type": "object"
-                }
-              ]
+              "type": "object"
             }
           },
           "required": [
@@ -62,20 +52,7 @@
           "type": "number"
         },
         "controllers": {
-          "title": "Controllers",
-          "description": "controllers",
-          "additionalProperties": false,
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/controller"
-              }
-            },
-            {
-              "$ref": "#/definitions/controller"
-            }
-          ]
+          "$ref": "#/definitions/controller"
         }
       }
     }
