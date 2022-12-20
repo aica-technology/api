@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Load Hardware",
+  "description": "Load a hardware interface",
+  "oneOf": [
+    {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "identifiers/hardware.schema.json"
+      }
+    },
+    {
+      "$ref": "identifiers/hardware.schema.json"
+    }
+  ]
+}
