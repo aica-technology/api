@@ -74,18 +74,18 @@
           }
         },
         "events": {
-          "title": "Predicate events",
+          "title": "Predicate Events",
           "description": "Component predicates that trigger events",
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "on_load": {
-              "title": "On load",
+              "title": "On Load",
               "description": "An internal predicate that triggers events when the component is loaded",
               "$ref": "events.schema.json"
             },
             "on_unload": {
-              "title": "On unload",
+              "title": "On Unload",
               "description": "An internal predicate that triggers events when the component is unloaded",
               "$ref": "events.schema.json"
             },
@@ -95,34 +95,34 @@
               "$ref": "events.schema.json"
             },
             "is_inactive": {
-              "title": "Is inactive (lifecycle)",
+              "title": "Is Inactive (lifecycle)",
               "description": "A lifecycle predicate that triggers events when the component enters the inactive state",
               "$ref": "events.schema.json"
             },
             "is_active": {
-              "title": "Is active (lifecycle)",
+              "title": "Is Active (lifecycle)",
               "description": "A lifecycle predicate that triggers events when the component enters the active state",
               "$ref": "events.schema.json"
             },
             "is_finalized": {
-              "title": "Is finalized (lifecycle)",
+              "title": "Is Finalized (lifecycle)",
               "description": "A lifecycle predicate that triggers events when the component enters the finalized state",
               "$ref": "events.schema.json"
             },
             "is_finished": {
-              "title": "Is finished",
+              "title": "Is Finished",
               "description": "A standard predicate that triggers events when the component finishes executing a post-construction function",
               "$ref": "events.schema.json"
             },
             "in_error_state": {
-              "title": "In error state",
+              "title": "In Error State",
               "description": "A predicate that triggers events when the component encounters an error",
               "$ref": "events.schema.json"
             }
           },
           "patternProperties": {
             "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
-              "title": "Custom predicate",
+              "title": "Custom Predicate",
               "description": "A component-specific predicate",
               "$ref": "events.schema.json"
             }

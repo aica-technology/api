@@ -33,6 +33,9 @@
     "hardware_interfaces": {
       "$ref": "hardware_interfaces.schema.json"
     },
+    "conditions": {
+      "$ref": "conditions.schema.json"
+    },
     "components": {
       "$ref": "components.schema.json"
     }
