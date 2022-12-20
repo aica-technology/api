@@ -58,8 +58,24 @@
           ]
         }
       },
-      "required": [
-        "interface"
+      "allOf": [
+        {
+          "required": [
+            "interface"
+          ],
+          "anyOf": [
+            {
+              "required": [
+                "start"
+              ]
+            },
+            {
+              "required": [
+                "stop"
+              ]
+            }
+          ]
+        }
       ]
     }
   }
