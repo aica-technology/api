@@ -110,11 +110,12 @@ class AICA:
         """
         return requests.post(self._endpoint('load_hardware'), json={"interface_name": interface_name})
 
-    def reset_application(self) -> requests.Response:
+    def pause_application(self) -> requests.Response:
         """
-        Reset the current application, removing all components and hardware interfaces.
+        Pause the current application. This prevents any events from being triggered or handled, but
+        does not pause the periodic execution of active components.
         """
-        return requests.post(self._endpoint('reset_application'))
+        return requests.post(self._endpoint('pause_application'))
 
     def set_application(self, payload: str) -> requests.Response:
         """
@@ -133,7 +134,7 @@ class AICA:
 
     def stop_application(self) -> requests.Response:
         """
-        Stop the AICA application engine.
+        Stop and reset the AICA application engine, removing all components and hardware interfaces.
         """
         return requests.post(self._endpoint('stop_application'))
 
