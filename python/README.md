@@ -13,14 +13,12 @@ from aica_api.client import AICA
 aica = AICA()
 
 aica.set_application('my_application.yaml')
-aica.init_application()
 aica.start_application()
 
 aica.load_component('my_component')
 aica.unload_component('my_component')
 
 aica.stop_application()
-aica.reset_application()
 ```
 
 To check the status of component predicates and conditions, the following blocking methods can be employed:
