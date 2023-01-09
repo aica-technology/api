@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Conditions",
+  "description": "A description of logical conditions used to trigger events in the application",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+      "title": "Condition Name",
+      "description": "The name of the condition",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "events": {
+          "title": "Conditional Events",
+          "description": "Events triggered by the condition",
+          "$ref": "events.schema.json"
+        }
+      },
+      "required": [
+        "events"
+      ],
+      "oneOf": [
+        {
+          "$ref": "#/$defs/condition_object"
+        },
+        {
+          "$ref": "#/$defs/predicate_object"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "condition_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "all": {
+          "title": "All",
+          "description": "True only when every listed item is true",
+          "$ref": "#/$defs/condition_array"
+        },
+        "any": {
+          "title": "Any",
+          "description": "True if at least one of the listed items is true",
+          "$ref": "#/$defs/condition_array"
+        },
+        "one_of": {
+          "title": "One Of",
+          "description": "True only when exactly one of the listed items is true",
+          "$ref": "#/$defs/condition_array"
+        },
+        "not": {
+          "title": "Not",
+          "description": "True only when the sub-item is false",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/condition_object"
+            },
+            {
+              "$ref": "#/$defs/predicate_object"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "all"
+          ]
+        },
+        {
+          "required": [
+            "any"
+          ]
+        },
+        {
+          "required": [
+            "one_of"
+          ]
+        },
+        {
+          "required": [
+            "not"
+          ]
+        }
+      ]
+    },
+    "condition_array": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/condition_object"
+          },
+          {
+            "$ref": "#/$defs/predicate_object"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
+      }
+    },
+    "predicate_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "events/identifiers/component.schema.json"
+        },
+        "predicate": {
+          "title": "Predicate Name",
+          "description": "The name of a predicate associated with the component",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$"
+        }
+      },
+      "required": [
+        "component",
+        "predicate"
+      ]
+    }
+  }
+}
