@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Components",
+  "description": "A description of components used in the application",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+      "title": "Component Name",
+      "description": "The name of the component",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "log_level": {
+          "title": "Log Level",
+          "description": "The log severity level for the component",
+          "type": "string",
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error",
+            "fatal"
+          ]
+        },
+        "component": {
+          "title": "Component Registration",
+          "description": "The fully qualified class name used to register the component",
+          "type": "string"
+        },
+        "mapping": {
+          "title": "Component Mapping",
+          "description": "The remapping rules for the component name and namespace",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "title": "Name Mapping",
+              "description": "The remapping rules for the component name",
+              "type": "string",
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$"
+            },
+            "namespace": {
+              "title": "Namespace Mapping",
+              "description": "The remapping rules for the component namespace",
+              "type": "string",
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$"
+            }
+          }
+        },
+        "parameters": {
+          "title": "Parameters",
+          "description": "Parameters of the component",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+              "title": "Parameter",
+              "description": "A component parameter",
+              "type": [
+                "boolean",
+                "number",
+                "string",
+                "array"
+              ],
+              "items": {
+                "type": [
+                  "boolean",
+                  "number",
+                  "string"
+                ]
+              }
+            }
+          }
+        },
+        "events": {
+          "title": "Predicate Events",
+          "description": "Component predicates that trigger events",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "on_load": {
+              "title": "On Load",
+              "description": "An internal predicate that triggers events when the component is loaded",
+              "$ref": "events.schema.json"
+            },
+            "on_unload": {
+              "title": "On Unload",
+              "description": "An internal predicate that triggers events when the component is unloaded",
+              "$ref": "events.schema.json"
+            },
+            "is_unconfigured": {
+              "title": "Is unconfigured (lifecycle)",
+              "description": "A lifecycle predicate that triggers events when the component enters the unconfigured state",
+              "$ref": "events.schema.json"
+            },
+            "is_inactive": {
+              "title": "Is Inactive (lifecycle)",
+              "description": "A lifecycle predicate that triggers events when the component enters the inactive state",
+              "$ref": "events.schema.json"
+            },
+            "is_active": {
+              "title": "Is Active (lifecycle)",
+              "description": "A lifecycle predicate that triggers events when the component enters the active state",
+              "$ref": "events.schema.json"
+            },
+            "is_finalized": {
+              "title": "Is Finalized (lifecycle)",
+              "description": "A lifecycle predicate that triggers events when the component enters the finalized state",
+              "$ref": "events.schema.json"
+            },
+            "is_finished": {
+              "title": "Is Finished",
+              "description": "A standard predicate that triggers events when the component finishes executing a post-construction function",
+              "$ref": "events.schema.json"
+            },
+            "in_error_state": {
+              "title": "In Error State",
+              "description": "A predicate that triggers events when the component encounters an error",
+              "$ref": "events.schema.json"
+            }
+          },
+          "patternProperties": {
+            "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+              "title": "Custom Predicate",
+              "description": "A component-specific predicate",
+              "$ref": "events.schema.json"
+            }
+          }
+        }
+      }
+    }
+  }
+}

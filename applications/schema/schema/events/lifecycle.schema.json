@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lifecycle Transition",
+  "description": "Transition the lifecycle state on a component",
+  "oneOf": [
+    {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/lifecycle_object"
+      }
+    },
+    {
+      "$ref": "#/$defs/lifecycle_object"
+    },
+    {
+      "$ref": "#/$defs/transition"
+    }
+  ],
+  "$defs": {
+    "transition": {
+      "title": "Lifecycle Transition",
+      "description": "A lifecycle transition",
+      "type": "string",
+      "enum": [
+        "create",
+        "configure",
+        "cleanup",
+        "activate",
+        "deactivate",
+        "unconfigured_shutdown",
+        "inactive_shutdown",
+        "active_shutdown",
+        "destroy"
+      ]
+    },
+    "lifecycle_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "transition": {
+          "$ref": "#/$defs/transition"
+        },
+        "component": {
+          "$ref": "identifiers/component.schema.json"
+        }
+      },
+      "required": [
+        "transition"
+      ]
+    }
+  }
+}

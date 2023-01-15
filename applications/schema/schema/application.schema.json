@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "YAML Application Description",
+  "description": "An AICA application graph description using YAML syntax.",
+  "type": "object",
+  "properties": {
+    "on_start": {
+      "title": "On Start",
+      "description": "A special keyword that triggers events when the application is launched",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "load": {
+          "$ref": "events/load.schema.json"
+        },
+        "lifecycle": {
+          "$ref": "events/lifecycle.schema.json"
+        },
+        "service": {
+          "$ref": "events/service.schema.json"
+        },
+        "load_hardware": {
+          "$ref": "events/load_hardware.schema.json"
+        },
+        "load_controller": {
+          "$ref": "events/load_controller.schema.json"
+        },
+        "switch_controllers": {
+          "$ref": "events/switch_controllers.schema.json"
+        }
+      }
+    },
+    "hardware_interfaces": {
+      "$ref": "hardware_interfaces.schema.json"
+    },
+    "conditions": {
+      "$ref": "conditions.schema.json"
+    },
+    "components": {
+      "$ref": "components.schema.json"
+    }
+  },
+  "required": [
+    "components"
+  ]
+}

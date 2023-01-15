@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Call Service",
+  "description": "Call a service on a component",
+  "oneOf": [
+    {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/service_object"
+      }
+    },
+    {
+      "$ref": "#/$defs/service_object"
+    },
+    {
+      "$ref": "identifiers/service.schema.json"
+    }
+  ],
+  "$defs": {
+    "service_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "identifiers/service.schema.json"
+        },
+        "component": {
+          "$ref": "identifiers/component.schema.json"
+        },
+        "payload": {
+          "title": "Service Payload",
+          "description": "The payload of the service call, formatted according to the service description",
+          "type": [
+            "string",
+            "object"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  }
+}

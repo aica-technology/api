@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Events",
+  "description": "Events",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "load": {
+      "$ref": "events/load.schema.json"
+    },
+    "unload": {
+      "$ref": "events/unload.schema.json"
+    },
+    "transition": {
+      "$ref": "events/transition.schema.json"
+    },
+    "set": {
+      "$ref": "events/set.schema.json"
+    },
+    "service": {
+      "$ref": "events/service.schema.json"
+    },
+    "lifecycle": {
+      "$ref": "events/lifecycle.schema.json"
+    },
+    "load_hardware": {
+      "$ref": "events/load_hardware.schema.json"
+    },
+    "unload_hardware": {
+      "$ref": "events/unload_hardware.schema.json"
+    },
+    "load_controller": {
+      "$ref": "events/load_controller.schema.json"
+    },
+    "unload_controller": {
+      "$ref": "events/unload_controller.schema.json"
+    },
+    "switch_controllers": {
+      "$ref": "events/switch_controllers.schema.json"
+    }
+  }
+}

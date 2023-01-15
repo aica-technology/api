@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hardware Interfaces",
+  "description": "A description of hardware interfaces used in the application",
+  "definitions": {
+    "controller": {
+      "title": "Controller",
+      "description": "The controller for the hardware interface",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+          "title": "Controller Name",
+          "description": "The name of the controller",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "plugin": {
+              "title": "Plugin",
+              "description": "The name of the controller plugin",
+              "type": "string"
+            },
+            "parameters": {
+              "title": "Parameters",
+              "description": "Parameters of the controller plugin",
+              "type": "object",
+              "additionalProperties": false,
+              "patternProperties": {
+                "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+                  "title": "Parameter",
+                  "description": "A controller parameter",
+                  "type": [
+                    "boolean",
+                    "number",
+                    "string",
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "boolean",
+                      "number",
+                      "string"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "plugin"
+          ]
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+      "title": "Hardware Interface Name",
+      "description": "The name of the hardware interface",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "urdf": {
+          "title": "URDF",
+          "description": "The path to the URDF file of the hardware",
+          "type": "string"
+        },
+        "rate": {
+          "title": "Rate",
+          "description": "The rate in Hz at which to run the interface",
+          "type": "number"
+        },
+        "controllers": {
+          "$ref": "#/definitions/controller"
+        }
+      }
+    }
+  }
+}
