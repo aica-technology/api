@@ -23,6 +23,11 @@
             "fatal"
           ]
         },
+        "display_name": {
+          "title": "Component Display Name",
+          "description": "The human-readable name to display on the component",
+          "type": "string"
+        },
         "component": {
           "title": "Component Registration",
           "description": "The fully qualified class name used to register the component",
@@ -70,6 +75,32 @@
                   "string"
                 ]
               }
+            }
+          }
+        },
+        "inputs": {
+          "title": "Inputs",
+          "description": "Input signals of the component",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+              "title": "Input topic",
+              "description": "The corresponding topic of the input signal",
+              "type": "string"
+            }
+          }
+        },
+        "outputs": {
+          "title": "Outputs",
+          "description": "Output signals of the component",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+              "title": "Output topic",
+              "description": "The corresponding topic of the output signal",
+              "type": "string"
             }
           }
         },
