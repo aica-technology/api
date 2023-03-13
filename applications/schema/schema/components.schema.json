@@ -104,6 +104,22 @@
             }
           }
         },
+        "input_collections": {
+          "title": "Input collections",
+          "description": "Collections of input signals of the component",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+              "title": "Input topics",
+              "description": "The array of topics that are included in the signal collection",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
         "events": {
           "title": "Predicate Events",
           "description": "Component predicates that trigger events",
