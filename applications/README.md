@@ -29,6 +29,7 @@ The following sections define the YAML application syntax used to describe an AI
     - [Mapping](#mapping)
     - [Log Level](#log-level)
     - [Parameters](#parameters)
+    - [Inputs and Outputs](#inputs-and-outputs)
     - [Events](#events)
 - [Validating a YAML Application](#validating-a-yaml-application)
 
@@ -252,6 +253,8 @@ components:
     log_level: ...  # optional
     mapping: ...    # optional
     parameters: ... # optional
+    inputs: ...     # optional
+    outputs: ...    # optional
     events: ...     # optional
 
   component_b:
@@ -313,6 +316,27 @@ my_component:
   parameters:
     my_string_parameter: "my_string_value"
     my_double_parameter: 2.0
+```
+
+### Inputs and Outputs
+
+The `inputs` and `outputs` fields are used to connect component signals together to enable communication, signal
+processing and control loops. Each signal is specified using a `name: value` syntax, where the name is the name
+of the signal according to the component description, and the value is and the name of the signal topic.
+If a component output is assigned to the same topic name as another component input, they are connected, as
+illustrated in the example below.
+
+```yaml
+my_component:
+  inputs:
+    robot_state: "/state"
+    applied_force: "/force"
+  outputs:
+    robot_command: "/command"
+
+my_other_component:
+  outputs:
+    force_torque_sensor: "/force"
 ```
 
 #### Component period
