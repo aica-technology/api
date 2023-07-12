@@ -6,6 +6,7 @@ if [ "$#" -ne 2 ]; then
   echo
   echo "Currently supported schema collections:"
   echo "  - applications"
+  echo "  - component-descriptions"
   echo
   exit 0
 fi
@@ -15,6 +16,9 @@ SCHEMA_ENTRYPOINT=""
 if [ "$SCHEMA" == "applications" ]; then
   echo "AICA application schema"
   SCHEMA_ENTRYPOINT="application.schema.json"
+elif [ "$SCHEMA" == "component-descriptions" ]; then
+  echo "Using AICA component description schema"
+  SCHEMA_ENTRYPOINT="component.schema.json"
 else
   echo "Invalid schema option: $SCHEMA"
   exit 0

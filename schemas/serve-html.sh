@@ -6,6 +6,7 @@ if [ "$#" -ne 1 ]; then
   echo
   echo "Currently supported schema collections:"
   echo "  - applications"
+  echo "  - component-descriptions"
   echo
   exit 0
 fi
@@ -13,8 +14,11 @@ fi
 SCHEMA="$1"
 SCHEMA_HTML=""
 if [ "$SCHEMA" == "applications" ]; then
-  echo "AICA application schema"
+  echo "Using AICA application schema"
   SCHEMA_HTML="application.schema.html"
+elif [ "$SCHEMA" == "component-descriptions" ]; then
+  echo "Using AICA component description schema"
+  SCHEMA_HTML="component.schema.html"
 else
   echo "Invalid schema option: $SCHEMA"
   exit 0

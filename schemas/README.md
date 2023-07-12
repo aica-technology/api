@@ -6,6 +6,11 @@ This directory contains JSON schemas to define public structures and syntax for 
 
 The [applications](./applications) directory defines the YAML syntax for AICA applications.
 
+## Component Description schema
+
+The [component-descriptions](./component-descriptions) directory defines the JSON syntax for describing the properties
+of AICA component classes.
+
 ## Tools
 
 The Dockerfile and bash scripts can be used to easily view or validate JSON schemas.
@@ -21,3 +26,7 @@ For example, to validate some YAML application file:
 ```shell
 ./validate.sh applications ../path/to/example_application.yaml
 ```
+
+Available `schema_collection` options are:
+- `applications`
+- `component-descriptions`
