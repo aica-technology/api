@@ -1,25 +1,50 @@
 #!/bin/bash
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: ./validate.sh /path/to/application.yaml"
-    exit 0
+if [ "$#" -ne 2 ]; then
+  echo "Validate a JSON or YAML file against a JSON schema"
+  echo "Usage: ./validate.sh <schema_collection> <path_to_file>"
+  echo
+  echo "Currently supported schema collections:"
+  echo "  - applications"
+  echo
+  exit 0
 fi
 
-YAML_FILE="$1"
-FULL_PATH="$(cd "$(dirname "$1")" || exit 1; pwd)"
-FILENAME=$(basename "${YAML_FILE}")
+SCHEMA="$1"
+SCHEMA_ENTRYPOINT=""
+if [ "$SCHEMA" == "applications" ]; then
+  echo "AICA application schema"
+  SCHEMA_ENTRYPOINT="application.schema.json"
+else
+  echo "Invalid schema option: $SCHEMA"
+  exit 0
+fi
 
-IMAGE_NAME=aica-technology/api/application-schema:validate
+FIXTURE_FILE="$2"
+FULL_PATH="$(
+  cd "$(dirname "$2")" || exit 1
+  pwd
+)"
+FILENAME=$(basename "${FIXTURE_FILE}")
+
+IMAGE_NAME="aica-technology/api/${SCHEMA}-schema:validate"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-docker build --target validate --tag "${IMAGE_NAME}" "${SCRIPT_DIR}" || exit 1
+docker build -f Dockerfile --target validate --tag "${IMAGE_NAME}" "${SCRIPT_DIR}/${SCHEMA}" || exit 1
 
-# mount a volume to share the file, attach to stderr, pass the filename to the entrypoint and redirect any output from stderr to stdout
-STDERR_CAPTURE=$(docker run -a stderr --rm --volume "$FULL_PATH":/home/validate "${IMAGE_NAME}" \
-  "/home/validate/${FILENAME}" 2>&1 >/dev/null)
-if [ -n "$STDERR_CAPTURE" ]; then
-  echo "Failure: ${FILENAME} is not a valid application description!"
-  echo "${STDERR_CAPTURE}"
+echo "${FULL_PATH}"
+
+# mount a volume to share the fixture file and pass the relevant paths as command arguments to the entrypoint
+RESULT=$(
+  docker run --rm \
+    --volume "${FULL_PATH}":/home/validate \
+    "${IMAGE_NAME}" \
+    "/schema/${SCHEMA_ENTRYPOINT}" "/home/validate/${FILENAME}"
+)
+
+if [ "$RESULT" == "ok -- validation done" ]; then
+  echo "Success: ${FILENAME} is a valid according to the ${SCHEMA} schema"
 else
-  echo "Success: ${FILENAME} is a valid application description."
+  echo "Failure: ${FILENAME} is not valid according to the ${SCHEMA} schema!"
+  echo "${RESULT}"
 fi

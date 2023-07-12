@@ -1,20 +1,35 @@
 #!/bin/bash
 
-if [ "$#" -ne 0 ]; then
-    echo "Usage: ./serve-html.sh"
-    exit 0
+if [ "$#" -ne 1 ]; then
+  echo "View JSON schema as readable HTML in the browser"
+  echo "Usage: ./serve-html.sh <schema_collection>"
+  echo
+  echo "Currently supported schema collections:"
+  echo "  - applications"
+  echo
+  exit 0
 fi
 
-IMAGE_NAME=aica-technology/api/application-schema:html
-CONTAINER_NAME=aica-technology-api-application-schema-html
+SCHEMA="$1"
+SCHEMA_HTML=""
+if [ "$SCHEMA" == "applications" ]; then
+  echo "AICA application schema"
+  SCHEMA_HTML="application.schema.html"
+else
+  echo "Invalid schema option: $SCHEMA"
+  exit 0
+fi
+
+IMAGE_NAME="aica-technology/api/${SCHEMA}-schema:html"
+CONTAINER_NAME="aica-technology-api-${SCHEMA}-schema-html"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-docker build --target serve-html --tag "${IMAGE_NAME}" "${SCRIPT_DIR}"
+docker build -f Dockerfile --target serve-html --tag "${IMAGE_NAME}" "${SCRIPT_DIR}/${SCHEMA}" || exit 1
 
 echo "Starting an html server container on localhost:8000"
 docker run -d --rm -p 8000:8000 --name "${CONTAINER_NAME}" "${IMAGE_NAME}"
 
-WEB_PATH=http://localhost:8000/application.schema.html
+WEB_PATH="http://localhost:8000/${SCHEMA_HTML}"
 if [ "$(command -v python)" ]; then
   python -m webbrowser "${WEB_PATH}"
 elif [ "$(command -v python3)" ]; then
