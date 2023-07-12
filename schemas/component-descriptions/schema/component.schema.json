@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "https://raw.githubusercontent.com/aica-technology/component-sdk/main/schema/schema/component.schema.json",
+  "title": "Dynamic Component Description",
+  "description": "A full description of a dynamic component in the AICA application framework.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Component Name",
+      "description": "The human-readable name of the component.",
+      "examples": [
+        "Point Attractor",
+        "Interactive Marker",
+        "Weighted Sum"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "title": "Component Description",
+      "description": "The human-readable description of this component and its behaviour.",
+      "type": "object",
+      "properties": {
+        "brief": {
+          "description": "A brief (one-line) description of the component for quick reference and tool-tips.",
+          "examples": [
+            "Generates a velocity command towards a target attractor"
+          ],
+          "type": "string"
+        },
+        "details": {
+          "description": "An optional detailed description of the component.",
+          "examples": [
+            "Given an input Cartesian pose and parameterized target pose, this component generates a Cartesian twist output towards the target linearly proportional to the distance multiplied by the gain parameter."
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "brief"
+      ]
+    },
+    "registration": {
+      "$ref": "#/$defs/registration"
+    },
+    "inherits": {
+      "oneOf": [
+        {
+          "$ref": "#"
+        },
+        {
+          "$ref": "#/$defs/registration"
+        }
+      ]
+    },
+    "virtual": {
+      "title": "Virtual Component Class",
+      "description": "If true, this property indicates that the component is an abstract or virtual base class and not directly instantiable.",
+      "type": "boolean",
+      "default": false
+    },
+    "inputs": {
+      "title": "Component Input Signals",
+      "description": "The fixed input signals (subscriptions) of the component.",
+      "type": "array",
+      "items": {
+        "$ref": "signal.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "input_collections": {
+      "title": "Component Input Signal Collections",
+      "description": "The dynamically assignable input signals (subscriptions) of the component.",
+      "type": "array",
+      "items": {
+        "$ref": "signal_collection.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "outputs": {
+      "title": "Component Output Signals",
+      "description": "The output signals (publications) of the component.",
+      "type": "array",
+      "items": {
+        "$ref": "signal.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "parameters": {
+      "title": "Component Parameters",
+      "description": "The parameters declared by the component.",
+      "type": "array",
+      "items": {
+        "$ref": "parameter.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "predicates": {
+      "title": "Component Predicates",
+      "description": "The predicates provided by the component.",
+      "type": "array",
+      "items": {
+        "$ref": "predicate.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "services": {
+      "title": "Component Services",
+      "description": "The services provided by the component.",
+      "type": "array",
+      "items": {
+        "$ref": "service.schema.json"
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "registration",
+    "inherits"
+  ],
+  "$defs": {
+    "registration": {
+      "title": "Component Registration",
+      "description": "The registration details of the exported component required for run-time loading.",
+      "examples": [
+        {
+          "package": "foo_component_package",
+          "class": "foo_component_package::Foo"
+        },
+        {
+          "package": "bar_component_package",
+          "class": "base_namespace::other_namespace::Bar"
+        },
+        {
+          "class": "foo_component_package::Foo"
+        },
+        "foo_component_package::Foo"
+      ],
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "package": {
+              "description": "The name of the package in which this component is defined.",
+              "examples": [
+                "modulo_components",
+                "foo_component_package"
+              ],
+              "type": "string"
+            },
+            "class": {
+              "description": "The fully qualified class name used to register the component.",
+              "examples": [
+                "modulo_components::Component",
+                "foo_component_package::Foo",
+                "base_namespace::other_namespace::Bar"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "class"
+          ]
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  }
+}

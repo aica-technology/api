@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "https://raw.githubusercontent.com/aica-technology/component-sdk/main/schema/schema/predicate.schema.json",
+  "title": "Component Predicate",
+  "description": "A predicate signal parameter of a dynamic component.",
+  "type": "object",
+  "properties": {
+    "display_name": {
+      "description": "The human-readable predicate name.",
+      "type": "string"
+    },
+    "description": {
+      "description": "A brief description of the predicate.",
+      "type": "string"
+    },
+    "predicate_name": {
+      "description": "The lower_snake_case predicate name as it is declared in the component.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "display_name",
+    "description",
+    "predicate_name"
+  ]
+}
