@@ -36,7 +36,7 @@ class AICA:
         :param endpoint: The API endpoint
         :return: The constructed request address
         """
-        return f'{self._address}/{endpoint}'
+        return f'{self._address}/v1/{endpoint}'
 
     def _ws_endpoint(self, endpoint=''):
         """
@@ -45,7 +45,7 @@ class AICA:
         :param endpoint: The websocket endpoint
         :return: The constructed connection address
         """
-        return f'{self._ws_address}/{endpoint}'
+        return f'{self._ws_address}/v1/{endpoint}'
 
     def check(self) -> requests.Response:
         """
@@ -57,21 +57,22 @@ class AICA:
         """
         Retrieve the JSON descriptions of all available components.
         """
-        return requests.get(self._endpoint('component_descriptions'))
+        return requests.get(self._endpoint('components'))
 
     def call_service(self, component_name: str, service_name: str,
-                     payload: Union[None, str] = None) -> requests.Response:
+                     payload: str) -> requests.Response:
         """
         Call a service on a component.
 
         :param component_name: The name of the component
         :param service_name: The name of the service
-        :param payload: The optional service payload, formatted according to the respective service description
+        :param payload: The service payload, formatted according to the respective service description
         """
-        request = {"component_name": component_name, "service_name": service_name}
-        if payload:
-            request["payload"] = payload
-        return requests.post(self._endpoint('call_service'), json=request)
+        endpoint = 'application/components/' + component_name + '/service/' + service_name
+        data = {
+            "payload": payload
+        }
+        return requests.put(self._endpoint(endpoint), json=data)
 
     def init_application(self, auto_load_hardware: bool = True) -> requests.Response:
         """
@@ -88,7 +89,8 @@ class AICA:
 
         :param component_name: The name of the component to load
         """
-        return requests.post(self._endpoint('load_component'), json={"component_name": component_name})
+        endpoint = 'application/components/' + component_name
+        return requests.put(self._endpoint(endpoint))
 
     def load_controller(self, interface_name: str, controller_name: str) -> requests.Response:
         """
@@ -98,8 +100,8 @@ class AICA:
         :param interface_name: The name of the hardware interface
         :param controller_name: The name of the controller to load
         """
-        return requests.post(self._endpoint('load_controller'),
-                             json={"interface_name": interface_name, "controller_name": controller_name})
+        endpoint = 'application/hardware/' + interface_name + '/controller/' + controller_name
+        return requests.put(self._endpoint(endpoint))
 
     def load_hardware(self, interface_name: str) -> requests.Response:
         """
@@ -108,14 +110,16 @@ class AICA:
 
         :param interface_name: The name of the hardware interface to load
         """
-        return requests.post(self._endpoint('load_hardware'), json={"interface_name": interface_name})
+        endpoint = 'application/hardware/' + interface_name
+        return requests.put(self._endpoint(endpoint))
 
     def pause_application(self) -> requests.Response:
         """
         Pause the current application. This prevents any events from being triggered or handled, but
         does not pause the periodic execution of active components.
         """
-        return requests.post(self._endpoint('pause_application'))
+        endpoint = 'application/state?action=pause'
+        return requests.put(self._endpoint(endpoint))
 
     def set_application(self, payload: str) -> requests.Response:
         """
@@ -124,19 +128,24 @@ class AICA:
         :param payload: The filepath of an application on the AICA computer, or the application content as a
         YAML-formatted string
         """
-        return requests.post(self._endpoint('set_application'), json={"payload": payload})
+        data = {
+            "payload": payload
+        }
+        return requests.put(self._endpoint('application'), json=data)
 
     def start_application(self) -> requests.Response:
         """
         Start the AICA application engine.
         """
-        return requests.post(self._endpoint('start_application'))
+        endpoint = 'application/state?action=start'
+        return requests.put(self._endpoint(endpoint))
 
     def stop_application(self) -> requests.Response:
         """
         Stop and reset the AICA application engine, removing all components and hardware interfaces.
         """
-        return requests.post(self._endpoint('stop_application'))
+        endpoint = 'application/state?action=stop'
+        return requests.put(self._endpoint(endpoint))
 
     def switch_controllers(self, interface_name: str, start: Union[None, List[str]] = None,
                            stop: Union[None, List[str]] = None) -> requests.Response:
@@ -147,9 +156,13 @@ class AICA:
         :param start: A list of controllers to start
         :param stop: A list of controllers to stop
         """
-        return requests.post(self._endpoint('call_service'),
-                             json={"interface_name": interface_name, "start": [] if not start else start,
-                                   "stop": [] if not stop else stop})
+        endpoint = 'application/controllers'
+        params = {
+            "interface_name": interface_name,
+            "start": [] if not start else start,
+            "stop": [] if not stop else stop
+        }
+        return requests.put(self._endpoint(endpoint), params=params)
 
     def unload_component(self, component_name: str) -> requests.Response:
         """
@@ -158,7 +171,8 @@ class AICA:
 
         :param component_name: The name of the component to unload
         """
-        return requests.post(self._endpoint('unload_component'), json={"component_name": component_name})
+        endpoint = 'application/components/' + component_name
+        return requests.delete(self._endpoint(endpoint))
 
     def unload_controller(self, interface_name: str, controller_name: str) -> requests.Response:
         """
@@ -168,8 +182,8 @@ class AICA:
         :param interface_name: The name of the hardware interface
         :param controller_name: The name of the controller to unload
         """
-        return requests.post(self._endpoint('load_controller'),
-                             json={"interface_name": interface_name, "controller_name": controller_name})
+        endpoint = 'application/hardware/' + interface_name + '/controller/' + controller_name
+        return requests.delete(self._endpoint(endpoint))
 
     def unload_hardware(self, interface_name: str) -> requests.Response:
         """
@@ -178,7 +192,8 @@ class AICA:
 
         :param interface_name: The name of the hardware interface to unload
         """
-        return requests.post(self._endpoint('unload_hardware'), json={"interface_name": interface_name})
+        endpoint = 'application/hardware/' + interface_name
+        return requests.delete(self._endpoint(endpoint))
 
     def wait_for_predicate(self, component, predicate, timeout: Union[None, int, float] = None):
         """
