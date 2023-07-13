@@ -11,6 +11,16 @@ The [applications](./applications) directory defines the YAML syntax for AICA ap
 The [component-descriptions](./component-descriptions) directory defines the JSON syntax for describing the properties
 of AICA component classes.
 
+## Controller Description schema
+
+The [controller-descriptions](./controller-descriptions) directory defines the JSON syntax for describing the properties
+of AICA controller plugins.
+
+## Parameters and Signals schema
+
+The [parameters](./parameters) and [signals](./signals) directories contains common schema definitions used by both
+the component and controller descriptions.
+
 ## Tools
 
 The Dockerfile and bash scripts can be used to easily view or validate JSON schemas.
@@ -30,3 +40,6 @@ For example, to validate some YAML application file:
 Available `schema_collection` options are:
 - `applications`
 - `component-descriptions`
+- `controller-descriptions`
+- `parameters`
+- `signals`

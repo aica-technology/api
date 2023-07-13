@@ -19,6 +19,15 @@ if [ "$SCHEMA" == "applications" ]; then
 elif [ "$SCHEMA" == "component-descriptions" ]; then
   echo "Using AICA component description schema"
   SCHEMA_HTML="component.schema.html"
+elif [ "$SCHEMA" == "controller-descriptions" ]; then
+  echo "Using AICA controller description schema"
+  SCHEMA_HTML="controller.schema.html"
+elif [ "$SCHEMA" == "parameters" ]; then
+  echo "Using AICA parameter schema"
+  SCHEMA_HTML="parameter.schema.html"
+elif [ "$SCHEMA" == "signals" ]; then
+  echo "Using AICA signal schema"
+  SCHEMA_HTML="signal.schema.html"
 else
   echo "Invalid schema option: $SCHEMA"
   exit 0

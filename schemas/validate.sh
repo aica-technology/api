@@ -14,11 +14,20 @@ fi
 SCHEMA="$1"
 SCHEMA_ENTRYPOINT=""
 if [ "$SCHEMA" == "applications" ]; then
-  echo "AICA application schema"
+  echo "Using AICA application schema"
   SCHEMA_ENTRYPOINT="application.schema.json"
 elif [ "$SCHEMA" == "component-descriptions" ]; then
   echo "Using AICA component description schema"
   SCHEMA_ENTRYPOINT="component.schema.json"
+elif [ "$SCHEMA" == "controller-descriptions" ]; then
+  echo "Using AICA controller description schema"
+  SCHEMA_ENTRYPOINT="controller.schema.json"
+elif [ "$SCHEMA" == "parameters" ]; then
+  echo "Using AICA parameter schema"
+  SCHEMA_ENTRYPOINT="parameter.schema.json"
+elif [ "$SCHEMA" == "signals" ]; then
+  echo "Using AICA signal schema"
+  SCHEMA_ENTRYPOINT="signal.schema.json"
 else
   echo "Invalid schema option: $SCHEMA"
   exit 0
