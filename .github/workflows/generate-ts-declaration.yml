@@ -1,0 +1,69 @@
+name: generate-typescript-declaration
+run-name: generate-typescript-declaration
+on:
+  push:
+    paths:
+      - '**.schema.json'
+
+jobs:
+  generate-typescript-declaration:
+    runs-on: ubuntu-latest
+    name: generate-typescript-declaration
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      # Generate application schemas to TypeScript declarations
+      - name: Generate application schemas to TypeScript declarations
+        id: tag
+        uses: ./.github/actions/generate-typescript-declaration
+        with:
+          schema-directory: ./schemas/applications/schema
+          schema: application.schema.json
+          ts-declaration: application.d.ts
+
+      # Checkout to frontend repository and create branch ci/update-schemas
+      - name: Checkout frontend repository
+        uses: actions/checkout@v3
+        with:
+          repository: aica-technology/frontend
+          ref: develop
+          path: frontend
+          token: ${{ secrets.FRONTEND_REPOSITORY_WRITE }}
+      - name: Create a new branch in frontend repository
+        run: |
+          cd frontend
+          ls
+          git config --global user.name github-actions[bot]
+          git config --global user.email github-actions[bot]@users.noreply.github.com
+
+          git checkout -b ci/update-schemas
+          git push -u -f origin ci/update-schemas
+
+      # Update application.d.ts and push changes to the branch in frontend repository
+      - name: Write application.d.ts and push changes to the branch in frontend repository
+        uses: aica-technology/.github/.github/actions/write-file@v0.4.1
+        with:
+          repository: aica-technology/frontend
+          branch: ci/update-schemas
+          filepath: src/utils/schemas/application.d.ts
+          file_source: schemas/applications/schema/application.d.ts
+          token: ${{ secrets.FRONTEND_REPOSITORY_WRITE }}
+
+      # Generate component schemas to TypeScript declarations
+      - name: Generate component schemas to TypeScript declarations
+        uses: ./.github/actions/generate-typescript-declaration
+        with:
+          schema-directory: ./schemas/component-descriptions/schema
+          schema: component.schema.json
+          ts-declaration: dynamic-component-description.d.ts
+
+      # Update dynamic-component-description.d.ts and push changes to the branch in frontend repository
+      - name: Write dynamic-component-description.d.ts and push changes to the branch in frontend repository
+        uses: aica-technology/.github/.github/actions/write-file@v0.4.1
+        with:
+          repository: aica-technology/frontend
+          branch: ci/update-schemas
+          filepath: src/utils/schemas/dynamic-component-description.d.ts
+          file_source: schemas/component-descriptions/schema/dynamic-component-description.d.ts
+          token: ${{ secrets.FRONTEND_REPOSITORY_WRITE }}
