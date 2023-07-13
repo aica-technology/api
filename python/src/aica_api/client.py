@@ -74,6 +74,7 @@ class AICA:
         }
         return requests.put(self._endpoint(endpoint), json=data)
 
+    # TODO: Missing v1 endpoint
     def init_application(self, auto_load_hardware: bool = True) -> requests.Response:
         """
         Initialize the currently set application.
