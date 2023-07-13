@@ -9,10 +9,6 @@ WORKDIR /
 COPY ./schema /schema
 
 
-FROM sources as validate
-ENTRYPOINT ["check-jsonschema", "--schemafile", "/schema/application.schema.json"]
-
-
 FROM sources as generate-docs
 RUN mkdir -p /html && generate-schema-doc /schema /html
 
@@ -20,3 +16,8 @@ RUN mkdir -p /html && generate-schema-doc /schema /html
 FROM generate-docs as serve-html
 WORKDIR /html
 CMD python -m http.server
+
+
+FROM sources as validate
+
+ENTRYPOINT ["check-jsonschema", "--schemafile"]

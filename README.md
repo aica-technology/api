@@ -1,6 +1,6 @@
 # AICA API Resources
 
-This repository contains tools and resources for interacting with the AICA API.
+This repository contains tools and resources for interacting with the AICA API, applications and components.
 
 ## Python client
 
@@ -10,3 +10,8 @@ pip install aica-api
 ```
 
 See the [python](./python) subdirectory for more information and source code.
+
+## Schemas
+
+JSON schemas defining the expected syntax for AICA application files or component descriptions are available
+in the [schemas](./schemas) subdirectory.
