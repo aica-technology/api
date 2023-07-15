@@ -209,9 +209,14 @@ default state and must be set by the user for the component to function, the `de
 description should be set to `null`. This is distinct from a valid default empty parameter state, which can be
 expressed with the empty string `""`.
 
-If a parameter is dynamically reconfigurable, it implies that the parameter can be changed after the component
-is already configured to influence the run-time behaviour.
+If a parameter is dynamically reconfigurable, as described by the `dynamic` property, it implies that the parameter can
+be changed after the component is already configured to influence the run-time behaviour.
 This requires the component to either poll the parameter value while running or implement a parameter change callback.
+
+The `internal` property can be used to hide a parameter from public interfaces that use the component description by
+indicating that the parameter is intended for internal use only. The intended outcome is for the parameter to be hidden
+from auto-generated component visualizations or documentation at a high level.
+If the field is omitted from a description, the parameter is assumed to be public.
 
 ## Predicates
 

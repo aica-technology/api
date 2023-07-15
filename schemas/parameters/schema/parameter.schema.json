@@ -52,6 +52,11 @@
     "dynamic": {
       "description": "Specify if this parameter can be dynamically reconfigured.",
       "type": "boolean"
+    },
+    "internal": {
+      "description": "Specify if this parameter is for internal use only and should be hidden from public users.",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [
