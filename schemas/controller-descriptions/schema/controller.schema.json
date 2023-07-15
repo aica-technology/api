@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/controller-descriptions/schema/controller.schema.json",
+  "title": "AICA Controller Description",
+  "description": "A full description of a controller in the AICA application framework.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Controller Name",
+      "description": "The human-readable name of the controller.",
+      "examples": [
+        "Robot State Broadcaster",
+        "Inverse Kinematics Velocity Controller"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "title": "Controller Description",
+      "description": "The human-readable description of the controller and its behaviour.",
+      "type": "object",
+      "properties": {
+        "brief": {
+          "description": "A brief (one-line) description of the controller for quick reference and tool-tips.",
+          "examples": [
+            "Publishes robot state data as modulo encoded states",
+            "Controls joint space velocity from a task-space command under `~/state_command`"
+          ],
+          "type": "string"
+        },
+        "details": {
+          "description": "An optional detailed description of the controller.",
+          "examples": [
+            "Joint state is published from joint state interfaces. Cartesian state is published if a URDF is available from which forward kinematics can be calculated. Force-torque sensor data is published if matching sensor state interfaces are available."
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "brief"
+      ]
+    },
+    "plugin": {
+      "description": "The registered class name of the controller plugin.",
+      "examples": [
+        "modulo_controllers/RobotStateBroadcaster",
+        "modulo_controllers/velocity/IKVelocityController"
+      ],
+      "type": "string"
+    },
+    "control_type": {
+      "description": "The control type of the controller",
+      "examples": [
+        "modulo_controllers/RobotStateBroadcaster",
+        "modulo_controllers/velocity/IKVelocityController"
+      ],
+      "type": "string",
+      "enum": [
+        "position",
+        "velocity",
+        "acceleration",
+        "effort"
+      ]
+    },
+    "virtual": {
+      "title": "Virtual Controller Class",
+      "description": "If true, this property indicates that the controller is an abstract or virtual base class and not directly instantiable.",
+      "type": "boolean",
+      "default": false
+    },
+    "inputs": {
+      "title": "Controller Input Signals",
+      "description": "The fixed input signals (subscriptions) of the controller.",
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "outputs": {
+      "title": "Controller Output Signals",
+      "description": "The output signals (publications) of the controller.",
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "parameters": {
+      "title": "Controller Parameters",
+      "description": "The parameters declared by the controller.",
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/parameters/schema/parameter.schema.json"
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "plugin"
+  ]
+}

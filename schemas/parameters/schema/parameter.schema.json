@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/component-sdk/main/schema/schema/parameter.schema.json",
-  "title": "Component Parameter",
-  "description": "A dynamic component parameter that is publicly configurable.",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/parameters/schema/parameter.schema.json",
+  "title": "Parameter",
+  "description": "A dynamic parameter that is publicly configurable.",
   "type": "object",
   "properties": {
     "display_name": {
@@ -18,7 +18,7 @@
       "type": "string"
     },
     "parameter_name": {
-      "description": "The lower_snake_case parameter name as it is declared in the component.",
+      "description": "The lower_snake_case parameter name as it is declared in the implementation.",
       "examples": [
         "reference_frame",
         "gain"
@@ -50,7 +50,7 @@
       ]
     },
     "dynamic": {
-      "description": "Specify if this parameter can be dynamically reconfigured while the component is active",
+      "description": "Specify if this parameter can be dynamically reconfigured.",
       "type": "boolean"
     }
   },

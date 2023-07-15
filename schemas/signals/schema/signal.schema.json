@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/component-sdk/main/schema/schema/signal.schema.json",
-  "title": "Component Signal",
-  "description": "A signal associated with a dynamic component that can be an input or an output.",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/signals/schema/signal.schema.json",
+  "title": "Signal",
+  "description": "A continuous data signal in the AICA framework that can be an input or an output.",
   "type": "object",
   "properties": {
     "display_name": {
-      "description": "The short name of this signal (to be displayed on the edge of the component).",
+      "description": "The short name of this signal (to be displayed on the edge of the node in the graph view).",
       "examples": [
         "Target Pose",
         "Sum",
@@ -33,7 +33,7 @@
       "type": "string"
     },
     "reconfigurable_topic": {
-      "description": "Indicate if the signal topic is reconfigurable and can be renamed while the component is inactive through the '<$signal_name>_topic' parameter.",
+      "description": "Indicate if the signal topic is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_topic' parameter.",
       "default": false,
       "type": "boolean"
     },
@@ -55,7 +55,7 @@
       "$ref": "signal_type.schema.json"
     },
     "reconfigurable_type": {
-      "description": "Indicate if the signal type is reconfigurable and can be renamed while the component is inactive through the '<$signal_name>_type' parameter.",
+      "description": "Indicate if the signal type is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_type' parameter.",
       "default": false,
       "type": "boolean"
     }

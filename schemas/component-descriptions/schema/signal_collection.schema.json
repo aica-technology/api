@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/component-sdk/main/schema/schema/input_signal_collection.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/component-descriptions/schema/input_signal_collection.schema.json",
   "title": "Input Signal Collection",
   "description": "A dynamic collection of input signals that can have zero or more topics of the same type.",
   "type": "object",
