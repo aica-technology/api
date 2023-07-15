@@ -47,6 +47,13 @@
       ],
       "type": "string"
     },
+    "inherits": {
+      "description": "The parent class name of the controller plugin in case of inheritance.",
+      "examples": [
+        "modulo_controllers/ModuloControllerInterface"
+      ],
+      "type": "string"
+    },
     "control_type": {
       "description": "The control type of the controller",
       "examples": [
