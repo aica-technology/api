@@ -15,9 +15,17 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install json-schema-to-typescript
+        run: npm install -g json-schema-to-typescript
+      - name: Install prettier
+        run: npm install -g prettier
+
       # Generate application schemas to TypeScript declarations
       - name: Generate application schemas to TypeScript declarations
-        id: tag
         uses: ./.github/actions/generate-typescript-declaration
         with:
           schema-directory: ./schemas/applications/schema
@@ -40,6 +48,7 @@ jobs:
           ref: develop
           path: frontend
           token: ${{ secrets.FRONTEND_REPOSITORY_WRITE }}
+
       - name: Create a new branch in frontend repository
         run: |
           ls schemas/applications/schema/
