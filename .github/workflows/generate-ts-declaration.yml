@@ -1,9 +1,11 @@
 name: generate-typescript-declaration
 run-name: generate-typescript-declaration
-on:
-  push:
-    paths:
-      - '**.schema.json'
+#on:
+#  push:
+#    paths:
+#      - '**.schema.json'
+
+on: [push]
 
 jobs:
   generate-typescript-declaration:
