@@ -20,16 +20,16 @@ runs:
   steps:
 #    - name: Check out repository code
 #      uses: actions/checkout@v3
-#    - name: Install node
-#      uses: actions/setup-node@v3
-#      with:
-#        node-version: '18'
-#    - name: Install json-schema-to-typescript
-#      shell: bash
-#      run: npm install -g json-schema-to-typescript
-#    - name: Install prettier
-#      shell: bash
-#      run: npm install -g prettier
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install json-schema-to-typescript
+      shell: bash
+      run: npm install -g json-schema-to-typescript
+    - name: Install prettier
+      shell: bash
+      run: npm install -g prettier
     # Convert schemas to TypeScript declarations
     - name: Convert ${{ inputs.schema }} to TypeScript declarations
       shell: bash

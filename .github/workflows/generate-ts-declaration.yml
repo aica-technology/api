@@ -15,14 +15,14 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Install node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Install json-schema-to-typescript
-        run: npm install -g json-schema-to-typescript
-      - name: Install prettier
-        run: npm install -g prettier
+#      - name: Install node
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Install json-schema-to-typescript
+#        run: npm install -g json-schema-to-typescript
+#      - name: Install prettier
+#        run: npm install -g prettier
 
       # Generate application schemas to TypeScript declarations
       - name: Generate application schemas to TypeScript declarations
