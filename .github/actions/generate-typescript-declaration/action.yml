@@ -1,0 +1,42 @@
+name: Generate typescript declaration
+description: 'Convert schemas to TypeScript declaration and format it by Prettier'
+author: aica-technology
+inputs:
+  schema-directory:
+    description: "The directory to the target schema"
+    required: true
+    type: string
+  ts-declaration:
+    description: "The name of the typescript declaration file"
+    required: true
+    type: string
+  schema:
+    description: "The name of the schema"
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    # Install packages: node, json-schema-to-typescript, Prettier
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install json-schema-to-typescript
+      shell: bash
+      run: npm install -g json-schema-to-typescript
+    - name: Install prettier
+      shell: bash
+      run: npm install -g prettier
+
+    # Convert schemas to TypeScript declarations
+    - name: Convert ${{ inputs.schema }} to TypeScript declarations
+      shell: bash
+      working-directory: ${{ inputs.schema-directory }}
+      run: json2ts ${{ inputs.schema }} > ${{ inputs.ts-declaration }}
+    # Run Prettier to format .d.ts file
+    - name: Run Prettier to format ${{ inputs.ts-declaration }}
+      shell: bash
+      working-directory: ${{ inputs.schema-directory }}
+      run: npx prettier --write ${{ inputs.ts-declaration }}
