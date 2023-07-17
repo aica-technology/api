@@ -3,9 +3,9 @@ description: 'Convert schemas to TypeScript declaration and format it by Prettie
 author: aica-technology
 inputs:
   schema-directory:
-      description: "The directory to the target schema"
-      required: true
-      type: string
+    description: "The directory to the target schema"
+    required: true
+    type: string
   ts-declaration:
     description: "The name of the typescript declaration file"
     required: true
@@ -18,8 +18,7 @@ inputs:
 runs:
   using: composite
   steps:
-#    - name: Check out repository code
-#      uses: actions/checkout@v3
+    # Install packages: node, json-schema-to-typescript, Prettier
     - name: Install node
       uses: actions/setup-node@v3
       with:
@@ -30,6 +29,7 @@ runs:
     - name: Install prettier
       shell: bash
       run: npm install -g prettier
+
     # Convert schemas to TypeScript declarations
     - name: Convert ${{ inputs.schema }} to TypeScript declarations
       shell: bash
