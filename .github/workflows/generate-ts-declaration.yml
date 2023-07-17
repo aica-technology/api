@@ -33,7 +33,7 @@ jobs:
           repository: aica-technology/frontend
           ref: develop
           path: frontend
-          token: ${{ secrets.FRONTEND_REPOSITORY_WRITE }}
+          ssh-key: ${{ secrets.FRONTEND_REPOSITORY_WRITE_SSH }}
 
       - name: Push .d.ts file to frontend repository
         run: |
