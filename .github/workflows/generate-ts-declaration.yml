@@ -1,9 +1,11 @@
 name: generate-typescript-declaration
 run-name: generate-typescript-declaration
-on:
-  push:
-    paths:
-      - '**.schema.json'
+#on:
+#  push:
+#    paths:
+#      - '**.schema.json'
+
+on: [push]
 
 jobs:
   generate-typescript-declaration:
@@ -40,6 +42,8 @@ jobs:
           token: ${{ secrets.FRONTEND_REPOSITORY_WRITE }}
       - name: Create a new branch in frontend repository
         run: |
+          ls schemas/applications/schema/
+          ls schemas/component-descriptions/schema/
           mv schemas/applications/schema/application.d.ts frontend/src/utils/schemas/
           mv schemas/component-descriptions/schema/dynamic-component-description.d.ts frontend/src/utils/schemas/
           cd frontend
