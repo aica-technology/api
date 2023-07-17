@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/fix/refs/schemas/controller-descriptions/schema/controller.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/controller-descriptions/schema/controller.schema.json",
   "title": "AICA Controller Description",
   "description": "A full description of a controller in the AICA application framework.",
   "type": "object",
@@ -72,7 +72,7 @@
       "description": "The fixed input signals (subscriptions) of the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/fix/refs/schemas/signals/schema/signal.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal.schema.json"
       },
       "uniqueItems": true
     },
@@ -81,7 +81,7 @@
       "description": "The output signals (publications) of the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/fix/refs/schemas/signals/schema/signal.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal.schema.json"
       },
       "uniqueItems": true
     },
@@ -90,7 +90,7 @@
       "description": "The parameters declared by the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/fix/refs/schemas/parameters/schema/parameter.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/parameters/schema/parameter.schema.json"
       },
       "uniqueItems": true
     }
