@@ -173,7 +173,8 @@ behavior when resolving a new signal connection.
 This has the extra caveat that the configurable signal type may only support a subset of all available types.
 For example, a configurable component input might support JointState or CartesianState signals, but nothing else.
 In this case, the `signal_types` property in the signal description should be used along with parameter validation
-by the component itself.
+by the component itself. In this case, the `signal_type` property should be used to determine the default type in case
+the type parameter is not set.
 
 ### Signal Collection
 

@@ -2,6 +2,9 @@ name: generate-typescript-declaration
 run-name: generate-typescript-declaration
 on:
   push:
+    branches:
+      - develop
+      - main
     paths:
       - '**.schema.json'
 
@@ -13,14 +16,14 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Generate application schemas to TypeScript declarations
+      - name: Generate TypeScript declarations for application schemas
         uses: ./.github/actions/generate-typescript-declaration
         with:
           schema-directory: ./schemas/applications/schema
           schema: application.schema.json
           ts-declaration: application.d.ts
 
-      - name: Generate component schemas to TypeScript declarations
+      - name: Generate TypeScript declarations for component schemas
         uses: ./.github/actions/generate-typescript-declaration
         with:
           schema-directory: ./schemas/component-descriptions/schema

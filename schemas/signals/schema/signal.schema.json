@@ -42,7 +42,7 @@
       "$ref": "signal_type.schema.json"
     },
     "signal_types": {
-      "description": "An array of signal types supported by configurable typing. The active type is set through the '<$signal_name>_type' parameter.",
+      "description": "An array of signal types supported by configurable typing. The active type is set through the '<$signal_name>_type' parameter, and the default type is determined by the `signal_type` property.",
       "type": "array",
       "items": {
         "$ref": "signal_type.schema.json"
@@ -50,61 +50,36 @@
       "minItems": 1,
       "uniqueItems": true
     },
-    "default_type": {
-      "description": "The default type of this signal.",
-      "$ref": "signal_type.schema.json"
-    },
     "reconfigurable_type": {
       "description": "Indicate if the signal type is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_type' parameter.",
       "default": false,
       "type": "boolean"
+    },
+    "custom_signal_type": {
+      "description": "The custom signal type of the signal",
+      "examples": [
+        "sensor_msgs::msg::JointState",
+        "geometry_msgs::msg::Pose"
+      ],
+      "type": "string"
     }
   },
   "required": [
     "display_name",
     "description",
-    "signal_name"
-  ],
-  "oneOf": [
-    {
-      "required": [
-        "signal_type"
-      ]
-    },
-    {
-      "required": [
-        "signal_types",
-        "default_type"
-      ]
-    }
+    "signal_name",
+    "signal_type"
   ],
   "if": {
-    "not": {
-      "required": [
-        "signal_type"
-      ]
+    "properties": {
+      "signal_type": {
+        "const": "other"
+      }
     }
   },
-  "else": {
-    "if": {
-      "properties": {
-        "signal_type": {
-          "const": "other"
-        }
-      }
-    },
-    "then": {
-      "custom_signal_type": {
-        "description": "The custom signal type of the signal",
-        "examples": [
-          "sensor_msgs::msg::JointState",
-          "geometry_msgs::msg::Pose"
-        ],
-        "type": "string"
-      },
-      "required": [
-        "custom_signal_type"
-      ]
-    }
+  "then": {
+    "required": [
+      "custom_signal_type"
+    ]
   }
 }
