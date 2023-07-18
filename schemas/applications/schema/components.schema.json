@@ -176,22 +176,7 @@
           }
         },
         "position": {
-          "title": "Position",
-          "description": "The position of the component",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "name": {
-              "title": "x",
-              "description": "The x position of the component on graph",
-              "type": "number"
-            },
-            "namespace": {
-              "title": "y",
-              "description": "The y position of the component on graph",
-              "type": "number"
-            }
-          }
+          "$ref": "position.schema.json"
         }
       }
     }

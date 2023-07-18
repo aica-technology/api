@@ -1,54 +1,31 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "ButtonName1",
-  "description": "A description of the button used in the application",
+  "title": "Buttons",
+  "description": "A description of interactive buttons in the application graph",
   "type": "object",
-  "additionalProperties": {},
+  "additionalProperties": false,
   "properties": {
-        "display_name": {
-          "type": "string"
-        },
-        "events": {
-          "$ref": "#/$defs/ButtonEvents"
-        },
-        "position": {
-          "$ref": "#/$defs/Position"
-        }
-  },
-  "$defs": {
-    "Position": {
-      "additionalProperties": false,
-      "description": "Position of the button",
-      "properties": {
-        "x": {
-          "type": "number"
-        },
-        "y": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "x",
-        "y"
-      ],
-      "type": "object"
+    "display_name": {
+      "title": "Button Display Name",
+      "description": "The human-readable name to display on the button",
+      "type": "string"
     },
-    "ButtonEvents": {
-      "additionalProperties": {
-        "items": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "not": {}
-            }
-          ]
+    "on_click": {
+      "title": "On Click",
+      "description": "Events that are triggered when the button is pressed",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "load": {
+          "$ref": "events/load.schema.json"
         },
-        "type": "array"
-      },
-      "description": "Event handler for buttons",
-      "type": "object"
+        "unload": {
+          "$ref": "events/unload.schema.json"
+        }
+      }
+    },
+    "position": {
+      "$ref": "position.schema.json"
     }
   }
 }
