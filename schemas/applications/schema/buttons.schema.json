@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ButtonName1",
+  "description": "A description of the button used in the application",
+  "type": "object",
+  "additionalProperties": {},
+  "properties": {
+        "display_name": {
+          "type": "string"
+        },
+        "events": {
+          "$ref": "#/$defs/ButtonEvents"
+        },
+        "position": {
+          "$ref": "#/$defs/Position"
+        }
+  },
+  "$defs": {
+    "Position": {
+      "additionalProperties": false,
+      "description": "Position of the button",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "type": "object"
+    },
+    "ButtonEvents": {
+      "additionalProperties": {
+        "items": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "not": {}
+            }
+          ]
+        },
+        "type": "array"
+      },
+      "description": "Event handler for buttons",
+      "type": "object"
+    }
+  }
+}

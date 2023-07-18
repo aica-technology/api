@@ -38,6 +38,12 @@
     },
     "components": {
       "$ref": "components.schema.json"
+    },
+    "buttons": {
+      "additionalProperties": {
+        "$ref": "buttons.schema.json"
+      },
+      "type": "object"
     }
   },
   "required": [
