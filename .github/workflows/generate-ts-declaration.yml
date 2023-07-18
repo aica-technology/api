@@ -3,7 +3,6 @@ run-name: generate-typescript-declaration
 on:
   push:
     branches:
-      - fix/prettier-config-and-types # TODO: remove before merging
       - develop
       - main
     paths:
