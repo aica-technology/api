@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/component-descriptions/schema/input_signal_collection.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/component-descriptions/schema/signal_collection.schema.json",
   "title": "Input Signal Collection",
   "description": "A dynamic collection of input signals that can have zero or more topics of the same type.",
   "type": "object",
@@ -32,20 +32,20 @@
     },
     "signal_type": {
       "description": "The default type of the signals (signals in a collection must have the same type).",
-      "$ref": "signal_type.schema.json"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal_type.schema.json"
     },
     "signal_types": {
       "description": "An array of signal types supported by configurable typing. The active type is set through the '<$input_collection_name>_type' parameter.",
       "type": "array",
       "items": {
-        "$ref": "signal_type.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal_type.schema.json"
       },
       "minItems": 1,
       "uniqueItems": true
     },
     "default_type": {
       "description": "The default type of this signal. It must be in the list of signal types.",
-      "$ref": "signal_type.schema.json"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal_type.schema.json"
     },
     "reconfigurable_type": {
       "description": "Indicate if the signal type is reconfigurable and can be changed while the component is inactive through the '<$input_collection_name>_type' parameter.",

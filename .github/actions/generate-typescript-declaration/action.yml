@@ -25,7 +25,10 @@ runs:
         node-version: '18'
     - name: Install json-schema-to-typescript
       shell: bash
-      run: npm install -g json-schema-to-typescript
+      # FIXME: json-schema-to-typescript does not properly handle URL refs, so an older fork
+      # is used instead (rm-json-schema-to-typescript). See also:
+      #   https://github.com/bcherny/json-schema-to-typescript/issues/324#issuecomment-1091701008
+      run: npm install -g rm-json-schema-to-typescript
     - name: Install prettier
       shell: bash
       run: npm install -g prettier

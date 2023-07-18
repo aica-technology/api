@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/signals/schema/signal.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal.schema.json",
   "title": "Signal",
   "description": "A continuous data signal in the AICA framework that can be an input or an output.",
   "type": "object",

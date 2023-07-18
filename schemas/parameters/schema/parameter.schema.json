@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/parameters/schema/parameter.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/parameters/schema/parameter.schema.json",
   "title": "Parameter",
   "description": "A dynamic parameter that is publicly configurable.",
   "type": "object",

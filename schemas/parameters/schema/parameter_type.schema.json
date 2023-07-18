@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/parameters/schema/parameter_type.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/parameters/schema/parameter_type.schema.json",
   "title": "Parameter Type",
   "description": "The value type of a parameter from a collection of supported types.",
   "type": "string",

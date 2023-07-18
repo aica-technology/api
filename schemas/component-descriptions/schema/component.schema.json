@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/component-descriptions/schema/component.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/component-descriptions/schema/component.schema.json",
   "title": "Dynamic Component Description",
   "description": "A full description of a dynamic component in the AICA application framework.",
   "type": "object",
