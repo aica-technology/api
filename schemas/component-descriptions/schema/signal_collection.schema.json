@@ -35,17 +35,13 @@
       "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal_type.schema.json"
     },
     "signal_types": {
-      "description": "An array of signal types supported by configurable typing. The active type is set through the '<$input_collection_name>_type' parameter.",
+      "description": "An array of signal types supported by configurable typing. The active type is set through the '<$input_collection_name>_type' parameter, and the default type is determined by the `signal_type` property.",
       "type": "array",
       "items": {
         "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal_type.schema.json"
       },
       "minItems": 1,
       "uniqueItems": true
-    },
-    "default_type": {
-      "description": "The default type of this signal. It must be in the list of signal types.",
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal_type.schema.json"
     },
     "reconfigurable_type": {
       "description": "Indicate if the signal type is reconfigurable and can be changed while the component is inactive through the '<$input_collection_name>_type' parameter.",
@@ -56,19 +52,7 @@
   "required": [
     "display_name",
     "description",
-    "input_collection_name"
-  ],
-  "oneOf": [
-    {
-      "required": [
-        "signal_type"
-      ]
-    },
-    {
-      "required": [
-        "signal_types",
-        "default_type"
-      ]
-    }
+    "input_collection_name",
+    "signal_type"
   ]
 }
