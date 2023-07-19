@@ -174,6 +174,9 @@
               "$ref": "events.schema.json"
             }
           }
+        },
+        "position": {
+          "$ref": "position.schema.json"
         }
       }
     }

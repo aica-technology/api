@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Buttons",
+  "description": "A description of interactive buttons in the application graph",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "display_name": {
+      "title": "Button Display Name",
+      "description": "The human-readable name to display on the button",
+      "type": "string"
+    },
+    "on_click": {
+      "title": "On Click",
+      "description": "Events that are triggered when the button is pressed",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "load": {
+          "$ref": "events/load.schema.json"
+        },
+        "unload": {
+          "$ref": "events/unload.schema.json"
+        }
+      }
+    },
+    "position": {
+      "$ref": "position.schema.json"
+    }
+  }
+}
