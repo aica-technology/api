@@ -47,26 +47,14 @@ that explains the functionality of the component in depth.
 ### Registration
 
 The `registration` property is used to associate the description with a unique component class. Component classes
-are implemented by ROS2 packages and registered under a unique class name. By convention, the class name should be
-defined in the namespace of the package. For example, some component class `Foo` in the package `foo_component_package`
-should be registered as `foo_component_package::Foo`, so that the package can be inferred from registered name.
-Under this convention, it is sufficient to write only the class name in the registration description, as in
+are implemented by ROS2 packages and registered under a unique class name. By convention, the class name must be
+defined in the namespace of the package, delimited by double colons `::`. For example, some component class `Foo`
+in the package `foo_component_package` should be registered as `foo_component_package::Foo`, so that the package can be
+inferred from the registered name.
 
 ```json
 {
   "registration": "foo_component_package::Foo"
-}
-```
-
-In some cases, the component may be registered under a class name which does not include the source package. For such
-components, it is necessary to specify the package and class as separate fields in the registration description:
-
-```json
-{
-  "registration": {
-    "package": "foo_component_package",
-    "class": "my_foo_namespace"
-  }
 }
 ```
 
