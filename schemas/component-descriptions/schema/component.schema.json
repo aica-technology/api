@@ -122,50 +122,11 @@
   "$defs": {
     "registration": {
       "title": "Component Registration",
-      "description": "The registration details of the exported component required for run-time loading.",
+      "description": "The full registered class name of the exported component required for run-time loading. The registration must start with the package name and may include additional namespaces delimited by double colons `::`.",
+      "type": "string",
       "examples": [
-        {
-          "package": "foo_component_package",
-          "class": "foo_component_package::Foo"
-        },
-        {
-          "package": "bar_component_package",
-          "class": "base_namespace::other_namespace::Bar"
-        },
-        {
-          "class": "foo_component_package::Foo"
-        },
-        "foo_component_package::Foo"
-      ],
-      "oneOf": [
-        {
-          "type": "object",
-          "properties": {
-            "package": {
-              "description": "The name of the package in which this component is defined.",
-              "examples": [
-                "modulo_components",
-                "foo_component_package"
-              ],
-              "type": "string"
-            },
-            "class": {
-              "description": "The fully qualified class name used to register the component.",
-              "examples": [
-                "modulo_components::Component",
-                "foo_component_package::Foo",
-                "base_namespace::other_namespace::Bar"
-              ],
-              "type": "string"
-            }
-          },
-          "required": [
-            "class"
-          ]
-        },
-        {
-          "type": "string"
-        }
+        "modulo_components::Component",
+        "foo_package::other_namespace::Foo"
       ]
     }
   }
