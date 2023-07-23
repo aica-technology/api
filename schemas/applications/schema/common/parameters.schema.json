@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Parameters",
+  "description": "A collection of named parameters with assigned values",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+      "title": "Parameter Value",
+      "description": "The value assigned to the named parameter",
+      "type": [
+        "boolean",
+        "number",
+        "string",
+        "array"
+      ],
+      "items": {
+        "type": [
+          "boolean",
+          "number",
+          "string"
+        ]
+      }
+    }
+  }
+}

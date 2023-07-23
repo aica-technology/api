@@ -54,29 +54,7 @@
           }
         },
         "parameters": {
-          "title": "Parameters",
-          "description": "Parameters of the component",
-          "type": "object",
-          "additionalProperties": false,
-          "patternProperties": {
-            "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
-              "title": "Parameter",
-              "description": "A component parameter",
-              "type": [
-                "boolean",
-                "number",
-                "string",
-                "array"
-              ],
-              "items": {
-                "type": [
-                  "boolean",
-                  "number",
-                  "string"
-                ]
-              }
-            }
-          }
+          "$ref": "common/parameters.schema.json"
         },
         "inputs": {
           "$ref": "common/inputs.schema.json"
