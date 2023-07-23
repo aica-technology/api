@@ -56,7 +56,7 @@
           "type": "number"
         },
         "position": {
-          "$ref": "position.schema.json"
+          "$ref": "common/position.schema.json"
         },
         "controllers": {
           "$ref": "#/definitions/controller"

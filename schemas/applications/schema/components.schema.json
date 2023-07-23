@@ -134,7 +134,7 @@
           }
         },
         "position": {
-          "$ref": "position.schema.json"
+          "$ref": "common/position.schema.json"
         }
       }
     }
