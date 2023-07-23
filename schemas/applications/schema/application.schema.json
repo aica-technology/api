@@ -42,8 +42,5 @@
     "buttons": {
       "$ref": "buttons.schema.json"
     }
-  },
-  "required": [
-    "components"
-  ]
+  }
 }
