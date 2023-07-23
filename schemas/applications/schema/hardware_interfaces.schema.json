@@ -43,6 +43,12 @@
                   }
                 }
               }
+            },
+            "inputs": {
+              "$ref": "common/inputs.schema.json"
+            },
+            "outputs": {
+              "$ref": "common/outputs.schema.json"
             }
           },
           "required": [
@@ -70,6 +76,9 @@
           "title": "Rate",
           "description": "The rate in Hz at which to run the interface",
           "type": "number"
+        },
+        "position": {
+          "$ref": "position.schema.json"
         },
         "controllers": {
           "$ref": "#/definitions/controller"

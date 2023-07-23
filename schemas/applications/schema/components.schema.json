@@ -79,30 +79,10 @@
           }
         },
         "inputs": {
-          "title": "Inputs",
-          "description": "Input signals of the component",
-          "type": "object",
-          "additionalProperties": false,
-          "patternProperties": {
-            "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
-              "title": "Input topic",
-              "description": "The corresponding topic of the input signal",
-              "type": "string"
-            }
-          }
+          "$ref": "common/inputs.schema.json"
         },
         "outputs": {
-          "title": "Outputs",
-          "description": "Output signals of the component",
-          "type": "object",
-          "additionalProperties": false,
-          "patternProperties": {
-            "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
-              "title": "Output topic",
-              "description": "The corresponding topic of the output signal",
-              "type": "string"
-            }
-          }
+          "$ref": "common/outputs.schema.json"
         },
         "input_collections": {
           "title": "Input collections",
