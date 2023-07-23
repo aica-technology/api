@@ -26,8 +26,9 @@ The following sections define the YAML application syntax used to describe an AI
   - [Nested Conditions](#nested-conditions)
 - [Components](#components)
     - [Component](#component)
-    - [Mapping](#mapping)
+    - [Position](#position)
     - [Log Level](#log-level)
+    - [Mapping](#mapping)
     - [Parameters](#parameters)
     - [Inputs and Outputs](#inputs-and-outputs)
     - [Events](#events)
@@ -106,6 +107,12 @@ Under each controller, the **plugin** field refers to a registered controller pl
 
 The **parameters** field then refers to configurable parameters for the given controller.
 
+The **inputs** and **outputs** fields define the ROS2 topics to which each signal of the controller should be connected.
+See also [Component Inputs and Outputs](#inputs-and-outputs).
+
+Optionally, the **position** field can be used to specify an X, Y location for rendering the hardware interface
+as a node in the AICA interactive graph editor. See also [Component Position](#position).
+
 For example:
 
 ```yaml
@@ -120,6 +127,10 @@ robot:
         linear_orthogonal_damping: 10.0
         angular_stiffness: 1.0
         angular_damping: 1.0
+      inputs:
+        command: /motion_generator/command_output
+      outputs:
+        state: /recorder/state_input
 ```
 
 ## Conditions
@@ -250,6 +261,7 @@ generally be in `lower_camel_case`.
 components:
   component_a:
     component: ...  # required
+    position: ...   # optional
     log_level: ...  # optional
     mapping: ...    # optional
     parameters: ... # optional
@@ -276,6 +288,31 @@ my_component:
   component: foo_components::Foo
 ```
 
+### Position
+
+The `position` field is used to define the desired location of the component when rendered as a node in the AICA
+interactive graph editor. It has two subfields defining the X and Y location, respectively.
+
+This field only affects visualization of the application graph and has no other run-time effect.
+If a position is not specified, the node will be rendered at a procedurally chosen location.
+
+```yaml
+my_component:
+  position:
+    x: 100
+    y: 200
+```
+
+### Log Level
+
+The `log_level` optionally sets the log severity level for this component.
+Supported levels are: [unset, debug, info, warn, error, fatal]
+
+```yaml
+my_component:
+  log_level: debug
+```
+
 ### Mapping
 
 The `mapping` field optionally defines overrides for the component name and namespace. Normally, the component node
@@ -293,16 +330,6 @@ component_b:
   mapping:
     name: my_new_component_name
     namespace: my_component_namespace
-```
-
-### Log Level
-
-The `log_level` optionally sets the log severity level for this component.
-Supported levels are: [unset, debug, info, warn, error, fatal]
-
-```yaml
-my_component:
-  log_level: debug
 ```
 
 ### Parameters
