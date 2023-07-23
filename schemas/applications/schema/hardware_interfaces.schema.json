@@ -55,6 +55,11 @@
           "description": "The rate in Hz at which to run the interface",
           "type": "number"
         },
+        "display_name": {
+          "title": "Hardware Interface Display Name",
+          "description": "The human-readable name to display on the hardware interface",
+          "type": "string"
+        },
         "position": {
           "$ref": "common/position.schema.json"
         },
