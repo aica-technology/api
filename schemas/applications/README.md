@@ -74,6 +74,7 @@ hardware_interfaces:
   robot_a:
     urdf: ...
     rate: ...
+    display_name: ... # optional
     controllers:
       ...
   robot_b:
@@ -93,6 +94,13 @@ robot_a:
 ### Rate
 
 The **rate** defines the robot control frequency in Hz.
+
+### Display name
+
+This optional field can be used to give the hardware interface a more human-readable name (one that doesn't have
+to conform to the lower_snake_case naming convention of the YAML syntax). It is only used when rendering the
+hardware interface as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the
+YAML field (from the previous example, it would default to `robot_a`).
 
 ### Controllers
 
@@ -260,14 +268,15 @@ generally be in `lower_camel_case`.
 ```yaml
 components:
   component_a:
-    component: ...  # required
-    position: ...   # optional
-    log_level: ...  # optional
-    mapping: ...    # optional
-    parameters: ... # optional
-    inputs: ...     # optional
-    outputs: ...    # optional
-    events: ...     # optional
+    component: ...    # required
+    display_name: ... # optional
+    position: ...     # optional
+    log_level: ...    # optional
+    mapping: ...      # optional
+    parameters: ...   # optional
+    inputs: ...       # optional
+    outputs: ...      # optional
+    events: ...       # optional
 
   component_b:
     ...
@@ -287,6 +296,11 @@ registration `foo_components::Foo` refers to a component `Foo` in package `foo_c
 my_component:
   component: foo_components::Foo
 ```
+
+### Display name
+
+This optional field is identical to the [hardware interface display name](#display-name) and is used to assign a
+nicer, human-readable display name to the component when rendered as a node in the AICA interactive graph editor.
 
 ### Position
 
