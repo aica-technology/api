@@ -56,10 +56,6 @@
     },
     "control_type": {
       "description": "The control type of the controller",
-      "examples": [
-        "modulo_controllers/RobotStateBroadcaster",
-        "modulo_controllers/velocity/IKVelocityController"
-      ],
       "type": "string",
       "enum": [
         "position",

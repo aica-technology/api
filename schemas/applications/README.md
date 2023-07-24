@@ -26,8 +26,9 @@ The following sections define the YAML application syntax used to describe an AI
   - [Nested Conditions](#nested-conditions)
 - [Components](#components)
     - [Component](#component)
-    - [Mapping](#mapping)
+    - [Position](#position)
     - [Log Level](#log-level)
+    - [Mapping](#mapping)
     - [Parameters](#parameters)
     - [Inputs and Outputs](#inputs-and-outputs)
     - [Events](#events)
@@ -73,6 +74,7 @@ hardware_interfaces:
   robot_a:
     urdf: ...
     rate: ...
+    display_name: ... # optional
     controllers:
       ...
   robot_b:
@@ -93,6 +95,13 @@ robot_a:
 
 The **rate** defines the robot control frequency in Hz.
 
+### Display name
+
+This optional field can be used to give the hardware interface a more human-readable name (one that doesn't have
+to conform to the lower_snake_case naming convention of the YAML syntax). It is only used when rendering the
+hardware interface as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the
+YAML field (from the previous example, it would default to `robot_a`).
+
 ### Controllers
 
 Controllers are the interface between components in the application and hardware in the real world. They convert desired
@@ -105,6 +114,12 @@ hardware interface, and should generally be in `lower_camel_case`.
 Under each controller, the **plugin** field refers to a registered controller plugin name.
 
 The **parameters** field then refers to configurable parameters for the given controller.
+
+The **inputs** and **outputs** fields define the ROS2 topics to which each signal of the controller should be connected.
+See also [Component Inputs and Outputs](#inputs-and-outputs).
+
+Optionally, the **position** field can be used to specify an X, Y location for rendering the hardware interface
+as a node in the AICA interactive graph editor. See also [Component Position](#position).
 
 For example:
 
@@ -120,6 +135,10 @@ robot:
         linear_orthogonal_damping: 10.0
         angular_stiffness: 1.0
         angular_damping: 1.0
+      inputs:
+        command: /motion_generator/command_output
+      outputs:
+        state: /recorder/state_input
 ```
 
 ## Conditions
@@ -249,13 +268,15 @@ generally be in `lower_camel_case`.
 ```yaml
 components:
   component_a:
-    component: ...  # required
-    log_level: ...  # optional
-    mapping: ...    # optional
-    parameters: ... # optional
-    inputs: ...     # optional
-    outputs: ...    # optional
-    events: ...     # optional
+    component: ...    # required
+    display_name: ... # optional
+    position: ...     # optional
+    log_level: ...    # optional
+    mapping: ...      # optional
+    parameters: ...   # optional
+    inputs: ...       # optional
+    outputs: ...      # optional
+    events: ...       # optional
 
   component_b:
     ...
@@ -276,6 +297,36 @@ my_component:
   component: foo_components::Foo
 ```
 
+### Display name
+
+This optional field is identical to the [hardware interface display name](#display-name) and is used to assign a
+nicer, human-readable display name to the component when rendered as a node in the AICA interactive graph editor.
+
+### Position
+
+The `position` field is used to define the desired location of the component when rendered as a node in the AICA
+interactive graph editor. It has two subfields defining the X and Y location, respectively.
+
+This field only affects visualization of the application graph and has no other run-time effect.
+If a position is not specified, the node will be rendered at a procedurally chosen location.
+
+```yaml
+my_component:
+  position:
+    x: 100
+    y: 200
+```
+
+### Log Level
+
+The `log_level` optionally sets the log severity level for this component.
+Supported levels are: [unset, debug, info, warn, error, fatal]
+
+```yaml
+my_component:
+  log_level: debug
+```
+
 ### Mapping
 
 The `mapping` field optionally defines overrides for the component name and namespace. Normally, the component node
@@ -293,16 +344,6 @@ component_b:
   mapping:
     name: my_new_component_name
     namespace: my_component_namespace
-```
-
-### Log Level
-
-The `log_level` optionally sets the log severity level for this component.
-Supported levels are: [unset, debug, info, warn, error, fatal]
-
-```yaml
-my_component:
-  log_level: debug
 ```
 
 ### Parameters

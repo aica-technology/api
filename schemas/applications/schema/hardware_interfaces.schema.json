@@ -20,29 +20,13 @@
               "type": "string"
             },
             "parameters": {
-              "title": "Parameters",
-              "description": "Parameters of the controller plugin",
-              "type": "object",
-              "additionalProperties": false,
-              "patternProperties": {
-                "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
-                  "title": "Parameter",
-                  "description": "A controller parameter",
-                  "type": [
-                    "boolean",
-                    "number",
-                    "string",
-                    "array"
-                  ],
-                  "items": {
-                    "type": [
-                      "boolean",
-                      "number",
-                      "string"
-                    ]
-                  }
-                }
-              }
+              "$ref": "common/parameters.schema.json"
+            },
+            "inputs": {
+              "$ref": "common/inputs.schema.json"
+            },
+            "outputs": {
+              "$ref": "common/outputs.schema.json"
             }
           },
           "required": [
@@ -70,6 +54,14 @@
           "title": "Rate",
           "description": "The rate in Hz at which to run the interface",
           "type": "number"
+        },
+        "display_name": {
+          "title": "Hardware Interface Display Name",
+          "description": "The human-readable name to display on the hardware interface",
+          "type": "string"
+        },
+        "position": {
+          "$ref": "common/position.schema.json"
         },
         "controllers": {
           "$ref": "#/definitions/controller"
