@@ -7,10 +7,10 @@ on:
   push:
     paths:
       - "website/**"
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
