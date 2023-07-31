@@ -50,7 +50,7 @@ jobs:
           npm run build --prefix docs
 
       - name: Deploy
-        # if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref_name == 'main')
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref_name == 'main')
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
