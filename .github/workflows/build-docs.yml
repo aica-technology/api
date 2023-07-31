@@ -13,6 +13,8 @@ on:
 
 jobs:
   build:
+    name: Build & Publish docs
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -40,7 +42,7 @@ jobs:
 
       - name: Lint / Formatting
         run: |
-          npm typecheck --prefix docs
+          npm run typecheck --prefix docs
           # TODO: should add more in the future if needed
 
       - name: Build
