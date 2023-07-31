@@ -1,0 +1,54 @@
+name: Build & Publish docs
+
+on:
+  pull_request:
+    paths:
+      - "website/**"
+  push:
+    paths:
+      - "website/**"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: "docs/package-lock.json"
+
+    - name: Cache docusaurus
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{ github.workspace }}/docs/.docusaurus
+          ${{ github.workspace }}/**/.cache
+        key: |
+          ${{ runner.os }}-docusaurus
+        restore-keys: |
+          ${{ runner.os }}-docusaurus
+
+      - name: Install dependencies
+        run: |
+          npm ci --prefix docs
+
+      - name: Lint / Formatting
+        run: |
+          npm typecheck --prefix docs
+          # TODO: should add more in the future if needed
+
+      - name: Build
+        run: |
+          npm run build --prefix docs
+
+      - name: Deploy
+        if: github.ref_name == 'main' && github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/build

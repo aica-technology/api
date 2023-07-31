@@ -3,13 +3,15 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
+const url = "https://docs.aica.tech";
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "AICA Documentation",
   tagline: "Documentation for AICA Developer Interface",
   favicon: "img/favicon.ico",
 
-  url: "https://docs.aica.tech",
+  url,
   baseUrl: "/",
 
   // GitHub pages deployment config.
@@ -76,7 +78,7 @@ const config = {
           //   label: "Tutorial",
           // },
           {
-            href: "/api",
+            href: `${url}/api`,
             label: "API",
             position: "left",
           },
