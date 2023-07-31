@@ -51,6 +51,10 @@ jobs:
           npm run build --prefix docs
 
       # Fetch API documentation
+      - uses: aica-technology/.github/.github/actions/login-to-ghcr@v0.6.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: aica-technology/.github/.github/actions/ghcr-ensure-prefix@v0.6.1
         id: ensure-image
         with:
