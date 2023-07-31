@@ -1,0 +1,29 @@
+/* :root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+} */
+
+[data-theme='dark'] {
+  /* Colors (from FE screenshot) */
+  --ifm-true-background-color: #050505;
+  --ifm-background-color: #1A1A1A;
+  --ifm-background-accent-color: #323232;
+  --ifm-control-color: #4D4D4D;
+  --ifm-text-accent-color: #2D6AE8;
+  --ifm-text-primary-color: #FFFFFF;
+  --ifm-text-secondary-color: #BCBCBC;
+
+  --ifm-color-primary: var(--ifm-text-accent-color);
+  --ifm-background-surface-color: var(--ifm-background-color);
+  --ifm-hover-overlay: var(--ifm-background-accent-color);
+  --ifm-footer-background-color: var(--ifm-background-accent-color);
+}
+
+[data-theme='dark'] .footer {
+  background-color: var(--ifm-background-accent-color);
+}
