@@ -7,7 +7,7 @@ on:
   push:
     paths:
       - "website/**"
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,16 +22,16 @@ jobs:
           cache: "npm"
           cache-dependency-path: "docs/package-lock.json"
 
-    - name: Cache docusaurus
-      uses: actions/cache@v3
-      with:
-        path: |
-          ${{ github.workspace }}/docs/.docusaurus
-          ${{ github.workspace }}/**/.cache
-        key: |
-          ${{ runner.os }}-docusaurus
-        restore-keys: |
-          ${{ runner.os }}-docusaurus
+      - name: Cache docusaurus
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/docs/.docusaurus
+            ${{ github.workspace }}/**/.cache
+          key: |
+            ${{ runner.os }}-docusaurus
+          restore-keys: |
+            ${{ runner.os }}-docusaurus
 
       - name: Install dependencies
         run: |
