@@ -3,10 +3,12 @@ name: Build & Publish docs
 on:
   pull_request:
     paths:
-      - "website/**"
+      - ".github"
+      - ".github/workflows/*-docs.yml"
   push:
     paths:
-      - "website/**"
+      - ".github"
+      - ".github/workflows/*-docs.yml"
   workflow_dispatch:
 
 jobs:
