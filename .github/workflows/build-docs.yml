@@ -27,7 +27,6 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/docs/.docusaurus
-            ${{ github.workspace }}/**/.cache
           key: |
             ${{ runner.os }}-docusaurus
           restore-keys: |
