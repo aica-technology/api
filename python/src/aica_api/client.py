@@ -45,7 +45,7 @@ class AICA:
         :param endpoint: The websocket endpoint
         :return: The constructed connection address
         """
-        return f'{self._ws_address}/v1/{endpoint}'
+        return f'{self._ws_address}/{endpoint}'
 
     def check(self) -> requests.Response:
         """
@@ -205,16 +205,16 @@ class AICA:
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: False if the connection times out before the predicate is true
         """
-        component = f'/{component}'
+        component = f'{component}'
 
         def check_predicate(data):
             try:
-                if data[component][predicate]:
+                if data[component]["predicates"][predicate]:
                     return True
             except KeyError:
                 return False
 
-        ws = WebsocketSyncClient(self._ws_endpoint('predicates'))
+        ws = WebsocketSyncClient(self._ws_endpoint('components'))
         return ws.read_until(check_predicate, timeout=timeout)
 
     def wait_for_condition(self, condition, timeout=None):
