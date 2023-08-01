@@ -1,0 +1,11 @@
+.features {
+  display: flex;
+  padding: 2rem 0;
+  width: 100%;
+  color: var(--ifm-text-secondary-color);
+}
+
+.featureSvg {
+  height: 200px;
+  width: 200px;
+}
