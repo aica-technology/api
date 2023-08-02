@@ -19,6 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Build Docusaurus
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -49,6 +50,35 @@ jobs:
         run: |
           npm run build --prefix docs
 
+      # Fetch API documentation
+      - uses: aica-technology/.github/.github/actions/login-to-ghcr@v0.6.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: aica-technology/.github/.github/actions/ghcr-ensure-prefix@v0.6.1
+        id: ensure-image
+        with:
+          image_name: aica-technology/backend-api-docs
+
+      - name: Get API version to fetch
+        id: api-version
+        run: |
+          VER="$(cat docs/api.version)"
+          echo "Version: $VER"
+          echo "version=$VER" >> $GITHUB_OUTPUT
+
+      - name: Create directory
+        run: |
+          mkdir -p docs/build/api
+
+      - name: Extract Swagger from the built image
+        uses: aica-technology/.github/.github/actions/docker-extract@v0.6.1
+        with:
+          image: ${{ steps.ensure-image.outputs.image_name }}:${{ steps.api-version.outputs.version }}
+          source: /index.html
+          destination: docs/build/api/index.html
+
+      # Deploy to GitHub Pages
       - name: Deploy
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref_name == 'main')
         uses: peaceiris/actions-gh-pages@v3
