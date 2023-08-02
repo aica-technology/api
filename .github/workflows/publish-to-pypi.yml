@@ -1,5 +1,7 @@
 name: Publish Python 🐍 distributions 📦 to PyPI and TestPyPI
-
+defaults:
+  run:
+    working-directory: python
 on: push
 jobs:
   build-n-publish:
@@ -19,7 +21,6 @@ jobs:
           --user
       - name: Build a binary wheel and a source tarball
         run: |
-          cd python
           python3 -m build --sdist --wheel --outdir dist/ .
       - name: Publish distribution 📦 to Test PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
