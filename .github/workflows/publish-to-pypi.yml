@@ -11,7 +11,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
-      - run: cd python
       - name: Install pypa/build
         run: >-
           python3 -m
@@ -19,13 +18,9 @@ jobs:
           build
           --user
       - name: Build a binary wheel and a source tarball
-        run: >-
-          python3 -m
-          build
-          --sdist
-          --wheel
-          --outdir dist/
-          .
+        run: |
+          cd python
+          python3 -m build --sdist --wheel --outdir dist/ .
       - name: Publish distribution 📦 to Test PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
