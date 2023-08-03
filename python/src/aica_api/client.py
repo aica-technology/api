@@ -83,6 +83,12 @@ class AICA:
         """
         return requests.post(self._endpoint('init_application'), json={"auto_load_hardware": auto_load_hardware})
 
+    def get_application_state(self) -> requests.Response:
+        """
+        Get the application state
+        """
+        return requests.get(self._endpoint('application/state'))
+
     def load_component(self, component_name: str) -> requests.Response:
         """
         Load a component in the current application. If the component is already loaded, or if the component is not
