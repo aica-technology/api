@@ -1,10 +1,13 @@
 name: Deploy Python API client to PyPI
 on:
   push:
-#    branches:
-#      - main
+    branches:
+      - main
+      - develop
     paths:
-      - 'python/pyproject.toml'
+      - 'python/**'
+    tags:
+      - '*'
 jobs:
   build-n-publish:
     name: Build and deploy Python API client to PyPI
