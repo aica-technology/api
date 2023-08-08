@@ -69,9 +69,7 @@ class AICA:
         :param payload: The service payload, formatted according to the respective service description
         """
         endpoint = 'application/components/' + component_name + '/service/' + service_name
-        data = {
-            "payload": payload
-        }
+        data = {"payload": payload}
         return requests.put(self._endpoint(endpoint), json=data)
 
     # TODO: Missing v1 endpoint
@@ -153,6 +151,18 @@ class AICA:
         """
         endpoint = 'application/state?action=stop'
         return requests.put(self._endpoint(endpoint))
+
+    def set_parameter(self, component_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
+        """
+        Set a parameter on a component.
+
+        :param component_name: The name of the component
+        :param parameter_name: The name of the parameter
+        :param parameter_value: The value of the parameter
+        """
+        endpoint = 'application/components/' + component_name + '/parameter/' + parameter_name
+        data = {"parameter_value": parameter_value}
+        return requests.put(self._endpoint(endpoint), json=data)
 
     def switch_controllers(self, interface_name: str, start: Union[None, List[str]] = None,
                            stop: Union[None, List[str]] = None) -> requests.Response:
