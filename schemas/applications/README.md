@@ -102,6 +102,11 @@ to conform to the lower_snake_case naming convention of the YAML syntax). It is 
 hardware interface as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the
 YAML field (from the previous example, it would default to `robot_a`).
 
+### Position
+
+Optionally, the **position** field can be used to specify an X, Y location for rendering the hardware interface
+as a node in the AICA interactive graph editor. See also [Component Position](#position).
+
 ### Controllers
 
 Controllers are the interface between components in the application and hardware in the real world. They convert desired
@@ -118,8 +123,7 @@ The **parameters** field then refers to configurable parameters for the given co
 The **inputs** and **outputs** fields define the ROS2 topics to which each signal of the controller should be connected.
 See also [Component Inputs and Outputs](#inputs-and-outputs).
 
-Optionally, the **position** field can be used to specify an X, Y location for rendering the hardware interface
-as a node in the AICA interactive graph editor. See also [Component Position](#position).
+The **log_level** optionally sets the log severity level for this controller. See also [Component Log Level](#log-level).
 
 For example:
 
