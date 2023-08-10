@@ -27,6 +27,9 @@
         },
         "switch_controllers": {
           "$ref": "events/switch_controllers.schema.json"
+        },
+        "position": {
+          "$ref": "common/position.schema.json"
         }
       }
     },
