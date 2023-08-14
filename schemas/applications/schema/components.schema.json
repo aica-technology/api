@@ -12,16 +12,7 @@
       "additionalProperties": false,
       "properties": {
         "log_level": {
-          "title": "Log Level",
-          "description": "The log severity level for the component",
-          "type": "string",
-          "enum": [
-            "debug",
-            "info",
-            "warn",
-            "error",
-            "fatal"
-          ]
+          "$ref": "common/log_level.schema.json"
         },
         "display_name": {
           "title": "Component Display Name",

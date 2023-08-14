@@ -14,6 +14,9 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
+            "log_level": {
+              "$ref": "common/log_level.schema.json"
+            },
             "plugin": {
               "title": "Plugin",
               "description": "The name of the controller plugin",
