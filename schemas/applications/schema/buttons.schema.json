@@ -22,9 +22,6 @@
         "unload": {
           "$ref": "events/unload.schema.json"
         },
-        "transition": {
-          "$ref": "events/transition.schema.json"
-        },
         "service": {
           "$ref": "events/service.schema.json"
         },
