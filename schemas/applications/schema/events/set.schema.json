@@ -15,40 +15,80 @@
     }
   ],
   "$defs": {
+    "parameter": {
+      "title": "Parameter Name",
+      "description": "The name of a parameter to set",
+      "type": "string",
+      "pattern": "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)"
+    },
+    "value": {
+      "title": "Parameter Value",
+      "description": "The value of the parameter to set",
+      "type": [
+        "boolean",
+        "number",
+        "string",
+        "array"
+      ],
+      "items": {
+        "type": [
+          "boolean",
+          "number",
+          "string"
+        ]
+      }
+    },
+    "controller": {
+      "title": "Controller Name", 
+      "description": "The name of a controller",
+      "type": "string",
+      "pattern": "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)"
+    },
     "set_parameter_object": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "parameter": {
-          "title": "Parameter Name",
-          "description": "The name of a parameter to set",
-          "type": "string",
-          "pattern": "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)"
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "parameter": {
+              "$ref": "#/$defs/parameter"
+            },
+            "value": {
+              "$ref": "#/$defs/value"
+            },
+            "component": {
+              "$ref": "identifiers/component.schema.json"
+            }
+          },
+          "required": [
+            "parameter",
+            "value"
+          ]
         },
-        "value": {
-          "title": "Parameter Value",
-          "description": "The value of the parameter to set",
-          "type": [
-            "boolean",
-            "number",
-            "string",
-            "array"
-          ],
-          "items": {
-            "type": [
-              "boolean",
-              "number",
-              "string"
-            ]
-          }
-        },
-        "component": {
-          "$ref": "identifiers/component.schema.json"
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "parameter": {
+              "$ref": "#/$defs/parameter"
+            },
+            "value": {
+              "$ref": "#/$defs/value"
+            },
+            "interface": {
+              "$ref": "identifiers/hardware.schema.json"
+            },
+            "controller": {
+              "$ref": "#/$defs/controller"
+            }
+          },
+          "required": [
+            "parameter",
+            "value",
+            "interface",
+            "controller"
+          ]
         }
-      },
-      "required": [
-        "parameter",
-        "value"
       ]
     }
   }
