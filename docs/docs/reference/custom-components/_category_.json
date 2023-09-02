@@ -1,0 +1,9 @@
+{
+  "label": "Custom components",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "The AICA application framework can be extended with custom components in addition to the standard library",
+
+  }
+}
