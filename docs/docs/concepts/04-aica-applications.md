@@ -25,12 +25,13 @@ Building an advanced robotic application then results in two key types of challe
 - arranging compatible components and controllers in a network graph of communication channels and messages
 
 If application-specific state logic or graph structure is hard-coded into one or more components, those components cease
-to be modular or re-usable for other applications. On the other hand, programming and compiling the application logic
-and graph into a dedicated supervisor program generally undermines the modern concepts of abstraction and dynamic
-reconfiguration that these modern ROS 2 tools provide.
+to be modular or re-usable for other applications. If, instead, the application logic is hard-coded in one main
+executable program, usually according to some state machine paradigm, this in turn generally undermines the modern
+concepts of abstraction and dynamic reconfiguration that ROS 2 tools provide.
 
-To address this challenge, the AICA framework includes at its core a generalized execution process known as the dynamic
-state engine.
+To address this challenge, the AICA framework includes at its core a generalized execution process known as the Dynamic
+State Engine which dynamically manages component and controller states according to a declarative and easily
+reconfigurable application description.
 
 ## The Dynamic State Engine
 

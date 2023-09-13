@@ -42,12 +42,15 @@ For example, lifecycle components have a predicate for each lifecycle state:
 Specialized components define additional predicates depending on their function. A component that calculates if a given
 input state is within some parameterized limits might have a predicate "is in bounds".
 
-This definition of predicates allows application descriptions to trigger events in a very declarative way:
-> When component A _is active_, do ...
+This definition of predicates allows application descriptions to trigger events in a very declarative way. For example:
+> When component A _is active_, load component B
+
+Here, `component A` is the source of the predicate, `is active` is the predicate itself, and `load component B` is the
+event that is triggered when the predicate is true.
 
 :::note
 
-Events are only triggered on the rising edge of a predicate value.
+Events are only triggered on the [_rising edge_](https://en.wikipedia.org/wiki/Signal_edge) of a predicate value.
 
 :::
 

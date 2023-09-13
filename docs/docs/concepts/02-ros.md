@@ -27,6 +27,7 @@ At a glance, the AICA framework extends ROS 2 with the following features:
 - Preconfigured and containerized ROS 2 workspaces
 - Fully integrated `ros2_control` architecture and hardware drivers for real-time control
 - Simplified and unified application syntax (no need for multiple nested launch files)
+- Advanced message types and object bindings for Cartesian and joint state signals necessary for robot control
 - Standardized component interfaces for effortless connectivity and modularity
 - Dynamic, reconfigurable, event-driven application engine
 

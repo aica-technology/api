@@ -5,7 +5,8 @@ sidebar_position: 1
 # Signals
 
 In the AICA framework, signals are designed to exchange continuous data between components and controllers in a running
-application. They are an abstraction of ROS 2 topics.
+application. They are an abstraction of ROS 2 topics that are assumed to exchange data at a regular, periodic frequency.
+This makes them well-suited for use with signal processing components and controllers.
 
 ROS 2 topics are messages sent from publishers to subscribers under a specific namespace (the message "topic")
 using some predefined message format (the message "type"). As a result, topics enable ROS nodes to communicate in many
