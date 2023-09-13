@@ -34,16 +34,9 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./src/layout/sidebars.js"),
           sidebarCollapsed: false,
-          editUrl:
-            "https://github.com/aica-technology/api/tree/develop/docs/docs",
+          editUrl: "https://github.com/aica-technology/api/tree/main/docs",
         },
-        // TODO: disabled the blog for now
         blog: false,
-        // blog: {
-        //   showReadingTime: true,
-        //   editUrl:
-        //     "https://github.com/aica-technology/api/tree/develop/docs/blog",
-        // },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -113,15 +106,6 @@ const config = {
       footer: {
         style: "dark",
         links: [
-          // {
-          //   title: "Guides",
-          //   items: [
-          //     {
-          //       label: "Getting started",
-          //       to: "/docs/getting-started/intro",
-          //     },
-          //   ],
-          // },
           {
             title: "More",
             items: [
