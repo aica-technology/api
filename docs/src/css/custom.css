@@ -8,6 +8,10 @@
   --ifm-color-primary-lightest: #3cad6e;
 } */
 
+:root {
+  --docusaurus-highlighted-code-line-bg: #BCBCBC;
+}
+
 [data-theme='dark'] {
   /* Colors (from FE screenshot) */
   --ifm-true-background-color: #050505;
@@ -22,6 +26,8 @@
   --ifm-background-surface-color: var(--ifm-background-color);
   --ifm-hover-overlay: var(--ifm-background-accent-color);
   --ifm-footer-background-color: var(--ifm-background-accent-color);
+
+  --docusaurus-highlighted-code-line-bg: #2D6AE8;
 }
 
 [data-theme='dark'] .footer {
