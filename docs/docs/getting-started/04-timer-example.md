@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # A basic application example
 
-Open the Developer Interface and copy the following application code into the Editor.
+Open the Developer Interface and copy the following application code into the text box under the Editor tab.
 
 ```yaml
 components:
@@ -52,13 +52,15 @@ on_start:
   load: timer
 ```
 
-The graph should show two components connected with event edges. Press the Play button to start the application.
+Then, press the Generate Graph button. The graph should show two components connected with event edges.
 
 <!-- TODO: screenshots would be nice -->
 
+Press the Play button to start the application.
+
 ## The example explained
 
-Application components are listed under the `components:` field. Each component has a name and a registration.
+Application components are listed under the `components` field. Each component has a name and a registration.
 The position field is used just for rendering the component on the graph.
 
 ```yaml
@@ -85,9 +87,9 @@ period for components is 0.1 seconds, so 10 times per second. The component peri
 make a component run slower or faster, respectively.
 
 The timer component has a special parameter called `timeout`, which is the duration in seconds that the timer should
-be active until
+be active. At the end of the timeout period, it will be in the "timed out" state.
 
-The `events:` field of a component associates component predicates with events.
+The `events` field of a component associates component predicates with events.
 
 ```yaml
     events:
@@ -124,7 +126,7 @@ second.
 
 The second block describing `timer_2` is nearly identical, as the two timers are intended to have symmetrical behavior.
 
-The very end of the application uses the `on_start:` field to list the initial application events.
+The very end of the application uses the `on_start` field to list the initial application events.
 
 ```yaml
 on_start:

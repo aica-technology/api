@@ -22,8 +22,8 @@ lifecycle), the general component behavior or purpose, and other metadata such a
 
 <!-- FIXME: link to the schema on GitHub once it is on main; relative paths will break if the doc is versioned -->
 The elements of a component description are written as a standardized JSON file for each component. The expected
-structure of the description is defined by the JSON schema
-in [component.schema.json](../../../../schemas/component-descriptions/schema/component.schema.json)
+structure of the component description is defined by
+the [Component Description JSON schema](../../../../schemas/component-descriptions/schema/component.schema.json)
 
 :::info
 
@@ -102,8 +102,8 @@ components, as they provide no meaningful behavior if directly instantiated.
 ## Signals
 
 <!-- FIXME: link to the schema on GitHub once it is on main; relative paths will break if the doc is versioned -->
-The signal description schema is defined
-in [signal.schema.json](../../../../schemas/signals/schema/signal.schema.json).
+The expected structure of the signal description is defined by
+the [Signal Description JSON schema](../../../../schemas/signals/schema/signal.schema.json).
 
 Component inputs and outputs are described with a signal name and type, matching the name and type in the implementation
 when using the respective `add_input` or `add_output` function. Additionally, a human-readable display name and
@@ -135,15 +135,15 @@ An example description of a component with one input and one output, both as joi
 ## Parameters
 
 <!-- FIXME: link to the schemas on GitHub once they are on main; relative paths will break if the doc is versioned -->
-The parameter description schema is defined
-in [parameter.schema.json](../../../../schemas/parameters/schema/parameter.schema.json).
+The expected structure of the parameter description is defined by
+the [Parameter Description JSON schema](../../../../schemas/parameters/schema/parameter.schema.json).
 
 Parameters contain a value of a certain type, described by the `parameter_type` property. Valid parameter types are
-defined in [parameter_type.schema.json](../../../../schemas/parameters/schema/parameter_type.schema.json).
+defined in the [Parameter Type JSON schema](../../../../schemas/parameters/schema/parameter_type.schema.json).
 
 If the `parameter_type` property is `state`, then the `parameter_state_type` property must also be defined as a member
 of the enumeration
-in [encoded_state_type.schema.json](../../../../schemas/parameters/schema/encoded_state_type.schema.json).
+in [Encoded State Type JSON schema](../../../../schemas/parameters/schema/encoded_state_type.schema.json).
 
 Parameters generally have a default value which renders them optional in some cases. When a parameter has no valid
 default state and must be set by the user for the component to function, the `default_value` property in the component
@@ -160,6 +160,7 @@ from auto-generated component visualizations or documentation at a high level.
 If the field is omitted from a description, the parameter is assumed to be public.
 
 An example parameter description is shown below.
+
 ```json
 {
   "parameters": [
@@ -176,7 +177,7 @@ An example parameter description is shown below.
 
 ## Predicates
 
-Predicates are crucial to drive the event logic of the dynamic state engine, but they are very simple to declare
+Predicates are crucial to drive the event logic of the Dynamic State Engine, but they are very simple to declare
 and describe. Each predicate of a component indicates a particular run-time state or configuration that is either
 "true" or "false". In the implementation, a predicate is a publisher with a boolean type. The component is responsible
 for determining the value of a predicate and publishing it under a particular topic name.
@@ -185,6 +186,7 @@ In the component description, predicates have a display name and description. Th
 to inform the state engine of the hidden topic name to listen to for that predicate.
 
 An example predicate description is shown below.
+
 ```json
 {
   "predicates": [
@@ -208,6 +210,7 @@ The `payload_format` property is used to describe the expected format and usage 
 it is thereby inferred that the service type is not an empty trigger when this property is present.
 
 Some example service descriptions are shown below.
+
 ```json
 {
   "services": [

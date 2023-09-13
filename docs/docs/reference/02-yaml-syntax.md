@@ -24,7 +24,7 @@ components:
   ...
 ```
 
-## On Start
+## On start
 
 The `on_start` keyword is reserved as a special event trigger when the application is launched.
 List the [events](#events) to trigger on startup (for example, to load components).
@@ -36,7 +36,7 @@ on_start:
     - component_b
 ```
 
-## Hardware Interfaces
+## Hardware interfaces
 
 Hardware interfaces describe the connected robots and their corresponding controllers.
 
@@ -54,7 +54,7 @@ hardware_interfaces:
 
 ### URDF
 
-The **urdf** field refers to a specially formatted robot description file which defines the joint configurations and the
+The `urdf` field refers to a specially formatted robot description file which defines the joint configurations and the
 hardware interface driver needed to communicate with the robot.
 
 A hardware interface can be linked to URDF file in one of the following ways:
@@ -102,12 +102,12 @@ view the available built-in example URDFs, respectively.
 
 ### Rate
 
-The **rate** defines the robot control frequency in Hz.
+The `rate` field defines the robot control frequency in Hz.
 
 ### Display name
 
 This optional field can be used to give the hardware interface a more human-readable name (one that doesn't have
-to conform to the lower_snake_case naming convention of the YAML syntax). It is only used when rendering the
+to conform to the `lower_snake_case` naming convention of the YAML syntax). It is only used when rendering the
 hardware interface as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the
 YAML field (from the previous example, it would default to `robot_a`).
 
@@ -117,17 +117,17 @@ Controllers are the interface between components in the application and hardware
 reference signals into real joint commands according to some internal control law, and convert joint states from the
 robot back to signals.
 
-Controllers are listed under a top-level field called **controllers**. Controller names must be unique within the given
-hardware interface, and should generally be in `lower_camel_case`.
+Controllers are listed under a top-level `controllers` field. Controller names must be unique within the given hardware
+interface, and should generally follow the `lower_camel_case` naming convention.
 
-Under each controller, the **plugin** field refers to a registered controller plugin name.
+Under each controller, the `plugin` field refers to a registered controller plugin name.
 
-The **parameters** field then refers to configurable parameters for the given controller.
+The `parameters` field then refers to configurable parameters for the given controller.
 
-The **inputs** and **outputs** fields define the ROS2 topics to which each signal of the controller should be connected.
+The `inputs` and `outputs` fields define the ROS2 topics to which each signal of the controller should be connected.
 See also [Component Inputs and Outputs](#inputs-and-outputs).
 
-Optionally, the **position** field can be used to specify an X, Y location for rendering the hardware interface
+Optionally, the `position` field can be used to specify an X, Y location for rendering the hardware interface
 as a node in the AICA interactive graph editor. See also [Component Position](#position).
 
 For example:
@@ -155,7 +155,7 @@ robot:
 Conditions are event triggers based on logical combinations of predicates.
 
 Conditions are listed under a top-level field called `conditions`. Condition names must be unique, and should
-generally be in `lower_camel_case`.
+generally follow the `lower_camel_case` naming convention.
 
 Conditional events are triggered only on the rising edge of the condition, preventing the repeated execution of an
 event if the condition stays true.
@@ -178,7 +178,7 @@ conditions:
 
 ```
 
-### Simple Conditions
+### Simple conditions
 
 A simple condition evaluates just a single component predicate and triggers the listed events when it is true.
 
@@ -190,7 +190,7 @@ condition_1:
     ...
 ```
 
-### Conditional Operators
+### Conditional operators
 
 To combine multiple predicates together into a single true / false condition, the following operators can be used.
 
@@ -199,7 +199,7 @@ The operators can refer to one or more component predicates with the syntax
 
 #### Not
 
-The **not** operator takes a single item and negates its value. It is true when the item is false, and false when the
+The `not` operator takes a single item and negates its value. It is true when the item is false, and false when the
 item is true.
 
 ```yaml
@@ -211,7 +211,7 @@ condition_1:
 
 #### All
 
-The **all** operator takes a list of items and is true only when every listed item is true.
+The `all` operator takes a list of items and is true only when every listed item is true.
 
 ```yaml
 condition_1:
@@ -224,7 +224,7 @@ condition_1:
 
 #### Any
 
-The **any** operator takes a list of items and is true when at least one of the listed items is true.
+The `any` operator takes a list of items and is true when at least one of the listed items is true.
 
 ```yaml
 condition_1:
@@ -235,9 +235,9 @@ condition_1:
     ...
 ```
 
-#### One Of
+#### One of
 
-The **one_of** operator takes a list of items and is true only when exactly one of the listed items is true.
+The `one_of` operator takes a list of items and is true only when exactly one of the listed items is true.
 
 ```yaml
 condition_1:
@@ -248,7 +248,7 @@ condition_1:
     ...
 ```
 
-### Nested Conditions
+### Nested conditions
 
 The conditional operators can be applied recursively for more complex conditions. The following example could be
 collapsed into the equivalent logical pseudocode: `NOT(a AND b AND (c OR d OR (e XOR f)))`
@@ -271,7 +271,7 @@ conditions:
 ## Components
 
 Components are listed under a top-level field called `components`. Component names must be unique, and should
-generally be in `lower_camel_case`.
+generally follow the `lower_camel_case` naming convention.
 
 ```yaml
 components:
@@ -325,7 +325,7 @@ my_component:
     y: 200
 ```
 
-### Log Level
+### Log level
 
 The `log_level` optionally sets the log severity level for this component.
 Supported levels are: [unset, debug, info, warn, error, fatal]
@@ -367,7 +367,21 @@ my_component:
     my_double_parameter: 2.0
 ```
 
-### Inputs and Outputs
+#### Component period
+
+The `period` parameter is a special reserved parameter that defines the step period of a component in seconds, which is
+the inverse of the execution period.
+
+For example, if an image processing component should run some computation at 20 frames per second, then the
+period parameter should be set to 0.05 seconds.
+
+```yaml
+my_component:
+  parameters:
+    period: 0.05
+```
+
+### Inputs and outputs
 
 The `inputs` and `outputs` fields are used to connect component signals together to enable communication, signal
 processing and control loops. Each signal is specified using a `name: value` syntax, where the name is the name
@@ -386,20 +400,6 @@ my_component:
 my_other_component:
   outputs:
     force_torque_sensor: "/force"
-```
-
-#### Component period
-
-The `period` parameter is a special reserved parameter that defines the step period of a component in seconds, which is
-the inverse of the execution period.
-
-For example, if an image processing component should run some computation at 20 frames per second, then the
-period parameter should be set to 0.05 seconds.
-
-```yaml
-my_component:
-  parameters:
-    period: 0.05
 ```
 
 ### Events
@@ -451,19 +451,20 @@ transition: <component_name>
 
 #### Trigger a lifecycle transition
 
-
 ```yaml
 # 
-  lifecycle: "configure"
+lifecycle: "configure"
 ```
 
 Request a lifecycle transition on the component that is triggering the event, using one of the available transitions
 (`configure`, `activate`, `deactivate`, `cleanup`, or `shutdown`).
+
 ```yaml
 lifecycle: activate
 ```
 
 Request a lifecycle transition on a different component.
+
 ```yaml
 lifecycle:
   transition: activate
@@ -471,6 +472,7 @@ lifecycle:
 ```
 
 Use a list to trigger multiple transitions from a single predicate.
+
 ```yaml
 lifecycle:
   - transition: activate
@@ -482,6 +484,7 @@ lifecycle:
 #### Set a parameter
 
 Set a parameter on the component that is triggering the event.
+
 ```yaml
 set:
   parameter: <parameter_name>
@@ -489,6 +492,7 @@ set:
 ```
 
 Set a parameter on a different component.
+
 ```yaml
 set:
   parameter: <parameter_name>
@@ -497,6 +501,7 @@ set:
 ```
 
 Set a parameter on the controller of a particular hardware interface.
+
 ```yaml
 set:
   parameter: <parameter_name>
@@ -508,11 +513,13 @@ set:
 #### Call a service
 
 Call a service with no payload on the component that is triggering the event.
+
 ```yaml
 service: <service_name>
 ```
 
 Call a service on a different component.
+
 ```yaml
 service:
   name: <service_name>
@@ -520,6 +527,7 @@ service:
 ```
 
 Call a service with a string payload.
+
 ```yaml
 service:
   name: <service_name>
@@ -546,11 +554,13 @@ service:
 #### Load or unload a hardware interface
 
 Load and initialize a hardware interface.
+
 ```yaml
 load_hardware: <hardware_interface_name>
 ```
 
 Unload and destroy a hardware interface.
+
 ```yaml
 unload_hardware: <hardware_interface_name>
 ```
@@ -576,6 +586,7 @@ unload_controller:
 ```
 
 Use a list to load or unload multiple controllers from a single predicate.
+
 ```yaml
 load_controller:
   - interface: <hardware_interface_name>
@@ -628,7 +639,7 @@ component:
       <some triggered event>: ...
 ```
 
-## Validating a YAML Application
+## Validating a YAML application
 
 <!-- FIXME: link to the schema on GitHub once it is on main; relative paths will break if the doc is versioned -->
 The [YAML application schema](../../../schemas/applications/schema/application.schema.json) defines the structural rules

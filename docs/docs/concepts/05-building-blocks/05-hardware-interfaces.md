@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Hardware Interfaces
+# Hardware interfaces
 
 AICA hardware interfaces are implemented according to the [ros2_control](../03-ros-concepts/04-control.md) standard,
 and currently support all major brands of robot manipulators.

@@ -5,7 +5,7 @@ sidebar_position: 2
 # Events
 
 Events are discrete actions that change the dynamic state of an AICA application. They are handled and executed by the
-dynamic state engine For this reason, they are sometimes referred to as "state events".
+Dynamic State Engine. For this reason, they are sometimes referred to as "state events".
 
 ## Event types
 
@@ -19,8 +19,9 @@ The following events can be used to dynamically update the state of a running ap
 
 ## Triggering events
 
-Events can be triggered externally through interactions with the Developer Interface UI or via the REST API, or
-internally by component predicates and conditions as defined in the application description.
+Events can be triggered externally by a user through interactions with the Developer Interface UI or via the REST API.
+They can also be triggered internally by the Dynamic State Engine according to the application description as a result
+of component **predicates** and **conditions**.
 
 ### Predicates
 

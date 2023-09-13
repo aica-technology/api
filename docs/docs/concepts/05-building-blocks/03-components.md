@@ -71,16 +71,16 @@ By default, lifecycle components only publish outputs when they are in the `ACTI
 
 ## Predicates
 
-Components declare and broadcast key internal states as predicate messages, which are used by the dynamic state engine
+Components declare and broadcast key internal states as predicate messages, which are used by the Dynamic State Engine
 to trigger events. Refer to [Events](./02-events.md) for more information.
 
 ## Services
 
 Components can provide service endpoints to trigger specific behaviors on demand. For compatibility with the application
-syntax and the dynamic state engine, the component service are limited to one of two request types:
+syntax and the Dynamic State Engine, the component service are limited to one of two request types:
 
 - Service request with no payload
 - Service request with a string payload
 
 The service response object for both types contains an execution status and message and is automatically handled by the
-dynamic state engine.
+Dynamic State Engine.

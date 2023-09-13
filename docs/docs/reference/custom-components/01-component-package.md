@@ -82,9 +82,8 @@ ament_auto_find_build_dependencies()
 
 include_directories(include)
 
-# highlight-start
+# highlight-next-line
 ### Register and install C++ Components here ###
-# highlight-end
 
 # install Python modules
 ament_python_install_package(${PROJECT_NAME} SCRIPTS_DESTINATION lib/${PROJECT_NAME})

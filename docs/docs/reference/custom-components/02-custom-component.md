@@ -166,7 +166,7 @@ CppComponent::CppComponent(const rclcpp::NodeOptions& options):
   // define a parameter as a class property, then add it to the component
   this->add_parameter(this->parameter_a_, "Description of parameter A");
   
-  # or, define and add a parameter in-line
+  // or, define and add a parameter in-line
   this->add_parameter(std::make_shared<state_representation::Parameter<double>>("B"), "Description of parameter B");
 }
 ```
@@ -255,7 +255,7 @@ a numerical value between some upper and lower bounds.
                 return False
         elif parameter.get_name() == "B":
             if parameter and parameter.get_value() < 0.0:
-                self.get_logger().warn(f"Parameter B cannot be negative ({parmaeter.get_value()}). "
+                self.get_logger().warn(f"Parameter B cannot be negative ({parameter.get_value()}). "
                                         "Setting value to 0.0 instead")
                 parameter.set_value(0.0)
         return True

@@ -32,15 +32,15 @@ reconfiguration that these modern ROS 2 tools provide.
 To address this challenge, the AICA framework includes at its core a generalized execution process known as the dynamic
 state engine.
 
-## The dynamic state engine
+## The Dynamic State Engine
 
-The dynamic state engine is responsible for managing the states of all the elements of an AICA application.
+The Dynamic State Engine (DSE) is responsible for managing the states of all the elements of an AICA application.
 
 An AICA application is an interconnected graph of **components**, **controllers** and **hardware interfaces**.
 Components process data in a periodic step function and transfer data as **signals** to other components and
 controllers. Hardware interfaces are drivers that connect controllers to robots.
 
-The dynamic state engine manages the application state using **events**, which are used to reconfigure parameters, load
+The DSE manages the application state using **events**, which are used to reconfigure parameters, load
 or unload components, manage component lifecycle states, trigger specific service actions and more.
 
 ## Declarative application descriptions
@@ -60,7 +60,7 @@ events.
 
 :::info
 
-The application description is itself dynamically reconfigurable; because the dynamic state engine is event-driven,
+The application description is itself dynamically reconfigurable; because the Dynamic State Engine is event-driven,
 it will parse and interpret the event actions for any event trigger from the application description at runtime.
 
 :::

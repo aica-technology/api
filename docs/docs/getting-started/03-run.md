@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 # Running the image
 
 This guide assumes that the AICA software image was distributed as `aica-technology/base`. If the base image has a
-different name, change the first line of the example below accordingly.
+different name, change the name of the image accordingly.
 
 You can start the AICA application container with the following command.
 
@@ -67,11 +67,30 @@ the data folder hidden in the home folder.
 
 :::
 
-```bash
-mkdir -p /path/to/data
+<Tabs groupId="os">
+<TabItem value="linux" label="Linux">
 
+```bash
 docker run -it --rm \
-  <default_run_args> \
+  --privileged \
+  --net=host \
+  -v /path/to/license:/license:ro \
+  #highlight-next-line
   -v /path/to/data:/data:rw \
   aica-technology/base
 ```
+
+</TabItem>
+<TabItem value="mac" label="macOS">
+
+```bash
+docker run -it --rm \
+  --privileged \
+   -p 80:80 -p 3000:3000 -p 5000:5000 \
+  -v /path/to/license:/license:ro \
+  -v /path/to/data:/data:rw \
+  aica-technology/base
+```
+
+</TabItem>
+</Tabs>

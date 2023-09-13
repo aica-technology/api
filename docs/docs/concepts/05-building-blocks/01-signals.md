@@ -20,22 +20,12 @@ This makes it easy to reconfigure the signal connections between different compo
 graph without modifying or recompiling any source code. By using standard message types, the signal compatibility
 between components and controllers is also simplified.
 
-<!-- TODO: not sure if this is too much to put here, since it's more relevant to the programming reference
 Additionally, ROS 2 messages are data packets, not data objects. Parsing data from a message, manipulating it and
-writing it back into a message can involve a fair amount of boiler-plate code.
+writing it back into a message can involve a fair amount of boilerplate code.
 
-When developing an AICA component, signals are automatically converted into the corresponding data object.
--->
+When developing an AICA component, signals are automatically converted to and from the corresponding data object.
 
-:::note
-
-The distinction between signals and topics is also made for a different reason; signals are treated as a continuous,
-periodic data exchange (though of course, computationally the messages still happen at discrete intervals). This is in
-contrast to AICA events, which use topics to trigger discrete logical behavior.
-
-:::
-
-## Signal types
+## Basic signal types
 
 The following standard message types are provided for signals.
 
@@ -45,11 +35,19 @@ The following standard message types are provided for signals.
 - Vector (array of floating point numbers)
 - String (plain text)
 
-### State messages
+## State signals
 
 In robot control applications, the _state_ of a robot or other objects is highly important.
 
-AICA signals make it easy for components and controllers to exchange the following state message types.
+In robotics and control, one of the most useful data types is the state of an object, i.e. its spatial properties.
+The joint angles of a robot arm, the 3D position and velocity of a flying drone, or the measurement of an accelerometer
+or force-torque sensor are all examples of instantaneous state variables.
+
+AICA signals make it easy for components and controllers to exchange Cartesian and joint state variables in an
+internally consistent way. For component developers, state signals are automatically converted into smart data classes
+that provide useful functions for conversions, transformations and other manipulations.
+
+The following state variables can be exchanged as signals:
 
 - Joint state
     - Positions
@@ -70,7 +68,17 @@ AICA signals make it easy for components and controllers to exchange the followi
         - Force
         - Torque
 
-### Custom messages
+:::info
+
+<!-- TODO: copy and link the markdown documentation of the state representation library directly in the programming reference -->
+
+AICA state signals are built on the
+open-source [`state_representation`](https://aica-technology.github.io/control-libraries/versions/v7.1.0/md__github_workspace_source_state_representation__r_e_a_d_m_e.html)
+library for Cartesian and joint state classes in C++ and Python.
+
+:::
+
+## Custom messages
 
 The standard primitive and state message types are generally enough to cover the majority of messaging needs in
 an AICA application. Having a reduced message definition set is important to maximizing the modularity and compatibility
