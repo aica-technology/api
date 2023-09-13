@@ -54,9 +54,7 @@ on_start:
 
 Then, press the Generate Graph button. The graph should show two components connected with event edges.
 
-<!-- TODO: screenshots would be nice -->
-
-Press the Play button to start the application.
+![timer example](assets/timer-example.png)
 
 ## The example explained
 
@@ -137,9 +135,13 @@ In this case, when the application is launched, the `timer` component should be 
 
 ## Putting it all together
 
+Press the Play button to start the application.
+
 When the application is started, the `timer` component is loaded. It is initially unconfigured, which triggers it
 to be configured. Thereafter, it lands in the inactive lifecycle state, which triggers it to be activated.
 Once activated, the timer starts running. After 2.5 seconds (as specified by the `timeout` parameter),
 the `is_timed_out` predicate goes from false to true. As a result, the `transition` event causes `timer` to be unloaded
 and `timer_2` to be loaded instead. The second timer then goes through the same steps of configuring and activating
 before transitioning back to the first timer.
+
+![timer example (animated)](./assets/timer-example.gif)
