@@ -3,82 +3,78 @@ import clsx from "clsx";
 import styles from "./styles.module.css";
 
 type FeatureItem = {
-  title: string;
-  Svg?: React.ComponentType<React.ComponentProps<"svg">>;
-  description: JSX.Element;
+    title: string;
+    Svg?: React.ComponentType<React.ComponentProps<"svg">>;
+    description: JSX.Element;
 };
 
 const FeatureList: FeatureItem[] = [
-  {
-    title: "Universal Compatibility",
-    description: (
-      <>
-        Our software solution is designed to seamlessly integrate with all kinds
-        of robots. With AICA software, you no longer need to worry about
-        programming each robot with a different software, as our platform is
-        compatible with all of them.
-      </>
-    ),
-  },
-  {
-    title: "Reinforcement Learning",
-    description: (
-      <>
-        Our software solution leverages the latest in cutting-edge technology,
-        including reinforcement learning and closed-loop force control. This
-        allows for dynamic motion and precise control of your robotic arm,
-        resulting in improved efficiency, productivity, and accuracy.
-      </>
-    ),
-  },
-  {
-    title: "Intuitive Interface",
-    description: (
-      <>
-        Our AICA application offers an intuitive and user-friendly interface
-        that makes controlling and programming your robotic arm a breeze. With
-        modular programming and learning from demonstration capabilities, our
-        application streamlines the process of controlling your robot.
-      </>
-    ),
-  },
-  {
-    title: "Tailored App",
-    description: (
-      <>
-        At AICA, we understand that every business is unique, which is why we
-        offer custom application development services to meet your specific
-        requirements. If you need a specific application for a project, our team
-        of experts is here to create a tailored solution just for you.
-      </>
-    ),
-  },
+    {
+        title: "Dynamic applications",
+        description: (
+            <>
+                An AICA application is an interconnected graph of components, controllers and hardware interfaces.
+                Components process data in a periodic step function and transfer data as signals to other components and
+                controllers. Hardware interfaces are drivers that connect controllers to robots.
+            </>
+        ),
+    },
+    {
+        title: "Built on ROS 2",
+        description: (
+            <>
+                AICA embraces the ROS philosophies of modularity, distributed processing and open standards. For new
+                developers, AICA provides an easy springboard into the wider world of ROS. Advanced users can take the
+                modularity and dynamic nature of the AICA framework to new frontiers.
+            </>
+        ),
+    },
+    {
+        title: "Intelligent control",
+        description: (
+            <>
+                AICA software is packed with cutting-edge technology for programming and controlling robots, including
+                learning from demonstration, reinforcement learning and closed-loop force control. Start building
+                dynamic, reactive, adaptive and collaborative control applications today.
+            </>
+        ),
+    },
+    {
+        title: "Developer Interface",
+        description: (
+            <>
+                An interactive application graph editor, URDF manager and API interface tools make creating, launching
+                and monitoring AICA applications from your browser a breeze. Leverage the power of modular programming
+                with a growing library of smart components and controllers in an intuitive drag and drop interface.
+            </>
+        ),
+    },
 ];
 
-function Feature({ title, Svg, description }: FeatureItem) {
-  return (
-    <div className={clsx("col col--6")}>
-      <div className="text--center">
-        {Svg ? <Svg className={styles.featureSvg} role="img" /> : null}
-      </div>
-      <div className="padding-horiz--md">
-        <h3>{title}</h3>
-        <p>{description}</p>
-      </div>
-    </div>
-  );
+function Feature({title, Svg, description}: FeatureItem) {
+    return (
+        <div className={clsx("col col--6")}>
+            <div className="text--center">
+                {Svg ? <Svg className={styles.featureSvg} role="img"/> : null}
+            </div>
+            <div className="padding-horiz--md">
+                <h3>{title}</h3>
+                <p>{description}</p>
+            </div>
+        </div>
+    );
 }
 
 export default function HomepageFeatures(): JSX.Element {
-  return (
-    <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+    return (
+        <section className={styles.features}>
+            <div className="container">
+                <div className="row">
+                    {FeatureList.map((props, idx) => (
+                        <Feature key={idx} {...props} />
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
 }
