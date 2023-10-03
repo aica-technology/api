@@ -2,10 +2,10 @@
 
 set -e
 
-BASE_TAG=""
-LICENSE_FILE="./License"
+BASE_TAG="latest"
+LICENSE_FILE="./license"
 PACKAGES=()
-FINAL_TAG=""
+FINAL_TAG="aica-technology/app:${BASE_TAG}"
 REGISTRY="registry.licensing.aica.tech"
 LOCAL_IMAGES=no
 BASE_IMAGE="base"
