@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/parameters/schema/encoded_state_type.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/parameters/schema/encoded_state_type.schema.json",
   "title": "Encoded State Type",
   "description": "The state type of an encoded value from a collection of supported types, as defined in clproto.",
   "type": "string",

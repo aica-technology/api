@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/component-descriptions/schema/component.schema.json",
+  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/component-descriptions/schema/component.schema.json",
   "title": "Dynamic Component Description",
   "description": "A full description of a dynamic component in the AICA application framework.",
   "type": "object",
@@ -63,7 +63,7 @@
       "description": "The fixed input signals (subscriptions) of the component.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/signals/schema/signal.schema.json"
       },
       "uniqueItems": true
     },
@@ -81,7 +81,7 @@
       "description": "The output signals (publications) of the component.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/signals/schema/signal.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/signals/schema/signal.schema.json"
       },
       "uniqueItems": true
     },
@@ -90,7 +90,7 @@
       "description": "The parameters declared by the component.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/develop/schemas/parameters/schema/parameter.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/parameters/schema/parameter.schema.json"
       },
       "uniqueItems": true
     },
