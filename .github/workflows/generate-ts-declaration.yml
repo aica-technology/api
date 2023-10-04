@@ -3,7 +3,6 @@ run-name: generate-typescript-declaration
 on:
   push:
     branches:
-      - develop
       - main
     paths:
       - '**.schema.json'
@@ -41,7 +40,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: aica-technology/frontend
-          ref: develop
+          ref: main
           path: frontend
           ssh-key: ${{ secrets.FRONTEND_REPOSITORY_WRITE_SSH }}
 
