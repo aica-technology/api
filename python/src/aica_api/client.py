@@ -58,6 +58,12 @@ class AICA:
         Retrieve the JSON descriptions of all available components.
         """
         return requests.get(self._endpoint('components'))
+        
+    def controller_descriptions(self) -> requests.Response:
+        """
+        Retrieve the JSON descriptions of all available components.
+        """
+        return requests.get(self._endpoint('controllers'))
 
     def call_service(self, component_name: str, service_name: str,
                      payload: str) -> requests.Response:
@@ -71,15 +77,6 @@ class AICA:
         endpoint = 'application/components/' + component_name + '/service/' + service_name
         data = {"payload": payload}
         return requests.put(self._endpoint(endpoint), json=data)
-
-    # TODO: Missing v1 endpoint
-    def init_application(self, auto_load_hardware: bool = True) -> requests.Response:
-        """
-        Initialize the currently set application.
-
-        :param auto_load_hardware: If true, load hardware interfaces automatically when initializing the application.
-        """
-        return requests.post(self._endpoint('init_application'), json={"auto_load_hardware": auto_load_hardware})
 
     def get_application_state(self) -> requests.Response:
         """
@@ -96,7 +93,7 @@ class AICA:
         """
         endpoint = 'application/components/' + component_name
         return requests.put(self._endpoint(endpoint))
-
+          
     def load_controller(self, interface_name: str, controller_name: str) -> requests.Response:
         """
         Load a controller for a given hardware interface. If the controller is already loaded, or if the controller
@@ -151,8 +148,8 @@ class AICA:
         """
         endpoint = 'application/state?action=stop'
         return requests.put(self._endpoint(endpoint))
-
-    def set_parameter(self, component_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
+        
+    def set_component_parameter(self, component_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
         """
         Set a parameter on a component.
 
@@ -161,6 +158,19 @@ class AICA:
         :param parameter_value: The value of the parameter
         """
         endpoint = 'application/components/' + component_name + '/parameter/' + parameter_name
+        data = {"parameter_value": parameter_value}
+        return requests.put(self._endpoint(endpoint), json=data)
+
+    def set_controller_parameter(self, interface_name: str, controller_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
+        """
+        Set a parameter on a component.
+
+        :param interface_name: The name of the hardware interface
+        :param controller_name: The name of the controller
+        :param parameter_name: The name of the parameter
+        :param parameter_value: The value of the parameter
+        """
+        endpoint = 'application/hardware/' + interface_name + '/controller/' + controller_name + '/parameter/' + parameter_name
         data = {"parameter_value": parameter_value}
         return requests.put(self._endpoint(endpoint), json=data)
 
@@ -211,6 +221,10 @@ class AICA:
         """
         endpoint = 'application/hardware/' + interface_name
         return requests.delete(self._endpoint(endpoint))
+    
+    def get_state(self):
+        endpoint = "application/state"
+        return requests.get(self._endpoint(endpoint))
 
     def wait_for_predicate(self, component, predicate, timeout: Union[None, int, float] = None):
         """
