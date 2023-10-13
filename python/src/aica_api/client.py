@@ -93,7 +93,7 @@ class AICA:
         """
         endpoint = 'application/components/' + component_name
         return requests.put(self._endpoint(endpoint))
-          
+
     def load_controller(self, interface_name: str, controller_name: str) -> requests.Response:
         """
         Load a controller for a given hardware interface. If the controller is already loaded, or if the controller
@@ -148,7 +148,7 @@ class AICA:
         """
         endpoint = 'application/state?action=stop'
         return requests.put(self._endpoint(endpoint))
-        
+
     def set_component_parameter(self, component_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
         """
         Set a parameter on a component.
@@ -222,8 +222,11 @@ class AICA:
         endpoint = 'application/hardware/' + interface_name
         return requests.delete(self._endpoint(endpoint))
     
-    def get_state(self):
-        endpoint = "application/state"
+    def get_application(self):
+        """
+        Get the application
+        """
+        endpoint = "application"
         return requests.get(self._endpoint(endpoint))
 
     def wait_for_predicate(self, component, predicate, timeout: Union[None, int, float] = None):
