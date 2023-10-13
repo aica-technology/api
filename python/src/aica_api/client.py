@@ -61,7 +61,7 @@ class AICA:
         
     def controller_descriptions(self) -> requests.Response:
         """
-        Retrieve the JSON descriptions of all available components.
+        Retrieve the JSON descriptions of all available controllers.
         """
         return requests.get(self._endpoint('controllers'))
 
