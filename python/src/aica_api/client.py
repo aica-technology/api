@@ -163,7 +163,7 @@ class AICA:
 
     def set_controller_parameter(self, interface_name: str, controller_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
         """
-        Set a parameter on a component.
+        Set a parameter on a controller.
 
         :param interface_name: The name of the hardware interface
         :param controller_name: The name of the controller
