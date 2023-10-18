@@ -174,19 +174,19 @@ class AICA:
         data = {"parameter_value": parameter_value}
         return requests.put(self._endpoint(endpoint), json=data)
 
-    def switch_controllers(self, hardware_name: str, start: Union[None, List[str]] = None,
-                           stop: Union[None, List[str]] = None) -> requests.Response:
+    def switch_controllers(self, hardware_name: str, activate: Union[None, List[str]] = None,
+                           deactivate: Union[None, List[str]] = None) -> requests.Response:
         """
-        Start and stop the controllers for a given hardware interface.
+        Activate and deactivate the controllers for a given hardware interface.
 
-        :param hardware_name: The name of the hardware interface to unload
-        :param start: A list of controllers to start
-        :param stop: A list of controllers to stop
+        :param hardware_name: The name of the hardware interface
+        :param activate: A list of controllers to activate
+        :param deactivate: A list of controllers to deactivate
         """
         endpoint = f'application/hardware/{hardware_name}/controllers'
         params = {
-            "start": [] if not start else start,
-            "stop": [] if not stop else stop
+            "activate": [] if not activate else activate,
+            "deactivate": [] if not deactivate else deactivate
         }
         return requests.put(self._endpoint(endpoint), params=params)
 
