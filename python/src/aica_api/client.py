@@ -120,7 +120,7 @@ class AICA:
         Pause the current application. This prevents any events from being triggered or handled, but
         does not pause the periodic execution of active components.
         """
-        endpoint = 'application/state?action=pause'
+        endpoint = 'application/state/transition?action=pause'
         return requests.put(self._endpoint(endpoint))
 
     def set_application(self, payload: str) -> requests.Response:
@@ -139,14 +139,14 @@ class AICA:
         """
         Start the AICA application engine.
         """
-        endpoint = 'application/state?action=start'
+        endpoint = 'application/state/transition?action=start'
         return requests.put(self._endpoint(endpoint))
 
     def stop_application(self) -> requests.Response:
         """
         Stop and reset the AICA application engine, removing all components and hardware interfaces.
         """
-        endpoint = 'application/state?action=stop'
+        endpoint = 'application/state/transition?action=stop'
         return requests.put(self._endpoint(endpoint))
 
     def set_component_parameter(self, component_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
