@@ -19,13 +19,31 @@
     "unload_object": {
       "oneOf": [
         {
-          "ref": "identifiers/component.schema.json"
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "component": {
+              "$ref": "identifiers/component.schema.json"
+            }
+          },
+          "required": [
+            "component"
+          ]
         },
         {
-          "ref": "identifiers/hardware.schema.json"
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "hardware": {
+              "$ref": "identifiers/hardware.schema.json"
+            }
+          },
+          "required": [
+            "hardware"
+          ]
         },
         {
-          "ref": "identifiers/controller.schema.json"
+          "$ref": "identifiers/controller.schema.json"
         }
       ]
     }
