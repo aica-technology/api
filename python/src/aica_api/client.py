@@ -94,25 +94,25 @@ class AICA:
         endpoint = 'application/components/' + component_name
         return requests.put(self._endpoint(endpoint))
 
-    def load_controller(self, interface_name: str, controller_name: str) -> requests.Response:
+    def load_controller(self, hardware_name: str, controller_name: str) -> requests.Response:
         """
         Load a controller for a given hardware interface. If the controller is already loaded, or if the controller
         is not listed in the hardware interface description, nothing happens.
 
-        :param interface_name: The name of the hardware interface
+        :param hardware_name: The name of the hardware interface
         :param controller_name: The name of the controller to load
         """
-        endpoint = 'application/hardware/' + interface_name + '/controller/' + controller_name
+        endpoint = 'application/hardware/' + hardware_name + '/controller/' + controller_name
         return requests.put(self._endpoint(endpoint))
 
-    def load_hardware(self, interface_name: str) -> requests.Response:
+    def load_hardware(self, hardware_name: str) -> requests.Response:
         """
         Load a hardware interface in the current application. If the hardware interface is already loaded, or if the
         interface is not described in the application, nothing happens.
 
-        :param interface_name: The name of the hardware interface to load
+        :param hardware_name: The name of the hardware interface to load
         """
-        endpoint = 'application/hardware/' + interface_name
+        endpoint = 'application/hardware/' + hardware_name
         return requests.put(self._endpoint(endpoint))
 
     def pause_application(self) -> requests.Response:
@@ -161,31 +161,31 @@ class AICA:
         data = {"parameter_value": parameter_value}
         return requests.put(self._endpoint(endpoint), json=data)
 
-    def set_controller_parameter(self, interface_name: str, controller_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
+    def set_controller_parameter(self, hardware_name: str, controller_name: str, parameter_name: str, parameter_value: str) -> requests.Response:
         """
         Set a parameter on a controller.
 
-        :param interface_name: The name of the hardware interface
+        :param hardware_name: The name of the hardware interface
         :param controller_name: The name of the controller
         :param parameter_name: The name of the parameter
         :param parameter_value: The value of the parameter
         """
-        endpoint = 'application/hardware/' + interface_name + '/controller/' + controller_name + '/parameter/' + parameter_name
+        endpoint = 'application/hardware/' + hardware_name + '/controller/' + controller_name + '/parameter/' + parameter_name
         data = {"parameter_value": parameter_value}
         return requests.put(self._endpoint(endpoint), json=data)
 
-    def switch_controllers(self, interface_name: str, start: Union[None, List[str]] = None,
+    def switch_controllers(self, hardware_name: str, start: Union[None, List[str]] = None,
                            stop: Union[None, List[str]] = None) -> requests.Response:
         """
         Start and stop the controllers for a given hardware interface.
 
-        :param interface_name: The name of the hardware interface to unload
+        :param hardware_name: The name of the hardware interface to unload
         :param start: A list of controllers to start
         :param stop: A list of controllers to stop
         """
         endpoint = 'application/controllers'
         params = {
-            "interface_name": interface_name,
+            "interface_name": hardware_name,
             "start": [] if not start else start,
             "stop": [] if not stop else stop
         }
@@ -201,25 +201,25 @@ class AICA:
         endpoint = 'application/components/' + component_name
         return requests.delete(self._endpoint(endpoint))
 
-    def unload_controller(self, interface_name: str, controller_name: str) -> requests.Response:
+    def unload_controller(self, hardware_name: str, controller_name: str) -> requests.Response:
         """
         Unload a controller for a given hardware interface. If the controller is not loaded, or if the controller
         is not listed in the hardware interface description, nothing happens.
 
-        :param interface_name: The name of the hardware interface
+        :param hardware_name: The name of the hardware interface
         :param controller_name: The name of the controller to unload
         """
-        endpoint = 'application/hardware/' + interface_name + '/controller/' + controller_name
+        endpoint = 'application/hardware/' + hardware_name + '/controller/' + controller_name
         return requests.delete(self._endpoint(endpoint))
 
-    def unload_hardware(self, interface_name: str) -> requests.Response:
+    def unload_hardware(self, hardware_name: str) -> requests.Response:
         """
         Unload a hardware interface in the current application. If the hardware interface is not loaded, or if the
         interface is not described in the application, nothing happens.
 
-        :param interface_name: The name of the hardware interface to unload
+        :param hardware_name: The name of the hardware interface to unload
         """
-        endpoint = 'application/hardware/' + interface_name
+        endpoint = 'application/hardware/' + hardware_name
         return requests.delete(self._endpoint(endpoint))
     
     def get_application(self):
