@@ -2,7 +2,7 @@ from typing import Union, List
 
 import requests
 
-from aica_api.ws_client import WebsocketSyncClient
+from ws_client import WebsocketSyncClient
 
 
 class AICA:
@@ -53,7 +53,10 @@ class AICA:
         """
         # TODO: come up with a compatibility table in the future
         api_version = requests.get(f'{self._address}/version').json()
-        return api_version.startswith('2')
+        new_version = api_version.startswith('2')
+        if not new_version:
+            print('You are using an old version ' + api_version)
+        return new_version
 
     def component_descriptions(self) -> requests.Response:
         """
