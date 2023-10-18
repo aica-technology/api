@@ -183,7 +183,7 @@ class AICA:
         :param activate: A list of controllers to activate
         :param deactivate: A list of controllers to deactivate
         """
-        endpoint = f'application/hardware/{hardware_name}/controllers'
+        endpoint = 'application/hardware/' + hardware_name + '/controllers'
         params = {
             "activate": [] if not activate else activate,
             "deactivate": [] if not deactivate else deactivate
