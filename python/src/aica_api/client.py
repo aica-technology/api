@@ -47,11 +47,13 @@ class AICA:
         """
         return f'{self._ws_address}/{endpoint}'
 
-    def check(self) -> requests.Response:
+    def check(self) -> bool:
         """
-        Make a GET request to the default endpoint to verify connectivity.
+        Check if the API version is v2 (any v2.x.x tag)
         """
-        return requests.get(self._endpoint())
+        # TODO: come up with a compatibility table in the future
+        api_version = requests.get(f'{self._address}/version').json()
+        return api_version.startswith('2')
 
     def component_descriptions(self) -> requests.Response:
         """
