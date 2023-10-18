@@ -183,9 +183,8 @@ class AICA:
         :param start: A list of controllers to start
         :param stop: A list of controllers to stop
         """
-        endpoint = 'application/controllers'
+        endpoint = f'application/hardware/{hardware_name}/controllers'
         params = {
-            "interface_name": hardware_name,
             "start": [] if not start else start,
             "stop": [] if not stop else stop
         }
