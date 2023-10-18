@@ -5,7 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "interface": {
+    "hardware": {
       "$ref": "hardware.schema.json"
     },
     "controller": {
@@ -16,7 +16,7 @@
     }
   },
   "required": [
-    "interface",
+    "hardware",
     "controller"
   ]
 }
