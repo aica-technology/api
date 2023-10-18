@@ -23,7 +23,7 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "name": {
+        "service": {
           "$ref": "identifiers/service.schema.json"
         },
         "component": {
@@ -39,7 +39,7 @@
         }
       },
       "required": [
-        "name"
+        "service"
       ]
     }
   }
