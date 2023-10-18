@@ -16,14 +16,8 @@
         "lifecycle": {
           "$ref": "events/lifecycle.schema.json"
         },
-        "service": {
-          "$ref": "events/service.schema.json"
-        },
-        "load_hardware": {
-          "$ref": "events/load_hardware.schema.json"
-        },
-        "load_controller": {
-          "$ref": "events/load_controller.schema.json"
+        "call_service": {
+          "$ref": "events/call_service.schema.json"
         },
         "switch_controllers": {
           "$ref": "events/switch_controllers.schema.json"

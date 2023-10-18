@@ -17,23 +17,11 @@
     "set": {
       "$ref": "events/set.schema.json"
     },
-    "service": {
-      "$ref": "events/service.schema.json"
+    "call_service": {
+      "$ref": "events/call_service.schema.json"
     },
     "lifecycle": {
       "$ref": "events/lifecycle.schema.json"
-    },
-    "load_hardware": {
-      "$ref": "events/load_hardware.schema.json"
-    },
-    "unload_hardware": {
-      "$ref": "events/unload_hardware.schema.json"
-    },
-    "load_controller": {
-      "$ref": "events/load_controller.schema.json"
-    },
-    "unload_controller": {
-      "$ref": "events/unload_controller.schema.json"
     },
     "switch_controllers": {
       "$ref": "events/switch_controllers.schema.json"
