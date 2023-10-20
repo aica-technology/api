@@ -25,8 +25,8 @@ or service request. Nodes that wish to publish data continuously normally config
 callback function at regular intervals.
 
 This periodic execution is built in to AICA components by default. Components have an execution rate defined by
-a `period` parameter (the time in seconds between execution steps), and automatically publish data attributes and
-predicates periodically.
+a `rate` parameter (the frequency in Hertz for the number of execution steps per second), and automatically publish data
+attributes and predicates periodically.
 
 Components can implement specific calculations to occur on step.
 

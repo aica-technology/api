@@ -14,7 +14,7 @@ An application description contains the following top-level elements.
 on_start:
   ...
 
-hardware_interfaces:
+hardware:
   ...
 
 conditions:
@@ -36,12 +36,12 @@ on_start:
     - component_b
 ```
 
-## Hardware interfaces
+## Hardware
 
 Hardware interfaces describe the connected robots and their corresponding controllers.
 
 ```yaml
-hardware_interfaces:
+hardware:
   robot_a:
     urdf: ...
     rate: ...
@@ -367,18 +367,18 @@ my_component:
     my_double_parameter: 2.0
 ```
 
-#### Component period
+#### Component rate
 
-The `period` parameter is a special reserved parameter that defines the step period of a component in seconds, which is
+The `rate` parameter is a special reserved parameter that defines the step rate of a component in Hertz, which is
 the inverse of the execution period.
 
 For example, if an image processing component should run some computation at 20 frames per second, then the
-period parameter should be set to 0.05 seconds.
+rate parameter should be set to 20 Hertz.
 
 ```yaml
 my_component:
   parameters:
-    period: 0.05
+    rate: 20
 ```
 
 ### Inputs and outputs
@@ -429,16 +429,18 @@ The following events are defined.
 Components can be loaded or unloaded by component name.
 
 ```yaml
-load: <component_name>
-unload: <component_name>
+load:
+  component: <component_name>
+unload:
+  component: <component_name>
 ```
 
-It is possible to load or unload multiple components simultaneously by specifying a list of names.
+It is possible to load or unload multiple components simultaneously by specifying a list of components.
 
 ```yaml
 load:
-  - component_a
-  - component_b 
+  - component: component_a
+  - component: component_b
 ```
 
 #### Transition from one component to another
@@ -452,7 +454,6 @@ transition: <component_name>
 #### Trigger a lifecycle transition
 
 ```yaml
-# 
 lifecycle: "configure"
 ```
 
@@ -507,7 +508,7 @@ set:
   parameter: <parameter_name>
   value: <parameter_value>
   controller: <controller_name>
-  interface: <hardware_interface_name>
+  hardware: <hardware_name>
 ```
 
 #### Call a service
@@ -515,22 +516,22 @@ set:
 Call a service with no payload on the component that is triggering the event.
 
 ```yaml
-service: <service_name>
+call_service: <service_name>
 ```
 
 Call a service on a different component.
 
 ```yaml
-service:
-  name: <service_name>
+call_service:
+  service: <service_name>
   component: <component_name>
 ```
 
 Call a service with a string payload.
 
 ```yaml
-service:
-  name: <service_name>
+call_service:
+  service: <service_name>
   component: <component_name>
   payload: "..."
 ```
@@ -540,8 +541,8 @@ the object into a string format when making the service call. In this case, the 
 for parsing the string back into a YAML object, dict or structure as necessary.
 
 ```yaml
-service:
-  name: <service_name>
+call_service:
+  service: <service_name>
   component: <component_name>
   payload:
     foo: "some content"
@@ -556,13 +557,15 @@ service:
 Load and initialize a hardware interface.
 
 ```yaml
-load_hardware: <hardware_interface_name>
+load:
+  hardware: <hardware_name>
 ```
 
 Unload and destroy a hardware interface.
 
 ```yaml
-unload_hardware: <hardware_interface_name>
+unload:
+  hardware: <hardware_name>
 ```
 
 :::caution
@@ -576,39 +579,40 @@ This behavior may change in the near future.
 #### Load or unload a controller
 
 ```yaml
-load_controller:
-  interface: <hardware_interface_name>
+load:
+  hardware: <hardware_name>
   controller: <controller_name>
 
-unload_controller:
-  interface: <hardware_interface_name>
+unload:
+  hardware: <hardware_name>
   controller: <controller_name>
 ```
 
 Use a list to load or unload multiple controllers from a single predicate.
 
 ```yaml
-load_controller:
-  - interface: <hardware_interface_name>
+load:
+  - hardware: <hardware_name>
     controller: controller_a
-  - interface: <hardware_interface_name>
+  - hardware: <hardware_name>
     controller: controller_b
 ```
 
-#### Start or stop a controller
+#### Activate or deactivate a controller
 
-Use the `switch_controllers` event to list the controllers to be started or stopped for a specific hardware interface.
+Use the `switch_controllers` event to list the controllers to be activated or deactivated for a specific hardware
+interface.
 
 ```yaml
 switch_controllers:
-  interface: <hardware_interface_name>
-  start: [ <controller_name>, <controller_name> ]
-  stop: [ "controller_three", "controller_four" ] 
+  hardware: <hardware_name>
+  activate: [ <controller_name>, <controller_name> ]
+  deactivate: [ "controller_three", "controller_four" ] 
 ```
 
 :::note
 
-A controller must be loaded before it can be started, and must be stopped before it can be unloaded.
+A controller must be loaded before it can be activated, and must be deactivated before it can be unloaded.
 
 :::
 

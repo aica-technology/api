@@ -564,8 +564,8 @@ Lifecycle components publish outputs only when the component is in the `ACTIVE` 
 
 ## Adding periodic behavior
 
-Every component has a built-in `period` parameter that defines the execution rate of periodic behaviors in seconds. For
-example, a component with a period of 0.1 seconds will execute periodic behaviors ten times per second. The evaluation
+Every component has a built-in `rate` parameter that defines the execution rate of periodic behaviors in Hertz. For
+example, a component with a rate of 10 Hertz will execute periodic behaviors ten times per second. The evaluation
 of periodic behaviors is referred to as the component "step".
 
 :::note
