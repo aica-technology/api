@@ -27,8 +27,8 @@
         }
       }
     },
-    "hardware_interfaces": {
-      "$ref": "hardware_interfaces.schema.json"
+    "hardware": {
+      "$ref": "hardware.schema.json"
     },
     "conditions": {
       "$ref": "conditions.schema.json"

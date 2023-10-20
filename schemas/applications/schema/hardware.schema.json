@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Hardware Interfaces",
+  "title": "Hardware",
   "description": "A description of hardware interfaces used in the application",
   "definitions": {
     "controller": {
@@ -43,7 +43,7 @@
   "additionalProperties": false,
   "patternProperties": {
     "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
-      "title": "Hardware Interface Name",
+      "title": "Hardware Name",
       "description": "The name of the hardware interface",
       "type": "object",
       "additionalProperties": false,
@@ -55,7 +55,7 @@
         },
         "rate": {
           "title": "Rate",
-          "description": "The rate in Hz at which to run the interface",
+          "description": "The rate in Hz at which to run the hardware interface",
           "type": "number"
         },
         "display_name": {
