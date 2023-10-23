@@ -1,12 +1,12 @@
 name: Deploy Python API client to PyPI
 on:
   push:
-#    branches:
-#      - main
-#    paths:
-#      - 'python/**'
-#    tags:
-#      - '*'
+    branches:
+      - main
+    paths:
+      - 'python/**'
+    tags:
+      - '*'
 jobs:
   check-version:
       name: Check if the version has been updated
@@ -41,38 +41,33 @@ jobs:
         working-directory: python
     steps:
       - uses: actions/checkout@v3
-      - name: Test
-        if: ${{ needs.check-version.outputs.has_changed == 'true' }}
-        run: |
-          ls
-#      - name: Set up Python
-#        uses: actions/setup-python@v4
-#        with:
-#          python-version: "3.x"
-#      - name: Install pypa/build
-#        run: >-
-#          python3 -m
-#          pip install
-#          build
-#          --user
-#      - name: Build a binary wheel and a source tarball
-#        run: >-
-#          python3 -m
-#          build
-#          --sdist
-#          --wheel
-#          --outdir dist/
-#          .
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+      - name: Install pypa/build
+        run: >-
+          python3 -m
+          pip install
+          build
+          --user
+      - name: Build a binary wheel and a source tarball
+        run: >-
+          python3 -m
+          build
+          --sdist
+          --wheel
+          --outdir dist/
+          .
 #      - name: Deploy API client to Test PyPI
 #        uses: pypa/gh-action-pypi-publish@release/v1
 #        with:
 #          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
 #          repository-url: https://test.pypi.org/legacy/
 #          packages-dir: python/dist
-
-#      - name: Deploy API client to PyPI
-#        if: ${{ needs.check-version.outputs.has_changed == 'true' }}
-#        uses: pypa/gh-action-pypi-publish@release/v1
-#        with:
-#          password: ${{ secrets.PYPI_API_TOKEN }}
-#          packages-dir: python/dist
+      - name: Deploy API client to PyPI
+        if: ${{ needs.check-version.outputs.has_changed == 'true' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages-dir: python/dist
