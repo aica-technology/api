@@ -8,8 +8,22 @@ on:
     tags:
       - '*'
 jobs:
+  check-version:
+    name: Check if the version has been updated
+    outputs:
+      has_changed: ${{ steps.check.outputs.has_changed }}
+      version: ${{ steps.versions.outputs.new_version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aica-technology/.github/.github/actions/check-version@v0.11.0
+        id: check
+        with:
+          package_path: ./python/pyproject.toml
+
   build-n-publish:
     name: Build and deploy Python API client to PyPI
+    needs: check-version
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -41,6 +55,7 @@ jobs:
 #          repository-url: https://test.pypi.org/legacy/
 #          packages-dir: python/dist
       - name: Deploy API client to PyPI
+        if: ${{ needs.check-version.outputs.has_changed == 'true' }}
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
