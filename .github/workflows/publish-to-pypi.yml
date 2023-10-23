@@ -20,6 +20,7 @@ jobs:
           run: |
             NEW_VERSION=$(grep -m 1 version ./python/pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
             echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+            git fetch 
             git checkout HEAD^
             PREV_VERSION=$(grep -m 1 version ./python/pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
             echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
