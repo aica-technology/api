@@ -1,25 +1,35 @@
 name: Deploy Python API client to PyPI
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'python/**'
-    tags:
-      - '*'
+#    branches:
+#      - main
+#    paths:
+#      - 'python/**'
+#    tags:
+#      - '*'
 jobs:
   check-version:
-    name: Check if the version has been updated
-    outputs:
-      has_changed: ${{ steps.check.outputs.has_changed }}
-      version: ${{ steps.versions.outputs.new_version }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: aica-technology/.github/.github/actions/check-version@v0.11.0
-        id: check
-        with:
-          package_path: ./python/pyproject.toml
+      name: Check if the version has been updated
+      outputs:
+        has_changed: ${{ steps.check.outputs.has_changed }}
+        version: ${{ steps.versions.outputs.new_version }}
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+          with:
+            fetch-depth: 2
+        - id: versions
+          run: |
+            PREV_VERSION=$(git show HEAD^:VERSION)
+            NEW_VERSION=$(git show HEAD:VERSION)
+            echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
+            echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+          shell: bash
+        - uses: aica-technology/.github/.github/actions/compare-versions@v0.11.0
+          id: check
+          with:
+            previous_version: ${{ steps.versions.outputs.prev_version }}
+            new_version: ${{ steps.versions.outputs.new_version }}
 
   build-n-publish:
     name: Build and deploy Python API client to PyPI
@@ -30,33 +40,36 @@ jobs:
         working-directory: python
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
-      - name: Install pypa/build
-        run: >-
-          python3 -m
-          pip install
-          build
-          --user
-      - name: Build a binary wheel and a source tarball
-        run: >-
-          python3 -m
-          build
-          --sdist
-          --wheel
-          --outdir dist/
-          .
+      - run:
+          needs.check-version.outputs.has_changed == 'true'
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: "3.x"
+#      - name: Install pypa/build
+#        run: >-
+#          python3 -m
+#          pip install
+#          build
+#          --user
+#      - name: Build a binary wheel and a source tarball
+#        run: >-
+#          python3 -m
+#          build
+#          --sdist
+#          --wheel
+#          --outdir dist/
+#          .
 #      - name: Deploy API client to Test PyPI
 #        uses: pypa/gh-action-pypi-publish@release/v1
 #        with:
 #          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
 #          repository-url: https://test.pypi.org/legacy/
 #          packages-dir: python/dist
-      - name: Deploy API client to PyPI
-        if: ${{ needs.check-version.outputs.has_changed == 'true' }}
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
-          packages-dir: python/dist
+
+#      - name: Deploy API client to PyPI
+#        if: ${{ needs.check-version.outputs.has_changed == 'true' }}
+#        uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          password: ${{ secrets.PYPI_API_TOKEN }}
+#          packages-dir: python/dist
