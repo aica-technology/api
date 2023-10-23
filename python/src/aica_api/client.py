@@ -52,10 +52,15 @@ class AICA:
         Check if the API version is v2 (any v2.x.x tag)
         """
         # TODO: come up with a compatibility table in the future
-        api_version = requests.get(f'{self._address}/version').json()
+        try:
+            api_version = requests.get(f'{self._address}/version').json()
+        except requests.exceptions.RequestException as e:
+            print(f'Error connecting to the API! {e}')
+            return False
         new_version = api_version.startswith('2')
         if not new_version:
-            print('You are using an old version ' + api_version)
+            print(f'The detected API version v{api_version} is older than the minimum API version v2.0.0 supported by '
+                  f'this client')
         return new_version
 
     def component_descriptions(self) -> requests.Response:
