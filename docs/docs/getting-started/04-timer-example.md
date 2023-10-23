@@ -49,7 +49,8 @@ components:
         transition: timer
 
 on_start:
-  load: timer
+  load:
+    component: timer
 ```
 
 Then, press the Generate Graph button. The graph should show two components connected with event edges.
@@ -128,7 +129,8 @@ The very end of the application uses the `on_start` field to list the initial ap
 
 ```yaml
 on_start:
-  load: timer
+  load:
+    component: timer
 ```
 
 In this case, when the application is launched, the `timer` component should be loaded.

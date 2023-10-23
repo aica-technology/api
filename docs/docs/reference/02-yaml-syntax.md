@@ -27,13 +27,14 @@ components:
 ## On start
 
 The `on_start` keyword is reserved as a special event trigger when the application is launched.
-List the [events](#events) to trigger on startup (for example, to load components).
+List the [events](#events) to trigger on startup (for example, to load components and hardware interfaces).
 
 ```yaml
 on_start:
   load:
-    - component_a
-    - component_b
+    - component: component_a
+    - component: component_b
+    - hardware: robot_a
 ```
 
 ## Hardware
