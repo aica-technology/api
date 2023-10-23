@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run:
-          needs.check-version.outputs.has_changed == 'true'
+          echo "${needs.check-version.outputs.has_changed == 'true'}"
 #      - name: Set up Python
 #        uses: actions/setup-python@v4
 #        with:
