@@ -19,7 +19,7 @@ jobs:
         - id: versions
           run: |
             ls
-            grep -m 1 version ./python/pyproject.toml | grep -e '\d.\d.\d' -o
+             grep -m 1 version ./python/pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3
 #            NEW_VERSION=$(grep -m 1 version ./python/pyproject.toml | grep -e '\d.\d.\d' -o)
 #            echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
 #            git checkout HEAD^
