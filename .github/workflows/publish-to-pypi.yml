@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Test
-        if: ${{ needs.check-version.outputs.has_changed == 'false' }}
+        if: ${{ needs.check-version.outputs.has_changed == 'true' }}
         run: |
           ls
 #      - name: Set up Python
