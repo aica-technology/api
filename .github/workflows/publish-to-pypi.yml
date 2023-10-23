@@ -20,8 +20,8 @@ jobs:
             fetch-depth: 2
         - id: versions
           run: |
-            PREV_VERSION=$(git show HEAD^:VERSION)
-            NEW_VERSION=$(git show HEAD:VERSION)
+            PREV_VERSION=$(git log -L7,7:./python/pyproject.toml)
+            NEW_VERSION=$(git log -L7,7:./python/pyproject.toml)
             echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
             echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
           shell: bash
