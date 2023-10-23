@@ -18,13 +18,11 @@ jobs:
         - uses: actions/checkout@v3
         - id: versions
           run: |
-            ls
-             grep -m 1 version ./python/pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3
-#            NEW_VERSION=$(grep -m 1 version ./python/pyproject.toml | grep -e '\d.\d.\d' -o)
-#            echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
-#            git checkout HEAD^
-#            PREV_VERSION=$(grep -m 1 version ./python/pyproject.toml | grep -e '\d.\d.\d' -o)
-#            echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
+            NEW_VERSION=$(grep -m 1 version ./python/pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
+            echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+            git checkout HEAD^
+            PREV_VERSION=$(grep -m 1 version ./python/pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
+            echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
           shell: bash
         - uses: aica-technology/.github/.github/actions/compare-versions@v0.11.0
           id: check
