@@ -17,6 +17,7 @@
   ],
   "$defs": {
     "switch_controllers_object": {
+      "title": "Switch Controllers Object",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -24,57 +25,30 @@
           "$ref": "identifiers/hardware.schema.json"
         },
         "activate": {
-          "title": "Activate Controllers",
-          "description": "The name(s) of the controller(s) to activate",
-          "additionalProperties": false,
-          "oneOf": [
-            {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "$ref": "identifiers/controller.schema.json#/properties/controller"
-              }
-            },
-            {
-              "$ref": "identifiers/controller.schema.json#/properties/controller"
-            }
-          ]
+          "$ref": "#/$defs/switch_controllers_target"
         },
         "deactivate": {
-          "title": "Deactivate Controllers",
-          "description": "The name(s) of the controller(s) to deactivate",
-          "additionalProperties": false,
-          "oneOf": [
-            {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "$ref": "identifiers/controller.schema.json#/properties/controller"
-              }
-            },
-            {
-              "$ref": "identifiers/controller.schema.json#/properties/controller"
-            }
-          ]
+          "$ref": "#/$defs/switch_controllers_target"
         }
       },
-      "allOf": [
+      "required": [
+        "hardware"
+      ]
+    },
+    "switch_controllers_target": {
+      "title": "Target Controller",
+      "Description": "A controller or list of controllers",
+      "additionalProperties": false,
+      "oneOf": [
         {
-          "required": [
-            "hardware"
-          ],
-          "anyOf": [
-            {
-              "required": [
-                "activate"
-              ]
-            },
-            {
-              "required": [
-                "deactivate"
-              ]
-            }
-          ]
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "identifiers/controller.schema.json#/properties/controller"
+          }
+        },
+        {
+          "$ref": "identifiers/controller.schema.json#/properties/controller"
         }
       ]
     }
