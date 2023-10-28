@@ -6,8 +6,8 @@
   "additionalProperties": false,
   "patternProperties": {
     "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
-      "title": "Component Name",
-      "description": "The name of the component",
+      "title": "Component",
+      "description": "A named component configuration",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -70,7 +70,7 @@
           }
         },
         "events": {
-          "title": "Predicate Events",
+          "title": "Event Predicates",
           "description": "Component predicates that trigger events",
           "type": "object",
           "additionalProperties": false,
@@ -86,7 +86,7 @@
               "$ref": "events.schema.json"
             },
             "is_unconfigured": {
-              "title": "Is unconfigured (lifecycle)",
+              "title": "Is Unconfigured (lifecycle)",
               "description": "A lifecycle predicate that triggers events when the component enters the unconfigured state",
               "$ref": "events.schema.json"
             },
@@ -118,7 +118,7 @@
           },
           "patternProperties": {
             "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
-              "title": "Custom Predicate",
+              "title": "Predicate Events",
               "description": "A component-specific predicate",
               "$ref": "events.schema.json"
             }

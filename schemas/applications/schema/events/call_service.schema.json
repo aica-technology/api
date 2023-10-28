@@ -20,6 +20,7 @@
   ],
   "$defs": {
     "service_object": {
+      "title": "Service Object",
       "type": "object",
       "additionalProperties": false,
       "properties": {
