@@ -8,44 +8,11 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "$ref": "#/$defs/unload_object"
+        "$ref": "identifiers/load_unload_target.json"
       }
     },
     {
-      "$ref": "#/$defs/unload_object"
+      "$ref": "identifiers/load_unload_target.json"
     }
-  ],
-  "$defs": {
-    "unload_object": {
-      "oneOf": [
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "component": {
-              "$ref": "identifiers/component.schema.json"
-            }
-          },
-          "required": [
-            "component"
-          ]
-        },
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "hardware": {
-              "$ref": "identifiers/hardware.schema.json"
-            }
-          },
-          "required": [
-            "hardware"
-          ]
-        },
-        {
-          "$ref": "identifiers/controller.schema.json"
-        }
-      ]
-    }
-  }
+  ]
 }
