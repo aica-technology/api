@@ -1,50 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Hardware",
+  "title": "Hardware Interfaces",
   "description": "A description of hardware interfaces used in the application",
-  "definitions": {
-    "controller": {
-      "title": "Controller",
-      "description": "The controller for the hardware interface",
-      "additionalProperties": false,
-      "patternProperties": {
-        "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
-          "title": "Controller Name",
-          "description": "The name of the controller",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "log_level": {
-              "$ref": "common/log_level.schema.json"
-            },
-            "plugin": {
-              "title": "Plugin",
-              "description": "The name of the controller plugin",
-              "type": "string"
-            },
-            "parameters": {
-              "$ref": "common/parameters.schema.json"
-            },
-            "inputs": {
-              "$ref": "common/inputs.schema.json"
-            },
-            "outputs": {
-              "$ref": "common/outputs.schema.json"
-            }
-          },
-          "required": [
-            "plugin"
-          ]
-        }
-      }
-    }
-  },
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
     "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
-      "title": "Hardware Name",
-      "description": "The name of the hardware interface",
+      "title": "Hardware",
+      "description": "A named hardware configuration",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -59,7 +22,7 @@
           "type": "number"
         },
         "display_name": {
-          "title": "Hardware Interface Display Name",
+          "title": "Hardware Display Name",
           "description": "The human-readable name to display on the hardware interface",
           "type": "string"
         },
@@ -67,7 +30,39 @@
           "$ref": "common/position.schema.json"
         },
         "controllers": {
-          "$ref": "#/definitions/controller"
+          "title": "Controllers",
+          "description": "The controllers attached to the hardware interface",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+              "title": "Controller",
+              "description": "A named controller configuration",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "log_level": {
+                  "$ref": "common/log_level.schema.json"
+                },
+                "plugin": {
+                  "title": "Controller Plugin",
+                  "description": "The name of the controller plugin",
+                  "type": "string"
+                },
+                "parameters": {
+                  "$ref": "common/parameters.schema.json"
+                },
+                "inputs": {
+                  "$ref": "common/inputs.schema.json"
+                },
+                "outputs": {
+                  "$ref": "common/outputs.schema.json"
+                }
+              },
+              "required": [
+                "plugin"
+              ]
+            }
+          }
         }
       }
     }
