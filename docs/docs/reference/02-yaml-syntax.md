@@ -46,7 +46,10 @@ hardware:
   robot_a:
     urdf: ...
     rate: ...
+    parameters:       # optional
+      ...
     display_name: ... # optional
+    position: ...     # optional
     controllers:
       ...
   robot_b:
@@ -105,12 +108,71 @@ view the available built-in example URDFs, respectively.
 
 The `rate` field defines the robot control frequency in Hz.
 
+### Parameters
+
+The `parameters` field is used to set hardware-specific parameter values which override the default values from the 
+associated URDF. 
+
+Specifically, the URDF is expected to include a `<ros2_control>` tag under which hardware properties are defined,
+including the hardware plugin and any number of parameters specific to that plugin.
+
+For example, a `robot_interface/GenericInterface` plugin may accept a `robot_ip` parameter to specify the IP address:
+
+```xml
+<robot name="example">
+    <ros2_control name="ExampleRobotHardwareInterface" type="system">
+        <hardware>
+            <plugin>robot_interface/GenericInterface</plugin>
+            <param name="robot_ip">192.168.0.1</param>
+        </hardware>
+        ...
+    </ros2_control>
+    ...
+</robot>
+```
+
+By adding `robot_ip` under the `parameters` field, the default IP address can be overridden when the hardware interface
+is loaded:
+
+```yaml
+my_robot:
+  urdf: Example Robot
+  parameters:
+    robot_ip: 172.16.0.1
+```
+
+In this example, the robot interface would be loaded with the IP address of `172.16.0.1` instead of the default
+`192.168.0.1` as specified in the URDF. This allows parameters to be selectively altered at deploy time directly in the
+application description without needing to modify the URDF itself.
+
+:::note
+
+Hardware parameter values are only applied if the parameter name matches an existing hardware parameter in the URDF.
+If the parameter does not exist in the URDF, it will not be added.
+
+:::
+
 ### Display name
 
-This optional field can be used to give the hardware interface a more human-readable name (one that doesn't have
-to conform to the `lower_snake_case` naming convention of the YAML syntax). It is only used when rendering the
-hardware interface as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the
+The optional `display_name` field can be used to give the hardware interface a more human-readable name (one that
+doesn't have to conform to the `lower_snake_case` naming convention of the YAML syntax). It is only used when rendering
+the hardware interface as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the
 YAML field (from the previous example, it would default to `robot_a`).
+
+### Position
+
+The optional `position` field is used to define the desired location of the hardware interface when rendered as a node
+in the AICA interactive graph editor. It has two subfields defining the X and Y location, respectively.
+
+This field only affects visualization of the application graph and has no other run-time effect.
+If a position is not specified, the node will be rendered at a procedurally chosen location.
+
+```yaml
+my_robot:
+  position:
+    x: 100
+    y: 200
+```
 
 ### Controllers
 
@@ -308,23 +370,13 @@ my_component:
 
 ### Display name
 
-This optional field is identical to the [hardware interface display name](#display-name) and is used to assign a
+This optional field is identical to the [hardware display name](#display-name) and is used to assign a
 nicer, human-readable display name to the component when rendered as a node in the AICA interactive graph editor.
 
 ### Position
 
-The `position` field is used to define the desired location of the component when rendered as a node in the AICA
-interactive graph editor. It has two subfields defining the X and Y location, respectively.
-
-This field only affects visualization of the application graph and has no other run-time effect.
-If a position is not specified, the node will be rendered at a procedurally chosen location.
-
-```yaml
-my_component:
-  position:
-    x: 100
-    y: 200
-```
+This optional field is identical to the [hardware position](#position) and is used to provide an X, Y position for the
+component when rendered as a node in the AICA interactive graph editor.
 
 ### Log level
 
