@@ -2,8 +2,7 @@ from typing import Union, List
 
 import requests
 
-from ws_client import WebsocketSyncClient
-
+from aica_api.ws_client import WebsocketSyncClient
 
 class AICA:
     """
