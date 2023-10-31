@@ -36,7 +36,7 @@ class AICA:
         :param endpoint: The API endpoint
         :return: The constructed request address
         """
-        return f'{self._address}/v1/{endpoint}'
+        return f'{self._address}/v2/{endpoint}'
 
     def _ws_endpoint(self, endpoint=''):
         """
