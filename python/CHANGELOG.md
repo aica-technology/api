@@ -5,6 +5,10 @@ Release Versions:
 - [1.0.1](#101)
 - [1.0.0](#100)
 
+## 1.0.2
+
+Patch the endpoint URL to correctly address API version 2.0
+
 ## 1.0.1
 
 Version 1.0.1 fixes a relative import issue.
