@@ -2,7 +2,11 @@
 
 Release Versions:
 
+- [1.0.1]
 - [1.0.0](#100)
+
+## 1.0.1
+Version 1.0.1 fixes the import issue
 
 ## 1.0.0
 
