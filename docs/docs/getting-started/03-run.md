@@ -7,15 +7,15 @@ import TabItem from '@theme/TabItem';
 
 # Running the image
 
-This guide assumes that the AICA software image was distributed as `aica-technology/base`. If the base image has a
-different name, change the name of the image accordingly.
+This guide assumes that the AICA runtime application image was tagged as `aica-runtime`. If the generated image has a
+different name, change the name of in the following instructions accordingly.
 
 You can start the AICA application container with the following command.
 
 :::note
 
 Change `/path/to/license` in the command below to the location of the personal AICA developer license assigned to you.
-For example, use `~/.aica-license` to keep the license file hidden in the home folder.
+For example, use `~/.aica-license.toml` to keep the license file hidden in the home folder.
 
 :::
 
@@ -28,7 +28,7 @@ docker run -it --rm \
   --privileged \
   --net=host \
   -v /path/to/license:/license:ro \
-  aica-technology/base
+  aica-runtime
 ```
 
 </TabItem>
@@ -37,9 +37,9 @@ docker run -it --rm \
 ```bash
 docker run -it --rm \
   --privileged \
-   -p 80:80 -p 3000:3000 -p 5000:5000 \
+  -p 3000:3000 -p 5000:5000 \
   -v /path/to/license:/license:ro \
-  aica-technology/base
+  aica-runtime
 ```
 
 </TabItem>
@@ -57,13 +57,13 @@ Visit [localhost:5000](http://localhost:5000) to see the Swagger homepage and do
 
 AICA applications and URDF hardware can be uploaded to a user database through the API or Developer Interface UI.
 Because the docker container is isolated from the host filesystem, the local database will be lost when the container
-exists. To persist local data between session, create a `data` directory somewhere on the host. Then execute the normal
-run command with an additional volume mount for the user data.
+exists. To persist local data between session, create a dedicated directory somewhere on the host. For example,
+use `mkdir ~/.aica-data` to keep the data folder hidden in the home folder. Then execute the normal run command with an
+additional volume mount for the user data.
 
 :::note
 
-Change `/path/to/data` in the command below to a desired location for the data. For example, use `~/.aica-data` to keep
-the data folder hidden in the home folder.
+Change `/path/to/data` in the command below to a desired location for the data (e.g., `~/.aica-data` or elsewhere)
 
 :::
 
@@ -77,7 +77,7 @@ docker run -it --rm \
   -v /path/to/license:/license:ro \
   #highlight-next-line
   -v /path/to/data:/data:rw \
-  aica-technology/base
+  aica-runtime
 ```
 
 </TabItem>
@@ -86,10 +86,11 @@ docker run -it --rm \
 ```bash
 docker run -it --rm \
   --privileged \
-   -p 80:80 -p 3000:3000 -p 5000:5000 \
+  -p 3000:3000 -p 5000:5000 \
   -v /path/to/license:/license:ro \
+  #highlight-next-line
   -v /path/to/data:/data:rw \
-  aica-technology/base
+  aica-runtime
 ```
 
 </TabItem>
