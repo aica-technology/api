@@ -110,7 +110,7 @@ The manifest file must contain a syntax header and a list of packages. The minim
 only the base package. The version of the base package can be changed according to the latest release.
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder
+#syntax=ghcr.io/aica-technology/app-builder:v1.0.0
 
 [packages]
 "@aica/base" = "v2.0.0"
@@ -119,7 +119,7 @@ only the base package. The version of the base package can be changed according 
 ### Configuring a runtime image with add-on packages
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder
+#syntax=ghcr.io/aica-technology/app-builder:v1.0.0
 
 [packages]
 "@aica/base" = "v2.0.0"
@@ -134,9 +134,6 @@ only the base package. The version of the base package can be changed according 
 An AICA license includes specific entitlements that determine which add-on packages and versions can be accessed and
 used.
 AICA support will provide a package manifest with the latest included add-ons together with the respective license key.
-
-For a full list of available add-ons for components and hardware collections, along with their latest versions and
-release notes, contact your AICA representative.
 
 For a full list of available add-ons for components and hardware collections, along with their latest versions and
 release notes, contact your AICA representative.
