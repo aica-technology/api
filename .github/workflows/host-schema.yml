@@ -18,6 +18,7 @@ jobs:
           cache-dependency-path: "utils/package-lock.json"
       - name: Install dependencies
         run: |
+          cd utils
           npm i
       - name: Bundle Schemas
         run: |
