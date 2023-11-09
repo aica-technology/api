@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.1.0"
   }
