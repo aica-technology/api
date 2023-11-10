@@ -11,7 +11,66 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup node
+      # Build Docusaurus
+      - name: Setup node in docs
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: "docs/package-lock.json"
+
+      - name: Cache docusaurus
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/docs/.docusaurus
+          key: |
+            ${{ runner.os }}-docusaurus
+          restore-keys: |
+            ${{ runner.os }}-docusaurus
+
+      - name: Install dependencies
+        run: |
+          npm ci --prefix docs
+
+      - name: Lint / Formatting
+        run: |
+          npm run typecheck --prefix docs
+          # TODO: should add more in the future if needed
+
+      - name: Build
+        run: |
+          npm run build --prefix docs
+
+      # Fetch API documentation
+      - uses: aica-technology/.github/.github/actions/login-to-ghcr@v0.6.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: aica-technology/.github/.github/actions/ghcr-ensure-prefix@v0.6.1
+        id: ensure-image
+        with:
+          image_name: aica-technology/backend-api-docs
+
+      - name: Get API version to fetch
+        id: api-version
+        run: |
+          VER="$(cat docs/api.version)"
+          echo "Version: $VER"
+          echo "version=$VER" >> $GITHUB_OUTPUT
+
+      - name: Create directory
+        run: |
+          mkdir -p docs/build/api
+
+      - name: Extract Swagger from the built image
+        uses: aica-technology/.github/.github/actions/docker-extract@v0.6.1
+        with:
+          image: ${{ steps.ensure-image.outputs.image_name }}:${{ steps.api-version.outputs.version }}
+          source: /index.html
+          destination: docs/build/api/index.html
+
+      - name: Setup node in utils
         uses: actions/setup-node@v3
         with:
           node-version: "16"
@@ -26,8 +85,11 @@ jobs:
         run: |
           python3 utils/bundle.py schemas/applications/schema/application.schema.json application.schema.json
           ls
+          mkdir -p docs/build/schema/1-0-0
+          mv application.schema.json docs/build/schema/1-0-0/application.schema.json
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: .
+            publish_dir: docs/build
