@@ -85,7 +85,7 @@ jobs:
         run: |
           python3 utils/bundle.py schemas/applications/schema/application.schema.json application.schema.json
           ls
-          mkdir -p docs/build/schema/1-0-0
+          mkdir -p docs/build/schema/0-0-0
           mv application.schema.json docs/build/schema/0-0-0/application.schema.json
 
       - name: Deploy
