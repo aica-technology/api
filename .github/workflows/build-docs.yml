@@ -1,15 +1,16 @@
 name: Build & Publish docs
 
 on:
-  pull_request:
-    paths:
-      - ".github"
-      - ".github/workflows/*-docs.yml"
-  push:
-    paths:
-      - ".github"
-      - ".github/workflows/*-docs.yml"
-  workflow_dispatch:
+  push
+#  pull_request:
+#    paths:
+#      - ".github"
+#      - ".github/workflows/*-docs.yml"
+#  push:
+#    paths:
+#      - ".github"
+#      - ".github/workflows/*-docs.yml"
+#  workflow_dispatch:
 
 jobs:
   build:
@@ -80,7 +81,7 @@ jobs:
 
       # Deploy to GitHub Pages
       - name: Deploy
-        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref_name == 'main')
+#        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref_name == 'main')
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
