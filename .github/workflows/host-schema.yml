@@ -23,6 +23,12 @@ jobs:
           pip3 install javascript
       - name: Bundle Schemas
         run: |
-          ls
           python3 utils/bundle.py schemas/applications/schema/application.schema.json application.schema.json
-          ls
+      # Deploy to GitHub Pages
+      - name: Deploy
+#        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref_name == 'main')
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: application.schema.json
+          cname: docs.aica.tech/schemas/1-0-0/application.schema.json
