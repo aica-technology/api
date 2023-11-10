@@ -1,9 +1,7 @@
 name: Bundle & Host JSON schema
 
 on:
-  push:
-    branches:
-      - main
+  push
 
 
 jobs:
@@ -27,3 +25,9 @@ jobs:
       - name: Bundle Schemas
         run: |
           python3 utils/bundle.py schemas/applications/schema/application.schema.json application.schema.json
+          ls
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: .

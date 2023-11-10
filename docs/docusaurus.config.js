@@ -12,7 +12,7 @@ const config = {
   favicon: "img/favicon.ico",
 
   url,
-  baseUrl: "/",
+  baseUrl: "/api/",
 
   // GitHub pages deployment config.
   organizationName: "aica-technology",
