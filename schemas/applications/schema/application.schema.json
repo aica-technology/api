@@ -1,5 +1,5 @@
 {
-  "$id": "/0-0-2/application.schema.json",
+  "$id": "/0-0-1/application.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "YAML Application Description",
   "description": "An AICA application graph description using YAML syntax.",
