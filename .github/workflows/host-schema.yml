@@ -42,10 +42,10 @@ jobs:
 #    if: ${{ needs.check-version.outputs.has_changed == 'true' }}
     steps:
       - run: |
-          ${{ steps.versions.outputs.id }}
-          ${{ steps.versions.outputs.version }}
-          docs/build/schema${{ steps.versions.outputs.id }}
-          docs/build/schema"${{ steps.versions.outputs.id }}"
+          ${{ needs.check-version.outputs.id }}
+          ${{ needs.check-version.outputs.version }}
+          docs/build/schema${{ needs.check-version.outputs.id }}
+          docs/build/schema"${{ needs.check-version.outputs.id }}"
 
 #      - uses: actions/checkout@v3
 #      # Build Docusaurus
