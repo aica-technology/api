@@ -1,12 +1,11 @@
 name: Bundle & Push JSON schema
 
 on:
-  push
-#  push:
-#    branches:
-#      - main
-#    paths:
-#      - 'schemas/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'schemas/**'
 
 jobs:
   bundle-push-schemas:
@@ -25,60 +24,3 @@ jobs:
         with:
           schema-path: ./schemas/component-descriptions/schema/component.schema.json
           schema: component.schema.json
-
-#jobs:
-#  check-version:
-#    name: Check if the version has been updated
-#    outputs:
-#      has_changed: ${{ steps.check.outputs.has_changed }}
-#      id: ${{ steps.versions.outputs.new_version }}
-#      version: ${{ steps.versions.outputs.version_only }}
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 2
-#      - id: versions
-#        run: |
-#          NEW_VERSION=$(jq -r '.["$id"]' schemas/component-descriptions/schema/component.schema.json)
-#          echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
-#          IFS='/' read -a id_array <<< "$NEW_VERSION"
-#          echo "version_only=${id_array[1]}" >> $GITHUB_OUTPUT
-#          git checkout HEAD^
-#          PREV_VERSION=$( jq -r '.["$id"]' schemas/component-descriptions/schema/component.schema.json)
-#          echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
-#        shell: bash
-#      - uses: aica-technology/.github/.github/actions/compare-versions@v0.11.0
-#        id: check
-#        with:
-#          previous_version: ${{ steps.versions.outputs.prev_version }}
-#          new_version: ${{ steps.versions.outputs.new_version }}
-#  build:
-#    needs: check-version
-#    name: Bundle & Push JSON schema
-#    runs-on: ubuntu-latest
-#    if: ${{ needs.check-version.outputs.has_changed == 'true' }}
-#    steps:
-#      - uses: actions/checkout@v3
-#      # Bundle JSON schema
-#      - name: Setup node in utils
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: "16"
-#          cache: "npm"
-#          cache-dependency-path: "utils/package-lock.json"
-#      - name: Install dependencies
-#        run: |
-#          cd utils
-#          npm i
-#          pip3 install javascript
-#      - name: Bundle & Push schemas
-#        run: |
-#          python3 utils/bundle.py schemas/component-descriptions/schema/component.schema.json component.schema.json
-#          mkdir -p docs/static/schemas/${{ needs.check-version.outputs.version }}
-#          mv component.schema.json docs/static/schemas${{ needs.check-version.outputs.id }}
-#          git config --global user.name github-actions[bot]
-#          git config --global user.email github-actions[bot]@users.noreply.github.com
-#          git add .
-#          git commit -m "generate new schema"
-#          git push
