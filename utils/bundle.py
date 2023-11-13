@@ -14,4 +14,3 @@ def bundle(file_path, output_file_name):
 if __name__ == "__main__":
     bundle(str(sys.argv[1]), str(sys.argv[2]))
 
-# "../schemas/applications/schema/application.schema.json"
