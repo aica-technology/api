@@ -9,13 +9,13 @@ inputs:
     description: "The name of the schema"
     required: true
 
-
 runs:
   using: composite
   steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 2
+    # Check if the version has been updated
     - id: versions
       run: |
         NEW_VERSION=$(jq -r '.["$id"]' ${{ inputs.schema-path }})
