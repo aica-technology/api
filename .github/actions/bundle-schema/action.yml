@@ -26,32 +26,28 @@ runs:
         PREV_VERSION=$( jq -r '.["$id"]' ${{ inputs.schema-path }})
         echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
       shell: bash
-    - uses: aica-technology/.github/.github/actions/compare-versions@v0.11.0
-      id: check
+    - uses: actions/checkout@v3
+    # Bundle JSON schema
+    - uses: actions/setup-node@v3
       with:
-        previous_version: ${{ steps.versions.outputs.prev_version }}
-        new_version: ${{ steps.versions.outputs.new_version }}
-#    - uses: actions/checkout@v3
-#    # Bundle JSON schema
-#    - uses: actions/setup-node@v3
-#      with:
-#        node-version: "16"
-#        cache: "npm"
-#        cache-dependency-path: "utils/package-lock.json"
-#    - name: Install dependencies
-#      shell: bash
-#      run: |
-#        cd utils
-#        npm i
-#        pip3 install javascript
-#    - name: Bundle & Push schemas
-#      shell: bash
-#      run: |
-#        python3 utils/bundle.py schemas/applications/schema/application.schema.json application.schema.json
-#        mkdir -p docs/static/schemas/${{ needs.check-version.outputs.version }}
-#        mv application.schema.json docs/static/schemas${{ needs.check-version.outputs.id }}
-#        git config --global user.name github-actions[bot]
-#        git config --global user.email github-actions[bot]@users.noreply.github.com
-#        git add .
-#        git commit -m "generate new schema"
-#        git push
+        node-version: "16"
+        cache: "npm"
+        cache-dependency-path: "utils/package-lock.json"
+    - name: Install dependencies
+      shell: bash
+      run: |
+        cd utils
+        npm i
+        pip3 install javascript
+    - name: Bundle & Push schemas
+      if: ${{ steps.versions.outputs.new_version != steps.versions.outputs.prev_version }}
+      shell: bash
+      run: |
+        python3 utils/bundle.py ${{ inputs.schema-path }} ${{ inputs.schema }}
+        mkdir -p docs/static/schemas/${{ needs.check-version.outputs.version }}
+        mv ${{ inputs.schema }} docs/static/schemas${{ needs.check-version.outputs.id }}
+        git config --global user.name github-actions[bot]
+        git config --global user.email github-actions[bot]@users.noreply.github.com
+        git add .
+        git commit -m "generate new schema"
+        git push
