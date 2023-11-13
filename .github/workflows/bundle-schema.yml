@@ -1,4 +1,4 @@
-name: Bundle & Host JSON schema
+name: Bundle & Push JSON schema
 
 on:
   push
@@ -37,7 +37,7 @@ jobs:
           new_version: ${{ steps.versions.outputs.new_version }}
   build:
     needs: check-version
-    name: Bundle & Push JSON schema to main
+    name: Bundle & Push JSON schema
     runs-on: ubuntu-latest
     if: ${{ needs.check-version.outputs.has_changed == 'true' }}
     steps:
@@ -54,7 +54,7 @@ jobs:
           cd utils
           npm i
           pip3 install javascript
-      - name: Bundle Schemas and push to main
+      - name: Bundle & Push schemas
         run: |
           python3 utils/bundle.py schemas/applications/schema/application.schema.json application.schema.json
           mkdir -p docs/static/schemas/${{ needs.check-version.outputs.version }}

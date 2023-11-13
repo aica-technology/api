@@ -9,6 +9,7 @@ on:
     paths:
       - ".github"
       - ".github/workflows/*-docs.yml"
+      - "docs/static/schemas/**"
   workflow_dispatch:
 
 jobs:
