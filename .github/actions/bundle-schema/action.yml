@@ -1,0 +1,57 @@
+name: Bundle & Push JSON schema
+description: 'Bundle & Push JSON schema'
+author: aica-technology
+inputs:
+  schema-path:
+    description: "The path to the schema"
+    required: true
+  schema:
+    description: "The name of the schema"
+    required: true
+
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 2
+    - id: versions
+      run: |
+        NEW_VERSION=$(jq -r '.["$id"]' ${{ inputs.schema-path }})
+        echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+        IFS='/' read -a id_array <<< "$NEW_VERSION"
+        echo "version_only=${id_array[1]}" >> $GITHUB_OUTPUT
+        git checkout HEAD^
+        PREV_VERSION=$( jq -r '.["$id"]' ${{ inputs.schema-path }})
+        echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
+      shell: bash
+    - uses: aica-technology/.github/.github/actions/compare-versions@v0.11.0
+      id: check
+      with:
+        previous_version: ${{ steps.versions.outputs.prev_version }}
+        new_version: ${{ steps.versions.outputs.new_version }}
+#    - uses: actions/checkout@v3
+#    # Bundle JSON schema
+#    - uses: actions/setup-node@v3
+#      with:
+#        node-version: "16"
+#        cache: "npm"
+#        cache-dependency-path: "utils/package-lock.json"
+#    - name: Install dependencies
+#      shell: bash
+#      run: |
+#        cd utils
+#        npm i
+#        pip3 install javascript
+#    - name: Bundle & Push schemas
+#      shell: bash
+#      run: |
+#        python3 utils/bundle.py schemas/applications/schema/application.schema.json application.schema.json
+#        mkdir -p docs/static/schemas/${{ needs.check-version.outputs.version }}
+#        mv application.schema.json docs/static/schemas${{ needs.check-version.outputs.id }}
+#        git config --global user.name github-actions[bot]
+#        git config --global user.email github-actions[bot]@users.noreply.github.com
+#        git add .
+#        git commit -m "generate new schema"
+#        git push
