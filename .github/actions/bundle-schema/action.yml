@@ -43,7 +43,7 @@ runs:
       if: ${{ steps.versions.outputs.new_version != steps.versions.outputs.prev_version }}
       shell: bash
       run: |
-        python3 utils/bundle.py ${{ inputs.schema-path }} ${{ inputs.schema }}
+        node bundleHelper.js ${{ inputs.schema-path }} ${{ inputs.schema }}
         mkdir -p docs/static/schemas/${{ steps.versions.outputs.version_only }}
         mv ${{ inputs.schema }} docs/static/schemas${{ steps.versions.outputs.new_version }}
         git config --global user.name github-actions[bot]
