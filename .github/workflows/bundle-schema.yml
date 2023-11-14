@@ -24,3 +24,8 @@ jobs:
         with:
           schema-path: ./schemas/component-descriptions/schema/component.schema.json
           schema: component.schema.json
+      - name: Bundle & Push JSON schema for controller schemas
+        uses: ./.github/actions/bundle-schema
+        with:
+          schema-path: ./schemas/controller-descriptions/schema/controller.schema.json
+          schema: controller.schema.json

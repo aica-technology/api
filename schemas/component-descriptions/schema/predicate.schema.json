@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "id": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/component-descriptions/schema/predicate.schema.json",
   "title": "Component Predicate",
   "description": "A predicate signal parameter of a dynamic component.",
   "type": "object",
