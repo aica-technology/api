@@ -2,10 +2,10 @@ name: Bundle & Push JSON schema
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'schemas/**'
+#    branches:
+#      - main
+#    paths:
+#      - 'schemas/**'
 
 jobs:
   bundle-push-schemas:
