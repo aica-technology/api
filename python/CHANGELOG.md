@@ -2,13 +2,15 @@
 
 Release Versions:
 
+- [1.1.0](#102)
 - [1.0.2](#102)
 - [1.0.1](#101)
 - [1.0.0](#100)
 
-## Upcoming changes (in development)
+## 1.1.0
 
-- fix(client): json format for setting parameter value (#80)
+- Fix JSON format for setting parameter value (#80)
+- Add function to set the lifecycle transition on a component (#81)
 
 ## 1.0.2
 
