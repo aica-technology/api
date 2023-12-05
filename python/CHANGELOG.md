@@ -2,8 +2,13 @@
 
 Release Versions:
 
+- [1.0.2](#102)
 - [1.0.1](#101)
 - [1.0.0](#100)
+
+## Upcoming changes (in development)
+
+- fix(client): json format for setting parameter value
 
 ## 1.0.2
 
