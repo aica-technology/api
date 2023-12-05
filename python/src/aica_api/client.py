@@ -183,6 +183,21 @@ class AICA:
         data = {"value": value}
         return requests.put(self._endpoint(endpoint), json=data)
 
+    def set_lifecycle_transition(self, component: str, transition: str) -> requests.Response:
+        """
+        Trigger a lifecycle transition on a component. The transition label must be one of the following:
+        ['configure', 'activate', 'deactivate', 'cleanup', 'shutdown']
+
+        The transition will only be executed if the target is a lifecycle component and the current lifecycle state
+        allows the requested transition.
+
+        :param component: The name of the component
+        :param transition: The lifecycle transition label
+        """
+        endpoint = 'application/components/' + component + '/lifecycle/transition'
+        data = {"transition": transition}
+        return requests.put(self._endpoint(endpoint), json=data)
+
     def switch_controllers(self, hardware: str, activate: Union[None, List[str]] = None,
                            deactivate: Union[None, List[str]] = None) -> requests.Response:
         """
