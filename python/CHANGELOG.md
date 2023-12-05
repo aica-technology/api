@@ -8,7 +8,7 @@ Release Versions:
 
 ## Upcoming changes (in development)
 
-- fix(client): json format for setting parameter value
+- fix(client): json format for setting parameter value (#80)
 
 ## 1.0.2
 
