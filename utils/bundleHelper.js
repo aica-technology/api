@@ -9,17 +9,19 @@ $RefParser.bundle(filePath).then(async (schema) => {
     let jsonSchema = decodeURI(JSON.stringify(schema, null, 2));
     jsonSchema = jsonSchema.replaceAll('%24', '$');
 
-    $RefParser.dereference(JSON.parse(jsonSchema), {
-      dereference: {
-        circular: 'ignore',
-      }}).then((derefSchema) => {
-
-          fs.writeFile(outputFileName, JSON.stringify(derefSchema, null, 2), 'utf8', (err) => {
+    if(outputFileName === "application.schema.json") {
+        fs.writeFile(outputFileName, JSON.stringify(jsonSchema, null, 2), 'utf8', (err) => {
               if (err) throw err;
-            console.log('The file has been saved!');
-          });
-    })
-
+              console.log('The file has been saved!');
+        });
+    } else {
+        let jsonSchemaObject = JSON.parse(jsonSchema);
+        jsonSchemaObject['properties']['parameters']['items']['properties']['parameter_state_type']['$ref'] = '#/properties/inputs/items/properties/signal_types/items';
+        fs.writeFile(outputFileName, JSON.stringify(jsonSchemaObject, null, 2), 'utf8', (err) => {
+          if (err) throw err;
+          console.log('The file has been saved!');
+        });
+    }
 });
 
 

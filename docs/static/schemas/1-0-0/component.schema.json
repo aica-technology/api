@@ -40,22 +40,10 @@
       ]
     },
     "registration": {
-      "title": "Component Registration",
-      "description": "The full registered class name of the exported component required for run-time loading. The registration must start with the package name and may include additional namespaces delimited by double colons `::`.",
-      "type": "string",
-      "examples": [
-        "modulo_components::Component",
-        "foo_package::other_namespace::Foo"
-      ]
+      "$ref": "#/$defs/registration"
     },
     "inherits": {
-      "title": "Component Registration",
-      "description": "The full registered class name of the exported component required for run-time loading. The registration must start with the package name and may include additional namespaces delimited by double colons `::`.",
-      "type": "string",
-      "examples": [
-        "modulo_components::Component",
-        "foo_package::other_namespace::Foo"
-      ]
+      "$ref": "#/$defs/registration"
     },
     "virtual": {
       "title": "Virtual Component Class",
@@ -107,44 +95,7 @@
           },
           "signal_type": {
             "description": "The fixed type of this signal.",
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "title": "Signal Type",
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "bool",
-                  "int",
-                  "double",
-                  "double_array",
-                  "string",
-                  "other"
-                ]
-              },
-              {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "title": "Encoded State Type",
-                "description": "The state type of an encoded value from a collection of supported types, as defined in clproto.",
-                "type": "string",
-                "enum": [
-                  "state",
-                  "spatial_state",
-                  "cartesian_state",
-                  "cartesian_pose",
-                  "cartesian_twist",
-                  "cartesian_acceleration",
-                  "cartesian_wrench",
-                  "jacobian",
-                  "joint_state",
-                  "joint_positions",
-                  "joint_velocities",
-                  "joint_torques",
-                  "shape",
-                  "ellipsoid",
-                  "parameter"
-                ]
-              }
-            ]
+            "$ref": "#/properties/inputs/items/properties/signal_types/items"
           },
           "signal_types": {
             "description": "An array of signal types supported by configurable typing. The active type is set through the '<$signal_name>_type' parameter, and the default type is determined by the `signal_type` property.",
@@ -265,88 +216,13 @@
           },
           "signal_type": {
             "description": "The default type of the signals (signals in a collection must have the same type).",
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "title": "Signal Type",
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "bool",
-                  "int",
-                  "double",
-                  "double_array",
-                  "string",
-                  "other"
-                ]
-              },
-              {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "title": "Encoded State Type",
-                "description": "The state type of an encoded value from a collection of supported types, as defined in clproto.",
-                "type": "string",
-                "enum": [
-                  "state",
-                  "spatial_state",
-                  "cartesian_state",
-                  "cartesian_pose",
-                  "cartesian_twist",
-                  "cartesian_acceleration",
-                  "cartesian_wrench",
-                  "jacobian",
-                  "joint_state",
-                  "joint_positions",
-                  "joint_velocities",
-                  "joint_torques",
-                  "shape",
-                  "ellipsoid",
-                  "parameter"
-                ]
-              }
-            ]
+            "$ref": "#/properties/inputs/items/properties/signal_types/items"
           },
           "signal_types": {
             "description": "An array of signal types supported by configurable typing. The active type is set through the '<$input_collection_name>_type' parameter, and the default type is determined by the `signal_type` property.",
             "type": "array",
             "items": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "title": "Signal Type",
-              "description": "Supported signal value types as simple atomic types or encoded state types.",
-              "anyOf": [
-                {
-                  "type": "string",
-                  "enum": [
-                    "bool",
-                    "int",
-                    "double",
-                    "double_array",
-                    "string",
-                    "other"
-                  ]
-                },
-                {
-                  "$schema": "https://json-schema.org/draft/2020-12/schema",
-                  "title": "Encoded State Type",
-                  "description": "The state type of an encoded value from a collection of supported types, as defined in clproto.",
-                  "type": "string",
-                  "enum": [
-                    "state",
-                    "spatial_state",
-                    "cartesian_state",
-                    "cartesian_pose",
-                    "cartesian_twist",
-                    "cartesian_acceleration",
-                    "cartesian_wrench",
-                    "jacobian",
-                    "joint_state",
-                    "joint_positions",
-                    "joint_velocities",
-                    "joint_torques",
-                    "shape",
-                    "ellipsoid",
-                    "parameter"
-                  ]
-                }
-              ]
+              "$ref": "#/properties/inputs/items/properties/signal_types/items"
             },
             "minItems": 1,
             "uniqueItems": true
@@ -371,163 +247,7 @@
       "description": "The output signals (publications) of the component.",
       "type": "array",
       "items": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "title": "Signal",
-        "description": "A continuous data signal in the AICA framework that can be an input or an output.",
-        "type": "object",
-        "properties": {
-          "display_name": {
-            "description": "The short name of this signal (to be displayed on the edge of the node in the graph view).",
-            "examples": [
-              "Target Pose",
-              "Sum",
-              "Command Torque"
-            ],
-            "type": "string"
-          },
-          "description": {
-            "description": "A description of the signal for tool-tips and documentation.",
-            "type": "string"
-          },
-          "signal_name": {
-            "description": "The registered name of the signal from which the default topic and parameter '<$signal_name>_topic' are determined.",
-            "examples": [
-              "target_pose",
-              "sum",
-              "command_torque"
-            ],
-            "type": "string"
-          },
-          "default_topic": {
-            "description": "The default topic name assigned to this signal. If unspecified, it is assumed to be '~/<$signal_name>'. Setting the parameter '<$signal_name>_topic' will override the default value.",
-            "default": "~/signal_name",
-            "type": "string"
-          },
-          "reconfigurable_topic": {
-            "description": "Indicate if the signal topic is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_topic' parameter.",
-            "default": false,
-            "type": "boolean"
-          },
-          "signal_type": {
-            "description": "The fixed type of this signal.",
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "title": "Signal Type",
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "bool",
-                  "int",
-                  "double",
-                  "double_array",
-                  "string",
-                  "other"
-                ]
-              },
-              {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "title": "Encoded State Type",
-                "description": "The state type of an encoded value from a collection of supported types, as defined in clproto.",
-                "type": "string",
-                "enum": [
-                  "state",
-                  "spatial_state",
-                  "cartesian_state",
-                  "cartesian_pose",
-                  "cartesian_twist",
-                  "cartesian_acceleration",
-                  "cartesian_wrench",
-                  "jacobian",
-                  "joint_state",
-                  "joint_positions",
-                  "joint_velocities",
-                  "joint_torques",
-                  "shape",
-                  "ellipsoid",
-                  "parameter"
-                ]
-              }
-            ]
-          },
-          "signal_types": {
-            "description": "An array of signal types supported by configurable typing. The active type is set through the '<$signal_name>_type' parameter, and the default type is determined by the `signal_type` property.",
-            "type": "array",
-            "items": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "title": "Signal Type",
-              "description": "Supported signal value types as simple atomic types or encoded state types.",
-              "anyOf": [
-                {
-                  "type": "string",
-                  "enum": [
-                    "bool",
-                    "int",
-                    "double",
-                    "double_array",
-                    "string",
-                    "other"
-                  ]
-                },
-                {
-                  "$schema": "https://json-schema.org/draft/2020-12/schema",
-                  "title": "Encoded State Type",
-                  "description": "The state type of an encoded value from a collection of supported types, as defined in clproto.",
-                  "type": "string",
-                  "enum": [
-                    "state",
-                    "spatial_state",
-                    "cartesian_state",
-                    "cartesian_pose",
-                    "cartesian_twist",
-                    "cartesian_acceleration",
-                    "cartesian_wrench",
-                    "jacobian",
-                    "joint_state",
-                    "joint_positions",
-                    "joint_velocities",
-                    "joint_torques",
-                    "shape",
-                    "ellipsoid",
-                    "parameter"
-                  ]
-                }
-              ]
-            },
-            "minItems": 1,
-            "uniqueItems": true
-          },
-          "reconfigurable_type": {
-            "description": "Indicate if the signal type is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_type' parameter.",
-            "default": false,
-            "type": "boolean"
-          },
-          "custom_signal_type": {
-            "description": "The custom signal type of the signal",
-            "examples": [
-              "sensor_msgs::msg::JointState",
-              "geometry_msgs::msg::Pose"
-            ],
-            "type": "string"
-          }
-        },
-        "required": [
-          "display_name",
-          "description",
-          "signal_name",
-          "signal_type"
-        ],
-        "if": {
-          "properties": {
-            "signal_type": {
-              "const": "other"
-            }
-          }
-        },
-        "then": {
-          "required": [
-            "custom_signal_type"
-          ]
-        }
+        "$ref": "#/properties/inputs/items"
       },
       "uniqueItems": true
     },
@@ -582,26 +302,7 @@
           },
           "parameter_state_type": {
             "description": "The state type of the parameter, if the value type is an encoded state.",
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "title": "Encoded State Type",
-            "type": "string",
-            "enum": [
-              "state",
-              "spatial_state",
-              "cartesian_state",
-              "cartesian_pose",
-              "cartesian_twist",
-              "cartesian_acceleration",
-              "cartesian_wrench",
-              "jacobian",
-              "joint_state",
-              "joint_positions",
-              "joint_velocities",
-              "joint_torques",
-              "shape",
-              "ellipsoid",
-              "parameter"
-            ]
+            "$ref": "#/properties/inputs/items/properties/signal_types/items"
           },
           "default_value": {
             "description": "The string representation of the default parameter value, or null if the parameter has no valid default value.",
