@@ -43,14 +43,7 @@
       "$ref": "#/$defs/registration"
     },
     "inherits": {
-      "oneOf": [
-        {
-          "$ref": "#"
-        },
-        {
-          "$ref": "#/$defs/registration"
-        }
-      ]
+      "$ref": "#/$defs/registration"
     },
     "virtual": {
       "title": "Virtual Component Class",
