@@ -381,7 +381,7 @@
                   "$ref": "#/properties/on_start/properties/load"
                 },
                 "unload": {
-                  "$ref": "#/properties/buttons/properties/on_click/properties/unload"
+                  "$ref": "#/properties/buttons/patternProperties/(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)/properties/on_click/properties/unload"
                 },
                 "transition": {
                   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -806,52 +806,60 @@
       "description": "A description of interactive buttons in the application graph",
       "type": "object",
       "additionalProperties": false,
-      "properties": {
-        "display_name": {
-          "title": "Button Display Name",
-          "description": "The human-readable name to display on the button",
-          "type": "string"
-        },
-        "on_click": {
-          "title": "On Click",
-          "description": "Events that are triggered when the button is pressed",
+      "patternProperties": {
+        "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+          "title": "Button",
+          "description": "A named interactive button",
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "load": {
-              "$ref": "#/properties/on_start/properties/load"
+            "display_name": {
+              "title": "Button Display Name",
+              "description": "The human-readable name to display on the button",
+              "type": "string"
             },
-            "unload": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "title": "Unload",
-              "description": "Unload a component, hardware interface or controller",
-              "oneOf": [
-                {
-                  "type": "array",
-                  "minItems": 1,
-                  "uniqueItems": true,
-                  "items": {
-                    "$ref": "#/properties/on_start/properties/load/oneOf/1"
-                  }
+            "on_click": {
+              "title": "On Click",
+              "description": "Events that are triggered when the button is pressed",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "load": {
+                  "$ref": "#/properties/on_start/properties/load"
                 },
-                {
-                  "$ref": "#/properties/on_start/properties/load/oneOf/1"
+                "unload": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "title": "Unload",
+                  "description": "Unload a component, hardware interface or controller",
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                        "$ref": "#/properties/on_start/properties/load/oneOf/1"
+                      }
+                    },
+                    {
+                      "$ref": "#/properties/on_start/properties/load/oneOf/1"
+                    }
+                  ]
+                },
+                "call_service": {
+                  "$ref": "#/properties/on_start/properties/call_service"
+                },
+                "lifecycle": {
+                  "$ref": "#/properties/on_start/properties/lifecycle"
+                },
+                "switch_controllers": {
+                  "$ref": "#/properties/on_start/properties/switch_controllers"
                 }
-              ]
+              }
             },
-            "call_service": {
-              "$ref": "#/properties/on_start/properties/call_service"
-            },
-            "lifecycle": {
-              "$ref": "#/properties/on_start/properties/lifecycle"
-            },
-            "switch_controllers": {
-              "$ref": "#/properties/on_start/properties/switch_controllers"
+            "position": {
+              "$ref": "#/properties/on_start/properties/position"
             }
           }
-        },
-        "position": {
-          "$ref": "#/properties/on_start/properties/position"
         }
       }
     }
