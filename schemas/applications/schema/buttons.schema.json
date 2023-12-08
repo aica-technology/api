@@ -4,37 +4,45 @@
   "description": "A description of interactive buttons in the application graph",
   "type": "object",
   "additionalProperties": false,
-  "properties": {
-    "display_name": {
-      "title": "Button Display Name",
-      "description": "The human-readable name to display on the button",
-      "type": "string"
-    },
-    "on_click": {
-      "title": "On Click",
-      "description": "Events that are triggered when the button is pressed",
+  "patternProperties": {
+    "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+      "title": "Button",
+      "description": "A named interactive button",
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "load": {
-          "$ref": "events/load.schema.json"
+        "display_name": {
+          "title": "Button Display Name",
+          "description": "The human-readable name to display on the button",
+          "type": "string"
         },
-        "unload": {
-          "$ref": "events/unload.schema.json"
+        "on_click": {
+          "title": "On Click",
+          "description": "Events that are triggered when the button is pressed",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "load": {
+              "$ref": "events/load.schema.json"
+            },
+            "unload": {
+              "$ref": "events/unload.schema.json"
+            },
+            "call_service": {
+              "$ref": "events/call_service.schema.json"
+            },
+            "lifecycle": {
+              "$ref": "events/lifecycle.schema.json"
+            },
+            "switch_controllers": {
+              "$ref": "events/switch_controllers.schema.json"
+            }
+          }
         },
-        "call_service": {
-          "$ref": "events/call_service.schema.json"
-        },
-        "lifecycle": {
-          "$ref": "events/lifecycle.schema.json"
-        },
-        "switch_controllers": {
-          "$ref": "events/switch_controllers.schema.json"
+        "position": {
+          "$ref": "common/position.schema.json"
         }
       }
-    },
-    "position": {
-      "$ref": "common/position.schema.json"
     }
   }
 }
