@@ -8,7 +8,8 @@ const url = "https://docs.aica.tech";
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "AICA for Developers",
-  tagline: "Documentation for the AICA Developer Interface and robotics software framework",
+  tagline:
+    "Documentation for the AICA Developer Interface and robotics software framework",
   favicon: "img/favicon.ico",
 
   url,
@@ -49,8 +50,8 @@ const config = {
     ({
       docs: {
         sidebar: {
-          hideable: true
-        }
+          hideable: true,
+        },
       },
       // TODO: add a social media card
       // image: "img/docusaurus-social-card.jpg",
@@ -130,6 +131,7 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
         defaultLanguage: "python",
+        additionalLanguages: ["toml"],
       },
     }),
 };
