@@ -2,10 +2,15 @@
 
 Release Versions:
 
+- [1.2.0](#120)
 - [1.1.0](#102)
 - [1.0.2](#102)
 - [1.0.1](#101)
 - [1.0.0](#100)
+
+## 1.2.0
+
+- Parse YAML file in set_application if it exists on client machine (#90)
 
 ## 1.1.0
 
