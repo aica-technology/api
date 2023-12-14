@@ -90,7 +90,7 @@ components, as they provide no meaningful behavior if directly instantiated.
 
 ## Signals
 
-The signals of a component should be described according to [signal.schema.json](./schema/signal.schema.json).
+The signals of a component should be described according to [signal.schema.json](../signals/signal.schema.json).
 
 A "signal" is the generic term for data on a ROS2 topic. We use "input" to refer to subscriptions, and "output" to refer
 to publications. This keeps the language concise and generic for a user who may not be familiar with ROS2 terminology. 
@@ -189,9 +189,9 @@ to the associated hidden array parameter.
 Component classes declare a fixed set of parameters by name and type. The value of parameters are consumed by the
 component when it is instantiated, or, in the case of lifecycle components, when it is configured.
 
-Parameters contain a value of a certain type, defined by the [parameter_type.schema.json](./schema/parameter_type.schema.json).
+Parameters contain a value of a certain type, defined by the [parameter_type.schema.json](../parameters/parameter_type.schema.json).
 If the `parameter_type` property is `state`, then the `parameter_state_type` property must also be defined as a member
-of the enumeration in [encoded_state_type.schema.json](./schema/encoded_state_type.schema.json).
+of the enumeration in [encoded_state_type.schema.json](../parameters/encoded_state_type.schema.json).
 
 Parameters generally have a default value which renders them optional in some cases. When a parameter has no valid
 default state and must be set by the user for the component to function, the `default_value` property in the component
@@ -227,20 +227,6 @@ service with a string payload, which can be used to pass parameters to the servi
 The `payload_format` property is used to describe the expected format and usage of the string trigger payload;
 it is thereby inferred that the service type is not an empty trigger when this property is present.
 
-## Scripts
-
-Two simple utility scripts are provided to view the schema and to validate JSON component descriptions.
-
-To view the schema specifications in a nicer format, run the [`./serve-html.sh`](./serve-html.sh) script in this
-directory. This will invoke a dockerized process in which a Python module `json-schema-for-humans` generate a static
-HTML representation of the schema which is served on a localhost port for viewing in the browser.
-
-To validate a component description, run the [`./validate.sh`](./validate.sh) script with a path to a JSON file.
-The path can be relative or absolute. For example,
-`./validate.sh examples/foo.json` or `./validate.sh /path/to/foo.json`.
-
-Any invalidities in the component description, such as missing required fields, will be reported.
-
 ## Saving the component description
 
 The component description JSON file should be saved in a `component_descriptions` directory of the package as a
@@ -266,27 +252,3 @@ descriptions to `${WORKSPACE}/install/<package_name>/component_descriptions`.
 install(DIRECTORY ./component_descriptions
         DESTINATION .)
 ```
-
-## CLion configuration for automatic validation
-
-CLion supports JSON schemas to directly validate syntax and formatting in the IDE.
-https://www.jetbrains.com/help/clion/json.html
-
-To set up validation for the component description schema, follow the steps given in
-[Configure a custom JSON schema](https://www.jetbrains.com/help/clion/json.html#6768673a).
-
-For step 3, give the Schema a useful name (such as "Component Description") and choose JSON Schema version 7.
-In the "Schema file or URL field", enter the following URL:
-```
-https://raw.githubusercontent.com/aica-technology/component-sdk/main/schema/schema/component.schema.json
-```
-
-For step 4, either manually specify files and directories to be validated, or use the file path pattern
-`component_descriptions/*.json` to detect all component description in compatible packages.
-
-CLion will then provide autocompletion for fields and types, and warn when required fields are missing.
-This is very useful when generating new component descriptions.
-However, CLion 2022 only supports up to JSON Schema version 7 and not the newest draft 2020-12,
-which provides some additional complex validation logic. For this reason, certain conditional validation
-will not be provided in the IDE. It is therefore recommended to use the [validation script](#scripts) for
-a final check of the description validity.

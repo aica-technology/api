@@ -10,8 +10,5 @@ graph structure in a text format using YAML syntax.
 
 ## Validating a YAML Application
 
-The [YAML application schema](./schema/schema/application.schema.json) defines the structural rules of an
+The [YAML application schema](./schema/application.schema.json) defines the structural rules of an
 AICA application and effectively distinguishes between valid and invalid syntax.
-
-Many modern IDEs and code editors can be configured to support custom schemas and provide in-line validation and
-completion of the YAML content.
