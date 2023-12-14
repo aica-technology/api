@@ -289,5 +289,4 @@ For step 4, either manually specify files and directories to be validated, or us
 
 CLion 2022 only supports up to JSON Schema version 7 and not the newest draft 2020-12,
 which provides some additional complex validation logic. For this reason, certain conditional validation
-will not be provided in the IDE. It is therefore recommended to use the [validation script](../validate.sh) for
-a final check of the description validity.
+will not be provided in the IDE.
