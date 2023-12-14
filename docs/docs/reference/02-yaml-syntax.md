@@ -709,6 +709,8 @@ completion of the YAML content.
 Developers working with Visual Studio Code can validate YAML application files easily in two steps:
 
 1. Install the [YAML extenstion from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
-2. Associate a schema in the YAML file using a modeline, i.e. place 
-`# yaml-language-server: $schema=https://docs.aica.tech/schemas/1-0-0/application.schema.json` on the first line of the
-file.
+2. Associate a schema with the YAML application by adding the following modeline to the file:
+
+```yaml
+# yaml-language-server: $schema=https://docs.aica.tech/schemas/1-0-0/application.schema.json
+```
