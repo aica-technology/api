@@ -698,9 +698,17 @@ component:
 
 ## Validating a YAML application
 
-<!-- FIXME: link to the schema on GitHub once it is on main; relative paths will break if the doc is versioned -->
-The [YAML application schema](../../../schemas/applications/schema/application.schema.json) defines the structural rules
+The [YAML application schema](https://docs.aica.tech/schemas/1-0-0/application.schema.json) defines the structural rules
 of an AICA application and effectively distinguishes between valid and invalid syntax.
 
 Many modern IDEs and code editors can be configured to support custom schemas and provide in-line validation and
 completion of the YAML content.
+
+### Validating a YAML application with Visual Studio Code
+
+Developers working with Visual Studio Code can validate YAML application files easily in two steps:
+
+1. Install the [YAML extenstion from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+2. Associate a schema in the YAML file using a modeline, i.e. place 
+`# yaml-language-server: $schema=https://docs.aica.tech/schemas/1-0-0/application.schema.json` on the first line of the
+file.
