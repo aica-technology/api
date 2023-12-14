@@ -138,11 +138,9 @@ class AICA:
         """
         Set an application to be the current application.
 
-        :param payload: The filepath of an application on the AICA computer, or the application content as a
-        YAML-formatted string
+        :param payload: The filepath of an application or the application content as a YAML-formatted string
         """
         if payload.endswith(".yaml") and os.path.isfile(payload):
-            # FIXME print line?
             with open(payload, "r") as file:
                 payload = yaml.safe_load(file)
         data = {
