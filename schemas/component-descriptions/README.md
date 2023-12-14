@@ -252,3 +252,42 @@ descriptions to `${WORKSPACE}/install/<package_name>/component_descriptions`.
 install(DIRECTORY ./component_descriptions
         DESTINATION .)
 ```
+
+## IDE configuration for automatic validation
+
+IDEs can provide autocompletion for fields and types, and warn when required fields are missing.
+This is very useful when generating new component descriptions.
+
+### VS Code
+
+With VS Code, you can directly associate a component description with a JSON schema using the `$schema` property inside
+the JSON file.
+
+```json
+{
+  "$schema": "https://docs.aica.tech/schemas/1-0-0/component.schema.json"
+}
+```
+
+### CLion
+
+CLion supports JSON schemas to directly validate syntax and formatting in the IDE.
+https://www.jetbrains.com/help/clion/json.html
+
+To set up validation for the component description schema, follow the steps given in
+[Configure a custom JSON schema](https://www.jetbrains.com/help/clion/json.html#6768673a).
+
+For step 3, give the Schema a useful name (such as "Component Description") and choose JSON Schema version 7.
+In the "Schema file or URL field", enter the following URL:
+
+```
+https://docs.aica.tech/schemas/1-0-0/component.schema.json
+```
+
+For step 4, either manually specify files and directories to be validated, or use the file path pattern
+`component_descriptions/*.json` to detect all component description in compatible packages.
+
+CLion 2022 only supports up to JSON Schema version 7 and not the newest draft 2020-12,
+which provides some additional complex validation logic. For this reason, certain conditional validation
+will not be provided in the IDE. It is therefore recommended to use the [validation script](../validate.sh) for
+a final check of the description validity.
