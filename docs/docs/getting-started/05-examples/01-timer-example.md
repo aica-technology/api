@@ -24,6 +24,9 @@ After starting the application container, open the Developer Interface on `local
 Copy the following application code into the text box under the Editor tab, replacing the default content.
 
 ```yaml
+on_start:
+  load:
+    component: timer
 components:
   timer:
     component: base_components::utilities::Timer
@@ -56,10 +59,6 @@ components:
         lifecycle: activate
       is_timed_out:
         transition: timer
-
-on_start:
-  load:
-    component: timer
 ```
 
 Then, press the Generate Graph button. The graph should show two components connected with event edges.
@@ -67,6 +66,16 @@ Then, press the Generate Graph button. The graph should show two components conn
 ![timer example](assets/timer-example.png)
 
 ## The example explained
+
+The application begins with the `on_start` directive to list the initial application events.
+
+```yaml
+on_start:
+  load:
+    component: timer
+```
+
+In this case, the first event that occurs in the application is to load the `timer` component.
 
 Application components are listed under the `components` field. Each component has a name and a registration.
 The position field is used just for rendering the component on the graph.
@@ -129,16 +138,6 @@ The `transition` event from `timer` to `timer_2` is a shorthand for unloading th
 second.
 
 The second block describing `timer_2` is nearly identical, as the two timers are intended to have symmetrical behavior.
-
-The very end of the application uses the `on_start` field to list the initial application events.
-
-```yaml
-on_start:
-  load:
-    component: timer
-```
-
-In this case, when the application is launched, the `timer` component should be loaded.
 
 ## Run the application
 
