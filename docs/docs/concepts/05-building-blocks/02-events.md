@@ -32,20 +32,13 @@ component name, the predicate name, and the current value (true or false) of the
 While the term "predicate" has several formal definitions in grammar, logic and mathematics, at AICA the [grammatical
 definition](https://en.wikipedia.org/wiki/Predicate_(grammar)) is used when naming predicates.
 
-For example, lifecycle components have a predicate for each lifecycle state:
-
-- is unconfigured
-- is inactive
-- is active
-- is finalized
-
-Specialized components define additional predicates depending on their function. A component that calculates if a given
-input state is within some parameterized limits might have a predicate "is in bounds".
+Components define predicates depending on their function. A component that calculates if a given input state is within
+some parameterized limits might have a predicate "is in bounds".
 
 This definition of predicates allows application descriptions to trigger events in a very declarative way. For example:
-> When component A _is active_, load component B
+> When component A _is in bounds_, load component B
 
-Here, `component A` is the source of the predicate, `is active` is the predicate itself, and `load component B` is the
+Here, `component A` is the source of the predicate, `is in bounds` is the predicate itself, and `load component B` is the
 event that is triggered when the predicate is true.
 
 :::note

@@ -15,7 +15,6 @@ Components process data in a periodic step function, are configured using parame
 other components and hardware interfaces. Key component states are published as predicates. Components may also expose
 specific services.
 
-
 ## Periodic behavior
 
 A key design concept for AICA components is the idea of periodic behavior.
@@ -73,6 +72,25 @@ By default, lifecycle components only publish outputs when they are in the `ACTI
 
 Components declare and broadcast key internal states as predicate messages, which are used by the Dynamic State Engine
 to trigger events. Refer to [Events](./02-events.md) for more information.
+
+### Lifecycle predicates
+
+Lifecycle components are based on [lifecycle nodes](../03-ros-concepts/02-lifecycle.md) and have additional predicates
+for each lifecycle state:
+
+- `is_unconfigured`
+- `is_inactive`
+- `is_active`
+- `is_finalized`
+
+### Auto lifecycle events
+
+When a lifecycle components is loaded, it starts in the unconfigured state and normally requires an external trigger to
+transition into different states.
+
+In the AICA framework, lifecycle components can auto-configure and auto-activate themselves. Associating
+the `is_unconfigured` predicate with a `lifecycle: configure` event enables the component to automatically configure
+itself. Equivalently, the `is_inactive` predicate can be used to trigger a `lifecycle: activate` event.
 
 ## Services
 

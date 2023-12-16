@@ -63,7 +63,7 @@ components:
 
 Then, press the Generate Graph button. The graph should show two components connected with event edges.
 
-![timer example](assets/timer-example.png)
+![timer example](./assets/timer-example.png)
 
 ## The example explained
 
@@ -150,7 +150,7 @@ the `is_timed_out` predicate goes from false to true. As a result, the `transiti
 and `timer_2` to be loaded instead. The second timer then goes through the same steps of configuring and activating
 before transitioning back to the first timer.
 
-![timer example (animated)](assets/timer-example.gif)
+![timer example (animated)](./assets/timer-example.gif)
 
 Use the Pause button to keep the application in an idle state; components will remain loaded and active, but predicates
 and events will not be handled until the application is started again.
