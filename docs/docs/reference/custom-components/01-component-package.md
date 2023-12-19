@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 :::info
 
-The creation of a component package can be greatly simplified by using our [Component Template](https://github.com/aica-technology/component-template). It comes with a boilerplate project which supports both C++ and Python.
+The creation of a component package can be greatly simplified by using
+our [Component Template](https://github.com/aica-technology/component-template). It comes with a boilerplate project
+which supports both C++ and Python.
 
 A lot of the information in this page is also available in the README of the template repository.
 
