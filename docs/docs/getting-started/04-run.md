@@ -60,11 +60,18 @@ like the example below:
 [INFO] [1702306119.566053151] [StateEngineInterface]: Successfully connected to Dynamic State Engine services
 ```
 
-If there are any errors, check that the license  (for example, `Error: license is invalid!` or `)
+:::info
+
+If there are any errors, check that the license file is valid and has been mounted correctly. For example, the following
+error would be shown from a correctly mounted but invalid license file:
 
 ```console
 [ERROR] [1702306228.377201011] [licensing]: Error: license is invalid (ERR - license is invalid), please check that it is correct
 ```
+
+Contact AICA support if the container does not start correctly despite a valid license file.
+
+:::
 
 ## Stopping the application container
 
