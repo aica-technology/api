@@ -14,6 +14,9 @@ An application description contains the following top-level elements.
 on_start:
   ...
 
+buttons:
+  ...
+
 hardware:
   ...
 
@@ -35,6 +38,44 @@ on_start:
     - component: component_a
     - component: component_b
     - hardware: robot_a
+```
+
+## Buttons
+
+Buttons are interactive elements in the Developer Interface UI. They are used to manually trigger state events when an
+application is running by clicking the trigger button in the application graph. Buttons have no effect on the
+application if the UI is not used.
+
+```yaml
+buttons:
+  my_button:
+    position: ...
+    on_click:
+      ...
+```
+
+### Position
+
+The `position` field is used to define the desired location of the button in the application graph. It has two subfields
+defining the X and Y location, respectively.
+
+```yaml
+my_button:
+  position:
+    x: 100
+    y: 200
+```
+
+### On Click
+
+List the [events](#events) to trigger when the button is clicked while the application is running (for example, to
+unload a component).
+
+```yaml
+my_button:
+  on_click:
+    unload:
+      component: component_a
 ```
 
 ## Hardware
@@ -110,8 +151,8 @@ The `rate` field defines the robot control frequency in Hz.
 
 ### Parameters
 
-The `parameters` field is used to set hardware-specific parameter values which override the default values from the 
-associated URDF. 
+The `parameters` field is used to set hardware-specific parameter values which override the default values from the
+associated URDF.
 
 Specifically, the URDF is expected to include a `<ros2_control>` tag under which hardware properties are defined,
 including the hardware plugin and any number of parameters specific to that plugin.
@@ -119,6 +160,7 @@ including the hardware plugin and any number of parameters specific to that plug
 For example, a `robot_interface/GenericInterface` plugin may accept a `robot_ip` parameter to specify the IP address:
 
 ```xml
+
 <robot name="example">
     <ros2_control name="ExampleRobotHardwareInterface" type="system">
         <hardware>
@@ -161,18 +203,11 @@ YAML field (from the previous example, it would default to `robot_a`).
 
 ### Position
 
-The optional `position` field is used to define the desired location of the hardware interface when rendered as a node
-in the AICA interactive graph editor. It has two subfields defining the X and Y location, respectively.
+This optional field is identical to the [button position](#position) and is used to provide an X, Y position for the
+component when rendered as a node in the AICA interactive graph editor.
 
 This field only affects visualization of the application graph and has no other run-time effect.
 If a position is not specified, the node will be rendered at a procedurally chosen location.
-
-```yaml
-my_robot:
-  position:
-    x: 100
-    y: 200
-```
 
 ### Controllers
 
@@ -375,7 +410,7 @@ nicer, human-readable display name to the component when rendered as a node in t
 
 ### Position
 
-This optional field is identical to the [hardware position](#position) and is used to provide an X, Y position for the
+This optional field is identical to the [button position](#position) and is used to provide an X, Y position for the
 component when rendered as a node in the AICA interactive graph editor.
 
 ### Log level
