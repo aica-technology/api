@@ -8,6 +8,10 @@ Release Versions:
 - [1.0.1](#101)
 - [1.0.0](#100)
 
+## Upcoming changes
+
+- refactor!: use Socket.IO client instead of websockets for run-time data (#95)
+
 ## 1.2.0
 
 - Parse YAML file in set_application if it exists on client machine (#90)
