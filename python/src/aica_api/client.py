@@ -4,6 +4,8 @@ import os
 import requests
 import yaml
 
+import importlib.metadata
+
 from aica_api.sio_client import read_until
 
 
@@ -39,21 +41,37 @@ class AICA:
         """
         return f'{self._address}/v2/{endpoint}'
 
+    @staticmethod
+    def client_version() -> str:
+        """
+        Get the version of this API client utility
+
+        :return: The version of the API client
+        """
+        return importlib.metadata.version('aica_api')
+
     def check(self) -> bool:
         """
-        Check if the API version is v2 (any v2.x.x tag)
+        Check if this API client is compatible with the detected API server version
+
+        :return: True if the client is compatible with the API server version, False otherwise
         """
-        # TODO: come up with a compatibility table in the future
         try:
             api_version = requests.get(f'{self._address}/version').json()
         except requests.exceptions.RequestException as e:
             print(f'Error connecting to the API! {e}')
             return False
-        new_version = api_version.startswith('2')
-        if not new_version:
-            print(f'The detected API version v{api_version} is older than the minimum API version v2.0.0 supported by '
-                  f'this client')
-        return new_version
+
+        if api_version.startswith('3'):
+            return True
+        elif api_version.startswith('2'):
+            print(f'The detected API version v{api_version} is older than the minimum API version v3.0.0 supported by '
+                  f'this client (v{self.client_version()}). Please install Python API client version v1.2.0 or later'
+                  f'for API server versions v2.X.')
+            return False
+        else:
+            print(f'The detected API version v{api_version} is deprecated and not supported by this API client!')
+            return False
 
     def component_descriptions(self) -> requests.Response:
         """
