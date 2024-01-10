@@ -58,6 +58,7 @@ def read_until(callback: Callable[[dict], bool], url: str = 'http://0.0.0.0:5000
             else:
                 if event == '*' or event == received[0]:
                     try:
+                        data = received[1]
                         if callback(data):
                             return data
                     except KeyError:
