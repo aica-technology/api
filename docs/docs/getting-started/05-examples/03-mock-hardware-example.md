@@ -64,7 +64,8 @@ more context.
 
 ## Setting up the application
 
-Go to the Editor page using the top navigation bar or at `localhost:8080/dev/editor` and create a new application.
+Go to the Editor page using the top navigation bar or at [localhost:8080/dev/editor](http://localhost:8080/dev/editor)
+and create a new application.
 
 Enter the following YAML and generate the graph.
 
@@ -95,6 +96,10 @@ hardware:
       robot_state_broadcaster:
         plugin: modulo_controllers/RobotStateBroadcaster
 ```
+
+The application graph should show a hardware interface with a controller and an event trigger.
+
+![mock hardware example graph](./assets/mock-hardware-example-graph.png)
 
 ## The example explained
 
@@ -203,4 +208,8 @@ The robot description topic will correspond to the name of the hardware interfac
 When the application is playing and the robot broadcaster controller has been activated, the robot model should appear
 in the RViz viewer.
 
+![mock hardware example rviz](./assets/mock-hardware-example-rviz.png)
+
+<!-- TODO
 The next example will add another controller to the mock hardware to move the robot based on a component output.
+-->
