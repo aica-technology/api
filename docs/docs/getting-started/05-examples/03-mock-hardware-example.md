@@ -19,9 +19,9 @@ This example requires the Universal Robots collection which includes example URD
 
 ## URDF Hardware Manager
 
-After starting the application container, go to `localhost:8080/dev/hardware` to open the Hardware Manager page of
-the Developer Interface. This page shows a table of available URDF files in the container database with a name and a
-description.
+After starting the application container, open the Hardware tab of the Developer
+Interface ([localhost:8080/dev/hardware](http://localhost:8080/dev/hardware)). This page shows a table of available URDF
+files in the container database with a name and a description.
 
 AICA hardware collections include example URDFs, which are shown on the table with a pad-lock icon indicating that they
 are not editable. Users can make an editable copy of a selected URDF with the "Save As" button, or upload and edit

@@ -7,7 +7,15 @@ title: Installation
 
 AICA software is distributed with Docker images and executed with Docker containers.
 
-Before proceeding, be sure to [install Docker Engine](https://docs.docker.com/engine/install/) on the host machine.
+Before proceeding, [install Docker Engine](https://docs.docker.com/engine/install/) on the host machine.
+
+:::info
+
+For Ubuntu users, make sure to follow
+the [post installation steps](https://docs.docker.com/engine/install/linux-postinstall/) to create the `docker` group
+and add your user.
+
+:::
 
 ## Logging in to the AICA package registry
 
