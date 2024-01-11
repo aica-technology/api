@@ -162,7 +162,8 @@ class AICA:
         endpoint = 'application/state/transition?action=stop'
         return requests.put(self._endpoint(endpoint))
 
-    def set_component_parameter(self, component: str, parameter: str, value: str) -> requests.Response:
+    def set_component_parameter(self, component: str, parameter: str, value: Union[
+            bool, int, float, bool, List[bool], List[int], List[float], List[str]]) -> requests.Response:
         """
         Set a parameter on a component.
 
@@ -174,7 +175,8 @@ class AICA:
         data = {"value": value}
         return requests.put(self._endpoint(endpoint), json=data)
 
-    def set_controller_parameter(self, hardware: str, controller: str, parameter: str, value: str) -> requests.Response:
+    def set_controller_parameter(self, hardware: str, controller: str, parameter: str, value: Union[
+            bool, int, float, bool, List[bool], List[int], List[float], List[str]]) -> requests.Response:
         """
         Set a parameter on a controller.
 
