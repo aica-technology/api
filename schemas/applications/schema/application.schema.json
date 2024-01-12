@@ -4,6 +4,7 @@
   "title": "YAML Application Description",
   "description": "An AICA application graph description using YAML syntax.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "on_start": {
       "title": "On Start",
