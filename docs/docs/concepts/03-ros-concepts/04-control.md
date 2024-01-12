@@ -11,7 +11,7 @@ hardware such as a robot arm.
 
 Interfacing with hardware peripherals imposes additional challenges, including:
 
-- networking and communication beyond the ROS RMW publisher / subscriber mechanism
+- networking and communication beyond the ROS Middleware (RMW) publisher / subscriber mechanism
 - hardware-specific control interfaces and requirements
 - safety and reliability around controller and hardware limits
 - potential real-time requirements for deterministic control performance
