@@ -32,10 +32,7 @@
                 "string"
               ]
             }
-          },
-          "required": [
-            "rate"
-          ]
+          }
         },
         "display_name": {
           "title": "Hardware Display Name",
@@ -80,7 +77,11 @@
             }
           }
         }
-      }
+      },
+      "required": [
+        "urdf",
+        "rate"
+      ]
     }
   }
 }
