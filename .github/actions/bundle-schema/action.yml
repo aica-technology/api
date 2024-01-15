@@ -48,7 +48,7 @@ runs:
         mv ${{ inputs.schema }} docs/static/schemas${{ steps.versions.outputs.new_version }}
         git config --global user.name github-actions[bot]
         git config --global user.email github-actions[bot]@users.noreply.github.com
-        git pull
+        git checkout -b ci/update-schemas
         git add .
         git commit -m "docs: ${{ inputs.schema }} ${{ steps.versions.outputs.version_only }}"
-        git push
+        git push -u -f origin ci/update-schemas
