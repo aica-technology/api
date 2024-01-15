@@ -52,5 +52,5 @@ runs:
         git checkout ci/update-schemas
         git pull
         git add .
-        git commit -m "docs: ${{ inputs.schema }} ${{ steps.versions.outputs.version_only }}"
+        git diff-index --quiet HEAD || git commit -m "docs: ${{ inputs.schema }} ${{ steps.versions.outputs.version_only }}"
         git push
