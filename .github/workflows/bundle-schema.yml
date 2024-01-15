@@ -14,9 +14,16 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Check branch ci/update-schema
+        shell: bash
+        id: check-branch-exist
+        run: |
+          git rev-parse --verify --quiet ci/update-schema
+          branch_exist=$( git rev-parse --verify --quiet ci/update-schema )
+          echo "branch_exist=${BRANCH_EXIST}" >> $GITHUB_OUTPUT
       - name: Create new branch
         shell: bash
-        if: ${{ git rev-parse --verify --quiet ci/update-schema }}
+        if: ${{ steps.check-branch-exist.outputs.branch_exist }}
         run: |
           git config --global user.name github-actions[bot]
           git config --global user.email github-actions[bot]@users.noreply.github.com
