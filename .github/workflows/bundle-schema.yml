@@ -14,21 +14,18 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Check branch ci/update-schema
-        shell: bash
-        id: check-branch-exist
-        run: |
-          branch_exist=$( git rev-parse --verify --quiet ci/update-schema 2>&1)
-          echo "branch_exist=${BRANCH_EXIST}" >> $GITHUB_OUTPUT
       - name: Create new branch
         shell: bash
         if: ${{ steps.check-branch-exist.outputs.branch_exist }}
         run: |
+          if git ls-remote origin | grep -sw "remote_branch_name" 2>&1>/dev/null; then echo "BRANCH EXISTS" ; 
+          else 
           git config --global user.name github-actions[bot]
           git config --global user.email github-actions[bot]@users.noreply.github.com
           git checkout -b ci/update-schemas
           git push -u origin ci/update-schemas
-          git checkout main
+          git checkout main ; 
+          fi
       - name: Bundle & Push JSON schema for application schemas
         uses: ./.github/actions/bundle-schema
         with:
