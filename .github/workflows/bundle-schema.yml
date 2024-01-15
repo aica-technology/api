@@ -53,7 +53,8 @@ jobs:
             -H ci/update-schemas \
             --title 'Update schemas' \
             --body 'This PR was automatically created by GitHub actions in response to schema changes. Please review and update any impacted code before merging the changes.' \
-            --reviewer jjenscodee \
+            --reviewer domire8 \
+            --reviewer eeberhard \
             2>&1
           ) || echo "::warning::Error creating the PR: $MESSAGE"
         env:
