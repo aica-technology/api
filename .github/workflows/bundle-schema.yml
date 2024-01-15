@@ -37,23 +37,22 @@ jobs:
         with:
           schema-path: ./schemas/controller-descriptions/schema/controller.schema.json
           schema: controller.schema.json
+      - name: Checkout branch ci/update-schemas
+        uses: actions/checkout@v3
+        with:
+          ref: ci/update-schemas
       - name: Create pull request
-        steps:
-          - uses: actions/checkout@v3
-            with:
-              ref: ci/update-schemas
-          - name: Create pull request
-            shell: bash
-            run: |
-              MESSAGE=$(
-                gh pr create \
-                -B develop \
-                -H ci/update-schemas \
-                --title 'Update schemas' \
-                --body 'This PR was automatically created by GitHub actions in response to schema changes. Please review and update any impacted code before merging the changes.' \
-                --reviewer jjenscodee \
-                2>&1
-              ) || echo "::warning::Error creating the PR: $MESSAGE"
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          MESSAGE=$(
+            gh pr create \
+            -B develop \
+            -H ci/update-schemas \
+            --title 'Update schemas' \
+            --body 'This PR was automatically created by GitHub actions in response to schema changes. Please review and update any impacted code before merging the changes.' \
+            --reviewer jjenscodee \
+            2>&1
+          ) || echo "::warning::Error creating the PR: $MESSAGE"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
