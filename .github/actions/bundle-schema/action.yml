@@ -49,6 +49,7 @@ runs:
         git config --global user.name github-actions[bot]
         git config --global user.email github-actions[bot]@users.noreply.github.com
         git fetch
+        git pull
         git checkout ci/update-schemas
         git add .
         git commit -m "docs: ${{ inputs.schema }} ${{ steps.versions.outputs.version_only }}"
