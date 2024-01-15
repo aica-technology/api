@@ -51,7 +51,7 @@ jobs:
             gh pr create \
             -B main \
             -H ci/update-schemas \
-            --title 'Update schemas' \
+            --title 'ci: update schemas' \
             --body 'This PR was automatically created by GitHub actions in response to schema changes. Please review and update any impacted code before merging the changes.' \
             --reviewer domire8 \
             --reviewer eeberhard \
