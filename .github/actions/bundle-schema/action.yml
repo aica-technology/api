@@ -40,7 +40,7 @@ runs:
         npm ci
         pip3 install javascript
     - name: Bundle & Push schemas
-#      if: ${{ steps.versions.outputs.new_version != steps.versions.outputs.prev_version }}
+      if: ${{ steps.versions.outputs.new_version != steps.versions.outputs.prev_version }}
       shell: bash
       run: |
         node utils/bundleHelper.js ${{ inputs.schema-path }} ${{ inputs.schema }}
