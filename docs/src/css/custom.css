@@ -34,13 +34,6 @@
   background-color: var(--ifm-background-accent-color);
 }
 
-/*[data-theme='light'] .themedSVG [fill='#FFFF50'] {*/
-/*  fill: greenyellow;*/
-/*}*/
-
 [data-theme='dark'] .themedSVG {
   filter: invert(93%) hue-rotate(180deg)
 }
-/*[data-theme='dark'] .themedDocusaurus [fill='#1e1e1e'] {*/
-/*  fill: whitesmoke;*/
-/*}*/
