@@ -1,5 +1,5 @@
 {
-  "$id": "/0-0-0/component.schema.json",
+  "$id": "/0-0-1/component.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Dynamic Component Description",
   "description": "A full description of a dynamic component in the AICA application framework.",
