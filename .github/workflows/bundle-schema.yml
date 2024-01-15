@@ -24,7 +24,6 @@ jobs:
             git config --global user.email github-actions[bot]@users.noreply.github.com
             git checkout -b ci/update-schemas
             git push -u origin ci/update-schemas
-            git checkout main
           fi
       - name: Bundle & Push JSON schema for application schemas
         uses: ./.github/actions/bundle-schema
