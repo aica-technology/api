@@ -17,12 +17,11 @@ jobs:
       - name: Create new branch
         shell: bash
         run: |
-          git config --global user.name github-actions[bot]
-          git config --global user.email github-actions[bot]@users.noreply.github.com
-          git fetch
-          if git ls-remote origin | grep -sw "remote_branch_name" 2>&1>/dev/null
+          if git ls-remote origin | grep -sw "ci/update-schemas" 2>&1>/dev/null
             then echo "BRANCH EXISTS"
           else 
+            git config --global user.name github-actions[bot]
+            git config --global user.email github-actions[bot]@users.noreply.github.com
             git checkout -b ci/update-schemas
             git push -u origin ci/update-schemas
             git checkout main
