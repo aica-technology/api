@@ -1,15 +1,11 @@
 name: Build & Publish docs
 
 on:
-  pull_request:
-    paths:
-      - ".github"
-      - ".github/workflows/*-docs.yml"
   push:
+    branches:
+      - main
     paths:
-      - ".github"
-      - ".github/workflows/*-docs.yml"
-      - "docs/static/schemas/**"
+      - "docs/**"
   workflow_dispatch:
 
 jobs:
