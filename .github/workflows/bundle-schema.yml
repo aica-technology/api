@@ -50,7 +50,7 @@ jobs:
         run: |
           MESSAGE=$(
             gh pr create \
-            -B develop \
+            -B main \
             -H ci/update-schemas \
             --title 'Update schemas' \
             --body 'This PR was automatically created by GitHub actions in response to schema changes. Please review and update any impacted code before merging the changes.' \
