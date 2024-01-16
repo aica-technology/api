@@ -7,11 +7,12 @@ Release Versions:
 
 ## 1-1-0
 
-Version 1-1-0 fixes an error in the application schema related to required field in the hardware schema.
+Version 1-1-0 adds a new property `optional` to the parameter schema to indicate if the user needs to specify a value in
+case a parameter doesn't have a default value.
 
 ### Changelog
 
-- fix: required fields for hardware schema (#97)
+- feat(parameter-schema): add new keyword optional for the parameter schema (#111)
 
 ## 1-0-0
 

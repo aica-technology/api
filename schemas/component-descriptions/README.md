@@ -265,7 +265,7 @@ the JSON file.
 
 ```json
 {
-  "$schema": "https://docs.aica.tech/schemas/1-0-0/component.schema.json"
+  "$schema": "https://docs.aica.tech/schemas/1-1-0/component.schema.json"
 }
 ```
 
@@ -281,7 +281,7 @@ For step 3, give the Schema a useful name (such as "Component Description") and 
 In the "Schema file or URL field", enter the following URL:
 
 ```
-https://docs.aica.tech/schemas/1-0-0/component.schema.json
+https://docs.aica.tech/schemas/1-1-0/component.schema.json
 ```
 
 For step 4, either manually specify files and directories to be validated, or use the file path pattern

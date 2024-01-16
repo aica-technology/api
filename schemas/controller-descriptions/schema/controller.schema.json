@@ -1,5 +1,5 @@
 {
-  "$id": "/1-0-0/controller.schema.json",
+  "$id": "/1-1-0/controller.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AICA Controller Description",
   "description": "A full description of a controller in the AICA application framework.",
