@@ -50,7 +50,7 @@
       ]
     },
     "optional": {
-      "description": "Specify if this parameter if optional if the default value is null",
+      "description": "Specify if this parameter is optional (only applicable if the default value is null)",
       "type": "boolean"
     },
     "dynamic": {
