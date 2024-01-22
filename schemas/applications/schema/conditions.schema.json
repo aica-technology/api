@@ -15,17 +15,73 @@
           "title": "Conditional Events",
           "description": "Events triggered by the condition",
           "$ref": "events.schema.json"
+        },
+        "all": {
+          "title": "All",
+          "description": "True only when every listed item is true",
+          "$ref": "#/$defs/condition_array"
+        },
+        "any": {
+          "title": "Any",
+          "description": "True if at least one of the listed items is true",
+          "$ref": "#/$defs/condition_array"
+        },
+        "one_of": {
+          "title": "One Of",
+          "description": "True only when exactly one of the listed items is true",
+          "$ref": "#/$defs/condition_array"
+        },
+        "not": {
+          "title": "Not",
+          "description": "True only when the sub-item is false",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/condition_object"
+            },
+            {
+              "$ref": "#/$defs/predicate_object"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        "component": {
+          "$ref": "events/identifiers/component.schema.json"
+        },
+        "predicate": {
+          "title": "Predicate Name",
+          "description": "The name of a predicate associated with the component",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$"
         }
       },
-      "required": [
-        "events"
-      ],
       "oneOf": [
         {
-          "$ref": "#/$defs/condition_object"
+          "required": [
+            "all"
+          ]
         },
         {
-          "$ref": "#/$defs/predicate_object"
+          "required": [
+            "any"
+          ]
+        },
+        {
+          "required": [
+            "one_of"
+          ]
+        },
+        {
+          "required": [
+            "not"
+          ]
+        },
+        {
+          "required": [
+            "component",
+            "predicate"
+          ]
         }
       ]
     }
