@@ -2,8 +2,17 @@
 
 Release Versions:
 
+- [1-1-1](#111)
 - [1-1-0](#110)
 - [1-0-0](#100)
+
+## 1-1-1
+
+Version 1-1-1 fixes a problem with the recursion inside the conditions schema.
+
+### Changelog
+
+- fix: update conditions schema (#114)
 
 ## 1-1-0
 
