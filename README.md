@@ -18,7 +18,7 @@ in the [schemas](./schemas) subdirectory.
 
 ### Bundling the schemas locally
 
-In order to bundle the schemas locally for debugging and testing, do the following (replace `path` and `schema` for the
+In order to bundle the schemas locally for debugging and testing, do the following (replace `<path>` and `<schema>` for the
 desired schema generation):
 
 ```bash
