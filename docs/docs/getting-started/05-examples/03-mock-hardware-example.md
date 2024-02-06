@@ -87,12 +87,12 @@ buttons:
 components: { }
 hardware:
   mock_hardware:
-    rate: 60
     display_name: Mock Hardware Interface
     position:
       x: 400
       y: -80
     urdf: Universal Robots 5e (mock interface)
+    rate: 60
     controllers:
       robot_state_broadcaster:
         plugin: modulo_controllers/RobotStateBroadcaster
