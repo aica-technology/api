@@ -87,6 +87,7 @@ buttons:
 components: { }
 hardware:
   mock_hardware:
+    rate: 60
     display_name: Mock Hardware Interface
     position:
       x: 400
