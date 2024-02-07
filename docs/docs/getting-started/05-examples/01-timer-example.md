@@ -15,7 +15,7 @@ This example requires only the base image.
 #syntax=ghcr.io/aica-technology/app-builder:v1
 
 [packages]
-"@aica/base" = "v2.1.0"
+"@aica/base" = "v3.0.0"
 ```
 
 ## Setting up the application

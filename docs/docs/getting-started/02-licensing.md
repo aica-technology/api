@@ -12,6 +12,16 @@ To request a license, contact the AICA sales team at contact@aica.tech. A user-s
 and sent by email. For the rest of this guide, it will be assumed that a valid license has been saved to a file called
 `aica-license.toml` on the host machine.
 
+:::caution
+
+Your license key should be kept secret. Do not share your license key with unauthorized users or enter it on websites
+other than the official AICA domain. License abuse may prevent your application from running or lead to your license
+being revoked.
+
+If an unauthorized user has gained access to your license key, contact support@aica.tech to reset your license.
+
+:::
+
 AICA licenses come in two variants: **online** and **offline**.
 
 ## Online licenses
