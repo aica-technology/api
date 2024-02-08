@@ -1,11 +1,6 @@
 name: Build & Publish docs
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "docs/**"
   workflow_dispatch:
 
 jobs:
