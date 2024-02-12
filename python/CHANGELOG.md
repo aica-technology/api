@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2.0.0](#200)
 - [1.2.1](#121)
 - [1.2.0](#120)
 - [1.1.0](#102)
@@ -9,7 +10,13 @@ Release Versions:
 - [1.0.1](#101)
 - [1.0.0](#100)
 
-## Upcoming changes
+## 2.0.0
+
+This version of the AICA API client is compatible with the new AICA API server version 3.0 by using Socket.IO instead of
+raw websockets for run-time data. This change breaks backwards compatibility for API server versions v2.x and below.
+It uses Socket.IO instead of raw websockets for run-time data required by the new AICA framework API version 3.0.
+
+### Breaking changes
 
 - refactor!: use Socket.IO client instead of websockets for run-time data (#95)
 

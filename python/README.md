@@ -10,6 +10,7 @@ The client can be used to easily make API calls as shown below:
 
 ```python
 from aica_api.client import AICA
+
 aica = AICA()
 
 aica.set_application('my_application.yaml')
@@ -25,6 +26,7 @@ To check the status of component predicates and conditions, the following blocki
 
 ```python
 from aica_api.client import AICA
+
 aica = AICA()
 
 if aica.wait_for_condition('timer_1_active', timeout=10.0):
@@ -38,7 +40,28 @@ else:
     print('Timed out before predicate was true')
 ```
 
-## Upcoming features
+## Compatability table
 
-- Better API documentation
-- Helper functions to handle API response objects
+The latest version of the AICA API client will generally support the latest API version in the AICA framework. For
+older versions of the AICA framework, it may be necessary to install older versions of the client. Use the following
+compatability table to determine which client version to use.
+
+| API server version | Matching Python client version |
+|--------------------|--------------------------------|
+| `v3.x`             | `>= v2.0.0`                    |
+| `v2.x`             | `v1.2.0`                       |
+| `<= v1.x`          | Unsupported                    |
+
+Recent client versions also support the following functions to check the client version and API compatability.
+
+```python
+from aica_api.client import AICA
+
+aica = AICA()
+
+# get the current client version
+aica.client_version()
+
+# check compatability between the client version and API version
+aica.check()
+```
