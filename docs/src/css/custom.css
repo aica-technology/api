@@ -33,3 +33,7 @@
 [data-theme='dark'] .footer {
   background-color: var(--ifm-background-accent-color);
 }
+
+[data-theme='dark'] .themedSVG {
+  filter: invert(93%) hue-rotate(180deg)
+}

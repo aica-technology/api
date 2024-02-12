@@ -8,6 +8,9 @@ inputs:
   schema:
     description: "The name of the schema"
     required: true
+  branch-name:
+    description: "The name of the branch"
+    required: true
 
 runs:
   using: composite
@@ -48,7 +51,9 @@ runs:
         mv ${{ inputs.schema }} docs/static/schemas${{ steps.versions.outputs.new_version }}
         git config --global user.name github-actions[bot]
         git config --global user.email github-actions[bot]@users.noreply.github.com
+        git fetch
+        git checkout ${{ inputs.branch-name }}
         git pull
         git add .
-        git commit -m "docs: ${{ inputs.schema }} ${{ steps.versions.outputs.version_only }}"
+        git diff-index --quiet HEAD || git commit -m "docs: ${{ inputs.schema }} ${{ steps.versions.outputs.version_only }}"
         git push

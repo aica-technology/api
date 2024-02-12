@@ -3,6 +3,7 @@
   "title": "Parameter",
   "description": "A dynamic parameter that is publicly configurable.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "display_name": {
       "description": "The human-readable parameter name.",
@@ -48,6 +49,10 @@
         }
       ]
     },
+    "optional": {
+      "description": "Specify if this parameter is optional (only applicable if the default value is null)",
+      "type": "boolean"
+    },
     "dynamic": {
       "description": "Specify if this parameter can be dynamically reconfigured.",
       "type": "boolean"
@@ -65,16 +70,39 @@
     "parameter_type",
     "default_value"
   ],
-  "if": {
-    "properties": {
-      "parameter_type": {
-        "const": "state"
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "default_value": {
+            "not": {
+              "const": null
+            }
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "optional"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "parameter_type": {
+            "const": "state"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "parameter_state_type"
+        ]
       }
     }
-  },
-  "then": {
-    "required": [
-      "parameter_state_type"
-    ]
-  }
+
+  ]
 }

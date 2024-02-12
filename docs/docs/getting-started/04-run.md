@@ -60,11 +60,18 @@ like the example below:
 [INFO] [1702306119.566053151] [StateEngineInterface]: Successfully connected to Dynamic State Engine services
 ```
 
-If there are any errors, check that the license  (for example, `Error: license is invalid!` or `)
+:::info
+
+If there are any errors, check that the license file is valid and has been mounted correctly. For example, the following
+error would be shown from a correctly mounted but invalid license file:
 
 ```console
 [ERROR] [1702306228.377201011] [licensing]: Error: license is invalid (ERR - license is invalid), please check that it is correct
 ```
+
+Contact AICA support if the container does not start correctly despite a valid license file.
+
+:::
 
 ## Stopping the application container
 
@@ -80,6 +87,61 @@ Interface.
 ## Access the REST API
 
 Visit [localhost:5000](http://localhost:5000) to see the Swagger UI and documentation for the REST API.
+
+## Connect a terminal session to the container
+
+It is sometimes useful to connect to the application container while it is running to inspect files or run commands.
+This can be accomplished with the `docker container exec` command using the container name.
+
+:::note
+
+Change `CONTAINER_NAME` in the command below to the name of the running container.
+
+:::
+
+```bash
+docker container exec -it CONTAINER_NAME /bin/bash
+```
+
+:::tip
+
+You can find the names of all running containers with the `docker ps` command.
+
+Docker containers can also be given an explicit name when started with `docker run --name CONTAINER_NAME [...]`.
+
+:::
+
+Once attached, run any commands in the context of the container. For example, `ros2 topic list` will show the current
+ROS 2 topics.
+
+Detach from the container with CTRL+D or with the `exit` command.
+
+### Display sharing
+
+:::note
+
+Native display sharing for GUI applications is only supported on Linux hosts.
+
+:::
+
+To run GUI applications like RViz in the docker container, it is necessary to share additional environment variables
+for the display and X11 server.
+
+:::caution
+
+Running `xhost +` disables access control to the X11 server on the host, allowing the container to access the display.
+It also allows any other process to access the server, which carries security implications. Use with caution.
+
+Access control can be re-enabled with `xhost -`.
+
+:::
+
+```bash
+xhost +
+docker container exec -it -e DISPLAY="$DISPLAY" -e XAUTHORITY="$XAUTH" CONTAINER_NAME /bin/bash
+```
+
+You should then be able to run `rviz2` inside the container and see the window appear.
 
 ## Persistent user data
 

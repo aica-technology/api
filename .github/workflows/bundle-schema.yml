@@ -14,18 +14,52 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Create new branch
+        id: branch-name
+        shell: bash
+        run: |
+          git config --global user.name github-actions[bot]
+          git config --global user.email github-actions[bot]@users.noreply.github.com
+          BRANCH_NAME="ci/update-schemas-$(date +%s)"
+          echo "Generated branch name: $BRANCH_NAME"
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+          git checkout -b ${BRANCH_NAME}
+          git push -u origin ${BRANCH_NAME}
       - name: Bundle & Push JSON schema for application schemas
         uses: ./.github/actions/bundle-schema
         with:
           schema-path: ./schemas/applications/schema/application.schema.json
           schema: application.schema.json
+          branch-name: ${{ steps.branch-name.outputs.branch_name }}
       - name: Bundle & Push JSON schema for component-descriptions schemas
         uses: ./.github/actions/bundle-schema
         with:
           schema-path: ./schemas/component-descriptions/schema/component.schema.json
           schema: component.schema.json
+          branch-name: ${{ steps.branch-name.outputs.branch_name }}
       - name: Bundle & Push JSON schema for controller schemas
         uses: ./.github/actions/bundle-schema
         with:
           schema-path: ./schemas/controller-descriptions/schema/controller.schema.json
           schema: controller.schema.json
+          branch-name: ${{ steps.branch-name.outputs.branch_name }}
+      - name: Checkout branch ci/update-schemas
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.branch-name.outputs.branch_name }}
+      - name: Create pull request
+        shell: bash
+        run: |
+          MESSAGE=$(
+            gh pr create \
+            -B main \
+            -H ${{ steps.branch-name.outputs.branch_name }} \
+            --title 'ci: update schemas' \
+            --body 'This PR was automatically created by GitHub actions in response to schema changes. Please review and update any impacted code before merging the changes.' \
+            --reviewer domire8 \
+            --reviewer eeberhard \
+            2>&1
+          ) || echo "::warning::Error creating the PR: $MESSAGE"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

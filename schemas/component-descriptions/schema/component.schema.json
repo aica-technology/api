@@ -1,10 +1,19 @@
 {
-  "$id": "/1-0-0/component.schema.json",
+  "$id": "/1-1-0/component.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Dynamic Component Description",
   "description": "A full description of a dynamic component in the AICA application framework.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
+    "$schema": {
+      "title": "Schema",
+      "description": "The reference to the schema",
+      "examples": [
+        "https://json-schema.org/draft/2020-12/schema"
+      ],
+      "type": "string"
+    },
     "name": {
       "title": "Component Name",
       "description": "The human-readable name of the component.",

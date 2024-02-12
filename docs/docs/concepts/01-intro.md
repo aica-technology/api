@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 ---
+import SystemOverview from './assets/system-overview-embedded.svg';
+import ComponentsControllersHardware from './assets/components-controllers-hardware-embedded.svg';
 
 # Introduction
 
@@ -9,12 +11,16 @@ AICA is committed to making robotics more accessible by providing smart software
 Robotics software has many layers and comprises many different parts. The following terms are used to distinguish
 between different parts of the AICA software stack.
 
+<SystemOverview className="themedSVG" style={{width: "100%"}}/>
+
 ## AICA framework
 
 The AICA **framework** is a virtual robotics workspace pre-configured with a growing collection of software libraries
-for
-motion generation, signal processing, and control algorithms. It includes hardware interfaces for real-time external
-control of popular robot brands. The workspace is the foundation and the software libraries are the building blocks.
+for motion generation, signal processing, machine learning and control algorithms. It includes hardware interfaces for
+real-time external control of popular robot brands, force-torque sensors and cameras.
+The workspace is the foundation and the software libraries are the building blocks.
+
+<ComponentsControllersHardware className="themedSVG" style={{width: "100%"}}/>
 
 ## AICA applications
 
