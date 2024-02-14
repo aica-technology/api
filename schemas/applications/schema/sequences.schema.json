@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sequences",
+  "description": "A description of sequences used to trigger events events in a specific order",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
+      "title": "Sequence",
+      "description": "A named event sequence",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "events.schema.json"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "wait": {
+                "$ref": "#/$defs/wait"
+              }
+            },
+            "required": [
+              "wait"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "assert": {
+                "$ref": "#/$defs/assert"
+              }
+            },
+            "required": [
+              "assert"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "seconds": {
+      "title": "Seconds to wait",
+      "description": "The duration to wait in seconds",
+      "type": "number"
+    },
+    "wait": {
+      "title": "Wait",
+      "description": "Wait until a component predicate or condition is true or a defined time has elapsed",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "events/identifiers/component.schema.json"
+        },
+        "condition": {
+          "$ref": "events/identifiers/condition.schema.json"
+        },
+        "predicate": {
+          "$ref": "events/identifiers/predicate.schema.json"
+        },
+        "seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "timeout": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "seconds": {
+              "$ref": "#/$defs/seconds"
+            },
+            "events": {
+              "$ref": "events.schema.json"
+            }
+          },
+          "required": [
+            "seconds",
+            "events"
+          ]
+        }
+      }
+    },
+    "assert": {
+      "title": "Assert",
+      "description": "Assert that a component predicate or condition is true or else abort the sequence",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "events/identifiers/component.schema.json"
+        },
+        "condition": {
+          "$ref": "events/identifiers/condition.schema.json"
+        },
+        "predicate": {
+          "$ref": "events/identifiers/predicate.schema.json"
+        },
+        "else": {
+          "description": "A description of application events to be triggered if the assertion fails",
+          "$ref": "events.schema.json"
+        }
+      }
+    }
+  }
+}

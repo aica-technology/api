@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Events",
-  "description": "Events",
+  "description": "A description of application events to be triggered",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -25,6 +25,9 @@
     },
     "switch_controllers": {
       "$ref": "events/switch_controllers.schema.json"
+    },
+    "sequence": {
+      "$ref": "events/sequence.schema.json"
     }
   }
 }
