@@ -2,9 +2,15 @@
 
 Release Versions:
 
+- [1-1-2](#112)
 - [1-1-1](#111)
 - [1-1-0](#110)
 - [1-0-0](#100)
+
+## 1-1-2
+
+Version 1-1-2 allows a single item in the list of transitions of lifecycle events to be just the transition keyword
+instead of a full transition object.
 
 ## 1-1-1
 
