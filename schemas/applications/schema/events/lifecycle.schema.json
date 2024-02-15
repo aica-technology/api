@@ -8,7 +8,14 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "$ref": "#/$defs/lifecycle_object"
+        "oneOf": [
+          {
+            "$ref": "#/$defs/lifecycle_object"
+          },
+          {
+            "$ref": "#/$defs/transition"
+          }
+        ]
       }
     },
     {
