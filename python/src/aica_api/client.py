@@ -66,7 +66,7 @@ class AICA:
             return True
         elif api_version.startswith('2'):
             print(f'The detected API version v{api_version} is older than the minimum API version v3.0.0 supported by '
-                  f'this client (v{self.client_version()}). Please install Python API client version v1.2.0 or later'
+                  f'this client (v{self.client_version()}). Please install Python API client version v1.2.0 '
                   f'for API server versions v2.X.')
             return False
         else:
