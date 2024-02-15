@@ -22,11 +22,11 @@ In order to bundle the schemas locally for debugging and testing, do the followi
 desired schema generation):
 
 ```bash
-docker build -t aica-technology/api-schema - <<EOF
+docker build -t aica-technology/api-schema -f- . <<EOF
 FROM node:latest
 WORKDIR /tmp
 COPY . .
-RUN npm install utils
+RUN cd utils && npm install
 RUN node utils/bundleHelper.js <path>/<schema>.schema.json <schema>.schema.json
 EOF
 CONTAINER_ID=$(docker run -d aica-technology/api-schema)
