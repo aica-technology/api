@@ -2,10 +2,17 @@
 
 Release Versions:
 
+- [1-2-0](#120)
 - [1-1-2](#112)
 - [1-1-1](#111)
 - [1-1-0](#110)
 - [1-0-0](#100)
+
+## 1-2-0
+
+Version 2-0-0 adds a new syntax to manage sequential events as an array of steps to be handled in order. Sequence steps
+are either standard state events or conditional blocks; the latter are used either to wait for a condition, predicate
+or fixed time interval, or to assert the current value of a condition or predicate.
 
 ## 1-1-2
 
