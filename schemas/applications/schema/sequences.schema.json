@@ -178,7 +178,41 @@
           "description": "A description of application events to be triggered if the assertion fails",
           "$ref": "events.schema.json"
         }
-      }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "condition"
+          ],
+          "oneOf": [
+            {},
+            {
+              "required": [
+                "component"
+              ]
+            },
+            {
+              "required": [
+                "predicate"
+              ]
+            }
+          ]
+        },
+        {
+          "required": [
+            "component",
+            "predicate"
+          ],
+          "oneOf": [
+            {},
+            {
+              "required": [
+                "condition"
+              ]
+            }
+          ]
+        }
+      ]
     }
   }
 }
