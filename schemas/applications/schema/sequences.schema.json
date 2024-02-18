@@ -48,41 +48,116 @@
       "description": "The duration to wait in seconds",
       "type": "number"
     },
+    "timeout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "events": {
+          "$ref": "events.schema.json"
+        }
+      },
+      "required": [
+        "seconds",
+        "events"
+      ]
+    },
     "wait": {
       "title": "Wait",
       "description": "Wait until a component predicate or condition is true or a defined time has elapsed",
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "condition": {
+          "$ref": "events/identifiers/component.schema.json"
+        },
         "component": {
           "$ref": "events/identifiers/component.schema.json"
         },
-        "condition": {
-          "$ref": "events/identifiers/condition.schema.json"
-        },
         "predicate": {
-          "$ref": "events/identifiers/predicate.schema.json"
+          "$ref": "events/identifiers/condition.schema.json"
         },
         "seconds": {
           "$ref": "#/$defs/seconds"
         },
         "timeout": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "seconds": {
-              "$ref": "#/$defs/seconds"
-            },
-            "events": {
-              "$ref": "events.schema.json"
-            }
-          },
+          "$ref": "#/$defs/timeout"
+        }
+      },
+      "oneOf": [
+        {
           "required": [
-            "seconds",
-            "events"
+            "condition"
+          ],
+          "oneOf": [
+            {},
+            {
+              "required": [
+                "component"
+              ]
+            },
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "seconds"
+              ]
+            }
+          ]
+        },
+        {
+          "required": [
+            "component",
+            "predicate"
+          ],
+          "oneOf": [
+            {},
+            {
+              "required": [
+                "condition"
+              ]
+            },
+            {
+              "required": [
+                "seconds"
+              ]
+            }
+          ]
+        },
+        {
+          "required": [
+            "seconds"
+          ],
+          "oneOf": [
+            {},
+            {
+              "required": [
+                "condition"
+              ]
+            },
+            {
+              "required": [
+                "component"
+              ]
+            },
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "timeout"
+              ]
+            }
           ]
         }
-      }
+      ]
     },
     "assert": {
       "title": "Assert",
