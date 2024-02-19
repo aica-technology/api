@@ -15,11 +15,21 @@
             "$ref": "events.schema.json"
           },
           {
-            "type": "object",
+            "title": "Wait",
             "additionalProperties": false,
             "properties": {
               "wait": {
-                "$ref": "#/$defs/wait"
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/wait_for_condition"
+                  },
+                  {
+                    "$ref": "#/$defs/wait_for_predicate"
+                  },
+                  {
+                    "$ref": "#/$defs/wait_for_time"
+                  }
+                ]
               }
             },
             "required": [
@@ -27,11 +37,18 @@
             ]
           },
           {
-            "type": "object",
+            "title": "Assert",
             "additionalProperties": false,
             "properties": {
               "assert": {
-                "$ref": "#/$defs/assert"
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/assert_condition"
+                  },
+                  {
+                    "$ref": "#/$defs/assert_predicate"
+                  }
+                ]
               }
             },
             "required": [
@@ -64,112 +81,84 @@
         "events"
       ]
     },
-    "wait": {
-      "title": "Wait",
-      "description": "Wait until a component predicate or condition is true or a defined time has elapsed",
+    "wait_for_condition": {
+      "title": "Wait for Condition",
+      "description": "Wait until a condition is true with an optional timeout to abort the sequence and handle breakout events",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "condition": {
-          "$ref": "events/identifiers/component.schema.json"
-        },
-        "component": {
-          "$ref": "events/identifiers/component.schema.json"
-        },
-        "predicate": {
           "$ref": "events/identifiers/condition.schema.json"
-        },
-        "seconds": {
-          "$ref": "#/$defs/seconds"
         },
         "timeout": {
           "$ref": "#/$defs/timeout"
         }
       },
-      "oneOf": [
-        {
-          "required": [
-            "condition"
-          ],
-          "oneOf": [
-            {},
-            {
-              "required": [
-                "component"
-              ]
-            },
-            {
-              "required": [
-                "predicate"
-              ]
-            },
-            {
-              "required": [
-                "seconds"
-              ]
-            }
-          ]
-        },
-        {
-          "required": [
-            "component",
-            "predicate"
-          ],
-          "oneOf": [
-            {},
-            {
-              "required": [
-                "condition"
-              ]
-            },
-            {
-              "required": [
-                "seconds"
-              ]
-            }
-          ]
-        },
-        {
-          "required": [
-            "seconds"
-          ],
-          "oneOf": [
-            {},
-            {
-              "required": [
-                "condition"
-              ]
-            },
-            {
-              "required": [
-                "component"
-              ]
-            },
-            {
-              "required": [
-                "predicate"
-              ]
-            },
-            {
-              "required": [
-                "timeout"
-              ]
-            }
-          ]
-        }
+      "required": [
+        "condition"
       ]
     },
-    "assert": {
-      "title": "Assert",
-      "description": "Assert that a component predicate or condition is true or else abort the sequence",
+    "wait_for_predicate": {
+      "title": "Wait for Predicate",
+      "description": "Wait until a component predicate is true with an optional timeout to abort the sequence and handle breakout events",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "component": {
           "$ref": "events/identifiers/component.schema.json"
         },
+        "predicate": {
+          "$ref": "events/identifiers/predicate.schema.json"
+        },
+        "timeout": {
+          "$ref": "#/$defs/timeout"
+        }
+      },
+      "required": [
+        "component",
+        "predicate"
+      ]
+    },
+    "wait_for_time": {
+      "title": "Wait",
+      "description": "Wait for a defined time",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "seconds": {
+          "$ref": "#/$defs/seconds"
+        }
+      },
+      "required": [
+        "seconds"
+      ]
+    },
+    "assert_condition": {
+      "title": "Assert Condition",
+      "description": "Assert that a condition is true or else abort the sequence and handle breakout events",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
         "condition": {
           "$ref": "events/identifiers/condition.schema.json"
+        },
+        "else": {
+          "description": "A description of application events to be triggered if the assertion fails",
+          "$ref": "events.schema.json"
+        }
+      },
+      "required": [
+        "condition"
+      ]
+    },
+    "assert_predicate": {
+      "title": "Assert Predicate",
+      "description": "Assert that a component predicate is true or else abort the sequence and handle breakout events",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "events/identifiers/component.schema.json"
         },
         "predicate": {
           "$ref": "events/identifiers/predicate.schema.json"
@@ -179,39 +168,9 @@
           "$ref": "events.schema.json"
         }
       },
-      "oneOf": [
-        {
-          "required": [
-            "condition"
-          ],
-          "oneOf": [
-            {},
-            {
-              "required": [
-                "component"
-              ]
-            },
-            {
-              "required": [
-                "predicate"
-              ]
-            }
-          ]
-        },
-        {
-          "required": [
-            "component",
-            "predicate"
-          ],
-          "oneOf": [
-            {},
-            {
-              "required": [
-                "condition"
-              ]
-            }
-          ]
-        }
+      "required": [
+        "component",
+        "predicate"
       ]
     }
   }
