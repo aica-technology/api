@@ -8,363 +8,32 @@ The following sections define the YAML syntax used to describe an AICA applicati
 
 ## Overview
 
-An application description contains the following top-level elements.
+An application description may contain some or all of the following top-level fields.
 
 ```yaml
 on_start:
-  ...
-
-buttons:
-  ...
-
-hardware:
-  ...
-
-conditions:
   ...
 
 components:
   ...
-```
 
-## On start
-
-The `on_start` keyword is reserved as a special event trigger when the application is launched.
-List the [events](#events) to trigger on startup (for example, to load components and hardware interfaces).
-
-```yaml
-on_start:
-  load:
-    - component: component_a
-    - component: component_b
-    - hardware: robot_a
-```
-
-## Buttons
-
-Buttons are interactive elements in the Developer Interface UI. They are used to manually trigger state events when an
-application is running by clicking the trigger button in the application graph. Buttons have no effect on the
-application if the UI is not used.
-
-```yaml
-buttons:
-  my_button:
-    position: ...
-    on_click:
-      ...
-```
-
-### Position
-
-The `position` field is used to define the desired location of the button in the application graph. It has two subfields
-defining the X and Y location, respectively.
-
-```yaml
-my_button:
-  position:
-    x: 100
-    y: 200
-```
-
-### On Click
-
-List the [events](#events) to trigger when the button is clicked while the application is running (for example, to
-unload a component).
-
-```yaml
-my_button:
-  on_click:
-    unload:
-      component: component_a
-```
-
-## Hardware
-
-Hardware interfaces describe the connected robots and their corresponding controllers.
-
-```yaml
 hardware:
-  robot_a:
-    urdf: ...
-    rate: ...
-    parameters:       # optional
-      ...
-    display_name: ... # optional
-    position: ...     # optional
-    controllers:
-      ...
-  robot_b:
-    ...
-```
+  ...
 
-### URDF
-
-The `urdf` field refers to a specially formatted robot description file which defines the joint configurations and the
-hardware interface driver needed to communicate with the robot.
-
-A hardware interface can be linked to URDF file in one of the following ways:
-
-- By name of the custom URDF uploaded to the AICA database
-- By name of an example URDF included in the AICA image (available examples depend on license and distribution versions)
-- By the path of a URDF file mounted in the container filesystem
-- By URDF string content inserted directly in the YAML (not recommended for large files)
-
-```yaml
-# referring to a custom robot description uploaded to the user database
-robot_a:
-  urdf: My custom robot
-
-# referring to a built-in robot description from the included examples
-robot_b:
-  urdf: Universal Robots 5e (default configuration)
-
-# using the path to a URDF file mounted in the container filesystem
-robot_c:
-  urdf: /home/ros2/my_robot.urdf
-
-# defining the URDF content in-line
-robot_d:
-  urdf: |
-    <robot name="example">
-        <ros2_control name="ExampleRobotHardwareInterface" type="system">
-            <hardware>
-                <plugin>robot_interface/GenericInterface</plugin>
-            </hardware>
-            ...
-        </ros2_control>
-        ...
-    </robot>
-```
-
-:::info
-
-Use the Hardware tab in the Developer Interface to manage available URDFs.
-
-Alternatively, use the API endpoints at `/v1/data/hardware` and `/v1/examples/hardware` to manage custom hardware and
-view the available built-in example URDFs, respectively.
-
-:::
-
-### Rate
-
-The `rate` field defines the robot control frequency in Hz.
-
-### Parameters
-
-The `parameters` field is used to set hardware-specific parameter values which override the default values from the
-associated URDF.
-
-Specifically, the URDF is expected to include a `<ros2_control>` tag under which hardware properties are defined,
-including the hardware plugin and any number of parameters specific to that plugin.
-
-For example, a `robot_interface/GenericInterface` plugin may accept a `robot_ip` parameter to specify the IP address:
-
-```xml
-
-<robot name="example">
-    <ros2_control name="ExampleRobotHardwareInterface" type="system">
-        <hardware>
-            <plugin>robot_interface/GenericInterface</plugin>
-            <param name="robot_ip">192.168.0.1</param>
-        </hardware>
-        ...
-    </ros2_control>
-    ...
-</robot>
-```
-
-By adding `robot_ip` under the `parameters` field, the default IP address can be overridden when the hardware interface
-is loaded:
-
-```yaml
-my_robot:
-  urdf: Example Robot
-  parameters:
-    robot_ip: 172.16.0.1
-```
-
-In this example, the robot interface would be loaded with the IP address of `172.16.0.1` instead of the default
-`192.168.0.1` as specified in the URDF. This allows parameters to be selectively altered at deploy time directly in the
-application description without needing to modify the URDF itself.
-
-:::note
-
-Hardware parameter values are only applied if the parameter name matches an existing hardware parameter in the URDF.
-If the parameter does not exist in the URDF, it will not be added.
-
-:::
-
-### Display name
-
-The optional `display_name` field can be used to give the hardware interface a more human-readable name (one that
-doesn't have to conform to the `lower_snake_case` naming convention of the YAML syntax). It is only used when rendering
-the hardware interface as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the
-YAML field (from the previous example, it would default to `robot_a`).
-
-### Position
-
-This optional field is identical to the [button position](#position) and is used to provide an X, Y position for the
-component when rendered as a node in the AICA interactive graph editor.
-
-This field only affects visualization of the application graph and has no other run-time effect.
-If a position is not specified, the node will be rendered at a procedurally chosen location.
-
-### Controllers
-
-Controllers are the interface between components in the application and hardware in the real world. They convert desired
-reference signals into real joint commands according to some internal control law, and convert joint states from the
-robot back to signals.
-
-Controllers are listed under a top-level `controllers` field. Controller names must be unique within the given hardware
-interface, and should generally follow the `lower_camel_case` naming convention.
-
-Under each controller, the `plugin` field refers to a registered controller plugin name.
-
-The `parameters` field then refers to configurable parameters for the given controller.
-
-The `inputs` and `outputs` fields define the ROS2 topics to which each signal of the controller should be connected.
-See also [Component Inputs and Outputs](#inputs-and-outputs).
-
-Optionally, the `position` field can be used to specify an X, Y location for rendering the hardware interface
-as a node in the AICA interactive graph editor. See also [Component Position](#position).
-
-For example:
-
-```yaml
-robot:
-  controllers:
-    broadcaster:
-      plugin: joint_state_broadcaster/JointStateBroadcaster
-    twist_controller:
-      plugin: "compliant_twist_controller/CompliantTwistController"
-      parameters:
-        linear_principle_damping: 10.0
-        linear_orthogonal_damping: 10.0
-        angular_stiffness: 1.0
-        angular_damping: { a: 1.0, b: true }
-      inputs:
-        command: /motion_generator/command_output
-      outputs:
-        state: /recorder/state_input
-```
-
-## Conditions
-
-Conditions are event triggers based on logical combinations of predicates.
-
-Conditions are listed under a top-level field called `conditions`. Condition names must be unique, and should
-generally follow the `lower_camel_case` naming convention.
-
-Conditional events are triggered only on the rising edge of the condition, preventing the repeated execution of an
-event if the condition stays true.
-
-Define events to be triggered by a condition by listing them under the condition name. See the [events](#events) section
-for available event syntax.
-
-```yaml
 conditions:
-  condition_1:
-    component: ...
-    predicate: ...
-    events:
-      ...
+  ...
 
-  condition_2:
-    <conditional_operator>: ...  # not, all, any, one_of
-    events:
-      ...
+sequences:
+  ...
 
+buttons:
+  ...
 ```
 
-### Simple conditions
-
-A simple condition evaluates just a single component predicate and triggers the listed events when it is true.
-
-```yaml
-condition_1:
-  component: my_component
-  predicate: some_component_predicate
-  events:
-    ...
-```
-
-### Conditional operators
-
-To combine multiple predicates together into a single true / false condition, the following operators can be used.
-
-The operators can refer to one or more component predicates with the syntax
-`{ component: component_a, predicate: some_predicate }`
-
-#### Not
-
-The `not` operator takes a single item and negates its value. It is true when the item is false, and false when the
-item is true.
-
-```yaml
-condition_1:
-  not: { component: component_a, predicate: some_predicate }
-  events:
-    ...
-```
-
-#### All
-
-The `all` operator takes a list of items and is true only when every listed item is true.
-
-```yaml
-condition_1:
-  all:
-    - { component: component_a, predicate: some_predicate }
-    - { component: component_b, predicate: some_predicate }
-  events:
-    ...
-```
-
-#### Any
-
-The `any` operator takes a list of items and is true when at least one of the listed items is true.
-
-```yaml
-condition_1:
-  any:
-    - { component: component_a, predicate: some_predicate }
-    - { component: component_b, predicate: some_predicate }
-  events:
-    ...
-```
-
-#### One of
-
-The `one_of` operator takes a list of items and is true only when exactly one of the listed items is true.
-
-```yaml
-condition_1:
-  one_of:
-    - { component: component_a, predicate: some_predicate }
-    - { component: component_b, predicate: some_predicate }
-  events:
-    ...
-```
-
-### Nested conditions
-
-The conditional operators can be applied recursively for more complex conditions. The following example could be
-collapsed into the equivalent logical pseudocode: `NOT(a AND b AND (c OR d OR (e XOR f)))`
-
-```yaml
-conditions:
-  nested_condition:
-    not:
-      all:
-        - { component: component_1, predicate: a }
-        - { component: component_2, predicate: b }
-        - any:
-            - { component: component_3, predicate: c }
-            - { component: component_4, predicate: d }
-            - one_of:
-                - { component: component_5, predicate: e }
-                - { component: component_6, predicate: f }
-```
+The fields `components` and `hardware` define the main building blocks of the application. The fields `conditions`
+and `sequences` define fine-grained application logic to trigger application state events. The `on_start` field defines
+a list of events to be triggered when the application is started, while the `buttons` field defines interactive buttons
+to manually trigger events through the AICA developer interface.
 
 ## Components
 
@@ -405,13 +74,22 @@ my_component:
 
 ### Display name
 
-This optional field is identical to the [hardware display name](#display-name) and is used to assign a
-nicer, human-readable display name to the component when rendered as a node in the AICA interactive graph editor.
+The optional `display_name` field can be used to give the component a more human-readable name (one that does not have
+to conform to the `lower_snake_case` naming convention of the YAML syntax). It is only used when rendering the component
+as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the YAML field (from the
+previous example, it would default to `my_component`).
 
 ### Position
 
-This optional field is identical to the [button position](#position) and is used to provide an X, Y position for the
-component when rendered as a node in the AICA interactive graph editor.
+The `position` field is used to define the desired location of the button in the application graph. It has two subfields
+defining the X and Y location, respectively.
+
+```yaml
+my_component:
+  position:
+    x: 100
+    y: 200
+```
 
 ### Log level
 
@@ -656,14 +334,6 @@ unload:
   hardware: <hardware_name>
 ```
 
-:::caution
-
-All hardware interfaces in the application are automatically loaded and initialized when the application starts.
-
-This behavior may change in the near future.
-
-:::
-
 #### Load or unload a controller
 
 ```yaml
@@ -704,6 +374,26 @@ A controller must be loaded before it can be activated, and must be deactivated 
 
 :::
 
+#### Manage sequences
+
+Use the `sequence` event to either start, restart or abort a named [sequence](#sequences) in the application
+description. Use the respective `start`, `restart` or `abort` fields either individually or collectively.
+
+```yaml
+sequence:
+  start: <sequence_name>
+  restart: <sequence_name>
+  abort: <sequence_name>
+```
+
+To manage multiple sequences with the same event trigger, use a list syntax.
+
+```yaml
+sequence:
+  - start: "sequence_a"
+  - start: "sequence_b"
+```
+
 ### Special event predicates
 
 #### on_load
@@ -729,6 +419,485 @@ component:
   events:
     on_unload:
       <some triggered event>: ...
+```
+
+## Hardware
+
+Hardware interfaces describe the connected robots and their corresponding controllers.
+
+```yaml
+hardware:
+  robot_a:
+    urdf: ...
+    rate: ...
+    parameters: # optional
+      ...
+    display_name: ... # optional
+    position: ...     # optional
+    controllers:
+      ...
+  robot_b:
+    ...
+```
+
+### URDF
+
+The `urdf` field refers to a specially formatted robot description file which defines the joint configurations and the
+hardware interface driver needed to communicate with the robot.
+
+A hardware interface can be linked to URDF file in one of the following ways:
+
+- By name of the custom URDF uploaded to the AICA database
+- By name of an example URDF included in the AICA image (available examples depend on license and distribution versions)
+- By the path of a URDF file mounted in the container filesystem
+- By URDF string content inserted directly in the YAML (not recommended for large files)
+
+```yaml
+# referring to a custom robot description uploaded to the user database
+robot_a:
+  urdf: My custom robot
+
+# referring to a built-in robot description from the included examples
+robot_b:
+  urdf: Universal Robots 5e (default configuration)
+
+# using the path to a URDF file mounted in the container filesystem
+robot_c:
+  urdf: /home/ros2/my_robot.urdf
+
+# defining the URDF content in-line
+robot_d:
+  urdf: |
+    <robot name="example">
+        <ros2_control name="ExampleRobotHardwareInterface" type="system">
+            <hardware>
+                <plugin>robot_interface/GenericInterface</plugin>
+            </hardware>
+            ...
+        </ros2_control>
+        ...
+    </robot>
+```
+
+:::info
+
+Use the Hardware tab in the Developer Interface to manage available URDFs.
+
+Alternatively, use the API endpoints at `/v1/data/hardware` and `/v1/examples/hardware` to manage custom hardware and
+view the available built-in example URDFs, respectively.
+
+:::
+
+### Rate
+
+The `rate` field defines the robot control frequency in Hz.
+
+### Parameters
+
+The `parameters` field is used to set hardware-specific parameter values which override the default values from the
+associated URDF.
+
+Specifically, the URDF is expected to include a `<ros2_control>` tag under which hardware properties are defined,
+including the hardware plugin and any number of parameters specific to that plugin.
+
+For example, a `robot_interface/GenericInterface` plugin may accept a `robot_ip` parameter to specify the IP address:
+
+```xml
+
+<robot name="example">
+    <ros2_control name="ExampleRobotHardwareInterface" type="system">
+        <hardware>
+            <plugin>robot_interface/GenericInterface</plugin>
+            <param name="robot_ip">192.168.0.1</param>
+        </hardware>
+        ...
+    </ros2_control>
+    ...
+</robot>
+```
+
+By adding `robot_ip` under the `parameters` field, the default IP address can be overridden when the hardware interface
+is loaded:
+
+```yaml
+my_robot:
+  urdf: Example Robot
+  parameters:
+    robot_ip: 172.16.0.1
+```
+
+In this example, the robot interface would be loaded with the IP address of `172.16.0.1` instead of the default
+`192.168.0.1` as specified in the URDF. This allows parameters to be selectively altered at deploy time directly in the
+application description without needing to modify the URDF itself.
+
+:::note
+
+Hardware parameter values are only applied if the parameter name matches an existing hardware parameter in the URDF.
+If the parameter does not exist in the URDF, it will not be added.
+
+:::
+
+### Display name
+
+This optional field is identical to the [component display name](#display-name) and is used to assign a nicer,
+human-readable display name to the hardware interface when rendered as a node in the AICA interactive graph editor.
+
+### Position
+
+This optional field is identical to the [component position](#position) and is used to provide an X, Y position for the
+hardware interface when rendered as a node in the AICA interactive graph editor.
+
+This field only affects visualization of the application graph and has no other run-time effect.
+If a position is not specified, the node will be rendered at a procedurally chosen location.
+
+### Controllers
+
+Controllers are the interface between components in the application and hardware in the real world. They convert desired
+reference signals into real joint commands according to some internal control law, and convert joint states from the
+robot back to signals.
+
+Controllers are listed under a top-level `controllers` field. Controller names must be unique within the given hardware
+interface, and should generally follow the `lower_camel_case` naming convention.
+
+Under each controller, the `plugin` field refers to a registered controller plugin name.
+
+The `parameters` field then refers to configurable parameters for the given controller.
+
+The `inputs` and `outputs` fields define the ROS2 topics to which each signal of the controller should be connected.
+See also [Component Inputs and Outputs](#inputs-and-outputs).
+
+Optionally, the `position` field can be used to specify an X, Y location for rendering the hardware interface
+as a node in the AICA interactive graph editor. See also [Component Position](#position).
+
+For example:
+
+```yaml
+robot:
+  controllers:
+    broadcaster:
+      plugin: joint_state_broadcaster/JointStateBroadcaster
+    twist_controller:
+      plugin: "compliant_twist_controller/CompliantTwistController"
+      parameters:
+        linear_principle_damping: 10.0
+        linear_orthogonal_damping: 10.0
+        angular_stiffness: 1.0
+        angular_damping: { a: 1.0, b: true }
+      inputs:
+        command: /motion_generator/command_output
+      outputs:
+        state: /recorder/state_input
+```
+
+## Conditions
+
+Conditions are event triggers based on logical combinations of predicates.
+
+Conditions are listed under a top-level field called `conditions`. Condition names must be unique, and should
+generally follow the `lower_camel_case` naming convention.
+
+Conditional events are triggered only on the rising edge of the condition, preventing the repeated execution of an
+event if the condition stays true.
+
+Define events to be triggered by a condition by listing them under the condition name. See the [events](#events) section
+for available event syntax.
+
+```yaml
+conditions:
+  condition_1:
+    component: ...
+    predicate: ...
+    events:
+      ...
+
+  condition_2:
+    <conditional_operator>: ...  # not, all, any, one_of
+    events:
+      ...
+
+```
+
+### Simple conditions
+
+A simple condition evaluates just a single component predicate and triggers the listed events when it is true.
+
+```yaml
+condition_1:
+  component: my_component
+  predicate: some_component_predicate
+  events:
+    ...
+```
+
+### Conditional operators
+
+To combine multiple predicates together into a single true / false condition, the following operators can be used.
+
+The operators can refer to one or more component predicates with the syntax
+`{ component: component_a, predicate: some_predicate }`
+
+#### Not
+
+The `not` operator takes a single item and negates its value. It is true when the item is false, and false when the
+item is true.
+
+```yaml
+condition_1:
+  not: { component: component_a, predicate: some_predicate }
+  events:
+    ...
+```
+
+#### All
+
+The `all` operator takes a list of items and is true only when every listed item is true.
+
+```yaml
+condition_1:
+  all:
+    - { component: component_a, predicate: some_predicate }
+    - { component: component_b, predicate: some_predicate }
+  events:
+    ...
+```
+
+#### Any
+
+The `any` operator takes a list of items and is true when at least one of the listed items is true.
+
+```yaml
+condition_1:
+  any:
+    - { component: component_a, predicate: some_predicate }
+    - { component: component_b, predicate: some_predicate }
+  events:
+    ...
+```
+
+#### One of
+
+The `one_of` operator takes a list of items and is true only when exactly one of the listed items is true.
+
+```yaml
+condition_1:
+  one_of:
+    - { component: component_a, predicate: some_predicate }
+    - { component: component_b, predicate: some_predicate }
+  events:
+    ...
+```
+
+### Nested conditions
+
+The conditional operators can be applied recursively for more complex conditions. The following example could be
+collapsed into the equivalent logical pseudocode: `NOT(a AND b AND (c OR d OR (e XOR f)))`
+
+```yaml
+conditions:
+  nested_condition:
+    not:
+      all:
+        - { component: component_1, predicate: a }
+        - { component: component_2, predicate: b }
+        - any:
+            - { component: component_3, predicate: c }
+            - { component: component_4, predicate: d }
+            - one_of:
+                - { component: component_5, predicate: e }
+                - { component: component_6, predicate: f }
+```
+
+## Sequences
+
+A sequence is a list of steps that are handled sequentially in order. Sequence steps are either
+standard [state events](#events) or conditional blocks; the conditional steps are used either to wait for a condition,
+predicate or fixed time interval, or to assert the current value of a condition or predicate.
+
+Similar to [conditions](#conditions), sequences are listed under a top-level field called `sequences`. Sequence names
+must be unique, and should generally follow the `lower_camel_case` naming convention.
+
+After sequences are defined in the yaml, they can be managed using [sequence state events](#manage-sequences); component
+predicates, conditions and even sequences can also start, restart or abort a sequence.
+
+The example below uses a combination of standard event steps and conditional blocks; it asserts that a component is
+active, sets a parameter on that component, waits 10 seconds, and then activates a controller.
+
+```yaml
+sequences:
+  sequence_1:
+    - assert:
+        component: my_component
+        predicate: is_active
+    - set:
+        component: my_component
+        parameter: speed
+        value: 2.0
+    - wait:
+        seconds: 10
+    - switch_controllers:
+        hardware: my_hardware
+        activate: my_controller
+```
+
+### Sequence assert
+
+The `assert` keyword is an assertion step to check if a condition or predicate is true. If the assertion succeeds,
+the sequence continues to the next step. If the assertion fails, the sequence is automatically aborted.
+Optionally, assertion failure can be used to trigger breakout events as a form of error handling.
+
+The following examples show the syntax to check either a condition or component predicate respectively.
+
+```yaml
+assert:
+  condition: my_condition
+```
+
+```yaml
+assert:
+  component: my_component
+  predicate: some_predicate
+```
+
+The `else` keyword is optionally used to define breakout events if the assertion fails. The following example would
+unload a component if condition `my_condition` is not true and then abort the sequence.
+
+```yaml
+assert:
+  condition: my_condition
+  else:
+    unload:
+      component: my_component
+```
+
+### Sequence wait
+
+The `wait` keyword is used to wait for either a fixed time interval or for a condition or component predicate to be
+true.
+
+#### Waiting for a specified time interval
+
+The simplest case is waiting for fixed duration, which uses the `seconds` field to define the time to wait in seconds.
+
+```yaml
+wait:
+  seconds: 10
+```
+
+#### Waiting for a condition or predicate
+
+The following examples show the syntax to wait for either a condition or component predicate state respectively.
+
+```yaml
+wait:
+  condition: my_condition
+```
+
+```yaml
+wait:
+  component: my_component
+  predicate: some_predicate
+```
+
+Compared to the simple fixed-time wait, a conditional wait step could block the sequence indefinitely. The `timeout`
+field can be used when waiting for a condition or predicate to set a maximum time limit. The time limit is defined in
+seconds with the `seconds` field.
+
+Similar to assertions, the sequence is aborted if the wait step times out. The optional `events` keyword can be used
+under the `timeout` field to define breakout events if the assertion fails. The following example would unload a
+component if condition `my_condition` is not true within 10 seconds and then abort the sequence.
+
+```yaml
+wait:
+  condition: my_condition
+  timeout:
+    seconds: 10
+    events:
+      unload:
+        component: my_component
+```
+
+### Using sequences to manage program flow
+
+Because sequences can also use sequence state events as steps, fine-grained looping and branching logic can be
+expressed.
+
+For example, this sequence would activate and deactivate a lifecycle component every 5 seconds in an endless loop:
+
+```yaml
+sequences:
+  my_sequence:
+    - lifecycle:
+        component: my_component
+        transition: activate
+    - wait:
+        seconds: 5
+    - lifecycle:
+        component: my_component
+        transition: deactivate
+    - wait:
+        seconds: 5
+    - sequence:
+        restart: my_sequence
+```
+
+The next example starts `sequence_2` if a condition is true, and else starts `sequence_3`.
+
+```yaml
+sequences:
+  sequence_1:
+    - wait:
+        seconds: 5
+    - assert:
+        condition: my_condition
+        else:
+          sequence:
+            start: sequence_3
+    - sequence:
+        start: sequence_2
+```
+
+## On Start
+
+The `on_start` keyword is reserved as a special event trigger when the application is launched.
+List the [events](#events) to trigger on startup (for example, to load components and hardware interfaces).
+
+```yaml
+on_start:
+  load:
+    - component: component_a
+    - component: component_b
+    - hardware: robot_a
+```
+
+## Buttons
+
+Buttons are interactive elements in the Developer Interface UI. They are used to manually
+trigger [state events](#events) when an application is running by clicking the trigger button in the application graph.
+Buttons have no effect on the application if the UI is not used.
+
+```yaml
+buttons:
+  my_button:
+    position: ...
+    on_click:
+      ...
+```
+
+### Position
+
+This optional field is identical to the [component position](#position) and is used to provide an X, Y position for the
+component when rendered as a node in the AICA interactive graph editor.
+
+### On Click
+
+List the [events](#events) to trigger when the button is clicked while the application is running (for example, to
+unload a component).
+
+```yaml
+my_button:
+  on_click:
+    unload:
+      component: component_a
 ```
 
 ## Validating a YAML application
