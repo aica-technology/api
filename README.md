@@ -30,8 +30,8 @@ RUN cd utils && npm install
 RUN node utils/bundleHelper.js <path>/<schema>.schema.json <schema>.schema.json
 EOF
 if [ $? -eq 0 ]; then \
-CONTAINER_ID=$(docker run -d aica-technology/api-schema);
-docker cp "${CONTAINER_ID}":/tmp/<schema>.schema.json .;
-docker stop "${CONTAINER_ID}";
+  CONTAINER_ID=$(docker run -d aica-technology/api-schema);
+  docker cp "${CONTAINER_ID}":/tmp/<schema>.schema.json .;
+  docker stop "${CONTAINER_ID}";
 fi
 ```
