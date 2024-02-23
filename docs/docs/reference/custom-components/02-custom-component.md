@@ -493,7 +493,7 @@ from std_msgs.msg import Float64
 
 from modulo_core.encoded_state import EncodedState
 
-from clproto.MessageType import CARTESIAN_POSE_MESSAGE
+from clproto import MessageType
 from state_representation import CartesianPose
 ```
 
@@ -509,7 +509,7 @@ from state_representation import CartesianPose
         self.add_output("number", "_output_number", Float64)
         
         # for encoded states, further define the expected state type when binding the output
-        self.add_output("pose", "_output_pose", EncodedState, CARTESIAN_POSE_MESSAGE)
+        self.add_output("pose", "_output_pose", EncodedState, MessageType.CARTESIAN_POSE_MESSAGE)
 ```
 
 </TabItem>
