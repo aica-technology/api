@@ -5,6 +5,7 @@ labels: [ "bug" ]
 projects: "aica-technology/1"
 assignees:
   - eeberhard
+  - domire8
 body:
   - type: markdown
     attributes:

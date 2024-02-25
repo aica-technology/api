@@ -6,9 +6,3 @@ contact_links:
   - name: AICA Website
     url: https://aica.tech
     about: Find more product information on the AICA website
-  - name: GitHub Community Support
-    url: https://github.com/orgs/community/discussions
-    about: Please ask and answer questions here.
-  - name: GitHub Security Bug Bounty
-    url: https://bounty.github.com/
-    about: Please report security vulnerabilities here.
