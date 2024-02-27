@@ -30,10 +30,229 @@ buttons:
   ...
 ```
 
-The fields `components` and `hardware` define the main building blocks of the application. The fields `conditions`
-and `sequences` define fine-grained application logic to trigger application state events. The `on_start` field defines
-a list of events to be triggered when the application is started, while the `buttons` field defines interactive buttons
-to manually trigger events through the AICA developer interface.
+The fields [`components`](#components) and [`hardware`](#hardware) define the main building blocks of the application.
+The fields [`conditions`](#conditions) and [`sequences`](#sequences) define fine-grained application logic to
+trigger [application state events](#events). The [`on_start`](#on-start)field defines a list of events to be triggered
+when the application is started, while the [`buttons`](#buttons) field defines interactive buttons to manually trigger
+events through the AICA developer interface.
+
+## Events
+
+Events drive the emergent behaviour of an application. Events can be triggered from internal application logic
+through [component predicates](#predicate-events),
+[conditions](#conditions), [sequences](#sequences), [UI buttons](#buttons) or
+automatically [at the start of the application](#on-start). In each of these cases, events are defined in the YAML
+under specific event keywords.
+
+Read more about [events in the Concepts guide](../concepts/05-building-blocks/02-events.md).
+
+### Load or unload a component
+
+Components can be loaded or unloaded by component name.
+
+```yaml
+load:
+  component: <component_name>
+unload:
+  component: <component_name>
+```
+
+It is possible to load or unload multiple components simultaneously by specifying a list of components.
+
+```yaml
+load:
+  - component: component_a
+  - component: component_b
+```
+
+### Transition from one component to another
+
+Component A can invoke a transition to component B as a shorthand for "unload component A, load component B".
+
+```yaml
+transition: <component_name>
+```
+
+### Trigger a lifecycle transition
+
+Request a lifecycle transition on the component that is triggering the event, using one of the available transitions
+(`configure`, `activate`, `deactivate`, `cleanup`, or `shutdown`).
+
+```yaml
+lifecycle: activate
+```
+
+Request a lifecycle transition on a different component.
+
+```yaml
+lifecycle:
+  transition: activate
+  component: <component_name>
+```
+
+Use a list to trigger multiple transitions from a single predicate.
+
+```yaml
+lifecycle:
+  - transition: activate
+    component: <component_name>
+  - transition: deactivate
+    component: <component_name>
+```
+
+### Set a parameter
+
+Set a parameter on the component that is triggering the event.
+
+```yaml
+set:
+  parameter: <parameter_name>
+  value: <parameter_value>
+```
+
+Set a parameter on a different component.
+
+```yaml
+set:
+  parameter: <parameter_name>
+  value: <parameter_value>
+  component: <component_name>
+```
+
+Set a parameter on the controller of a particular hardware interface.
+
+```yaml
+set:
+  parameter: <parameter_name>
+  value: <parameter_value>
+  controller: <controller_name>
+  hardware: <hardware_name>
+```
+
+### Call a service
+
+Call a service with no payload on the component that is triggering the event.
+
+```yaml
+call_service: <service_name>
+```
+
+Call a service on a different component.
+
+```yaml
+call_service:
+  service: <service_name>
+  component: <component_name>
+```
+
+Call a service with a string payload.
+
+```yaml
+call_service:
+  service: <service_name>
+  component: <component_name>
+  payload: "..."
+```
+
+The service payload can also be written as any standard YAML object. The application parser will automatically encode
+the object into a string format when making the service call. In this case, the component service is responsible
+for parsing the string back into a YAML object, dict or structure as necessary.
+
+```yaml
+call_service:
+  service: <service_name>
+  component: <component_name>
+  payload:
+    foo: some content
+    bar: [ x, y, z ]
+    baz:
+      a: 1
+      b: 2
+```
+
+### Load or unload a hardware interface
+
+Load and initialize a hardware interface.
+
+```yaml
+load:
+  hardware: <hardware_name>
+```
+
+Unload and destroy a hardware interface.
+
+```yaml
+unload:
+  hardware: <hardware_name>
+```
+
+### Load or unload a controller
+
+```yaml
+load:
+  hardware: <hardware_name>
+  controller: <controller_name>
+
+unload:
+  hardware: <hardware_name>
+  controller: <controller_name>
+```
+
+Use a list to load or unload multiple controllers from a single predicate.
+
+```yaml
+load:
+  - hardware: <hardware_name>
+    controller: controller_a
+  - hardware: <hardware_name>
+    controller: controller_b
+```
+
+### Activate or deactivate a controller
+
+Use the `switch_controllers` event to list the controllers to be activated or deactivated for a specific hardware
+interface.
+
+```yaml
+switch_controllers:
+  hardware: <hardware_name>
+  activate: [ <controller_one>, <controller_two> ]
+  deactivate: [ <controller_three>, <controller_four> ] 
+```
+
+To activate or deactivate a single controller, the controller name can be given directly instead of using a list.
+
+```yaml
+switch_controllers:
+  hardware: <hardware_name>
+  activate: <controller_name>
+```
+
+:::note
+
+A controller must be loaded before it can be activated, and must be deactivated before it can be unloaded.
+
+:::
+
+### Manage sequences
+
+Use the `sequence` event to either start, restart or abort a named [sequence](#sequences) in the application
+description. Use the respective `start`, `restart` or `abort` fields either individually or collectively.
+
+```yaml
+sequence:
+  start: <sequence_name>
+  restart: <sequence_name>
+  abort: <sequence_name>
+```
+
+To manage multiple sequences with the same event trigger, use a list syntax.
+
+```yaml
+sequence:
+  - start: sequence_a
+  - start: sequence_b
+```
 
 ## Components
 
@@ -168,237 +387,29 @@ my_other_component:
     force_torque_sensor: /force
 ```
 
-### Events
+### Predicate events
 
-Events drive the emergent behaviour of an application. Define events to be triggered by a predicate by listing them
-under the predicate name, as shown below.
+Component predicates can be used to trigger [events](#events) by adding the named predicate and corresponding events
+under the `events` field of a component definition. For example:
 
 ```yaml
 my_component:
   events:
     is_active:
-      <triggered event_a>: ...
-      <triggered event_b>: ...
+      load: ...
+      unload: ...
     some_other_predicate_name:
-      <triggered event_c>: ...
-      <triggered event_bd>: ...
+      set: ...
+      call_service: ...
 ```
 
-Read more about [events in the Concepts guide](../concepts/05-building-blocks/02-events.md).
+#### Special event predicates
 
-The following events are defined.
+In addition to standard component predicates produced by the component at runtime, two other event triggers can be
+associated with a component. These triggers are provided by the Dynamic State Engine which manages the component rather
+than the component itself.
 
-#### Load or unload a component
-
-Components can be loaded or unloaded by component name.
-
-```yaml
-load:
-  component: <component_name>
-unload:
-  component: <component_name>
-```
-
-It is possible to load or unload multiple components simultaneously by specifying a list of components.
-
-```yaml
-load:
-  - component: component_a
-  - component: component_b
-```
-
-#### Transition from one component to another
-
-Component A can invoke a transition to component B as a shorthand for "unload component A, load component B".
-
-```yaml
-transition: <component_name>
-```
-
-#### Trigger a lifecycle transition
-
-Request a lifecycle transition on the component that is triggering the event, using one of the available transitions
-(`configure`, `activate`, `deactivate`, `cleanup`, or `shutdown`).
-
-```yaml
-lifecycle: activate
-```
-
-Request a lifecycle transition on a different component.
-
-```yaml
-lifecycle:
-  transition: activate
-  component: <component_name>
-```
-
-Use a list to trigger multiple transitions from a single predicate.
-
-```yaml
-lifecycle:
-  - transition: activate
-    component: <component_name>
-  - transition: deactivate
-    component: <component_name>
-```
-
-#### Set a parameter
-
-Set a parameter on the component that is triggering the event.
-
-```yaml
-set:
-  parameter: <parameter_name>
-  value: <parameter_value>
-```
-
-Set a parameter on a different component.
-
-```yaml
-set:
-  parameter: <parameter_name>
-  value: <parameter_value>
-  component: <component_name>
-```
-
-Set a parameter on the controller of a particular hardware interface.
-
-```yaml
-set:
-  parameter: <parameter_name>
-  value: <parameter_value>
-  controller: <controller_name>
-  hardware: <hardware_name>
-```
-
-#### Call a service
-
-Call a service with no payload on the component that is triggering the event.
-
-```yaml
-call_service: <service_name>
-```
-
-Call a service on a different component.
-
-```yaml
-call_service:
-  service: <service_name>
-  component: <component_name>
-```
-
-Call a service with a string payload.
-
-```yaml
-call_service:
-  service: <service_name>
-  component: <component_name>
-  payload: "..."
-```
-
-The service payload can also be written as any standard YAML object. The application parser will automatically encode
-the object into a string format when making the service call. In this case, the component service is responsible
-for parsing the string back into a YAML object, dict or structure as necessary.
-
-```yaml
-call_service:
-  service: <service_name>
-  component: <component_name>
-  payload:
-    foo: some content
-    bar: [ x, y, z ]
-    baz:
-      a: 1
-      b: 2
-```
-
-#### Load or unload a hardware interface
-
-Load and initialize a hardware interface.
-
-```yaml
-load:
-  hardware: <hardware_name>
-```
-
-Unload and destroy a hardware interface.
-
-```yaml
-unload:
-  hardware: <hardware_name>
-```
-
-#### Load or unload a controller
-
-```yaml
-load:
-  hardware: <hardware_name>
-  controller: <controller_name>
-
-unload:
-  hardware: <hardware_name>
-  controller: <controller_name>
-```
-
-Use a list to load or unload multiple controllers from a single predicate.
-
-```yaml
-load:
-  - hardware: <hardware_name>
-    controller: controller_a
-  - hardware: <hardware_name>
-    controller: controller_b
-```
-
-#### Activate or deactivate a controller
-
-Use the `switch_controllers` event to list the controllers to be activated or deactivated for a specific hardware
-interface.
-
-```yaml
-switch_controllers:
-  hardware: <hardware_name>
-  activate: [ <controller_one>, <controller_two> ]
-  deactivate: [ <controller_three>, <controller_four> ] 
-```
-
-To activate or deactivate a single controller, the controller name can be given directly instead of using a list.
-
-```yaml
-switch_controllers:
-  hardware: <hardware_name>
-  activate: <controller_name>
-```
-
-:::note
-
-A controller must be loaded before it can be activated, and must be deactivated before it can be unloaded.
-
-:::
-
-#### Manage sequences
-
-Use the `sequence` event to either start, restart or abort a named [sequence](#sequences) in the application
-description. Use the respective `start`, `restart` or `abort` fields either individually or collectively.
-
-```yaml
-sequence:
-  start: <sequence_name>
-  restart: <sequence_name>
-  abort: <sequence_name>
-```
-
-To manage multiple sequences with the same event trigger, use a list syntax.
-
-```yaml
-sequence:
-  - start: sequence_a
-  - start: sequence_b
-```
-
-### Special event predicates
-
-#### on_load
+**on_load**
 
 The `on_load` predicate is provided by the state engine and set to true after the component has been loaded. Any events
 associated with the `on_load` predicate are handled after the node has been instantiated.
@@ -410,7 +421,7 @@ component:
       <some triggered event>: ...
 ```
 
-#### on_unload
+**on_unload**
 
 The `on_unload` predicate is similar to the `on_load` predicate and is provided by the state engine. Any events
 associated with the `on_unload` predicate are handled once the component interface has been destroyed.
