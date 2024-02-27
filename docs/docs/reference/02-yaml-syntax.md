@@ -122,14 +122,14 @@ component_b:
 
 ### Parameters
 
-The `parameters` field allows initial parameters values to be set using a `name: value` syntax.
-Currently, only string and double parameters are supported. These values are only applied when the component
-is loaded and are not dynamically reconfigurable.
+The `parameters` field allows initial component parameters values to be set using a `name: value` syntax. These values
+are only applied when the component is loaded. To set parameter values after a component has been loaded, use the
+[set parameter event](#set-a-parameter).
 
 ```yaml
 my_component:
   parameters:
-    my_string_parameter: "my_string_value"
+    my_string_parameter: my string value
     my_double_parameter: 2.0
 ```
 
@@ -158,19 +158,17 @@ illustrated in the example below.
 ```yaml
 my_component:
   inputs:
-    robot_state: "/state"
-    applied_force: "/force"
+    robot_state: /state
+    applied_force: /force
   outputs:
-    robot_command: "/command"
+    robot_command: /command
 
 my_other_component:
   outputs:
-    force_torque_sensor: "/force"
+    force_torque_sensor: /force
 ```
 
 ### Events
-
-<!-- TODO: define the syntax for each event in more detail -->
 
 Events drive the emergent behaviour of an application. Define events to be triggered by a predicate by listing them
 under the predicate name, as shown below.
@@ -218,10 +216,6 @@ transition: <component_name>
 ```
 
 #### Trigger a lifecycle transition
-
-```yaml
-lifecycle: "configure"
-```
 
 Request a lifecycle transition on the component that is triggering the event, using one of the available transitions
 (`configure`, `activate`, `deactivate`, `cleanup`, or `shutdown`).
@@ -311,7 +305,7 @@ call_service:
   service: <service_name>
   component: <component_name>
   payload:
-    foo: "some content"
+    foo: some content
     bar: [ x, y, z ]
     baz:
       a: 1
@@ -364,8 +358,16 @@ interface.
 ```yaml
 switch_controllers:
   hardware: <hardware_name>
-  activate: [ <controller_name>, <controller_name> ]
-  deactivate: [ "controller_three", "controller_four" ] 
+  activate: [ <controller_one>, <controller_two> ]
+  deactivate: [ <controller_three>, <controller_four> ] 
+```
+
+To activate or deactivate a single controller, the controller name can be given directly instead of using a list.
+
+```yaml
+switch_controllers:
+  hardware: <hardware_name>
+  activate: <controller_name>
 ```
 
 :::note
@@ -390,17 +392,16 @@ To manage multiple sequences with the same event trigger, use a list syntax.
 
 ```yaml
 sequence:
-  - start: "sequence_a"
-  - start: "sequence_b"
+  - start: sequence_a
+  - start: sequence_b
 ```
 
 ### Special event predicates
 
 #### on_load
 
-The `on_load` predicate is provided by the state engine and set to true after the component
-has been loaded. Any events associated with the `on_load` predicate are handled once
-on instantiation of the node.
+The `on_load` predicate is provided by the state engine and set to true after the component has been loaded. Any events
+associated with the `on_load` predicate are handled after the node has been instantiated.
 
 ```yaml
 component:
@@ -411,8 +412,8 @@ component:
 
 #### on_unload
 
-The `on_unload` predicate is similar to the `on_load` predicate and is provided by the state engine.
-Any events associated with the `on_unload` predicate are handled once upon destruction of the component interface.
+The `on_unload` predicate is similar to the `on_load` predicate and is provided by the state engine. Any events
+associated with the `on_unload` predicate are handled once the component interface has been destroyed.
 
 ```yaml
 component:
@@ -577,7 +578,7 @@ robot:
     broadcaster:
       plugin: joint_state_broadcaster/JointStateBroadcaster
     twist_controller:
-      plugin: "compliant_twist_controller/CompliantTwistController"
+      plugin: compliant_twist_controller/CompliantTwistController
       parameters:
         linear_principle_damping: 10.0
         linear_orthogonal_damping: 10.0
