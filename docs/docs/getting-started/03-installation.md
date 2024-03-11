@@ -86,13 +86,13 @@ package.
 #syntax=ghcr.io/aica-technology/app-builder:v1
 
 [packages]
-"@aica/base" = "v3.0.0"
+"@aica/base" = "v3.1.0"
 
 # add components
 "@aica/components/signal-processing" = "v1.0.1"
 
 # add hardware collections 
-"@aica/collections/ur-collection" = "v3.0.4"
+"@aica/collections/ur-collection" = "v3.0.5"
 ```
 
 ### Including custom packages

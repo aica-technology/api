@@ -12,9 +12,9 @@ This example requires the Universal Robots collection which includes example URD
 #syntax=ghcr.io/aica-technology/app-builder:v1
 
 [packages]
-"@aica/base" = "v3.0.0"
+"@aica/base" = "v3.1.0"
 
-"@aica/collections/ur-collection" = "v3.0.4"
+"@aica/collections/ur-collection" = "v3.0.5"
 ```
 
 ## URDF Hardware Manager
