@@ -39,7 +39,7 @@ Each `aica-package.toml` should start with `#syntax=ghcr.io/aica-technology/pack
 the Docker syntax and version used to build the package.
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.9
+#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
 ```
 
 You can find the available
@@ -116,7 +116,7 @@ available yet.
 
 ```toml title="aica-package.toml"
 [build.environment.aica.libraries]
-"@aica/foss/control-libraries" = "v7.2.0"
+"@aica/foss/control-libraries" = "v7.3.0"
 "@aica/foss/network-interfaces" = "v2.0.1"
 ```
 
@@ -141,7 +141,7 @@ component built with a tag of `ghcr.io/myorg/mypackage:v1.0.0`, you could use it
 
 ```toml title="aica-package.toml"
 [build.environment.aica.ros]
-"@aica/foss/modulo" = "v3.2.0"
+"@aica/foss/modulo" = "v4.0.0"
 "@myorg/mypackage" = "docker-image://ghcr.io/myorg/mypackage:v1.0.0"
 ```
 
@@ -312,7 +312,7 @@ docker build -f aica-package.toml -t my_component .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.9
+#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
 
 [build]
 type = "ros"
@@ -321,10 +321,10 @@ type = "ros"
 image = "iron"
 
 [build.environment.aica.libraries]
-"@aica/foss/control-libraries" = "v7.2.0"
+"@aica/foss/control-libraries" = "v7.3.0"
 
 [build.environment.aica.ros]
-"@aica/foss/modulo" = "v3.2.0"
+"@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
 source = "./custom_component_package"
@@ -339,7 +339,7 @@ docker build -f aica-package.toml -t my_component .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.9
+#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
 
 [build]
 type = "ros"
@@ -348,10 +348,10 @@ type = "ros"
 image = "iron"
 
 [build.environment.aica.libraries]
-"@aica/foss/control-libraries" = "v7.2.0"
+"@aica/foss/control-libraries" = "v7.3.0"
 
 [build.environment.aica.ros]
-"@aica/foss/modulo" = "v3.2.0"
+"@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
 source = "./custom_component_package"
@@ -376,7 +376,7 @@ docker build -f aica-package.toml \
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.9
+#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
 
 [build]
 type = "ros"
@@ -388,7 +388,7 @@ image = "docker-image://base"
 "@aica/foss/control-libraries" = "build-context://cl"
 
 [build.environment.aica.ros]
-"@aica/foss/modulo" = "v3.2.0"
+"@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
 source = "build-context://my_source"
@@ -401,7 +401,7 @@ docker build -f aica-package.toml -t my_component --target list .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.9
+#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
 
 [build]
 type = "ros"

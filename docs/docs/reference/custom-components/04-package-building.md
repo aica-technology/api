@@ -14,7 +14,7 @@ A basic `aica-package.toml` file for a component package stored in the `custom_c
 roughly like this:
 
 ```toml
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.9
+#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
 
 [build]
 type = "ros"
@@ -23,10 +23,10 @@ type = "ros"
 image = "iron"
 
 [build.environment.aica.libraries]
-"@aica/foss/control-libraries" = "v7.2.0"
+"@aica/foss/control-libraries" = "v7.3.0"
 
 [build.environment.aica.ros]
-"@aica/foss/modulo" = "v3.2.0"
+"@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
 source = "./custom_component_package"
