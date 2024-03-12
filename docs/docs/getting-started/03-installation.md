@@ -71,7 +71,7 @@ only the base package. The version of the base package can be changed according 
 #syntax=ghcr.io/aica-technology/app-builder:v1
 
 [packages]
-"@aica/base" = "v3.1.0"
+"@aica/base" = "v3.1.1"
 ```
 
 ### Configuring a runtime image with add-on packages
@@ -86,7 +86,7 @@ package.
 #syntax=ghcr.io/aica-technology/app-builder:v1
 
 [packages]
-"@aica/base" = "v3.1.0"
+"@aica/base" = "v3.1.1"
 
 # add components
 "@aica/components/signal-processing" = "v1.0.1"
@@ -108,7 +108,7 @@ docker registries such as DockerHub or GitHub Container Registry and can be incl
 #syntax=ghcr.io/aica-technology/app-builder:v1
 
 [packages]
-"@aica/base" = "v3.1.0"
+"@aica/base" = "v3.1.1"
 
 # add a custom package from a local docker image path
 "my-local-package" = "docker-image://my-custom-component-package"
