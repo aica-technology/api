@@ -554,6 +554,14 @@ Lifecycle components publish outputs only when the component is in the `ACTIVE` 
 
 :::
 
+:::caution
+
+Each signal shall be named using only characters from the alphanumeric set (letters A-Z and numbers 0-9) and the
+underscore (`_`). Additionally, the `lower_snake_case` convention should be used and signal names may not start with a
+number or an underscore. 
+
+:::
+
 <!-- TODO
 ## Adding services
 -->
