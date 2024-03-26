@@ -315,6 +315,20 @@ The binding logic is supported for a number of common message data types. To int
 (for example, to communicate with ROS 2 nodes using custom message types outside the AICA framework), it is possible to
 define raw publishers and subscribers following standard ROS 2 conventions.
 
+### Signal name
+
+Component signals are declared and managed with unique signal names. The signal name is used to determine the default
+topic. For a signal added under the name `foo`, the default topic will be `~/foo`. Adding a signal also automatically
+creates and associates a parameter with that signal with the parameter name `[signal_name]_topic`, which is used to
+override the default topic name at runtime. For a signal name `foo`, the parameter associated to the signal topic will
+be called `foo_topic`.
+
+For these reasons, signal names must adhere to the following rules:
+
+- Signal names must be unique across all inputs and outputs
+- Signal names must be written in `lower_snake_case` (using only lowercase letters, numbers and underscores)
+- Signal names cannot start with a number or underscore.
+
 ### Message types
 
 The supported message types are defined in the `std_msgs` library and include:
@@ -551,14 +565,6 @@ service call, an input subscription callback or a lifecycle transition.
 Empty states will not be published.
 
 Lifecycle components publish outputs only when the component is in the `ACTIVE` lifecycle state.
-
-:::
-
-:::caution
-
-Each signal shall be named using only characters from the alphanumeric set (letters A-Z and numbers 0-9) and the
-underscore (`_`). Additionally, the `lower_snake_case` convention should be used and signal names may not start with a
-number or an underscore. 
 
 :::
 
