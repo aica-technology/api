@@ -110,7 +110,7 @@
       "description": "The services provided by the component.",
       "type": "array",
       "items": {
-        "$ref": "service.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/services/schema/service.schema.json"
       },
       "uniqueItems": true
     }
