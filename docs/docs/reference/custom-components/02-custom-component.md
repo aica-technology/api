@@ -325,7 +325,7 @@ be called `foo_topic`.
 
 For these reasons, signal names must adhere to the following rules:
 
-- Signal names must be unique across all inputs and outputs
+- Signal names must be unique for all inputs and outputs of the component
 - Signal names must be written in `lower_snake_case` (using only lowercase letters, numbers and underscores)
 - Signal names cannot start with a number or underscore.
 
