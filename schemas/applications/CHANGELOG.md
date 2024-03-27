@@ -11,6 +11,8 @@ Release Versions:
 
 ## 1-3-0
 
+Version 1-3-0 adds support for service calls on controllers.
+
 ## 1-2-0
 
 Version 1-2-0 adds a new syntax to manage sequential events as an array of steps to be handled in order. Sequence steps
