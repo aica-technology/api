@@ -914,7 +914,7 @@ my_button:
 
 ## Validating a YAML application
 
-The [YAML application schema](https://docs.aica.tech/schemas/1-2-0/application.schema.json) defines the structural rules
+The [YAML application schema](https://docs.aica.tech/schemas/1-3-0/application.schema.json) defines the structural rules
 of an AICA application and effectively distinguishes between valid and invalid syntax.
 
 Many modern IDEs and code editors can be configured to support custom schemas and provide in-line validation and
@@ -928,5 +928,5 @@ Developers working with Visual Studio Code can validate YAML application files e
 2. Associate a schema with the YAML application by adding the following modeline to the file:
 
 ```yaml
-# yaml-language-server: $schema=https://docs.aica.tech/schemas/1-2-0/application.schema.json
+# yaml-language-server: $schema=https://docs.aica.tech/schemas/1-3-0/application.schema.json
 ```

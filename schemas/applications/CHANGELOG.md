@@ -2,11 +2,16 @@
 
 Release Versions:
 
+- [1-3-0](#130)
 - [1-2-0](#120)
 - [1-1-2](#112)
 - [1-1-1](#111)
 - [1-1-0](#110)
 - [1-0-0](#100)
+
+## 1-3-0
+
+Version 1-3-0 adds support for service calls on controllers.
 
 ## 1-2-0
 

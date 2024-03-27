@@ -2,8 +2,17 @@
 
 Release Versions:
 
+- [1-2-0](#120)
 - [1-1-0](#110)
 - [1-0-0](#100)
+
+## 1-2-0
+
+As of version 1-2-0, controllers can also have the field `services` to list the services provided by the controller.
+
+### Changelog
+
+- feat(controller-schema): add services (#138)
 
 ## 1-1-0
 
