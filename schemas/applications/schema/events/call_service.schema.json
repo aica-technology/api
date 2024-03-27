@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Call Service",
-  "description": "Call a service on a component",
+  "description": "Call a service",
   "oneOf": [
     {
       "type": "array",
@@ -20,27 +20,58 @@
   ],
   "$defs": {
     "service_object": {
-      "title": "Service Object",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "service": {
-          "$ref": "identifiers/service.schema.json"
+      "oneOf": [
+        {
+          "title": "Call Component Service Object",
+          "type": "object",
+          "additionalProperties": false,
+          "service": {
+            "$ref": "identifiers/service.schema.json"
+          },
+          "component": {
+            "$ref": "identifiers/component.schema.json"
+          },
+          "payload": {
+            "title": "Service Payload",
+            "description": "The payload of the service call, formatted according to the service description",
+            "type": [
+              "string",
+              "object"
+            ]
+          },
+          "required": [
+            "service"
+          ]
         },
-        "component": {
-          "$ref": "identifiers/component.schema.json"
-        },
-        "payload": {
-          "title": "Service Payload",
-          "description": "The payload of the service call, formatted according to the service description",
-          "type": [
-            "string",
-            "object"
+        {
+          "title": "Call Controller Service Object",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "service": {
+              "$ref": "identifiers/service.schema.json"
+            },
+            "hardware": {
+              "$ref": "identifiers/hardware.schema.json"
+            },
+            "controller": {
+              "$ref": "identifiers/controller.schema.json#/properties/controller"
+            },
+            "payload": {
+              "title": "Service Payload",
+              "description": "The payload of the service call, formatted according to the service description",
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
+          "required": [
+            "service",
+            "hardware",
+            "controller"
           ]
         }
-      },
-      "required": [
-        "service"
       ]
     }
   }
