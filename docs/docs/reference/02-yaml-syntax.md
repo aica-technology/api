@@ -154,16 +154,6 @@ call_service:
   payload: "..."
 ```
 
-Call a service on the controller of a particular hardware interface.
-
-```yaml
-call_service:
-  service: <service_name>
-  controller: <controller_name>
-  hardware: <hardware_name>
-  payload: "..."
-```
-
 The service payload can also be written as any standard YAML object. The application parser will automatically encode
 the object into a string format when making the service call. In this case, the component service is responsible
 for parsing the string back into a YAML object, dict or structure as necessary.
