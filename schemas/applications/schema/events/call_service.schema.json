@@ -19,25 +19,31 @@
     }
   ],
   "$defs": {
+    "payload": {
+      "title": "Service Payload",
+      "description": "The payload of the service call, formatted according to the service description",
+      "type": [
+        "string",
+        "object"
+      ]
+    },
     "service_object": {
+      "title": "Call Service Object",
       "oneOf": [
         {
           "title": "Call Component Service Object",
           "type": "object",
           "additionalProperties": false,
-          "service": {
-            "$ref": "identifiers/service.schema.json"
-          },
-          "component": {
-            "$ref": "identifiers/component.schema.json"
-          },
-          "payload": {
-            "title": "Service Payload",
-            "description": "The payload of the service call, formatted according to the service description",
-            "type": [
-              "string",
-              "object"
-            ]
+          "properties": {
+            "service": {
+              "$ref": "identifiers/service.schema.json"
+            },
+            "payload": {
+              "$ref": "#/$defs/payload"
+            },
+            "component": {
+              "$ref": "identifiers/component.schema.json"
+            }
           },
           "required": [
             "service"
@@ -58,12 +64,7 @@
               "$ref": "identifiers/controller.schema.json#/properties/controller"
             },
             "payload": {
-              "title": "Service Payload",
-              "description": "The payload of the service call, formatted according to the service description",
-              "type": [
-                "string",
-                "object"
-              ]
+              "$ref": "#/$defs/payload"
             }
           },
           "required": [
