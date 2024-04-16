@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Component Service",
-  "description": "A service endpoint of a dynamic component.",
+  "title": "Service",
+  "description": "A service endpoint of a component or controller.",
   "type": "object",
   "properties": {
     "display_name": {
@@ -13,7 +13,7 @@
       "type": "string"
     },
     "service_name": {
-      "description": "The lower_snake_case service name as it is declared in the component.",
+      "description": "The lower_snake_case service name as it is declared in the component or controller.",
       "type": "string"
     },
     "payload_format": {
