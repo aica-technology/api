@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Component Predicate",
-  "description": "A predicate signal parameter of a dynamic component.",
+  "title": "Predicate",
+  "description": "A predicate of a component or controller.",
   "type": "object",
   "properties": {
     "display_name": {
@@ -13,7 +13,7 @@
       "type": "string"
     },
     "predicate_name": {
-      "description": "The lower_snake_case predicate name as it is declared in the component.",
+      "description": "The lower_snake_case predicate name as it is declared in the component or controller.",
       "type": "string"
     }
   },

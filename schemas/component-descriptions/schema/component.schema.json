@@ -101,7 +101,7 @@
       "description": "The predicates provided by the component.",
       "type": "array",
       "items": {
-        "$ref": "predicate.schema.json"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/predicates/schema/predicate.schema.json"
       },
       "uniqueItems": true
     },
