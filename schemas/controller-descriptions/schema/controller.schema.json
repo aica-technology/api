@@ -1,5 +1,5 @@
 {
-  "$id": "/1-2-0/controller.schema.json",
+  "$id": "/1-3-0/controller.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AICA Controller Description",
   "description": "A full description of a controller in the AICA application framework.",
@@ -103,6 +103,15 @@
       "type": "array",
       "items": {
         "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/parameters/schema/parameter.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "predicates": {
+      "title": "Component Predicates",
+      "description": "The predicates provided by the controller.",
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/predicates/schema/predicate.schema.json"
       },
       "uniqueItems": true
     },

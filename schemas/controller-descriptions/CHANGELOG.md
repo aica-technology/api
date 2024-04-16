@@ -2,9 +2,18 @@
 
 Release Versions:
 
+- [1-3-0](#130)
 - [1-2-0](#120)
 - [1-1-0](#110)
 - [1-0-0](#100)
+
+## 1-3-0
+
+As of version 1-2-0, controllers can also have the field `predicates` to list the predicates provided by the controller.
+
+### Changelog
+
+- feat(controller-schema): add predicates (#145)
 
 ## 1-2-0
 
