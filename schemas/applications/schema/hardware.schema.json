@@ -69,7 +69,19 @@
                 },
                 "outputs": {
                   "$ref": "common/outputs.schema.json"
-                }
+                },
+                "events": {
+                  "title": "Event Predicates",
+                  "description": "Controller predicates that trigger events",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "patternProperties": {
+                    "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+                      "title": "Predicate Events",
+                      "description": "A controller-specific predicate",
+                      "$ref": "events.schema.json"
+                    }
+                  }
               },
               "required": [
                 "plugin"
