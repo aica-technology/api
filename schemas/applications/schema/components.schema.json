@@ -70,7 +70,7 @@
           }
         },
         "events": {
-          "title": "Event Predicates",
+          "title": "Component Event Predicates",
           "description": "Component predicates that trigger events",
           "type": "object",
           "additionalProperties": false,
@@ -118,7 +118,7 @@
           },
           "patternProperties": {
             "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
-              "title": "Predicate Events",
+              "title": "Component Predicate",
               "description": "A component-specific predicate",
               "$ref": "events.schema.json"
             }

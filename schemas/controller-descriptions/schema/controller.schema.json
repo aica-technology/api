@@ -107,7 +107,7 @@
       "uniqueItems": true
     },
     "predicates": {
-      "title": "Component Predicates",
+      "title": "Controller Predicates",
       "description": "The predicates provided by the controller.",
       "type": "array",
       "items": {
