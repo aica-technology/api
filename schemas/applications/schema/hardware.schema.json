@@ -82,18 +82,19 @@
                       "$ref": "events.schema.json"
                     }
                   }
-              },
-              "required": [
-                "plugin"
-              ]
+                },
+                "required": [
+                  "plugin"
+                ]
+              }
             }
           }
-        }
-      },
-      "required": [
-        "urdf",
-        "rate"
-      ]
+        },
+        "required": [
+          "urdf",
+          "rate"
+        ]
+      }
     }
   }
 }
