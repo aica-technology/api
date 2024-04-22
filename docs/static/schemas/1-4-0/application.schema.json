@@ -450,19 +450,19 @@
                           "$ref": "#/properties/sequences/$defs/timeout/properties/events"
                         }
                       }
-                    },
-                    "required": [
-                      "plugin"
-                    ]
-                  }
+                    }
+                  },
+                  "required": [
+                    "plugin"
+                  ]
                 }
               }
-            },
-            "required": [
-              "urdf",
-              "rate"
-            ]
-          }
+            }
+          },
+          "required": [
+            "urdf",
+            "rate"
+          ]
         }
       }
     },
