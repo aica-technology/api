@@ -145,6 +145,15 @@ call_service:
   component: <component_name>
 ```
 
+Call a service on a controller.
+
+```yaml
+call_service:
+  service: <service_name>
+  controller: <controller_name>
+  hardware: <hardware>
+```
+
 Call a service with a string payload.
 
 ```yaml
@@ -578,6 +587,9 @@ The `parameters` field then refers to configurable parameters for the given cont
 The `inputs` and `outputs` fields define the ROS2 topics to which each signal of the controller should be connected.
 See also [Component Inputs and Outputs](#inputs-and-outputs).
 
+Predicates can be used to trigger [events](#events) by adding the named predicate and corresponding events
+under the `events` field of a controller definition. See also [Predicate Events](#predicate-events).
+
 Optionally, the `position` field can be used to specify an X, Y location for rendering the hardware interface
 as a node in the AICA interactive graph editor. See also [Component Position](#position).
 
@@ -599,6 +611,10 @@ robot:
         command: /motion_generator/command_output
       outputs:
         state: /recorder/state_input
+      events:
+        my_predicate_name:
+          set: ...
+          call_service: ...
 ```
 
 ## Conditions
@@ -621,8 +637,15 @@ conditions:
     predicate: ...
     events:
       ...
-
+  
   condition_2:
+    controller: ...
+    hardware: ...
+    predicate: ...
+    events:
+      ...
+
+  condition_3:
     <conditional_operator>: ...  # not, all, any, one_of
     events:
       ...
@@ -631,12 +654,19 @@ conditions:
 
 ### Simple conditions
 
-A simple condition evaluates just a single component predicate and triggers the listed events when it is true.
+A simple condition evaluates just a single component or controller predicate and triggers the listed events when it is
+true.
 
 ```yaml
 condition_1:
   component: my_component
   predicate: some_component_predicate
+  events:
+    ...
+condition_2:
+  controller: my_controller
+  hardware: my_hardware
+  predicate: some_controller_predicate
   events:
     ...
 ```
@@ -729,7 +759,7 @@ Similar to [conditions](#conditions), sequences are listed under a top-level fie
 must be unique, and should generally follow the `lower_camel_case` naming convention.
 
 After sequences are defined in the yaml, they can be managed using [sequence state events](#manage-sequences); component
-predicates, conditions and even sequences can also start, restart or abort a sequence.
+or controller predicates, conditions and even sequences can also start, restart or abort a sequence.
 
 The example below uses a combination of standard event steps and conditional blocks; it asserts that a component is
 active, sets a parameter on that component, waits 10 seconds, and then activates a controller.
@@ -757,7 +787,7 @@ The `assert` keyword is an assertion step to check if a condition or predicate i
 the sequence continues to the next step. If the assertion fails, the sequence is automatically aborted.
 Optionally, assertion failure can be used to trigger breakout events as a form of error handling.
 
-The following examples show the syntax to check either a condition or component predicate respectively.
+The following examples show the syntax to check either a condition or predicate respectively.
 
 ```yaml
 assert:
@@ -767,6 +797,13 @@ assert:
 ```yaml
 assert:
   component: my_component
+  predicate: some_predicate
+```
+
+```yaml
+assert:
+  controller: my_controller
+  hardware: my_hardware
   predicate: some_predicate
 ```
 
@@ -783,7 +820,7 @@ assert:
 
 ### Sequence wait
 
-The `wait` keyword is used to wait for either a fixed time interval or for a condition or component predicate to be
+The `wait` keyword is used to wait for either a fixed time interval or for a condition or predicate to be
 true.
 
 #### Waiting for a specified time interval
@@ -797,7 +834,7 @@ wait:
 
 #### Waiting for a condition or predicate
 
-The following examples show the syntax to wait for either a condition or component predicate state respectively.
+The following examples show the syntax to wait for either a condition or predicate state respectively.
 
 ```yaml
 wait:
@@ -807,6 +844,13 @@ wait:
 ```yaml
 wait:
   component: my_component
+  predicate: some_predicate
+```
+
+```yaml
+wait:
+  controller: my_controller
+  hardware: my_hardware
   predicate: some_predicate
 ```
 
