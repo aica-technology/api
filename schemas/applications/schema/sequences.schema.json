@@ -100,12 +100,18 @@
     },
     "wait_for_predicate": {
       "title": "Wait for Predicate",
-      "description": "Wait until a component predicate is true with an optional timeout to abort the sequence and handle breakout events",
+      "description": "Wait until a predicate is true with an optional timeout to abort the sequence and handle breakout events",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "component": {
           "$ref": "events/identifiers/component.schema.json"
+        },
+        "controller": {
+          "$ref": "events/identifiers/controller.schema.json#/properties/controller"
+        },
+        "hardware": {
+          "$ref": "events/identifiers/hardware.schema.json"
         },
         "predicate": {
           "$ref": "events/identifiers/predicate.schema.json"
@@ -114,9 +120,20 @@
           "$ref": "#/$defs/timeout"
         }
       },
-      "required": [
-        "component",
-        "predicate"
+      "oneOf": [
+        {
+          "required": [
+            "component",
+            "predicate"
+          ]
+        },
+        {
+          "required": [
+            "controller",
+            "hardware",
+            "predicate"
+          ]
+        }
       ]
     },
     "wait_for_time": {
@@ -153,12 +170,18 @@
     },
     "assert_predicate": {
       "title": "Assert Predicate",
-      "description": "Assert that a component predicate is true or else abort the sequence and handle breakout events",
+      "description": "Assert that a predicate is true or else abort the sequence and handle breakout events",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "component": {
           "$ref": "events/identifiers/component.schema.json"
+        },
+        "controller": {
+          "$ref": "events/identifiers/controller.schema.json#/properties/controller"
+        },
+        "hardware": {
+          "$ref": "events/identifiers/hardware.schema.json"
         },
         "predicate": {
           "$ref": "events/identifiers/predicate.schema.json"
@@ -168,9 +191,20 @@
           "$ref": "events.schema.json"
         }
       },
-      "required": [
-        "component",
-        "predicate"
+      "oneOf": [
+        {
+          "required": [
+            "component",
+            "predicate"
+          ]
+        },
+        {
+          "required": [
+            "controller",
+            "hardware",
+            "predicate"
+          ]
+        }
       ]
     }
   }

@@ -49,6 +49,12 @@
         "component": {
           "$ref": "events/identifiers/component.schema.json"
         },
+        "controller": {
+          "$ref": "events/identifiers/controller.schema.json#/properties/controller"
+        },
+        "hardware": {
+          "$ref": "events/identifiers/hardware.schema.json"
+        },
         "predicate": {
           "$ref": "events/identifiers/predicate.schema.json"
         }
@@ -77,6 +83,13 @@
         {
           "required": [
             "component",
+            "predicate"
+          ]
+        },
+        {
+          "required": [
+            "controller",
+            "hardware",
             "predicate"
           ]
         }
@@ -167,13 +180,30 @@
         "component": {
           "$ref": "events/identifiers/component.schema.json"
         },
+        "controller": {
+          "$ref": "events/identifiers/controller.schema.json#/properties/controller"
+        },
+        "hardware": {
+          "$ref": "events/identifiers/hardware.schema.json"
+        },
         "predicate": {
           "$ref": "events/identifiers/predicate.schema.json"
         }
       },
-      "required": [
-        "component",
-        "predicate"
+      "oneOf": [
+        {
+          "required": [
+            "component",
+            "predicate"
+          ]
+        },
+        {
+          "required": [
+            "controller",
+            "hardware",
+            "predicate"
+          ]
+        }
       ]
     }
   }
