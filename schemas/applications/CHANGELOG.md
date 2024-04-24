@@ -2,7 +2,7 @@
 
 Release Versions:
 
-- [1-5-0](#150)
+- [1-4-1](#141)
 - [1-4-0](#140)
 - [1-3-0](#130)
 - [1-2-0](#120)
@@ -11,9 +11,9 @@ Release Versions:
 - [1-1-0](#110)
 - [1-0-0](#100)
 
-## 1-5-0
+## 1-4-1
 
-Version 1-5-0 adds support for controller predicates in conditions and sequences.
+Version 1-4-1 adds support for controller predicates in conditions and sequences.
 
 ## 1-4-0
 
