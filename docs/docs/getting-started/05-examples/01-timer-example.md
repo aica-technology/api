@@ -11,11 +11,11 @@ application.
 
 This example requires only the base image.
 
-```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder:v1
+```toml title="aica-application.toml"
+#syntax=ghcr.io/aica-technology/app-builder:v2
 
-[packages]
-"@aica/base" = "v3.1.1"
+[base]
+"image" = "v3.3.0"
 ```
 
 ## Setting up the application

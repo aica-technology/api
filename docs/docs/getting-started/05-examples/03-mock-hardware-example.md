@@ -8,13 +8,14 @@ sidebar_position: 3
 
 This example requires the Universal Robots collection which includes example URDF content.
 
-```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder:v1
+```toml title="aica-application.toml"
+#syntax=ghcr.io/aica-technology/app-builder:v2
+
+[base]
+"image" = "v3.3.0"
 
 [packages]
-"@aica/base" = "v3.1.1"
-
-"@aica/collections/ur-collection" = "v3.0.5"
+"@aica/collections/ur-collection" = "v3.1.0"
 ```
 
 ## URDF Hardware Manager
@@ -84,7 +85,7 @@ buttons:
       switch_controllers:
         hardware: mock_hardware
         activate: robot_state_broadcaster
-components: { }
+components: {}
 hardware:
   mock_hardware:
     display_name: Mock Hardware Interface
@@ -136,7 +137,7 @@ the [YAML application syntax](../../reference/02-yaml-syntax.md) reference page.
 Moving up the application, the `components` field is left empty because there are no components in this example.
 
 ```yaml
-components: { }
+components: {}
 ```
 
 Above that, the application defines an event trigger button under the top-level `buttons` field.

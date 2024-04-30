@@ -67,11 +67,15 @@ runtime image.
 The manifest file must contain a syntax header and a list of packages. The minimal version of the manifest includes
 only the base package. The version of the base package can be changed according to the latest release.
 
-```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder:v1
+:::info
+In the past, you might have seen applications using the `aica-package.toml` filename. While you can use any filename as we do not enforce any, we recommend using `aica-application.toml` to avoid confusion with the `aica-package.toml` file which is used for building packages using `package-builder`.
+:::
 
-[packages]
-"@aica/base" = "v3.1.1"
+```toml title="aica-application.toml"
+#syntax=ghcr.io/aica-technology/app-builder:v2
+
+[base]
+"image" = "v3.3.0"
 ```
 
 ### Configuring a runtime image with add-on packages
@@ -82,17 +86,22 @@ prefix. The following example manifest file includes two add-on packages: versio
 `components/signal-processing` component package and version 3.04 of the `collections/ur-collection` hardware collection
 package.
 
-```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder:v1
+:::note
+Starting with version `2.0.0` of the `app-builder`, all packages need to have special metadata associated in their image. This is done automatically when building with newer versions of `app-builder`. This means you won't be able to use older versions of certain libraries and packages with newer versions of `app-builder`.
+:::
+
+```toml title="aica-application.toml"
+#syntax=ghcr.io/aica-technology/app-builder:v2
+
+[base]
+"image" = "v3.3.0"
 
 [packages]
-"@aica/base" = "v3.1.1"
-
 # add components
-"@aica/components/signal-processing" = "v1.0.1"
+"@aica/components/signal-processing" = "v1.1.0"
 
-# add hardware collections 
-"@aica/collections/ur-collection" = "v3.0.5"
+# add hardware collections
+"@aica/collections/ur-collection" = "v3.1.0"
 ```
 
 ### Including custom packages
@@ -104,12 +113,13 @@ component package that was locally built using `docker build [...] --tag my-cust
 as `docker-image://my-custom-component-package`. Community and third-party packages may also be available on other
 docker registries such as DockerHub or GitHub Container Registry and can be included with the associated docker path.
 
-```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder:v1
+```toml title="aica-application.toml"
+#syntax=ghcr.io/aica-technology/app-builder:v2
+
+[base]
+"image" = "v3.3.0"
 
 [packages]
-"@aica/base" = "v3.1.1"
-
 # add a custom package from a local docker image path
 "my-local-package" = "docker-image://my-custom-component-package"
 
@@ -127,11 +137,11 @@ to access AICA packages.
 :::
 
 Once the desired packages have been configured in a manifest file, a `docker build` command can be used to build the
-runtime application image. In this example, a manifest file saved as `aica-package.toml` is used to build an image
+runtime application image. In this example, a manifest file saved as `aica-application.toml` is used to build an image
 with the name `aica-runtime`.
 
 ```shell
-docker build -f aica-package.toml -t aica-runtime .
+docker build -f aica-application.toml -t aica-runtime .
 ```
 
 The command `docker image ls | grep aica-runtime` should then list the `aica-runtime` image.
