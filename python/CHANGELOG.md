@@ -10,6 +10,10 @@ Release Versions:
 - [1.0.1](#101)
 - [1.0.0](#100)
 
+## Upcoming changes
+
+- feat: support hardware and controller states and predicates in `wait_for` functions (#156)
+
 ## 2.0.0
 
 This version of the AICA API client is compatible with the new AICA API server version 3.0 by using Socket.IO instead of
