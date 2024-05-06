@@ -45,7 +45,7 @@ the Docker syntax and version used to build the package.
 You can find the available
 versions [here](https://github.com/orgs/aica-technology/packages/container/package/package-builder).
 
-The upcoming sections describe the syntax for the `package-builder` version `1.0.0` and later. If you are migrating from an older version, please refer to any of the following guide:
+The upcoming sections describe the syntax for the `package-builder` version `1.0.0` and later. If you are migrating from an older version, please refer to the corresponding guide:
 
 - [Migrating from `0.0.X`](/docs/reference/custom-components/aica-package-migrations#migrating-from-0-0-x)
 
