@@ -75,7 +75,7 @@ Required. `[build.image]` is the tag of the AICA `ghcr.io/aica-technology/ros2-w
 
 ```toml title="aica-package.toml"
 [build]
-image = "iron"
+image = "v1.0.0-iron"
 ```
 
 #### `[build.cmake-args]`
@@ -276,7 +276,7 @@ following environment variables should be available:
 - `HOME`: the path to the home directory of the non-root user
 - `ROS_DISTRO`: the ROS2 distribution used to build the component
 - `ROS2_WORKSPACE`: the path to the workspace where the standard ROS2 packages are installed as well as
-  the `[build.environment.aica.ros]` packages
+  the `[build.dependencies]` packages
 - any other environment variables set by `colcon`'s `${WORKSPACE}/install/setup.bash`
 
 ```toml title="aica-package.toml"
@@ -327,19 +327,19 @@ ros-name = "my_collection" # required because `my-collection` is not a valid ROS
 
 ##### `docker-image://`
 
-As documented above, you can use `docker-image://` to specify your own `[build.environment.aica.ros]` packages. However,
+As documented above, you can use `docker-image://` to specify your own `[build.dependencies]` packages. However,
 you can also use it anywhere you are giving the tag to a Docker image. This is useful if you want to use a custom base
 image for example.
 
 Some examples:
 
 ```toml title="aica-package.toml"
-[build.environment.aica]
+[build]
 image = "docker-image://ghcr.io/myorg/myimage:v1.0.0"
 
 # and/or
 
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "docker-image://ghcr.io/myorg/myimage:v1.0.0"
 ```
 
@@ -353,7 +353,7 @@ from another Docker image.
 Some examples:
 
 ```toml title="aica-package.toml"
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "build-context://cl"
 
 # and/or
@@ -385,18 +385,14 @@ docker build -f aica-package.toml -t my_component .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
+image = "v1.0.0-iron"
 
-[build.environment.aica]
-image = "iron"
-
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "v7.3.0"
-
-[build.environment.aica.ros]
 "@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
@@ -412,18 +408,14 @@ docker build -f aica-package.toml -t my_component .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
+image = "v1.0.0-iron"
 
-[build.environment.aica]
-image = "iron"
-
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "v7.3.0"
-
-[build.environment.aica.ros]
 "@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
@@ -449,18 +441,14 @@ docker build -f aica-package.toml \
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
-
-[build.environment.aica]
 image = "docker-image://base"
 
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "build-context://cl"
-
-[build.environment.aica.ros]
 "@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
@@ -474,13 +462,11 @@ docker build -f aica-package.toml -t my_component --target list .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
-
-[build.environment.aica]
-image = "iron"
+image = "v1.0.0-iron"
 
 [build.packages.component]
 
@@ -502,9 +488,9 @@ Some useful options:
 - `-t` or `--tag`: tag the image with a name and an optional tag, e.g. `-t my_component` or `-t my_component:latest`
 - `--platform`: build for a specific platform, e.g. `--platform linux/amd64` or `--platform linux/arm64`
 - `--build-arg`: this can be used to override any key in `aica-package.toml`,
-  e.g. `--build-arg config.build.environment.aica.image=jazzy`
+  e.g. `--build-arg config.build.image=jazzy`
 - `--ssh`: this can be used to pass SSH credentials to Docker, e.g. `--ssh default`. You will also need to
-  set `[build.environment.ssh]` to `true` in `aica-package.toml`
+  set `[build.ssh]` to `true` in `aica-package.toml`
 - `--build-context`: this can be used to pass a context to Docker, e.g. `--build-context my_source=../my_folder`. You
   can then use `build-context://my_source` in `aica-package.toml` to build a component from a folder outside your root
   context or from another Docker image
