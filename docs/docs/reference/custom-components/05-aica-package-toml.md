@@ -96,6 +96,7 @@ image.
 
 :::note
 Those libraries and packages will not be available at runtime, only while building. If you need them for building _and_ running, add them to the `[build.packages.XYZ.dependencies]` section below instead.
+Libraries that are only required at runtime, and not at build time, can be declared with `[build.run-dependencies]` instead.
 :::
 
 :::note
