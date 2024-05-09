@@ -13,6 +13,7 @@ Release Versions:
 ## Upcoming changes
 
 - feat: support hardware and controller states and predicates in `wait_for` functions (#156)
+- feat: define more detailed feature and function compatibility between versions (#158)
 
 ## 2.0.0
 
