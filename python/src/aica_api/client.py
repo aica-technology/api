@@ -1,13 +1,19 @@
+from deprecation import deprecated
+from functools import wraps
+from logging import getLogger
 from typing import Union, List
-from warnings import deprecated
 
 import os
 import requests
+import semver
 import yaml
 
 import importlib.metadata
 
 from aica_api.sio_client import read_until
+
+
+CLIENT_VERSION = importlib.metadata.version('aica_api')
 
 
 class AICA:
@@ -33,6 +39,9 @@ class AICA:
         else:
             self._address = f'http://{url}:{port}'
 
+        self._logger = getLogger(__name__)
+        self._api_version = None
+
     def _endpoint(self, endpoint=''):
         """
         Build the request address for a given endpoint.
@@ -43,13 +52,56 @@ class AICA:
         return f'{self._address}/v2/{endpoint}'
 
     @staticmethod
+    def _requires_api_version(version):
+        """
+        Decorator to mark a function with a specific API server version constraint.
+        Elides the function call and returns None with a warning if the version constraint is violated.
+
+        Example usage:
+        @_requires_api_version('>=3.2.1')
+        def my_new_endpoint()
+          ...
+
+        :param version: The version constraint specifier (i.e. >=3.2.1)
+        """
+        def decorator(func):
+            @wraps(func)
+            def wrapper(self, *args, **kwargs):
+                if self._api_version is None and self.api_version() is None:
+                    return None
+                if not semver.match(self._api_version, version):
+                    self._logger.warning(f'The function {func.__name__} requires API server version {version}, '
+                                         f'but the current API server version is {self._api_version}')
+                    return None
+                return func(self, *args, **kwargs)
+
+            return wrapper
+
+        return decorator
+
+    def api_version(self) -> Union[str, None]:
+        """
+        Get the version of the AICA API server
+
+        :return: The version of the API server or None in case of
+        """
+        try:
+            self._api_version = requests.get(f'{self._address}/version').json()
+            self._logger.debug(f'API server version identified as {self._api_version}')
+        except requests.exceptions.RequestException:
+            self._logger.error(f'Error connecting to the API server at {self._address}! '
+                               f'Check that the AICA container is running and configured with the right address.')
+            self._api_version = None
+        return self._api_version
+
+    @staticmethod
     def client_version() -> str:
         """
         Get the version of this API client utility
 
         :return: The version of the API client
         """
-        return importlib.metadata.version('aica_api')
+        return CLIENT_VERSION
 
     def check(self) -> bool:
         """
@@ -57,21 +109,26 @@ class AICA:
 
         :return: True if the client is compatible with the API server version, False otherwise
         """
-        try:
-            api_version = requests.get(f'{self._address}/version').json()
-        except requests.exceptions.RequestException as e:
-            print(f'Error connecting to the API! {e}')
+        if self._api_version is None and self.api_version() is None:
             return False
 
-        if api_version.startswith('3'):
+        version_info = semver.parse_version_info(self._api_version)
+
+        if version_info.major == 3:
             return True
-        elif api_version.startswith('2'):
-            print(f'The detected API version v{api_version} is older than the minimum API version v3.0.0 supported by '
-                  f'this client (v{self.client_version()}). Please install Python API client version v1.2.0 '
-                  f'for API server versions v2.X.')
+        elif version_info.major > 3:
+            self._logger.error(f'The detected API version v{self._api_version} is newer than the maximum API version '
+                               f'supported by this client (v{self.client_version()}). Please upgrade the Python API '
+                               f'client version for newer API server versions.')
+            return False
+        elif version_info.major == 2:
+            self._logger.error(f'The detected API version v{self._api_version} is older than the minimum API version '
+                               f'supported by this client (v{self.client_version()}). Please downgrade the Python API '
+                               f'client to version v1.2.0 for API server versions v2.X.')
             return False
         else:
-            print(f'The detected API version v{api_version} is deprecated and not supported by this API client!')
+            self._logger.error(f'The detected API version v{self._api_version} is deprecated and not supported by '
+                               f'this API client!')
             return False
 
     def component_descriptions(self) -> requests.Response:
@@ -280,6 +337,7 @@ class AICA:
         return read_until(lambda data: data[component]['state'] == state, url=self._address, namespace='/v2/components',
                           event='component_data', timeout=timeout) is not None
 
+    @_requires_api_version('>=3.1.0')
     def wait_for_hardware(self, hardware: str, state: str, timeout: Union[None, int, float] = None) -> bool:
         """
         Wait for a hardware interface to be in a particular state. Hardware can be in any of the following states:
@@ -293,6 +351,7 @@ class AICA:
         return read_until(lambda data: data[hardware]['state'] == state, url=self._address, namespace='/v2/hardware',
                           event='hardware_data', timeout=timeout) is not None
 
+    @_requires_api_version('>=3.1.0')
     def wait_for_controller(self, hardware: str, controller: str, state: str,
                             timeout: Union[None, int, float] = None) -> bool:
         """
@@ -308,7 +367,8 @@ class AICA:
         return read_until(lambda data: data[hardware]['controllers'][controller]['state'] == state, url=self._address,
                           namespace='/v2/hardware', event='hardware_data', timeout=timeout) is not None
 
-    @deprecated("Use wait_for_component_predicate instead")
+    @deprecated(deprecated_in='2.1.0', removed_in='3.0.0', current_version=CLIENT_VERSION,
+                details='Use the wait_for_component_predicate function instead')
     def wait_for_predicate(self, component: str, predicate: str, timeout: Union[None, int, float] = None) -> bool:
         """
         Wait until a component predicate is true.
@@ -321,6 +381,7 @@ class AICA:
         return read_until(lambda data: data[component]['predicates'][predicate], url=self._address,
                           namespace='/v2/components', event='component_data', timeout=timeout) is not None
 
+    @_requires_api_version('>=3.1.0')
     def wait_for_component_predicate(self, component: str, predicate: str,
                                      timeout: Union[None, int, float] = None) -> bool:
         """
@@ -334,6 +395,7 @@ class AICA:
         return read_until(lambda data: data[component]['predicates'][predicate], url=self._address,
                           namespace='/v2/components', event='component_data', timeout=timeout) is not None
 
+    @_requires_api_version('>=3.1.0')
     def wait_for_controller_predicate(self, hardware: str, controller: str, predicate: str,
                                       timeout: Union[None, int, float] = None) -> bool:
         """
