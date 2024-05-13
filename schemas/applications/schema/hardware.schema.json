@@ -5,7 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
-    "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+    "^[a-z][a-z0-9_]*[a-z0-9]$": {
       "title": "Hardware",
       "description": "A named hardware configuration",
       "type": "object",
@@ -25,7 +25,7 @@
           "title": "Hardware Parameters",
           "type": "object",
           "patternProperties": {
-            "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+            "^[a-z][a-z0-9_]*[a-z0-9]$": {
               "title": "Hardware Parameter",
               "description": "A hardware parameter in the URDF to be overridden with a new value",
               "type": [
@@ -47,7 +47,7 @@
           "description": "The controllers attached to the hardware interface",
           "additionalProperties": false,
           "patternProperties": {
-            "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+            "^[a-z][a-z0-9_]*[a-z0-9]$": {
               "title": "Controller",
               "description": "A named controller configuration",
               "type": "object",
@@ -76,7 +76,7 @@
                   "type": "object",
                   "additionalProperties": false,
                   "patternProperties": {
-                    "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+                    "^[a-z][a-z0-9_]*[a-z0-9]$": {
                       "title": "Controller Predicate",
                       "description": "A controller-specific predicate",
                       "$ref": "events.schema.json"

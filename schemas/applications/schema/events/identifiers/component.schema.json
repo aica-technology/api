@@ -3,5 +3,5 @@
   "title": "Component Name",
   "description": "The name of a component",
   "type": "string",
-  "pattern": "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)"
+  "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
 }
