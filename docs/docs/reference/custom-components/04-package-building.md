@@ -13,20 +13,16 @@ workspace. The easiest way to do this is to use a `aica-package.toml` file.
 A basic `aica-package.toml` file for a component package stored in the `custom_component_package` directory would look
 roughly like this:
 
-```toml
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+```toml title="aica-package.toml"
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
+image = "v1.0.0-iron"
 
-[build.environment.aica]
-image = "iron"
-
-[build.environment.aica.libraries]
-"@aica/foss/control-libraries" = "v7.3.0"
-
-[build.environment.aica.ros]
-"@aica/foss/modulo" = "v4.0.0"
+[build.dependencies]
+"@aica/foss/control-libraries" = "v7.5.0"
+"@aica/foss/modulo" = "v4.2.0"
 
 [build.packages.component]
 source = "./custom_component_package"

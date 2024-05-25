@@ -39,13 +39,19 @@ Each `aica-package.toml` should start with `#syntax=ghcr.io/aica-technology/pack
 the Docker syntax and version used to build the package.
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 ```
 
 You can find the available
 versions [here](https://github.com/orgs/aica-technology/packages/container/package/package-builder).
 
+The upcoming sections describe the syntax for the `package-builder` version `1.0.0` and later. If you are migrating from an older version, please refer to the corresponding guide:
+
+- [Migrating from `0.0.X`](/docs/reference/custom-components/aica-package-migrations#migrating-from-0-0-x)
+
 ### `[build]`
+
+#### `[build.type]`
 
 Required. The only `[build.type]` currently supported is `ros`.
 
@@ -54,54 +60,47 @@ Required. The only `[build.type]` currently supported is `ros`.
 type = "ros"
 ```
 
-#### `[build.cmake_args]`
+#### `[build.ssh]`
+
+Optional. Default is `false`. If set to `true`, any call to `CMake`, `pip` or custom stage will have access to the SSH credentials given to Docker with `--ssh default`. This is useful if you need to clone a private repository in CMakeLists.txt or install a private Python package from git.
+
+```toml title="aica-package.toml"
+[build]
+ssh = false
+```
+
+#### `[build.image]`
+
+Required. `[build.image]` is the tag of the AICA `ghcr.io/aica-technology/ros2-ws` image that will be used to build the components. Those images are tagged after the versions of the ROS 2 distributions and are available [here](https://github.com/aica-technology/docker-images/pkgs/container/ros2-ws).
+
+```toml title="aica-package.toml"
+[build]
+image = "v1.0.0-iron"
+```
+
+#### `[build.cmake-args]`
 
 Optional. In this category, you can specify arguments which will be passed to CMake through `-DK1=V1 -DK2=V2 ...`
 
 ```toml title="aica-package.toml"
-[build.cmake_args]
+[build.cmake-args]
 # here are a few examples
 PACKAGE_NAME = "my_package"
 USE_FEATURE_X = "ON"
 ```
 
-#### `[build.environment]`
+#### `[build.dependencies]`
 
-Required. This category describes the environment (ROS version, libraries, etc.) that will be used to build the
-components.
-
-`[build.environment.ssh]` is optional (defaults to `false`). If set to `true`, any call to `CMake`, `pip` or custom
-stage will have access to the SSH credentials given to Docker with `--ssh default`. This is useful if you need to clone
-a private repository in CMakeLists.txt or install a private Python package from git.
-
-```toml title="aica-package.toml"
-[build.environment]
-ssh = false
-```
-
-`[build.environment.aica]` is required. `[build.environment.aica.image]` is the tag of the
-AICA `ghcr.io/aica-technology/ros2-control` image that will be used to build the components. Those images are tagged
-after the ROS2 distributions and are
-available [here](https://github.com/aica-technology/docker-images/pkgs/container/ros2-control).
-
-```toml title="aica-package.toml"
-[build.environment.aica]
-image = "iron"
-```
-
-##### `[build.environment.aica.libraries]`
-
-Optional. `[build.environment.aica.libraries]` is used to specify the AICA libraries that will be installed in the
+Optional. `[build.dependencies]` is used to specify the AICA libraries and ROS 2 packages that will be installed in the
 image.
 
 :::note
-Those libraries will not be available at runtime, only while building. If you need them for building _and_ running, add
-them to the `[build.packages.XYZ.dependencies]` section below instead.
+Those libraries and packages will not be available at runtime, only while building. If you need them for building _and_ running, add them to the `[build.packages.XYZ.dependencies]` section below instead.
+Libraries that are only required at runtime, and not at build time, can be declared with `[build.run-dependencies]` instead.
 :::
 
 :::note
-Those libraries are built for specific versions of ROS2, so make sure that the version you are using is compatible with
-your `[build.environment.aica.image]`.
+Those libraries and packages are built for specific versions of ROS 2, so make sure that the version you are using is compatible with your `[build.image]`.
 :::
 
 Components usually require the `control-libraries` library. You can find the available
@@ -109,41 +108,68 @@ versions [here](https://github.com/aica-technology/control-libraries/pkgs/contai
 building a hardware interface, you might want to use the `network-interfaces` library; you can find the available
 versions [here](https://github.com/aica-technology/network-interfaces/pkgs/container/network-interfaces).
 
-:::note
-Those libraries are built in a specific way to be compatible with the AICA packaging system. Custom libraries are not
-available yet.
-:::
-
-```toml title="aica-package.toml"
-[build.environment.aica.libraries]
-"@aica/foss/control-libraries" = "v7.3.0"
-"@aica/foss/network-interfaces" = "v2.0.1"
-```
-
-##### `[build.environment.aica.ros]`
-
-Optional. `[build.environment.aica.ros]` is used to specify the ROS2 packages that will be installed in the image.
-
-:::note
-Those packages will not be available at runtime, only while building.
-:::
-
-:::note
-Those packages are built for specific versions of ROS2, so make sure that the version you are using is compatible with
-your `[build.environment.aica.image]`.
-:::
-
 Components usually require the `modulo` package. You can find the available
 versions [here](https://github.com/aica-technology/modulo/pkgs/container/modulo).
 
-You can also use any other ROS2 package that has been built with `aica-package.toml`. For example, if you had a
-component built with a tag of `ghcr.io/myorg/mypackage:v1.0.0`, you could use it like this:
+:::note
+Libraries are built in a specific way to be compatible with the AICA packaging system. Custom libraries are not
+available yet.
+:::
+
+:::note
+Starting with version `1.0.0` of the `package-builder`, all libraries and packages need to have special metadata associated in their image. This is done automatically when building with newer versions of `package-builder`. This means you won't be able to use older versions of certain libraries and packages with newer versions of `package-builder`.
+:::
 
 ```toml title="aica-package.toml"
-[build.environment.aica.ros]
-"@aica/foss/modulo" = "v4.0.0"
+[build.dependencies]
+"@aica/foss/control-libraries" = "v7.5.0"
+"@aica/foss/network-interfaces" = "v3.0.0"
+"@aica/foss/modulo" = "v4.2.0"
 "@myorg/mypackage" = "docker-image://ghcr.io/myorg/mypackage:v1.0.0"
 ```
+
+##### Adding version constraints
+
+Because `package-builder` will use your dependencies in the metadata of the component, the version of the dependencies will be expected when the component is used. You can tweak _which_ exact version is expected by using version constraints.
+
+```toml title="aica-package.toml"
+[build.dependencies]
+"@aica/foss/control-libraries" = {version = "v7.5.0", constraints = ">= 7.5.0"}
+```
+
+:::note
+By default, the version constraint is derived from the given version. It will be `~> X.Y` where `X` and `Y` are the major and minor versions of the given version. This means that any version with the same major version and a minor version greater than or equal to the given minor version will be accepted.
+:::
+
+:::note
+You can find more information about version constraints and their syntax [here](#version-constraints).
+:::
+
+##### Adding build-time dependencies
+
+Sometimes you might want to add a library but not require it in the metadata of your component. We call those dependencies build-only dependencies. This might be useful when using a static library that is built into your component and thus is not needed at runtime.
+
+```toml title="aica-package.toml"
+[build.dependencies]
+"@myorg/mylib" = {version = "v7.5.0", build-only = true}
+```
+
+:::note
+You can also add version constraints to build-only dependencies.
+:::
+
+#### `[build.run-dependencies]`
+
+Optional. This field is similar to `[build.dependencies]` but its content is not downloaded and added to the image during the build. Instead, the information contained there is used in the metadata of your component. When someone uses your component, they will be notified that they need to use a specific version of the added dependencies matching the one specified in this section.
+
+```toml title="aica-package.toml"
+[build.run-dependencies]
+"@myorg/mypackage" = ">= 1.0.0"
+```
+
+:::note
+The value expected for each entry is not a version but a version constraint. You can find more information about this concept and its syntax in the corresponding section [here](#version-constraints).
+:::
 
 #### `[build.packages]`
 
@@ -251,7 +277,7 @@ following environment variables should be available:
 - `HOME`: the path to the home directory of the non-root user
 - `ROS_DISTRO`: the ROS2 distribution used to build the component
 - `ROS2_WORKSPACE`: the path to the workspace where the standard ROS2 packages are installed as well as
-  the `[build.environment.aica.ros]` packages
+  the `[build.dependencies]` packages
 - any other environment variables set by `colcon`'s `${WORKSPACE}/install/setup.bash`
 
 ```toml title="aica-package.toml"
@@ -262,23 +288,59 @@ python3 ${WORKSPACE}/src/my_component/script.py
 """
 ```
 
+### `[metadata]`
+
+Required.
+
+#### `[metadata.version]`
+
+Required. Must be a [semver-compliant](https://semver.org/) version string.
+
+```toml title="aica-package.toml"
+[metadata]
+version = "1.0.0"
+```
+
+#### `[metadata.description]`
+
+Optional. A short description of the component.
+
+```toml title="aica-package.toml"
+[metadata]
+description = "My awesome component"
+```
+
+#### `[metadata.collection]`
+
+Required when using multiple `[build.packages]`, otherwise ignored. This must contain the names of the collection being built (the set of multiple components).
+
+`[metadata.collection.name]` is required. It is the name of the collection.
+
+`[metadata.collection.ros-name]` is optional. This must be specified if `[metadata.collection.name]` is not a valid ROS package name.
+
+```toml title="aica-package.toml"
+[metadata.collection]
+name = "my-collection"
+ros-name = "my_collection" # required because `my-collection` is not a valid ROS package name
+```
+
 #### Advanced usage
 
 ##### `docker-image://`
 
-As documented above, you can use `docker-image://` to specify your own `[build.environment.aica.ros]` packages. However,
+As documented above, you can use `docker-image://` to specify your own `[build.dependencies]` packages. However,
 you can also use it anywhere you are giving the tag to a Docker image. This is useful if you want to use a custom base
 image for example.
 
 Some examples:
 
 ```toml title="aica-package.toml"
-[build.environment.aica]
+[build]
 image = "docker-image://ghcr.io/myorg/myimage:v1.0.0"
 
 # and/or
 
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "docker-image://ghcr.io/myorg/myimage:v1.0.0"
 ```
 
@@ -292,7 +354,7 @@ from another Docker image.
 Some examples:
 
 ```toml title="aica-package.toml"
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "build-context://cl"
 
 # and/or
@@ -300,6 +362,18 @@ Some examples:
 [build.packages.component]
 source = "build-context://my_source"
 ```
+
+##### Version constraints
+
+Version constraints follow the syntax of the [Terraform version constraints](https://www.terraform.io/docs/language/expressions/version-constraints.html) which is similar to syntax used by NPM, yarn or pip. Here is a quick summary:
+
+- Versions constraints are composed of one or more conditions separated by commas, e.g. `>= 1.0.0, < 2.0.0`.
+- Each version specified must be a valid [semver](https://semver.org/) version, e.g. `1.0.0`.
+- The following operators are supported:
+  - `=` or no operator: allow only the exact version, cannot be combined with other conditions.
+  - `!=`: exclude a specific version.
+  - `>`, `>=`, `<`, `<=`: comparison against a specific version, allowing any version matching the operator. `>` allows newer version and `<` allows older version.
+  - `~>`: allows only the right most number of the version to increase. This is useful to allow only patch or minor versions to increase, e.g. `~> 1.0` allows `1.1`, `1.2`, etc. but not `2.0` and `~> 1.0.0` allows `1.0.1`, `1.0.2`, etc. but not `1.1.0`.
 
 ### Examples
 
@@ -312,18 +386,14 @@ docker build -f aica-package.toml -t my_component .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
+image = "v1.0.0-iron"
 
-[build.environment.aica]
-image = "iron"
-
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "v7.3.0"
-
-[build.environment.aica.ros]
 "@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
@@ -339,18 +409,14 @@ docker build -f aica-package.toml -t my_component .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
+image = "v1.0.0-iron"
 
-[build.environment.aica]
-image = "iron"
-
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "v7.3.0"
-
-[build.environment.aica.ros]
 "@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
@@ -376,18 +442,14 @@ docker build -f aica-package.toml \
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
-
-[build.environment.aica]
 image = "docker-image://base"
 
-[build.environment.aica.libraries]
+[build.dependencies]
 "@aica/foss/control-libraries" = "build-context://cl"
-
-[build.environment.aica.ros]
 "@aica/foss/modulo" = "v4.0.0"
 
 [build.packages.component]
@@ -401,13 +463,11 @@ docker build -f aica-package.toml -t my_component --target list .
 ```
 
 ```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/package-builder:v0.0.13
+#syntax=ghcr.io/aica-technology/package-builder:v1
 
 [build]
 type = "ros"
-
-[build.environment.aica]
-image = "iron"
+image = "v1.0.0-iron"
 
 [build.packages.component]
 
@@ -429,9 +489,9 @@ Some useful options:
 - `-t` or `--tag`: tag the image with a name and an optional tag, e.g. `-t my_component` or `-t my_component:latest`
 - `--platform`: build for a specific platform, e.g. `--platform linux/amd64` or `--platform linux/arm64`
 - `--build-arg`: this can be used to override any key in `aica-package.toml`,
-  e.g. `--build-arg config.build.environment.aica.image=jazzy`
+  e.g. `--build-arg config.build.image=jazzy`
 - `--ssh`: this can be used to pass SSH credentials to Docker, e.g. `--ssh default`. You will also need to
-  set `[build.environment.ssh]` to `true` in `aica-package.toml`
+  set `[build.ssh]` to `true` in `aica-package.toml`
 - `--build-context`: this can be used to pass a context to Docker, e.g. `--build-context my_source=../my_folder`. You
   can then use `build-context://my_source` in `aica-package.toml` to build a component from a folder outside your root
   context or from another Docker image
@@ -439,3 +499,4 @@ Some useful options:
   in `aica-package.toml` to define the stage
 - `--no-cache`: this can be used to force Docker to rebuild the image from scratch
 - `--progress`: this can be used to change the progress output, e.g. `--progress plain` or `--progress auto`
+- `--label`: this can be used to add metadata to the image, e.g. `--label my_label=my_value`
