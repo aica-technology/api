@@ -59,6 +59,11 @@
       },
       "position": {
         "$ref": "common/position.schema.json"
+      },
+      "display_name": {
+        "title": "Sequence Display Name",
+        "description": "The human-readable name to display on the sequence",
+        "type": "string"
       }
     }
   },
