@@ -56,6 +56,9 @@
             ]
           }
         ]
+      },
+      "position": {
+        "$ref": "common/position.schema.json"
       }
     }
   },
