@@ -91,6 +91,42 @@
         "base"
       ]
     },
+    "metadata": {
+      "title": "Application Metadata",
+      "description": "Metadata used to describe the application for user convenience. This information may be used by parsers to search or sort database applications",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Application Name",
+          "description": "The name of the application",
+          "type": "string"
+        },
+        "description": {
+          "title": "Application Description",
+          "description": "A brief description of the application",
+          "type": "string"
+        },
+        "tags": {
+          "title": "Application Tags",
+          "description": "A collection of user-defined tags that provide additional context for categorizing the application",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "example": [
+              "motion",
+              "optimization",
+              "assembly",
+              "force control"
+            ]
+          }
+        }
+      }
+    },
+    "userdata": {
+      "title": "User Data",
+      "description": "This property accepts any data structure and will be ignored by the syntax parser. It can be used to store additional metadata or context about the application for user convenience."
+    },
     "on_start": {
       "title": "On Start",
       "description": "A special keyword that triggers events when the application is launched",
