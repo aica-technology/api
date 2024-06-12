@@ -48,10 +48,10 @@
           "$ref": "common/parameters.schema.json"
         },
         "inputs": {
-          "$ref": "common/inputs.schema.json"
+          "$ref": "common/signals.schema.json"
         },
         "outputs": {
-          "$ref": "common/outputs.schema.json"
+          "$ref": "common/signals.schema.json"
         },
         "input_collections": {
           "title": "Input collections",
