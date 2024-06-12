@@ -19,7 +19,7 @@
       "title": "Parameter Name",
       "description": "The name of a parameter to set",
       "type": "string",
-      "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
     },
     "value": {
       "title": "New Parameter Value",

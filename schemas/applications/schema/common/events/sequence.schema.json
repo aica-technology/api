@@ -23,17 +23,17 @@
         "start": {
           "description": "Name of the sequence to start",
           "type": "string",
-          "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
         },
         "restart": {
           "description": "Name of the sequence to restart",
           "type": "string",
-          "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
         },
         "abort": {
           "description": "Name of the sequence to abort",
           "type": "string",
-          "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
         }
       },
       "oneOf": [

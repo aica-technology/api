@@ -5,7 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
-    "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)": {
+    "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
       "title": "Signal topic",
       "description": "The corresponding topic of the signal",
       "type": "string"

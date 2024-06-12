@@ -5,7 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
-    "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)": {
+    "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
       "title": "Component",
       "description": "A named component configuration",
       "type": "object",
@@ -59,7 +59,7 @@
           "type": "object",
           "additionalProperties": false,
           "patternProperties": {
-            "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)": {
+            "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
               "title": "Input topics",
               "description": "The array of topics that are included in the signal collection",
               "type": "array",

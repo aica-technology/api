@@ -5,7 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
-    "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)": {
+    "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
       "title": "Parameter Value",
       "description": "The value assigned to the named parameter",
       "type": [
