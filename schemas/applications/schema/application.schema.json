@@ -134,19 +134,19 @@
       "additionalProperties": false,
       "properties": {
         "load": {
-          "$ref": "events/load.schema.json"
+          "$ref": "common/events/load.schema.json"
         },
         "lifecycle": {
-          "$ref": "events/lifecycle.schema.json"
+          "$ref": "common/events/lifecycle.schema.json"
         },
         "call_service": {
-          "$ref": "events/call_service.schema.json"
+          "$ref": "common/events/call_service.schema.json"
         },
         "switch_controllers": {
-          "$ref": "events/switch_controllers.schema.json"
+          "$ref": "common/events/switch_controllers.schema.json"
         },
         "sequence": {
-          "$ref": "events/sequence.schema.json"
+          "$ref": "common/events/sequence.schema.json"
         },
         "position": {
           "$ref": "common/position.schema.json"

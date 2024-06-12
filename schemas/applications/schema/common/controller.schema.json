@@ -6,13 +6,10 @@
   "additionalProperties": false,
   "properties": {
     "hardware": {
-      "$ref": "hardware.schema.json"
+      "$ref": "identifier.schema.json"
     },
     "controller": {
-      "title": "Controller Name",
-      "description": "The name of a controller",
-      "type": "string",
-      "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
+      "$ref": "identifier.schema.json"
     }
   },
   "required": [

@@ -15,7 +15,7 @@
       "$ref": "#/$defs/service_object"
     },
     {
-      "$ref": "identifiers/service.schema.json"
+      "$ref": "../identifier.schema.json"
     }
   ],
   "$defs": {
@@ -36,13 +36,13 @@
           "additionalProperties": false,
           "properties": {
             "service": {
-              "$ref": "identifiers/service.schema.json"
+              "$ref": "../identifier.schema.json"
             },
             "payload": {
               "$ref": "#/$defs/payload"
             },
             "component": {
-              "$ref": "identifiers/component.schema.json"
+              "$ref": "../identifier.schema.json"
             }
           },
           "required": [
@@ -55,13 +55,13 @@
           "additionalProperties": false,
           "properties": {
             "service": {
-              "$ref": "identifiers/service.schema.json"
+              "$ref": "../identifier.schema.json"
             },
             "hardware": {
-              "$ref": "identifiers/hardware.schema.json"
+              "$ref": "../identifier.schema.json"
             },
             "controller": {
-              "$ref": "identifiers/controller.schema.json#/properties/controller"
+              "$ref": "../identifier.schema.json"
             },
             "payload": {
               "$ref": "#/$defs/payload"

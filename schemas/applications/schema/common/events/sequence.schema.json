@@ -22,15 +22,18 @@
       "properties": {
         "start": {
           "description": "Name of the sequence to start",
-          "type": "string"
+          "type": "string",
+          "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
         },
         "restart": {
           "description": "Name of the sequence to restart",
-          "type": "string"
+          "type": "string",
+          "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
         },
         "abort": {
           "description": "Name of the sequence to abort",
-          "type": "string"
+          "type": "string",
+          "pattern": "(^[a-z][a-z0-9_]*[a-z0-9]$)|(^[a-z]$)"
         }
       },
       "oneOf": [

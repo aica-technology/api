@@ -8,7 +8,7 @@
       "additionalProperties": false,
       "properties": {
         "component": {
-          "$ref": "component.schema.json"
+          "$ref": "identifier.schema.json"
         }
       },
       "required": [
@@ -20,7 +20,7 @@
       "additionalProperties": false,
       "properties": {
         "hardware": {
-          "$ref": "hardware.schema.json"
+          "$ref": "identifier.schema.json"
         }
       },
       "required": [

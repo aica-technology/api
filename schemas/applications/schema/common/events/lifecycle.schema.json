@@ -52,7 +52,7 @@
           "$ref": "#/$defs/transition"
         },
         "component": {
-          "$ref": "identifiers/component.schema.json"
+          "$ref": "../identifier.schema.json"
         }
       },
       "required": [
