@@ -9,6 +9,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "loop": {
+          "title": "Loop Sequence",
+          "description": "If true, automatically restart the sequence after completing the last sequence step",
+          "type": "boolean"
+        },
         "steps": {
           "title": "Sequence Steps",
           "description": "The ordered sequence steps to either trigger events, wait for a predefined time or check a condition",
@@ -104,7 +109,10 @@
             ]
           }
         }
-      }
+      },
+      "required": [
+        "steps"
+      ]
     }
   }
 }
