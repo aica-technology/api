@@ -62,9 +62,6 @@
           "description": "The human-readable name to display on the hardware interface",
           "type": "string"
         },
-        "position": {
-          "$ref": "common/position.schema.json"
-        },
         "events": {
           "title": "Hardware Events",
           "description": "Hardware event sources that can trigger events",

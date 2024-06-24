@@ -38,9 +38,6 @@
               "$ref": "common/events/switch_controllers.schema.json"
             }
           }
-        },
-        "position": {
-          "$ref": "common/position.schema.json"
         }
       }
     }

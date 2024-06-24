@@ -22,9 +22,6 @@
     },
     "sequence": {
       "$ref": "common/events/sequence.schema.json#/$defs/start_a_sequence"
-    },
-    "position": {
-      "$ref": "common/position.schema.json"
     }
   },
   "$defs": {
