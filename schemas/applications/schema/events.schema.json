@@ -5,29 +5,32 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "application": {
+      "$ref": "common/events/application.schema.json"
+    },
     "load": {
-      "$ref": "events/load.schema.json"
+      "$ref": "common/events/load.schema.json"
     },
     "unload": {
-      "$ref": "events/unload.schema.json"
+      "$ref": "common/events/unload.schema.json"
     },
     "transition": {
-      "$ref": "events/transition.schema.json"
+      "$ref": "common/events/transition.schema.json"
     },
     "set": {
-      "$ref": "events/set.schema.json"
+      "$ref": "common/events/set.schema.json"
     },
     "call_service": {
-      "$ref": "events/call_service.schema.json"
+      "$ref": "common/events/call_service.schema.json"
     },
     "lifecycle": {
-      "$ref": "events/lifecycle.schema.json"
+      "$ref": "common/events/lifecycle.schema.json"
     },
     "switch_controllers": {
-      "$ref": "events/switch_controllers.schema.json"
+      "$ref": "common/events/switch_controllers.schema.json"
     },
     "sequence": {
-      "$ref": "events/sequence.schema.json"
+      "$ref": "common/events/sequence.schema.json"
     }
   }
 }

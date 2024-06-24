@@ -22,7 +22,7 @@
       "additionalProperties": false,
       "properties": {
         "hardware": {
-          "$ref": "identifiers/hardware.schema.json"
+          "$ref": "../identifier.schema.json"
         },
         "activate": {
           "$ref": "#/$defs/switch_controllers_target"
@@ -44,11 +44,11 @@
           "type": "array",
           "minItems": 1,
           "items": {
-            "$ref": "identifiers/controller.schema.json#/properties/controller"
+            "$ref": "../identifier.schema.json"
           }
         },
         {
-          "$ref": "identifiers/controller.schema.json#/properties/controller"
+          "$ref": "../identifier.schema.json"
         }
       ]
     }

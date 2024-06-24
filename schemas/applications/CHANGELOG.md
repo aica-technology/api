@@ -2,14 +2,38 @@
 
 Release Versions:
 
-- [1-4-1](#141)
-- [1-4-0](#140)
-- [1-3-0](#130)
-- [1-2-0](#120)
-- [1-1-2](#112)
-- [1-1-1](#111)
-- [1-1-0](#110)
-- [1-0-0](#100)
+- [2-0-0](#2-0-0)
+- [1-4-1](#1-4-1)
+- [1-4-0](#1-4-0)
+- [1-3-0](#1-3-0)
+- [1-2-0](#1-2-0)
+- [1-1-2](#1-1-2)
+- [1-1-1](#1-1-1)
+- [1-1-0](#1-1-0)
+- [1-0-0](#1-0-0)
+
+## 2-0-0
+
+### New features in 2-0-0
+
+- Application dependencies can be defined under the top-level `dependencies` property, including the base image version
+  and additional packages
+- Application metadata can be defined under the top-level `metadata` property including a name, description and tags
+- Any additional user data can be included in an application under the top-level `userdata` property
+- A running application can be stopped with the `application: stop` event from any event source
+- Components, controllers and hardware support dedicated transition events such as `on_load`, `on_activate`
+  and `on_error` which behave as event triggers similar to predicates
+- Condition sources for sequence steps and conditions now include component, controller, hardware or sequence states in
+  addition to the previous component or controller predicate sources
+- Hardware control rate can be supplemented with a `rate_tolerance` to determine the allowable deviation from the
+  intended control rate, and an optional `strict` flag that immediately shuts down the hardware in case of rate
+  deviation or other error
+- Sequences support additional properties including display name, position on the graph and automatic looping
+- Sequences and conditions support display names
+
+### Breaking changes
+
+Refer to the migration guide in [README.md](./README.md#migrating-from-1-4-x-to-2-0-0) for more information.
 
 ## 1-4-1
 

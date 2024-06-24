@@ -5,150 +5,85 @@
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
-    "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
-      "title": "Condition Name",
-      "description": "The name of the condition",
+    "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "display_name": {
+          "title": "Condition Display Name",
+          "description": "The human-readable name to display on the condition",
+          "type": "string"
+        },
+        "condition": {
+          "$ref": "#/$defs/condition_object"
+        },
         "events": {
-          "title": "Conditional Events",
-          "description": "Events triggered by the condition",
           "$ref": "events.schema.json"
-        },
-        "all": {
-          "title": "All",
-          "description": "True only when every listed item is true",
-          "$ref": "#/$defs/condition_array"
-        },
-        "any": {
-          "title": "Any",
-          "description": "True if at least one of the listed items is true",
-          "$ref": "#/$defs/condition_array"
-        },
-        "one_of": {
-          "title": "One Of",
-          "description": "True only when exactly one of the listed items is true",
-          "$ref": "#/$defs/condition_array"
-        },
-        "not": {
-          "title": "Not",
-          "description": "True only when the sub-item is false",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/condition_object"
-            },
-            {
-              "$ref": "#/$defs/predicate_object"
-            },
-            {
-              "type": "boolean"
-            }
-          ]
-        },
-        "component": {
-          "$ref": "events/identifiers/component.schema.json"
-        },
-        "controller": {
-          "$ref": "events/identifiers/controller.schema.json#/properties/controller"
-        },
-        "hardware": {
-          "$ref": "events/identifiers/hardware.schema.json"
-        },
-        "predicate": {
-          "$ref": "events/identifiers/predicate.schema.json"
         }
       },
-      "oneOf": [
-        {
-          "required": [
-            "all"
-          ]
-        },
-        {
-          "required": [
-            "any"
-          ]
-        },
-        {
-          "required": [
-            "one_of"
-          ]
-        },
-        {
-          "required": [
-            "not"
-          ]
-        },
-        {
-          "required": [
-            "component",
-            "predicate"
-          ]
-        },
-        {
-          "required": [
-            "controller",
-            "hardware",
-            "predicate"
-          ]
-        }
+      "required": [
+        "condition"
       ]
     }
   },
   "$defs": {
     "condition_object": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "all": {
-          "title": "All",
-          "description": "True only when every listed item is true",
-          "$ref": "#/$defs/condition_array"
-        },
-        "any": {
-          "title": "Any",
-          "description": "True if at least one of the listed items is true",
-          "$ref": "#/$defs/condition_array"
-        },
-        "one_of": {
-          "title": "One Of",
-          "description": "True only when exactly one of the listed items is true",
-          "$ref": "#/$defs/condition_array"
-        },
-        "not": {
-          "title": "Not",
-          "description": "True only when the sub-item is false",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/condition_object"
-            },
-            {
-              "$ref": "#/$defs/predicate_object"
-            },
-            {
-              "type": "boolean"
-            }
-          ]
-        }
-      },
       "oneOf": [
         {
+          "$ref": "common/condition_object.schema.json"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "all": {
+              "title": "All",
+              "description": "True only when every listed item is true",
+              "$ref": "#/$defs/condition_array"
+            }
+          },
           "required": [
             "all"
           ]
         },
         {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "any": {
+              "title": "Any",
+              "description": "True if at least one of the listed items is true",
+              "$ref": "#/$defs/condition_array"
+            }
+          },
           "required": [
             "any"
           ]
         },
         {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "one_of": {
+              "title": "One Of",
+              "description": "True only when exactly one of the listed items is true",
+              "$ref": "#/$defs/condition_array"
+            }
+          },
           "required": [
             "one_of"
           ]
         },
         {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "not": {
+              "title": "Not",
+              "description": "True only when the sub-item is false",
+              "$ref": "#/$defs/condition_object"
+            }
+          },
           "required": [
             "not"
           ]
@@ -160,51 +95,8 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/condition_object"
-          },
-          {
-            "$ref": "#/$defs/predicate_object"
-          },
-          {
-            "type": "boolean"
-          }
-        ]
+        "$ref": "#/$defs/condition_object"
       }
-    },
-    "predicate_object": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "component": {
-          "$ref": "events/identifiers/component.schema.json"
-        },
-        "controller": {
-          "$ref": "events/identifiers/controller.schema.json#/properties/controller"
-        },
-        "hardware": {
-          "$ref": "events/identifiers/hardware.schema.json"
-        },
-        "predicate": {
-          "$ref": "events/identifiers/predicate.schema.json"
-        }
-      },
-      "oneOf": [
-        {
-          "required": [
-            "component",
-            "predicate"
-          ]
-        },
-        {
-          "required": [
-            "controller",
-            "hardware",
-            "predicate"
-          ]
-        }
-      ]
     }
   }
 }

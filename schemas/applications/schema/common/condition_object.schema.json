@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Condition Object",
+  "description": "A specific condition source in the application",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/component_predicate"
+    },
+    {
+      "$ref": "#/$defs/controller_predicate"
+    },
+    {
+      "$ref": "#/$defs/component_state"
+    },
+    {
+      "$ref": "#/$defs/controller_state"
+    },
+    {
+      "$ref": "#/$defs/hardware_state"
+    },
+    {
+      "$ref": "#/$defs/sequence_state"
+    },
+    {
+      "$ref": "#/$defs/condition"
+    },
+    {
+      "$ref": "#/$defs/boolean"
+    }
+  ],
+  "$defs": {
+    "component_predicate": {
+      "title": "Component Predicate Condition",
+      "description": "A condition depending on the runtime state of a component predicate",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "identifier.schema.json"
+        },
+        "predicate": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "component",
+        "predicate"
+      ]
+    },
+    "controller_predicate": {
+      "title": "Controller Predicate Condition",
+      "description": "A condition depending on the runtime state of a controller predicate",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "controller": {
+          "$ref": "identifier.schema.json"
+        },
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        },
+        "predicate": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "controller",
+        "hardware",
+        "predicate"
+      ]
+    },
+    "component_state": {
+      "title": "Component State Condition",
+      "description": "A condition depending on the runtime state of a component",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "identifier.schema.json"
+        },
+        "state": {
+          "title": "Component State",
+          "description": "The runtime state of the component",
+          "type": "string",
+          "enum": [
+            "unloaded",
+            "loaded",
+            "unconfigured",
+            "inactive",
+            "active",
+            "finalized"
+          ]
+        }
+      },
+      "required": [
+        "component",
+        "state"
+      ]
+    },
+    "controller_state": {
+      "title": "Controller State Condition",
+      "description": "A condition depending on the runtime state of a controller",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "controller": {
+          "$ref": "identifier.schema.json"
+        },
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        },
+        "state": {
+          "title": "Controller State",
+          "description": "The runtime state of the controller",
+          "type": "string",
+          "enum": [
+            "unloaded",
+            "loaded",
+            "active"
+          ]
+        }
+      },
+      "required": [
+        "controller",
+        "hardware",
+        "state"
+      ]
+    },
+    "hardware_state": {
+      "title": "Hardware State Condition",
+      "description": "A condition depending on the runtime state of a hardware interface",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        },
+        "state": {
+          "title": "Hardware State",
+          "description": "The runtime state of the hardware interface",
+          "type": "string",
+          "enum": [
+            "unloaded",
+            "loaded"
+          ]
+        }
+      },
+      "required": [
+        "hardware",
+        "state"
+      ]
+    },
+    "sequence_state": {
+      "title": "Sequence State Condition",
+      "description": "A condition depending on the runtime state of a sequence",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sequence": {
+          "$ref": "identifier.schema.json"
+        },
+        "state": {
+          "title": "Sequence State",
+          "description": "The runtime state of the sequence",
+          "type": "string",
+          "enum": [
+            "inactive",
+            "active"
+          ]
+        }
+      },
+      "required": [
+        "sequence",
+        "state"
+      ]
+    },
+    "condition": {
+      "title": "Reference Condition",
+      "description": "A condition depending on the runtime state of another condition",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "condition": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "condition"
+      ]
+    },
+    "boolean": {
+      "description": "A hard-coded Boolean value which may be useful for testing and developing applications",
+      "type": "boolean"
+    }
+  }
+}

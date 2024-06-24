@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Graph",
+  "description": "Information for the graphical representation of the application",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "positions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "on_start": {
+          "$ref": "#/$defs/position"
+        },
+        "buttons": {
+          "$ref": "#/$defs/position_group"
+        },
+        "components": {
+          "$ref": "#/$defs/position_group"
+        },
+        "hardware": {
+          "$ref": "#/$defs/position_group"
+        },
+        "conditions": {
+          "$ref": "#/$defs/position_group"
+        },
+        "sequences": {
+          "$ref": "#/$defs/position_group"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "position": {
+      "title": "Position",
+      "description": "The position of the element on the graph",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "title": "X Position",
+          "description": "The X position of the element on the graph",
+          "type": "number",
+          "multipleOf" : 20
+        },
+        "y": {
+          "title": "Y Position",
+          "description": "The Y position of the element on the graph",
+          "type": "number",
+          "multipleOf" : 20
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "position_group": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "$ref": "#/$defs/position"
+        }
+      }
+    }
+  }
+}

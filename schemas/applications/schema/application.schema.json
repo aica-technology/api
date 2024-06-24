@@ -1,36 +1,134 @@
 {
-  "$id": "/1-4-1/application.schema.json",
+  "$id": "/draft/2-0-0/application.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "YAML Application Description",
   "description": "An AICA application graph description using YAML syntax.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "on_start": {
-      "title": "On Start",
-      "description": "A special keyword that triggers events when the application is launched",
+    "schema": {
+      "title": "Schema",
+      "description": "The schema version of the application syntax",
+      "examples": [
+        "1-4-1",
+        "draft/2-0-0",
+        "2-1-0"
+      ],
+      "type": "string",
+      "pattern": "^(draft/)?[0-9]+-[0-9]+-[0-9]+$"
+    },
+    "dependencies": {
+      "title": "Dependencies",
+      "description": "The application dependencies, including the base version and any required packages",
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "load": {
-          "$ref": "events/load.schema.json"
+        "base": {
+          "title": "Base Version",
+          "description": "The version of the AICA base image",
+          "examples": [
+            "v3.1.1",
+            "v4.0.0"
+          ],
+          "type": "string",
+          "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
         },
-        "lifecycle": {
-          "$ref": "events/lifecycle.schema.json"
+        "packages": {
+          "title": "Application Packages",
+          "description": "A list of packages required by the application",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "title": "Package Details",
+            "description": "The specification of a package name and version with optional version constraints",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "package": {
+                "title": "Package Name",
+                "description": "The name of the package",
+                "examples": [
+                  "@aica/components/pose-detection",
+                  "@aica/collections/ur-collection"
+                ],
+                "type": "string"
+              },
+              "version": {
+                "title": "Package Version",
+                "description": "The specific version of the package used by the author of the application",
+                "examples": [
+                  "v1.2.3",
+                  "docker-image://ghcr.io/aica-technology/custom-package:v0.1.0"
+                ],
+                "type": "string",
+                "pattern": "^(v[0-9]+\\.[0-9]+\\.[0-9]+)|(docker-image://.*)$"
+              },
+              "constraints": {
+                "title": "Package Version Constraint",
+                "description": "A range of acceptable package versions that are supported by the application defined by constraints. For more details on syntax, see https://developer.hashicorp.com/terraform/language/expressions/version-constraints",
+                "examples": [
+                  "1.0.0",
+                  "= 1.0.1",
+                  "> 1.0.2",
+                  ">= 1.0.3",
+                  "~> 1.0.4",
+                  "~> 1.1",
+                  ">= 1.1.0, < 2.0.0",
+                  ">= 2.0.0, != 2.0.1, <= 2.0.2"
+                ],
+                "type": "string",
+                "pattern": "^(((?<!^), )?((=|!=|<|<=|>|>=|~>) )?(([0-9]+\\.[0-9]+\\.[0-9]+)|((?<=~> )[0-9]+\\.[0-9]+)))+$"
+              }
+            },
+            "required": [
+              "package",
+              "version"
+            ]
+          }
+        }
+      },
+      "required": [
+        "base"
+      ]
+    },
+    "metadata": {
+      "title": "Application Metadata",
+      "description": "Metadata used to describe the application for user convenience. This information may be used by parsers to search or sort database applications",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Application Name",
+          "description": "The name of the application",
+          "type": "string"
         },
-        "call_service": {
-          "$ref": "events/call_service.schema.json"
+        "description": {
+          "title": "Application Description",
+          "description": "A brief description of the application",
+          "type": "string"
         },
-        "switch_controllers": {
-          "$ref": "events/switch_controllers.schema.json"
-        },
-        "sequence": {
-          "$ref": "events/sequence.schema.json"
-        },
-        "position": {
-          "$ref": "common/position.schema.json"
+        "tags": {
+          "title": "Application Tags",
+          "description": "A collection of user-defined tags that provide additional context for categorizing the application",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "example": [
+              "motion",
+              "optimization",
+              "assembly",
+              "force control"
+            ]
+          }
         }
       }
+    },
+    "userdata": {
+      "title": "User Data",
+      "description": "This property accepts any data structure and will be ignored by the syntax parser. It can be used to store additional metadata or context about the application for user convenience."
+    },
+    "on_start": {
+      "$ref": "on_start.schema.json"
     },
     "hardware": {
       "$ref": "hardware.schema.json"
@@ -46,6 +144,27 @@
     },
     "sequences": {
       "$ref": "sequences.schema.json"
+    },
+    "graph": {
+      "$ref": "graph.schema.json"
+    }
+  },
+  "required": [
+    "schema",
+    "dependencies"
+  ],
+  "$defs": {
+    "events": {
+      "$ref": "events.schema.json"
+    },
+    "log_level": {
+      "$ref": "common/log_level.schema.json"
+    },
+    "parameters": {
+      "$ref": "common/parameters.schema.json"
+    },
+    "signals": {
+      "$ref": "common/signals.schema.json"
     }
   }
 }

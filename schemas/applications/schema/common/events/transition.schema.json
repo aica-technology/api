@@ -2,9 +2,5 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Transition Components",
   "description": "Unload the current component and load another one",
-  "oneOf": [
-    {
-      "$ref": "identifiers/component.schema.json"
-    }
-  ]
+  "$ref": "../identifier.schema.json"
 }

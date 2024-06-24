@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "On Start",
+  "description": "A special keyword that triggers events when the application is launched",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "load": {
+      "oneOf": [
+        {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/load_on_start"
+          }
+        },
+        {
+          "$ref": "#/$defs/load_on_start"
+        }
+      ]
+    },
+    "sequence": {
+      "$ref": "common/events/sequence.schema.json#/$defs/start_a_sequence"
+    }
+  },
+  "$defs": {
+    "load_on_start": {
+      "title": "Load On Start",
+      "oneOf": [
+        {
+          "$ref": "common/load_unload_target.json#/$defs/component_identifier"
+        },
+        {
+          "$ref": "common/load_unload_target.json#/$defs/hardware_identifier"
+        }
+      ]
+    }
+  }
+}

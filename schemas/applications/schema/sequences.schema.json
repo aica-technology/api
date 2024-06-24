@@ -1,210 +1,123 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Sequences",
-  "description": "A description of sequences used to trigger events events in a specific order",
+  "description": "A description of sequences used to trigger events in a specific order",
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
-    "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)": {
-      "title": "Sequence",
-      "description": "A named event sequence",
-      "type": "array",
-      "items": {
-        "oneOf": [
-          {
-            "$ref": "events.schema.json"
-          },
-          {
-            "title": "Wait",
-            "additionalProperties": false,
-            "properties": {
-              "wait": {
-                "oneOf": [
-                  {
-                    "$ref": "#/$defs/wait_for_condition"
-                  },
-                  {
-                    "$ref": "#/$defs/wait_for_predicate"
-                  },
-                  {
-                    "$ref": "#/$defs/wait_for_time"
+    "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "title": "Sequence Display Name",
+          "description": "The human-readable name to display on the sequence",
+          "type": "string"
+        },
+        "loop": {
+          "title": "Loop Sequence",
+          "description": "If true, automatically restart the sequence after completing the last sequence step",
+          "type": "boolean"
+        },
+        "steps": {
+          "title": "Sequence Steps",
+          "description": "The ordered sequence steps to either trigger events, wait for a predefined time or check a condition",
+          "type": "array",
+          "items": {
+            "title": "Sequence Step",
+            "anyOf": [
+              {
+                "$ref": "events.schema.json"
+              },
+              {
+                "title": "Delay Step",
+                "description": "Delay the sequence by a defined time in seconds",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "delay": {
+                    "description": "The time to delay the sequence in seconds",
+                    "type": "number"
                   }
+                },
+                "required": [
+                  "delay"
+                ]
+              },
+              {
+                "title": "Check Condition Step",
+                "description": "Check a runtime condition to determine if the sequence should continue or not",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "check": {
+                    "anyOf": [
+                      {
+                        "title": "Non-Blocking Condition Step",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "condition": {
+                            "$ref": "common/condition_object.schema.json"
+                          },
+                          "else": {
+                            "$ref": "events.schema.json"
+                          }
+                        },
+                        "required": [
+                          "condition"
+                        ]
+                      },
+                      {
+                        "title": "Blocking Condition Step",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "condition": {
+                            "$ref": "common/condition_object.schema.json"
+                          },
+                          "wait_forever": {
+                            "const": true
+                          }
+                        },
+                        "required": [
+                          "condition",
+                          "wait_forever"
+                        ]
+                      },
+                      {
+                        "title": "Blocking Condition Step With Timeout",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "condition": {
+                            "$ref": "common/condition_object.schema.json"
+                          },
+                          "timeout": {
+                            "type": "number"
+                          },
+                          "else": {
+                            "$ref": "events.schema.json"
+                          }
+                        },
+                        "required": [
+                          "condition",
+                          "timeout"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "check"
                 ]
               }
-            },
-            "required": [
-              "wait"
-            ]
-          },
-          {
-            "title": "Assert",
-            "additionalProperties": false,
-            "properties": {
-              "assert": {
-                "oneOf": [
-                  {
-                    "$ref": "#/$defs/assert_condition"
-                  },
-                  {
-                    "$ref": "#/$defs/assert_predicate"
-                  }
-                ]
-              }
-            },
-            "required": [
-              "assert"
             ]
           }
-        ]
-      }
-    }
-  },
-  "$defs": {
-    "seconds": {
-      "title": "Seconds to wait",
-      "description": "The duration to wait in seconds",
-      "type": "number"
-    },
-    "timeout": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "seconds": {
-          "$ref": "#/$defs/seconds"
-        },
-        "events": {
-          "$ref": "events.schema.json"
         }
       },
       "required": [
-        "seconds",
-        "events"
-      ]
-    },
-    "wait_for_condition": {
-      "title": "Wait for Condition",
-      "description": "Wait until a condition is true with an optional timeout to abort the sequence and handle breakout events",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "$ref": "events/identifiers/condition.schema.json"
-        },
-        "timeout": {
-          "$ref": "#/$defs/timeout"
-        }
-      },
-      "required": [
-        "condition"
-      ]
-    },
-    "wait_for_predicate": {
-      "title": "Wait for Predicate",
-      "description": "Wait until a predicate is true with an optional timeout to abort the sequence and handle breakout events",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "component": {
-          "$ref": "events/identifiers/component.schema.json"
-        },
-        "controller": {
-          "$ref": "events/identifiers/controller.schema.json#/properties/controller"
-        },
-        "hardware": {
-          "$ref": "events/identifiers/hardware.schema.json"
-        },
-        "predicate": {
-          "$ref": "events/identifiers/predicate.schema.json"
-        },
-        "timeout": {
-          "$ref": "#/$defs/timeout"
-        }
-      },
-      "oneOf": [
-        {
-          "required": [
-            "component",
-            "predicate"
-          ]
-        },
-        {
-          "required": [
-            "controller",
-            "hardware",
-            "predicate"
-          ]
-        }
-      ]
-    },
-    "wait_for_time": {
-      "title": "Wait",
-      "description": "Wait for a defined time",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "seconds": {
-          "$ref": "#/$defs/seconds"
-        }
-      },
-      "required": [
-        "seconds"
-      ]
-    },
-    "assert_condition": {
-      "title": "Assert Condition",
-      "description": "Assert that a condition is true or else abort the sequence and handle breakout events",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "$ref": "events/identifiers/condition.schema.json"
-        },
-        "else": {
-          "description": "A description of application events to be triggered if the assertion fails",
-          "$ref": "events.schema.json"
-        }
-      },
-      "required": [
-        "condition"
-      ]
-    },
-    "assert_predicate": {
-      "title": "Assert Predicate",
-      "description": "Assert that a predicate is true or else abort the sequence and handle breakout events",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "component": {
-          "$ref": "events/identifiers/component.schema.json"
-        },
-        "controller": {
-          "$ref": "events/identifiers/controller.schema.json#/properties/controller"
-        },
-        "hardware": {
-          "$ref": "events/identifiers/hardware.schema.json"
-        },
-        "predicate": {
-          "$ref": "events/identifiers/predicate.schema.json"
-        },
-        "else": {
-          "description": "A description of application events to be triggered if the assertion fails",
-          "$ref": "events.schema.json"
-        }
-      },
-      "oneOf": [
-        {
-          "required": [
-            "component",
-            "predicate"
-          ]
-        },
-        {
-          "required": [
-            "controller",
-            "hardware",
-            "predicate"
-          ]
-        }
+        "steps"
       ]
     }
   }

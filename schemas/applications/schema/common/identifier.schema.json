@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "The unique identifier of an application element (e.g., a component, controller, condition, or similar) formatted in lower_snake_case",
+  "type": "string",
+  "examples": [
+    "a",
+    "foo",
+    "foo_bar",
+    "foo_bar_1"
+  ],
+  "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+}

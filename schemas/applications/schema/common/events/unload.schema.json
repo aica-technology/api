@@ -1,18 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Load",
-  "description": "Load a component, hardware interface or controller",
+  "title": "Unload",
+  "description": "Unload a component, hardware interface or controller",
   "oneOf": [
     {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "$ref": "identifiers/load_unload_target.json"
+        "$ref": "../load_unload_target.json"
       }
     },
     {
-      "$ref": "identifiers/load_unload_target.json"
+      "$ref": "../load_unload_target.json"
     }
   ]
 }

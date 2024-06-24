@@ -5,7 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
-    "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+    "^[a-z][a-z0-9_]*[a-z0-9]$": {
       "title": "Hardware",
       "description": "A named hardware configuration",
       "type": "object",
@@ -19,18 +19,41 @@
         "rate": {
           "title": "Rate",
           "description": "The rate in Hz at which to run the hardware interface",
-          "type": "number"
+          "type": "number",
+          "default": 100.0,
+          "examples": [
+            12.5,
+            100,
+            250
+          ]
+        },
+        "strict": {
+          "title": "Strict Hardware",
+          "description": "If true, automatically stop controller execution on error or if the execution rate drops below the rate tolerance threshold",
+          "default": false,
+          "type": "boolean"
+        },
+        "rate_tolerance": {
+          "title": "Rate Tolerance",
+          "description": "The tolerance threshold relative to the rate that determines the minimum acceptable execution rate as (rate * rate_tolerance) before triggering the \"on_rate_violation\" event transition",
+          "type": "number",
+          "default": 0.9,
+          "examples": [
+            0.5,
+            0.9,
+            0.99
+          ],
+          "minimum": 0,
+          "exclusiveMaximum": 1
         },
         "parameters": {
           "title": "Hardware Parameters",
           "type": "object",
           "patternProperties": {
-            "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+            "^[a-z][a-z0-9_]*[a-z0-9]$": {
               "title": "Hardware Parameter",
               "description": "A hardware parameter in the URDF to be overridden with a new value",
-              "type": [
-                "string"
-              ]
+              "type": "string"
             }
           }
         },
@@ -39,15 +62,40 @@
           "description": "The human-readable name to display on the hardware interface",
           "type": "string"
         },
-        "position": {
-          "$ref": "common/position.schema.json"
+        "events": {
+          "title": "Hardware Events",
+          "description": "Hardware event sources that can trigger events",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "transitions": {
+              "title": "Hardware State Transitions",
+              "description": "Hardware state transitions that can trigger events",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "on_load": {
+                  "$ref": "events.schema.json"
+                },
+                "on_error": {
+                  "$ref": "events.schema.json"
+                },
+                "on_rate_violation": {
+                  "$ref": "events.schema.json"
+                },
+                "on_unload": {
+                  "$ref": "events.schema.json"
+                }
+              }
+            }
+          }
         },
         "controllers": {
           "title": "Controllers",
           "description": "The controllers attached to the hardware interface",
           "additionalProperties": false,
           "patternProperties": {
-            "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
+            "^[a-z][a-z0-9_]*[a-z0-9]$": {
               "title": "Controller",
               "description": "A named controller configuration",
               "type": "object",
@@ -65,21 +113,49 @@
                   "$ref": "common/parameters.schema.json"
                 },
                 "inputs": {
-                  "$ref": "common/inputs.schema.json"
+                  "$ref": "common/signals.schema.json"
                 },
                 "outputs": {
-                  "$ref": "common/outputs.schema.json"
+                  "$ref": "common/signals.schema.json"
                 },
                 "events": {
-                  "title": "Controller Event Predicates",
-                  "description": "Controller predicates that trigger events",
+                  "title": "Controller Events",
+                  "description": "Controller event sources that can trigger events",
                   "type": "object",
                   "additionalProperties": false,
-                  "patternProperties": {
-                    "^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$": {
-                      "title": "Controller Predicate",
-                      "description": "A controller-specific predicate",
-                      "$ref": "events.schema.json"
+                  "properties": {
+                    "transitions": {
+                      "title": "Controller State Transitions",
+                      "description": "Controller state transitions that can trigger events",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "on_load": {
+                          "$ref": "events.schema.json"
+                        },
+                        "on_activate": {
+                          "$ref": "events.schema.json"
+                        },
+                        "on_error": {
+                          "$ref": "events.schema.json"
+                        },
+                        "on_deactivate": {
+                          "$ref": "events.schema.json"
+                        },
+                        "on_unload": {
+                          "$ref": "events.schema.json"
+                        }
+                      }
+                    },
+                    "predicates": {
+                      "type": "object",
+                      "title": "Controller Predicates",
+                      "description": "Controller predicates that can trigger events",
+                      "patternProperties": {
+                        "^[a-z][a-z0-9_]*[a-z0-9]$": {
+                          "$ref": "events.schema.json"
+                        }
+                      }
                     }
                   }
                 }

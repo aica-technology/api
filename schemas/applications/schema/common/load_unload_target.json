@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Load / Unload Target",
+  "description": "Identifier for a component, hardware interface or controller to load or unload",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/component_identifier"
+    },
+    {
+      "$ref": "#/$defs/controller_identifier"
+    },
+    {
+      "$ref": "#/$defs/hardware_identifier"
+    }
+  ],
+  "$defs": {
+    "component_identifier": {
+      "title": "Component Identifier",
+      "description": "A component in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "component"
+      ]
+    },
+    "controller_identifier": {
+      "title": "Controller Identifier",
+      "description": "A controller associated with a particular hardware interface",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        },
+        "controller": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "hardware",
+        "controller"
+      ]
+    },
+    "hardware_identifier": {
+      "title": "Hardware Identifier",
+      "description": "A hardware interface in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "hardware"
+      ]
+    }
+  }
+}

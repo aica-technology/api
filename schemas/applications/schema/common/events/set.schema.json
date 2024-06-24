@@ -19,7 +19,7 @@
       "title": "Parameter Name",
       "description": "The name of a parameter to set",
       "type": "string",
-      "pattern": "(^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$)|(^[a-zA-Z]$)"
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
     },
     "value": {
       "title": "New Parameter Value",
@@ -53,7 +53,7 @@
               "$ref": "#/$defs/value"
             },
             "component": {
-              "$ref": "identifiers/component.schema.json"
+              "$ref": "../identifier.schema.json"
             }
           },
           "required": [
@@ -73,10 +73,10 @@
               "$ref": "#/$defs/value"
             },
             "hardware": {
-              "$ref": "identifiers/hardware.schema.json"
+              "$ref": "../identifier.schema.json"
             },
             "controller": {
-              "$ref": "identifiers/controller.schema.json#/properties/controller"
+              "$ref": "../identifier.schema.json"
             }
           },
           "required": [

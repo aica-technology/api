@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Lifecycle Transition",
+  "title": "Lifecycle Event",
   "description": "Transition the lifecycle state on a component",
   "oneOf": [
     {
@@ -8,24 +8,25 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/lifecycle_object"
-          },
-          {
-            "$ref": "#/$defs/transition"
-          }
-        ]
+        "$ref": "#/$defs/lifecycle_event"
       }
     },
     {
-      "$ref": "#/$defs/lifecycle_object"
-    },
-    {
-      "$ref": "#/$defs/transition"
+      "$ref": "#/$defs/lifecycle_event"
     }
   ],
   "$defs": {
+    "lifecycle_event": {
+      "title": "Lifecycle Transition",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/lifecycle_object"
+        },
+        {
+          "$ref": "#/$defs/transition"
+        }
+      ]
+    },
     "transition": {
       "title": "Lifecycle Transition Label",
       "description": "A lifecycle transition",
@@ -43,7 +44,7 @@
       ]
     },
     "lifecycle_object": {
-      "title": "Lifecycle Object",
+      "title": "Lifecycle Transition Object",
       "description": "A lifecycle identifier containing a transition label and target component",
       "type": "object",
       "additionalProperties": false,
@@ -52,7 +53,7 @@
           "$ref": "#/$defs/transition"
         },
         "component": {
-          "$ref": "identifiers/component.schema.json"
+          "$ref": "../identifier.schema.json"
         }
       },
       "required": [
