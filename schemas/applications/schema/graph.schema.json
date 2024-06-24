@@ -40,12 +40,14 @@
         "x": {
           "title": "X Position",
           "description": "The X position of the element on the graph",
-          "type": "number"
+          "type": "number",
+          "multipleOf" : 20
         },
         "y": {
           "title": "Y Position",
           "description": "The Y position of the element on the graph",
-          "type": "number"
+          "type": "number",
+          "multipleOf" : 20
         }
       },
       "required": [
