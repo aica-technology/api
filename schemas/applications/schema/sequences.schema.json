@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Sequences",
-  "description": "A description of sequences used to trigger events events in a specific order",
+  "description": "A description of sequences used to trigger events in a specific order",
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
@@ -19,6 +19,7 @@
           "description": "The ordered sequence steps to either trigger events, wait for a predefined time or check a condition",
           "type": "array",
           "items": {
+            "title": "Sequence Step",
             "anyOf": [
               {
                 "$ref": "events.schema.json"

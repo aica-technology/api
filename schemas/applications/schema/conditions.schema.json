@@ -13,8 +13,6 @@
           "$ref": "#/$defs/condition_object"
         },
         "events": {
-          "title": "Conditional Events",
-          "description": "Events triggered by the condition",
           "$ref": "events.schema.json"
         }
       },

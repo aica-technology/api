@@ -172,5 +172,19 @@
   "required": [
     "schema",
     "dependencies"
-  ]
+  ],
+  "$defs": {
+    "events": {
+      "$ref": "events.schema.json"
+    },
+    "log_level": {
+      "$ref": "common/log_level.schema.json"
+    },
+    "parameters": {
+      "$ref": "common/parameters.schema.json"
+    },
+    "signals": {
+      "$ref": "common/signals.schema.json"
+    }
+  }
 }

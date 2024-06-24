@@ -82,35 +82,27 @@
               "additionalProperties": false,
               "properties": {
                 "on_load": {
-                  "description": "Trigger events when the component is loaded",
                   "$ref": "events.schema.json"
                 },
                 "on_configure": {
-                  "description": "Trigger events when the lifecycle component has been successfully configured and is in the configured state",
                   "$ref": "events.schema.json"
                 },
                 "on_activate": {
-                  "description": "Trigger events when the lifecycle component has been successfully activated and is in the active state",
                   "$ref": "events.schema.json"
                 },
                 "on_deactivate": {
-                  "description": "Trigger events when the lifecycle component has been successfully deactivated and is in the configured state",
                   "$ref": "events.schema.json"
                 },
                 "on_cleanup": {
-                  "description": "Trigger events when the lifecycle component has been successfully cleaned up and is in the unconfigured state",
                   "$ref": "events.schema.json"
                 },
                 "on_shutdown": {
-                  "description": "Trigger events when the lifecycle component has been shut down and is in the finalized state",
                   "$ref": "events.schema.json"
                 },
                 "on_error": {
-                  "description": "Trigger events when the lifecycle component has raised an error and is in the ErrorProcessing transition state",
                   "$ref": "events.schema.json"
                 },
                 "on_unload": {
-                  "description": "Trigger events when the component is unloaded",
                   "$ref": "events.schema.json"
                 }
               }
@@ -121,8 +113,6 @@
               "description": "Component predicates that can trigger events",
               "patternProperties": {
                 "^[a-z][a-z0-9_]*[a-z0-9]$": {
-                  "title": "Component Predicate",
-                  "description": "A component-specific predicate",
                   "$ref": "events.schema.json"
                 }
               }

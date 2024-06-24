@@ -53,15 +53,12 @@
               "additionalProperties": false,
               "properties": {
                 "on_load": {
-                  "description": "Trigger events when the hardware is loaded",
                   "$ref": "events.schema.json"
                 },
                 "on_error": {
-                  "description": "Trigger events when the hardware interface has raised an error",
                   "$ref": "events.schema.json"
                 },
                 "on_unload": {
-                  "description": "Trigger events when the hardware is unloaded",
                   "$ref": "events.schema.json"
                 }
               }
@@ -109,23 +106,18 @@
                       "additionalProperties": false,
                       "properties": {
                         "on_load": {
-                          "description": "Trigger events when the controller is loaded",
                           "$ref": "events.schema.json"
                         },
                         "on_activate": {
-                          "description": "Trigger events when the controller has been successfully activated and is in the active state",
                           "$ref": "events.schema.json"
                         },
                         "on_error": {
-                          "description": "Trigger events when the controller has raised an error",
                           "$ref": "events.schema.json"
                         },
                         "on_deactivate": {
-                          "description": "Trigger events when the controller has been successfully deactivated and is in the configured state",
                           "$ref": "events.schema.json"
                         },
                         "on_unload": {
-                          "description": "Trigger events when the controller is unloaded",
                           "$ref": "events.schema.json"
                         }
                       }
@@ -136,8 +128,6 @@
                       "description": "Controller predicates that can trigger events",
                       "patternProperties": {
                         "^[a-z][a-z0-9_]*[a-z0-9]$": {
-                          "title": "Controller Predicate",
-                          "description": "A controller-specific predicate",
                           "$ref": "events.schema.json"
                         }
                       }

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Manage a sequence",
+  "title": "Manage Sequences",
   "description": "Start, restart or abort a sequence",
   "oneOf": [
     {
@@ -16,38 +16,49 @@
   ],
   "$defs": {
     "sequence_object": {
-      "title": "Sequence event",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "start": {
-          "description": "Name of the sequence to start",
-          "type": "string",
-          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
-        },
-        "restart": {
-          "description": "Name of the sequence to restart",
-          "type": "string",
-          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
-        },
-        "abort": {
-          "description": "Name of the sequence to abort",
-          "type": "string",
-          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
-        }
-      },
+      "title": "ManageSequenceObject",
       "oneOf": [
         {
+          "title": "Start A Sequence",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "start": {
+              "description": "Name of the sequence to start",
+              "type": "string",
+              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+            }
+          },
           "required": [
             "start"
           ]
         },
         {
+          "title": "Restart A Sequence",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "restart": {
+              "description": "Name of the sequence to restart",
+              "type": "string",
+              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+            }
+          },
           "required": [
             "restart"
           ]
         },
         {
+          "title": "Abort A Sequence",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "abort": {
+              "description": "Name of the sequence to abort",
+              "type": "string",
+              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+            }
+          },
           "required": [
             "abort"
           ]
