@@ -19,19 +19,7 @@
       "title": "ManageSequenceObject",
       "oneOf": [
         {
-          "title": "Start A Sequence",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "start": {
-              "description": "Name of the sequence to start",
-              "type": "string",
-              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
-            }
-          },
-          "required": [
-            "start"
-          ]
+          "$ref": "#/$defs/start_a_sequence"
         },
         {
           "title": "Restart A Sequence",
@@ -63,6 +51,21 @@
             "abort"
           ]
         }
+      ]
+    },
+    "start_a_sequence": {
+      "title": "Start A Sequence",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "description": "Name of the sequence to start",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        }
+      },
+      "required": [
+        "start"
       ]
     }
   }

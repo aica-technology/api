@@ -128,30 +128,7 @@
       "description": "This property accepts any data structure and will be ignored by the syntax parser. It can be used to store additional metadata or context about the application for user convenience."
     },
     "on_start": {
-      "title": "On Start",
-      "description": "A special keyword that triggers events when the application is launched",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "load": {
-          "$ref": "common/events/load.schema.json"
-        },
-        "lifecycle": {
-          "$ref": "common/events/lifecycle.schema.json"
-        },
-        "call_service": {
-          "$ref": "common/events/call_service.schema.json"
-        },
-        "switch_controllers": {
-          "$ref": "common/events/switch_controllers.schema.json"
-        },
-        "sequence": {
-          "$ref": "common/events/sequence.schema.json"
-        },
-        "position": {
-          "$ref": "common/position.schema.json"
-        }
-      }
+      "$ref": "on_start.schema.json"
     },
     "hardware": {
       "$ref": "hardware.schema.json"
