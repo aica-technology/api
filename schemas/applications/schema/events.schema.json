@@ -5,6 +5,9 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "application": {
+      "$ref": "common/events/application.schema.json"
+    },
     "load": {
       "$ref": "common/events/load.schema.json"
     },

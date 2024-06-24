@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Application Event",
+  "description": "Stop the current application",
+  "type": "string",
+  "enum": [
+    "stop"
+  ]
+}
