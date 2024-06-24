@@ -19,7 +19,32 @@
         "rate": {
           "title": "Rate",
           "description": "The rate in Hz at which to run the hardware interface",
-          "type": "number"
+          "type": "number",
+          "default": 100.0,
+          "examples": [
+            12.5,
+            100,
+            250
+          ]
+        },
+        "strict": {
+          "title": "Strict Hardware",
+          "description": "If true, automatically stop controller execution on error or if the execution rate drops below the rate tolerance threshold",
+          "default": false,
+          "type": "boolean"
+        },
+        "rate_tolerance": {
+          "title": "Rate Tolerance",
+          "description": "The tolerance threshold relative to the rate that determines the minimum acceptable execution rate as (rate * rate_tolerance) before triggering the \"on_rate_violation\" event transition",
+          "type": "number",
+          "default": 0.9,
+          "examples": [
+            0.5,
+            0.9,
+            0.99
+          ],
+          "minimum": 0,
+          "exclusiveMaximum": 1
         },
         "parameters": {
           "title": "Hardware Parameters",
@@ -56,6 +81,9 @@
                   "$ref": "events.schema.json"
                 },
                 "on_error": {
+                  "$ref": "events.schema.json"
+                },
+                "on_rate_violation": {
                   "$ref": "events.schema.json"
                 },
                 "on_unload": {
