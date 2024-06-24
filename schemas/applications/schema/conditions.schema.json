@@ -9,6 +9,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "display_name": {
+          "title": "Condition Display Name",
+          "description": "The human-readable name to display on the condition",
+          "type": "string"
+        },
         "condition": {
           "$ref": "#/$defs/condition_object"
         },

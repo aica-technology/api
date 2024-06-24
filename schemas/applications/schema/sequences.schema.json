@@ -9,6 +9,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "display_name": {
+          "title": "Sequence Display Name",
+          "description": "The human-readable name to display on the sequence",
+          "type": "string"
+        },
         "loop": {
           "title": "Loop Sequence",
           "description": "If true, automatically restart the sequence after completing the last sequence step",
