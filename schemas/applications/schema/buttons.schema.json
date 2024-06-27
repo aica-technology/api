@@ -36,6 +36,9 @@
             },
             "switch_controllers": {
               "$ref": "events/switch_controllers.schema.json"
+            },
+            "set": {
+              "$ref": "events/set.schema.json"
             }
           }
         },
