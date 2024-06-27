@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [1-4-2](#163)
 - [1-4-1](#141)
 - [1-4-0](#140)
 - [1-3-0](#130)
@@ -10,6 +11,10 @@ Release Versions:
 - [1-1-1](#111)
 - [1-1-0](#110)
 - [1-0-0](#100)
+
+## 1-4-2
+
+Version 1-4-2 adds support for set parameters in buttons.
 
 ## 1-4-1
 
