@@ -14,7 +14,7 @@ Release Versions:
 
 ## 1-4-2
 
-Version 1-4-2 adds support for set parameters in buttons.
+Version 1-4-2 adds support for the `set` parameter event in buttons.
 
 ## 1-4-1
 
