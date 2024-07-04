@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2.1.0](#210)
 - [2.0.0](#200)
 - [1.2.1](#121)
 - [1.2.0](#120)
@@ -9,6 +10,11 @@ Release Versions:
 - [1.0.2](#102)
 - [1.0.1](#101)
 - [1.0.0](#100)
+
+## 2.1.0
+
+- Support hardware and controller states and predicates in `wait_for` functions (#156)
+- Define more detailed feature and function compatibility between versions (#158)
 
 ## 2.0.0
 

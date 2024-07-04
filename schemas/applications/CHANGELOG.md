@@ -3,6 +3,7 @@
 Release Versions:
 
 - [2-0-0](#2-0-0)
+- [1-4-2](#1-4-2)
 - [1-4-1](#1-4-1)
 - [1-4-0](#1-4-0)
 - [1-3-0](#1-3-0)
@@ -34,6 +35,10 @@ Release Versions:
 ### Breaking changes
 
 Refer to the migration guide in [README.md](./README.md#migrating-from-1-4-x-to-2-0-0) for more information.
+
+## 1-4-2
+
+Version 1-4-2 adds support for the `set` parameter event in buttons.
 
 ## 1-4-1
 

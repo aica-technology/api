@@ -42,15 +42,21 @@ else:
 
 ## Compatability table
 
-The latest version of the AICA API client will generally support the latest API version in the AICA framework. For
-older versions of the AICA framework, it may be necessary to install older versions of the client. Use the following
-compatability table to determine which client version to use.
+The latest version of the AICA API client will generally support the latest API server version in the AICA framework.
+Major changes to the API client or server versions indicate breaking changes and are not backwards compatible. To
+interact with older versions of the AICA framework, it may be necessary to install older versions of the client.
+Use the following compatability table to determine which client version to use.
 
-| API server version | Matching Python client version |
-|--------------------|--------------------------------|
-| `v3.x`             | `>= v2.0.0`                    |
-| `v2.x`             | `v1.2.0`                       |
-| `<= v1.x`          | Unsupported                    |
+| API server version | Matching Python client version  |
+|--------------------|---------------------------------|
+| `3.x`              | `>= 2.0.0`                      |
+| `2.x`              | `1.2.0`                         |
+| `<= 1.x`           | Unsupported                     |
+
+Between major version changes, minor updates to the API server version and Python client versions may introduce new
+endpoints and functions respectively. If a function requires a feature that the detected API server version does not yet
+support (as is the case when the Python client version is more up-to-date than the targeted API server), then calling
+that function will return None with a warning.
 
 Recent client versions also support the following functions to check the client version and API compatability.
 
@@ -59,9 +65,14 @@ from aica_api.client import AICA
 
 aica = AICA()
 
+# get the current API server version
+print(aica.api_version())
 # get the current client version
-aica.client_version()
+print(aica.client_version())
 
 # check compatability between the client version and API version
-aica.check()
+if aica.check():
+    print('Versions are compatible')
+else:
+    print('Versions are incompatible')
 ```
