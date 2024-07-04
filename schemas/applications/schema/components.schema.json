@@ -44,6 +44,16 @@
             }
           }
         },
+        "rate": {
+          "description": "The rate in Hz at which to run the component's periodic behaviors",
+          "type": "number",
+          "default": 10.0,
+          "examples": [
+            12.5,
+            100,
+            250
+          ]
+        },
         "parameters": {
           "$ref": "common/parameters.schema.json"
         },

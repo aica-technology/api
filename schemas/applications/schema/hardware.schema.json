@@ -17,7 +17,6 @@
           "type": "string"
         },
         "rate": {
-          "title": "Rate",
           "description": "The rate in Hz at which to run the hardware interface",
           "type": "number",
           "default": 100.0,
@@ -108,6 +107,16 @@
                   "title": "Controller Plugin",
                   "description": "The name of the controller plugin",
                   "type": "string"
+                },
+                "rate": {
+                  "description": "The rate in Hz at which to run the controller. If undefined, the hardware rate is used instead.",
+                  "type": "number",
+                  "default": 100.0,
+                  "examples": [
+                    12.5,
+                    100,
+                    250
+                  ]
                 },
                 "parameters": {
                   "$ref": "common/parameters.schema.json"
