@@ -100,8 +100,11 @@ Change `CONTAINER_NAME` in the command below to the name of the running containe
 :::
 
 ```bash
-docker container exec -it CONTAINER_NAME /bin/bash
+docker container exec -it -u ros2 CONTAINER_NAME /bin/bash
 ```
+
+The flags `-it -u ros2` tell docker to attach an interactive terminal as the `ros2` user. The command `/bin/bash`
+starts a shell process.
 
 :::tip
 
@@ -138,7 +141,7 @@ Access control can be re-enabled with `xhost -`.
 
 ```bash
 xhost +
-docker container exec -it -e DISPLAY="$DISPLAY" -e XAUTHORITY="$XAUTH" CONTAINER_NAME /bin/bash
+docker container exec -it -u ros2 -e DISPLAY="$DISPLAY" -e XAUTHORITY="$XAUTH" CONTAINER_NAME /bin/bash
 ```
 
 You should then be able to run `rviz2` inside the container and see the window appear.
