@@ -82,11 +82,11 @@ library for Cartesian and joint state classes in C++ and Python.
 ## Custom messages
 
 The standard primitive and state message types are generally enough to cover the majority of messaging needs in
-an AICA application. Having a reduced message definition set is important to maximizing the modularity and compatibility
+an AICA. Having a reduced message definition set is important to maximizing the modularity and compatibility
 of components. When components are connected by a signal in an application graph, the application interpreter will try
 to assert that the signals have a matching type.
 
-However, any ROS 2 message can be implemented as a signal using the `custom` signal type. As long as the custom type
+, any ROS 2 message can be implemented as a signal using the `custom` signal type. As long as the custom type
 between two connected components has the same name, the application will be valid.
 
 :::tip
