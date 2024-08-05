@@ -5,7 +5,7 @@ title: Describing a component
 
 # Describing a component
 
-To fully support custom components in the AICA application framework, it is crucial to have a consistent means of
+To fully support custom components in the AICA System, it is crucial to have a consistent means of
 describing individual components and the interfaces they provide. A machine-readable component description should
 contain all necessary information to procedurally generate documentation, frontend visualisations and backend services
 for any new component.

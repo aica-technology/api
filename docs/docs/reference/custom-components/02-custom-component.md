@@ -312,7 +312,7 @@ means that the associated input data object is automatically updated every time 
 this means that internal changes to the output data object will automatically be updated in the publisher.
 
 The binding logic is supported for a number of common message data types. To interface with non-standard messages
-(for example, to communicate with ROS 2 nodes using custom message types outside the AICA framework), it is possible to
+(for example, to communicate with ROS 2 nodes using custom message types outside the AICA System), it is possible to
 define raw publishers and subscribers following standard ROS 2 conventions.
 
 ### Signal name
