@@ -2,7 +2,7 @@
   "$id": "/1-1-0/component.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Dynamic Component Description",
-  "description": "A full description of a dynamic component in the AICA application framework.",
+  "description": "A full description of a dynamic component in the AICA System.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -67,7 +67,7 @@
       "items": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "title": "Signal",
-        "description": "A continuous data signal in the AICA framework that can be an input or an output.",
+        "description": "A continuous data signal in the AICA System that can be an input or an output.",
         "type": "object",
         "properties": {
           "display_name": {

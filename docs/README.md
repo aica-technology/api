@@ -17,7 +17,7 @@ Documentation diagrams should be made with [Excalidraw](https://excalidraw.com).
 As a general style guide, use bold stroke width, "artist" stroke sloppiness, transparent backgrounds and hand-drawn
 font with medium font-size.
 
-To exporting a drawing, select the relevant parts of the scene and "Export image...". Under the export options, make
+To export a drawing, select the relevant parts of the scene and "Export image...". Under the export options, make
 sure "Background" and "Dark mode" are **disabled**, and "Embed scene" is **enabled**. Then, export it as SVG.
 
 Scene embedding allows collaborators to edit and extend existing diagrams. The exported SVG can be re-opened in
