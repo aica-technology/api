@@ -38,11 +38,11 @@ offerings.
 
 ## AICA Studio
 
-**AICA Studio** is the user interface layer to the AICA Core that empowers developers to build and
+**AICA Studio** is the user interface layer to AICA Core that empowers developers to build and
 extend their own advanced robotic applications. AICA developers use this interface internally when building custom
 applications, and decided it was worth sharing with the robotics community as a stand-alone product with the following
 features:
 
 - Graphical web-based UI to dynamically edit, run and monitor AICA application
 - REST API to interface with and manage AICA applications from CLI or automation cells
-- Component SDK to extend the core library with custom logic and behaviors
+- Component SDK to extend the base library with custom logic and behaviors

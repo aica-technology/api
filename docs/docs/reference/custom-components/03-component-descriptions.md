@@ -80,7 +80,7 @@ Any consumer of the component description can dynamically load the base componen
 details in the `inherits` property and expand the fields into the derived description.
 
 Components that derive directly from `modulo_components::Component` or `modulo_components::LifecycleComponent`
-should also specify this under the `inherits` property. These core base classes are identified and treated
+should also specify this under the `inherits` property. These base classes are identified and treated
 distinctly by consumers of the component description.
 
 #### Virtual components

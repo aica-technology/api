@@ -23,9 +23,9 @@ latest versions. In case of doubt, contact support@aica.tech for help.
 
 ## Compatibility
 
-AICA Core is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
+AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
 
-AICA Core itself runs in a Docker container based on Ubuntu 22.04. Thanks to containerization, the majority of the
+AICA System itself runs in a Docker container based on Ubuntu 22.04. Thanks to containerization, the majority of the
 installation and usage steps in this guide will be the same for macOS or Ubuntu host platforms unless otherwise
 indicated.
 

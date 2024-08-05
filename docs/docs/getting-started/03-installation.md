@@ -20,7 +20,7 @@ and add your user.
 ## The AICA package registry
 
 As seen in [Concepts: Introduction](../concepts/01-intro.md), AICA System comprises a collection of multiple packages
-around a unified framework. The base package includes the Dynamic State Engine, a core collection of components and
+around a unified framework. The base package includes the Dynamic State Engine, a base collection of components and
 controllers, the REST API and AICA Studio. Add-on packages include additional components or hardware
 collections.
 
