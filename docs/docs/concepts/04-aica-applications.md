@@ -29,7 +29,7 @@ to be modular or re-usable for other applications. If, instead, the application 
 executable program, usually according to some state machine paradigm, this in turn generally undermines the modern
 concepts of abstraction and dynamic reconfiguration that ROS 2 tools provide.
 
-To address this challenge, the AICA framework includes at its core a generalized execution process known as the Dynamic
+To address this challenge, AICA Core includes a generalized execution process known as the Dynamic
 State Engine which dynamically manages component and controller states according to a declarative and easily
 reconfigurable application description.
 
@@ -55,7 +55,7 @@ For example, some component A might be loaded when the application starts. Then,
 loaded after component A is finalized. Finally, controller X should be started when component B is active, and
 stopped if component C has an error.
 
-In the AICA framework, applications are formally described in a YAML file. An application description can also be
+In AICA Core, applications are formally described in a YAML file. An application description can also be
 represented as a graph of building blocks (components, controllers, hardware interfaces) connected by signals and
 events.
 

@@ -15,14 +15,14 @@ capabilities of ROS from scratch often constitutes a degree in computer science 
 ROS comes from the abstractions provided by community packages and extensions that each address a particular niche and
 can be combined to solve complex problems.
 
-The AICA framework is built on ROS 2, but it is not intended to supersede existing ROS 2 distributions, packages or
+AICA Core is built on ROS 2, but it is not intended to supersede existing ROS 2 distributions, packages or
 tools. AICA applications and building blocks are fully compatible with existing ROS packages and community tools and
 can be used and deployed alongside them.
 
 For new developers, AICA provides an easy springboard into the wider world of ROS. Advanced users can take the
-modularity and dynamic nature of the AICA framework to new frontiers.
+modularity and dynamic nature of AICA Core to new frontiers.
 
-At a glance, the AICA framework extends ROS 2 with the following features:
+At a glance, AICA Core extends ROS 2 with the following features:
 
 - Preconfigured and containerized ROS 2 workspaces
 - Fully integrated `ros2_control` architecture and hardware drivers for real-time control
