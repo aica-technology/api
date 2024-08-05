@@ -19,7 +19,7 @@ The following can be used to dynamically update the state of a running applicati
 
 ## Triggering events
 
-Events can be triggered externally by a user through interactions with the Developer Interface UI or via the REST API.
+Events can be triggered externally by a user through interactions with AICA Studio or via the REST API.
 They can also be triggered internally by the Dynamic State Engine according to the application description as a result
 of component **predicates** and **conditions**.
 

@@ -82,7 +82,7 @@ library for Cartesian and joint state classes in C++ and Python.
 ## Custom messages
 
 The standard primitive and state message types are generally enough to cover the majority of messaging needs in
-an AICA. Having a reduced message definition set is important to maximizing the modularity and compatibility
+an AICA application. Having a reduced message definition set is important to maximizing the modularity and compatibility
 of components. When components are connected by a signal in an application graph, the application interpreter will try
 to assert that the signals have a matching type.
 

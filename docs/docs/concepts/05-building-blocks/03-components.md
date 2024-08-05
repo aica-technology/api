@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Components
 
-In the AICA application framework, components are the building blocks of advanced robot behaviors.
+Within an AICA System application, components are the building blocks of advanced robot behaviors.
 
 AICA components are wrappers for [ROS 2 nodes](../03-ros-concepts/01-nodes.md)
 and [lifecycle nodes](../03-ros-concepts/02-lifecycle.md)
@@ -88,7 +88,7 @@ for each lifecycle state:
 When a lifecycle components is loaded, it starts in the unconfigured state and normally requires an external trigger to
 transition into different states.
 
-In the AICA framework, lifecycle components can auto-configure and auto-activate themselves. Associating
+In the AICA System, lifecycle components can auto-configure and auto-activate themselves. Associating
 the `is_unconfigured` predicate with a `lifecycle: configure` event enables the component to automatically configure
 itself. Equivalently, the `is_inactive` predicate can be used to trigger a `lifecycle: activate` event.
 

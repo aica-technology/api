@@ -4,11 +4,11 @@ sidebar_position: 1
 
 # Getting started
 
-This guide will cover the basic steps to get started with the AICA framework, from installation to application examples.
+This guide will cover the basic steps to get started with the AICA System, from installation to application examples.
 
 :::caution
 
-The AICA framework is being distributed in a limited beta program. Installation, configuration and run-time instructions
+The AICA System is being distributed in a limited beta program. Installation, configuration and run-time instructions
 are subject to breaking changes in the near future. We will endeavour to keep this documentation up-to-date with the
 latest versions. In case of doubt, contact support@aica.tech for help.
 
@@ -23,9 +23,9 @@ latest versions. In case of doubt, contact support@aica.tech for help.
 
 ## Compatibility
 
-The AICA framework is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
+AICA Core is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
 
-The framework itself runs in a Docker container based on Ubuntu 22.04. Thanks to containerization, the majority of the
+AICA Core itself runs in a Docker container based on Ubuntu 22.04. Thanks to containerization, the majority of the
 installation and usage steps in this guide will be the same for macOS or Ubuntu host platforms unless otherwise
 indicated.
 
