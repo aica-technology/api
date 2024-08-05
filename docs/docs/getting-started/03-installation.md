@@ -5,7 +5,7 @@ title: Installation
 
 ## Pre-requisites
 
-AICA software is distributed with Docker images and executed with Docker containers.
+AICA System is distributed with Docker images and executed with Docker containers.
 
 Before proceeding, [install Docker Engine](https://docs.docker.com/engine/install/) on the host machine.
 
@@ -19,12 +19,12 @@ and add your user.
 
 ## The AICA package registry
 
-As seen in [Concepts: Introduction](../concepts/01-intro.md), AICA software comprises a collection of multiple packages
+As seen in [Concepts: Introduction](../concepts/01-intro.md), AICA System comprises a collection of multiple packages
 around a unified framework. The base package includes the Dynamic State Engine, a core collection of components and
-controllers, the REST API and Developer Interface UI. Add-on packages include additional components or hardware
+controllers, the REST API and AICA Studio. Add-on packages include additional components or hardware
 collections.
 
-AICA software packages are hosted as docker images in a private container registry. Viewing and downloading packages
+AICA System packages are hosted as docker images in a private container registry. Viewing and downloading packages
 from the registry requires a valid [license](./02-licensing.md).
 
 ### Listing available AICA packages
@@ -97,7 +97,7 @@ package.
 
 ### Including custom packages
 
-The AICA framework allows developers to build their
+AICA System allows developers to build their
 own [custom components](../reference/custom-components/01-component-package.md). These packages can be included under
 a custom name using the `docker-image://` prefix to specify the docker image name or path. For example, a custom
 component package that was locally built using `docker build [...] --tag my-custom-component-package` could be included

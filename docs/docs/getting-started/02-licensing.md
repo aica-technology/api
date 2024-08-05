@@ -22,7 +22,7 @@ If an unauthorized user has gained access to your license key, contact support@a
 
 :::
 
-AICA licenses come in two variants: **online** and **offline**.
+AICA System licenses come in two variants: **online** and **offline**.
 
 ## Online licenses
 
