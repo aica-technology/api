@@ -7,7 +7,7 @@ sidebar_position: 5
 AICA hardware interfaces are implemented according to the [ros2_control](../03-ros-concepts/04-control.md) standard,
 and currently support all major brands of robot manipulators.
 
-The AICA application framework is compatible with third-party hardware interfaces following the `ros2_control` standard.
+AICA Core is compatible with third-party hardware interfaces following the `ros2_control` standard.
 
 :::note
 

@@ -5,7 +5,7 @@ title: Describing a component
 
 # Describing a component
 
-To fully support custom components in the AICA application framework, it is crucial to have a consistent means of
+To fully support custom components in the AICA System, it is crucial to have a consistent means of
 describing individual components and the interfaces they provide. A machine-readable component description should
 contain all necessary information to procedurally generate documentation, frontend visualisations and backend services
 for any new component.
@@ -80,7 +80,7 @@ Any consumer of the component description can dynamically load the base componen
 details in the `inherits` property and expand the fields into the derived description.
 
 Components that derive directly from `modulo_components::Component` or `modulo_components::LifecycleComponent`
-should also specify this under the `inherits` property. These core base classes are identified and treated
+should also specify this under the `inherits` property. These base classes are identified and treated
 distinctly by consumers of the component description.
 
 #### Virtual components

@@ -9,7 +9,7 @@ Dynamic State Engine. For this reason, they are sometimes referred to as "state 
 
 ## Event types
 
-The following events can be used to dynamically update the state of a running application:
+The following can be used to dynamically update the state of a running application:
 
 - Load or unload a component, controller or hardware interface
 - Trigger a lifecycle transition (for example, configure, activate or deactivate) on a lifecycle component
@@ -19,7 +19,7 @@ The following events can be used to dynamically update the state of a running ap
 
 ## Triggering events
 
-Events can be triggered externally by a user through interactions with the Developer Interface UI or via the REST API.
+Events can be triggered externally by a user through interactions with AICA Studio or via the REST API.
 They can also be triggered internally by the Dynamic State Engine according to the application description as a result
 of component **predicates** and **conditions**.
 

@@ -5,7 +5,7 @@ title: Licensing
 
 # Licensing
 
-A valid license is required to use AICA software. A license regulates both the access rights to download AICA software
+A valid license is required to use AICA System. A license regulates both the access rights to download AICA software
 packages and the usage rights to run AICA applications.
 
 To request a license, contact the AICA sales team at contact@aica.tech. A user-specific license key will be generated
@@ -22,7 +22,7 @@ If an unauthorized user has gained access to your license key, contact support@a
 
 :::
 
-AICA licenses come in two variants: **online** and **offline**.
+AICA System licenses come in two variants: **online** and **offline**.
 
 ## Online licenses
 

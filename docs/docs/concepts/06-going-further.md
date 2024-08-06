@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Going further with AICA
 
-[Contact us](mailto:contact@aica.tech) to learn more about AICA software or and to request software license.
+[Contact us](mailto:contact@aica.tech) to learn more about AICA and/or to request a software license.
 
 If you already have an AICA software license, continue to the [Getting started](../getting-started/01-intro.md) guide
 for first-time setup and onboarding.

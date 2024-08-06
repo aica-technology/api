@@ -25,7 +25,7 @@ const FeatureList: FeatureItem[] = [
             <>
                 AICA embraces the ROS philosophies of modularity, distributed processing and open standards. For new
                 developers, AICA provides an easy springboard into the wider world of ROS. Advanced users can take the
-                modularity and dynamic nature of the AICA framework to new frontiers.
+                modularity and dynamic nature of the AICA System to new frontiers.
             </>
         ),
     },
@@ -33,14 +33,14 @@ const FeatureList: FeatureItem[] = [
         title: "Intelligent control",
         description: (
             <>
-                AICA software is packed with cutting-edge technology for programming and controlling robots, including
+                AICA System is packed with cutting-edge technology for programming and controlling robots, including
                 learning from demonstration, reinforcement learning and closed-loop force control. Start building
                 dynamic, reactive, adaptive and collaborative control applications today.
             </>
         ),
     },
     {
-        title: "Developer Interface",
+        title: "AICA Studio",
         description: (
             <>
                 An interactive application graph editor, URDF manager and API interface tools make creating, launching

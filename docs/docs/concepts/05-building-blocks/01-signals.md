@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Signals
 
-In the AICA framework, signals are designed to exchange continuous data between components and controllers in a running
+In AICA System, signals are designed to exchange continuous data between components and controllers in a running
 application. They are an abstraction of ROS 2 topics that are assumed to exchange data at a regular, periodic frequency.
 This makes them well-suited for use with signal processing components and controllers.
 
@@ -86,7 +86,7 @@ an AICA application. Having a reduced message definition set is important to max
 of components. When components are connected by a signal in an application graph, the application interpreter will try
 to assert that the signals have a matching type.
 
-However, any ROS 2 message can be implemented as a signal using the `custom` signal type. As long as the custom type
+, any ROS 2 message can be implemented as a signal using the `custom` signal type. As long as the custom type
 between two connected components has the same name, the application will be valid.
 
 :::tip
