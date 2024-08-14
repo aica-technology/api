@@ -2,7 +2,7 @@
   "$id": "/1-2-0/controller.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AICA Controller Description",
-  "description": "A full description of a controller in the AICA System.",
+  "description": "A full description of a controller in the AICA application framework.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -86,7 +86,7 @@
       "items": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "title": "Signal",
-        "description": "A continuous data signal in the AICA System that can be an input or an output.",
+        "description": "A continuous data signal in the AICA framework that can be an input or an output.",
         "type": "object",
         "properties": {
           "display_name": {
