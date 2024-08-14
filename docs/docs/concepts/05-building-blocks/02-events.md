@@ -9,7 +9,7 @@ Dynamic State Engine. For this reason, they are sometimes referred to as "state 
 
 ## Event types
 
-The following can be used to dynamically update the state of a running application:
+The following events can be used to dynamically update the state of a running application:
 
 - Load or unload a component, controller or hardware interface
 - Trigger a lifecycle transition (for example, configure, activate or deactivate) on a lifecycle component

@@ -86,7 +86,7 @@ an AICA application. Having a reduced message definition set is important to max
 of components. When components are connected by a signal in an application graph, the application interpreter will try
 to assert that the signals have a matching type.
 
-, any ROS 2 message can be implemented as a signal using the `custom` signal type. As long as the custom type
+However, any ROS 2 message can be implemented as a signal using the `custom` signal type. As long as the custom type
 between two connected components has the same name, the application will be valid.
 
 :::tip
