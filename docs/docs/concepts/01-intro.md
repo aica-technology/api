@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 import SystemOverview from './assets/system-overview-embedded.svg';
-import ComponentsControllersHardware from '';
+import ComponentsControllersHardware from './assets/components-controllers-hardware-embedded.svg';
 
 # Introduction
 
