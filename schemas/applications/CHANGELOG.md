@@ -31,6 +31,8 @@ Release Versions:
   deviation or other error
 - Sequences support additional properties including display name, position on the graph and automatic looping
 - Sequences and conditions support display names
+- The event structures for lifecycle transitions, service calls and setting parameters now always require the target
+  component to be specified, removing the previous "shorthand" for self-targeting events
 
 ### Breaking changes
 

@@ -13,9 +13,6 @@
     },
     {
       "$ref": "#/$defs/service_object"
-    },
-    {
-      "$ref": "../identifier.schema.json"
     }
   ],
   "$defs": {
@@ -35,17 +32,18 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
+            "component": {
+              "$ref": "../identifier.schema.json"
+            },
             "service": {
               "$ref": "../identifier.schema.json"
             },
             "payload": {
               "$ref": "#/$defs/payload"
-            },
-            "component": {
-              "$ref": "../identifier.schema.json"
             }
           },
           "required": [
+            "component",
             "service"
           ]
         },
@@ -54,13 +52,13 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "service": {
+            "controller": {
               "$ref": "../identifier.schema.json"
             },
             "hardware": {
               "$ref": "../identifier.schema.json"
             },
-            "controller": {
+            "service": {
               "$ref": "../identifier.schema.json"
             },
             "payload": {
@@ -68,9 +66,9 @@
             }
           },
           "required": [
-            "service",
             "hardware",
-            "controller"
+            "controller",
+            "service"
           ]
         }
       ]

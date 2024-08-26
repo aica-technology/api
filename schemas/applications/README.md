@@ -226,6 +226,43 @@ controllers:
           unload: foo
 ```
 
+#### Self-targeting events
+
+Previously, certain component predicate-driven events could be implicitly self-targeting; the target component did not
+need to be specified in the event object if the target component was the same as the component triggering the event.
+This applied to lifecycle transition, service call and parameter setting events.
+
+Now, the target component is always required as part of the event structure for these events. This is because events
+can be triggered from many sources, including predicate or state transitions from components, controllers, or hardware,
+or as a result of sequence steps or conditions; implicitly determining the target component from the event source is
+not possible in the majority of these cases.
+
+Before:
+
+```yaml
+lifecycle: activate
+call_service:
+  service: foo
+set:
+  parameter: foo
+  value: bar
+```
+
+After:
+
+```yaml
+lifecycle:
+  component: foo
+  transition: activate
+call_service:
+  component: foo
+  service: foo
+set:
+  component: foo
+  parameter: foo
+  value: bar
+```
+
 #### Component mapping
 
 The `mapping` property of components has been renamed to `remapping`. The pattern restrictions for remapped names and

@@ -8,41 +8,14 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "$ref": "#/$defs/lifecycle_event"
+        "$ref": "#/$defs/lifecycle_object"
       }
     },
     {
-      "$ref": "#/$defs/lifecycle_event"
+      "$ref": "#/$defs/lifecycle_object"
     }
   ],
   "$defs": {
-    "lifecycle_event": {
-      "title": "Lifecycle Transition",
-      "oneOf": [
-        {
-          "$ref": "#/$defs/lifecycle_object"
-        },
-        {
-          "$ref": "#/$defs/transition"
-        }
-      ]
-    },
-    "transition": {
-      "title": "Lifecycle Transition Label",
-      "description": "A lifecycle transition",
-      "type": "string",
-      "enum": [
-        "create",
-        "configure",
-        "cleanup",
-        "activate",
-        "deactivate",
-        "unconfigured_shutdown",
-        "inactive_shutdown",
-        "active_shutdown",
-        "destroy"
-      ]
-    },
     "lifecycle_object": {
       "title": "Lifecycle Transition Object",
       "description": "A lifecycle identifier containing a transition label and target component",
@@ -50,13 +23,27 @@
       "additionalProperties": false,
       "properties": {
         "transition": {
-          "$ref": "#/$defs/transition"
+          "title": "Lifecycle Transition Label",
+          "description": "A lifecycle transition",
+          "type": "string",
+          "enum": [
+            "create",
+            "configure",
+            "cleanup",
+            "activate",
+            "deactivate",
+            "unconfigured_shutdown",
+            "inactive_shutdown",
+            "active_shutdown",
+            "destroy"
+          ]
         },
         "component": {
           "$ref": "../identifier.schema.json"
         }
       },
       "required": [
+        "component",
         "transition"
       ]
     }
