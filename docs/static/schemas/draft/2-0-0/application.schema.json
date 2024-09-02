@@ -604,10 +604,10 @@
                   "additionalProperties": false,
                   "properties": {
                     "component": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "predicate": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     }
                   },
                   "required": [
@@ -622,13 +622,13 @@
                   "additionalProperties": false,
                   "properties": {
                     "controller": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "hardware": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "predicate": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     }
                   },
                   "required": [
@@ -644,7 +644,7 @@
                   "additionalProperties": false,
                   "properties": {
                     "component": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "state": {
                       "title": "Component State",
@@ -672,10 +672,10 @@
                   "additionalProperties": false,
                   "properties": {
                     "controller": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "hardware": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "state": {
                       "title": "Controller State",
@@ -701,7 +701,7 @@
                   "additionalProperties": false,
                   "properties": {
                     "hardware": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "state": {
                       "title": "Hardware State",
@@ -725,7 +725,7 @@
                   "additionalProperties": false,
                   "properties": {
                     "sequence": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "state": {
                       "title": "Sequence State",
@@ -749,7 +749,7 @@
                   "additionalProperties": false,
                   "properties": {
                     "condition": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     }
                   },
                   "required": [
@@ -1080,7 +1080,7 @@
                   "additionalProperties": false,
                   "properties": {
                     "component": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     }
                   },
                   "required": [
@@ -1094,10 +1094,10 @@
                   "additionalProperties": false,
                   "properties": {
                     "hardware": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "controller": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     }
                   },
                   "required": [
@@ -1112,16 +1112,7 @@
                   "additionalProperties": false,
                   "properties": {
                     "hardware": {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
-                      "$comment": "The unique identifier of an application element (e.g., a component, controller, condition, or similar) formatted in lower_snake_case",
-                      "type": "string",
-                      "examples": [
-                        "a",
-                        "foo",
-                        "foo_bar",
-                        "foo_bar_1"
-                      ],
-                      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+                      "$ref": "#/$defs/identifier"
                     }
                   },
                   "required": [
@@ -1213,7 +1204,7 @@
                   "additionalProperties": false,
                   "properties": {
                     "component": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "parameter": {
                       "$ref": "#/$defs/events/properties/set/$defs/parameter"
@@ -1234,10 +1225,10 @@
                   "additionalProperties": false,
                   "properties": {
                     "controller": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "hardware": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "parameter": {
                       "$ref": "#/$defs/events/properties/set/$defs/parameter"
@@ -1292,10 +1283,10 @@
                   "additionalProperties": false,
                   "properties": {
                     "component": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "service": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "payload": {
                       "$ref": "#/$defs/events/properties/call_service/$defs/payload"
@@ -1312,13 +1303,13 @@
                   "additionalProperties": false,
                   "properties": {
                     "controller": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "hardware": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "service": {
-                      "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                      "$ref": "#/$defs/identifier"
                     },
                     "payload": {
                       "$ref": "#/$defs/events/properties/call_service/$defs/payload"
@@ -1375,7 +1366,7 @@
                   ]
                 },
                 "component": {
-                  "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                  "$ref": "#/$defs/identifier"
                 }
               },
               "required": [
@@ -1409,7 +1400,7 @@
               "additionalProperties": false,
               "properties": {
                 "hardware": {
-                  "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                  "$ref": "#/$defs/identifier"
                 },
                 "activate": {
                   "$ref": "#/$defs/events/properties/switch_controllers/$defs/switch_controllers_target"
@@ -1431,11 +1422,11 @@
                   "type": "array",
                   "minItems": 1,
                   "items": {
-                    "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                    "$ref": "#/$defs/identifier"
                   }
                 },
                 {
-                  "$ref": "#/properties/on_start/$defs/load_on_start/oneOf/1/properties/hardware"
+                  "$ref": "#/$defs/identifier"
                 }
               ]
             }
@@ -1514,6 +1505,18 @@
           }
         }
       }
+    },
+    "identifier": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$comment": "The unique identifier of an application element (e.g., a component, controller, condition, or similar) formatted in lower_snake_case",
+      "type": "string",
+      "examples": [
+        "a",
+        "foo",
+        "foo_bar",
+        "foo_bar_1"
+      ],
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
     },
     "log_level": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",

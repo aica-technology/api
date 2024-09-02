@@ -157,6 +157,9 @@
     "events": {
       "$ref": "events.schema.json"
     },
+    "identifier": {
+      "$ref": "common/identifier.schema.json"
+    },
     "log_level": {
       "$ref": "common/log_level.schema.json"
     },
