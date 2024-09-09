@@ -9,12 +9,12 @@ application.
 
 ## Package requirements
 
-This example requires only the base image.
+This example requires only the `core` image.
 
 ```toml title="aica-application.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
-[base]
+[core]
 "image" = "v3.3.0"
 ```
 

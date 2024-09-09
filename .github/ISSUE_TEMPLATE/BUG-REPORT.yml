@@ -19,12 +19,12 @@ body:
     id: manifest
     attributes:
       label: Image manifest
-      description: Copy the full manifest file with the base version and any extras used to package your AICA runtime image
+      description: Copy the full manifest file with the core version and any extras used to package your AICA System image
       render: Shell
       placeholder: |
         #syntax=ghcr.io/aica-technology/app-builder:v2
 
-        [base]
+        [core]
         image = "v1.2.3"
     validations:
       required: true

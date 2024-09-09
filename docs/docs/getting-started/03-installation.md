@@ -20,7 +20,7 @@ and add your user.
 ## The AICA package registry
 
 As seen in [Concepts: Introduction](../concepts/01-intro.md), AICA software comprises a collection of multiple packages
-around a unified framework. The base package includes the Dynamic State Engine, a core collection of components and
+around a unified framework. The `core` package includes the Dynamic State Engine, a core collection of components and
 controllers, the REST API and Developer Interface UI. Add-on packages include additional components or hardware
 collections.
 
@@ -57,15 +57,15 @@ This is because the authentication layer ignores the username and only uses the 
 
 ## Configuring AICA packages with a manifest file
 
-A runtime application image is configured using a simple **manifest file** defining the version of the base package
+A runtime application image is configured using a simple **manifest file** defining the version of the `core` package
 to use and optionally defining additional add-on packages. The manifest file contains a custom docker syntax header
 pointing to AICA's app-builder tool, and the `docker build` command is used to bundle all listed packages into a final
 runtime image.
 
-### Configuring a minimal runtime image with the core base package
+### Configuring a minimal runtime image with the `core` package
 
 The manifest file must contain a syntax header and a list of packages. The minimal version of the manifest includes
-only the base package. The version of the base package can be changed according to the latest release.
+only the `core` package. The version of the `core` package can be changed according to the latest release.
 
 :::info
 In the past, you might have seen applications using the `aica-package.toml` filename. While you can use any filename as we do not enforce any, we recommend using `aica-application.toml` to avoid confusion with the `aica-package.toml` file which is used for building packages using `package-builder`.
@@ -74,7 +74,7 @@ In the past, you might have seen applications using the `aica-package.toml` file
 ```toml title="aica-application.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
-[base]
+[core]
 "image" = "v3.3.0"
 ```
 
@@ -93,7 +93,7 @@ Starting with version `2.0.0` of the `app-builder`, all packages need to have sp
 ```toml title="aica-application.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
-[base]
+[core]
 "image" = "v3.3.0"
 
 [packages]
@@ -116,7 +116,7 @@ docker registries such as DockerHub or GitHub Container Registry and can be incl
 ```toml title="aica-application.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
-[base]
+[core]
 "image" = "v3.3.0"
 
 [packages]

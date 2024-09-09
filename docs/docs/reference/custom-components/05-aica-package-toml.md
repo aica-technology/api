@@ -89,6 +89,39 @@ PACKAGE_NAME = "my_package"
 USE_FEATURE_X = "ON"
 ```
 
+#### `[build.apt-repos]`
+
+Optional. This category allows you to add extra APT repositories to the image. This is useful if you need to install some packages that are not available in the default repositories, which is common for third-party packages.
+
+Multiple syntaxes are supported:
+
+##### Using a `deb` file
+
+```toml title="aica-package.toml"
+[build.apt-repos]
+cuda = { deb-uri = 'https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/{{ if eq .Arch "amd64" }}x86_64{{else}}sbsa{{end}}/cuda-keyring_1.0-1_all.deb' }
+```
+
+Note that `{{ if eq .Arch "amd64" }}x86_64{{else}}sbsa{{end}}` is a template that will be replaced by `x86_64` if the architecture is `amd64` and `sbsa` otherwise. See [here](https://pkg.go.dev/text/template) for more information on the templating syntax.
+
+##### Using a repository (with an optional keyring)
+
+```toml title="aica-package.toml"
+[build.apt-repos.librealsense]
+type = "deb" # optional, defaults to "deb", can also be "deb-src"
+uri = "https://librealsense.intel.com/Debian/apt-repo"
+distribution = "jammy" # optional, will default to the current distribution
+components = ["main"]
+keyring = "https://librealsense.intel.com/Debian/librealsense.pgp" # optional
+```
+
+Note that in this case we use a subcategory to specify the property of this repository, but it can also be expressed using the `{}` syntax like the previous example:
+
+```toml title="aica-package.toml"
+[build.apt-repos]
+librealsense = { type = "deb", uri = "https://librealsense.intel.com/Debian/apt-repo", distribution = "jammy", components = ["main"], keyring = "https://librealsense.intel.com/Debian/librealsense.pgp" }
+```
+
 #### `[build.dependencies]`
 
 Optional. `[build.dependencies]` is used to specify the AICA libraries and ROS 2 packages that will be installed in the
@@ -199,12 +232,12 @@ source = "different-folder/event-more"
 Optional. This category allows you to specify the APT packages that will be installed in the image. This is useful if
 you need to install some system dependencies.
 
-Available packages are based on the Ubuntu version used by the specified version of ROS2. You can find the list of
+By default, available packages are based on the Ubuntu version used by the specified version of ROS2. You can find the list of
 packages [here](https://packages.ubuntu.com/) and the Ubuntu version used by the ROS2
-distribution [here](https://docs.ros.org/en/iron/Installation/Ubuntu-Install-Debians.html).
+distribution [here](https://docs.ros.org/en/iron/Installation/Ubuntu-Install-Debians.html). See [this section](#buildapt-repos) to learn how to add extra APT repositories.
 
-:::note
-`*` is the only supported version for now. It will install the latest version of the package.
+:::tip
+You can either provide a version to be installed or `*` to install the latest available version.
 :::
 
 :::note
@@ -214,7 +247,7 @@ Packages specified in `<*depend>` in `package.xml` will be installed through `ro
 ```toml title="aica-package.toml"
 [build.packages.my_component.dependencies.apt]
 libopencv-dev = "*"
-libyaml-cpp-dev = "*"
+libyaml-cpp-dev = "2.55.1"
 ```
 
 ##### `[build.packages.XYZ.dependencies.pip]`
