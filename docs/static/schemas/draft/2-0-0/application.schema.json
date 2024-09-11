@@ -269,6 +269,11 @@
                     "log_level": {
                       "$ref": "#/$defs/log_level"
                     },
+                    "display_name": {
+                      "title": "Controller Display Name",
+                      "description": "The human-readable name to display on the controller",
+                      "type": "string"
+                    },
                     "plugin": {
                       "title": "Controller Plugin",
                       "description": "The name of the controller plugin",

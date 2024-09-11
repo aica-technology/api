@@ -150,6 +150,10 @@ export type ManageSequenceObject = StartASequence | RestartASequence | AbortASeq
  */
 export type LogLevel = "debug" | "info" | "warn" | "error" | "fatal";
 /**
+ * The human-readable name to display on the controller
+ */
+export type ControllerDisplayName = string;
+/**
  * The name of the controller plugin
  */
 export type ControllerPlugin = string;
@@ -602,6 +606,7 @@ export interface Controllers {
  */
 export interface Controller {
     log_level?: LogLevel;
+    display_name?: ControllerDisplayName;
     plugin: ControllerPlugin;
     /**
      * The rate in Hz at which to run the controller. If undefined, the hardware rate is used instead.
