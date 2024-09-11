@@ -29,8 +29,9 @@ Release Versions:
 - Hardware control rate can be supplemented with a `rate_tolerance` to determine the allowable deviation from the
   intended control rate, and an optional `strict` flag that immediately shuts down the hardware in case of rate
   deviation or other error
-- Sequences support additional properties including display name, position on the graph and automatic looping
-- Sequences and conditions support display names
+- Graph positions can be expressed for all elements, including sequences, conditions and a stop application node
+- Sequences have a property to support automatic looping
+- Sequences, conditions and controllers now support display names
 - The event structures for lifecycle transitions, service calls and setting parameters now always require the target
   component to be specified, removing the previous "shorthand" for self-targeting events
 
