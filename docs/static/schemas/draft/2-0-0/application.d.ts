@@ -42,6 +42,7 @@ export type ApplicationDescription = string;
  */
 export type ApplicationTags = string[];
 export type LoadOnStart = ComponentIdentifier | HardwareIdentifier;
+export type Identifier = string;
 /**
  * The path to the URDF file of the hardware
  */
@@ -136,7 +137,7 @@ export type LifecycleTransitionLabel =
 export type SwitchControllers =
     | [SwitchControllersObject, ...SwitchControllersObject[]]
     | SwitchControllersObject;
-export type TargetController = [string, ...string[]] | string;
+export type TargetController = [Identifier, ...Identifier[]] | Identifier;
 /**
  * Start, restart or abort a sequence
  */
@@ -439,14 +440,14 @@ export interface OnStart {
  * A component in the application
  */
 export interface ComponentIdentifier {
-    component: string;
+    component: Identifier;
 }
 
 /**
  * A hardware interface in the application
  */
 export interface HardwareIdentifier {
-    hardware: string;
+    hardware: Identifier;
 }
 
 export interface StartASequence {
@@ -500,7 +501,6 @@ export interface HardwareEvents {
 export interface HardwareStateTransitions {
     on_load?: Events;
     on_error?: Events;
-    on_rate_violation?: Events;
     on_unload?: Events;
 }
 
@@ -529,33 +529,33 @@ export interface Events {
  * A controller associated with a particular hardware interface
  */
 export interface ControllerIdentifier {
-    hardware: string;
-    controller: string;
+    hardware: Identifier;
+    controller: Identifier;
 }
 
 export interface SetComponentParameterObject {
-    component: string;
+    component: Identifier;
     parameter: ParameterName;
     value: NewParameterValue;
 }
 
 export interface SetControllerParameterObject {
-    controller: string;
-    hardware: string;
+    controller: Identifier;
+    hardware: Identifier;
     parameter: ParameterName;
     value: NewParameterValue;
 }
 
 export interface CallComponentServiceObject {
-    component: string;
-    service: string;
+    component: Identifier;
+    service: Identifier;
     payload?: ServicePayload;
 }
 
 export interface CallControllerServiceObject {
-    controller: string;
-    hardware: string;
-    service: string;
+    controller: Identifier;
+    hardware: Identifier;
+    service: Identifier;
     payload?: ServicePayload;
 }
 
@@ -564,11 +564,11 @@ export interface CallControllerServiceObject {
  */
 export interface LifecycleTransitionObject {
     transition: LifecycleTransitionLabel;
-    component: string;
+    component: Identifier;
 }
 
 export interface SwitchControllersObject {
-    hardware: string;
+    hardware: Identifier;
     activate?: TargetController;
     deactivate?: TargetController;
 }
@@ -788,24 +788,24 @@ export interface Conditions {
  * A condition depending on the runtime state of a component predicate
  */
 export interface ComponentPredicateCondition {
-    component: string;
-    predicate: string;
+    component: Identifier;
+    predicate: Identifier;
 }
 
 /**
  * A condition depending on the runtime state of a controller predicate
  */
 export interface ControllerPredicateCondition {
-    controller: string;
-    hardware: string;
-    predicate: string;
+    controller: Identifier;
+    hardware: Identifier;
+    predicate: Identifier;
 }
 
 /**
  * A condition depending on the runtime state of a component
  */
 export interface ComponentStateCondition {
-    component: string;
+    component: Identifier;
     state: ComponentState;
 }
 
@@ -813,8 +813,8 @@ export interface ComponentStateCondition {
  * A condition depending on the runtime state of a controller
  */
 export interface ControllerStateCondition {
-    controller: string;
-    hardware: string;
+    controller: Identifier;
+    hardware: Identifier;
     state: ControllerState;
 }
 
@@ -822,7 +822,7 @@ export interface ControllerStateCondition {
  * A condition depending on the runtime state of a hardware interface
  */
 export interface HardwareStateCondition {
-    hardware: string;
+    hardware: Identifier;
     state: HardwareState;
 }
 
@@ -830,7 +830,7 @@ export interface HardwareStateCondition {
  * A condition depending on the runtime state of a sequence
  */
 export interface SequenceStateCondition {
-    sequence: string;
+    sequence: Identifier;
     state: SequenceState;
 }
 
@@ -838,7 +838,7 @@ export interface SequenceStateCondition {
  * A condition depending on the runtime state of another condition
  */
 export interface ReferenceCondition {
-    condition: string;
+    condition: Identifier;
 }
 
 /**
@@ -895,6 +895,7 @@ export interface BlockingConditionStepWithTimeout {
 export interface Graph {
     positions?: {
         on_start?: Position;
+        stop?: Position;
         buttons?: {
             [k: string]: Position;
         };

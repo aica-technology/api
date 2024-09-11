@@ -248,9 +248,6 @@
                     "on_error": {
                       "$ref": "#/$defs/events"
                     },
-                    "on_rate_violation": {
-                      "$ref": "#/$defs/events"
-                    },
                     "on_unload": {
                       "$ref": "#/$defs/events"
                     }
@@ -966,6 +963,9 @@
           "additionalProperties": false,
           "properties": {
             "on_start": {
+              "$ref": "#/properties/graph/$defs/position"
+            },
+            "stop": {
               "$ref": "#/properties/graph/$defs/position"
             },
             "buttons": {
