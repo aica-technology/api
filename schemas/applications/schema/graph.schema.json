@@ -12,6 +12,9 @@
         "on_start": {
           "$ref": "#/$defs/position"
         },
+        "stop": {
+          "$ref": "#/$defs/position"
+        },
         "buttons": {
           "$ref": "#/$defs/position_group"
         },

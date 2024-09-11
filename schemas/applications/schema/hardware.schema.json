@@ -79,9 +79,6 @@
                 "on_error": {
                   "$ref": "events.schema.json"
                 },
-                "on_rate_violation": {
-                  "$ref": "events.schema.json"
-                },
                 "on_unload": {
                   "$ref": "events.schema.json"
                 }
