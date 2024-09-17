@@ -19,13 +19,13 @@
     },
     "dependencies": {
       "title": "Dependencies",
-      "description": "The application dependencies, including the base version and any required packages",
+      "description": "The application dependencies, including the version of AICA Core and any required packages",
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "base": {
-          "title": "Base Version",
-          "description": "The version of the AICA base image",
+        "core": {
+          "title": "Core Version",
+          "description": "The version of the AICA Core image",
           "examples": [
             "v3.1.1",
             "v4.0.0"
@@ -88,7 +88,7 @@
         }
       },
       "required": [
-        "base"
+        "core"
       ]
     },
     "metadata": {

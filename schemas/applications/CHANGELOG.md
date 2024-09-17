@@ -17,7 +17,7 @@ Release Versions:
 
 ### New features in 2-0-0
 
-- Application dependencies can be defined under the top-level `dependencies` property, including the base image version
+- Application dependencies can be defined under the top-level `dependencies` property, including the core image version
   and additional packages
 - Application metadata can be defined under the top-level `metadata` property including a name, description and tags
 - Any additional user data can be included in an application under the top-level `userdata` property

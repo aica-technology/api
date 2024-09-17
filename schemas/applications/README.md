@@ -26,14 +26,14 @@ names in the application must be `lower_snake_case`.
 
 The new schema requires two new top-level properties to be defined in all applications. These are `schema`, which must
 declare the syntax version of the current application, and `dependencies`, which must at minimum define the version of
-the base AICA image required to run the application. Refer to the complete documentation for additional information
+the AICA Core image required to run the application. Refer to the complete documentation for additional information
 on these new properties.
 
 ```yaml
 schema: 2-0-0
 
 dependencies:
-  base: v4.0.0
+  core: v4.0.0
 ```
 
 #### Graph positions

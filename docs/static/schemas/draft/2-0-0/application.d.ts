@@ -10,9 +10,9 @@
  */
 export type Schema = string;
 /**
- * The version of the AICA base image
+ * The version of the AICA Core image
  */
-export type BaseVersion = string;
+export type CoreVersion = string;
 /**
  * The name of the package
  */
@@ -398,10 +398,10 @@ export interface YAMLApplicationDescription {
 }
 
 /**
- * The application dependencies, including the base version and any required packages
+ * The application dependencies, including the version of AICA Core and any required packages
  */
 export interface Dependencies {
-    base: BaseVersion;
+    core: CoreVersion;
     packages?: ApplicationPackages;
 }
 
