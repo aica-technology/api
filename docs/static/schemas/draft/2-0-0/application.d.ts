@@ -227,7 +227,7 @@ export type ComponentState =
 /**
  * The runtime state of the controller
  */
-export type ControllerState = "unloaded" | "loaded" | "active";
+export type ControllerState = "unloaded" | "inactive" | "active";
 /**
  * The runtime state of the hardware interface
  */
@@ -235,7 +235,7 @@ export type HardwareState = "unloaded" | "loaded";
 /**
  * The runtime state of the sequence
  */
-export type SequenceState = "inactive" | "active";
+export type SequenceState = "inactive" | "active" | "aborted";
 /**
  * True only when every listed item is true
  */
@@ -719,8 +719,11 @@ export interface ComponentStateTransitions {
     on_activate?: Events;
     on_deactivate?: Events;
     on_cleanup?: Events;
-    on_shutdown?: Events;
+    on_configure_failure?: Events;
+    on_activate_failure?: Events;
     on_error?: Events;
+    on_error_recovery?: Events;
+    on_shutdown?: Events;
     on_unload?: Events;
 }
 

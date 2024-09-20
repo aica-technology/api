@@ -462,10 +462,19 @@
                     "on_cleanup": {
                       "$ref": "#/$defs/events"
                     },
-                    "on_shutdown": {
+                    "on_configure_failure": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_activate_failure": {
                       "$ref": "#/$defs/events"
                     },
                     "on_error": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_error_recovery": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_shutdown": {
                       "$ref": "#/$defs/events"
                     },
                     "on_unload": {
@@ -685,7 +694,7 @@
                       "type": "string",
                       "enum": [
                         "unloaded",
-                        "loaded",
+                        "inactive",
                         "active"
                       ]
                     }
@@ -735,7 +744,8 @@
                       "type": "string",
                       "enum": [
                         "inactive",
-                        "active"
+                        "active",
+                        "aborted"
                       ]
                     }
                   },
