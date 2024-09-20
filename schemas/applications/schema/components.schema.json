@@ -106,9 +106,6 @@
                 "on_cleanup": {
                   "$ref": "events.schema.json"
                 },
-                "on_shutdown": {
-                  "$ref": "events.schema.json"
-                },
                 "on_configure_failure": {
                   "$ref": "events.schema.json"
                 },
@@ -119,6 +116,9 @@
                   "$ref": "events.schema.json"
                 },
                 "on_error_recovery": {
+                  "$ref": "events.schema.json"
+                },
+                "on_shutdown": {
                   "$ref": "events.schema.json"
                 },
                 "on_unload": {
