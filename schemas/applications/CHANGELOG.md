@@ -24,6 +24,8 @@ Release Versions:
 - A running application can be stopped with the `application: stop` event from any event source
 - Components, controllers and hardware support dedicated transition events such as `on_load`, `on_activate`
   and `on_error` which behave as event triggers similar to predicates
+- Lifecycle components have access to additional error handling with the `on_configure_failure`, `on_activate_failure`,
+  `on_error` and `on_error_recovery` transition events
 - Condition sources for sequence steps and conditions now include component, controller, hardware or sequence states in
   addition to the previous component or controller predicate sources
 - Hardware control rate can be supplemented with a `rate_tolerance` to determine the allowable deviation from the
