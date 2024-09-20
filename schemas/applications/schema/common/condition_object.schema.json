@@ -115,7 +115,7 @@
           "type": "string",
           "enum": [
             "unloaded",
-            "loaded",
+            "inactive",
             "active"
           ]
         }
@@ -165,7 +165,8 @@
           "type": "string",
           "enum": [
             "inactive",
-            "active"
+            "active",
+            "aborted"
           ]
         }
       },
