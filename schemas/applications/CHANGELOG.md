@@ -21,6 +21,7 @@ Release Versions:
   and additional packages
 - Application metadata can be defined under the top-level `metadata` property including a name, description and tags
 - Any additional user data can be included in an application under the top-level `userdata` property
+- Interactive UI buttons and all position data is now defined under a top-level `graph` property
 - A running application can be stopped with the `application: stop` event from any event source
 - Components, controllers and hardware support dedicated transition events such as `on_load`, `on_activate`
   and `on_error` which behave as event triggers similar to predicates
