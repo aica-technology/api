@@ -5,6 +5,9 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "buttons": {
+      "$ref": "buttons.schema.json"
+    },
     "positions": {
       "type": "object",
       "additionalProperties": false,

@@ -136,9 +136,6 @@
     "components": {
       "$ref": "components.schema.json"
     },
-    "buttons": {
-      "$ref": "buttons.schema.json"
-    },
     "conditions": {
       "$ref": "conditions.schema.json"
     },

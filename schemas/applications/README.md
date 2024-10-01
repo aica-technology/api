@@ -104,6 +104,32 @@ graph:
         y: 500
 ```
 
+#### UI buttons
+
+The `buttons` property was previously a top-level field that defined the behavior of interactive UI elements in the
+application graph. The definition of buttons have now been moved under the new `graph` property, as these elements
+are only used by the application graph.
+
+Before:
+
+```yaml
+buttons:
+  my_button:
+    on_click:
+      load: ...
+```
+
+After:
+
+```yaml
+graph:
+  buttons:
+    my_button:
+      on_click:
+        load: ...
+```
+
+
 #### Events on start
 
 The `on_start` property is now only permitted to load components, load hardware and start sequences. Previously, it was
