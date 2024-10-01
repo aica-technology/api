@@ -195,10 +195,6 @@ export type NodeNamespace = string;
  */
 export type InputTopics = string[];
 /**
- * The human-readable name to display on the button
- */
-export type ButtonDisplayName = string;
-/**
  * The human-readable name to display on the condition
  */
 export type ConditionDisplayName = string;
@@ -372,6 +368,10 @@ export type SequenceStep = Events | DelayStep | CheckConditionStep;
  */
 export type SequenceSteps = SequenceStep[];
 /**
+ * The human-readable name to display on the button
+ */
+export type ButtonDisplayName = string;
+/**
  * The X position of the element on the graph
  */
 export type XPosition = number;
@@ -391,7 +391,6 @@ export interface YAMLApplicationDescription {
     on_start?: OnStart;
     hardware?: HardwareInterfaces;
     components?: Components;
-    buttons?: Buttons;
     conditions?: Conditions;
     sequences?: Sequences;
     graph?: Graph;
@@ -735,36 +734,6 @@ export interface ComponentPredicates {
 }
 
 /**
- * A description of interactive buttons in the application graph
- */
-export interface Buttons {
-    [k: string]: Button;
-}
-
-/**
- * A named interactive button
- *
- * This interface was referenced by `Buttons`'s JSON-Schema definition
- * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
- */
-export interface Button {
-    display_name?: ButtonDisplayName;
-    on_click?: OnClick;
-}
-
-/**
- * Events that are triggered when the button is pressed
- */
-export interface OnClick {
-    load?: Load;
-    unload?: Unload;
-    call_service?: CallService;
-    lifecycle?: LifecycleEvent;
-    switch_controllers?: SwitchControllers;
-    set?: SetParameter;
-}
-
-/**
  * A description of logical conditions used to trigger events in the application
  */
 export interface Conditions {
@@ -901,6 +870,7 @@ export interface BlockingConditionStepWithTimeout {
  * Information for the graphical representation of the application
  */
 export interface Graph {
+    buttons?: Buttons;
     positions?: {
         on_start?: Position;
         stop?: Position;
@@ -920,6 +890,37 @@ export interface Graph {
             [k: string]: Position;
         };
     };
+}
+
+/**
+ * A description of interactive buttons in the application graph
+ */
+export interface Buttons {
+    [k: string]: Button;
+}
+
+/**
+ * A named interactive button
+ *
+ * This interface was referenced by `Buttons`'s JSON-Schema definition
+ * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
+ */
+export interface Button {
+    display_name?: ButtonDisplayName;
+    on_click?: OnClick;
+}
+
+/**
+ * Events that are triggered when the button is pressed
+ */
+export interface OnClick {
+    load?: Load;
+    unload?: Unload;
+    call_service?: CallService;
+    lifecycle?: LifecycleEvent;
+    switch_controllers?: SwitchControllers;
+    set?: SetParameter;
+    sequence?: ManageSequences;
 }
 
 /**

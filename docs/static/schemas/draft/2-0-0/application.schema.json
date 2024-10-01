@@ -498,54 +498,6 @@
         }
       }
     },
-    "buttons": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "Buttons",
-      "description": "A description of interactive buttons in the application graph",
-      "type": "object",
-      "additionalProperties": false,
-      "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-          "title": "Button",
-          "description": "A named interactive button",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "display_name": {
-              "title": "Button Display Name",
-              "description": "The human-readable name to display on the button",
-              "type": "string"
-            },
-            "on_click": {
-              "title": "On Click",
-              "description": "Events that are triggered when the button is pressed",
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "load": {
-                  "$ref": "#/$defs/events/properties/load"
-                },
-                "unload": {
-                  "$ref": "#/$defs/events/properties/unload"
-                },
-                "call_service": {
-                  "$ref": "#/$defs/events/properties/call_service"
-                },
-                "lifecycle": {
-                  "$ref": "#/$defs/events/properties/lifecycle"
-                },
-                "switch_controllers": {
-                  "$ref": "#/$defs/events/properties/switch_controllers"
-                },
-                "set": {
-                  "$ref": "#/$defs/events/properties/set"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "conditions": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "Conditions",
@@ -973,6 +925,57 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "buttons": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Buttons",
+          "description": "A description of interactive buttons in the application graph",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+              "title": "Button",
+              "description": "A named interactive button",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "display_name": {
+                  "title": "Button Display Name",
+                  "description": "The human-readable name to display on the button",
+                  "type": "string"
+                },
+                "on_click": {
+                  "title": "On Click",
+                  "description": "Events that are triggered when the button is pressed",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "load": {
+                      "$ref": "#/$defs/events/properties/load"
+                    },
+                    "unload": {
+                      "$ref": "#/$defs/events/properties/unload"
+                    },
+                    "call_service": {
+                      "$ref": "#/$defs/events/properties/call_service"
+                    },
+                    "lifecycle": {
+                      "$ref": "#/$defs/events/properties/lifecycle"
+                    },
+                    "switch_controllers": {
+                      "$ref": "#/$defs/events/properties/switch_controllers"
+                    },
+                    "set": {
+                      "$ref": "#/$defs/events/properties/set"
+                    },
+                    "sequence": {
+                      "$ref": "#/$defs/events/properties/sequence"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "positions": {
           "type": "object",
           "additionalProperties": false,
