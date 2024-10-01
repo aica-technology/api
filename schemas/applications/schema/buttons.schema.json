@@ -39,6 +39,9 @@
             },
             "set": {
               "$ref": "common/events/set.schema.json"
+            },
+            "sequence": {
+              "$ref": "common/events/sequence.schema.json"
             }
           }
         }
