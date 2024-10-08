@@ -32,7 +32,10 @@ Release Versions:
 - Hardware control rate can be supplemented with a `rate_tolerance` to determine the allowable deviation from the
   intended control rate, and an optional `strict` flag that immediately shuts down the hardware in case of rate
   deviation or other error
+- Static frames can be defined in the application with a position, orientation, name, and reference frame under the new
+  top-level `frames` property
 - Graph positions can be expressed for all elements, including sequences, conditions and a stop application node
+- Edge path information for custom edge routing can be stored under the `edges` sub-property of `graph`
 - Sequences have a property to support automatic looping
 - Sequences, conditions and controllers now support display names
 - The event structures for lifecycle transitions, service calls and setting parameters now always require the target
