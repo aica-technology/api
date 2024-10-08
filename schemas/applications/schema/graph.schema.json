@@ -36,14 +36,20 @@
       }
     },
     "edges": {
+      "title": "Graph Edges",
+      "description": "A description of edges in the application with additional graphical information",
       "type": "object",
       "additionalProperties": false,
       "patternProperties": {
         "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "title": "Graph Edge",
+          "description": "Additional graphical information about a specific edge in the application",
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "path": {
+              "title": "Edge Path",
+              "description": "Custom edge path coordinates as x, y pairs",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/position"
