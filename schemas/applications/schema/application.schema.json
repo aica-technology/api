@@ -142,6 +142,9 @@
     "sequences": {
       "$ref": "sequences.schema.json"
     },
+    "frames": {
+      "$ref": "frames.schema.json"
+    },
     "graph": {
       "$ref": "graph.schema.json"
     }
