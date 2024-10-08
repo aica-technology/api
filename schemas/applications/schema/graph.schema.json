@@ -34,6 +34,24 @@
           "$ref": "#/$defs/position_group"
         }
       }
+    },
+    "edges": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/position"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {
@@ -47,13 +65,13 @@
           "title": "X Position",
           "description": "The X position of the element on the graph",
           "type": "number",
-          "multipleOf" : 20
+          "multipleOf": 20
         },
         "y": {
           "title": "Y Position",
           "description": "The Y position of the element on the graph",
           "type": "number",
-          "multipleOf" : 20
+          "multipleOf": 20
         }
       },
       "required": [
