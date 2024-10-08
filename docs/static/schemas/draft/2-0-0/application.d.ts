@@ -368,6 +368,10 @@ export type SequenceStep = Events | DelayStep | CheckConditionStep;
  */
 export type SequenceSteps = SequenceStep[];
 /**
+ * The reference frame that the positive and orientation of the frame is defined relative to
+ */
+export type ReferenceFrame = string;
+/**
  * The human-readable name to display on the button
  */
 export type ButtonDisplayName = string;
@@ -379,6 +383,10 @@ export type XPosition = number;
  * The Y position of the element on the graph
  */
 export type YPosition = number;
+/**
+ * Custom edge path coordinates as x, y pairs
+ */
+export type EdgePath = Position[];
 
 /**
  * An AICA application graph description using YAML syntax.
@@ -393,6 +401,7 @@ export interface YAMLApplicationDescription {
     components?: Components;
     conditions?: Conditions;
     sequences?: Sequences;
+    frames?: Frames;
     graph?: Graph;
 }
 
@@ -867,6 +876,44 @@ export interface BlockingConditionStepWithTimeout {
 }
 
 /**
+ * A description of the static frames available in the application
+ */
+export interface Frames {
+    [k: string]: Frame;
+}
+
+/**
+ * The position and orientation of a static frame in the application
+ *
+ * This interface was referenced by `Frames`'s JSON-Schema definition
+ * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
+ */
+export interface Frame {
+    position: FramePosition;
+    orientation: FrameOrientation;
+    reference_frame?: ReferenceFrame;
+}
+
+/**
+ * The frame position as Cartesian coordinates
+ */
+export interface FramePosition {
+    x: number;
+    y: number;
+    z: number;
+}
+
+/**
+ * The frame orientation in a unit quaternion representation
+ */
+export interface FrameOrientation {
+    w: number;
+    x: number;
+    y: number;
+    z: number;
+}
+
+/**
  * Information for the graphical representation of the application
  */
 export interface Graph {
@@ -890,6 +937,7 @@ export interface Graph {
             [k: string]: Position;
         };
     };
+    edges?: GraphEdges;
 }
 
 /**
@@ -932,4 +980,21 @@ export interface OnClick {
 export interface Position {
     x: XPosition;
     y: YPosition;
+}
+
+/**
+ * A description of edges in the application with additional graphical information
+ */
+export interface GraphEdges {
+    [k: string]: GraphEdge;
+}
+
+/**
+ * Additional graphical information about a specific edge in the application
+ *
+ * This interface was referenced by `GraphEdges`'s JSON-Schema definition
+ * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
+ */
+export interface GraphEdge {
+    path?: EdgePath;
 }

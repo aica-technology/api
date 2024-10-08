@@ -918,6 +918,82 @@
         }
       }
     },
+    "frames": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Frames",
+      "description": "A description of the static frames available in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "title": "Frame",
+          "description": "The position and orientation of a static frame in the application",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "position": {
+              "title": "Frame Position",
+              "description": "The frame position as Cartesian coordinates",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "z"
+              ]
+            },
+            "orientation": {
+              "title": "Frame Orientation",
+              "description": "The frame orientation in a unit quaternion representation",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "w": {
+                  "type": "number"
+                },
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "w",
+                "x",
+                "y",
+                "z"
+              ]
+            },
+            "reference_frame": {
+              "title": "Reference Frame",
+              "description": "The reference frame that the positive and orientation of the frame is defined relative to",
+              "type": "string",
+              "default": "world",
+              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+            }
+          },
+          "required": [
+            "position",
+            "orientation"
+          ]
+        }
+      }
+    },
     "graph": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "Graph",
@@ -1000,6 +1076,30 @@
             },
             "sequences": {
               "$ref": "#/properties/graph/$defs/position_group"
+            }
+          }
+        },
+        "edges": {
+          "title": "Graph Edges",
+          "description": "A description of edges in the application with additional graphical information",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+              "title": "Graph Edge",
+              "description": "Additional graphical information about a specific edge in the application",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "title": "Edge Path",
+                  "description": "Custom edge path coordinates as x, y pairs",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/properties/graph/$defs/position"
+                  }
+                }
+              }
             }
           }
         }
