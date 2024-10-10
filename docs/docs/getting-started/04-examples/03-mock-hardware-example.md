@@ -4,18 +4,12 @@ sidebar_position: 3
 
 # An application with hardware
 
-## Package requirements
+## Launcher configuration requirements
 
-This example requires the Universal Robots collection which includes example URDF content.
+This example uses an additional Universal Robots collection package, which includes drivers for communicating with
+UR robots and the example URDF content used to visualize the robot arm.
 
-```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder:v1
-
-[packages]
-"@aica/base" = "v3.1.1"
-
-"@aica/collections/ur-collection" = "v3.0.5"
-```
+Use AICA Core v3.1.1 together with the `collections/ur-collection` package at version v3.0.5 to reproduce this example.
 
 ## URDF Hardware Manager
 

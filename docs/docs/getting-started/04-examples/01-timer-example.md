@@ -7,16 +7,9 @@ sidebar_position: 1
 This example will show how components and predicate events can be used to create dynamic behavior in an AICA
 application.
 
-## Package requirements
+## Launcher configuration requirements
 
-This example requires only the base image.
-
-```toml title="aica-package.toml"
-#syntax=ghcr.io/aica-technology/app-builder:v1
-
-[packages]
-"@aica/base" = "v3.1.1"
-```
+This example uses AICA Core v3.1.1
 
 ## Setting up the application
 
