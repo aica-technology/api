@@ -79,9 +79,6 @@
                 "on_error": {
                   "$ref": "events.schema.json"
                 },
-                "on_rate_violation": {
-                  "$ref": "events.schema.json"
-                },
                 "on_unload": {
                   "$ref": "events.schema.json"
                 }
@@ -102,6 +99,11 @@
               "properties": {
                 "log_level": {
                   "$ref": "common/log_level.schema.json"
+                },
+                "display_name": {
+                  "title": "Controller Display Name",
+                  "description": "The human-readable name to display on the controller",
+                  "type": "string"
                 },
                 "plugin": {
                   "title": "Controller Plugin",

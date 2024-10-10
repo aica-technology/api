@@ -1,0 +1,481 @@
+{
+  "$id": "/1-1-1/component.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dynamic Component Description",
+  "description": "A full description of a dynamic component in the AICA application framework.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "title": "Schema",
+      "description": "The reference to the schema",
+      "examples": [
+        "https://json-schema.org/draft/2020-12/schema"
+      ],
+      "type": "string"
+    },
+    "name": {
+      "title": "Component Name",
+      "description": "The human-readable name of the component.",
+      "examples": [
+        "Point Attractor",
+        "Interactive Marker",
+        "Weighted Sum"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "title": "Component Description",
+      "description": "The human-readable description of this component and its behaviour.",
+      "type": "object",
+      "properties": {
+        "brief": {
+          "description": "A brief (one-line) description of the component for quick reference and tool-tips.",
+          "examples": [
+            "Generates a velocity command towards a target attractor"
+          ],
+          "type": "string"
+        },
+        "details": {
+          "description": "An optional detailed description of the component.",
+          "examples": [
+            "Given an input Cartesian pose and parameterized target pose, this component generates a Cartesian twist output towards the target linearly proportional to the distance multiplied by the gain parameter."
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "brief"
+      ]
+    },
+    "registration": {
+      "$ref": "#/$defs/registration"
+    },
+    "inherits": {
+      "$ref": "#/$defs/registration"
+    },
+    "lifecycle": {
+      "title": "Lifecycle Component",
+      "description": "If true, this property indicates that the component is a lifecycle component.",
+      "type": "boolean",
+      "default": false
+    },
+    "virtual": {
+      "title": "Virtual Component Class",
+      "description": "If true, this property indicates that the component is an abstract or virtual base class and not directly instantiable.",
+      "type": "boolean",
+      "default": false
+    },
+    "inputs": {
+      "title": "Component Input Signals",
+      "description": "The fixed input signals (subscriptions) of the component.",
+      "type": "array",
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Signal",
+        "description": "A continuous data signal in the AICA framework that can be an input or an output.",
+        "type": "object",
+        "properties": {
+          "display_name": {
+            "description": "The short name of this signal (to be displayed on the edge of the node in the graph view).",
+            "examples": [
+              "Target Pose",
+              "Sum",
+              "Command Torque"
+            ],
+            "type": "string"
+          },
+          "description": {
+            "description": "A description of the signal for tool-tips and documentation.",
+            "type": "string"
+          },
+          "signal_name": {
+            "description": "The registered name of the signal from which the default topic and parameter '<$signal_name>_topic' are determined.",
+            "examples": [
+              "target_pose",
+              "sum",
+              "command_torque"
+            ],
+            "type": "string"
+          },
+          "default_topic": {
+            "description": "The default topic name assigned to this signal. If unspecified, it is assumed to be '~/<$signal_name>'. Setting the parameter '<$signal_name>_topic' will override the default value.",
+            "default": "~/signal_name",
+            "type": "string"
+          },
+          "reconfigurable_topic": {
+            "description": "Indicate if the signal topic is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_topic' parameter.",
+            "default": false,
+            "type": "boolean"
+          },
+          "signal_type": {
+            "description": "The fixed type of this signal.",
+            "$ref": "#/properties/inputs/items/properties/signal_types/items"
+          },
+          "signal_types": {
+            "description": "An array of signal types supported by configurable typing. The active type is set through the '<$signal_name>_type' parameter, and the default type is determined by the `signal_type` property.",
+            "type": "array",
+            "items": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Signal Type",
+              "description": "Supported signal value types as simple atomic types or encoded state types.",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "bool",
+                    "int",
+                    "double",
+                    "double_array",
+                    "string",
+                    "other"
+                  ]
+                },
+                {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "title": "Encoded State Type",
+                  "description": "The state type of an encoded value from a collection of supported types, as defined in clproto.",
+                  "type": "string",
+                  "enum": [
+                    "state",
+                    "spatial_state",
+                    "cartesian_state",
+                    "cartesian_pose",
+                    "cartesian_twist",
+                    "cartesian_acceleration",
+                    "cartesian_wrench",
+                    "jacobian",
+                    "joint_state",
+                    "joint_positions",
+                    "joint_velocities",
+                    "joint_torques",
+                    "shape",
+                    "ellipsoid",
+                    "parameter"
+                  ]
+                }
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "reconfigurable_type": {
+            "description": "Indicate if the signal type is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_type' parameter.",
+            "default": false,
+            "type": "boolean"
+          },
+          "custom_signal_type": {
+            "description": "The custom signal type of the signal",
+            "examples": [
+              "sensor_msgs::msg::JointState",
+              "geometry_msgs::msg::Pose"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "display_name",
+          "description",
+          "signal_name",
+          "signal_type"
+        ],
+        "if": {
+          "properties": {
+            "signal_type": {
+              "const": "other"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "custom_signal_type"
+          ]
+        }
+      },
+      "uniqueItems": true
+    },
+    "input_collections": {
+      "title": "Component Input Signal Collections",
+      "description": "The dynamically assignable input signals (subscriptions) of the component.",
+      "type": "array",
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Input Signal Collection",
+        "description": "A dynamic collection of input signals that can have zero or more topics of the same type.",
+        "type": "object",
+        "properties": {
+          "display_name": {
+            "description": "The short name of this input signal collection (to be displayed on the edge of the component).",
+            "type": "string"
+          },
+          "description": {
+            "description": "A description of the signal collection for tool-tips and documentation.",
+            "type": "string"
+          },
+          "input_collection_name": {
+            "description": "The registered name of the input collection from which the parameter '<$input_collection_name>_topics' is determined.",
+            "type": "string"
+          },
+          "default_topics": {
+            "description": "The optional default array of topic names in this signal collection. Setting the parameter '<$input_collection_name>_topics' will override the default value.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "reconfigurable_topics": {
+            "description": "Indicate if the array of input collection topics is reconfigurable and can be changed while the component is inactive through the '<$input_collection_name>_topics' parameter.",
+            "default": false,
+            "type": "boolean"
+          },
+          "signal_type": {
+            "description": "The default type of the signals (signals in a collection must have the same type).",
+            "$ref": "#/properties/inputs/items/properties/signal_types/items"
+          },
+          "signal_types": {
+            "description": "An array of signal types supported by configurable typing. The active type is set through the '<$input_collection_name>_type' parameter, and the default type is determined by the `signal_type` property.",
+            "type": "array",
+            "items": {
+              "$ref": "#/properties/inputs/items/properties/signal_types/items"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "reconfigurable_type": {
+            "description": "Indicate if the signal type is reconfigurable and can be changed while the component is inactive through the '<$input_collection_name>_type' parameter.",
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "display_name",
+          "description",
+          "input_collection_name",
+          "signal_type"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "outputs": {
+      "title": "Component Output Signals",
+      "description": "The output signals (publications) of the component.",
+      "type": "array",
+      "items": {
+        "$ref": "#/properties/inputs/items"
+      },
+      "uniqueItems": true
+    },
+    "parameters": {
+      "title": "Component Parameters",
+      "description": "The parameters declared by the component.",
+      "type": "array",
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Parameter",
+        "description": "A dynamic parameter that is publicly configurable.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "display_name": {
+            "description": "The human-readable parameter name.",
+            "examples": [
+              "Reference Frame",
+              "Gain"
+            ],
+            "type": "string"
+          },
+          "description": {
+            "description": "A brief description of the parameter.",
+            "type": "string"
+          },
+          "parameter_name": {
+            "description": "The lower_snake_case parameter name as it is declared in the implementation.",
+            "examples": [
+              "reference_frame",
+              "gain"
+            ],
+            "type": "string"
+          },
+          "parameter_type": {
+            "description": "The parameter value type.",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "Parameter Type",
+            "type": "string",
+            "enum": [
+              "bool",
+              "bool_array",
+              "int",
+              "int_array",
+              "double",
+              "double_array",
+              "string",
+              "string_array",
+              "vector",
+              "matrix",
+              "state"
+            ]
+          },
+          "parameter_state_type": {
+            "description": "The state type of the parameter, if the value type is an encoded state.",
+            "$ref": "#/properties/inputs/items/properties/signal_types/items"
+          },
+          "default_value": {
+            "description": "The string representation of the default parameter value, or null if the parameter has no valid default value.",
+            "examples": [
+              "foo",
+              "[ 1.0, 2.0, 3.0 ]",
+              null
+            ],
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "optional": {
+            "description": "Specify if this parameter is optional (only applicable if the default value is null)",
+            "type": "boolean"
+          },
+          "dynamic": {
+            "description": "Specify if this parameter can be dynamically reconfigured.",
+            "type": "boolean"
+          },
+          "internal": {
+            "description": "Specify if this parameter is for internal use only and should be hidden from public users.",
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "display_name",
+          "description",
+          "parameter_name",
+          "parameter_type",
+          "default_value"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "default_value": {
+                  "not": {
+                    "const": null
+                  }
+                }
+              }
+            },
+            "then": {
+              "not": {
+                "required": [
+                  "optional"
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "parameter_type": {
+                  "const": "state"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "parameter_state_type"
+              ]
+            }
+          }
+        ]
+      },
+      "uniqueItems": true
+    },
+    "predicates": {
+      "title": "Component Predicates",
+      "description": "The predicates provided by the component.",
+      "type": "array",
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Predicate",
+        "description": "A predicate of a component or controller.",
+        "type": "object",
+        "properties": {
+          "display_name": {
+            "description": "The human-readable predicate name.",
+            "type": "string"
+          },
+          "description": {
+            "description": "A brief description of the predicate.",
+            "type": "string"
+          },
+          "predicate_name": {
+            "description": "The lower_snake_case predicate name as it is declared in the component or controller.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "display_name",
+          "description",
+          "predicate_name"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "services": {
+      "title": "Component Services",
+      "description": "The services provided by the component.",
+      "type": "array",
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Service",
+        "description": "A service endpoint of a component or controller.",
+        "type": "object",
+        "properties": {
+          "display_name": {
+            "description": "The human-readable service name.",
+            "type": "string"
+          },
+          "description": {
+            "description": "A brief description of the service.",
+            "type": "string"
+          },
+          "service_name": {
+            "description": "The lower_snake_case service name as it is declared in the component or controller.",
+            "type": "string"
+          },
+          "payload_format": {
+            "description": "Optional description of the payload format if the service has a string payload. If omitted, the service is assumed to be an empty trigger.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "display_name",
+          "description",
+          "service_name"
+        ]
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "registration",
+    "inherits"
+  ],
+  "$defs": {
+    "registration": {
+      "title": "Component Registration",
+      "description": "The full registered class name of the exported component required for run-time loading. The registration must start with the package name and may include additional namespaces delimited by double colons `::`.",
+      "type": "string",
+      "examples": [
+        "modulo_components::Component",
+        "foo_package::other_namespace::Foo"
+      ]
+    }
+  }
+}

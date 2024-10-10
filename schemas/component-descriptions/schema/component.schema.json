@@ -1,5 +1,5 @@
 {
-  "$id": "/1-1-0/component.schema.json",
+  "$id": "/1-1-1/component.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Dynamic Component Description",
   "description": "A full description of a dynamic component in the AICA application framework.",
@@ -53,6 +53,12 @@
     },
     "inherits": {
       "$ref": "#/$defs/registration"
+    },
+    "lifecycle": {
+      "title": "Lifecycle Component",
+      "description": "If true, this property indicates that the component is a lifecycle component.",
+      "type": "boolean",
+      "default": false
     },
     "virtual": {
       "title": "Virtual Component Class",

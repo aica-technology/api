@@ -46,17 +46,18 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
+            "component": {
+              "$ref": "../identifier.schema.json"
+            },
             "parameter": {
               "$ref": "#/$defs/parameter"
             },
             "value": {
               "$ref": "#/$defs/value"
-            },
-            "component": {
-              "$ref": "../identifier.schema.json"
             }
           },
           "required": [
+            "component",
             "parameter",
             "value"
           ]
@@ -66,24 +67,24 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
+            "controller": {
+              "$ref": "../identifier.schema.json"
+            },
+            "hardware": {
+              "$ref": "../identifier.schema.json"
+            },
             "parameter": {
               "$ref": "#/$defs/parameter"
             },
             "value": {
               "$ref": "#/$defs/value"
-            },
-            "hardware": {
-              "$ref": "../identifier.schema.json"
-            },
-            "controller": {
-              "$ref": "../identifier.schema.json"
             }
           },
           "required": [
-            "parameter",
-            "value",
+            "controller",
             "hardware",
-            "controller"
+            "parameter",
+            "value"
           ]
         }
       ]

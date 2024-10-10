@@ -10,9 +10,9 @@
  */
 export type Schema = string;
 /**
- * The version of the AICA base image
+ * The version of the AICA Core image
  */
-export type BaseVersion = string;
+export type CoreVersion = string;
 /**
  * The name of the package
  */
@@ -42,14 +42,11 @@ export type ApplicationDescription = string;
  */
 export type ApplicationTags = string[];
 export type LoadOnStart = ComponentIdentifier | HardwareIdentifier;
+export type Identifier = string;
 /**
  * The path to the URDF file of the hardware
  */
 export type URDF = string;
-/**
- * The rate in Hz at which to run the hardware interface
- */
-export type Rate = number;
 /**
  * If true, automatically stop controller execution on error or if the execution rate drops below the rate tolerance threshold
  */
@@ -105,48 +102,57 @@ export type NewParameterValue = boolean | number | string | (boolean | number | 
 /**
  * Call a service
  */
-export type CallService = [CallServiceObject, ...CallServiceObject[]] | CallServiceObject | string;
+export type CallService = [CallServiceObject, ...CallServiceObject[]] | CallServiceObject;
 export type CallServiceObject = CallComponentServiceObject | CallControllerServiceObject;
 /**
  * The payload of the service call, formatted according to the service description
  */
 export type ServicePayload =
-  | string
-  | {
-      [k: string]: unknown;
-    };
+    | string
+    | {
+    [k: string]: unknown;
+};
 /**
  * Transition the lifecycle state on a component
  */
-export type LifecycleEvent = [LifecycleTransition, ...LifecycleTransition[]] | LifecycleTransition;
-export type LifecycleTransition = LifecycleTransitionObject | LifecycleTransitionLabel;
+export type LifecycleEvent =
+    | [LifecycleTransitionObject, ...LifecycleTransitionObject[]]
+    | LifecycleTransitionObject;
 /**
  * A lifecycle transition
  */
 export type LifecycleTransitionLabel =
-  | "create"
-  | "configure"
-  | "cleanup"
-  | "activate"
-  | "deactivate"
-  | "unconfigured_shutdown"
-  | "inactive_shutdown"
-  | "active_shutdown"
-  | "destroy";
+    | "create"
+    | "configure"
+    | "cleanup"
+    | "activate"
+    | "deactivate"
+    | "unconfigured_shutdown"
+    | "inactive_shutdown"
+    | "active_shutdown"
+    | "destroy";
 /**
  * Activate or deactivate controllers on a hardware interface
  */
-export type SwitchControllers = [SwitchControllersObject, ...SwitchControllersObject[]] | SwitchControllersObject;
-export type TargetController = [string, ...string[]] | string;
+export type SwitchControllers =
+    | [SwitchControllersObject, ...SwitchControllersObject[]]
+    | SwitchControllersObject;
+export type TargetController = [Identifier, ...Identifier[]] | Identifier;
 /**
  * Start, restart or abort a sequence
  */
-export type ManageSequences = [ManageSequenceObject, ...ManageSequenceObject[]] | ManageSequenceObject;
+export type ManageSequences =
+    | [ManageSequenceObject, ...ManageSequenceObject[]]
+    | ManageSequenceObject;
 export type ManageSequenceObject = StartASequence | RestartASequence | AbortASequence;
 /**
  * The log severity level for the component
  */
 export type LogLevel = "debug" | "info" | "warn" | "error" | "fatal";
+/**
+ * The human-readable name to display on the controller
+ */
+export type ControllerDisplayName = string;
 /**
  * The name of the controller plugin
  */
@@ -189,10 +195,6 @@ export type NodeNamespace = string;
  */
 export type InputTopics = string[];
 /**
- * The human-readable name to display on the button
- */
-export type ButtonDisplayName = string;
-/**
  * The human-readable name to display on the condition
  */
 export type ConditionDisplayName = string;
@@ -200,22 +202,28 @@ export type ConditionDisplayName = string;
  * A specific condition source in the application
  */
 export type ConditionObject =
-  | ComponentPredicateCondition
-  | ControllerPredicateCondition
-  | ComponentStateCondition
-  | ControllerStateCondition
-  | HardwareStateCondition
-  | SequenceStateCondition
-  | ReferenceCondition
-  | boolean;
+    | ComponentPredicateCondition
+    | ControllerPredicateCondition
+    | ComponentStateCondition
+    | ControllerStateCondition
+    | HardwareStateCondition
+    | SequenceStateCondition
+    | ReferenceCondition
+    | boolean;
 /**
  * The runtime state of the component
  */
-export type ComponentState = "unloaded" | "loaded" | "unconfigured" | "inactive" | "active" | "finalized";
+export type ComponentState =
+    | "unloaded"
+    | "loaded"
+    | "unconfigured"
+    | "inactive"
+    | "active"
+    | "finalized";
 /**
  * The runtime state of the controller
  */
-export type ControllerState = "unloaded" | "loaded" | "active";
+export type ControllerState = "unloaded" | "inactive" | "active";
 /**
  * The runtime state of the hardware interface
  */
@@ -223,129 +231,129 @@ export type HardwareState = "unloaded" | "loaded";
 /**
  * The runtime state of the sequence
  */
-export type SequenceState = "inactive" | "active";
+export type SequenceState = "inactive" | "active" | "aborted";
 /**
  * True only when every listed item is true
  */
 export type All = [
-  (
-    | ConditionObject
-    | {
+    (
+        | ConditionObject
+        | {
         all: All;
-      }
-    | {
+    }
+        | {
         any: Any;
-      }
-    | {
+    }
+        | {
         one_of: OneOf;
-      }
-    | {
+    }
+        | {
         not: Not;
-      }
-  ),
-  ...(
-    | ConditionObject
-    | {
+    }
+        ),
+    ...(
+        | ConditionObject
+        | {
         all: All;
-      }
-    | {
+    }
+        | {
         any: Any;
-      }
-    | {
+    }
+        | {
         one_of: OneOf;
-      }
-    | {
+    }
+        | {
         not: Not;
-      }
-  )[]
+    }
+        )[]
 ];
 /**
  * True if at least one of the listed items is true
  */
 export type Any = [
-  (
-    | ConditionObject
-    | {
+    (
+        | ConditionObject
+        | {
         all: All;
-      }
-    | {
+    }
+        | {
         any: Any;
-      }
-    | {
+    }
+        | {
         one_of: OneOf;
-      }
-    | {
+    }
+        | {
         not: Not;
-      }
-  ),
-  ...(
-    | ConditionObject
-    | {
+    }
+        ),
+    ...(
+        | ConditionObject
+        | {
         all: All;
-      }
-    | {
+    }
+        | {
         any: Any;
-      }
-    | {
+    }
+        | {
         one_of: OneOf;
-      }
-    | {
+    }
+        | {
         not: Not;
-      }
-  )[]
+    }
+        )[]
 ];
 /**
  * True only when exactly one of the listed items is true
  */
 export type OneOf = [
-  (
-    | ConditionObject
-    | {
+    (
+        | ConditionObject
+        | {
         all: All;
-      }
-    | {
+    }
+        | {
         any: Any;
-      }
-    | {
+    }
+        | {
         one_of: OneOf;
-      }
-    | {
+    }
+        | {
         not: Not;
-      }
-  ),
-  ...(
-    | ConditionObject
-    | {
+    }
+        ),
+    ...(
+        | ConditionObject
+        | {
         all: All;
-      }
-    | {
+    }
+        | {
         any: Any;
-      }
-    | {
+    }
+        | {
         one_of: OneOf;
-      }
-    | {
+    }
+        | {
         not: Not;
-      }
-  )[]
+    }
+        )[]
 ];
 /**
  * True only when the sub-item is false
  */
 export type Not =
-  | ConditionObject
-  | {
-      all: All;
-    }
-  | {
-      any: Any;
-    }
-  | {
-      one_of: OneOf;
-    }
-  | {
-      not: Not;
-    };
+    | ConditionObject
+    | {
+    all: All;
+}
+    | {
+    any: Any;
+}
+    | {
+    one_of: OneOf;
+}
+    | {
+    not: Not;
+};
 /**
  * The human-readable name to display on the sequence
  */
@@ -360,6 +368,14 @@ export type SequenceStep = Events | DelayStep | CheckConditionStep;
  */
 export type SequenceSteps = SequenceStep[];
 /**
+ * The reference frame that the positive and orientation of the frame is defined relative to
+ */
+export type ReferenceFrame = string;
+/**
+ * The human-readable name to display on the button
+ */
+export type ButtonDisplayName = string;
+/**
  * The X position of the element on the graph
  */
 export type XPosition = number;
@@ -367,84 +383,99 @@ export type XPosition = number;
  * The Y position of the element on the graph
  */
 export type YPosition = number;
+/**
+ * Custom edge path coordinates as x, y pairs
+ */
+export type EdgePath = Position[];
 
 /**
  * An AICA application graph description using YAML syntax.
  */
 export interface YAMLApplicationDescription {
-  schema: Schema;
-  dependencies: Dependencies;
-  metadata?: ApplicationMetadata;
-  userdata?: UserData;
-  on_start?: OnStart;
-  hardware?: HardwareInterfaces;
-  components?: Components;
-  buttons?: Buttons;
-  conditions?: Conditions;
-  sequences?: Sequences;
-  graph?: Graph;
+    schema: Schema;
+    dependencies: Dependencies;
+    metadata?: ApplicationMetadata;
+    userdata?: UserData;
+    on_start?: OnStart;
+    hardware?: HardwareInterfaces;
+    components?: Components;
+    conditions?: Conditions;
+    sequences?: Sequences;
+    frames?: Frames;
+    graph?: Graph;
 }
+
 /**
- * The application dependencies, including the base version and any required packages
+ * The application dependencies, including the version of AICA Core and any required packages
  */
 export interface Dependencies {
-  base: BaseVersion;
-  packages?: ApplicationPackages;
+    core: CoreVersion;
+    packages?: ApplicationPackages;
 }
+
 /**
  * The specification of a package name and version with optional version constraints
  */
 export interface PackageDetails {
-  package: PackageName;
-  version: PackageVersion;
-  constraints?: PackageVersionConstraint;
+    package: PackageName;
+    version: PackageVersion;
+    constraints?: PackageVersionConstraint;
 }
+
 /**
  * Metadata used to describe the application for user convenience. This information may be used by parsers to search or sort database applications
  */
 export interface ApplicationMetadata {
-  name?: ApplicationName;
-  description?: ApplicationDescription;
-  tags?: ApplicationTags;
-  [k: string]: unknown;
+    name?: ApplicationName;
+    description?: ApplicationDescription;
+    tags?: ApplicationTags;
+
+    [k: string]: unknown;
 }
+
 /**
  * This property accepts any data structure and will be ignored by the syntax parser. It can be used to store additional metadata or context about the application for user convenience.
  */
 export interface UserData {
-  [k: string]: unknown;
+    [k: string]: unknown;
 }
+
 /**
  * A special keyword that triggers events when the application is launched
  */
 export interface OnStart {
-  load?: [LoadOnStart, ...LoadOnStart[]] | LoadOnStart;
-  sequence?: StartASequence;
+    load?: [LoadOnStart, ...LoadOnStart[]] | LoadOnStart;
+    sequence?: StartASequence;
 }
+
 /**
  * A component in the application
  */
 export interface ComponentIdentifier {
-  component: string;
+    component: Identifier;
 }
+
 /**
  * A hardware interface in the application
  */
 export interface HardwareIdentifier {
-  hardware: string;
+    hardware: Identifier;
 }
+
 export interface StartASequence {
-  /**
-   * Name of the sequence to start
-   */
-  start: string;
+    /**
+     * Name of the sequence to start
+     */
+    start: string;
 }
+
 /**
  * A description of hardware interfaces used in the application
  */
 export interface HardwareInterfaces {
-  [k: string]: Hardware;
+    [k: string]: Hardware;
 }
+
 /**
  * A named hardware configuration
  *
@@ -452,33 +483,39 @@ export interface HardwareInterfaces {
  * via the `patternProperty` "^[a-z][a-z0-9_]*[a-z0-9]$".
  */
 export interface Hardware {
-  urdf: URDF;
-  rate: Rate;
-  strict?: StrictHardware;
-  rate_tolerance?: RateTolerance;
-  parameters?: HardwareParameters;
-  display_name?: HardwareDisplayName;
-  events?: HardwareEvents;
-  controllers?: Controllers;
+    urdf: URDF;
+    /**
+     * The rate in Hz at which to run the hardware interface
+     */
+    rate: number;
+    strict?: StrictHardware;
+    rate_tolerance?: RateTolerance;
+    parameters?: HardwareParameters;
+    display_name?: HardwareDisplayName;
+    events?: HardwareEvents;
+    controllers?: Controllers;
 }
+
 export interface HardwareParameters {
-  [k: string]: HardwareParameter;
+    [k: string]: HardwareParameter;
 }
+
 /**
  * Hardware event sources that can trigger events
  */
 export interface HardwareEvents {
-  transitions?: HardwareStateTransitions;
+    transitions?: HardwareStateTransitions;
 }
+
 /**
  * Hardware state transitions that can trigger events
  */
 export interface HardwareStateTransitions {
-  on_load?: Events;
-  on_error?: Events;
-  on_rate_violation?: Events;
-  on_unload?: Events;
+    on_load?: Events;
+    on_error?: Events;
+    on_unload?: Events;
 }
+
 /**
  * A description of application events to be triggered
  *
@@ -489,75 +526,86 @@ export interface HardwareStateTransitions {
  * via the `patternProperty` "^[a-z][a-z0-9_]*[a-z0-9]$".
  */
 export interface Events {
-  application?: ApplicationEvent;
-  load?: Load;
-  unload?: Unload;
-  transition?: TransitionComponents;
-  set?: SetParameter;
-  call_service?: CallService;
-  lifecycle?: LifecycleEvent;
-  switch_controllers?: SwitchControllers;
-  sequence?: ManageSequences;
+    application?: ApplicationEvent;
+    load?: Load;
+    unload?: Unload;
+    transition?: TransitionComponents;
+    set?: SetParameter;
+    call_service?: CallService;
+    lifecycle?: LifecycleEvent;
+    switch_controllers?: SwitchControllers;
+    sequence?: ManageSequences;
 }
+
 /**
  * A controller associated with a particular hardware interface
  */
 export interface ControllerIdentifier {
-  hardware: string;
-  controller: string;
+    hardware: Identifier;
+    controller: Identifier;
 }
+
 export interface SetComponentParameterObject {
-  parameter: ParameterName;
-  value: NewParameterValue;
-  component?: string;
+    component: Identifier;
+    parameter: ParameterName;
+    value: NewParameterValue;
 }
+
 export interface SetControllerParameterObject {
-  parameter: ParameterName;
-  value: NewParameterValue;
-  hardware: string;
-  controller: string;
+    controller: Identifier;
+    hardware: Identifier;
+    parameter: ParameterName;
+    value: NewParameterValue;
 }
+
 export interface CallComponentServiceObject {
-  service: string;
-  payload?: ServicePayload;
-  component?: string;
+    component: Identifier;
+    service: Identifier;
+    payload?: ServicePayload;
 }
+
 export interface CallControllerServiceObject {
-  service: string;
-  hardware: string;
-  controller: string;
-  payload?: ServicePayload;
+    controller: Identifier;
+    hardware: Identifier;
+    service: Identifier;
+    payload?: ServicePayload;
 }
+
 /**
  * A lifecycle identifier containing a transition label and target component
  */
 export interface LifecycleTransitionObject {
-  transition: LifecycleTransitionLabel;
-  component?: string;
+    transition: LifecycleTransitionLabel;
+    component: Identifier;
 }
+
 export interface SwitchControllersObject {
-  hardware: string;
-  activate?: TargetController;
-  deactivate?: TargetController;
+    hardware: Identifier;
+    activate?: TargetController;
+    deactivate?: TargetController;
 }
+
 export interface RestartASequence {
-  /**
-   * Name of the sequence to restart
-   */
-  restart: string;
+    /**
+     * Name of the sequence to restart
+     */
+    restart: string;
 }
+
 export interface AbortASequence {
-  /**
-   * Name of the sequence to abort
-   */
-  abort: string;
+    /**
+     * Name of the sequence to abort
+     */
+    abort: string;
 }
+
 /**
  * The controllers attached to the hardware interface
  */
 export interface Controllers {
-  [k: string]: Controller;
+    [k: string]: Controller;
 }
+
 /**
  * A named controller configuration
  *
@@ -565,54 +613,66 @@ export interface Controllers {
  * via the `patternProperty` "^[a-z][a-z0-9_]*[a-z0-9]$".
  */
 export interface Controller {
-  log_level?: LogLevel;
-  plugin: ControllerPlugin;
-  parameters?: Parameters;
-  inputs?: Signals;
-  outputs?: Signals;
-  events?: ControllerEvents;
+    log_level?: LogLevel;
+    display_name?: ControllerDisplayName;
+    plugin: ControllerPlugin;
+    /**
+     * The rate in Hz at which to run the controller. If undefined, the hardware rate is used instead.
+     */
+    rate?: number;
+    parameters?: Parameters;
+    inputs?: Signals;
+    outputs?: Signals;
+    events?: ControllerEvents;
 }
+
 /**
  * A collection of named parameters with assigned values
  */
 export interface Parameters {
-  [k: string]: ParameterValue;
+    [k: string]: ParameterValue;
 }
+
 /**
  * A map of signal topics by signal name
  */
 export interface Signals {
-  [k: string]: SignalTopic;
+    [k: string]: SignalTopic;
 }
+
 /**
  * Controller event sources that can trigger events
  */
 export interface ControllerEvents {
-  transitions?: ControllerStateTransitions;
-  predicates?: ControllerPredicates;
+    transitions?: ControllerStateTransitions;
+    predicates?: ControllerPredicates;
 }
+
 /**
  * Controller state transitions that can trigger events
  */
 export interface ControllerStateTransitions {
-  on_load?: Events;
-  on_activate?: Events;
-  on_error?: Events;
-  on_deactivate?: Events;
-  on_unload?: Events;
+    on_load?: Events;
+    on_activate?: Events;
+    on_error?: Events;
+    on_deactivate?: Events;
+    on_unload?: Events;
 }
+
 /**
  * Controller predicates that can trigger events
  */
 export interface ControllerPredicates {
-  [k: string]: Events;
+    [k: string]: Events;
 }
+
 /**
  * A description of components used in the application
  */
 export interface Components {
-  [k: string]: Component;
+    [k: string]: Component;
 }
+
 /**
  * A named component configuration
  *
@@ -620,61 +680,273 @@ export interface Components {
  * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
  */
 export interface Component {
-  log_level?: LogLevel;
-  display_name?: ComponentDisplayName;
-  component?: ComponentRegistration;
-  remapping?: ComponentRemapping;
-  parameters?: Parameters;
-  inputs?: Signals;
-  outputs?: Signals;
-  input_collections?: InputCollections;
-  events?: ComponentEvents;
+    log_level?: LogLevel;
+    display_name?: ComponentDisplayName;
+    component?: ComponentRegistration;
+    remapping?: ComponentRemapping;
+    /**
+     * The rate in Hz at which to run the component's periodic behaviors
+     */
+    rate?: number;
+    parameters?: Parameters;
+    inputs?: Signals;
+    outputs?: Signals;
+    input_collections?: InputCollections;
+    events?: ComponentEvents;
 }
+
 /**
  * The remapping rules for the component node name and namespace
  */
 export interface ComponentRemapping {
-  name?: NodeName;
-  namespace?: NodeNamespace;
+    name?: NodeName;
+    namespace?: NodeNamespace;
 }
+
 /**
  * Collections of input signals of the component
  */
 export interface InputCollections {
-  [k: string]: InputTopics;
+    [k: string]: InputTopics;
 }
+
 /**
  * Component event sources that can trigger events
  */
 export interface ComponentEvents {
-  transitions?: ComponentStateTransitions;
-  predicates?: ComponentPredicates;
+    transitions?: ComponentStateTransitions;
+    predicates?: ComponentPredicates;
 }
+
 /**
  * Component state transitions that can trigger events
  */
 export interface ComponentStateTransitions {
-  on_load?: Events;
-  on_configure?: Events;
-  on_activate?: Events;
-  on_deactivate?: Events;
-  on_cleanup?: Events;
-  on_shutdown?: Events;
-  on_error?: Events;
-  on_unload?: Events;
+    on_load?: Events;
+    on_configure?: Events;
+    on_activate?: Events;
+    on_deactivate?: Events;
+    on_cleanup?: Events;
+    on_configure_failure?: Events;
+    on_activate_failure?: Events;
+    on_error?: Events;
+    on_error_recovery?: Events;
+    on_shutdown?: Events;
+    on_unload?: Events;
 }
+
 /**
  * Component predicates that can trigger events
  */
 export interface ComponentPredicates {
-  [k: string]: Events;
+    [k: string]: Events;
 }
+
+/**
+ * A description of logical conditions used to trigger events in the application
+ */
+export interface Conditions {
+    /**
+     * This interface was referenced by `Conditions`'s JSON-Schema definition
+     * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
+     */
+    [k: string]: {
+        display_name?: ConditionDisplayName;
+        condition:
+            | ConditionObject
+            | {
+            all: All;
+        }
+            | {
+            any: Any;
+        }
+            | {
+            one_of: OneOf;
+        }
+            | {
+            not: Not;
+        };
+        events?: Events;
+    };
+}
+
+/**
+ * A condition depending on the runtime state of a component predicate
+ */
+export interface ComponentPredicateCondition {
+    component: Identifier;
+    predicate: Identifier;
+}
+
+/**
+ * A condition depending on the runtime state of a controller predicate
+ */
+export interface ControllerPredicateCondition {
+    controller: Identifier;
+    hardware: Identifier;
+    predicate: Identifier;
+}
+
+/**
+ * A condition depending on the runtime state of a component
+ */
+export interface ComponentStateCondition {
+    component: Identifier;
+    state: ComponentState;
+}
+
+/**
+ * A condition depending on the runtime state of a controller
+ */
+export interface ControllerStateCondition {
+    controller: Identifier;
+    hardware: Identifier;
+    state: ControllerState;
+}
+
+/**
+ * A condition depending on the runtime state of a hardware interface
+ */
+export interface HardwareStateCondition {
+    hardware: Identifier;
+    state: HardwareState;
+}
+
+/**
+ * A condition depending on the runtime state of a sequence
+ */
+export interface SequenceStateCondition {
+    sequence: Identifier;
+    state: SequenceState;
+}
+
+/**
+ * A condition depending on the runtime state of another condition
+ */
+export interface ReferenceCondition {
+    condition: Identifier;
+}
+
+/**
+ * A description of sequences used to trigger events in a specific order
+ */
+export interface Sequences {
+    /**
+     * This interface was referenced by `Sequences`'s JSON-Schema definition
+     * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
+     */
+    [k: string]: {
+        display_name?: SequenceDisplayName;
+        loop?: LoopSequence;
+        steps: SequenceSteps;
+    };
+}
+
+/**
+ * Delay the sequence by a defined time in seconds
+ */
+export interface DelayStep {
+    /**
+     * The time to delay the sequence in seconds
+     */
+    delay: number;
+}
+
+/**
+ * Check a runtime condition to determine if the sequence should continue or not
+ */
+export interface CheckConditionStep {
+    check: NonBlockingConditionStep | BlockingConditionStep | BlockingConditionStepWithTimeout;
+}
+
+export interface NonBlockingConditionStep {
+    condition: ConditionObject;
+    else?: Events;
+}
+
+export interface BlockingConditionStep {
+    condition: ConditionObject;
+    wait_forever: true;
+}
+
+export interface BlockingConditionStepWithTimeout {
+    condition: ConditionObject;
+    timeout: number;
+    else?: Events;
+}
+
+/**
+ * A description of the static frames available in the application
+ */
+export interface Frames {
+    [k: string]: Frame;
+}
+
+/**
+ * The position and orientation of a static frame in the application
+ *
+ * This interface was referenced by `Frames`'s JSON-Schema definition
+ * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
+ */
+export interface Frame {
+    position: FramePosition;
+    orientation: FrameOrientation;
+    reference_frame?: ReferenceFrame;
+}
+
+/**
+ * The frame position as Cartesian coordinates
+ */
+export interface FramePosition {
+    x: number;
+    y: number;
+    z: number;
+}
+
+/**
+ * The frame orientation in a unit quaternion representation
+ */
+export interface FrameOrientation {
+    w: number;
+    x: number;
+    y: number;
+    z: number;
+}
+
+/**
+ * Information for the graphical representation of the application
+ */
+export interface Graph {
+    buttons?: Buttons;
+    positions?: {
+        on_start?: Position;
+        stop?: Position;
+        buttons?: {
+            [k: string]: Position;
+        };
+        components?: {
+            [k: string]: Position;
+        };
+        hardware?: {
+            [k: string]: Position;
+        };
+        conditions?: {
+            [k: string]: Position;
+        };
+        sequences?: {
+            [k: string]: Position;
+        };
+    };
+    edges?: GraphEdges;
+}
+
 /**
  * A description of interactive buttons in the application graph
  */
 export interface Buttons {
-  [k: string]: Button;
+    [k: string]: Button;
 }
+
 /**
  * A named interactive button
  *
@@ -682,161 +954,23 @@ export interface Buttons {
  * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
  */
 export interface Button {
-  display_name?: ButtonDisplayName;
-  on_click?: OnClick;
+    display_name?: ButtonDisplayName;
+    on_click?: OnClick;
 }
+
 /**
  * Events that are triggered when the button is pressed
  */
 export interface OnClick {
-  load?: Load;
-  unload?: Unload;
-  call_service?: CallService;
-  lifecycle?: LifecycleEvent;
-  switch_controllers?: SwitchControllers;
+    load?: Load;
+    unload?: Unload;
+    call_service?: CallService;
+    lifecycle?: LifecycleEvent;
+    switch_controllers?: SwitchControllers;
+    set?: SetParameter;
+    sequence?: ManageSequences;
 }
-/**
- * A description of logical conditions used to trigger events in the application
- */
-export interface Conditions {
-  /**
-   * This interface was referenced by `Conditions`'s JSON-Schema definition
-   * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
-   */
-  [k: string]: {
-    display_name?: ConditionDisplayName;
-    condition:
-      | ConditionObject
-      | {
-          all: All;
-        }
-      | {
-          any: Any;
-        }
-      | {
-          one_of: OneOf;
-        }
-      | {
-          not: Not;
-        };
-    events?: Events;
-  };
-}
-/**
- * A condition depending on the runtime state of a component predicate
- */
-export interface ComponentPredicateCondition {
-  component: string;
-  predicate: string;
-}
-/**
- * A condition depending on the runtime state of a controller predicate
- */
-export interface ControllerPredicateCondition {
-  controller: string;
-  hardware: string;
-  predicate: string;
-}
-/**
- * A condition depending on the runtime state of a component
- */
-export interface ComponentStateCondition {
-  component: string;
-  state: ComponentState;
-}
-/**
- * A condition depending on the runtime state of a controller
- */
-export interface ControllerStateCondition {
-  controller: string;
-  hardware: string;
-  state: ControllerState;
-}
-/**
- * A condition depending on the runtime state of a hardware interface
- */
-export interface HardwareStateCondition {
-  hardware: string;
-  state: HardwareState;
-}
-/**
- * A condition depending on the runtime state of a sequence
- */
-export interface SequenceStateCondition {
-  sequence: string;
-  state: SequenceState;
-}
-/**
- * A condition depending on the runtime state of another condition
- */
-export interface ReferenceCondition {
-  condition: string;
-}
-/**
- * A description of sequences used to trigger events in a specific order
- */
-export interface Sequences {
-  /**
-   * This interface was referenced by `Sequences`'s JSON-Schema definition
-   * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
-   */
-  [k: string]: {
-    display_name?: SequenceDisplayName;
-    loop?: LoopSequence;
-    steps: SequenceSteps;
-  };
-}
-/**
- * Delay the sequence by a defined time in seconds
- */
-export interface DelayStep {
-  /**
-   * The time to delay the sequence in seconds
-   */
-  delay: number;
-}
-/**
- * Check a runtime condition to determine if the sequence should continue or not
- */
-export interface CheckConditionStep {
-  check: NonBlockingConditionStep | BlockingConditionStep | BlockingConditionStepWithTimeout;
-}
-export interface NonBlockingConditionStep {
-  condition: ConditionObject;
-  else?: Events;
-}
-export interface BlockingConditionStep {
-  condition: ConditionObject;
-  wait_forever: true;
-}
-export interface BlockingConditionStepWithTimeout {
-  condition: ConditionObject;
-  timeout: number;
-  else?: Events;
-}
-/**
- * Information for the graphical representation of the application
- */
-export interface Graph {
-  positions?: {
-    on_start?: Position;
-    buttons?: {
-      [k: string]: Position;
-    };
-    components?: {
-      [k: string]: Position;
-    };
-    hardware?: {
-      [k: string]: Position;
-    };
-    conditions?: {
-      [k: string]: Position;
-    };
-    sequences?: {
-      [k: string]: Position;
-    };
-  };
-}
+
 /**
  * The position of the element on the graph
  *
@@ -844,6 +978,23 @@ export interface Graph {
  * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
  */
 export interface Position {
-  x: XPosition;
-  y: YPosition;
+    x: XPosition;
+    y: YPosition;
+}
+
+/**
+ * A description of edges in the application with additional graphical information
+ */
+export interface GraphEdges {
+    [k: string]: GraphEdge;
+}
+
+/**
+ * Additional graphical information about a specific edge in the application
+ *
+ * This interface was referenced by `GraphEdges`'s JSON-Schema definition
+ * via the `patternProperty` "^[a-z]([a-z0-9_]?[a-z0-9])*$".
+ */
+export interface GraphEdge {
+    path?: EdgePath;
 }

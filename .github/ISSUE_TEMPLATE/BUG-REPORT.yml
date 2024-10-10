@@ -1,7 +1,7 @@
 name: Bug Report
 description: Submit a bug report
 title: "[Bug]: "
-labels: [ "bug" ]
+labels: ["bug"]
 projects: "aica-technology/1"
 assignees:
   - eeberhard
@@ -19,13 +19,13 @@ body:
     id: manifest
     attributes:
       label: Image manifest
-      description: Copy the full manifest file with the base version and any extras used to package your AICA runtime image
+      description: Copy the full manifest file with the core version and any extras used to package your AICA System image
       render: Shell
       placeholder: |
-        #syntax=ghcr.io/aica-technology/app-builder:v1
+        #syntax=ghcr.io/aica-technology/app-builder:v2
 
-        [packages]
-        "@aica/base" = "v1.2.3"
+        [core]
+        image = "v1.2.3"
     validations:
       required: true
   - type: textarea

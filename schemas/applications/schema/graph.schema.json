@@ -5,11 +5,17 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "buttons": {
+      "$ref": "buttons.schema.json"
+    },
     "positions": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "on_start": {
+          "$ref": "#/$defs/position"
+        },
+        "stop": {
           "$ref": "#/$defs/position"
         },
         "buttons": {
@@ -28,6 +34,30 @@
           "$ref": "#/$defs/position_group"
         }
       }
+    },
+    "edges": {
+      "title": "Graph Edges",
+      "description": "A description of edges in the application with additional graphical information",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "title": "Graph Edge",
+          "description": "Additional graphical information about a specific edge in the application",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "title": "Edge Path",
+              "description": "Custom edge path coordinates as x, y pairs",
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/position"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {
@@ -41,13 +71,13 @@
           "title": "X Position",
           "description": "The X position of the element on the graph",
           "type": "number",
-          "multipleOf" : 20
+          "multipleOf": 20
         },
         "y": {
           "title": "Y Position",
           "description": "The Y position of the element on the graph",
           "type": "number",
-          "multipleOf" : 20
+          "multipleOf": 20
         }
       },
       "required": [

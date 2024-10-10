@@ -17,20 +17,29 @@ Release Versions:
 
 ### New features in 2-0-0
 
-- Application dependencies can be defined under the top-level `dependencies` property, including the base image version
+- Application dependencies can be defined under the top-level `dependencies` property, including the core image version
   and additional packages
 - Application metadata can be defined under the top-level `metadata` property including a name, description and tags
 - Any additional user data can be included in an application under the top-level `userdata` property
+- Interactive UI buttons and all position data is now defined under a top-level `graph` property
 - A running application can be stopped with the `application: stop` event from any event source
 - Components, controllers and hardware support dedicated transition events such as `on_load`, `on_activate`
   and `on_error` which behave as event triggers similar to predicates
+- Lifecycle components have access to additional error handling with the `on_configure_failure`, `on_activate_failure`,
+  `on_error` and `on_error_recovery` transition events
 - Condition sources for sequence steps and conditions now include component, controller, hardware or sequence states in
   addition to the previous component or controller predicate sources
 - Hardware control rate can be supplemented with a `rate_tolerance` to determine the allowable deviation from the
   intended control rate, and an optional `strict` flag that immediately shuts down the hardware in case of rate
   deviation or other error
-- Sequences support additional properties including display name, position on the graph and automatic looping
-- Sequences and conditions support display names
+- Static frames can be defined in the application with a position, orientation, name, and reference frame under the new
+  top-level `frames` property
+- Graph positions can be expressed for all elements, including sequences, conditions and a stop application node
+- Edge path information for custom edge routing can be stored under the `edges` sub-property of `graph`
+- Sequences have a property to support automatic looping
+- Sequences, conditions and controllers now support display names
+- The event structures for lifecycle transitions, service calls and setting parameters now always require the target
+  component to be specified, removing the previous "shorthand" for self-targeting events
 
 ### Breaking changes
 

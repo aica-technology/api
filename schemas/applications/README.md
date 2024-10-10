@@ -26,14 +26,14 @@ names in the application must be `lower_snake_case`.
 
 The new schema requires two new top-level properties to be defined in all applications. These are `schema`, which must
 declare the syntax version of the current application, and `dependencies`, which must at minimum define the version of
-the base AICA image required to run the application. Refer to the complete documentation for additional information
+the AICA Core image required to run the application. Refer to the complete documentation for additional information
 on these new properties.
 
 ```yaml
 schema: 2-0-0
 
 dependencies:
-  base: v4.0.0
+  core: v4.0.0
 ```
 
 #### Graph positions
@@ -103,6 +103,32 @@ graph:
         x: 200
         y: 500
 ```
+
+#### UI buttons
+
+The `buttons` property was previously a top-level field that defined the behavior of interactive UI elements in the
+application graph. The definition of buttons have now been moved under the new `graph` property, as these elements
+are only used by the application graph.
+
+Before:
+
+```yaml
+buttons:
+  my_button:
+    on_click:
+      load: ...
+```
+
+After:
+
+```yaml
+graph:
+  buttons:
+    my_button:
+      on_click:
+        load: ...
+```
+
 
 #### Events on start
 
@@ -224,6 +250,43 @@ controllers:
       predicates:
         is_in_range:
           unload: foo
+```
+
+#### Self-targeting events
+
+Previously, certain component predicate-driven events could be implicitly self-targeting; the target component did not
+need to be specified in the event object if the target component was the same as the component triggering the event.
+This applied to lifecycle transition, service call and parameter setting events.
+
+Now, the target component is always required as part of the event structure for these events. This is because events
+can be triggered from many sources, including predicate or state transitions from components, controllers, or hardware,
+or as a result of sequence steps or conditions; implicitly determining the target component from the event source is
+not possible in the majority of these cases.
+
+Before:
+
+```yaml
+lifecycle: activate
+call_service:
+  service: foo
+set:
+  parameter: foo
+  value: bar
+```
+
+After:
+
+```yaml
+lifecycle:
+  component: foo
+  transition: activate
+call_service:
+  component: foo
+  service: foo
+set:
+  component: foo
+  parameter: foo
+  value: bar
 ```
 
 #### Component mapping

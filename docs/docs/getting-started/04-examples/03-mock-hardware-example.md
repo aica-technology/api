@@ -78,7 +78,7 @@ buttons:
       switch_controllers:
         hardware: mock_hardware
         activate: robot_state_broadcaster
-components: { }
+components: {}
 hardware:
   mock_hardware:
     display_name: Mock Hardware Interface
@@ -130,7 +130,7 @@ the [YAML application syntax](../../reference/02-yaml-syntax.md) reference page.
 Moving up the application, the `components` field is left empty because there are no components in this example.
 
 ```yaml
-components: { }
+components: {}
 ```
 
 Above that, the application defines an event trigger button under the top-level `buttons` field.

@@ -2,8 +2,14 @@
 
 Release Versions:
 
+- [1-1-1](#111)
 - [1-1-0](#110)
 - [1-0-0](#100)
+
+## 1-1-1
+
+Version 1-1-1 adds a new property `lifecycle` to the component description schema to indicate if the component is based
+on a lifecycle node.
 
 ## 1-1-0
 

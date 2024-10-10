@@ -9,7 +9,7 @@ application.
 
 ## Launcher configuration requirements
 
-This example uses AICA Core v3.1.1
+This example uses AICA Core v3.1.1 in the Launcher configuration.
 
 ## Setting up the application
 
