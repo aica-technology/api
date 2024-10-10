@@ -25,7 +25,7 @@ of **predicates**, **transitions**, **sequences** or **conditions**.
 
 ### Predicates
 
-Predicates are logical statements about that evaluate to true or false and are used to indicate key states for either a
+Predicates are logical statements that evaluate to true or false and are used to indicate key states for either a
 component or controller. AICA components and controllers broadcast any changes to their predicates to a global channel
 in a message containing the source name, the predicate name, and the current value (true or false) of the predicate.
 
@@ -60,7 +60,7 @@ associated with one or more events to be triggered when that state transition oc
 
 ### Sequences
 
-A sequence is a list of steps that are handled sequentially in order. Sequence steps can trigger any zstate event, while
+A sequence is a list of steps that are handled sequentially in order. Sequence steps can trigger any state event, while
 intermediate sequence steps can also be configured with a time delay or to wait for a specific condition to resolve in
 the application.
 
