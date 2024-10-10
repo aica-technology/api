@@ -70,35 +70,26 @@ By default, lifecycle components only publish outputs when they are in the `ACTI
 
 ## Predicates
 
-Components declare and broadcast key internal states as predicate messages, which are used by the Dynamic State Engine
+Components declare and broadcast key internal states as predicate messages, which are used by the Event Engine
 to trigger events. Refer to [Events](./02-events.md) for more information.
-
-### Lifecycle predicates
-
-Lifecycle components are based on [lifecycle nodes](../03-ros-concepts/02-lifecycle.md) and have additional predicates
-for each lifecycle state:
-
-- `is_unconfigured`
-- `is_inactive`
-- `is_active`
-- `is_finalized`
 
 ### Auto lifecycle events
 
 When a lifecycle components is loaded, it starts in the unconfigured state and normally requires an external trigger to
 transition into different states.
 
-In the AICA System, lifecycle components can auto-configure and auto-activate themselves. Associating
-the `is_unconfigured` predicate with a `lifecycle: configure` event enables the component to automatically configure
-itself. Equivalently, the `is_inactive` predicate can be used to trigger a `lifecycle: activate` event.
+In the AICA System, lifecycle components can auto-configure and auto-activate themselves
+using [transition events](./02-events.md#transitions). Associating the `on_load` state transition with a
+`lifecycle: configure` event enables the component to automatically configure itself. Equivalently, the `on_configure`
+transition can be used to trigger a `lifecycle: activate` event.
 
 ## Services
 
 Components can provide service endpoints to trigger specific behaviors on demand. For compatibility with the application
-syntax and the Dynamic State Engine, the component service are limited to one of two request types:
+syntax and the Event Engine, the component service are limited to one of two request types:
 
 - Service request with no payload
 - Service request with a string payload
 
 The service response object for both types contains an execution status and message and is automatically handled by the
-Dynamic State Engine.
+Event Engine.

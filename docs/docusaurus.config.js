@@ -9,7 +9,7 @@ const url = "https://docs.aica.tech";
 const config = {
   title: "AICA for Developers",
   tagline:
-    "Documentation for the AICA Developer Interface and robotics software framework",
+    "Documentation for the AICA System and robotics software framework",
   favicon: "img/favicon.ico",
 
   url,

@@ -6,26 +6,11 @@ sidebar_position: 1
 
 This guide will cover the basic steps to get started with the AICA System, from installation to application examples.
 
-:::caution
-
-The AICA System is being distributed in a limited beta program. Installation, configuration and run-time instructions
-are subject to breaking changes in the near future. We will endeavour to keep this documentation up-to-date with the
-latest versions. In case of doubt, contact support@aica.tech for help.
-
-:::
-
-<!-- TODO: write more guides for demo applications:
-- Using an interactive marker with RViz
-- Using a hardware + controller with a mock interface
-- Using the generic interface with a simulator
-- Using a real robot
--->
-
 ## Compatibility
 
-AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
+The AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
 
-AICA System itself runs in a Docker container based on Ubuntu 22.04. Thanks to containerization, the majority of the
+AICA Core runs in a Docker container based on Ubuntu 22.04. Thanks to containerization, the majority of the
 installation and usage steps in this guide will be the same for macOS or Ubuntu host platforms unless otherwise
 indicated.
 
@@ -46,6 +31,10 @@ Graphical user interfaces and application windows opened inside a container will
 without explicit display forwarding. Further, support for OpenGL rendering is limited on macOS, which affects certain
 3D programs and simulators commonly used in robotics. For example, opening an RViz window in the container on a Mac host
 will fail, while it will work natively on an Ubuntu host.
+
+AICA Studio is continually being extended to include more live data visualization including interactive 2D and 3D data
+views directly in the browser. As a result, the reliance on display sharing and the associated operating system
+limitations will be reduced.
 
 ### Real-time capabilities
 

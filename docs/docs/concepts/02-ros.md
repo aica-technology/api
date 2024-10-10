@@ -8,21 +8,21 @@ The [Robot Operating System (ROS)](https://www.ros.org) is a collection of open-
 built by roboticists, for roboticists. AICA embraces the ROS philosophies of modularity, distributed processing and
 extensible open standards to support increasingly advanced robot applications.
 
-At its root, ROS 2 is a middleware publisher/subscriber mechanism that enables different processes to communicate via
+At its heart, ROS 2 is a middleware publisher/subscriber mechanism that enables different processes to communicate via
 messages. ROS 2 is becoming more accessible with every new distribution, but understanding how to design, configure,
 launch and manage ROS processes for any particular robotic application can be a daunting task. Fully leveraging the
 capabilities of ROS from scratch often constitutes a degree in computer science or robotics in itself. The true power of
 ROS comes from the abstractions provided by community packages and extensions that each address a particular niche and
 can be combined to solve complex problems.
 
-AICA Core is built on ROS 2, but it is not intended to supersede existing ROS 2 distributions, packages or
+The AICA System is built on ROS 2, but it is not intended to supersede existing ROS 2 distributions, packages or
 tools. AICA applications and building blocks are fully compatible with existing ROS packages and community tools and
 can be used and deployed alongside them.
 
 For new developers, AICA provides an easy springboard into the wider world of ROS. Advanced users can take the
-modularity and dynamic nature of AICA Core to new frontiers.
+modularity and dynamic nature of the AICA System to new frontiers.
 
-At a glance, AICA Core extends ROS 2 with the following features:
+At a glance, the AICA System extends ROS 2 with the following features:
 
 - Preconfigured and containerized ROS 2 workspaces
 - Fully integrated `ros2_control` architecture and hardware drivers for real-time control

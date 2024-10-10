@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 ---
+
 import SystemOverview from './assets/system-overview-embedded.svg';
 import ComponentsControllersHardware from './assets/components-controllers-hardware-embedded.svg';
 
@@ -15,10 +16,10 @@ between different parts of the AICA software stack.
 
 ## AICA Core
 
-**AICA Core** is a virtual robotics workspace pre-configured with a growing collection of software libraries
+**AICA Core** is a virtual robotics workspace pre-configured with a growing collection of software modules
 for motion generation, signal processing, machine learning and control algorithms. It includes hardware interfaces for
 real-time external control of popular robot brands, force-torque sensors and cameras.
-The workspace is the foundation and the software libraries are the building blocks.
+The workspace is the foundation and the software modules are the building blocks.
 
 <ComponentsControllersHardware className="themedSVG" style={{width: "100%"}}/>
 
@@ -38,11 +39,21 @@ offerings.
 
 ## AICA Studio
 
-**AICA Studio** is the user interface layer to AICA Core that empowers developers to build and
-extend their own advanced robotic applications. AICA developers use this interface internally when building custom
-applications, and decided it was worth sharing with the robotics community as a stand-alone product with the following
-features:
+**AICA Studio** is the graphical user interface layer to AICA Core that empowers developers to build and
+extend their own advanced robotic applications. The interactive application editor can be used to dynamically edit, run
+and monitor robot behaviors. Monitor robot and sensor state data directly in the browser, and manage application states
+and events precisely through predicates, transitions, conditions, sequences or interactive buttons.
 
-- Graphical web-based UI to dynamically edit, run and monitor AICA application
-- REST API to interface with and manage AICA applications from CLI or automation cells
-- Component SDK to extend the base library with custom logic and behaviors
+## AICA System
+
+The **AICA System** is the software ecosystem that extends AICA Core and Studio. While AICA Core comes bundled with
+the basics, AICA is continually developing additional collections of components, controllers or hardware interfaces
+that suit particular use-cases or types of robots. These first-party add-on packages are available to download from
+the AICA registry.
+
+- **AICA Launcher** is a desktop app that can install and run AICA Studio with Core and add-on packages in just a few
+  clicks
+- **AICA Studio: Cloud** is an online-only version of the Studio experience to access and edit applications from
+  anywhere
+- The **Component SDK** allows developers to extend the base library with custom functionality that will work seamlessly
+  alongside native components
