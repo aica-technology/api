@@ -1,0 +1,1693 @@
+{
+  "$id": "/2-0-1/application.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "YAML Application Description",
+  "description": "An AICA application graph description using YAML syntax.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "title": "Schema",
+      "description": "The schema version of the application syntax",
+      "examples": [
+        "1-4-1",
+        "draft/2-0-0",
+        "2-1-0"
+      ],
+      "type": "string",
+      "pattern": "^(draft/)?[0-9]+-[0-9]+-[0-9]+$"
+    },
+    "dependencies": {
+      "title": "Dependencies",
+      "description": "The application dependencies, including the version of AICA Core and any required packages",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "core": {
+          "title": "Core Version",
+          "description": "The version of the AICA Core image",
+          "examples": [
+            "v3.1.1",
+            "v4.0.0"
+          ],
+          "type": "string",
+          "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "packages": {
+          "title": "Application Packages",
+          "description": "A list of packages required by the application",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "title": "Package Details",
+            "description": "The specification of a package name and version with optional version constraints",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "package": {
+                "title": "Package Name",
+                "description": "The name of the package",
+                "examples": [
+                  "@aica/components/pose-detection",
+                  "@aica/collections/ur-collection"
+                ],
+                "type": "string"
+              },
+              "version": {
+                "title": "Package Version",
+                "description": "The specific version of the package used by the author of the application",
+                "examples": [
+                  "v1.2.3",
+                  "docker-image://ghcr.io/aica-technology/custom-package:v0.1.0"
+                ],
+                "type": "string",
+                "pattern": "^(v[0-9]+\\.[0-9]+\\.[0-9]+)|(docker-image://.*)$"
+              },
+              "constraints": {
+                "title": "Package Version Constraint",
+                "description": "A range of acceptable package versions that are supported by the application defined by constraints. For more details on syntax, see https://developer.hashicorp.com/terraform/language/expressions/version-constraints",
+                "examples": [
+                  "1.0.0",
+                  "= 1.0.1",
+                  "> 1.0.2",
+                  ">= 1.0.3",
+                  "~> 1.0.4",
+                  "~> 1.1",
+                  ">= 1.1.0, < 2.0.0",
+                  ">= 2.0.0, != 2.0.1, <= 2.0.2"
+                ],
+                "type": "string",
+                "pattern": "^(\\s*(=|!=|<|<=|>|>=|~>)?\\s*([0-9]+\\.[0-9]+(\\.[0-9]+)?)\\s*,?\\s*)+$"
+              }
+            },
+            "required": [
+              "package",
+              "version"
+            ]
+          }
+        }
+      },
+      "required": [
+        "core"
+      ]
+    },
+    "metadata": {
+      "title": "Application Metadata",
+      "description": "Metadata used to describe the application for user convenience. This information may be used by parsers to search or sort database applications",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Application Name",
+          "description": "The name of the application",
+          "type": "string"
+        },
+        "description": {
+          "title": "Application Description",
+          "description": "A brief description of the application",
+          "type": "string"
+        },
+        "tags": {
+          "title": "Application Tags",
+          "description": "A collection of user-defined tags that provide additional context for categorizing the application",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "example": [
+              "motion",
+              "optimization",
+              "assembly",
+              "force control"
+            ]
+          }
+        }
+      }
+    },
+    "userdata": {
+      "title": "User Data",
+      "description": "This property accepts any data structure and will be ignored by the syntax parser. It can be used to store additional metadata or context about the application for user convenience."
+    },
+    "on_start": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "On Start",
+      "description": "A special keyword that triggers events when the application is launched",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "load": {
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/properties/on_start/$defs/load_on_start"
+              }
+            },
+            {
+              "$ref": "#/properties/on_start/$defs/load_on_start"
+            }
+          ]
+        },
+        "sequence": {
+          "$ref": "#/$defs/events/properties/sequence/$defs/start_a_sequence"
+        }
+      },
+      "$defs": {
+        "load_on_start": {
+          "title": "Load On Start",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/events/properties/load/oneOf/1/$defs/component_identifier"
+            },
+            {
+              "$ref": "#/$defs/events/properties/load/oneOf/1/$defs/hardware_identifier"
+            }
+          ]
+        }
+      }
+    },
+    "hardware": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Hardware Interfaces",
+      "description": "A description of hardware interfaces used in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*[a-z0-9]$": {
+          "title": "Hardware",
+          "description": "A named hardware configuration",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "urdf": {
+              "title": "URDF",
+              "description": "The path to the URDF file of the hardware",
+              "type": "string"
+            },
+            "rate": {
+              "description": "The rate in Hz at which to run the hardware interface",
+              "type": "number",
+              "default": 100,
+              "examples": [
+                12.5,
+                100,
+                250
+              ]
+            },
+            "strict": {
+              "title": "Strict Hardware",
+              "description": "If true, automatically stop controller execution on error or if the execution rate drops below the rate tolerance threshold",
+              "default": false,
+              "type": "boolean"
+            },
+            "rate_tolerance": {
+              "title": "Rate Tolerance",
+              "description": "The tolerance threshold relative to the rate that determines the minimum acceptable execution rate as (rate * rate_tolerance) before triggering the \"on_rate_violation\" event transition",
+              "type": "number",
+              "default": 0.9,
+              "examples": [
+                0.5,
+                0.9,
+                0.99
+              ],
+              "minimum": 0,
+              "exclusiveMaximum": 1
+            },
+            "parameters": {
+              "title": "Hardware Parameters",
+              "type": "object",
+              "patternProperties": {
+                "^[a-z][a-z0-9_]*[a-z0-9]$": {
+                  "title": "Hardware Parameter",
+                  "description": "A hardware parameter in the URDF to be overridden with a new value",
+                  "type": "string"
+                }
+              }
+            },
+            "display_name": {
+              "title": "Hardware Display Name",
+              "description": "The human-readable name to display on the hardware interface",
+              "type": "string"
+            },
+            "events": {
+              "title": "Hardware Events",
+              "description": "Hardware event sources that can trigger events",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "transitions": {
+                  "title": "Hardware State Transitions",
+                  "description": "Hardware state transitions that can trigger events",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "on_load": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_error": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_unload": {
+                      "$ref": "#/$defs/events"
+                    }
+                  }
+                }
+              }
+            },
+            "controllers": {
+              "title": "Controllers",
+              "description": "The controllers attached to the hardware interface",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z][a-z0-9_]*[a-z0-9]$": {
+                  "title": "Controller",
+                  "description": "A named controller configuration",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_level": {
+                      "$ref": "#/$defs/log_level"
+                    },
+                    "display_name": {
+                      "title": "Controller Display Name",
+                      "description": "The human-readable name to display on the controller",
+                      "type": "string"
+                    },
+                    "plugin": {
+                      "title": "Controller Plugin",
+                      "description": "The name of the controller plugin",
+                      "type": "string"
+                    },
+                    "rate": {
+                      "description": "The rate in Hz at which to run the controller. If undefined, the hardware rate is used instead.",
+                      "type": "number",
+                      "default": 100,
+                      "examples": [
+                        12.5,
+                        100,
+                        250
+                      ]
+                    },
+                    "parameters": {
+                      "$ref": "#/$defs/parameters"
+                    },
+                    "inputs": {
+                      "$ref": "#/$defs/signals"
+                    },
+                    "outputs": {
+                      "$ref": "#/$defs/signals"
+                    },
+                    "events": {
+                      "title": "Controller Events",
+                      "description": "Controller event sources that can trigger events",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "transitions": {
+                          "title": "Controller State Transitions",
+                          "description": "Controller state transitions that can trigger events",
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "on_load": {
+                              "$ref": "#/$defs/events"
+                            },
+                            "on_activate": {
+                              "$ref": "#/$defs/events"
+                            },
+                            "on_error": {
+                              "$ref": "#/$defs/events"
+                            },
+                            "on_deactivate": {
+                              "$ref": "#/$defs/events"
+                            },
+                            "on_unload": {
+                              "$ref": "#/$defs/events"
+                            }
+                          }
+                        },
+                        "predicates": {
+                          "type": "object",
+                          "title": "Controller Predicates",
+                          "description": "Controller predicates that can trigger events",
+                          "patternProperties": {
+                            "^[a-z][a-z0-9_]*[a-z0-9]$": {
+                              "$ref": "#/$defs/events"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "plugin"
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "urdf",
+            "rate"
+          ]
+        }
+      }
+    },
+    "components": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Components",
+      "description": "A description of components used in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "title": "Component",
+          "description": "A named component configuration",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "log_level": {
+              "$ref": "#/$defs/log_level"
+            },
+            "display_name": {
+              "title": "Component Display Name",
+              "description": "The human-readable name to display on the component",
+              "type": "string"
+            },
+            "component": {
+              "title": "Component Registration",
+              "description": "The fully qualified class name used to register the component",
+              "type": "string"
+            },
+            "remapping": {
+              "title": "Component Remapping",
+              "description": "The remapping rules for the component node name and namespace",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "title": "Node Name",
+                  "description": "The remapping rules for the component node name",
+                  "type": "string",
+                  "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+                },
+                "namespace": {
+                  "title": "Node Namespace",
+                  "description": "The remapping rules for the component node namespace",
+                  "type": "string",
+                  "pattern": "^[a-zA-Z_](/?[a-zA-Z0-9_]+)*$"
+                }
+              }
+            },
+            "rate": {
+              "description": "The rate in Hz at which to run the component's periodic behaviors",
+              "type": "number",
+              "default": 10,
+              "examples": [
+                12.5,
+                100,
+                250
+              ]
+            },
+            "parameters": {
+              "$ref": "#/$defs/parameters"
+            },
+            "inputs": {
+              "$ref": "#/$defs/signals"
+            },
+            "outputs": {
+              "$ref": "#/$defs/signals"
+            },
+            "input_collections": {
+              "title": "Input collections",
+              "description": "Collections of input signals of the component",
+              "type": "object",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+                  "title": "Input topics",
+                  "description": "The array of topics that are included in the signal collection",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "events": {
+              "title": "Component Events",
+              "description": "Component event sources that can trigger events",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "transitions": {
+                  "title": "Component State Transitions",
+                  "description": "Component state transitions that can trigger events",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "on_load": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_configure": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_activate": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_deactivate": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_cleanup": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_configure_failure": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_activate_failure": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_error": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_error_recovery": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_shutdown": {
+                      "$ref": "#/$defs/events"
+                    },
+                    "on_unload": {
+                      "$ref": "#/$defs/events"
+                    }
+                  }
+                },
+                "predicates": {
+                  "type": "object",
+                  "title": "Component Predicates",
+                  "description": "Component predicates that can trigger events",
+                  "patternProperties": {
+                    "^[a-z][a-z0-9_]*[a-z0-9]$": {
+                      "$ref": "#/$defs/events"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "conditions": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Conditions",
+      "description": "A description of logical conditions used to trigger events in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "display_name": {
+              "title": "Condition Display Name",
+              "description": "The human-readable name to display on the condition",
+              "type": "string"
+            },
+            "condition": {
+              "$ref": "#/properties/conditions/$defs/condition_object"
+            },
+            "events": {
+              "$ref": "#/$defs/events"
+            }
+          },
+          "required": [
+            "condition"
+          ]
+        }
+      },
+      "$defs": {
+        "condition_object": {
+          "oneOf": [
+            {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Condition Object",
+              "description": "A specific condition source in the application",
+              "oneOf": [
+                {
+                  "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0/$defs/component_predicate"
+                },
+                {
+                  "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0/$defs/controller_predicate"
+                },
+                {
+                  "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0/$defs/component_state"
+                },
+                {
+                  "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0/$defs/controller_state"
+                },
+                {
+                  "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0/$defs/hardware_state"
+                },
+                {
+                  "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0/$defs/sequence_state"
+                },
+                {
+                  "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0/$defs/condition"
+                },
+                {
+                  "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0/$defs/boolean"
+                }
+              ],
+              "$defs": {
+                "component_predicate": {
+                  "title": "Component Predicate Condition",
+                  "description": "A condition depending on the runtime state of a component predicate",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "component": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "predicate": {
+                      "$ref": "#/$defs/identifier"
+                    }
+                  },
+                  "required": [
+                    "component",
+                    "predicate"
+                  ]
+                },
+                "controller_predicate": {
+                  "title": "Controller Predicate Condition",
+                  "description": "A condition depending on the runtime state of a controller predicate",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "controller": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "hardware": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "predicate": {
+                      "$ref": "#/$defs/identifier"
+                    }
+                  },
+                  "required": [
+                    "controller",
+                    "hardware",
+                    "predicate"
+                  ]
+                },
+                "component_state": {
+                  "title": "Component State Condition",
+                  "description": "A condition depending on the runtime state of a component",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "component": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "state": {
+                      "title": "Component State",
+                      "description": "The runtime state of the component",
+                      "type": "string",
+                      "enum": [
+                        "unloaded",
+                        "loaded",
+                        "unconfigured",
+                        "inactive",
+                        "active",
+                        "finalized"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "component",
+                    "state"
+                  ]
+                },
+                "controller_state": {
+                  "title": "Controller State Condition",
+                  "description": "A condition depending on the runtime state of a controller",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "controller": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "hardware": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "state": {
+                      "title": "Controller State",
+                      "description": "The runtime state of the controller",
+                      "type": "string",
+                      "enum": [
+                        "unloaded",
+                        "inactive",
+                        "active"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "controller",
+                    "hardware",
+                    "state"
+                  ]
+                },
+                "hardware_state": {
+                  "title": "Hardware State Condition",
+                  "description": "A condition depending on the runtime state of a hardware interface",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "hardware": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "state": {
+                      "title": "Hardware State",
+                      "description": "The runtime state of the hardware interface",
+                      "type": "string",
+                      "enum": [
+                        "unloaded",
+                        "loaded"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "hardware",
+                    "state"
+                  ]
+                },
+                "sequence_state": {
+                  "title": "Sequence State Condition",
+                  "description": "A condition depending on the runtime state of a sequence",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "sequence": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "state": {
+                      "title": "Sequence State",
+                      "description": "The runtime state of the sequence",
+                      "type": "string",
+                      "enum": [
+                        "inactive",
+                        "active",
+                        "aborted"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "sequence",
+                    "state"
+                  ]
+                },
+                "condition": {
+                  "title": "Reference Condition",
+                  "description": "A condition depending on the runtime state of another condition",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "condition": {
+                      "$ref": "#/$defs/identifier"
+                    }
+                  },
+                  "required": [
+                    "condition"
+                  ]
+                },
+                "boolean": {
+                  "description": "A hard-coded Boolean value which may be useful for testing and developing applications",
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "all": {
+                  "title": "All",
+                  "description": "True only when every listed item is true",
+                  "$ref": "#/properties/conditions/$defs/condition_array"
+                }
+              },
+              "required": [
+                "all"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "any": {
+                  "title": "Any",
+                  "description": "True if at least one of the listed items is true",
+                  "$ref": "#/properties/conditions/$defs/condition_array"
+                }
+              },
+              "required": [
+                "any"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "one_of": {
+                  "title": "One Of",
+                  "description": "True only when exactly one of the listed items is true",
+                  "$ref": "#/properties/conditions/$defs/condition_array"
+                }
+              },
+              "required": [
+                "one_of"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "not": {
+                  "title": "Not",
+                  "description": "True only when the sub-item is false",
+                  "$ref": "#/properties/conditions/$defs/condition_object"
+                }
+              },
+              "required": [
+                "not"
+              ]
+            }
+          ]
+        },
+        "condition_array": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/properties/conditions/$defs/condition_object"
+          }
+        }
+      }
+    },
+    "sequences": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Sequences",
+      "description": "A description of sequences used to trigger events in a specific order",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "display_name": {
+              "title": "Sequence Display Name",
+              "description": "The human-readable name to display on the sequence",
+              "type": "string"
+            },
+            "loop": {
+              "title": "Loop Sequence",
+              "description": "If true, automatically restart the sequence after completing the last sequence step",
+              "type": "boolean"
+            },
+            "steps": {
+              "title": "Sequence Steps",
+              "description": "The ordered sequence steps to either trigger events, wait for a predefined time or check a condition",
+              "type": "array",
+              "items": {
+                "title": "Sequence Step",
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/events"
+                  },
+                  {
+                    "title": "Delay Step",
+                    "description": "Delay the sequence by a defined time in seconds",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "delay": {
+                        "description": "The time to delay the sequence in seconds",
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "delay"
+                    ]
+                  },
+                  {
+                    "title": "Check Condition Step",
+                    "description": "Check a runtime condition to determine if the sequence should continue or not",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "check": {
+                        "anyOf": [
+                          {
+                            "title": "Non-Blocking Condition Step",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "condition": {
+                                "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0"
+                              },
+                              "else": {
+                                "$ref": "#/$defs/events"
+                              }
+                            },
+                            "required": [
+                              "condition"
+                            ]
+                          },
+                          {
+                            "title": "Blocking Condition Step",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "condition": {
+                                "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0"
+                              },
+                              "wait_forever": {
+                                "const": true
+                              }
+                            },
+                            "required": [
+                              "condition",
+                              "wait_forever"
+                            ]
+                          },
+                          {
+                            "title": "Blocking Condition Step With Timeout",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "condition": {
+                                "$ref": "#/properties/conditions/$defs/condition_object/oneOf/0"
+                              },
+                              "timeout": {
+                                "type": "number"
+                              },
+                              "else": {
+                                "$ref": "#/$defs/events"
+                              }
+                            },
+                            "required": [
+                              "condition",
+                              "timeout"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "check"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "steps"
+          ]
+        }
+      }
+    },
+    "frames": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Frames",
+      "description": "A description of the static frames available in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "title": "Frame",
+          "description": "The position and orientation of a static frame in the application",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "position": {
+              "title": "Frame Position",
+              "description": "The frame position as Cartesian coordinates",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "z"
+              ]
+            },
+            "orientation": {
+              "title": "Frame Orientation",
+              "description": "The frame orientation in a unit quaternion representation",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "w": {
+                  "type": "number"
+                },
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "w",
+                "x",
+                "y",
+                "z"
+              ]
+            },
+            "reference_frame": {
+              "title": "Reference Frame",
+              "description": "The reference frame that the positive and orientation of the frame is defined relative to",
+              "type": "string",
+              "default": "world",
+              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+            }
+          },
+          "required": [
+            "position",
+            "orientation"
+          ]
+        }
+      }
+    },
+    "graph": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Graph",
+      "description": "Information for the graphical representation of the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "buttons": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Buttons",
+          "description": "A description of interactive buttons in the application graph",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+              "title": "Button",
+              "description": "A named interactive button",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "display_name": {
+                  "title": "Button Display Name",
+                  "description": "The human-readable name to display on the button",
+                  "type": "string"
+                },
+                "on_click": {
+                  "title": "On Click",
+                  "description": "Events that are triggered when the button is pressed",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "load": {
+                      "$ref": "#/$defs/events/properties/load"
+                    },
+                    "unload": {
+                      "$ref": "#/$defs/events/properties/unload"
+                    },
+                    "call_service": {
+                      "$ref": "#/$defs/events/properties/call_service"
+                    },
+                    "lifecycle": {
+                      "$ref": "#/$defs/events/properties/lifecycle"
+                    },
+                    "switch_controllers": {
+                      "$ref": "#/$defs/events/properties/switch_controllers"
+                    },
+                    "set": {
+                      "$ref": "#/$defs/events/properties/set"
+                    },
+                    "sequence": {
+                      "$ref": "#/$defs/events/properties/sequence"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "positions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "on_start": {
+              "$ref": "#/properties/graph/$defs/position"
+            },
+            "stop": {
+              "$ref": "#/properties/graph/$defs/position"
+            },
+            "buttons": {
+              "$ref": "#/properties/graph/$defs/position_group"
+            },
+            "components": {
+              "$ref": "#/properties/graph/$defs/position_group"
+            },
+            "hardware": {
+              "$ref": "#/properties/graph/$defs/position_group"
+            },
+            "conditions": {
+              "$ref": "#/properties/graph/$defs/position_group"
+            },
+            "sequences": {
+              "$ref": "#/properties/graph/$defs/position_group"
+            }
+          }
+        },
+        "edges": {
+          "title": "Graph Edges",
+          "description": "A description of edges in the application with additional graphical information",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+              "title": "Graph Edge",
+              "description": "Additional graphical information about a specific edge in the application",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "title": "Edge Path",
+                  "description": "Custom edge path coordinates as x, y pairs",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/properties/graph/$defs/position"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "$defs": {
+        "position": {
+          "title": "Position",
+          "description": "The position of the element on the graph",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "title": "X Position",
+              "description": "The X position of the element on the graph",
+              "type": "number",
+              "multipleOf": 20
+            },
+            "y": {
+              "title": "Y Position",
+              "description": "The Y position of the element on the graph",
+              "type": "number",
+              "multipleOf": 20
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ]
+        },
+        "position_group": {
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+              "$ref": "#/properties/graph/$defs/position"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "schema",
+    "dependencies"
+  ],
+  "$defs": {
+    "events": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Events",
+      "description": "A description of application events to be triggered",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "application": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Application Event",
+          "description": "Stop the current application",
+          "type": "string",
+          "enum": [
+            "stop"
+          ]
+        },
+        "load": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Load",
+          "description": "Load a component, hardware interface or controller",
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/events/properties/load/oneOf/1"
+              }
+            },
+            {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Load / Unload Target",
+              "description": "Identifier for a component, hardware interface or controller to load or unload",
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/events/properties/load/oneOf/1/$defs/component_identifier"
+                },
+                {
+                  "$ref": "#/$defs/events/properties/load/oneOf/1/$defs/controller_identifier"
+                },
+                {
+                  "$ref": "#/$defs/events/properties/load/oneOf/1/$defs/hardware_identifier"
+                }
+              ],
+              "$defs": {
+                "component_identifier": {
+                  "title": "Component Identifier",
+                  "description": "A component in the application",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "component": {
+                      "$ref": "#/$defs/identifier"
+                    }
+                  },
+                  "required": [
+                    "component"
+                  ]
+                },
+                "controller_identifier": {
+                  "title": "Controller Identifier",
+                  "description": "A controller associated with a particular hardware interface",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "hardware": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "controller": {
+                      "$ref": "#/$defs/identifier"
+                    }
+                  },
+                  "required": [
+                    "hardware",
+                    "controller"
+                  ]
+                },
+                "hardware_identifier": {
+                  "title": "Hardware Identifier",
+                  "description": "A hardware interface in the application",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "hardware": {
+                      "$ref": "#/$defs/identifier"
+                    }
+                  },
+                  "required": [
+                    "hardware"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "unload": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Unload",
+          "description": "Unload a component, hardware interface or controller",
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/events/properties/load/oneOf/1"
+              }
+            },
+            {
+              "$ref": "#/$defs/events/properties/load/oneOf/1"
+            }
+          ]
+        },
+        "transition": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Transition Components",
+          "description": "Unload the current component and load another one",
+          "$comment": "The unique identifier of an application element (e.g., a component, controller, condition, or similar) formatted in lower_snake_case",
+          "type": "string",
+          "examples": [
+            "a",
+            "foo",
+            "foo_bar",
+            "foo_bar_1"
+          ],
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
+        "set": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Set Parameter",
+          "description": "Set a parameter on a component",
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/events/properties/set/$defs/set_parameter_object"
+              }
+            },
+            {
+              "$ref": "#/$defs/events/properties/set/$defs/set_parameter_object"
+            }
+          ],
+          "$defs": {
+            "parameter": {
+              "title": "Parameter Name",
+              "description": "The name of a parameter to set",
+              "type": "string",
+              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+            },
+            "value": {
+              "title": "New Parameter Value",
+              "description": "The value of the parameter to set",
+              "type": [
+                "boolean",
+                "number",
+                "string",
+                "array"
+              ],
+              "items": {
+                "type": [
+                  "boolean",
+                  "number",
+                  "string"
+                ]
+              }
+            },
+            "set_parameter_object": {
+              "title": "Set Parameter Object",
+              "oneOf": [
+                {
+                  "title": "Set Component Parameter Object",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "component": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "parameter": {
+                      "$ref": "#/$defs/events/properties/set/$defs/parameter"
+                    },
+                    "value": {
+                      "$ref": "#/$defs/events/properties/set/$defs/value"
+                    }
+                  },
+                  "required": [
+                    "component",
+                    "parameter",
+                    "value"
+                  ]
+                },
+                {
+                  "title": "Set Controller Parameter Object",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "controller": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "hardware": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "parameter": {
+                      "$ref": "#/$defs/events/properties/set/$defs/parameter"
+                    },
+                    "value": {
+                      "$ref": "#/$defs/events/properties/set/$defs/value"
+                    }
+                  },
+                  "required": [
+                    "controller",
+                    "hardware",
+                    "parameter",
+                    "value"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "call_service": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Call Service",
+          "description": "Call a service",
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/events/properties/call_service/$defs/service_object"
+              }
+            },
+            {
+              "$ref": "#/$defs/events/properties/call_service/$defs/service_object"
+            }
+          ],
+          "$defs": {
+            "payload": {
+              "title": "Service Payload",
+              "description": "The payload of the service call, formatted according to the service description",
+              "type": [
+                "string",
+                "object"
+              ]
+            },
+            "service_object": {
+              "title": "Call Service Object",
+              "oneOf": [
+                {
+                  "title": "Call Component Service Object",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "component": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "service": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "payload": {
+                      "$ref": "#/$defs/events/properties/call_service/$defs/payload"
+                    }
+                  },
+                  "required": [
+                    "component",
+                    "service"
+                  ]
+                },
+                {
+                  "title": "Call Controller Service Object",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "controller": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "hardware": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "service": {
+                      "$ref": "#/$defs/identifier"
+                    },
+                    "payload": {
+                      "$ref": "#/$defs/events/properties/call_service/$defs/payload"
+                    }
+                  },
+                  "required": [
+                    "hardware",
+                    "controller",
+                    "service"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "lifecycle": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Lifecycle Event",
+          "description": "Transition the lifecycle state on a component",
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/events/properties/lifecycle/$defs/lifecycle_object"
+              }
+            },
+            {
+              "$ref": "#/$defs/events/properties/lifecycle/$defs/lifecycle_object"
+            }
+          ],
+          "$defs": {
+            "lifecycle_object": {
+              "title": "Lifecycle Transition Object",
+              "description": "A lifecycle identifier containing a transition label and target component",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "transition": {
+                  "title": "Lifecycle Transition Label",
+                  "description": "A lifecycle transition",
+                  "type": "string",
+                  "enum": [
+                    "create",
+                    "configure",
+                    "cleanup",
+                    "activate",
+                    "deactivate",
+                    "unconfigured_shutdown",
+                    "inactive_shutdown",
+                    "active_shutdown",
+                    "destroy"
+                  ]
+                },
+                "component": {
+                  "$ref": "#/$defs/identifier"
+                }
+              },
+              "required": [
+                "component",
+                "transition"
+              ]
+            }
+          }
+        },
+        "switch_controllers": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Switch Controllers",
+          "description": "Activate or deactivate controllers on a hardware interface",
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/events/properties/switch_controllers/$defs/switch_controllers_object"
+              }
+            },
+            {
+              "$ref": "#/$defs/events/properties/switch_controllers/$defs/switch_controllers_object"
+            }
+          ],
+          "$defs": {
+            "switch_controllers_object": {
+              "title": "Switch Controllers Object",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "hardware": {
+                  "$ref": "#/$defs/identifier"
+                },
+                "activate": {
+                  "$ref": "#/$defs/events/properties/switch_controllers/$defs/switch_controllers_target"
+                },
+                "deactivate": {
+                  "$ref": "#/$defs/events/properties/switch_controllers/$defs/switch_controllers_target"
+                }
+              },
+              "required": [
+                "hardware"
+              ]
+            },
+            "switch_controllers_target": {
+              "title": "Target Controller",
+              "Description": "A controller or list of controllers",
+              "additionalProperties": false,
+              "oneOf": [
+                {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/identifier"
+                  }
+                },
+                {
+                  "$ref": "#/$defs/identifier"
+                }
+              ]
+            }
+          }
+        },
+        "sequence": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Manage Sequences",
+          "description": "Start, restart or abort a sequence",
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/events/properties/sequence/$defs/sequence_object"
+              }
+            },
+            {
+              "$ref": "#/$defs/events/properties/sequence/$defs/sequence_object"
+            }
+          ],
+          "$defs": {
+            "sequence_object": {
+              "title": "ManageSequenceObject",
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/events/properties/sequence/$defs/start_a_sequence"
+                },
+                {
+                  "title": "Restart A Sequence",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "restart": {
+                      "description": "Name of the sequence to restart",
+                      "type": "string",
+                      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+                    }
+                  },
+                  "required": [
+                    "restart"
+                  ]
+                },
+                {
+                  "title": "Abort A Sequence",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "abort": {
+                      "description": "Name of the sequence to abort",
+                      "type": "string",
+                      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+                    }
+                  },
+                  "required": [
+                    "abort"
+                  ]
+                }
+              ]
+            },
+            "start_a_sequence": {
+              "title": "Start A Sequence",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "start": {
+                  "description": "Name of the sequence to start",
+                  "type": "string",
+                  "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+                }
+              },
+              "required": [
+                "start"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "identifier": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$comment": "The unique identifier of an application element (e.g., a component, controller, condition, or similar) formatted in lower_snake_case",
+      "type": "string",
+      "examples": [
+        "a",
+        "foo",
+        "foo_bar",
+        "foo_bar_1"
+      ],
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+    },
+    "log_level": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Log Level",
+      "description": "The log severity level for the component",
+      "type": "string",
+      "enum": [
+        "debug",
+        "info",
+        "warn",
+        "error",
+        "fatal"
+      ]
+    },
+    "parameters": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Parameters",
+      "description": "A collection of named parameters with assigned values",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "title": "Parameter Value",
+          "description": "The value assigned to the named parameter",
+          "type": [
+            "boolean",
+            "number",
+            "string",
+            "array"
+          ],
+          "items": {
+            "type": [
+              "boolean",
+              "number",
+              "string"
+            ]
+          }
+        }
+      }
+    },
+    "signals": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Signals",
+      "description": "A map of signal topics by signal name",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "title": "Signal topic",
+          "description": "The corresponding topic of the signal",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
