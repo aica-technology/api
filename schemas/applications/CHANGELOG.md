@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2-0-1](#2-0-1)
 - [2-0-0](#2-0-0)
 - [1-4-2](#1-4-2)
 - [1-4-1](#1-4-1)
@@ -12,6 +13,11 @@ Release Versions:
 - [1-1-1](#1-1-1)
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
+
+## 2-0-1
+
+This patch replaces the version constraint regex for the package dependencies with a simpler and more permissive case.
+The previously used regex lookaround expressions were not supported in all browsers, including Safari.
 
 ## 2-0-0
 
