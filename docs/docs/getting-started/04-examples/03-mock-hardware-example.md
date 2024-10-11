@@ -21,13 +21,6 @@ AICA hardware collections include example URDFs, which are shown on the table wi
 are not editable. Users can make an editable copy of a selected URDF with the "Save As" button, or upload and edit
 custom URDFs.
 
-:::note
-
-Refer to the section on [Persistent user data](../04-run.md#persistent-user-data) on how to mount a container volume to
-persist database content between containers.
-
-:::
-
 From the hardware manager table, select the entry named "Universal Robots 5e (mock interface)". The URDF content should
 appear on the right side of the page.
 
@@ -181,22 +174,15 @@ to [component auto-lifecycle events](../../concepts/05-building-blocks/03-compon
 
 :::info
 
-Only users with a Linux host can visualize the robot with RViz. Follow the steps in
-the [Display sharing](../04-run.md#display-sharing) section to attach a new terminal to the running container.
+Only users with a Linux host can visualize the robot with RViz. On macOS, AICA Launcher will not show the RViz option.
 
 :::
 
-Open RViz in the container with the `rviz2` command.
+Open RViz using the gear menu icon in the bottom right of AICA Launcher and choosing the "Launch RViz" option.
 
-In the Displays panel under Global Options, set the Fixed Frame to `world`.
+:::note
 
-Press Add or CTRL+N to add a new display and select the RobotModel plugin.
-
-Under the RobotModel Description Topic, enter `/mock_hardware/robot_description`.
-
-:::tip
-
-The robot description topic will correspond to the name of the hardware interface in the YAML application.
+A native 3D viewer will be available in AICA Studio for all platforms in an upcoming version.
 
 :::
 

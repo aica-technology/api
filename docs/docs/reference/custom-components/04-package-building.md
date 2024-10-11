@@ -42,9 +42,10 @@ You can then build your component using the following command:
 docker build -f aica-package.toml -t custom-component .
 ```
 
-:::tip
+## Launching your custom component
 
-Refer to [this documentation page](../../getting-started/installation#configuring-a-runtime-image-with-add-on-packages)
-to learn how to run an application with your new component.
+In AICA Launcher, include the docker image path from the build step as a custom package in the system configuration.
 
-:::
+Refer to
+the [installation and launch](../../getting-started/03-installation-and-launch.md#configuring-the-aica-system-image)
+section for more details.
