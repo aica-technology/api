@@ -29,15 +29,16 @@ read the **state** of a robot and to write a **command** to the robot in a real-
 
 ### State interfaces
 
-State interfaces provide the current state of the robot. This is most commonly defined as the robot joint positions,
-and may also include joint velocities, torques or other available sensor data.
+State interfaces provide the current state of the hardware. This is most commonly defined as the robot joint positions,
+and may also include joint velocities, joint torques, other available sensor data, and general purpose digital inputs
+and outputs (GPIO).
 
 ### Command interfaces
 
-Command interfaces represent the desired control action that a robot should execute. The nature of a command interface
-depends on the robot actuators, but commonly includes joint positions, velocities or torques. For real-time control,
+Command interfaces represent the desired control action that a hardware should execute. The nature of a command
+interface depends on the actuators, but commonly includes joint positions, velocities or torques. For real-time control,
 velocity and torque are the preferred command modes. For other actuators such as robot grippers, the command interface
-might instead specify a gripper distance or force.
+might instead specify a gripper distance or force through a GPIO.
 
 ## Hardware interfaces
 
