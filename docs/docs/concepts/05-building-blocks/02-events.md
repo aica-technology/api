@@ -13,9 +13,9 @@ The following events can be used to dynamically update the state of a running ap
 
 - Load or unload a component, controller or hardware interface
 - Trigger a lifecycle transition (for example, configure, activate or deactivate) on a lifecycle component
-- Start or stop a controller
+- Activate or deactivate a controller
 - Set the value of a parameter on a loaded component or controller
-- Call a service on a component
+- Call a service on a loaded component or controller
 
 ## Triggering events
 
