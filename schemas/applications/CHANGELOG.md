@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2-0-2](#2-0-2)
 - [2-0-1](#2-0-1)
 - [2-0-0](#2-0-0)
 - [1-4-2](#1-4-2)
@@ -13,6 +14,11 @@ Release Versions:
 - [1-1-1](#1-1-1)
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
+
+## 2-0-2
+
+This patch includes application events under the graph trigger button events, giving users the option to stop the
+application from a trigger button instead of the main application controls in Studio.
 
 ## 2-0-1
 
