@@ -13,9 +13,9 @@ This example uses AICA Core v4.0.0 in the Launcher configuration. Launch the AIC
 Copy the following application code into the text box under the Editor tab, replacing the default content.
 
 ```yaml
-schema: 2-0-0
+schema: 2-0-2
 dependencies:
-  core: v4.0.0
+  core: v4.0.1
 on_start:
   load:
     component: timer
@@ -84,7 +84,7 @@ graph:
           component: timer_2
           transition: deactivate
     button_2:
-      display_name: Play Timer 2
+      display_name: Start Timer 2
       on_click:
         lifecycle:
           component: timer_2
@@ -191,7 +191,7 @@ pauses the `timer_2` component by deactivating it while the second one un-pauses
           component: timer_2
           transition: deactivate
     button_2:
-      display_name: Play Timer 2
+      display_name: Start Timer 2
       on_click:
         lifecycle:
           component: timer_2
@@ -211,7 +211,7 @@ back to the first timer.
 
 ![timer example (animated)](./assets/timer-example.gif)
 
-Use the Pause and Play trigger buttons to deactivate and activate the `timer_2` while it is loaded. Verify that once
+Use the Pause and Start trigger buttons to deactivate and activate the `timer_2` while it is loaded. Verify that once
 paused, the elapsed time does not count towards the component timing out and it only times out once it has been in the
 active state for a total of 4 seconds.
 
