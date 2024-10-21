@@ -38,7 +38,7 @@ and outputs (GPIO).
 Command interfaces represent the desired control action that a hardware should execute. The nature of a command
 interface depends on the actuators, but commonly includes joint positions, velocities or torques. For real-time control,
 velocity and torque are the preferred command modes. For other actuators such as robot grippers, the command interface
-might instead specify a gripper distance or force through a GPIO.
+might instead specify a gripper finger distance or force through a GPIO.
 
 ## Hardware interfaces
 

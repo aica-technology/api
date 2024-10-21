@@ -17,7 +17,7 @@ indicated.
 :::info
 
 There are some limitations with Docker on macOS compared to Docker on Ubuntu, which can affect advanced usage.
-For the best developer experience, use an Ubuntu 24.04 host machine.
+For the best developer experience, use a modern Ubuntu host machine (20.04 or higher) with Docker v19 or higher. 
 
 ### Network sharing
 
