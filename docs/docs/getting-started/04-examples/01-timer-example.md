@@ -9,7 +9,11 @@ application.
 
 ## Launcher configuration requirements
 
-This example uses AICA Core v4.0.0 in the Launcher configuration. Launch the AICA Studio and press Create new.
+This example uses AICA Core v4.0.1 in the Launcher configuration.
+
+## Setting up the application
+
+Launch AICA Studio and create a new application by pressing "Create new".
 Copy the following application code into the text box under the Editor tab, replacing the default content.
 
 ```yaml
@@ -56,19 +60,12 @@ components:
           transition: timer
     parameters:
       timeout: !!float 4.0
-hardware: {}
+hardware: { }
 graph:
   positions:
     stop:
       x: 0
       y: 160
-    buttons:
-      button:
-        x: 320
-        y: 320
-      button_2:
-        x: 320
-        y: -120
     components:
       timer:
         x: 320
@@ -76,19 +73,6 @@ graph:
       timer_2:
         x: 840
         y: -20
-  buttons:
-    button:
-      display_name: Pause Timer 2
-      on_click:
-        lifecycle:
-          component: timer_2
-          transition: deactivate
-    button_2:
-      display_name: Start Timer 2
-      on_click:
-        lifecycle:
-          component: timer_2
-          transition: activate
 ```
 
 Then, press the Generate Graph button. The graph should show two components connected with event edges.
@@ -134,6 +118,15 @@ faster or slower, respectively.
 The timer component has a special parameter called `timeout`, which is the duration in seconds that the timer should
 be active. At the end of the timeout period, it will be in the "timed out" state.
 
+:::info
+
+The `!!float` tag is used to distinguish floating-point parameters from integer parameters in the YAML. Some YAML
+document parsers, formatters or emitters would round a value such as `5.0` to the "equivalent" integer value `5`.
+AICA Studio automatically adds the `!!float` tag to ensure that the Event Engine always parses the parameter as a
+floating-point value.
+
+:::
+
 The `events` field of a component associates component predicates with events.
 
 ```yaml
@@ -176,28 +169,6 @@ second.
 The second block describing `timer_2` is nearly identical (apart from a different value for the `timeout` parameter), as
 the two timers are intended to have symmetrical behavior.
 
-The `Timer` components are lifecycle components, they have an internal state which is the elapsed time since the first
-activation. Deactivating a timer saves the elapsed time and stops it from timing out - it is like pausing a stopwatch.
-Activating the timer again is equivalent to unpausing the stopwatch - the elapsed time increases until eventually the
-timeout has been reached. To show this behavior, two trigger buttons can be found in the application. The first button
-pauses the `timer_2` component by deactivating it while the second one un-pauses the timer by activating it.
-
-```yaml
-  buttons:
-    button:
-      display_name: Pause Timer 2
-      on_click:
-        lifecycle:
-          component: timer_2
-          transition: deactivate
-    button_2:
-      display_name: Start Timer 2
-      on_click:
-        lifecycle:
-          component: timer_2
-          transition: activate
-```
-
 ## Run the application
 
 Press the Play button to start the application.
@@ -211,10 +182,20 @@ back to the first timer.
 
 ![timer example (animated)](./assets/timer-example.gif)
 
-Use the Pause and Start trigger buttons to deactivate and activate the `timer_2` while it is loaded. Verify that once
-paused, the elapsed time does not count towards the component timing out and it only times out once it has been in the
-active state for a total of 4 seconds.
+In the AICA System, events are the key drivers of application logic. While the application is running, events can be
+triggered automatically from transitions or predicates, as seen in this example, but also by other event sources such
+as conditions, sequences, interactive trigger buttons in AICA Studio and even external API calls.
 
-Use the Stop button to unload all components and reset the application.
+It is possible to pause an application using the Pause control, which has the effect of blocking any and all events from
+being triggered. When an application is paused, all components will remain in their current state; any components and
+controllers that are loaded and active will keep running according to their current states. Only the triggering and
+automatic propagation of events is paused.
+
+Try pausing the application and see how the state of the timers can be prevented from changing. Notice how pausing the
+application while a timer is active does not prevent it from counting towards its timeout threshold, and that resuming
+the application after the elapsed time has passed will then immediately trigger the waiting transition.
+
+Finally, use the Stop button to stop the application. This will deactivate and unload all components and controllers
+and fully reset the application.
 
 Next, learn how to edit the application using the interactive graph editor.
