@@ -127,7 +127,7 @@ floating-point value.
 
 :::
 
-The `events` field of a component associates component predicates with events.
+The `events` field of a component associates component state transitions and predicates with events.
 
 ```yaml
     events:
