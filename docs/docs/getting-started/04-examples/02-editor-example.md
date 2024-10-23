@@ -12,7 +12,10 @@ and any changes will automatically be written back to the YAML representation.
 Drag the background to pan the graph view and scroll to zoom in or out. Click the arrow icons on the central divider
 on the page to expand either the code editor or graph view to full screen.
 
-You can also use the graph control buttons on the bottom left to zoom and fit the view.
+You can also use the graph control buttons on the bottom left to zoom and fit the view. The mini-map on the bottom right
+can also be used to navigate around the graph.
+
+<!-- TODO: parameters and auto-lifecycle events are no longer dropdowns, but part of the Parameter editor view -->
 
 ## Setting component parameters
 
@@ -45,6 +48,23 @@ When both toggle switches are enabled, the YAML code will show the corresponding
 
 Disabling one or both auto event switches will also remove the corresponding events from the YAML, while enabling the
 switch will regenerate the event in the YAML.
+
+<!-- TODO: Replace the following sections with adding interactive buttons 
+
+Show how we can:
+- go to the sidebar
+- click on add trigger button
+- drag to reposition
+- create an event edge to the timer
+- choose the event type (e.g. deactivate)
+- rename the button
+
+Repeat for a second button to show manual deactivation / activation
+
+Then say: now that we learned to add buttons and create event edges, try to do the same for components. As an exercise,
+search for and add timer components, set thea auto-lifecycle events, and connect the transition edges to recreate the
+example from scratch.
+-->
 
 ## Creating and deleting event edges
 
