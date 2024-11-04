@@ -114,12 +114,17 @@ class AICA:
 
         version_info = semver.parse_version_info(self._api_version)
 
-        if version_info.major == 3:
+        if version_info.major == 4:
             return True
-        elif version_info.major > 3:
+        elif version_info.major > 4:
             self._logger.error(f'The detected API version v{self._api_version} is newer than the maximum API version '
                                f'supported by this client (v{self.client_version()}). Please upgrade the Python API '
                                f'client version for newer API server versions.')
+            return False
+        elif version_info.major == 3:
+            self._logger.error(f'The detected API version v{self._api_version} is older than the minimum API version '
+                               f'supported by this client (v{self.client_version()}). Please downgrade the Python API '
+                               f'client to version v2.1.0 for API server versions v3.X.')
             return False
         elif version_info.major == 2:
             self._logger.error(f'The detected API version v{self._api_version} is older than the minimum API version '
