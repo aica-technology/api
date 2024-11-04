@@ -180,6 +180,20 @@ class AICA:
         """
         return requests.get(self._endpoint('controllers'))
 
+    @deprecated(deprecated_in='3.0.0', removed_in='4.0.0', current_version=CLIENT_VERSION,
+                details='Use the call_component_service function instead')
+    def call_service(self, component: str, service: str, payload: str) -> requests.Response:
+        """
+        Call a service on a component.
+
+        :param component: The name of the component
+        :param service: The name of the service
+        :param payload: The service payload, formatted according to the respective service description
+        """
+        endpoint = 'application/components/' + component + '/service/' + service
+        data = {"payload": payload}
+        return requests.put(self._endpoint(endpoint), json=data)
+
     def call_component_service(self, component: str, service: str, payload: str) -> requests.Response:
         """
         Call a service on a component.
@@ -429,20 +443,6 @@ class AICA:
         """
         return read_until(lambda data: data[hardware]['controllers'][controller]['state'] == state, url=self._address,
                           namespace='/v2/hardware', event='hardware_data', timeout=timeout) is not None
-
-    @deprecated(deprecated_in='2.1.0', removed_in='3.0.0', current_version=CLIENT_VERSION,
-                details='Use the wait_for_component_predicate function instead')
-    def wait_for_predicate(self, component: str, predicate: str, timeout: Union[None, int, float] = None) -> bool:
-        """
-        Wait until a component predicate is true.
-
-        :param component: The name of the component
-        :param predicate: The name of the predicate
-        :param timeout: Timeout duration in seconds. If set to None, block indefinitely
-        :return: True if the predicate is true before the timeout duration, False otherwise
-        """
-        return read_until(lambda data: data[component]['predicates'][predicate], url=self._address,
-                          namespace='/v2/components', event='component_data', timeout=timeout) is not None
 
     @_requires_api_version('>=3.1.0')
     def wait_for_component_predicate(self, component: str, predicate: str,
