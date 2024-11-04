@@ -58,7 +58,7 @@ class AICA:
         Elides the function call and returns None with a warning if the version constraint is violated.
 
         Example usage:
-        @_requires_core_version('>=3.2.1')
+        @_requires_api_version('>=3.2.1')
         def my_new_endpoint()
           ...
 
