@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [3.1.0](#300)
 - [2.1.0](#210)
 - [2.0.0](#200)
 - [1.2.1](#121)
@@ -10,6 +11,10 @@ Release Versions:
 - [1.0.2](#102)
 - [1.0.1](#101)
 - [1.0.0](#100)
+
+## 3.0.0
+
+Version 3.0.0 of the AICA API client is compatible with the new AICA Core version 4.0.
 
 ## 2.1.0
 
