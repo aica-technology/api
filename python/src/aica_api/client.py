@@ -143,7 +143,7 @@ class AICA:
         """
         return requests.get(self._endpoint('controllers'))
 
-    def call_service(self, component: str, service: str, payload: str) -> requests.Response:
+    def call_component_service(self, component: str, service: str, payload: str) -> requests.Response:
         """
         Call a service on a component.
 
@@ -152,6 +152,19 @@ class AICA:
         :param payload: The service payload, formatted according to the respective service description
         """
         endpoint = 'application/components/' + component + '/service/' + service
+        data = {"payload": payload}
+        return requests.put(self._endpoint(endpoint), json=data)
+
+    def call_controller_service(self, hardware: str, controller: str, service: str, payload: str) -> requests.Response:
+        """
+        Call a service on a controller.
+
+        :param hardware: The name of the hardware interface
+        :param controller: The name of the controller
+        :param service: The name of the service
+        :param payload: The service payload, formatted according to the respective service description
+        """
+        endpoint = 'application/hardware/' + hardware + 'controller/' + controller + '/service/' + service
         data = {"payload": payload}
         return requests.put(self._endpoint(endpoint), json=data)
 
@@ -258,7 +271,8 @@ class AICA:
     def set_lifecycle_transition(self, component: str, transition: str) -> requests.Response:
         """
         Trigger a lifecycle transition on a component. The transition label must be one of the following:
-        ['configure', 'activate', 'deactivate', 'cleanup', 'shutdown']
+        ['configure', 'activate', 'deactivate', 'cleanup', 'unconfigured_shutdown', 'inactive_shutdown',
+        'acitve_shutdown']
 
         The transition will only be executed if the target is a lifecycle component and the current lifecycle state
         allows the requested transition.
@@ -324,6 +338,18 @@ class AICA:
         endpoint = "application"
         return requests.get(self._endpoint(endpoint))
 
+    def manage_sequence(self, sequence_name: str, action: str):
+        """
+        Manage a sequence. The action label must be one of the following: ['start', 'restart', 'abort']
+
+        The action will only be executed if the sequence exists and allows the requested action.
+
+        :param sequence_name: The name of the sequence
+        :param action: The sequence action label
+        """
+        endpoint = f"application/sequences/{sequence_name}?action={action}"
+        return requests.put(self._endpoint(endpoint))
+
     def wait_for_component(self, component: str, state: str, timeout: Union[None, int, float] = None) -> bool:
         """
         Wait for a component to be in a particular state. Components can be in any of the following states:
@@ -356,7 +382,7 @@ class AICA:
                             timeout: Union[None, int, float] = None) -> bool:
         """
         Wait for a controller to be in a particular state. Controllers can be in any of the following states:
-            ['unloaded', 'loaded', 'unconfigured', 'inactive', 'active', 'finalized']
+            ['unloaded', 'loaded', 'active', 'finalized']
 
         :param hardware: The name of the hardware interface responsible for the controller
         :param controller: The name of the controller
@@ -411,7 +437,7 @@ class AICA:
                           url=self._address, namespace='/v2/hardware', event='hardware_data',
                           timeout=timeout) is not None
 
-    def wait_for_condition(self, condition, timeout=None) -> bool:
+    def wait_for_condition(self, condition: str, timeout=None) -> bool:
         """
         Wait until a condition is true.
 
@@ -421,3 +447,16 @@ class AICA:
         """
         return read_until(lambda data: data[condition], url=self._address, namespace='/v2/conditions',
                           event='conditions', timeout=timeout) is not None
+
+    def wait_for_sequence(self, sequence: str, state: str, timeout=None) -> bool:
+        """
+        Wait for a sequence to be in a particular state. Sequences can be in any of the following states:
+            ['active', 'inactive', 'aborted']
+
+        :param sequence: The name of the sequence
+        :param state: The state of the sequence to wait for
+        :param timeout: Timeout duration in seconds. If set to None, block indefinitely
+        :return: True if the condition is true before the timeout duration, False otherwise
+        """
+        return read_until(lambda data: data[sequence]['state'] == state, url=self._address, namespace='/v2/sequences',
+                          event='sequences', timeout=timeout) is not None
