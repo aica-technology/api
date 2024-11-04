@@ -215,7 +215,7 @@ class AICA:
         :param service: The name of the service
         :param payload: The service payload, formatted according to the respective service description
         """
-        endpoint = 'application/hardware/' + hardware + 'controller/' + controller + '/service/' + service
+        endpoint = 'application/hardware/' + hardware + '/controller/' + controller + '/service/' + service
         data = {"payload": payload}
         return requests.put(self._endpoint(endpoint), json=data)
 
