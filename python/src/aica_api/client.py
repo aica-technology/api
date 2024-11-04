@@ -52,13 +52,13 @@ class AICA:
         return f'{self._address}/v2/{endpoint}'
 
     @staticmethod
-    def _requires_api_version(version):
+    def _requires_core_version(version):
         """
-        Decorator to mark a function with a specific API server version constraint.
+        Decorator to mark a function with a specific AICA Core version constraint.
         Elides the function call and returns None with a warning if the version constraint is violated.
 
         Example usage:
-        @_requires_api_version('>=3.2.1')
+        @_requires_core_version('>=3.2.1')
         def my_new_endpoint()
           ...
 
@@ -414,7 +414,7 @@ class AICA:
         return read_until(lambda data: data[component]['state'] == state, url=self._address, namespace='/v2/components',
                           event='component_data', timeout=timeout) is not None
 
-    @_requires_api_version('>=3.1.0')
+    @_requires_core_version('>=3.1.0')
     def wait_for_hardware(self, hardware: str, state: str, timeout: Union[None, int, float] = None) -> bool:
         """
         Wait for a hardware interface to be in a particular state. Hardware can be in any of the following states:
@@ -428,7 +428,7 @@ class AICA:
         return read_until(lambda data: data[hardware]['state'] == state, url=self._address, namespace='/v2/hardware',
                           event='hardware_data', timeout=timeout) is not None
 
-    @_requires_api_version('>=3.1.0')
+    @_requires_core_version('>=3.1.0')
     def wait_for_controller(self, hardware: str, controller: str, state: str,
                             timeout: Union[None, int, float] = None) -> bool:
         """
@@ -444,7 +444,7 @@ class AICA:
         return read_until(lambda data: data[hardware]['controllers'][controller]['state'] == state, url=self._address,
                           namespace='/v2/hardware', event='hardware_data', timeout=timeout) is not None
 
-    @_requires_api_version('>=3.1.0')
+    @_requires_core_version('>=3.1.0')
     def wait_for_component_predicate(self, component: str, predicate: str,
                                      timeout: Union[None, int, float] = None) -> bool:
         """
@@ -458,7 +458,7 @@ class AICA:
         return read_until(lambda data: data[component]['predicates'][predicate], url=self._address,
                           namespace='/v2/components', event='component_data', timeout=timeout) is not None
 
-    @_requires_api_version('>=3.1.0')
+    @_requires_core_version('>=3.1.0')
     def wait_for_controller_predicate(self, hardware: str, controller: str, predicate: str,
                                       timeout: Union[None, int, float] = None) -> bool:
         """
