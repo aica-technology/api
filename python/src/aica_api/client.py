@@ -40,7 +40,7 @@ class AICA:
             self._address = f'http://{url}:{port}'
 
         self._logger = getLogger(__name__)
-        self._api_version = None
+        self._core_version = None
 
     def _endpoint(self, endpoint=''):
         """
@@ -58,7 +58,7 @@ class AICA:
         Elides the function call and returns None with a warning if the version constraint is violated.
 
         Example usage:
-        @_requires_api_version('>=3.2.1')
+        @_requires_core_version('>=3.2.1')
         def my_new_endpoint()
           ...
 
@@ -67,11 +67,11 @@ class AICA:
         def decorator(func):
             @wraps(func)
             def wrapper(self, *args, **kwargs):
-                if self._api_version is None and self.api_version() is None:
+                if self._core_version is None and self.api_version() is None:
                     return None
-                if not semver.match(self._api_version, version):
+                if not semver.match(self._core_version, version):
                     self._logger.warning(f'The function {func.__name__} requires API server version {version}, '
-                                         f'but the current API server version is {self._api_version}')
+                                         f'but the current API server version is {self._core_version}')
                     return None
                 return func(self, *args, **kwargs)
 
@@ -79,20 +79,52 @@ class AICA:
 
         return decorator
 
+    @deprecated(deprecated_in='3.0.0', removed_in='4.0.0', current_version=CLIENT_VERSION,
+                details='Use the core_version function instead')
     def api_version(self) -> Union[str, None]:
         """
         Get the version of the AICA API server
 
-        :return: The version of the API server or None in case of
+        :return: The version of the API server or None in case of connection failure
         """
         try:
-            self._api_version = requests.get(f'{self._address}/version').json()
-            self._logger.debug(f'API server version identified as {self._api_version}')
+            self._core_version = requests.get(f'{self._address}/version').json()
+            self._logger.debug(f'API server version identified as {self._core_version}')
         except requests.exceptions.RequestException:
             self._logger.error(f'Error connecting to the API server at {self._address}! '
                                f'Check that the AICA container is running and configured with the right address.')
-            self._api_version = None
-        return self._api_version
+            self._core_version = None
+        return self._core_version
+
+    def core_version(self) -> Union[str, None]:
+        """
+        Get the version of the AICA Core
+
+        :return: The version of the AICA core or None in case of connection failure
+        """
+        try:
+            self._core_version = requests.get(f'{self._address}/version').json()
+            self._logger.debug(f'AICA Core version identified as {self._core_version}')
+        except requests.exceptions.RequestException:
+            self._logger.error(f'Error connecting to the API server at {self._address}! '
+                               f'Check that the AICA Core is running and configured with the right address.')
+            self._core_version = None
+        return self._core_version
+
+    def protocol(self) -> Union[str, None]:
+        """
+        Get the version of the API protocol
+
+        :return: The version of the API protocol or None in case of connection failure
+        """
+        try:
+            protocol = requests.get(f'{self._address}/protocol').json()
+            self._logger.debug(f'API protocol version identified as {protocol}')
+            return protocol
+        except requests.exceptions.RequestException:
+            self._logger.error(f'Error connecting to the API server at {self._address}! '
+                               f'Check that the AICA Core is running and configured with the right address.')
+        return None
 
     @staticmethod
     def client_version() -> str:
@@ -105,35 +137,35 @@ class AICA:
 
     def check(self) -> bool:
         """
-        Check if this API client is compatible with the detected API server version
+        Check if this API client is compatible with the detected AICA Core version
 
-        :return: True if the client is compatible with the API server version, False otherwise
+        :return: True if the client is compatible with the AICA Core version, False otherwise
         """
-        if self._api_version is None and self.api_version() is None:
+        if self._core_version is None and self.api_version() is None:
             return False
 
-        version_info = semver.parse_version_info(self._api_version)
+        version_info = semver.parse_version_info(self._core_version)
 
         if version_info.major == 4:
             return True
         elif version_info.major > 4:
-            self._logger.error(f'The detected API version v{self._api_version} is newer than the maximum API version '
-                               f'supported by this client (v{self.client_version()}). Please upgrade the Python API '
-                               f'client version for newer API server versions.')
+            self._logger.error(f'The detected AICA Core version v{self._core_version} is newer than the maximum AICA '
+                               f'Core version supported by this client (v{self.client_version()}). Please upgrade the '
+                               f'Python API client version for newer API server versions.')
             return False
         elif version_info.major == 3:
-            self._logger.error(f'The detected API version v{self._api_version} is older than the minimum API version '
-                               f'supported by this client (v{self.client_version()}). Please downgrade the Python API '
-                               f'client to version v2.1.0 for API server versions v3.X.')
+            self._logger.error(f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
+                               f'Core version supported by this client (v{self.client_version()}). Please downgrade '
+                               f'the Python API client to version v2.1.0 for API server versions v3.X.')
             return False
         elif version_info.major == 2:
-            self._logger.error(f'The detected API version v{self._api_version} is older than the minimum API version '
-                               f'supported by this client (v{self.client_version()}). Please downgrade the Python API '
-                               f'client to version v1.2.0 for API server versions v2.X.')
+            self._logger.error(f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
+                               f'Core version supported by this client (v{self.client_version()}). Please downgrade '
+                               f'the Python API client to version v1.2.0 for API server versions v2.X.')
             return False
         else:
-            self._logger.error(f'The detected API version v{self._api_version} is deprecated and not supported by '
-                               f'this API client!')
+            self._logger.error(f'The detected AICA Core version v{self._core_version} is deprecated and not supported '
+                               f'by this API client!')
             return False
 
     def component_descriptions(self) -> requests.Response:
