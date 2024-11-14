@@ -37,9 +37,13 @@ class AICA:
         elif '//' in url or ':' in url:
             raise ValueError(f'Invalid URL format {url}')
         else:
-            self._address = f'http://{url}:{port}'
+            if port == 5000:
+                self._address = f'http://{url}:{port}'
+            else:
+                self._address = f'http://{url}:{port}/api'
 
         self._logger = getLogger(__name__)
+        self._protocol = None
         self._core_version = None
 
     def _endpoint(self, endpoint=''):
@@ -49,7 +53,9 @@ class AICA:
         :param endpoint: The API endpoint
         :return: The constructed request address
         """
-        return f'{self._address}/v2/{endpoint}'
+        if self._protocol is None:
+            self.protocol()
+        return f'{self._address}/{self._protocol}/{endpoint}'
 
     @staticmethod
     def _requires_core_version(version):
@@ -64,10 +70,11 @@ class AICA:
 
         :param version: The version constraint specifier (i.e. >=3.2.1)
         """
+
         def decorator(func):
             @wraps(func)
             def wrapper(self, *args, **kwargs):
-                if self._core_version is None and self.api_version() is None:
+                if self._core_version is None and self.core_version() is None:
                     return None
                 if not semver.match(self._core_version, version):
                     self._logger.warning(f'The function {func.__name__} requires API server version {version}, '
@@ -79,22 +86,25 @@ class AICA:
 
         return decorator
 
-    @deprecated(deprecated_in='3.0.0', removed_in='4.0.0', current_version=CLIENT_VERSION,
-                details='Use the core_version function instead')
     def api_version(self) -> Union[str, None]:
         """
-        Get the version of the AICA API server
+        Get the specific version the AICA API server as a sub-package of AICA Core
 
         :return: The version of the API server or None in case of connection failure
         """
         try:
-            self._core_version = requests.get(f'{self._address}/version').json()
-            self._logger.debug(f'API server version identified as {self._core_version}')
+            api_server_version = self.license().json()['signed_packages']['aica_api_server']
+            self._logger.debug(f'AICA API server version identified as {api_server_version}')
+            return api_server_version
         except requests.exceptions.RequestException:
             self._logger.error(f'Error connecting to the API server at {self._address}! '
-                               f'Check that the AICA container is running and configured with the right address.')
-            self._core_version = None
-        return self._core_version
+                               f'Check that AICA Core is running and configured with the right address.')
+        except requests.exceptions.JSONDecodeError:
+            self._logger.error(f'Error getting version details! Expected JSON data in the response body.')
+        except KeyError as e:
+            self._logger.error(
+                f'Error getting version details! Expected a map of `signed_packages` to include `aica_api_server`: {e}')
+        return None
 
     def core_version(self) -> Union[str, None]:
         """
@@ -107,24 +117,9 @@ class AICA:
             self._logger.debug(f'AICA Core version identified as {self._core_version}')
         except requests.exceptions.RequestException:
             self._logger.error(f'Error connecting to the API server at {self._address}! '
-                               f'Check that the AICA Core is running and configured with the right address.')
+                               f'Check that AICA Core is running and configured with the right address.')
             self._core_version = None
         return self._core_version
-
-    def protocol(self) -> Union[str, None]:
-        """
-        Get the version of the API protocol
-
-        :return: The version of the API protocol or None in case of connection failure
-        """
-        try:
-            protocol = requests.get(f'{self._address}/protocol').json()
-            self._logger.debug(f'API protocol version identified as {protocol}')
-            return protocol
-        except requests.exceptions.RequestException:
-            self._logger.error(f'Error connecting to the API server at {self._address}! '
-                               f'Check that the AICA Core is running and configured with the right address.')
-        return None
 
     @staticmethod
     def client_version() -> str:
@@ -135,13 +130,35 @@ class AICA:
         """
         return CLIENT_VERSION
 
+    def protocol(self) -> Union[str, None]:
+        """
+        Get the API protocol version used as a namespace for API requests
+
+        :return: The version of the API protocol or None in case of connection failure
+        """
+        try:
+            self._protocol = requests.get(f'{self._address}/protocol').json()
+            self._logger.debug(f'API protocol version identified as {self._protocol}')
+            return self._protocol
+        except requests.exceptions.RequestException:
+            self._logger.error(f'Error connecting to the API server at {self._address}! '
+                               f'Check that AICA Core is running and configured with the right address.')
+        return None
+
     def check(self) -> bool:
         """
         Check if this API client is compatible with the detected AICA Core version
 
         :return: True if the client is compatible with the AICA Core version, False otherwise
         """
-        if self._core_version is None and self.api_version() is None:
+        if self._protocol is None and self.protocol() is None:
+            return False
+        elif self._protocol != "v2":
+            self._logger.error(f'The detected API protocol version {self._protocol} is not supported by this client'
+                               f'(v{self.client_version()}). Please refer to the compatibility table.')
+            return False
+
+        if self._core_version is None and self.core_version() is None:
             return False
 
         version_info = semver.parse_version_info(self._core_version)
@@ -151,7 +168,7 @@ class AICA:
         elif version_info.major > 4:
             self._logger.error(f'The detected AICA Core version v{self._core_version} is newer than the maximum AICA '
                                f'Core version supported by this client (v{self.client_version()}). Please upgrade the '
-                               f'Python API client version for newer API server versions.')
+                               f'Python API client version for newer versions of Core.')
             return False
         elif version_info.major == 3:
             self._logger.error(f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
@@ -168,15 +185,28 @@ class AICA:
                                f'by this API client!')
             return False
 
+    def license(self) -> requests.Response:
+        """
+        Get licensing status details for the AICA Core session, including the type of license, a list of entitlements
+        for the licensed user and a map of installed packages and versions included in the license.
+
+        Use `license().json()` to extract the map of license details from the response object.
+        """
+        return requests.get(self._endpoint('license'))
+
     def component_descriptions(self) -> requests.Response:
         """
-        Retrieve the JSON descriptions of all available components.
+        Retrieve descriptions of all installed components.
+
+        Use `component_descriptions().json()` to extract the map of descriptions from the response object.
         """
         return requests.get(self._endpoint('components'))
 
     def controller_descriptions(self) -> requests.Response:
         """
-        Retrieve the JSON descriptions of all available controllers.
+        Retrieve descriptions of all installed controllers.
+
+        Use `controller_descriptions().json()` to extract the map of descriptions from the response object.
         """
         return requests.get(self._endpoint('controllers'))
 
@@ -190,9 +220,7 @@ class AICA:
         :param service: The name of the service
         :param payload: The service payload, formatted according to the respective service description
         """
-        endpoint = 'application/components/' + component + '/service/' + service
-        data = {"payload": payload}
-        return requests.put(self._endpoint(endpoint), json=data)
+        return self.call_component_service(component, service, payload)
 
     def call_component_service(self, component: str, service: str, payload: str) -> requests.Response:
         """
@@ -293,7 +321,7 @@ class AICA:
         return requests.put(self._endpoint(endpoint))
 
     def set_component_parameter(self, component: str, parameter: str, value: Union[
-            bool, int, float, bool, List[bool], List[int], List[float], List[str]]) -> requests.Response:
+        bool, int, float, bool, List[bool], List[int], List[float], List[str]]) -> requests.Response:
         """
         Set a parameter on a component.
 
@@ -306,7 +334,7 @@ class AICA:
         return requests.put(self._endpoint(endpoint), json=data)
 
     def set_controller_parameter(self, hardware: str, controller: str, parameter: str, value: Union[
-            bool, int, float, bool, List[bool], List[int], List[float], List[str]]) -> requests.Response:
+        bool, int, float, bool, List[bool], List[int], List[float], List[str]]) -> requests.Response:
         """
         Set a parameter on a controller.
 
@@ -382,13 +410,13 @@ class AICA:
         endpoint = 'application/hardware/' + hardware
         return requests.delete(self._endpoint(endpoint))
 
-    def get_application(self):
+    def get_application(self) -> requests.Response:
         """
-        Get the application
+        Get the currently set application
         """
-        endpoint = "application"
-        return requests.get(self._endpoint(endpoint))
+        return requests.get(self._endpoint("application"))
 
+    @_requires_core_version('>=4.0.0')
     def manage_sequence(self, sequence_name: str, action: str):
         """
         Manage a sequence. The action label must be one of the following: ['start', 'restart', 'abort']
@@ -485,6 +513,7 @@ class AICA:
         return read_until(lambda data: data[condition], url=self._address, namespace='/v2/conditions',
                           event='conditions', timeout=timeout) is not None
 
+    @_requires_core_version('>=4.0.0')
     def wait_for_sequence(self, sequence: str, state: str, timeout=None) -> bool:
         """
         Wait for a sequence to be in a particular state. Sequences can be in any of the following states:
