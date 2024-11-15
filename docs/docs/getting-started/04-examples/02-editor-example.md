@@ -48,9 +48,9 @@ enabling the switch will regenerate the event in the YAML.
 
 ## Setting component parameters
 
-Component parameters can be edited directly in the settings. Try changing the value of the Timeout parameter to a
-different one and look for the corresponding change in the code editor. Then press play on the application and observe
-that the timer now has a different duration before triggering the "Is timed out" predicate.
+Component parameters can be edited directly in the settings. Try changing the value of the Timeout parameter and look
+for the corresponding change in the code editor. Then press play on the application and observe that the timer now has a
+different duration before triggering the "Is timed out" predicate.
 
 ## Adding and deleting elements
 
@@ -63,8 +63,8 @@ Trigger Events Buttons are interactive elements that can be used to trigger even
 with the flow of the application. Click on the Trigger Events Button in the sidebar to add such an element to the
 application. A new button should appear on the graph and in the code.
 
-The sidebar menu can be closed by clicking anywhere in the graph. Drag on the button to change its position in the
-graph. This will also update the corresponding Trigger Events Button position in the code editor.
+The sidebar menu can be closed by clicking anywhere in the graph. Drag the button to change its position in the graph.
+This will also update the corresponding Trigger Events Button position in the code editor.
 
 To delete an element from the graph, press the small menu icon in its top right corner, then click Remove.
 
