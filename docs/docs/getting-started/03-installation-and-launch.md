@@ -17,6 +17,24 @@ and add your user.
 
 :::
 
+## The AICA package registry
+
+AICA software packages are hosted as docker images in a private container registry. Viewing and downloading packages
+from the registry requires a valid [license](./02-licensing.md).
+
+### Listing available AICA packages
+
+To list available packages and versions, go to the official AICA registry page
+at [https://registry.licensing.aica.tech](https://registry.licensing.aica.tech) and enter your license key.
+
+:::tip
+
+An AICA license includes specific entitlements that determine which add-on packages and versions can be accessed and
+used. To discover and access additional components and hardware collections, contact your AICA representative to upgrade
+your license.
+
+:::
+
 ## AICA Launcher
 
 AICA Launcher is the easiest way to get up and running with the AICA System. It manages licensing, package distribution
@@ -86,3 +104,8 @@ from the registry and bundled into the specific runtime image. Depending on netw
 the image has been built, launching the configuration a second time will be much faster as the results are cached.
 
 ![aica-launcher-studio](./assets/aica-launcher-studio.png)
+
+## Manual installation and launch
+
+For advanced users or users that deal with headless machines, there exists the option to [manually perform the login,
+build and launch steps](../reference/02-manual-installation-launch.md) that the AICA Launcher handles automatically.
