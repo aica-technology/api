@@ -116,7 +116,7 @@ robot joint states and transforms.
 :::tip
 
 Learn more about available properties for application hardware on
-the [YAML application syntax](../../reference/02-yaml-syntax.md) reference page.
+the [YAML application syntax](../../reference/03-yaml-syntax.md) reference page.
 
 :::
 
