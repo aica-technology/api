@@ -178,10 +178,9 @@ To shut down the AICA application container at any time, press CTRL+C in the ori
 to stop the application container from a different terminal window, look up the container name
 with `docker container ps` and then run `docker container stop <container_name>`.
 
-## Access the Developer Interface
+## Access the AICA Studio
 
-Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view the Developer
-Interface.
+Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view the AICA Studio.
 
 ## Access the REST API
 
@@ -247,10 +246,10 @@ You should then be able to run `rviz2` inside the container and see the window a
 
 ## Persistent user data
 
-AICA applications and URDF hardware can be uploaded to a user database through the API or Developer Interface UI.
-Because the docker container is isolated from the host filesystem, the local database will be lost when the container
-exists. To persist local data between sessions, create a dedicated directory somewhere on the host. For example,
-use `mkdir ~/.aica-data` to keep the data folder hidden in the home folder. Then execute the normal run command with an
+AICA applications and URDF hardware can be uploaded to a user database through the API or AICA Studio. Because the
+docker container is isolated from the host filesystem, the local database will be lost when the container exists. To
+persist local data between sessions, create a dedicated directory somewhere on the host. For example, use 
+`mkdir ~/.aica-data` to keep the data folder hidden in the home folder. Then execute the normal run command with an
 additional volume mount for the user data.
 
 :::note
