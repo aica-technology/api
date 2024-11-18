@@ -22,25 +22,22 @@ class AICA:
     """
 
     # noinspection HttpUrlsUsage
-    def __init__(self, url: str = 'localhost', port: Union[str, int] = '5000'):
+    def __init__(self, url: str = 'localhost', port: Union[str, int] = '8080'):
         """
         Construct the API client with the address of the AICA application.
 
         :param url: The IP address of the AICA application
-        :param port: The API port for HTTP REST endpoints (default 5000)
+        :param port: The API port for HTTP REST endpoints (default 8080)
         """
         if not isinstance(port, int):
             port = int(port)
 
         if url.startswith('http://'):
-            self._address = f'{url}:{port}'
+            self._address = f'{url}:{port}/api'
         elif '//' in url or ':' in url:
             raise ValueError(f'Invalid URL format {url}')
         else:
-            if port == 5000:
-                self._address = f'http://{url}:{port}'
-            else:
-                self._address = f'http://{url}:{port}/api'
+            self._address = f'http://{url}:{port}/api'
 
         self._logger = getLogger(__name__)
         self._protocol = None
