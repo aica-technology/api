@@ -150,13 +150,16 @@ When the container starts up, it will generate some initial output in the termin
 like the example below:
 
 ```console
-[2023-12-11 14:48:38 +0000] [65] [INFO] Starting gunicorn 21.2.0
-[2023-12-11 14:48:38 +0000] [65] [INFO] Listening at: http://0.0.0.0:5000 (65)
-[2023-12-11 14:48:38 +0000] [65] [INFO] Using worker: gthread
-[2023-12-11 14:48:38 +0000] [69] [INFO] Booting worker with pid: 69
-[INFO] [1702306118.970110638] [StateEngine.ServiceHandler]: Initializing state engine services
-[INFO] [1702306118.977229190] [state_engine]: No initial application provided. Use the state engine service interface to set, initialize and start an application.
-[INFO] [1702306119.566053151] [StateEngineInterface]: Successfully connected to Dynamic State Engine services
+[2024-11-18 13:43:12 +0000] [87] [INFO] Starting gunicorn 21.2.0
+[2024-11-18 13:43:12 +0000] [87] [INFO] Listening at: http://0.0.0.0:5000 (87)
+[2024-11-18 13:43:12 +0000] [87] [INFO] Using worker: eventlet
+[2024-11-18 13:43:12 +0000] [100] [INFO] Booting worker with pid: 100
+[INFO] [rosapi_node-1]: process started with pid [151]
+[INFO] [1731937392.265880595] [EventEngine.ServiceHandler]: Initializing event engine services
+[INFO] [1731937392.270243234] [event_engine]: No initial application provided. Use the event engine service interface to set, initialize and start an application.
+[2024-11-18 13:43:13 +0000] [100] [INFO] Starting sync of cloud applications
+[INFO] [1731937393.151675196] [EventEngineInterface]: Successfully connected to Event Engine services
+[2024-11-18 13:43:13 +0000] [100] [INFO] Synced cloud applications: 0 added, 0 updated, 0 deleted, 1 total
 ```
 
 :::info
@@ -165,10 +168,20 @@ If there are any errors, check that the license file is valid and has been mount
 error would be shown from a correctly mounted but invalid license file:
 
 ```console
-[ERROR] [1702306228.377201011] [licensing]: Error: license is invalid (ERR - license is invalid), please check that it is correct
+[ERROR] [1731937393.377201011] [licensing]: Error: license is invalid (ERR - license is invalid), please check that it is correct
 ```
 
 Contact AICA support if the container does not start correctly despite a valid license file.
+
+There can also be harmless warnings that appear if Cloud Storage is not set up or if the license verification takes
+longer that a few seconds:
+
+```console
+[2024-11-18 13:38:16 +0000] [135] [INFO] Starting sync of cloud applications
+[2024-11-18 13:38:16 +0000] [135] [WARNING] Sync failed
+[2024-11-18 13:08:42 +0000] [151] [INFO] Waiting for licensing status... 5
+[WARN] [1731935323.407252919] [EventEngine.ServiceHandler]: (404): Could not determine any license status
+```
 
 :::
 
