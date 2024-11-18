@@ -138,7 +138,7 @@ docker run -it --rm \
 ```bash
 docker run -it --rm \
   --privileged \
-  -p 8080:8080 -p 5000:5000 \
+  -p 8080:8080 -p 18000-18100:18000-18100/udp \
   -v /path/to/license:/license:ro \
   aica-runtime
 ```
@@ -185,7 +185,7 @@ Interface.
 
 ## Access the REST API
 
-Visit [localhost:5000](http://localhost:5000) to see the Swagger UI and documentation for the REST API.
+Visit [localhost:8080/api](http://localhost:8080/api) to see the Swagger UI and documentation for the REST API.
 
 ## Connect a terminal session to the container
 
@@ -278,7 +278,7 @@ docker run -it --rm \
 ```bash
 docker run -it --rm \
   --privileged \
-  -p 8080:8080 -p 5000:5000 \
+  -p 8080:8080 -p 18000-18100:18000-18100/udp \
   -v /path/to/license:/license:ro \
   #highlight-next-line
   -v /path/to/data:/data:rw \
