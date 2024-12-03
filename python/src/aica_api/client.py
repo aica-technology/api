@@ -72,11 +72,17 @@ class AICA:
             @wraps(func)
             def wrapper(self, *args, **kwargs):
                 if self._core_version is None and self.core_version() is None:
-                    return None
+                    self._logger.warning(f'The function {func.__name__} requires AICA Core version {version}, '
+                                         f'but the current Core version is unknown. The function call behavior '
+                                         f'may be undefined.')
+                    return func(self, *args, **kwargs)
+
                 if not semver.match(self._core_version, version):
-                    self._logger.warning(f'The function {func.__name__} requires API server version {version}, '
-                                         f'but the current API server version is {self._core_version}')
+                    self._logger.error(f'The function {func.__name__} requires AICA Core version {version}, '
+                                       f'but the current AICA Core version is {self._core_version}. The function '
+                                       f'will not be called')
                     return None
+
                 return func(self, *args, **kwargs)
 
             return wrapper
