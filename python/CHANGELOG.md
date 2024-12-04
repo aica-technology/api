@@ -2,7 +2,7 @@
 
 Release Versions:
 
-- [3.1.0](#300)
+- [3.0.0](#300)
 - [2.1.0](#210)
 - [2.0.0](#200)
 - [1.2.1](#121)
@@ -14,7 +14,17 @@ Release Versions:
 
 ## 3.0.0
 
-Version 3.0.0 of the AICA API client is compatible with the new AICA Core version 4.0.
+Version 3.0.0 of the AICA API client is compatible with the new AICA Core version 4.0. It supports additional methods to
+query the Core, API server and protocol versions and the sub-versions of installed packages through license metadata.
+
+This release removes the previously deprecated method `wait_for_predicate` which has been replaced by the specific
+`wait_for_component_predicate` or `wait_for_controller_predicate` methods.
+
+Similarly, it marks the `call_service` method as deprecated in this version and introduces the `call_component_service`
+and `call_controller_service` methods as preferred alternatives.
+
+This release also introduces two new methods to manage sequences: `manage_sequence` to start, restart or abort a named
+sequence and `wait_for_sequence` to wait until a sequence is inactive, active or aborted.
 
 ## 2.1.0
 
