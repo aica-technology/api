@@ -1,6 +1,6 @@
 from deprecation import deprecated
 from functools import wraps
-from logging import getLogger
+from logging import getLogger, INFO
 from typing import Union, List
 
 import os
@@ -22,12 +22,13 @@ class AICA:
     """
 
     # noinspection HttpUrlsUsage
-    def __init__(self, url: str = 'localhost', port: Union[str, int] = '8080'):
+    def __init__(self, url: str = 'localhost', port: Union[str, int] = '8080', log_level = INFO):
         """
         Construct the API client with the address of the AICA application.
 
         :param url: The IP address of the AICA application
         :param port: The API port for HTTP REST endpoints (default 8080)
+        :param log_level: The desired log level
         """
         if not isinstance(port, int):
             port = int(port)
@@ -40,6 +41,7 @@ class AICA:
             self._address = f'http://{url}:{port}/api'
 
         self._logger = getLogger(__name__)
+        self._logger.setLevel(log_level)
         self._protocol = None
         self._core_version = None
 
