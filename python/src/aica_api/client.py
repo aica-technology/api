@@ -115,13 +115,19 @@ class AICA:
 
         :return: The version of the AICA core or None in case of connection failure
         """
+        core_version = None
         try:
-            self._core_version = requests.get(f'{self._address}/version').json()
-            self._logger.debug(f'AICA Core version identified as {self._core_version}')
+            core_version = requests.get(f'{self._address}/version').json()
         except requests.exceptions.RequestException:
             self._logger.error(f'Error connecting to the API server at {self._address}! '
                                f'Check that AICA Core is running and configured with the right address.')
-            self._core_version = None
+
+        if not semver.Version.is_valid(core_version):
+            self._logger.warning(f'Invalid format for the AICA Core version {core_version}! This could be a result'
+                                 f'of an internal or pre-release build of AICA Core.')
+            core_version = None
+
+        self._core_version = core_version
         return self._core_version
 
     @staticmethod
