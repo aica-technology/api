@@ -123,7 +123,7 @@ class AICA:
                                f'Check that AICA Core is running and configured with the right address.')
 
         if not semver.Version.is_valid(f'{core_version}'):
-            self._logger.warning(f'Invalid format for the AICA Core version {core_version}! This could be a result'
+            self._logger.warning(f'Invalid format for the AICA Core version {core_version}! This could be a result '
                                  f'of an internal or pre-release build of AICA Core.')
             core_version = None
 
