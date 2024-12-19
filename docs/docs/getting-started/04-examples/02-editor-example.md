@@ -52,12 +52,16 @@ Component parameters can be edited directly in the settings. Try changing the va
 for the corresponding change in the code editor. Then press play on the application and observe that the timer now has a
 different duration before triggering the "Is timed out" predicate.
 
+<!-- TODO: explain behavior with "default" once it's working as intended -->
+
 ## Adding and deleting elements
 
 Let's now make the example a bit more interesting by adding more elements to the graph using the sidebar menu; press the
 (+) button in the corner of the graph to open the sidebar. At the top, you will see special entries
 "Hardware Interface", "Trigger Events Button", "Sequence" and "Condition", for which a dedicated example is included
 in later sections. These are followed by a list of components with a name and brief description.
+
+<!-- TODO: link the examples once they exist -->
 
 Trigger Events Buttons are interactive elements that can be used to trigger events through mouse clicks and interact
 with the flow of the application. Click on the Trigger Events Button in the sidebar to add such an element to the
