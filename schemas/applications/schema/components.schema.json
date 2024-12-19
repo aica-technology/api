@@ -81,7 +81,7 @@
         },
         "intra_process_communications": {
           "title": "Use Intra-Process Communications",
-          "description": "If true, publishers and subscribers within the same process will enable intra-process communication which can avoid (de)serialization and unnecessary copies of messages, achieving lower latencies CPU load in some cases.",
+          "description": "If true, publishers and subscribers within the same process will enable intra-process communication which can avoid (de)serialization and unnecessary copies of messages, achieving lower latencies and CPU load in some cases",
           "default": true,
           "type": "boolean"
         },
