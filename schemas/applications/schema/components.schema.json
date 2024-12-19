@@ -80,8 +80,8 @@
           }
         },
         "intra_process_communications": {
-          "title": "Use Intra-process Communications",
-          "description": "If true, messages on topics which are published and subscribed to within this context will go through a special intra-process communication code code path which can avoid serialization and deserialization, unnecessary copies, and achieve lower latencies in some cases.",
+          "title": "Use Intra-Process Communications",
+          "description": "If true, publishers and subscribers within the same process will enable intra-process communication which can avoid (de)serialization and unnecessary copies of messages, achieving lower latencies CPU load in some cases.",
           "default": true,
           "type": "boolean"
         },
