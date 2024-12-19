@@ -75,7 +75,7 @@ Required. `[build.image]` is the tag of the AICA `ghcr.io/aica-technology/ros2-w
 
 ```toml title="aica-package.toml"
 [build]
-image = "v1.0.0-iron"
+image = "v2.0.0-jazzy"
 ```
 
 #### `[build.cmake-args]`
@@ -137,11 +137,9 @@ Those libraries and packages are built for specific versions of ROS 2, so make s
 :::
 
 Components usually require the `control-libraries` library. You can find the available
-versions [here](https://github.com/aica-technology/control-libraries/pkgs/container/control-libraries). If you are
-building a hardware interface, you might want to use the `network-interfaces` library; you can find the available
-versions [here](https://github.com/aica-technology/network-interfaces/pkgs/container/network-interfaces).
+versions [here](https://github.com/aica-technology/control-libraries/pkgs/container/control-libraries). 
 
-Components usually require the `modulo` package. You can find the available
+Components usually also require the `modulo` package. You can find the available
 versions [here](https://github.com/aica-technology/modulo/pkgs/container/modulo).
 
 :::note
@@ -155,9 +153,8 @@ Starting with version `1.0.0` of the `package-builder`, all libraries and packag
 
 ```toml title="aica-package.toml"
 [build.dependencies]
-"@aica/foss/control-libraries" = "v7.5.0"
-"@aica/foss/network-interfaces" = "v3.0.0"
-"@aica/foss/modulo" = "v4.2.0"
+"@aica/foss/control-libraries" = "v9.0.0"
+"@aica/foss/modulo" = "v5.0.1"
 "@myorg/mypackage" = "docker-image://ghcr.io/myorg/mypackage:v1.0.0"
 ```
 
@@ -167,7 +164,7 @@ Because `package-builder` will use your dependencies in the metadata of the comp
 
 ```toml title="aica-package.toml"
 [build.dependencies]
-"@aica/foss/control-libraries" = {version = "v7.5.0", constraints = ">= 7.5.0"}
+"@aica/foss/control-libraries" = {version = "v9.0.1", constraints = ">= 9.0.1"}
 ```
 
 :::note
@@ -423,11 +420,11 @@ docker build -f aica-package.toml -t my_component .
 
 [build]
 type = "ros"
-image = "v1.0.0-iron"
+image = "v2.0.0-jazzy"
 
 [build.dependencies]
-"@aica/foss/control-libraries" = "v7.3.0"
-"@aica/foss/modulo" = "v4.0.0"
+"@aica/foss/control-libraries" = "v9.0.0"
+"@aica/foss/modulo" = "v5.0.1"
 
 [build.packages.component]
 source = "./custom_component_package"
@@ -446,11 +443,11 @@ docker build -f aica-package.toml -t my_component .
 
 [build]
 type = "ros"
-image = "v1.0.0-iron"
+image = "v2.0.0-jazzy"
 
 [build.dependencies]
-"@aica/foss/control-libraries" = "v7.3.0"
-"@aica/foss/modulo" = "v4.0.0"
+"@aica/foss/control-libraries" = "v9.0.0"
+"@aica/foss/modulo" = "v5.0.1"
 
 [build.packages.component]
 source = "./custom_component_package"
@@ -483,7 +480,7 @@ image = "docker-image://base"
 
 [build.dependencies]
 "@aica/foss/control-libraries" = "build-context://cl"
-"@aica/foss/modulo" = "v4.0.0"
+"@aica/foss/modulo" = "v5.0.1"
 
 [build.packages.component]
 source = "build-context://my_source"
@@ -500,7 +497,7 @@ docker build -f aica-package.toml -t my_component --target list .
 
 [build]
 type = "ros"
-image = "v1.0.0-iron"
+image = "v2.0.0-jazzy"
 
 [build.packages.component]
 
