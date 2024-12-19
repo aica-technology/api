@@ -74,9 +74,27 @@ To delete an element from the graph, press the small menu icon in its top right 
 
 ## Creating and deleting event edges
 
-The timers are already connected with a Transition event edge. To change the event type on an edge, click on the label.
+To create a new edge, move the mouse over an event source handle until the cursor changes to a targeting reticule. Then,
+click and drag to create a draft edge. Pull it towards a target handle (on the top left of a component) until the cursor
+changes again and the draft edge snaps in place, at which point you can let go of the mouse button. If the connection is
+valid, it will create a new event edge with the default event (Load). Event source handles are found under transitions
+and predicates of a component and look like that:
+
+![event handle](./assets/event-source-handle.png)
+
+:::note
+
+All components have an icon on their top right that looks like an event source handle but is in fact a condition source
+and creating event edges from those will not work. 
+
+<!-- TODO: link example with conditions -->
+
+:::
+
+Create an event edge between the new trigger button and the Timer 2 component. Choose the Deactivate
+event type in order to pause the timer on click of the button. To change the event type on an edge, click on the label.
 This will open a selection menu showing other available event types (for example, Load, Unload, Configure...). Choosing
-a different event type will close the selection menu and update the YAML code accordingly.
+an event type will close the selection menu and update the YAML code accordingly.
 
 ![event edge](./assets/event-edge.png)
 
@@ -84,14 +102,7 @@ Clicking on an edge also selects it, which is indicated by the increased line th
 will deselect it. While the edge is selected, press the delete key to delete the edge. This will also remove the
 event from the YAML representation.
 
-To create a new edge, move the mouse over the event source handle until the cursor changes to a targeting reticule.
-Then, click and drag to create a draft edge. Pull it towards a target handle (on the top left of a component) until the
-cursor changes again and the draft edge snaps in place, at which point you can let go of the mouse button. If the
-connection is valid, it will create a new event edge with the default event (Load).
-
-Repeat this procedure to create an event between the new trigger button and the Timer 2 component. Choose the Deactivate
-event type in order to pause the timer on click of the button. Add a second trigger button, create a new event edge to
-Timer 2 and choose the Activate event type.
+Add now a second trigger button, create a new event edge to Timer 2 and choose the Activate event type.
 
 ![trigger buttons](./assets/trigger-buttons.gif)
 
