@@ -9,7 +9,7 @@ application.
 
 ## Launcher configuration requirements
 
-This example uses AICA Core v4.0.1 in the Launcher configuration.
+This example uses AICA Core v4.2.0 in the Launcher configuration.
 
 ## Setting up the application
 
@@ -19,7 +19,7 @@ Copy the following application code into the text box under the Editor tab, repl
 ```yaml
 schema: 2-0-2
 dependencies:
-  core: v4.0.1
+  core: v4.2.0
 on_start:
   load:
     component: timer
@@ -41,6 +41,7 @@ components:
         is_timed_out:
           transition: timer_2
     parameters:
+      rate: !!float 5.0
       timeout: !!float 2.0
   timer_2:
     component: aica_core_components::utility::Timer
@@ -59,8 +60,9 @@ components:
         is_timed_out:
           transition: timer
     parameters:
+      rate: !!float 5.0
       timeout: !!float 4.0
-hardware: { }
+hardware: {}
 graph:
   positions:
     stop:
@@ -103,30 +105,6 @@ The display name field is used just for rendering the component on the graph.
 In this case, `aica_core_components::utility::Timer` is the registration of a built-in AICA component. It is a lifecycle
 component that starts a timer when the component is activated.
 
-Thereafter, the initial component parameters are defined.
-
-```yaml
-    parameters:
-      rate: !!float 5.0
-      timeout: !!float 2.0
-```
-
-All components have a `rate` parameter which defines the frequency of periodic execution steps. The default rate for
-components is 10 Hertz, so 10 times per second. The component rate can be increased or decreased to make a component run
-faster or slower, respectively.
-
-The timer component has a special parameter called `timeout`, which is the duration in seconds that the timer should
-be active. At the end of the timeout period, it will be in the "timed out" state.
-
-:::info
-
-The `!!float` tag is used to distinguish floating-point parameters from integer parameters in the YAML. Some YAML
-document parsers, formatters or emitters would round a value such as `5.0` to the "equivalent" integer value `5`.
-AICA Studio automatically adds the `!!float` tag to ensure that the Event Engine always parses the parameter as a
-floating-point value.
-
-:::
-
 The `events` field of a component associates component state transitions and predicates with events.
 
 ```yaml
@@ -153,7 +131,7 @@ When a lifecycle component configures or activates itself automatically, this is
 
 ![auto lifecycle timer](./assets/auto-lifecycle-events-timer.png)
 
-Finally, the timer component has a special predicate `is_timed_out`, which is internally associated with the `timeout`
+Thereafter, the timer component has a special predicate `is_timed_out`, which is internally associated with the `timeout`
 parameter.
 
 ```yaml
@@ -165,6 +143,30 @@ parameter.
 In this case, after the timer component has been active for 2 seconds, it triggers a transition event to `timer_2`.
 The `transition` event from `timer` to `timer_2` is a shorthand for unloading the first component and loading the
 second.
+
+Finally, the initial component parameters are defined.
+
+```yaml
+    parameters:
+      rate: !!float 5.0
+      timeout: !!float 2.0
+```
+
+All components have a `rate` parameter which defines the frequency of periodic execution steps. The default rate for
+components is 10 Hertz, so 10 times per second. The component rate can be increased or decreased to make a component run
+faster or slower, respectively.
+
+The timer component has a special parameter called `timeout`, which is the duration in seconds that the timer should
+be active. At the end of the timeout period, it will be in the "timed out" state.
+
+:::info
+
+The `!!float` tag is used to distinguish floating-point parameters from integer parameters in the YAML. Some YAML
+document parsers, formatters or emitters would round a value such as `5.0` to the "equivalent" integer value `5`.
+AICA Studio automatically adds the `!!float` tag to ensure that the Event Engine always parses the parameter as a
+floating-point value.
+
+:::
 
 The second block describing `timer_2` is nearly identical (apart from a different value for the `timeout` parameter), as
 the two timers are intended to have symmetrical behavior.
