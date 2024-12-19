@@ -16,13 +16,16 @@ roughly like this:
 ```toml title="aica-package.toml"
 #syntax=ghcr.io/aica-technology/package-builder:v1
 
+[metadata]
+version = "0.0.1"
+
 [build]
 type = "ros"
-image = "v1.0.0-iron"
+image = "v2.0.0-jazzy"
 
 [build.dependencies]
-"@aica/foss/control-libraries" = "v7.5.0"
-"@aica/foss/modulo" = "v4.2.0"
+"@aica/foss/control-libraries" = "v9.0.0"
+"@aica/foss/modulo" = "v5.0.1"
 
 [build.packages.component]
 source = "./custom_component_package"
