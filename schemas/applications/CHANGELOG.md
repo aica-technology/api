@@ -15,6 +15,10 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
+## Upcoming changes
+
+- feat: add intra process comms field to component schema (#192)
+
 ## 2-0-2
 
 This patch includes application events under the graph trigger button events, giving users the option to stop the

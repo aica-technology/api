@@ -79,6 +79,12 @@
             }
           }
         },
+        "intra_process_communications": {
+          "title": "Use Intra-process Communications",
+          "description": "If true, messages on topics which are published and subscribed to within this context will go through a special intra-process communication code code path which can avoid serialization and deserialization, unnecessary copies, and achieve lower latencies in some cases.",
+          "default": true,
+          "type": "boolean"
+        },
         "events": {
           "title": "Component Events",
           "description": "Component event sources that can trigger events",
