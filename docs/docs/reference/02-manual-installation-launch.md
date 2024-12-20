@@ -7,16 +7,17 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 The following sections explain how the installation and launch steps of the AICA Launcher can be performed manually.
-The pre-requisites are still a valid license and a host with Docker installed.
+The pre-requisites are still a valid license and a host with Docker installed. For the rest of this guide, it will be
+assumed that a valid license has been saved to a file called `aica-license.toml` on the host machine.
 
 ## Logging in to the AICA package registry
 
-To authenticate docker to login and pull images from the registry, run the following command:
+To authenticate docker to login and pull images from the registry, run the following command (no replacement of
+`USERNAME` required):
 
 ```shell
 cat aica-license.toml | docker login registry.licensing.aica.tech -u USERNAME --password-stdin
 ```
-
 
 ## Configuring AICA packages with a manifest file
 
@@ -31,14 +32,18 @@ The manifest file must contain a syntax header and a list of packages. The minim
 only the `core` package. The version of the `core` package can be changed according to the latest release.
 
 :::info
-In the past, you might have seen applications using the `aica-package.toml` filename. While you can use any filename as we do not enforce any, we recommend using `aica-application.toml` to avoid confusion with the `aica-package.toml` file which is used for building packages using `package-builder`.
+
+In the past, you might have seen applications using the `aica-package.toml` filename. While you can use any filename as
+we do not enforce any, we recommend using `aica-application.toml` to avoid confusion with the `aica-package.toml` file
+which is used for building packages using `package-builder`.
+
 :::
 
 ```toml title="aica-application.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
-image = "v4.1.0"
+image = "v4.2.0"
 ```
 
 ### Configuring a runtime image with add-on packages
@@ -49,14 +54,18 @@ file includes two add-on packages: version 2.0.0 of the `components/rl_policy_co
 4.0.0 of the `collections/ur-collection` hardware collection package.
 
 :::note
-Starting with version `2.0.0` of the `app-builder`, all packages need to have special metadata associated in their image. This is done automatically when building with newer versions of `app-builder`. This means you won't be able to use older versions of certain libraries and packages with newer versions of `app-builder`.
+
+Starting with version `2.0.0` of the `app-builder`, all packages need to have special metadata associated in their
+image. This is done automatically when building with newer versions of `app-builder`. This means you won't be able to
+use older versions of certain libraries and packages with newer versions of `app-builder`.
+
 :::
 
 ```toml title="aica-application.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
-"image" = "v4.1.0"
+"image" = "v4.2.0"
 
 [packages]
 # add components
@@ -68,18 +77,18 @@ Starting with version `2.0.0` of the `app-builder`, all packages need to have sp
 
 ### Including custom packages
 
-The AICA framework allows developers to build their
-own [custom components](../reference/custom-components/01-component-package.md). These packages can be included under
-a custom name using the `docker-image://` prefix to specify the docker image name or path. For example, a custom
-component package that was locally built using `docker build [...] --tag my-custom-component-package` could be included
-as `docker-image://my-custom-component-package`. Community and third-party packages may also be available on other
-docker registries such as DockerHub or GitHub Container Registry and can be included with the associated docker path.
+The AICA framework allows developers to build their own
+[custom components](../reference/custom-components/01-component-package.md). These packages can be included under a
+custom name using the `docker-image://` prefix to specify the docker image name or path. For example, a custom component
+package that was locally built using `docker build [...] --tag my-custom-component-package` could be included as
+`docker-image://my-custom-component-package`. Community and third-party packages may also be available on other docker
+registries such as DockerHub or GitHub Container Registry and can be included with the associated docker path.
 
 ```toml title="aica-application.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
-"image" = "v4.1.0"
+"image" = "v4.2.0"
 
 [packages]
 # add a custom package from a local docker image path
@@ -115,11 +124,12 @@ You can start the AICA application container with the following command.
 
 :::note
 
-Change `/path/to/license` in the command below to the location of the personal AICA developer license assigned to you.
-For example, use `~/.aica-license.toml` to keep the license file hidden in the home folder.
+Change `/path/to/license` in the command below to the location of the `aica-license.toml` file from above. For example,
+use `~/.aica-license.toml` to keep the license file hidden in the home folder.
 
 :::
 
+<!-- TODO: edit this if we ever go away from --net=host -->
 
 <Tabs groupId="os">
 <TabItem value="linux" label="Linux">
