@@ -51,7 +51,7 @@ image = "v4.2.0"
 A manifest can include additional components and hardware collections as add-on packages. For any available package
 listed in the AICA registry, specify the package and version with the `@aica/` prefix. The following example manifest
 file includes two add-on packages: version 2.0.0 of the `components/rl_policy_components` component package and version
-4.0.0 of the `collections/ur-collection` hardware collection package.
+4.1.0 of the `collections/ur-collection` hardware collection package.
 
 :::note
 
@@ -72,7 +72,7 @@ use older versions of certain libraries and packages with newer versions of `app
 "@aica/components/rl-policy-components" = "v2.0.0"
 
 # add hardware collections
-"@aica/collections/ur-collection" = "v4.0.0"
+"@aica/collections/ur-collection" = "v4.1.0"
 ```
 
 ### Including custom packages
