@@ -8,9 +8,11 @@ title: Licensing
 A valid license is required to use AICA System. A license regulates both the access rights to download AICA software
 packages and the usage rights to run AICA applications.
 
-To request an AICA System License, contact the AICA sales team at contact@aica.tech. A user-specific license key will be
-generated and access instructions will be sent by email. For the rest of this guide, it will be assumed that a valid
-license has been saved to a file called `aica-license.toml` on the host machine.
+To request an AICA System License, contact the AICA sales team at contact@aica.tech. Each new user will receive access
+instructions to a personal account for the [AICA License Manager](https://licensing.aica.tech/list) which lists all
+licenses associated with that user. Every license has a name, an expiration date, the actual license key and a list of
+allowed packages. The link on the top right forwards directly to the AICA Package Registry where the user can see all
+available packages for that specific license.
 
 :::caution
 
@@ -22,7 +24,7 @@ If an unauthorized user has gained access to your license key, contact support@a
 
 :::
 
-An AICA System License can come in two variants: **online** and **offline**.
+Additionally, an AICA System License can come in two variants: **online** and **offline**.
 
 ## Online licenses
 
