@@ -24,8 +24,8 @@ type = "ros"
 image = "v2.0.0-jazzy"
 
 [build.dependencies]
-"@aica/foss/control-libraries" = "v9.0.0"
-"@aica/foss/modulo" = "v5.0.1"
+"@aica/foss/control-libraries" = "v9.0.1"
+"@aica/foss/modulo" = "v5.1.0"
 
 [build.packages.component]
 source = "./custom_component_package"

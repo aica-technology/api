@@ -153,8 +153,8 @@ Starting with version `1.0.0` of the `package-builder`, all libraries and packag
 
 ```toml title="aica-package.toml"
 [build.dependencies]
-"@aica/foss/control-libraries" = "v9.0.0"
-"@aica/foss/modulo" = "v5.0.1"
+"@aica/foss/control-libraries" = "v9.0.1"
+"@aica/foss/modulo" = "v5.1.0"
 "@myorg/mypackage" = "docker-image://ghcr.io/myorg/mypackage:v1.0.0"
 ```
 
@@ -423,8 +423,8 @@ type = "ros"
 image = "v2.0.0-jazzy"
 
 [build.dependencies]
-"@aica/foss/control-libraries" = "v9.0.0"
-"@aica/foss/modulo" = "v5.0.1"
+"@aica/foss/control-libraries" = "v9.0.1"
+"@aica/foss/modulo" = "v5.1.0"
 
 [build.packages.component]
 source = "./custom_component_package"
@@ -446,8 +446,8 @@ type = "ros"
 image = "v2.0.0-jazzy"
 
 [build.dependencies]
-"@aica/foss/control-libraries" = "v9.0.0"
-"@aica/foss/modulo" = "v5.0.1"
+"@aica/foss/control-libraries" = "v9.0.1"
+"@aica/foss/modulo" = "v5.1.0"
 
 [build.packages.component]
 source = "./custom_component_package"
@@ -480,7 +480,7 @@ image = "docker-image://base"
 
 [build.dependencies]
 "@aica/foss/control-libraries" = "build-context://cl"
-"@aica/foss/modulo" = "v5.0.1"
+"@aica/foss/modulo" = "v5.1.0"
 
 [build.packages.component]
 source = "build-context://my_source"
