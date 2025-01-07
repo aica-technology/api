@@ -153,6 +153,13 @@ docker run -it --rm \
   aica-runtime
 ```
 
+:::note
+
+If port 8080 is already used on the host, use `-p HOST_PORT:8080` to avoid conflicts. Do not remap ports `18000-18100`
+to something else.
+
+:::
+
 </TabItem>
 </Tabs>
 
