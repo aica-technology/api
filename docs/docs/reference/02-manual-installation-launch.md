@@ -6,9 +6,10 @@ title: Manual Installation and Launch
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The following sections explain how the installation and launch steps of the AICA Launcher can be performed manually.
-The pre-requisites are still a valid license and a host with Docker installed. For the rest of this guide, it will be
-assumed that a valid license has been saved to a file called `aica-license.toml` on the host machine.
+The following sections explain how to install and launch AICA Core and any additional packages manually from the command
+line without the use of AICA Launcher. The pre-requisites are still a valid license and a host with Docker installed.
+For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
+on the host machine.
 
 ## Logging in to the AICA package registry
 
@@ -21,15 +22,15 @@ cat aica-license.toml | docker login registry.licensing.aica.tech -u USERNAME --
 
 ## Configuring AICA packages with a manifest file
 
-A runtime application image is configured using a simple **manifest file** defining the version of the `core` package
-to use and optionally defining additional add-on packages. The manifest file contains a custom docker syntax header
-pointing to AICA's app-builder tool, and the `docker build` command is used to bundle all listed packages into a final
-runtime image.
+A runtime application image is configured using a simple **manifest file** defining the version of AICA Core to use and
+optionally defining additional add-on packages. The manifest file contains a custom docker syntax header pointing to
+AICA's app-builder tool, and the `docker build` command is used to bundle all listed packages into a final runtime
+image.
 
-### Configuring a minimal runtime image with the `core` package
+### Configuring a minimal runtime image with a version of AICA Core
 
 The manifest file must contain a syntax header and a list of packages. The minimal version of the manifest includes
-only the `core` package. The version of the `core` package can be changed according to the latest release.
+only AICA Core as the `core` package. The version can be changed according to the available releases.
 
 :::info
 
@@ -155,8 +156,7 @@ docker run -it --rm \
 
 :::note
 
-If port 8080 is already used on the host, use `-p HOST_PORT:8080` to avoid conflicts. Do not remap ports `18000-18100`
-to something else.
+If port 8080 is already used on the host, use `-p HOST_PORT:8080` to avoid conflicts. Do not remap ports `18000-18100`.
 
 :::
 
@@ -210,7 +210,7 @@ with `docker container ps` and then run `docker container stop <container_name>`
 
 ## Access the AICA Studio
 
-Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view the AICA Studio.
+Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view AICA Studio.
 
 ## Access the REST API
 
