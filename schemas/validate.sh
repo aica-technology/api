@@ -7,6 +7,8 @@ if [ "$#" -ne 2 ]; then
   echo "Currently supported schema collections:"
   echo "  - applications"
   echo "  - component-descriptions"
+  echo "  - controller-descriptions"
+  echo "  - interfaces"
   echo
   exit 0
 fi
@@ -22,12 +24,9 @@ elif [ "$SCHEMA" == "component-descriptions" ]; then
 elif [ "$SCHEMA" == "controller-descriptions" ]; then
   echo "Using AICA controller description schema"
   SCHEMA_ENTRYPOINT="controller.schema.json"
-elif [ "$SCHEMA" == "parameters" ]; then
-  echo "Using AICA parameter schema"
-  SCHEMA_ENTRYPOINT="parameter.schema.json"
-elif [ "$SCHEMA" == "signals" ]; then
-  echo "Using AICA signal schema"
-  SCHEMA_ENTRYPOINT="signal.schema.json"
+elif [ "$SCHEMA" == "interfaces" ]; then
+  echo "Using AICA interfaces schema"
+  SCHEMA_ENTRYPOINT="interfaces.schema.json"
 else
   echo "Invalid schema option: $SCHEMA"
   exit 0
