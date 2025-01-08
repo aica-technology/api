@@ -8,9 +8,11 @@ on:
       - 'schemas/**'
 
 jobs:
-  bundle-push-schemas:
+  setup:
     runs-on: ubuntu-latest
-    name: bundle-and-push-schemas
+    name: Set up a branch to update schemas
+    outputs:
+      branch_name: ${{ steps.branch-name.outputs.branch_name }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -25,35 +27,45 @@ jobs:
           echo "branch_name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
           git checkout -b ${BRANCH_NAME}
           git push -u origin ${BRANCH_NAME}
-      - name: Bundle & Push JSON schema for application schemas
-        uses: ./.github/actions/bundle-schema
+
+  bundle-schemas:
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      matrix:
+        schema: [application, component, controller, interfaces]
+        include:
+          - schema: application
+            schema-path: ./schemas/applications/schema
+          - schema: component
+            schema-path: ./schemas/component-descriptions/schema
+          - schema: controller
+            schema-path: ./schemas/controller-descriptions/schema
+          - schema: interfaces
+            schema-path: ./schemas/common_interfaces/schema
+    name: Bundle the ${{ matrix.schema }} schema
+    steps:
+      - uses: ./.github/actions/bundle-schema
         with:
-          schema-path: ./schemas/applications/schema/application.schema.json
-          schema: application.schema.json
-          branch-name: ${{ steps.branch-name.outputs.branch_name }}
-      - name: Bundle & Push JSON schema for component-descriptions schemas
-        uses: ./.github/actions/bundle-schema
-        with:
-          schema-path: ./schemas/component-descriptions/schema/component.schema.json
-          schema: component.schema.json
-          branch-name: ${{ steps.branch-name.outputs.branch_name }}
-      - name: Bundle & Push JSON schema for controller schemas
-        uses: ./.github/actions/bundle-schema
-        with:
-          schema-path: ./schemas/controller-descriptions/schema/controller.schema.json
-          schema: controller.schema.json
-          branch-name: ${{ steps.branch-name.outputs.branch_name }}
+          schema-path: ${{ matrix.schema-path }}/${{ matrix.schema }}.schema.json
+          schema: ${{ matrix.schema }}.schema.json
+          branch-name: ${{ needs.setup.outputs.outputs.branch_name }}
+
+  push-schemas:
+    runs-on: ubuntu-latest
+    needs: [setup, bundle-schemas]
+    steps:
       - name: Checkout branch ci/update-schemas
         uses: actions/checkout@v3
         with:
-          ref: ${{ steps.branch-name.outputs.branch_name }}
+          ref: ${{ needs.setup.branch-name.outputs.branch_name }}
       - name: Create pull request
         shell: bash
         run: |
           MESSAGE=$(
             gh pr create \
             -B main \
-            -H ${{ steps.branch-name.outputs.branch_name }} \
+            -H ${{ needs.setup.branch-name.outputs.branch_name }} \
             --title 'ci: update schemas' \
             --body 'This PR was automatically created by GitHub actions in response to schema changes. Please review and update any impacted code before merging the changes.' \
             --reviewer domire8 \
@@ -62,4 +74,3 @@ jobs:
           ) || echo "::warning::Error creating the PR: $MESSAGE"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
