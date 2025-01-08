@@ -16,9 +16,9 @@ of AICA component classes.
 The [controller-descriptions](./controller-descriptions) directory defines the JSON syntax for describing the properties
 of AICA controller plugins.
 
-## Parameters and Signals schema
+## Interfaces
 
-The [parameters](./parameters) and [signals](./signals) directories contains common schema definitions used by both
+The [interfaces](./interfaces) directory defines a schema with common interface definitions used by both
 the component and controller descriptions.
 
 ## Tools
@@ -41,5 +41,4 @@ Available `schema_collection` options are:
 - `applications`
 - `component-descriptions`
 - `controller-descriptions`
-- `parameters`
-- `signals`
+- `interfaces`
