@@ -15,7 +15,7 @@
       ]
     },
     {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/schemas/parameters/schema/encoded_state_type.schema.json"
+      "$ref": "encoded_state_type.schema.json"
     }
   ]
 }
