@@ -44,6 +44,8 @@ jobs:
             schema-path: ./schemas/interfaces/schema
     name: Bundle the ${{ matrix.schema }} schema
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
       - uses: ./.github/actions/bundle-schema
         with:
           schema-path: ${{ matrix.schema-path }}/${{ matrix.schema }}.schema.json
