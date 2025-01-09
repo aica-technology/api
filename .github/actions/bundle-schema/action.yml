@@ -21,13 +21,18 @@ runs:
     # Check if the version has been updated
     - id: versions
       run: |
-        NEW_VERSION=$(jq -r '.["$id"]' ${{ inputs.schema-path }})
-        echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
-        IFS='/' read -a id_array <<< "$NEW_VERSION"
-        echo "version_only=${id_array[1]}" >> $GITHUB_OUTPUT
+        SCHEMA_ID=$(jq -r '.["$id"]' ${{ inputs.schema-path }})
+        # remove the first slash
+        SCHEMA_ID="${SCHEMA_ID#/*}"
+        # remove the schema name at the end of the ID to leave just the version
+        SCHEMA_VERSION="${SCHEMA_ID%/*}"
+        echo "new_schema_id=${SCHEMA_ID}" >> $GITHUB_OUTPUT
+        echo "new_schema_version=${SCHEMA_VERSION}" >> $GITHUB_OUTPUT
         git checkout HEAD^
-        PREV_VERSION=$( jq -r '.["$id"]' ${{ inputs.schema-path }})
-        echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
+        PREV_SCHEMA_ID=$( jq -r '.["$id"]' ${{ inputs.schema-path }})
+        # remove the first slash
+        PREV_SCHEMA_ID="${PREV_SCHEMA_ID#/*}"
+        echo "prev_schema_id=${PREV_SCHEMA_ID}" >> $GITHUB_OUTPUT
       shell: bash
     - uses: actions/checkout@v3
     # Bundle JSON schema
@@ -43,17 +48,20 @@ runs:
         npm ci
         pip3 install javascript
     - name: Bundle & Push schemas
-      if: ${{ steps.versions.outputs.new_version != steps.versions.outputs.prev_version }}
+      if: ${{ steps.versions.outputs.new_schema_id != steps.versions.outputs.prev_schema_id }}
       shell: bash
       run: |
         node utils/bundleHelper.js ${{ inputs.schema-path }} ${{ inputs.schema }}
-        mkdir -p docs/static/schemas/${{ steps.versions.outputs.version_only }}
-        mv ${{ inputs.schema }} docs/static/schemas${{ steps.versions.outputs.new_version }}
+        echo "Ensuring directory branch name: docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}"
+        mkdir -p docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}
+        echo "Moving schema to path docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}"
+        mv ${{ inputs.schema }} docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}
         git config --global user.name github-actions[bot]
         git config --global user.email github-actions[bot]@users.noreply.github.com
         git fetch
         git checkout ${{ inputs.branch-name }}
         git pull
         git add .
-        git diff-index --quiet HEAD || git commit -m "docs: ${{ inputs.schema }} ${{ steps.versions.outputs.version_only }}"
+        git diff-index --quiet HEAD || git commit -m "docs: ${{ inputs.schema }} ${{ steps.versions.outputs.new_schema_version }}"
+        echo "Pushing commit to ${{ inputs.branch-name }}"
         git push

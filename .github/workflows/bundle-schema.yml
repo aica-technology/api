@@ -33,7 +33,6 @@ jobs:
     needs: setup
     strategy:
       matrix:
-        schema: [application, component, controller, interfaces]
         include:
           - schema: application
             schema-path: ./schemas/applications/schema
@@ -42,30 +41,30 @@ jobs:
           - schema: controller
             schema-path: ./schemas/controller-descriptions/schema
           - schema: interfaces
-            schema-path: ./schemas/common_interfaces/schema
+            schema-path: ./schemas/interfaces/schema
     name: Bundle the ${{ matrix.schema }} schema
     steps:
       - uses: ./.github/actions/bundle-schema
         with:
           schema-path: ${{ matrix.schema-path }}/${{ matrix.schema }}.schema.json
           schema: ${{ matrix.schema }}.schema.json
-          branch-name: ${{ needs.setup.outputs.outputs.branch_name }}
+          branch-name: ${{ needs.setup.outputs.branch_name }}
 
   push-schemas:
     runs-on: ubuntu-latest
     needs: [setup, bundle-schemas]
     steps:
-      - name: Checkout branch ci/update-schemas
+      - name: Checkout branch ${{ needs.setup.outputs.branch_name }}
         uses: actions/checkout@v3
         with:
-          ref: ${{ needs.setup.branch-name.outputs.branch_name }}
-      - name: Create pull request
+          ref: ${{ needs.setup.outputs.branch_name }}
+      - name: Create pull request on branch ${{ needs.setup.outputs.branch_name }}
         shell: bash
         run: |
           MESSAGE=$(
             gh pr create \
             -B main \
-            -H ${{ needs.setup.branch-name.outputs.branch_name }} \
+            -H ${{ needs.setup.outputs.branch_name }} \
             --title 'ci: update schemas' \
             --body 'This PR was automatically created by GitHub actions in response to schema changes. Please review and update any impacted code before merging the changes.' \
             --reviewer domire8 \
