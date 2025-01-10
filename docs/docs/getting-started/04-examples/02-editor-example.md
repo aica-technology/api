@@ -2,8 +2,12 @@
 sidebar_position: 2
 ---
 
+import eventEdge from './assets/event-edge.png'
+import eventSourceHandle from './assets/event-source-handle.png'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import timerSettings from './assets/timer-settings.png'
+import triggerButtons from './assets/trigger-buttons.gif'
 
 # The application graph editor
 
@@ -23,7 +27,9 @@ can also be used to navigate around the graph.
 Component parameters and settings can be edited directly from the graph view. Click on the gear icon of the first Timer
 component to open its settings panel. The settings panel can be closed with the X or by clicking anywhere in the graph.
 
-![timer settings](./assets/timer-settings.png)
+<div class="text--center">
+  <img src={timerSettings} alt="Timer settings" />
+</div>
 
 ### Auto-lifecycle events
 
@@ -83,9 +89,6 @@ also be deleted by selecting them with a click and pressing the Delete key on yo
 </TabItem>
 </Tabs>
 
-To delete an element from the graph, press the small menu icon in its top right corner, then click Remove. Elements can
-also be deleted by selecting them with a click and pressing the Delete keyboard shortcut.
-
 For this example, let's add a "Trigger Events Button" to the timer application by clicking on it in the sidebar. A new
 button should appear on the graph and in the code. This is an interactive elements that can be used to trigger events
 through mouse clicks and interact with the flow of the application.
@@ -103,7 +106,9 @@ changes again and the draft edge snaps in place, at which point you can let go o
 valid, it will create a new event edge with the default event (Load). Event source handles are found under transitions
 and predicates of a component and look like that:
 
-![event handle](./assets/event-source-handle.png)
+<div class="text--center">
+  <img src={eventSourceHandle} alt="Event source handle" />
+</div>
 
 :::note
 
@@ -124,7 +129,9 @@ desired event. This will close the selection menu and update the YAML code accor
 
 For this example, choose the Deactivate event in order to pause the timer on click of the button.
 
-![event edge](./assets/event-edge.png)
+<div class="text--center">
+  <img src={eventEdge} alt="Event edge" />
+</div>
 
 Clicking on an edge also selects it, which is indicated by the increased line thickness. Clicking away from the edge
 will deselect it. While the edge is selected, press the Delete key to delete the edge. This will also remove the
@@ -132,7 +139,9 @@ event from the YAML representation.
 
 Now add a second trigger button, create a new event edge to Timer 2 and choose the Activate event type.
 
-![trigger buttons](./assets/trigger-buttons.gif)
+<div class="text--center">
+  <img src={triggerButtons} alt="Trigger buttons example" />
+</div>
 
 ## Renaming elements in the graph
 

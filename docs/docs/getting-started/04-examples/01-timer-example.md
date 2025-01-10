@@ -2,6 +2,9 @@
 sidebar_position: 1
 ---
 
+import autoLifecycleEventsTimer from './assets/auto-lifecycle-events-timer.png'
+import timerExample from './assets/timer-example.gif'
+
 # A basic application example
 
 This example will show how components and predicate events can be used to create dynamic behavior in an AICA
@@ -129,7 +132,9 @@ Similarly, the next event activates the timer when it is configured:
 When a lifecycle component configures or activates itself automatically, this is known as "auto-configure" and
 "auto-activate", respectively. The graph shows these events with the green icons next to the component name.
 
-![auto lifecycle timer](./assets/auto-lifecycle-events-timer.png)
+<div class="text--center">
+  <img src={autoLifecycleEventsTimer} alt="Auto lifecycle events timer example" />
+</div>
 
 Thereafter, the timer component has a special predicate `is_timed_out`, which is internally associated with the `timeout`
 parameter.
@@ -182,7 +187,9 @@ predicate goes from false to true. As a result, the `transition` event causes `t
 loaded instead. The second timer then goes through the same steps of configuring and activating before transitioning
 back to the first timer.
 
-![timer example (animated)](./assets/timer-example.gif)
+<div class="text--center">
+  <img src={timerExample} alt="Timer example" />
+</div>
 
 In the AICA System, events are the key drivers of application logic. While the application is running, events can be
 triggered automatically from transitions or predicates, as seen in this example, but also by other event sources such
