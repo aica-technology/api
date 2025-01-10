@@ -2,6 +2,9 @@
 sidebar_position: 2
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # The application graph editor
 
 In the previous steps, an example application graph was generated from YAML. The graph can also be edited interactively
@@ -64,6 +67,21 @@ AICA Core and any additionally installed packages, grouped by package. Clicking 
 automatically add it to the graph.
 
 <!-- TODO: link the examples once they exist -->
+
+<Tabs groupId="os">
+<TabItem value="linux" label="Linux">
+
+To delete an element from the graph, press the small menu icon in its top right corner, then click Remove. Elements can
+also be deleted by selecting them with a click and pressing the Backspace key on your keyboard.
+
+</TabItem>
+<TabItem value="mac" label="macOS">
+
+To delete an element from the graph, press the small menu icon in its top right corner, then click Remove. Elements can
+also be deleted by selecting them with a click and pressing the Delete key on your keyboard.
+
+</TabItem>
+</Tabs>
 
 To delete an element from the graph, press the small menu icon in its top right corner, then click Remove. Elements can
 also be deleted by selecting them with a click and pressing the Delete keyboard shortcut.
