@@ -15,9 +15,12 @@
     "joint_state",
     "joint_positions",
     "joint_velocities",
+    "joint_accelerations",
     "joint_torques",
     "shape",
     "ellipsoid",
-    "parameter"
+    "parameter",
+    "digital_io_state",
+    "analog_io_state"
   ]
 }
