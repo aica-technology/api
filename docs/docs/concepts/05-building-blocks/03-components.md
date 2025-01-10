@@ -83,6 +83,8 @@ using [transition events](./02-events.md#transitions). Associating the `on_load`
 `lifecycle: configure` event enables the component to automatically configure itself. Equivalently, the `on_configure`
 transition can be used to trigger a `lifecycle: activate` event.
 
+<!-- TODO: explain that this only works if everything happens on load, not after deactivating it reactivates again -->
+
 ## Services
 
 Components can provide service endpoints to trigger specific behaviors on demand. For compatibility with the application
