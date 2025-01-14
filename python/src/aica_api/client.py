@@ -1,28 +1,31 @@
-from deprecation import deprecated
-from functools import wraps
-from logging import getLogger, INFO
-from typing import Union, List
-
+import importlib.metadata
 import os
+import urllib.parse
+from functools import wraps
+from logging import INFO, getLogger
+from typing import List, Optional, Union
+
 import requests
 import semver
 import yaml
-
-import importlib.metadata
+from deprecation import deprecated
 
 from aica_api.sio_client import read_until
-
 
 CLIENT_VERSION = importlib.metadata.version('aica_api')
 
 
 class AICA:
-    """
-    API client for AICA applications.
-    """
+    """API client for AICA applications."""
 
     # noinspection HttpUrlsUsage
-    def __init__(self, url: str = 'localhost', port: Union[str, int] = '8080', log_level = INFO):
+    def __init__(
+        self,
+        url: str = 'localhost',
+        port: Union[str, int] = '8080',
+        log_level=INFO,
+        api_key: Optional[str] = None,
+    ):
         """
         Construct the API client with the address of the AICA application.
 
@@ -44,8 +47,10 @@ class AICA:
         self._logger.setLevel(log_level)
         self._protocol = None
         self._core_version = None
+        self.__api_key = api_key
+        self.__token = None
 
-    def _endpoint(self, endpoint=''):
+    def _endpoint(self, endpoint: str = '') -> str:
         """
         Build the request address for a given endpoint.
 
@@ -54,7 +59,56 @@ class AICA:
         """
         if self._protocol is None:
             self.protocol()
-        return f'{self._address}/{self._protocol}/{endpoint}'
+        return self.__raw_endpoint(f'{self._protocol}/{endpoint}')
+
+    def __raw_endpoint(self, endpoint: str) -> str:
+        return f'{self._address}/{endpoint}'
+
+    def __create_token(self) -> None:
+        """Authenticate with the API and store the result in self.__token."""
+        if self.__token is None:
+            return
+        rep = requests.post(self._endpoint('auth/login'), headers={'Authorization': f'Bearer {self.__api_key}'})
+        rep.raise_for_status()
+        self.__token = rep.json()['token']
+
+    def _sio_auth(self) -> Optional[str]:
+        # FIXME: doesn't handle token expiration
+        if self.__api_key is not None:
+            self.__create_token()
+        return self.__token
+
+    def _safe_uri(self, uri: str) -> str:
+        """
+        Make a string safe for use in a URI by encoding special characters.
+
+        :param uri: The URI to sanitize
+        :return: The sanitized URI
+        """
+        return urllib.parse.quote_plus(uri)
+
+    def _request(
+        self,
+        method: str,
+        endpoint: str,
+        *,
+        params: Optional[dict] = None,
+        auth: Optional[bool] = None,
+        json: Optional[dict] = None,
+    ) -> requests.Response:
+        headers = None
+        retry = 2
+        while retry > 0:
+            if self.__api_key is not None:
+                self.__create_token()
+                headers = {'Authorization': f'Bearer {self.__token}'}
+            res = requests.request(method, self._endpoint(endpoint), params=params, json=json, headers=headers, timeout=5)
+            retry -= 1
+            if res.status_code == 401:
+                if self.__api_key is None:
+                    break
+                self.__token = None
+        return res
 
     @staticmethod
     def _requires_core_version(version):
@@ -74,15 +128,19 @@ class AICA:
             @wraps(func)
             def wrapper(self, *args, **kwargs):
                 if self._core_version is None and self.core_version() is None:
-                    self._logger.warning(f'The function {func.__name__} requires AICA Core version {version}, '
-                                         f'but the current Core version is unknown. The function call behavior '
-                                         f'may be undefined.')
+                    self._logger.warning(
+                        f'The function {func.__name__} requires AICA Core version {version}, '
+                        f'but the current Core version is unknown. The function call behavior '
+                        f'may be undefined.'
+                    )
                     return func(self, *args, **kwargs)
 
                 if not semver.match(self._core_version, version):
-                    self._logger.error(f'The function {func.__name__} requires AICA Core version {version}, '
-                                       f'but the current AICA Core version is {self._core_version}. The function '
-                                       f'will not be called')
+                    self._logger.error(
+                        f'The function {func.__name__} requires AICA Core version {version}, '
+                        f'but the current AICA Core version is {self._core_version}. The function '
+                        f'will not be called'
+                    )
                     return None
 
                 return func(self, *args, **kwargs)
@@ -102,13 +160,14 @@ class AICA:
             self._logger.debug(f'AICA API server version identified as {api_server_version}')
             return api_server_version
         except requests.exceptions.RequestException:
-            self._logger.error(f'Error connecting to the API server at {self._address}! '
-                               f'Check that AICA Core is running and configured with the right address.')
-        except requests.exceptions.JSONDecodeError:
-            self._logger.error(f'Error getting version details! Expected JSON data in the response body.')
+            self._logger.error(
+                f'Error connecting to the API server at {self._address}! '
+                f'Check that AICA Core is running and configured with the right address.'
+            )
         except KeyError as e:
             self._logger.error(
-                f'Error getting version details! Expected a map of `signed_packages` to include `aica_api_server`: {e}')
+                f'Error getting version details! Expected a map of `signed_packages` to include `aica_api_server`: {e}'
+            )
         return None
 
     def core_version(self) -> Union[str, None]:
@@ -119,14 +178,18 @@ class AICA:
         """
         core_version = None
         try:
-            core_version = requests.get(f'{self._address}/version').json()
+            core_version = requests.get(self.__raw_endpoint('version')).json()
         except requests.exceptions.RequestException:
-            self._logger.error(f'Error connecting to the API server at {self._address}! '
-                               f'Check that AICA Core is running and configured with the right address.')
+            self._logger.error(
+                f'Error connecting to the API server at {self._address}! '
+                f'Check that AICA Core is running and configured with the right address.'
+            )
 
         if not semver.Version.is_valid(f'{core_version}'):
-            self._logger.warning(f'Invalid format for the AICA Core version {core_version}! This could be a result '
-                                 f'of an internal or pre-release build of AICA Core.')
+            self._logger.warning(
+                f'Invalid format for the AICA Core version {core_version}! This could be a result '
+                f'of an internal or pre-release build of AICA Core.'
+            )
             core_version = None
 
         self._core_version = core_version
@@ -148,12 +211,14 @@ class AICA:
         :return: The version of the API protocol or None in case of connection failure
         """
         try:
-            self._protocol = requests.get(f'{self._address}/protocol').json()
+            self._protocol = requests.get(self.__raw_endpoint('protocol')).json()
             self._logger.debug(f'API protocol version identified as {self._protocol}')
             return self._protocol
         except requests.exceptions.RequestException:
-            self._logger.error(f'Error connecting to the API server at {self._address}! '
-                               f'Check that AICA Core is running and configured with the right address.')
+            self._logger.error(
+                f'Error connecting to the API server at {self._address}! '
+                f'Check that AICA Core is running and configured with the right address.'
+            )
         return None
 
     def check(self) -> bool:
@@ -164,9 +229,11 @@ class AICA:
         """
         if self._protocol is None and self.protocol() is None:
             return False
-        elif self._protocol != "v2":
-            self._logger.error(f'The detected API protocol version {self._protocol} is not supported by this client'
-                               f'(v{self.client_version()}). Please refer to the compatibility table.')
+        elif self._protocol != 'v2':
+            self._logger.error(
+                f'The detected API protocol version {self._protocol} is not supported by this client'
+                f'(v{self.client_version()}). Please refer to the compatibility table.'
+            )
             return False
 
         if self._core_version is None and self.core_version() is None:
@@ -175,25 +242,39 @@ class AICA:
         version_info = semver.parse_version_info(self._core_version)
 
         if version_info.major == 4:
+            if version_info.minor > 2 and self.__api_key is None:
+                self._logger.warning(
+                    f'The detected AICA Core version v{self._core_version} requires an API key for '
+                    f'authentication. Please provide an API key to the client for this version.'
+                )
+                return False
             return True
         elif version_info.major > 4:
-            self._logger.error(f'The detected AICA Core version v{self._core_version} is newer than the maximum AICA '
-                               f'Core version supported by this client (v{self.client_version()}). Please upgrade the '
-                               f'Python API client version for newer versions of Core.')
+            self._logger.error(
+                f'The detected AICA Core version v{self._core_version} is newer than the maximum AICA '
+                f'Core version supported by this client (v{self.client_version()}). Please upgrade the '
+                f'Python API client version for newer versions of Core.'
+            )
             return False
         elif version_info.major == 3:
-            self._logger.error(f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
-                               f'Core version supported by this client (v{self.client_version()}). Please downgrade '
-                               f'the Python API client to version v2.1.0 for API server versions v3.X.')
+            self._logger.error(
+                f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
+                f'Core version supported by this client (v{self.client_version()}). Please downgrade '
+                f'the Python API client to version v2.1.0 for API server versions v3.X.'
+            )
             return False
         elif version_info.major == 2:
-            self._logger.error(f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
-                               f'Core version supported by this client (v{self.client_version()}). Please downgrade '
-                               f'the Python API client to version v1.2.0 for API server versions v2.X.')
+            self._logger.error(
+                f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
+                f'Core version supported by this client (v{self.client_version()}). Please downgrade '
+                f'the Python API client to version v1.2.0 for API server versions v2.X.'
+            )
             return False
         else:
-            self._logger.error(f'The detected AICA Core version v{self._core_version} is deprecated and not supported '
-                               f'by this API client!')
+            self._logger.error(
+                f'The detected AICA Core version v{self._core_version} is deprecated and not supported '
+                f'by this API client!'
+            )
             return False
 
     def license(self) -> requests.Response:
@@ -203,7 +284,7 @@ class AICA:
 
         Use `license().json()` to extract the map of license details from the response object.
         """
-        return requests.get(self._endpoint('license'))
+        return self._request('GET', 'license')
 
     def component_descriptions(self) -> requests.Response:
         """
@@ -211,7 +292,7 @@ class AICA:
 
         Use `component_descriptions().json()` to extract the map of descriptions from the response object.
         """
-        return requests.get(self._endpoint('components'))
+        return self._request('GET', 'components')
 
     def controller_descriptions(self) -> requests.Response:
         """
@@ -219,10 +300,14 @@ class AICA:
 
         Use `controller_descriptions().json()` to extract the map of descriptions from the response object.
         """
-        return requests.get(self._endpoint('controllers'))
+        return self._request('GET', 'controllers')
 
-    @deprecated(deprecated_in='3.0.0', removed_in='4.0.0', current_version=CLIENT_VERSION,
-                details='Use the call_component_service function instead')
+    @deprecated(
+        deprecated_in='3.0.0',
+        removed_in='4.0.0',
+        current_version=CLIENT_VERSION,
+        details='Use the call_component_service function instead',
+    )
     def call_service(self, component: str, service: str, payload: str) -> requests.Response:
         """
         Call a service on a component.
@@ -241,9 +326,9 @@ class AICA:
         :param service: The name of the service
         :param payload: The service payload, formatted according to the respective service description
         """
-        endpoint = 'application/components/' + component + '/service/' + service
-        data = {"payload": payload}
-        return requests.put(self._endpoint(endpoint), json=data)
+        endpoint = f'application/components/{self._safe_uri(component)}/service/{self._safe_uri(service)}'
+        data = {'payload': payload}
+        return self._request('PUT', endpoint, json=data)
 
     def call_controller_service(self, hardware: str, controller: str, service: str, payload: str) -> requests.Response:
         """
@@ -254,15 +339,15 @@ class AICA:
         :param service: The name of the service
         :param payload: The service payload, formatted according to the respective service description
         """
-        endpoint = 'application/hardware/' + hardware + '/controller/' + controller + '/service/' + service
-        data = {"payload": payload}
-        return requests.put(self._endpoint(endpoint), json=data)
+        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controller/{self._safe_uri(controller)}/service/{self._safe_uri(service)}'
+        data = {'payload': payload}
+        return self._request('PUT', endpoint, json=data)
 
     def get_application_state(self) -> requests.Response:
         """
         Get the application state
         """
-        return requests.get(self._endpoint('application/state'))
+        return self._request('GET', 'application/state')
 
     def load_component(self, component: str) -> requests.Response:
         """
@@ -271,8 +356,8 @@ class AICA:
 
         :param component: The name of the component to load
         """
-        endpoint = 'application/components/' + component
-        return requests.put(self._endpoint(endpoint))
+        endpoint = f'application/components/{self._safe_uri(component)}'
+        return self._request('PUT', endpoint)
 
     def load_controller(self, hardware: str, controller: str) -> requests.Response:
         """
@@ -282,8 +367,8 @@ class AICA:
         :param hardware: The name of the hardware interface
         :param controller: The name of the controller to load
         """
-        endpoint = 'application/hardware/' + hardware + '/controller/' + controller
-        return requests.put(self._endpoint(endpoint))
+        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controller/{self._safe_uri(controller)}'
+        return self._request('PUT', endpoint)
 
     def load_hardware(self, hardware: str) -> requests.Response:
         """
@@ -292,16 +377,16 @@ class AICA:
 
         :param hardware: The name of the hardware interface to load
         """
-        endpoint = 'application/hardware/' + hardware
-        return requests.put(self._endpoint(endpoint))
+        endpoint = f'application/hardware/{self._safe_uri(hardware)}'
+        return self._request('PUT', endpoint)
 
     def pause_application(self) -> requests.Response:
         """
         Pause the current application. This prevents any events from being triggered or handled, but
         does not pause the periodic execution of active components.
         """
-        endpoint = 'application/state/transition?action=pause'
-        return requests.put(self._endpoint(endpoint))
+        endpoint = 'application/state/transition'
+        return self._request('PUT', endpoint, params={'action': 'pause'})
 
     def set_application(self, payload: str) -> requests.Response:
         """
@@ -309,30 +394,32 @@ class AICA:
 
         :param payload: The filepath of an application or the application content as a YAML-formatted string
         """
-        if payload.endswith(".yaml") and os.path.isfile(payload):
-            with open(payload, "r") as file:
+        if payload.endswith('.yaml') and os.path.isfile(payload):
+            with open(payload, 'r') as file:
                 payload = yaml.safe_load(file)
-        data = {
-            "payload": payload
-        }
-        return requests.put(self._endpoint('application'), json=data)
+        data = {'payload': payload}
+        return self._request('PUT', 'application', json=data)
 
     def start_application(self) -> requests.Response:
         """
         Start the AICA application engine.
         """
         endpoint = 'application/state/transition?action=start'
-        return requests.put(self._endpoint(endpoint))
+        return self._request('PUT', endpoint)
 
     def stop_application(self) -> requests.Response:
         """
         Stop and reset the AICA application engine, removing all components and hardware interfaces.
         """
-        endpoint = 'application/state/transition?action=stop'
-        return requests.put(self._endpoint(endpoint))
+        endpoint = 'application/state/transition'
+        return self._request('PUT', endpoint, params={'action': 'stop'})
 
-    def set_component_parameter(self, component: str, parameter: str, value: Union[
-        bool, int, float, bool, List[bool], List[int], List[float], List[str]]) -> requests.Response:
+    def set_component_parameter(
+        self,
+        component: str,
+        parameter: str,
+        value: Union[bool, int, float, bool, List[bool], List[int], List[float], List[str]],
+    ) -> requests.Response:
         """
         Set a parameter on a component.
 
@@ -340,12 +427,17 @@ class AICA:
         :param parameter: The name of the parameter
         :param value: The value of the parameter
         """
-        endpoint = 'application/components/' + component + '/parameter/' + parameter
-        data = {"value": value}
-        return requests.put(self._endpoint(endpoint), json=data)
+        endpoint = f'application/components/{self._safe_uri(component)}/parameter/{self._safe_uri(parameter)}'
+        data = {'value': value}
+        return self._request('PUT', endpoint, json=data)
 
-    def set_controller_parameter(self, hardware: str, controller: str, parameter: str, value: Union[
-        bool, int, float, bool, List[bool], List[int], List[float], List[str]]) -> requests.Response:
+    def set_controller_parameter(
+        self,
+        hardware: str,
+        controller: str,
+        parameter: str,
+        value: Union[bool, int, float, bool, List[bool], List[int], List[float], List[str]],
+    ) -> requests.Response:
         """
         Set a parameter on a controller.
 
@@ -354,9 +446,9 @@ class AICA:
         :param parameter: The name of the parameter
         :param value: The value of the parameter
         """
-        endpoint = 'application/hardware/' + hardware + '/controller/' + controller + '/parameter/' + parameter
-        data = {"value": value}
-        return requests.put(self._endpoint(endpoint), json=data)
+        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controller/{self._safe_uri(controller)}/parameter/{self._safe_uri(parameter)}'
+        data = {'value': value}
+        return self._request('PUT', endpoint, json=data)
 
     def set_lifecycle_transition(self, component: str, transition: str) -> requests.Response:
         """
@@ -370,12 +462,16 @@ class AICA:
         :param component: The name of the component
         :param transition: The lifecycle transition label
         """
-        endpoint = 'application/components/' + component + '/lifecycle/transition'
-        data = {"transition": transition}
-        return requests.put(self._endpoint(endpoint), json=data)
+        endpoint = f'application/components/{self._safe_uri(component)}/lifecycle/transition'
+        data = {'transition': transition}
+        return self._request('PUT', endpoint, json=data)
 
-    def switch_controllers(self, hardware: str, activate: Union[None, List[str]] = None,
-                           deactivate: Union[None, List[str]] = None) -> requests.Response:
+    def switch_controllers(
+        self,
+        hardware: str,
+        activate: Union[None, List[str]] = None,
+        deactivate: Union[None, List[str]] = None,
+    ) -> requests.Response:
         """
         Activate and deactivate the controllers for a given hardware interface.
 
@@ -383,12 +479,12 @@ class AICA:
         :param activate: A list of controllers to activate
         :param deactivate: A list of controllers to deactivate
         """
-        endpoint = 'application/hardware/' + hardware + '/controllers'
+        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controllers'
         params = {
-            "activate": [] if not activate else activate,
-            "deactivate": [] if not deactivate else deactivate
+            'activate': [] if not activate else activate,
+            'deactivate': [] if not deactivate else deactivate,
         }
-        return requests.put(self._endpoint(endpoint), params=params)
+        return self._request('PUT', endpoint, params=params)
 
     def unload_component(self, component: str) -> requests.Response:
         """
@@ -397,8 +493,8 @@ class AICA:
 
         :param component: The name of the component to unload
         """
-        endpoint = 'application/components/' + component
-        return requests.delete(self._endpoint(endpoint))
+        endpoint = f'application/components/{self._safe_uri(component)}'
+        return self._request('DELETE', endpoint)
 
     def unload_controller(self, hardware: str, controller: str) -> requests.Response:
         """
@@ -408,8 +504,8 @@ class AICA:
         :param hardware: The name of the hardware interface
         :param controller: The name of the controller to unload
         """
-        endpoint = 'application/hardware/' + hardware + '/controller/' + controller
-        return requests.delete(self._endpoint(endpoint))
+        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controller/{self._safe_uri(controller)}'
+        return self._request('DELETE', endpoint)
 
     def unload_hardware(self, hardware: str) -> requests.Response:
         """
@@ -418,14 +514,14 @@ class AICA:
 
         :param hardware: The name of the hardware interface to unload
         """
-        endpoint = 'application/hardware/' + hardware
-        return requests.delete(self._endpoint(endpoint))
+        endpoint = f'application/hardware/{self._safe_uri(hardware)}'
+        return self._request('DELETE', endpoint)
 
     def get_application(self) -> requests.Response:
         """
         Get the currently set application
         """
-        return requests.get(self._endpoint("application"))
+        return self._request('GET', 'application')
 
     @_requires_core_version('>=4.0.0')
     def manage_sequence(self, sequence_name: str, action: str):
@@ -437,8 +533,8 @@ class AICA:
         :param sequence_name: The name of the sequence
         :param action: The sequence action label
         """
-        endpoint = f"application/sequences/{sequence_name}?action={action}"
-        return requests.put(self._endpoint(endpoint))
+        endpoint = f'application/sequences/{self._safe_uri(sequence_name)}'
+        return self._request('PUT', endpoint, params={'action': self._safe_uri(action)})
 
     def wait_for_component(self, component: str, state: str, timeout: Union[None, int, float] = None) -> bool:
         """
@@ -450,8 +546,17 @@ class AICA:
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: True if the component is in the intended state before the timeout duration, False otherwise
         """
-        return read_until(lambda data: data[component]['state'] == state, url=self._address, namespace='/v2/components',
-                          event='component_data', timeout=timeout) is not None
+        return (
+            read_until(
+                lambda data: data[component]['state'] == state,
+                url=self._address,
+                namespace='/v2/components',
+                event='component_data',
+                timeout=timeout,
+                auth=self._sio_auth(),
+            )
+            is not None
+        )
 
     @_requires_core_version('>=3.1.0')
     def wait_for_hardware(self, hardware: str, state: str, timeout: Union[None, int, float] = None) -> bool:
@@ -464,12 +569,26 @@ class AICA:
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: True if the hardware is in the intended state before the timeout duration, False otherwise
         """
-        return read_until(lambda data: data[hardware]['state'] == state, url=self._address, namespace='/v2/hardware',
-                          event='hardware_data', timeout=timeout) is not None
+        return (
+            read_until(
+                lambda data: data[hardware]['state'] == state,
+                url=self._address,
+                namespace='/v2/hardware',
+                event='hardware_data',
+                timeout=timeout,
+                auth=self._sio_auth(),
+            )
+            is not None
+        )
 
     @_requires_core_version('>=3.1.0')
-    def wait_for_controller(self, hardware: str, controller: str, state: str,
-                            timeout: Union[None, int, float] = None) -> bool:
+    def wait_for_controller(
+        self,
+        hardware: str,
+        controller: str,
+        state: str,
+        timeout: Union[None, int, float] = None,
+    ) -> bool:
         """
         Wait for a controller to be in a particular state. Controllers can be in any of the following states:
             ['unloaded', 'loaded', 'active', 'finalized']
@@ -480,12 +599,20 @@ class AICA:
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: True if the controller is in the intended state before the timeout duration, False otherwise
         """
-        return read_until(lambda data: data[hardware]['controllers'][controller]['state'] == state, url=self._address,
-                          namespace='/v2/hardware', event='hardware_data', timeout=timeout) is not None
+        return (
+            read_until(
+                lambda data: data[hardware]['controllers'][controller]['state'] == state,
+                url=self._address,
+                namespace='/v2/hardware',
+                event='hardware_data',
+                timeout=timeout,
+                auth=self._sio_auth(),
+            )
+            is not None
+        )
 
     @_requires_core_version('>=3.1.0')
-    def wait_for_component_predicate(self, component: str, predicate: str,
-                                     timeout: Union[None, int, float] = None) -> bool:
+    def wait_for_component_predicate(self, component: str, predicate: str, timeout: Union[None, int, float] = None) -> bool:
         """
         Wait until a component predicate is true.
 
@@ -494,12 +621,26 @@ class AICA:
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: True if the predicate is true before the timeout duration, False otherwise
         """
-        return read_until(lambda data: data[component]['predicates'][predicate], url=self._address,
-                          namespace='/v2/components', event='component_data', timeout=timeout) is not None
+        return (
+            read_until(
+                lambda data: data[component]['predicates'][predicate],
+                url=self._address,
+                namespace='/v2/components',
+                event='component_data',
+                timeout=timeout,
+                auth=self._sio_auth(),
+            )
+            is not None
+        )
 
     @_requires_core_version('>=3.1.0')
-    def wait_for_controller_predicate(self, hardware: str, controller: str, predicate: str,
-                                      timeout: Union[None, int, float] = None) -> bool:
+    def wait_for_controller_predicate(
+        self,
+        hardware: str,
+        controller: str,
+        predicate: str,
+        timeout: Union[None, int, float] = None,
+    ) -> bool:
         """
         Wait until a controller predicate is true.
 
@@ -509,9 +650,17 @@ class AICA:
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: True if the predicate is true before the timeout duration, False otherwise
         """
-        return read_until(lambda data: data[hardware]['controllers'][controller]['predicates'][predicate],
-                          url=self._address, namespace='/v2/hardware', event='hardware_data',
-                          timeout=timeout) is not None
+        return (
+            read_until(
+                lambda data: data[hardware]['controllers'][controller]['predicates'][predicate],
+                url=self._address,
+                namespace='/v2/hardware',
+                event='hardware_data',
+                timeout=timeout,
+                auth=self._sio_auth(),
+            )
+            is not None
+        )
 
     def wait_for_condition(self, condition: str, timeout=None) -> bool:
         """
@@ -521,8 +670,17 @@ class AICA:
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: True if the condition is true before the timeout duration, False otherwise
         """
-        return read_until(lambda data: data[condition], url=self._address, namespace='/v2/conditions',
-                          event='conditions', timeout=timeout) is not None
+        return (
+            read_until(
+                lambda data: data[condition],
+                url=self._address,
+                namespace='/v2/conditions',
+                event='conditions',
+                timeout=timeout,
+                auth=self._sio_auth(),
+            )
+            is not None
+        )
 
     @_requires_core_version('>=4.0.0')
     def wait_for_sequence(self, sequence: str, state: str, timeout=None) -> bool:
@@ -535,5 +693,14 @@ class AICA:
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: True if the condition is true before the timeout duration, False otherwise
         """
-        return read_until(lambda data: data[sequence]['state'] == state, url=self._address, namespace='/v2/sequences',
-                          event='sequences', timeout=timeout) is not None
+        return (
+            read_until(
+                lambda data: data[sequence]['state'] == state,
+                url=self._address,
+                namespace='/v2/sequences',
+                event='sequences',
+                timeout=timeout,
+                auth=self._sio_auth(),
+            )
+            is not None
+        )
