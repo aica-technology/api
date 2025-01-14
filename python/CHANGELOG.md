@@ -12,6 +12,10 @@ Release Versions:
 - [1.0.1](#101)
 - [1.0.0](#100)
 
+## Upcoming changes
+
+- feat(python): add support for the upcoming auth update (#207)
+
 ## 3.0.0
 
 Version 3.0.0 of the AICA API client is compatible with the new AICA Core version 4.0. It supports additional methods to
