@@ -64,7 +64,7 @@ class AICA:
     def __raw_endpoint(self, endpoint: str) -> str:
         return f'{self._address}/{endpoint}'
 
-    def __create_token(self) -> None:
+    def __ensure_token(self) -> None:
         """Authenticate with the API and store the result in self.__token."""
         if self.__token is not None:
             return
@@ -75,7 +75,7 @@ class AICA:
     def _sio_auth(self) -> Optional[str]:
         # FIXME: doesn't handle token expiration
         if self.__api_key is not None:
-            self.__create_token()
+            self.__ensure_token()
         return self.__token
 
     def _safe_uri(self, uri: str) -> str:
@@ -100,7 +100,7 @@ class AICA:
         retry = 2
         while retry > 0:
             if self.__api_key is not None:
-                self.__create_token()
+                self.__ensure_token()
                 headers = {'Authorization': f'Bearer {self.__token}'}
             res = requests.request(
                 method, self._endpoint(endpoint), params=params, json=json, headers=headers, timeout=5
