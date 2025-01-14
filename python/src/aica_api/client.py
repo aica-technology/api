@@ -68,9 +68,9 @@ class AICA:
         """Authenticate with the API and store the result in self.__token."""
         if self.__token is not None:
             return
-        rep = requests.post(self._endpoint('auth/login'), headers={'Authorization': f'Bearer {self.__api_key}'})
-        rep.raise_for_status()
-        self.__token = rep.json()['token']
+        res = requests.post(self._endpoint('auth/login'), headers={'Authorization': f'Bearer {self.__api_key}'})
+        res.raise_for_status()
+        self.__token = res.json()['token']
 
     def _sio_auth(self) -> Optional[str]:
         # FIXME: doesn't handle token expiration
