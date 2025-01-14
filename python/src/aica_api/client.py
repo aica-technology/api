@@ -119,7 +119,14 @@ class AICA:
         """
         core_version = None
         try:
+<<<<<<< Updated upstream
             core_version = requests.get(f'{self._address}/version').json()
+=======
+            core_version = requests.get(self.__raw_endpoint('version')).json()
+        except requests.exceptions.InternalServerError:
+            # most likely an unsigned core
+            pass
+>>>>>>> Stashed changes
         except requests.exceptions.RequestException:
             self._logger.error(f'Error connecting to the API server at {self._address}! '
                                f'Check that AICA Core is running and configured with the right address.')
