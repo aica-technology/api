@@ -66,7 +66,7 @@ class AICA:
 
     def __create_token(self) -> None:
         """Authenticate with the API and store the result in self.__token."""
-        if self.__token is None:
+        if self.__token is not None:
             return
         rep = requests.post(self._endpoint('auth/login'), headers={'Authorization': f'Bearer {self.__api_key}'})
         rep.raise_for_status()
