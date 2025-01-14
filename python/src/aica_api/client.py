@@ -78,7 +78,8 @@ class AICA:
             self.__ensure_token()
         return self.__token
 
-    def _safe_uri(self, uri: str) -> str:
+    @staticmethod
+    def _safe_uri(uri: str) -> str:
         """
         Make a string safe for use in a URI by encoding special characters.
 
@@ -97,6 +98,7 @@ class AICA:
     ) -> requests.Response:
         headers = None
         retry = 2
+        res = None
         while retry > 0:
             if self.__api_key is not None:
                 self.__ensure_token()
@@ -330,7 +332,7 @@ class AICA:
         :param service: The name of the service
         :param payload: The service payload, formatted according to the respective service description
         """
-        endpoint = f'application/components/{self._safe_uri(component)}/service/{self._safe_uri(service)}'
+        endpoint = f'application/components/{AICA._safe_uri(component)}/service/{AICA._safe_uri(service)}'
         data = {'payload': payload}
         return self._request('PUT', endpoint, json=data)
 
@@ -343,7 +345,7 @@ class AICA:
         :param service: The name of the service
         :param payload: The service payload, formatted according to the respective service description
         """
-        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controller/{self._safe_uri(controller)}/service/{self._safe_uri(service)}'
+        endpoint = f'application/hardware/{AICA._safe_uri(hardware)}/controller/{AICA._safe_uri(controller)}/service/{AICA._safe_uri(service)}'
         data = {'payload': payload}
         return self._request('PUT', endpoint, json=data)
 
@@ -360,7 +362,7 @@ class AICA:
 
         :param component: The name of the component to load
         """
-        endpoint = f'application/components/{self._safe_uri(component)}'
+        endpoint = f'application/components/{AICA._safe_uri(component)}'
         return self._request('PUT', endpoint)
 
     def load_controller(self, hardware: str, controller: str) -> requests.Response:
@@ -371,7 +373,7 @@ class AICA:
         :param hardware: The name of the hardware interface
         :param controller: The name of the controller to load
         """
-        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controller/{self._safe_uri(controller)}'
+        endpoint = f'application/hardware/{AICA._safe_uri(hardware)}/controller/{AICA._safe_uri(controller)}'
         return self._request('PUT', endpoint)
 
     def load_hardware(self, hardware: str) -> requests.Response:
@@ -381,7 +383,7 @@ class AICA:
 
         :param hardware: The name of the hardware interface to load
         """
-        endpoint = f'application/hardware/{self._safe_uri(hardware)}'
+        endpoint = f'application/hardware/{AICA._safe_uri(hardware)}'
         return self._request('PUT', endpoint)
 
     def pause_application(self) -> requests.Response:
@@ -431,7 +433,7 @@ class AICA:
         :param parameter: The name of the parameter
         :param value: The value of the parameter
         """
-        endpoint = f'application/components/{self._safe_uri(component)}/parameter/{self._safe_uri(parameter)}'
+        endpoint = f'application/components/{AICA._safe_uri(component)}/parameter/{AICA._safe_uri(parameter)}'
         data = {'value': value}
         return self._request('PUT', endpoint, json=data)
 
@@ -450,7 +452,7 @@ class AICA:
         :param parameter: The name of the parameter
         :param value: The value of the parameter
         """
-        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controller/{self._safe_uri(controller)}/parameter/{self._safe_uri(parameter)}'
+        endpoint = f'application/hardware/{AICA._safe_uri(hardware)}/controller/{AICA._safe_uri(controller)}/parameter/{AICA._safe_uri(parameter)}'
         data = {'value': value}
         return self._request('PUT', endpoint, json=data)
 
@@ -466,7 +468,7 @@ class AICA:
         :param component: The name of the component
         :param transition: The lifecycle transition label
         """
-        endpoint = f'application/components/{self._safe_uri(component)}/lifecycle/transition'
+        endpoint = f'application/components/{AICA._safe_uri(component)}/lifecycle/transition'
         data = {'transition': transition}
         return self._request('PUT', endpoint, json=data)
 
@@ -483,7 +485,7 @@ class AICA:
         :param activate: A list of controllers to activate
         :param deactivate: A list of controllers to deactivate
         """
-        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controllers'
+        endpoint = f'application/hardware/{AICA._safe_uri(hardware)}/controllers'
         params = {
             'activate': [] if not activate else activate,
             'deactivate': [] if not deactivate else deactivate,
@@ -497,7 +499,7 @@ class AICA:
 
         :param component: The name of the component to unload
         """
-        endpoint = f'application/components/{self._safe_uri(component)}'
+        endpoint = f'application/components/{AICA._safe_uri(component)}'
         return self._request('DELETE', endpoint)
 
     def unload_controller(self, hardware: str, controller: str) -> requests.Response:
@@ -508,7 +510,7 @@ class AICA:
         :param hardware: The name of the hardware interface
         :param controller: The name of the controller to unload
         """
-        endpoint = f'application/hardware/{self._safe_uri(hardware)}/controller/{self._safe_uri(controller)}'
+        endpoint = f'application/hardware/{AICA._safe_uri(hardware)}/controller/{AICA._safe_uri(controller)}'
         return self._request('DELETE', endpoint)
 
     def unload_hardware(self, hardware: str) -> requests.Response:
@@ -518,7 +520,7 @@ class AICA:
 
         :param hardware: The name of the hardware interface to unload
         """
-        endpoint = f'application/hardware/{self._safe_uri(hardware)}'
+        endpoint = f'application/hardware/{AICA._safe_uri(hardware)}'
         return self._request('DELETE', endpoint)
 
     def get_application(self) -> requests.Response:
@@ -537,8 +539,8 @@ class AICA:
         :param sequence_name: The name of the sequence
         :param action: The sequence action label
         """
-        endpoint = f'application/sequences/{self._safe_uri(sequence_name)}'
-        return self._request('PUT', endpoint, params={'action': self._safe_uri(action)})
+        endpoint = f'application/sequences/{AICA._safe_uri(sequence_name)}'
+        return self._request('PUT', endpoint, params={'action': AICA._safe_uri(action)})
 
     def wait_for_component(self, component: str, state: str, timeout: Union[None, int, float] = None) -> bool:
         """

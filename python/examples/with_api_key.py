@@ -8,4 +8,5 @@ client = AICA(
 
 assert client.check()
 print(f'Application state: {client.get_application_state().text}')
+print(f'Application state: {client.load_component("def").text}')
 print(client.wait_for_component('abc', 'on'))
