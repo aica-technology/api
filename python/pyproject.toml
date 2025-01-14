@@ -28,7 +28,7 @@ classifiers = [
 
 
 [tool.ruff]
-line-length = 125
+line-length = 120
 
 [tool.ruff.lint]
 ignore = ["D212", "D400", "D415", "FA100", "G004"]
