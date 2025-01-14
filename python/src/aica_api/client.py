@@ -93,7 +93,6 @@ class AICA:
         endpoint: str,
         *,
         params: Optional[dict] = None,
-        auth: Optional[bool] = None,
         json: Optional[dict] = None,
     ) -> requests.Response:
         headers = None
