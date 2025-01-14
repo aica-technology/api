@@ -102,7 +102,9 @@ class AICA:
             if self.__api_key is not None:
                 self.__create_token()
                 headers = {'Authorization': f'Bearer {self.__token}'}
-            res = requests.request(method, self._endpoint(endpoint), params=params, json=json, headers=headers, timeout=5)
+            res = requests.request(
+                method, self._endpoint(endpoint), params=params, json=json, headers=headers, timeout=5
+            )
             retry -= 1
             if res.status_code == 401:
                 if self.__api_key is None:
@@ -179,6 +181,9 @@ class AICA:
         core_version = None
         try:
             core_version = requests.get(self.__raw_endpoint('version')).json()
+        except requests.exceptions.InternalServerError:
+            # most likely an unsigned core
+            pass
         except requests.exceptions.RequestException:
             self._logger.error(
                 f'Error connecting to the API server at {self._address}! '
@@ -612,7 +617,9 @@ class AICA:
         )
 
     @_requires_core_version('>=3.1.0')
-    def wait_for_component_predicate(self, component: str, predicate: str, timeout: Union[None, int, float] = None) -> bool:
+    def wait_for_component_predicate(
+        self, component: str, predicate: str, timeout: Union[None, int, float] = None
+    ) -> bool:
         """
         Wait until a component predicate is true.
 
