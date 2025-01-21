@@ -1,12 +1,17 @@
 import time
-from typing import Callable, Union
+from typing import Callable, Optional, Union
 
 import socketio
 from socketio.exceptions import ConnectionError, TimeoutError
 
 
-def read_once(url: str = 'http://0.0.0.0:5000', namespace: str = '/', event: str = '*',
-              timeout: Union[None, int, float] = 5) -> Union[None, dict]:
+def read_once(
+    url: str = 'http://0.0.0.0:5000',
+    namespace: str = '/',
+    event: str = '*',
+    timeout: Union[None, int, float] = 5,
+    auth: Optional[str] = None,
+) -> Union[None, dict]:
     """
     Listen for and return the first Socket.IO event on a specified URL and namespace within a time limited period
 
@@ -16,11 +21,24 @@ def read_once(url: str = 'http://0.0.0.0:5000', namespace: str = '/', event: str
     :param timeout: The timeout in seconds to listen for an event. If set to None, block indefinitely
     :return: The received event data, or None if the connection or event listener timed out
     """
-    return read_until(lambda data: True, url=url, namespace=namespace, event=event, timeout=timeout)
+    return read_until(
+        lambda data: True,
+        url=url,
+        namespace=namespace,
+        event=event,
+        timeout=timeout,
+        auth=auth,
+    )
 
 
-def read_until(callback: Callable[[dict], bool], url: str = 'http://0.0.0.0:5000', namespace: str = '/',
-               event: str = '*', timeout: Union[None, int, float] = 5) -> Union[None, dict]:
+def read_until(
+    callback: Callable[[dict], bool],
+    url: str = 'http://0.0.0.0:5000',
+    namespace: str = '/',
+    event: str = '*',
+    timeout: Union[None, int, float] = 5,
+    auth: Optional[str] = None,
+) -> Union[None, dict]:
     """
     Listen for and return the first Socket.IO event that validates against a callback function on a specified URL
     and namespace within a time limited period
@@ -38,9 +56,15 @@ def read_until(callback: Callable[[dict], bool], url: str = 'http://0.0.0.0:5000
 
     with socketio.SimpleClient() as sio:
         try:
-            sio.connect(url, namespace=namespace, wait_timeout=timeout)
+            sio.connect(
+                url,
+                socketio_path='/ws/socket.io',
+                namespace=namespace,
+                wait_timeout=timeout,
+                auth={'auth': f'Bearer {auth}'},
+            )
         except ConnectionError:
-            print(f"Could not connect!")
+            print('Could not connect!')
             return None
 
         start_time = time.time()
