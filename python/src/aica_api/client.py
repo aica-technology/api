@@ -66,6 +66,15 @@ class AICA:
 
     def __ensure_token(self) -> None:
         """Authenticate with the API and store the result in self.__token."""
+        err = ' The function call may fail due to lack of authentication.'
+        has_version, is_compatible = self._check_version(
+            None,
+            '>=4.3.0',
+            err_incompatible=err,
+            err_undefined=err,
+        )
+        if not has_version or not is_compatible:
+            return
         if self.__token is not None:
             return
         res = requests.post(self._endpoint('auth/login'), headers={'Authorization': f'Bearer {self.__api_key}'})
@@ -113,6 +122,31 @@ class AICA:
                 self.__token = None
         return res
 
+    def _check_version(
+        self,
+        name: Optional[str],
+        requirement: str,
+        *,
+        err_undefined: str = '',
+        err_incompatible: str = '',
+    ) -> tuple[bool, bool]:
+        fname = f'The function {name}' if name is not None else 'This function'
+        if self._core_version is None and self.core_version() is None:
+            self._logger.warning(
+                f'{fname} requires AICA Core version {requirement}, '
+                f'but the current Core version is unknown.{err_undefined}'
+            )
+            return False, False
+
+        if not semver.match(self._core_version, requirement):
+            self._logger.error(
+                f'{fname} requires AICA Core version {requirement}, '
+                f'but the current AICA Core version is {self._core_version}.{err_incompatible}'
+            )
+            return True, False
+
+        return True, True
+
     @staticmethod
     def _requires_core_version(version):
         """
@@ -130,22 +164,14 @@ class AICA:
         def decorator(func):
             @wraps(func)
             def wrapper(self, *args, **kwargs):
-                if self._core_version is None and self.core_version() is None:
-                    self._logger.warning(
-                        f'The function {func.__name__} requires AICA Core version {version}, '
-                        f'but the current Core version is unknown. The function call behavior '
-                        f'may be undefined.'
-                    )
-                    return func(self, *args, **kwargs)
-
-                if not semver.match(self._core_version, version):
-                    self._logger.error(
-                        f'The function {func.__name__} requires AICA Core version {version}, '
-                        f'but the current AICA Core version is {self._core_version}. The function '
-                        f'will not be called'
-                    )
+                has_version, is_compatible = self._check_version(
+                    func.__name__,
+                    version,
+                    err_undefined=' The function call behavior may be undefined.',
+                    err_incompatible=' The function will not be called.',
+                )
+                if not is_compatible:
                     return None
-
                 return func(self, *args, **kwargs)
 
             return wrapper
