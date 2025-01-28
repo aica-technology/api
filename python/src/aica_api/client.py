@@ -66,12 +66,10 @@ class AICA:
 
     def __ensure_token(self) -> None:
         """Authenticate with the API and store the result in self.__token."""
-        err = ' The function call may fail due to lack of authentication.'
         has_version, is_compatible = self._check_version(
             None,
             '>=4.3.0',
-            err_incompatible=err,
-            err_undefined=err,
+            err_undefined=' The function call may fail due to lack of authentication.',
         )
         if not has_version or not is_compatible:
             return
@@ -128,7 +126,7 @@ class AICA:
         requirement: str,
         *,
         err_undefined: str = '',
-        err_incompatible: str = '',
+        err_incompatible: Optional[str] = None,
     ) -> tuple[bool, bool]:
         fname = f'The function {name}' if name is not None else 'This function'
         if self._core_version is None and self.core_version() is None:
@@ -139,10 +137,11 @@ class AICA:
             return False, False
 
         if not semver.match(self._core_version, requirement):
-            self._logger.error(
-                f'{fname} requires AICA Core version {requirement}, '
-                f'but the current AICA Core version is {self._core_version}.{err_incompatible}'
-            )
+            if err_incompatible is not None:
+                self._logger.error(
+                    f'{fname} requires AICA Core version {requirement}, '
+                    f'but the current AICA Core version is {self._core_version}.{err_incompatible}'
+                )
             return True, False
 
         return True, True
