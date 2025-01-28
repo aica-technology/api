@@ -15,6 +15,7 @@ Release Versions:
 ## Upcoming changes
 
 - feat(python): add support for the upcoming auth update (#207)
+- fix(api): avoid auth warnings when using older versions of Core (#211)
 
 ## 3.0.0
 
