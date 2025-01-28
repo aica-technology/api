@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [3.1.0](#310)
 - [3.0.0](#300)
 - [2.1.0](#210)
 - [2.0.0](#200)
@@ -12,10 +13,15 @@ Release Versions:
 - [1.0.1](#101)
 - [1.0.0](#100)
 
-## Upcoming changes
+## 3.1.0
 
-- feat(python): add support for the upcoming auth update (#207)
-- fix(api): avoid auth warnings when using older versions of Core (#211)
+Version 3.1.0 of the AICA API client is compatible with AICA Core v4.3.0. This version introduces authentication and
+access scopes to the API server. An API key with appropriate scopes is required to access the respective endpoints and
+functionalities.
+
+### Features
+
+- Add support for the upcoming auth update (#207)
 
 ## 3.0.0
 
