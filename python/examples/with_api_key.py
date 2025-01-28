@@ -7,9 +7,8 @@ client = AICA(
 )
 
 print(f"Check: {"pass" if client.check() else "failed"}")
-print(f'API Version: {client.api_version()}')
+print(f'Core Version: {client.core_version()}')
 print(f'Protocol: {client.protocol()}')
-print(f'License: {client.license().text}')
 print(f'Application state: {client.get_application_state().text}')
 print(f'Load component: {client.load_component("def").text}')
 print(client.wait_for_component('abc', 'loaded'))
