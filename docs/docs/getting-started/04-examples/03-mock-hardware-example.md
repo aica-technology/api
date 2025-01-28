@@ -9,12 +9,12 @@ sidebar_position: 3
 This example uses an additional Universal Robots collection package, which includes drivers for communicating with
 UR robots and the example URDF content used to visualize the robot arm.
 
-Use AICA Core v3.1.1 together with the `collections/ur-collection` package at version v3.0.5 to reproduce this example.
+Use AICA Core v4.2.0 together with the `collections/ur-collection` package at version v4.1.0 to reproduce this example.
 
 ## URDF Hardware Manager
 
-After starting the application container, open the Hardware tab of the Developer
-Interface ([localhost:8080/dev/hardware](http://localhost:8080/dev/hardware)). This page shows a table of available URDF
+After starting AICA Studio, open the Hardware Manager 
+([localhost:8080/studio/hardware](http://localhost:8080/studio/hardware)). This page shows a table of available URDF
 files in the container database with a name and a description.
 
 AICA hardware collections include example URDFs, which are shown on the table with a pad-lock icon indicating that they
@@ -27,17 +27,17 @@ appear on the right side of the page.
 ```xml title="Universal Robots 5e (mock interface)"
 <?xml version="1.0" ?>
 <robot name="ur5e">
-    <ros2_control name="UniversalRobotsInterface" type="system">
+    <ros2_control name="ur5e_mock" type="system">
         <hardware>
             #highlight-next-line
-            <plugin>robot_interface/MockInterface</plugin>
+            <plugin>aica_core_interfaces/MockInterface</plugin>
         </hardware>
         ...
     </ros2_control>
 </robot>
 ```
 
-The selected URDF specifies the hardware plugin `robot_interface/MockInterface`. This is a generic AICA plugin that
+The selected URDF specifies the hardware plugin `aica_core_interfaces/MockInterface`. This is a generic AICA plugin that
 mocks real robot hardware by perfectly following all commands and reflecting back the robot state.
 
 The mock URDF will be used to demonstrate the hardware interface block in AICA applications.
@@ -51,38 +51,49 @@ more context.
 
 ## Setting up the application
 
-Go to the Editor page using the top navigation bar or at [localhost:8080/dev/editor](http://localhost:8080/dev/editor)
-and create a new application.
+Go to the Editor page using the top navigation bar or at
+[localhost:8080/studio/editor](http://localhost:8080/studio/editor) and create a new application.
 
 Enter the following YAML and generate the graph.
 
 ```yaml
+schema: 2-0-2
+dependencies:
+  core: v4.2.0
 on_start:
   load:
-    - hardware: mock_hardware
-    - controller: robot_state_broadcaster
-      hardware: mock_hardware
-buttons:
-  activate_controller:
-    position:
-      x: 0
-      y: 280
-    on_click:
-      switch_controllers:
-        hardware: mock_hardware
-        activate: robot_state_broadcaster
-components: {}
+    hardware: mock_hardware
 hardware:
   mock_hardware:
-    display_name: Mock Hardware Interface
-    position:
-      x: 400
-      y: -80
+    display_name: Hardware Interface
     urdf: Universal Robots 5e (mock interface)
     rate: 60
+    events:
+      transitions:
+        on_load:
+          load:
+            controller: robot_state_broadcaster
+            hardware: mock_hardware
     controllers:
       robot_state_broadcaster:
-        plugin: modulo_controllers/RobotStateBroadcaster
+        plugin: aica_core_controllers/RobotStateBroadcaster
+graph:
+  positions:
+    buttons:
+      button:
+        x: -120
+        y: 260
+    hardware:
+      mock_hardware:
+        x: 500
+        y: -20
+  buttons:
+    button:
+      display_name: Activate Controller
+      on_click:
+        switch_controllers:
+          hardware: mock_hardware
+          activate: robot_state_broadcaster
 ```
 
 The application graph should show a hardware interface with a controller and an event trigger.
@@ -91,26 +102,42 @@ The application graph should show a hardware interface with a controller and an 
 
 ## The example explained
 
-Starting from the bottom, the top-level `hardware` field defines the hardware interfaces in an application.
-
-In this case, there is one hardware interface called `mock_hardware`.
+The application begins with the `on_start` directive to list the initial application events. In this case, the only
+event that occurs on start is to load the `mock_hardware` hardware interface.
 
 ```yaml
+on_start:
+  load:
+    hardware: mock_hardware
+```
+
+Moving down the application, the top-level `hardware` field defines the hardware interfaces in an application. In this
+case, there is one hardware interface called `mock_hardware`.
+
+```yaml
+hardware:
   mock_hardware:
-    display_name: Mock Hardware Interface
-    position:
-      x: 400
-      y: -80
+    display_name: Hardware Interface
     urdf: Universal Robots 5e (mock interface)
+    rate: 60
+    events:
+      transitions:
+        on_load:
+          load:
+            controller: robot_state_broadcaster
+            hardware: mock_hardware
     controllers:
       robot_state_broadcaster:
-        plugin: modulo_controllers/RobotStateBroadcaster
+        plugin: aica_core_controllers/RobotStateBroadcaster
 ```
 
 The `urdf` field specifies the `Universal Robots 5e (mock interface)` URDF as identified on the hardware manager page.
 
+The `events` field lists events that occur on state transitions of the hardware interface. In this case, the `on_load`
+transition is used to load a controller once the ardware interface is loaded.
+
 The `controllers` field lists the controllers associated with the hardware interface. In this example, the only
-controller is the `modulo_controllers/RobotStateBroadcaster`, which is a generic AICA controller that broadcasts the
+controller is the `aica_core_controllers/RobotStateBroadcaster`, which is a generic AICA controller that broadcasts the
 robot joint states and transforms.
 
 :::tip
@@ -120,53 +147,44 @@ the [YAML application syntax](../../reference/03-yaml-syntax.md) reference page.
 
 :::
 
-Moving up the application, the `components` field is left empty because there are no components in this example.
+At the bottom, the application defines positions of components in the graph and event trigger buttons under the
+top-level `graph` field.
 
 ```yaml
-components: {}
+graph:
+  positions:
+    buttons:
+      button:
+        x: -120
+        y: 260
+    hardware:
+      mock_hardware:
+        x: 500
+        y: -20
+  buttons:
+    button:
+      display_name: Activate Controller
+      on_click:
+        switch_controllers:
+          hardware: mock_hardware
+          activate: robot_state_broadcaster
 ```
 
-Above that, the application defines an event trigger button under the top-level `buttons` field.
-
-```yaml
-buttons:
-  activate_controller:
-    position:
-      x: 0
-      y: 280
-    on_click:
-      switch_controllers:
-        hardware: mock_hardware
-        activate: robot_state_broadcaster
-```
-
-The `on_click` field defines the application events that are triggered with the event button is pressed. In this case,
-it triggers the `switch_controllers` event which is used to activate the `robot_state_broadcaster` controller on the
-`mock_hardware` interface.
-
-The application begins with the `on_start` directive to list the initial application events.
-
-```yaml
-on_start:
-  load:
-    - hardware: mock_hardware
-    - controller: robot_state_broadcaster
-      hardware: mock_hardware
-```
-
-In this case, the first event that occurs in the application is to load the `mock_hardware` hardware interface.
-After that, the `robot_state_broadcaster` controller is loaded.
+The `on_click` field of buttons defines the application events that are triggered with the event button is pressed. In
+this case, it triggers the `switch_controllers` event which is used to activate the `robot_state_broadcaster` controller
+on the `mock_hardware` interface.
 
 ## Run the application
 
 Putting it all together, pressing Play on this application should load the mock hardware interface and load the
 broadcaster controller. When the trigger button is pressed in the graph editor, the broadcaster will be activated.
 
-:::caution
+:::tip
 
-The loading behavior of hardware interfaces and controllers may change in future versions to simplify "auto-load"
-procedures similar
-to [component auto-lifecycle events](../../concepts/05-building-blocks/03-components.md#auto-lifecycle-events)
+Controllers can also be "auto-activated", similar to the procedure in the
+[previous example](./02-editor-example.md#auto-lifecycle-events). Try to modify this example by removing the trigger
+button and navigating to the controller settings to toggle the "auto-activate" behavior. Once the application is started
+again, the controller should now automatically be active.
 
 :::
 
