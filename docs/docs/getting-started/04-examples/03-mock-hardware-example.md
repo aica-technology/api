@@ -63,7 +63,6 @@ dependencies:
 on_start:
   load:
     hardware: mock_hardware
-components: {}
 hardware:
   mock_hardware:
     display_name: Hardware Interface
@@ -112,14 +111,8 @@ on_start:
     hardware: mock_hardware
 ```
 
-Moving down the application, the `components` field is left empty because there are no components in this example.
-
-```yaml
-components: {}
-```
-
-Below that, the top-level `hardware` field defines the hardware interfaces in an application. In this case, there is one
-hardware interface called `mock_hardware`.
+Moving down the application, the top-level `hardware` field defines the hardware interfaces in an application. In this
+case, there is one hardware interface called `mock_hardware`.
 
 ```yaml
 hardware:
