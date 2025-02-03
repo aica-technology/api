@@ -118,7 +118,6 @@ docker build -f aica-application.toml -t aica-runtime .
 
 The command `docker image ls | grep aica-runtime` should then list the `aica-runtime` image.
 
-
 ## Starting the application container
 
 You can start the AICA application container with the following command.
@@ -208,9 +207,89 @@ To shut down the AICA application container at any time, press CTRL+C in the ori
 to stop the application container from a different terminal window, look up the container name
 with `docker container ps` and then run `docker container stop <container_name>`.
 
+### Persistent user data
+
+AICA applications, URDF hardware and user configurations managed through the API or AICA Studio are stored in a
+database. Because the docker container is isolated from the host filesystem, the local database will be lost when the
+container exits. To persist local data between sessions, create a dedicated directory somewhere on the host. For
+example, use `mkdir ~/.aica-data` to keep the data folder hidden in the home folder. Then execute the normal run command
+with an additional volume mount for the user data.
+
+:::note
+
+Change `/path/to/data` in the command below to a desired location for the data (e.g., `~/.aica-data` or elsewhere)
+
+:::
+
+<Tabs groupId="os">
+<TabItem value="linux" label="Linux">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  --net=host \
+  -v /path/to/license:/license:ro \
+  #highlight-next-line
+  -v /path/to/data:/data:rw \
+  aica-runtime
+```
+
+</TabItem>
+<TabItem value="mac" label="macOS">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -v /path/to/license:/license:ro \
+  #highlight-next-line
+  -v /path/to/data:/data:rw \
+  aica-runtime
+```
+
+</TabItem>
+</Tabs>
+
+### Setting a super-admin password
+
+AICA Core v4.3.0 and later require authentication for AICA Studio and the API. If no users exist in the mounted user
+database, as is the case for a new configuration or when no data folder is mounted, a system administration password can
+be set through an environment variable which grants full administration rights.
+
+<Tabs groupId="os">
+<TabItem value="linux" label="Linux">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  --net=host \
+  -v /path/to/license:/license:ro \
+  #highlight-next-line
+  -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
+  aica-runtime
+```
+
+</TabItem>
+<TabItem value="mac" label="macOS">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -v /path/to/license:/license:ro \
+  #highlight-next-line
+  -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
+  aica-runtime
+```
+
+</TabItem>
+</Tabs>
+
 ## Access the AICA Studio
 
-Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view AICA Studio.
+Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view AICA Studio. If the
+`AICA_SUPER_ADMIN_PASSWORD` environment variable was set, use the `super-admin` username and the provided password to
+log in as the system administrator.
 
 ## Access the REST API
 
@@ -273,46 +352,3 @@ docker container exec -it -u ros2 -e DISPLAY="$DISPLAY" -e XAUTHORITY="$XAUTH" C
 ```
 
 You should then be able to run `rviz2` inside the container and see the window appear.
-
-## Persistent user data
-
-AICA applications and URDF hardware can be uploaded to a user database through the API or AICA Studio. Because the
-docker container is isolated from the host filesystem, the local database will be lost when the container exists. To
-persist local data between sessions, create a dedicated directory somewhere on the host. For example, use 
-`mkdir ~/.aica-data` to keep the data folder hidden in the home folder. Then execute the normal run command with an
-additional volume mount for the user data.
-
-:::note
-
-Change `/path/to/data` in the command below to a desired location for the data (e.g., `~/.aica-data` or elsewhere)
-
-:::
-
-<Tabs groupId="os">
-<TabItem value="linux" label="Linux">
-
-```bash
-docker run -it --rm \
-  --privileged \
-  --net=host \
-  -v /path/to/license:/license:ro \
-  #highlight-next-line
-  -v /path/to/data:/data:rw \
-  aica-runtime
-```
-
-</TabItem>
-<TabItem value="mac" label="macOS">
-
-```bash
-docker run -it --rm \
-  --privileged \
-  -p 8080:8080 -p 18000-18100:18000-18100/udp \
-  -v /path/to/license:/license:ro \
-  #highlight-next-line
-  -v /path/to/data:/data:rw \
-  aica-runtime
-```
-
-</TabItem>
-</Tabs>
