@@ -18,6 +18,7 @@ Release Versions:
 ## Upcoming changes
 
 - feat: add intra process comms field to component schema (#192)
+- feat: add joint positions to application schema (#215)
 
 ## 2-0-2
 

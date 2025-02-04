@@ -145,6 +145,9 @@
     "frames": {
       "$ref": "frames.schema.json"
     },
+    "joint_positions": {
+      "$ref": "joint_positions.schema.json"
+    },
     "graph": {
       "$ref": "graph.schema.json"
     }
