@@ -17,14 +17,22 @@
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
-          "items": "string"
+          "items": {
+            "type": "string",
+            "example": [
+              "joint_1",
+              "shoulder_joint"
+            ]
+          }
         },
         "positions": {
           "title": "Joint Positions",
           "description": "The positions of the joints in the same order as the names",
           "type": "array",
           "minItems": 1,
-          "items": "number"
+          "items": {
+            "type": "number"
+          }
         }
       },
       "required": [
