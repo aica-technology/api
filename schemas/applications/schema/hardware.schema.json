@@ -26,6 +26,24 @@
             250
           ]
         },
+        "tf_prefix": {
+            "description": "The TF prefix to use for the URDF",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "my_robot_",
+              "left_robot_",
+              "robot_1_"
+            ]
+        },
+        "reference_frame": {
+            "description": "The reference frame to use for the URDF",
+            "type": "string",
+            "default": "",
+            "examples": [
+              "world"
+            ]
+        },
         "strict": {
           "title": "Strict Hardware",
           "description": "If true, automatically stop controller execution on error or if the execution rate drops below the rate tolerance threshold",
