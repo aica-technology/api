@@ -1,5 +1,5 @@
 {
-  "$id": "/2-0-2/application.schema.json",
+  "$id": "/draft/2-0-3/application.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "YAML Application Description",
   "description": "An AICA application graph description using YAML syntax.",
@@ -144,6 +144,9 @@
     },
     "frames": {
       "$ref": "frames.schema.json"
+    },
+    "joint_positions": {
+      "$ref": "joint_positions.schema.json"
     },
     "graph": {
       "$ref": "graph.schema.json"
