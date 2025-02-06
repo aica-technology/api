@@ -27,7 +27,7 @@
           ]
         },
         "tf_prefix": {
-            "description": "The TF prefix to use for the URDF",
+            "description": "An optional TF prefix to apply to all of the links in the URDF to distinguish multiple instances of the same robot",
             "type": "string",
             "default": "",
             "examples": [
@@ -37,9 +37,8 @@
             ]
         },
         "reference_frame": {
-            "description": "The reference frame to use for the URDF",
+            "description": "An optional reference frame to relocate the hardware in the 3D scene. If left empty, the root link in the URDF will be used as the reference frame of the hardware instead.",
             "type": "string",
-            "default": "",
             "examples": [
               "world"
             ]
