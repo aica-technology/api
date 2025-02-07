@@ -120,7 +120,6 @@ const config = {
                     {
                         title: "More",
                         items: [
-                            //https://github.com/orgs/aica-technology/discussions
                             {
                                 label: "Discussions, announcements, and new releases",
                                 href: "https://github.com/orgs/aica-technology/discussions",

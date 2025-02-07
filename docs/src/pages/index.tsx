@@ -45,7 +45,7 @@ function AICAdemySection() {
                 <p className="hero__subtitle">
                     Visit our learning platform for more video lessons and training modules
                 </p>
-                <LinkButton link={"/docs/intro"} text={"AICAdemy"}/>
+                <LinkButton link={"https://aica.thinkific.com"} text={"AICAdemy"}/>
             </div>
         </header>
     );
