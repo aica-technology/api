@@ -101,7 +101,7 @@ components, as they provide no meaningful behavior if directly instantiated.
 ## Signals
 
 The expected structure of the signal description is defined by
-the [Signal Description JSON schema](../../../static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/signal).
+the [Signal Description JSON schema](../../../static/schemas/1-0-0/interfaces.schema.json#/$defs/signal).
 
 Component inputs and outputs are described with a signal name and type, matching the name and type in the implementation
 when using the respective `add_input` or `add_output` function. Additionally, a human-readable display name and
@@ -133,15 +133,15 @@ An example description of a component with one input and one output, both as joi
 ## Parameters
 
 The expected structure of the parameter description is defined by
-the [Parameter Description JSON schema](../../../static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/parameter).
+the [Parameter Description JSON schema](../../../static/schemas/1-0-0/interfaces.schema.json#/$defs/parameter).
 
 Parameters contain a value of a certain type, described by the `parameter_type` property. Valid parameter types are
 defined in
-the [Parameter Type JSON schema](../../../static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/parameter_type).
+the [Parameter Type JSON schema](../../../static/schemas/1-0-0/interfaces.schema.json#/$defs/parameter_type).
 
 If the `parameter_type` property is `state`, then the `parameter_state_type` property must also be defined as a member
 of the enumeration
-in [Encoded State Type JSON schema](../../../static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/encoded_state_type.schema.json).
+in [Encoded State Type JSON schema](../../../static/schemas/1-0-0/interfaces.schema.json#/$defs/encoded_state_type.schema.json).
 
 Parameters generally have a default value which renders them optional in some cases. When a parameter has no valid
 default state and must be set by the user for the component to function, the `default_value` property in the component
@@ -176,7 +176,7 @@ An example parameter description is shown below.
 ## Predicates
 
 The expected structure of the predicate description is defined by
-the [Predicate Description JSON schema](../../../static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/predicate).
+the [Predicate Description JSON schema](../../../static/schemas/1-0-0/interfaces.schema.json#/$defs/predicate).
 
 Predicates are crucial to drive the event logic of the Dynamic State Engine, but they are very simple to declare
 and describe. Each predicate of a component indicates a particular run-time state or configuration that is either
@@ -203,7 +203,7 @@ An example predicate description is shown below.
 ## Services
 
 The expected structure of the service description is defined by
-the [Service Description JSON schema](../../../static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/service).
+the [Service Description JSON schema](../../../static/schemas/1-0-0/interfaces.schema.json#/$defs/service).
 
 Services are endpoints provided by a component that can trigger certain behaviours. In the backend implementation,
 they are created as ROS2 services with a specific `service_name` using one of two service message types. The first
