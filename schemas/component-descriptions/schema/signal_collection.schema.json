@@ -31,13 +31,13 @@
     },
     "signal_type": {
       "description": "The default type of the signals (signals in a collection must have the same type).",
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/signal_type"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/signal_type"
     },
     "signal_types": {
       "description": "An array of signal types supported by configurable typing. The active type is set through the '<$input_collection_name>_type' parameter, and the default type is determined by the `signal_type` property.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/signal_type"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/signal_type"
       },
       "minItems": 1,
       "uniqueItems": true
