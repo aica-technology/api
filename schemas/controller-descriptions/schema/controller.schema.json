@@ -84,7 +84,7 @@
       "description": "The fixed input signals (subscriptions) of the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/signal_type"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/signal_type"
       },
       "uniqueItems": true
     },
@@ -93,7 +93,7 @@
       "description": "The output signals (publications) of the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/signal"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/signal"
       },
       "uniqueItems": true
     },
@@ -102,7 +102,7 @@
       "description": "The parameters declared by the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/parameter"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/parameter"
       },
       "uniqueItems": true
     },
@@ -111,7 +111,7 @@
       "description": "The predicates provided by the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/predicate"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/predicate"
       },
       "uniqueItems": true
     },
@@ -120,7 +120,7 @@
       "description": "The services provided by the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/1-0-0/interfaces.schema.json#/$defs/service"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/service"
       },
       "uniqueItems": true
     }
