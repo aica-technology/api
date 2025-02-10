@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2-0-3](#2-0-3)
 - [2-0-2](#2-0-2)
 - [2-0-1](#2-0-1)
 - [2-0-0](#2-0-0)
@@ -15,7 +16,11 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
-## Upcoming changes
+## 2-0-3
+
+This patch adds new optional properties to components, hardware and the top-level application.
+
+### Changelog
 
 - feat: add intra process comms field to component schema (#192)
 - feat: add joint positions to application schema (#215)
