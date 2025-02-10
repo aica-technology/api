@@ -84,7 +84,7 @@
       "description": "The fixed input signals (subscriptions) of the controller.",
       "type": "array",
       "items": {
-        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/signal_type"
+        "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/signal"
       },
       "uniqueItems": true
     },
