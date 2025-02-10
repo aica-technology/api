@@ -1,5 +1,5 @@
 {
-  "$id": "/1-0-0/interfaces.schema.json",
+  "$id": "/draft/1-0-0/interfaces.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Common Interfaces",
   "description": "This schema includes definitions for common interfaces across the AICA System",
