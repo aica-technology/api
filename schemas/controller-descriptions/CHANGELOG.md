@@ -2,10 +2,17 @@
 
 Release Versions:
 
-- [1-3-0](#130)
-- [1-2-0](#120)
-- [1-1-0](#110)
-- [1-0-0](#100)
+- [1-3-1](#1-3-1)
+- [1-3-0](#1-3-0)
+- [1-2-0](#1-2-0)
+- [1-1-0](#1-1-0)
+- [1-0-0](#1-0-0)
+
+## 1-3-1
+
+Version 1-3-1 uses the new common interfaces schema at version 1-0-0 for the definitions of parameters, predicates,
+services and signals. This version includes `joint_accelerations`, `digital_io_state`, `analog_io_state` as available
+signal types.
 
 ## 1-3-0
 
