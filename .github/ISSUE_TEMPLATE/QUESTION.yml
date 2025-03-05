@@ -5,6 +5,7 @@ labels: ["documentation", "question"]
 assignees:
   - eeberhard
   - domire8
+  - rrosa24
 body:
   - type: markdown
     attributes:
