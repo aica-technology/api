@@ -19,9 +19,8 @@ body:
   - type: textarea
     id: manifest
     attributes:
-      label: Image configuration
-      description: Paste a screenshot of the Launcher configuration with the core version and any extras used to package your AICA System image
-      render: Shell
+      label: System configuration
+      description: Specify the affected AICA Core version and the name and versions of any packages if related to the issue. You may also paste a screenshot of the Launcher configuration showing the core version and packages.
       placeholder: |
         Paste screenshot here
     validations:
