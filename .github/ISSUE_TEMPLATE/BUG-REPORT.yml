@@ -22,7 +22,9 @@ body:
       label: System configuration
       description: Specify the affected AICA Core version and the name and versions of any packages if related to the issue. You may also paste a screenshot of the Launcher configuration showing the core version and packages.
       placeholder: |
-        Paste screenshot here
+        Core v1.2.3
+        Affected packages: ur-collection v1.2.3
+        (or paste a Launcher screenshot here)
     validations:
       required: true
   - type: textarea
