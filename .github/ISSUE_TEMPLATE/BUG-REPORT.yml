@@ -2,7 +2,7 @@ name: Bug Report
 description: Submit a bug report
 title: "[Bug]: "
 labels: ["bug"]
-projects: "aica-technology/1"
+projects: ["aica-technology/1"]
 assignees:
   - eeberhard
   - domire8
@@ -17,16 +17,11 @@ body:
         3. Fill out the form fields below
         4. Press Submit
   - type: textarea
-    id: manifest
+    id: version
     attributes:
-      label: Image manifest
-      description: Copy the full manifest file with the core version and any extras used to package your AICA System image
-      render: Shell
-      placeholder: |
-        #syntax=ghcr.io/aica-technology/app-builder:v2
-
-        [core]
-        image = "v1.2.3"
+      label: Version
+      description: Which version of AICA Core are you using? Also include any additional packages and their versions if relevant to the bug report.
+      placeholder: v1.2.3
     validations:
       required: true
   - type: textarea
