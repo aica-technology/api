@@ -19,11 +19,11 @@ and add your user.
 
 :::caution
 
-Note that Docker desktop for Linux is currently **not** supported. In Linux, Docker desktop is configured such that 
-it does not allow for the elevated permissions the AICA System requires (e.g., for peripheral devices, forwarding 
-graphics, etc). If you already have and need Docker desktop for other purposes, know that it is still possible to use 
-the AICA System by following the above instructions. However, to ensure full compatibility it is recommended that you 
-remove it from your system when not needed.  
+Please note that Docker Desktop for Linux is currently **unsupported**, as its default configuration does not allow for 
+the elevated permissions required by the AICA System (e.g., for peripheral devices, graphics forwarding, ...). For full 
+compatibility, it is recommended to uninstall it. If you require Docker Desktop for other purposes, you may still use 
+the AICA System by following the provided instructions. However, additional steps may be needed when (manually) 
+interacting with AICA's Docker images and containers.
 
 :::
 
