@@ -15,9 +15,13 @@ For Ubuntu users, make sure to follow
 the [post installation steps](https://docs.docker.com/engine/install/linux-postinstall/) to create the `docker` group
 and add your user.
 
-Also, note that Docker desktop for Linux is currently **not** supported as it uses a custom context which can not be 
-changed and does not allow for the elevated permissions the AICA System requires (e.g., for peripheral devices, 
-forwarding graphics, etc).
+:::
+
+:::caution
+
+Note that Docker desktop for Linux is currently **not** supported. In Linux, Docker desktop is configured such that 
+it does not allow for the elevated permissions the AICA System requires (e.g., for peripheral devices, forwarding 
+graphics, etc).
 
 :::
 
