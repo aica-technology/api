@@ -108,6 +108,37 @@ to access AICA packages.
 
 :::
 
+:::caution
+
+For **Linux users** that have Docker Desktop installed on their system, note that it uses a custom Docker context, namely 
+`desktop-linux`. Docker Desktop will set `desktop-linux` as the system-wide default context. This has a few side-effects
+on using the AICA System:
+
+- `desktop-linux` is created with limited privileges that do not allow the AICA System to work properly (e.g., with 
+peripheral devices, forwarding graphics, ...). In short, `docker build` will still work, but you will not be able to 
+use the full potential of the software. 
+- AICA Launcher will, by default, look for the `default` context (with elevated permissions) which:
+   -  may not exist if the [installation guide](https://docs.docker.com/engine/install/) is not followed
+   -  may still be overriden for some AICA Launcher functionalities if the system-wide context is not changed 
+
+### Suggested actions
+
+- If you are not using Docker Desktop, consider uninstalling it to avoid confusion and/or problems
+- If you need Docker Desktop for other purposes, make sure to change the context before using AICA System software:
+
+```shell
+# In a terminal window, verify the active context
+docker context ls
+
+# If "default" is not selected, switch to it
+docker context use default
+```
+
+
+
+
+:::
+
 Once the desired packages have been configured in a manifest file, a `docker build` command can be used to build the
 runtime application image. In this example, a manifest file saved as `aica-application.toml` is used to build an image
 with the name `aica-runtime`.
