@@ -27,7 +27,7 @@ and that some AICA Launcher functionalities will not work out-of-the-box (e.g., 
 ### Configuring Docker context
 
 `desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations, 
-make sure to change the context before building, executing AICA applications, or running the AICA Launcher.
+make sure to change the context before building or executing AICA applications, or running the AICA Launcher.
 
 See the available contexts on your system:
 
@@ -35,7 +35,7 @@ See the available contexts on your system:
 docker context ls
 ```
 
-You should see a `default` choice alognside `desktop-linux` that **Docker Desktop for Linux** created. If you do not see
+You should see a `default` choice alongside `desktop-linux` that **Docker Desktop for Linux** created. If you do not see
 it, then you may have missed some of the installation steps (refer to the 
 [installation guide](../getting-started/03-installation-and-launch.md)). If it is indeed there, make sure it is active:
 
