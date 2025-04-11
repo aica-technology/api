@@ -3,6 +3,9 @@
 const lightCodeTheme = require("prism-react-renderer").themes.github;
 const darkCodeTheme = require("prism-react-renderer").themes.vsDark;
 
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+
 const url = "https://docs.aica.tech";
 
 /** @type {import('@docusaurus/types').Config} */
@@ -36,6 +39,8 @@ const config = {
                     sidebarPath: require.resolve("./src/layout/sidebars.js"),
                     sidebarCollapsed: false,
                     editUrl: "https://github.com/aica-technology/api/tree/main/docs",
+                    remarkPlugins: [remarkMath],
+                    rehypePlugins: [rehypeKatex],
                 },
                 blog: false,
                 theme: {
@@ -148,6 +153,15 @@ const config = {
                 additionalLanguages: ["cpp", "python", "toml", "json", "bash"],
             },
         }),
+    stylesheets: [
+        {
+            href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+            type: 'text/css',
+            integrity:
+                'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
+            crossorigin: 'anonymous',
+        },
+    ],
 };
 
 module.exports = config;
