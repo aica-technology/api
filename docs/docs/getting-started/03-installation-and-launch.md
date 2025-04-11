@@ -19,7 +19,7 @@ and add your user.
 
 :::caution
 
-For Ubuntu users, please not that a **Docker Desktop for Linux** installation does **not** include all the necessary 
+For Ubuntu users, please note that a **Docker Desktop for Linux** installation does **not** include all the necessary 
 dependencies. Please follow the instructions from the provided link to ensure that all requirements are met.
 
 When installed, **Docker Desktop for Linux** can **not** be used to manage images and containers created by the AICA 
