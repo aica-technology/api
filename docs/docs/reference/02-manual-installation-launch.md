@@ -11,6 +11,44 @@ line without the use of AICA Launcher. The pre-requisites are still a valid lice
 For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
 on the host machine.
 
+## Configuring your system when Docker Desktop for Linux is installed
+
+If you are using Linux but do not have **Docker Desktop for Linux** installed, you may skip this section.
+
+For Linux users that have **Docker Desktop for Linux** installed, some additinal steps may be required to ensure that 
+the AICA System software is used at its full potential.
+
+The main issue originates from **Docker Desktop for Linux** creating a custom Docker context (`desktop-linux`) and 
+endpoint to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, 
+without contaminating other parts of your system. However, creating a custom context with an endpoint in your `/home` 
+directory means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...)
+and that some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal). 
+
+### Configuring Docker context
+
+`desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations, 
+make sure to change the context before building, executing AICA applications, or running the AICA Launcher.
+
+See the available contexts on your system:
+
+```shell
+docker context ls
+```
+
+You should see a `default` choice alognside `desktop-linux` that **Docker Desktop for Linux** created. If you do not see
+it, then you may have missed some of the installation steps (refer to the 
+[installation guide](../getting-started/03-installation-and-launch.md)). If it is indeed there, make sure it is active:
+
+```shell
+docker context use default
+```
+
+:::note
+
+You may need to repeat these steps upon a restart of your system.
+
+:::
+
 ## Logging in to the AICA package registry
 
 To authenticate docker to login and pull images from the registry, run the following command (no replacement of
@@ -105,37 +143,6 @@ registries such as DockerHub or GitHub Container Registry and can be included wi
 
 [Log in to the package registry](#logging-in-to-the-aica-package-registry) before building the image to authorize docker
 to access AICA packages.
-
-:::
-
-:::caution
-
-For **Linux users** that have Docker Desktop installed on their system, note that it uses a custom Docker context, namely 
-`desktop-linux`. Docker Desktop will set `desktop-linux` as the system-wide default context. This has a few side-effects
-on using the AICA System:
-
-- `desktop-linux` is created with limited privileges that do not allow the AICA System to work properly (e.g., with 
-peripheral devices, forwarding graphics, ...). In short, `docker build` will still work, but you will not be able to 
-use the full potential of the software. 
-- AICA Launcher will, by default, look for the `default` context (with elevated permissions) which:
-   -  may not exist if the [installation guide](https://docs.docker.com/engine/install/) is not followed
-   -  may still be overriden for some AICA Launcher functionalities if the system-wide context is not changed 
-
-### Suggested actions
-
-- If you are not using Docker Desktop, consider uninstalling it to avoid confusion and/or problems
-- If you need Docker Desktop for other purposes, make sure to change the context before using AICA System software:
-
-```shell
-# In a terminal window, verify the active context
-docker context ls
-
-# If "default" is not selected, switch to it
-docker context use default
-```
-
-
-
 
 :::
 
