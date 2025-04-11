@@ -1,7 +1,7 @@
 // @ts-check
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/vsDark");
+const lightCodeTheme = require("prism-react-renderer").themes.github;
+const darkCodeTheme = require("prism-react-renderer").themes.vsDark;
 
 const url = "https://docs.aica.tech";
 
@@ -145,7 +145,7 @@ const config = {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
                 defaultLanguage: "python",
-                additionalLanguages: ["toml"],
+                additionalLanguages: ["cpp", "python", "toml", "json", "bash"],
             },
         }),
 };
