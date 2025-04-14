@@ -19,11 +19,11 @@ and add your user.
 
 :::caution
 
-For Ubuntu users, please note that a **Docker Desktop for Linux** installation does **not** include all the necessary 
-dependencies. Please follow the instructions from the provided link to ensure that all requirements are met.
+For Ubuntu users, note that a **Docker Desktop for Linux** installation does **not** include all the necessary 
+dependencies. Follow the instructions from the provided link to ensure that all requirements are met.
 
 When installed, **Docker Desktop for Linux** can **not** be used to manage images and containers created by the AICA 
-System. Additionally, you may experience some issues when using the AICA System software due to Docker Desktop's custom
+System. Additionally, you may experience some issues when using AICA System software due to Docker Desktop's custom
 configuration (see [manual installation](../reference/02-manual-installation-launch.md) for more details).
 
 :::

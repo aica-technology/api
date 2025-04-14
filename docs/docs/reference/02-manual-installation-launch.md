@@ -15,8 +15,8 @@ on the host machine.
 
 If you are using Linux but do not have **Docker Desktop for Linux** installed, you may skip this section.
 
-For Linux users that have **Docker Desktop for Linux** installed, some additinal steps may be required to ensure that 
-the AICA System software is used at its full potential.
+For Linux users that have **Docker Desktop for Linux** installed, some additional steps may be required to ensure that 
+AICA System software is used at its full potential.
 
 The main issue originates from **Docker Desktop for Linux** creating a custom Docker context (`desktop-linux`) and 
 endpoint to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, 
@@ -27,7 +27,7 @@ and that some AICA Launcher functionalities will not work out-of-the-box (e.g., 
 ### Configuring Docker context
 
 `desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations, 
-make sure to change the context before building or executing AICA applications, or running the AICA Launcher.
+make sure to change the context before building or executing AICA applications, or running AICA Launcher.
 
 See the available contexts on your system:
 
