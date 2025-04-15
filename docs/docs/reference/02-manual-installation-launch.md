@@ -13,16 +13,16 @@ on the host machine.
 
 ## Configuring your system when Docker Desktop for Linux is installed
 
-If you are using Linux but do not have **Docker Desktop for Linux** installed, you may skip this section.
+If you are using Linux but do not have Docker Desktop for Linux installed, you may skip this section.
 
-For Linux users that have **Docker Desktop for Linux** installed, some additional steps may be required to ensure that 
+For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that 
 AICA System software is used at its full potential.
 
-The main issue originates from **Docker Desktop for Linux** creating a custom Docker context (`desktop-linux`) and 
-endpoint to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, 
-without contaminating other parts of your system. However, creating a custom context with an endpoint in your `/home` 
-directory means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...)
-and that some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal). 
+The main issue originates from Docker Desktop for Linux creating a custom Docker context (`desktop-linux`) and endpoint
+to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, without
+contaminating other parts of your system. However, creating a custom context with an endpoint in your `/home` directory
+means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that 
+some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal). 
 
 ### Configuring Docker context
 
