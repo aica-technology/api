@@ -76,15 +76,21 @@ const config = {
                     // },
                     {
                         type: "docSidebar",
+                        sidebarId: "gettingStartedSidebar",
+                        position: "left",
+                        label: "Getting started",
+                    },
+                    {
+                        type: "docSidebar",
                         sidebarId: "conceptsSidebar",
                         position: "left",
                         label: "Concepts",
                     },
                     {
                         type: "docSidebar",
-                        sidebarId: "gettingStartedSidebar",
+                        sidebarId: "examplesSidebar",
                         position: "left",
-                        label: "Getting started",
+                        label: "Examples",
                     },
                     {
                         type: "docSidebar",
@@ -92,6 +98,13 @@ const config = {
                         position: "left",
                         label: "Programming reference",
                     },
+                    // TODO: add FAQ section
+                    // {
+                    //     type: "docSidebar",
+                    //     sidebarId: "faqSidebar",
+                    //     position: "left",
+                    //     label: "FAQ",
+                    // },
                     {
                         href: `${url}/api`,
                         label: "REST API",
