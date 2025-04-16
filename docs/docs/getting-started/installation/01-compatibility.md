@@ -2,11 +2,7 @@
 sidebar_position: 1
 ---
 
-# Getting started
-
-This guide will cover the basic steps to get started with the AICA System, from installation to application examples.
-
-## Compatibility
+# Compatibility
 
 The AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
 
