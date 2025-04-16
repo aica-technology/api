@@ -51,9 +51,10 @@ the basics, AICA is continually developing additional collections of components,
 that suit particular use-cases or types of robots. These first-party add-on packages are available to download from
 the AICA registry.
 
+In addition to AICA Core, AICA Studio and our package registry, the AICA System additionally includes the following
+products and resources:
+
 - **AICA Launcher** is a desktop app that can install and run AICA Studio with Core and add-on packages in just a few
   clicks
-- **AICA Studio: Cloud** is an online-only version of the Studio experience to access and edit applications from
-  anywhere
 - The **Component SDK** allows developers to extend the base library with custom functionality that will work seamlessly
   alongside native components
