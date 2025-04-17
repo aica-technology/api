@@ -65,7 +65,7 @@ When the AICA Launcher is started for the first time (or after explicitly loggin
 your AICA System License. As an example, the online license key to enter might look similar to
 `5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3`.
 
-![aica-launcher-login](./assets/aica-launcher-login.png)
+![aica-launcher-login](../assets/aica-launcher-login.png)
 
 Once the license is copied into the text field, it will automatically check the validity of the license and log in if
 successful. If the license is not recognized, check your internet connection
@@ -81,13 +81,13 @@ Defining configurations helps to ensure repeatable builds and deployments, even 
 packages are subsequently updated or changed.
 
 The simplest configuration just specifies the AICA Core Version, without any packages. Official packages can be added
-from a dropdown, with a version subselection for each package. [Custom packages](../reference/01-intro.md) can be built
+from a dropdown, with a version subselection for each package. [Custom packages](../../reference/01-intro.md) can be built
 using the SDK and then added to the configuration using a Docker image URI.
 
 Advanced configuration options allow setting additional Docker parameters, including real-time permissions and volume
 mounting for persistent storage or file-system interactions.
 
-![aica-launcher-package](./assets/aica-launcher-package.png)
+![aica-launcher-package](../assets/aica-launcher-package.png)
 
 ### Launching a configuration
 
@@ -96,7 +96,7 @@ first time launching a configuration, the AICA Core software image and any addit
 from the registry and bundled into the specific runtime image. Depending on network speeds, this may take a while. After
 the image has been built, launching the configuration a second time will be much faster as the results are cached.
 
-![aica-launcher-studio](./assets/aica-launcher-studio.png)
+![aica-launcher-studio](../assets/aica-launcher-studio.png)
 
 ## Authentication
 
@@ -135,18 +135,18 @@ passwords are not inferred or shared between different configurations, even if t
 
 :::
 
-![aica-studio-create-user](./assets/aica-studio-create-user.png)
+![aica-studio-create-user](../assets/aica-studio-create-user.png)
 
 A random password is generated for a newly created user and can later be changed by the respective user. If AICA Studio
 is accessed from a browser external to AICA Launcher, or if the user of AICA Launcher logs out of the current session, a
 valid user email and password must be supplied to log back in to AICA Studio.
 
-![aica-studio-user-login](./assets/aica-studio-user-login.png)
+![aica-studio-user-login](../assets/aica-studio-user-login.png)
 
 The User page in AICA Studio can be used to view the current user with their available scopes, change the password or
 create API keys.
 
-![aica-studio-other-user](./assets/aica-studio-other-user.png)
+![aica-studio-other-user](../assets/aica-studio-other-user.png)
 
 :::tip
 
@@ -180,5 +180,5 @@ Administration access to manage and create users and authorize cloud service int
 ## Manual installation and launch
 
 For advanced users or users that deal with headless machines, the login, build and launch steps described here can also
-be performed [manually from the command line](../reference/02-manual-installation-launch.md) instead of using AICA
+be performed [manually from the command line](../../reference/02-manual-installation-launch.md) instead of using AICA
 Launcher.
