@@ -50,7 +50,7 @@ jobs:
       - uses: aica-technology/.github/.github/actions/ghcr-ensure-prefix@v0.6.1
         id: ensure-image
         with:
-          image_name: aica-technology/backend-api-docs
+          image_name: aica-technology/api-server-docs
 
       - name: Get API version to fetch
         id: api-version

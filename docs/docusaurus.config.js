@@ -15,7 +15,7 @@ const config = {
         "Documentation for the AICA System and robotics software framework",
     favicon: "img/favicon.ico",
 
-    url,
+    url: url,
     baseUrl: "/",
 
     // GitHub pages deployment config.
