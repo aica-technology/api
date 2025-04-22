@@ -19,7 +19,7 @@ available packages for one specific license.
 
 :::tip
 
-An AICA System license includes specific entitlements that determine which add-on packages and versions can be accessed
+An AICA System License includes specific entitlements that determine which add-on packages and versions can be accessed
 and used. To discover and access additional components and hardware collections, contact your AICA representative to
 upgrade your license.
 
