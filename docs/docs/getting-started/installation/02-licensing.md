@@ -42,7 +42,7 @@ If an unauthorized user has gained access to your license key, contact support@a
 
 :::
 
-An AICA System license will appear in the following format, though the specific license key will be unique for each
+An AICA System License will appear in the following format, though the specific license key will be unique for each
 user.
 
 ```toml title="aica-license.toml"
