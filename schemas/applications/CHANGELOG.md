@@ -16,6 +16,10 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
+## Upcoming changes
+
+- feat: more permissive names for frames and parameters (#260)
+
 ## 2-0-3
 
 This patch adds new optional properties to components, hardware and the top-level application.
