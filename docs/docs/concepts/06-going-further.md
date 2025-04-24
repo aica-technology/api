@@ -6,7 +6,8 @@ sidebar_position: 6
 
 [Contact us](mailto:contact@aica.tech) to learn more about AICA and/or to request an AICA System License.
 
-If you already have an AICA System License, continue to the [Getting started](../getting-started/01-intro.md) guide
-for first-time setup and onboarding.
+If you already have an AICA System License, continue on to [application examples](/docs/category/guides) for guides and
+practical references on how to set up your robotic applications.
 
-For advanced usage, refer to the [Programming reference](../reference/01-intro.md).
+For advanced usage, including building custom components with our Component SDK, refer to
+the [Programming reference](../reference/01-intro.md).
