@@ -24,7 +24,7 @@ dependencies. Follow the instructions from the provided link to ensure that all 
 
 When installed, Docker Desktop for Linux can **not** be used to manage images and containers created by the AICA System. 
 Additionally, you may experience some issues when using AICA System software due to Docker Desktop's custom
-configuration (see [manual installation](../reference/02-manual-installation-launch.md) for more details).
+configuration (see [manual installation](../../reference/02-manual-installation-launch.md) for more details).
 
 :::
 
