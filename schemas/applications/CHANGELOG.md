@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2-0-4](#2-0-4)
 - [2-0-3](#2-0-3)
 - [2-0-2](#2-0-2)
 - [2-0-1](#2-0-1)
@@ -16,7 +17,12 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
-## Upcoming changes
+## 2-0-4
+
+This patch relaxes the pattern properties for parameter and frame names in the application schema. Names are now allowed
+to start with any alphanumeric character and can contain underscores, full stops, and dashes.
+
+### Changelog
 
 - feat: more permissive names for frames and parameters (#260)
 
