@@ -17,6 +17,10 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
+## Upcoming changes
+
+- feat: allow null values for parameters (#264)
+
 ## 2-0-4
 
 This patch relaxes the pattern properties for parameter and frame names in the application schema. Names are now allowed
