@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2-0-5](#2-0-5)
 - [2-0-4](#2-0-4)
 - [2-0-3](#2-0-3)
 - [2-0-2](#2-0-2)
@@ -17,7 +18,7 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
-## Upcoming changes
+## 2-0-5
 
 This patch allows parameter values to have the `null` type, which is intended to represent an unset or "empty"
 parameter value. This should be seen as distinct from an empty string value `""` or any other falsey value.
