@@ -17,6 +17,11 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
+## Upcoming changes
+
+This patch allows parameter values to have the `null` type, which is intended to represent an unset or "empty"
+parameter value. This should be seen as distinct from an empty string value `""` or any other falsey value.
+
 ## 2-0-4
 
 This patch relaxes the pattern properties for parameter and frame names in the application schema. Names are now allowed

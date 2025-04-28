@@ -9,6 +9,7 @@
       "title": "Parameter Value",
       "description": "The value assigned to the named parameter",
       "type": [
+        "null",
         "boolean",
         "number",
         "string",
