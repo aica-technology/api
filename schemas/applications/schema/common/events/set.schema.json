@@ -25,6 +25,7 @@
       "title": "New Parameter Value",
       "description": "The value of the parameter to set",
       "type": [
+        "null",
         "boolean",
         "number",
         "string",
