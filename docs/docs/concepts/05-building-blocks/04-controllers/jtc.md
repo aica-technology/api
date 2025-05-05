@@ -40,5 +40,6 @@ joint-space motion.
 traverse.
   
 Additional parameters can be modified to fine tune how JTC behaves (for example, PID gains for velocity control,
-constraints for time and goal accuracy, and more). You may find JTC usage examples in **todo** and an advanced guide on
-how to put an application together using AICA Studion in **todo**.
+constraints for time and goal accuracy, and more). 
+<!-- You may find JTC usage examples in **todo** and an advanced guide on
+how to put an application together using AICA Studion in **todo**. -->
