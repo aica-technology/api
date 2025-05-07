@@ -34,8 +34,8 @@ velocities, accelerations, or effort, and their corresponding times from the sta
    
 2. a **service** by providing one of the following:
    
-   - **Cartesian frame names** (published as transformations; TFs) indicating the poses that should be traversed in a
-joint-space motion.
+   - **Cartesian frame names** (published as transformations; TFs) indicating the end-effector poses that should be
+traversed in a joint-space motion.
    - **Joint position names** (published as joint frames; JFs) indicating the exact joint waypoints that JTC should
 traverse.
   
