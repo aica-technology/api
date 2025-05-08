@@ -29,8 +29,9 @@ function HomepageHeader() {
                 <h1 className="hero__title">{siteConfig.title}</h1>
                 <p className="hero__subtitle">{siteConfig.tagline}</p>
                 <div className={styles.centered}>
-                    <LinkButton link={"/docs/concepts/intro"} text={"Learn basic concepts"}/>
                     <LinkButton link={"/docs/getting-started/intro"} text={"Get up and running"}/>
+                    <LinkButton link={"/docs/category/ros-2-concepts"} text={"Learn basic concepts"}/>
+                    <LinkButton link={"/docs/category/guides"} text={"Guides and examples"}/>
                     <LinkButton link={"/docs/reference/intro"} text={"Advanced programming"}/>
                 </div>
             </div>
