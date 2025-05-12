@@ -32,9 +32,9 @@ AICA Core v4.3.2
   - **Classes Path**: Path to the class labels e.g., `/files/coco.yaml`
   - **Rate**: This is hardware dependent but 3 should work on most machines.
 
-#### Convert YOLO Model to ONNX
+*Convert YOLO Model to ONNX*
 
-To create an onnx file of a YOLO model you can [download](https://github.com/sunsmarterjie/yolov12) a `.pt` model, (we use the lightweight version — YOLO12n). Then use Python (with `ultralytics` installed) to convert the `.pt` model to `.onnx`:
+The YOLO model expects an ONNX file, you can create one from a pretrained [`.pt`](https://github.com/sunsmarterjie/yolov12) model, (we use the lightweight version — YOLO12n). Then use Python (with `ultralytics` installed) to convert the `.pt` model to `.onnx`:
 ```python
 from ultralytics import YOLO
 
@@ -45,28 +45,22 @@ model = YOLO("yolov12n.pt")
 model.export(format="onnx")  # creates 'yolov12n.onnx'
 ```
 
-These YOLO models are pre-trained on coco - you can download the Classes file for coco [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml). 
+These YOLO models are pre-trained on coco - you can download the Classes file for coco [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml). If you fine tune YOLO to your use case you may need to create a custom yaml file.
 
 ### Running the Application
 
-- Launch the application in AICA Studio.
+- Start the application in AICA Studio.
 - Open **RViz**: bottom-right gear icon → "Launch RViz"
 - Open **RViz** → **Add** → **By topic** → `/yolo_executor/annotated_image/Image`  
-  to view the YOLO model's annotated output.
+  to view the YOLO model's annotated output. It should show the camera images with bounding boxes drawn around key objects in it.
 
 > Only users with a Linux host can visualize the robot with RViz. On macOS, AICA Launcher will not show the RViz option.
 
 ## Tracking an Object with YOLO
-We use YOLO bounding boxes to generate a 3D marker and drive the robot.
-To track an object:
-- Perform object detection with the YOLO Executor component, based on an camera or video feed. 
-- Create a marker in 3D space based on the position of YOLO's bounding boxes.
-- Drive the robot towards the marker.
-
-Assumptions
-- Camera is fixed and angled downward
-- Known camera position pointing down: `(x=0, y=0.6, z=0.6)`
-- Objects are on a flat surface at `z=0`
+We use YOLO to generate bounding boxes which in turn are used to position a 3D marker and drive the robot. We first need to create a custom component which can estimate a pose from a position in the camera frame. More information about custom components can be found [here](https://docs.aica.tech/docs/category/custom-components/). We make 3 simplifying assumptions:
+  1. Camera is fixed and angled downward
+  2. Known camera position pointing down: `(x=0, y=0.6, z=0.6)`
+  2. Objects are on a flat surface at `z=0`
 
 ### Creating a Custom Marker Component
 1. **Set up the repository:**
@@ -75,28 +69,21 @@ Assumptions
      ```bash
      ./initialize_package.sh
      ```
-   - Name it `component_utils` and include only a **Python Lifecycle Component**.
+   - Name it `component_utils`, do not include any components as we will create them from scratch.
 
     **Create files and classes:**
-    - In `source/component_utils/component_utils/`:
-      - Create `yolotomarker.py`
 
-    - In `source/component_utils/component_descriptions/`:
-      - Create `yolotomarker.json`
-
-    - In `source/component_utils/setup.cfg`:
-      - Register the python component with:
-        ```cfg
-        component_utils::YoloToMarker = component_utils.yolotomarker:YoloToMarker
-        ```
+    - Create `yolotomarker.py` in `source/component_utils/component_utils/`.
+    - Create `yolotomarker.json` in `source/component_utils/component_descriptions/`.
+    - Register the component in `source/component_utils/setup.cfg` with:
+      ```cfg
+      component_utils::YoloToMarker = component_utils.yolotomarker:YoloToMarker
+      ```
 
 #### Component Code
-Below is the core implementation:
-- Reads JSON input from YOLO Executor
-- Projects bounding boxes into 3D using FoV, camera height
-- Outputs a `CartesianState` for robot control
+Below is the core implementation, the component reads JSON input from YOLO Executor, projects bounding boxes into 3D using FoV, camera height, outputs a `CartesianState` for robot control.
 
-In `yolotomarker.py`:
+Copy the following into `yolotomarker.py`:
 ```python
 import state_representation as sr
 from modulo_components.lifecycle_component import LifecycleComponent
@@ -220,12 +207,6 @@ class YoloToMarker(LifecycleComponent):
             self.get_logger().error(f'Error in on_step_callback: {e}')
 ```
 
-**Improvements**
-
-- Add error checks for malformed bbox
-- Make image size (`img_shape`) a configurable parameter
-- Add optional logging toggle
-
 The component description is defined in `yolotomarker.json`:
 ```json
 {
@@ -312,11 +293,17 @@ The component description is defined in `yolotomarker.json`:
   ]
 }
 ```
-
-In terminal, enter the component folder and run  
+Build and load the component in terminal, enter the component folder and run  
 `docker build -f aica-package.toml -t objectdetection .` 
 
 Next, configure AICA Studio and add `objectdetection` under **Custom Packages**. You should see `Component Utils` under *Add Component* and be able to add **YOLO to marker**. We can test that our component is working by connecting JSON input to the Bounding Boxes output of **YOLO Executor**. When we run the application we should see our component logging every iteration. 
+
+
+**Improvements**
+The component could be further improved by:
+- Add error checks for bounding box and parameters.
+- Make image size (`img_shape`) a configurable parameter
+- Adding logic for when nothing is found in the image.
 
 ## Final Notes
 
@@ -333,8 +320,8 @@ To emulate a camera by playing a video frame by frame, [create a custom componen
   ```cfg
   component_utils::VideoPlayer = component_utils.videoplayer:VideoPlayer
   ```
-**Create Python component.**
 
+#### Component Code
 Update videoplayer.py with the following:
 
 ```python
@@ -412,9 +399,8 @@ We can add these as requirements in `source/component_utils/requirements.txt
 cv_bridge
 opencv-python==4.11.0.86
 ```
-**Update videoplayer.json.**
 
-Replace the contents of `videoplayer.json` with the following:
+The component description is defined by `videoplayer.json` which should be replaced with the following:
 
 ```json
 {
@@ -448,8 +434,8 @@ Replace the contents of `videoplayer.json` with the following:
 ```
 This defines parameters and inputs.
 
-**Build and Load the Component**  
-In terminal, enter the component folder and run  
+
+Build and Load the component in terminal, enter the component folder and run  
 `docker build -f aica-package.toml -t objectdetection .`  
 Next, configure AICA Studio and add `objectdetection` under **Custom Packages**.
 
