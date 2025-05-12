@@ -8,31 +8,28 @@ This example provides a use case for `Object Detection Components`. We show how 
 
 ## Testing the YOLO Executor
 ### Setup
-Launch AICA Studio with:
-AICA Core v4.3.2
-- `collections/object-detection`
-- `collections/intel-realsense-collection`
-- Under **Advanced Settings**, add a volume containing the folder where you will store your YOLO model files and link it to `/files`.
-
-### Setting Up the Application
+- Launch AICA Studio with:
+    - AICA Core v4.3.2
+    - `collections/object-detection`
+    - `collections/intel-realsense-collection`
+    - Under **Advanced Settings**, add a volume containing the folder where you will store your YOLO model files and link it to `/files`.
 
 - Remove the **Hardware Interface**.
 - Add the following components:
-  - `Object Detection Components/YOLO Executor`
-  - `Realsense2 Camera` or if you do not have a camera, you can [create a video player component](#create-a-video-player-component) instead.
+    - `Object Detection Components/YOLO Executor`
+    - `Realsense2 Camera` or if you do not have a camera, you can [create a video player component](#create-a-video-player-component) instead.
 
 - Connect both components’ **load nodes** to load on program start.
 - Connect the **RGB Image** output of the Realsense2 Camera or video player to the **RGB Image** input of the YOLO Executor.
 
-**Configuring YOLO Executor**
+- Configure the YOLO Executor
+  - Set to **auto-configure** and **auto-activate**.
+  - Set the following:
+    - **Model Path**: YOLO model in `.onnx` format e.g., `/files/yolo12n.onnx`
+    - **Classes Path**: Path to the class labels e.g., `/files/coco.yaml`
+    - **Rate**: This is hardware dependent but 3 should work on most machines.
 
-- Set to **auto-configure** and **auto-activate**.
-- Set the following:
-  - **Model Path**: YOLO model in `.onnx` format e.g., `/files/yolo12n.onnx`
-  - **Classes Path**: Path to the class labels e.g., `/files/coco.yaml`
-  - **Rate**: This is hardware dependent but 3 should work on most machines.
-
-*Convert YOLO Model to ONNX*
+**Converting YOLO Model to ONNX**
 
 The YOLO model expects an ONNX file, you can create one from a pretrained [`.pt`](https://github.com/sunsmarterjie/yolov12) model, (we use the lightweight version — YOLO12n). Then use Python (with `ultralytics` installed) to convert the `.pt` model to `.onnx`:
 ```python
@@ -45,14 +42,11 @@ model = YOLO("yolov12n.pt")
 model.export(format="onnx")  # creates 'yolov12n.onnx'
 ```
 
-These YOLO models are pre-trained on coco - you can download the Classes file for coco [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml). If you fine tune YOLO to your use case you may need to create a custom yaml file.
+These YOLO models are pre-trained on coco - you can download the classes file for coco [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml). If you fine tune YOLO to your use case you may need to create a custom yaml file.
 
 ### Running the Application
 
-- Start the application in AICA Studio.
-- Open **RViz**: bottom-right gear icon → "Launch RViz"
-- Open **RViz** → **Add** → **By topic** → `/yolo_executor/annotated_image/Image`  
-  to view the YOLO model's annotated output. It should show the camera images with bounding boxes drawn around key objects in it.
+Start the application in AICA Studio. Then open **RViz**: bottom-right gear icon → "Launch RViz", then **RViz** → **Add** → **By topic** → `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated output. It should show the camera images with bounding boxes drawn around key objects in it.
 
 > Only users with a Linux host can visualize the robot with RViz. On macOS, AICA Launcher will not show the RViz option.
 
@@ -211,7 +205,7 @@ The component description is defined in `yolotomarker.json`:
 ```json
 {
   "$schema": "https://docs.aica.tech/schemas/1-1-1/component.schema.json",
-  "name": "YOLO to marker",
+  "name": "YOLO to Marker",
   "description": {
     "brief": "Reads bounding boxes and outputs an interactive marker",
     "details": "This component computes an approximate 3D position from 2D bounding boxes assuming a fixed camera position and flat object surface."
@@ -296,7 +290,13 @@ The component description is defined in `yolotomarker.json`:
 Build and load the component in terminal, enter the component folder and run  
 `docker build -f aica-package.toml -t objectdetection .` 
 
-Next, configure AICA Studio and add `objectdetection` under **Custom Packages**. You should see `Component Utils` under *Add Component* and be able to add **YOLO to marker**. We can test that our component is working by connecting JSON input to the Bounding Boxes output of **YOLO Executor**. When we run the application we should see our component logging every iteration. 
+Next, configure AICA Studio and add `objectdetection` under **Custom Packages**. You should see `Component Utils` under *Add Component* and be able to add **YOLO to Marker**. 
+
+**Tracking an Object**
+
+Connect the Bounding Boxes output of **YOLO Executor** to the JSON Input of **YOLO to Marker** then configure it with auto-configure and auto-activate. You should also set the parameters based on your camera and what you are filming. You can set *Thing to track* to person to track yourself in the frame.
+
+We can test that the component is working by connecting JSON input to the Bounding Boxes output of **YOLO Executor**. When we run the application we should see our component logging every iteration.
 
 
 **Improvements**
