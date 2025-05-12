@@ -12,8 +12,8 @@ examples will be covered in more depth in later sections of this documentation.
 
 ## Application manager and editor
 
-The default landing page when opening AICA Studio is the application manager and editor. You can return to this page at
-any time by clicking the "Editor" tab in the top navbar.
+The default landing page when opening AICA Studio is the application manager and editor. It can also be accessed by
+clicking the "Editor" tab in the top navbar.
 
 It shows a list of saved applications and presents options to create a new application or upload applications from file.
 For a new installation with no saved applications, the list will be empty.

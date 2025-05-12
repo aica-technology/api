@@ -37,7 +37,7 @@ the [concepts](/docs/category/application-building-blocks) section.
 
 ## Interacting with the graph
 
-Click and drag on the background of the graph or on the mini-map on the bottom right to pan the view and zoom in and out
+Click and drag on the background of the graph or on the mini-map on the bottom left to pan the view and zoom in and out
 by scrolling. The graph control buttons next to the mini-map can also be used to zoom and fit the view.
 
 ### Adding and deleting nodes
@@ -73,7 +73,7 @@ Nodes can also be deleted by selecting them with a click and pressing the Delete
 
 ### Managing graph edges
 
-Edge connections can be made between nodes using the respect signal edge
+Edge connections can be made between nodes using the respective signal edge
 handle <SignalHandle className="inlineEdgeHandleSVG"/> and event edge
 handle <EventHandle className="inlineEdgeHandleSVG"/>. The white side of the handle indicates the directionality of the
 edge; when the white side is facing away from a node, the handle is an "output" or a "source" for the edge. When the
@@ -96,7 +96,7 @@ example, Load, Unload, Configure...) and click on the desired event.
 
 Edge paths can be manually edited for better graph layouts in any of the following ways:
 
-- Drag an edge segment to move it
+- Drag an edge segment
 - Click once on an edge to create a breakpoint, then drag the edge segment on either side of the breakpoint
 - Click on two parts of the edge to create two breakpoints, then drag the intermediate edge segment
 
