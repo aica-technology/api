@@ -59,9 +59,19 @@ $ npm run build
 This command generates static content into the `build` directory and can be served using any static contents hosting
 service.
 
-### Deployment
+## Virtual development
 
-The documentation is automatically built and deployed through a GitHub Actions workflow when changes are merged to 
+You can build and see the documentation through Docker for ease of setup. Simply run:
+
+```bash
+docker compose up --build
+```
+
+You can then access the docs at [http://localhost:3333](http://localhost:3333).
+
+## Deployment
+
+The documentation is automatically built and deployed through a GitHub Actions workflow when changes are merged to
 the `main` branch.
 
 Sometimes, GitHub page deployment resets the custom domain setting, effectively breaking the documentation website.
