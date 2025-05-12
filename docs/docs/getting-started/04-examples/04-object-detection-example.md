@@ -4,12 +4,12 @@ sidebar_position: 4
 
 # Using YOLO to Track Objects
 
-This example provides a simple use case for Object Detection Components. It creates a custom component used with AICA Core v4.3.2, `collections/object-detection`, and `collections/intel-realsense-collection`. If you do not have a RealSense camera, an alternative custom component that plays a video is provided.
+This example provides a use case for `Object Detection Components`. We show how to create a custom component which converts bounding boxes into a 3D pose. This requires AICA Core v4.3.2, `collections/object-detection`. The example works with both a realsense camera using `collections/intel-realsense-collection` or a video played through a custom component which is provided.
 
-## Using the YOLO Executor
+## Testing the YOLO Executor
 ### Setup
 Launch AICA Studio with:
-- AICA Core v4.3.2
+AICA Core v4.3.2
 - `collections/object-detection`
 - `collections/intel-realsense-collection`
 - Under **Advanced Settings**, add a volume containing the folder where you will store your YOLO model files and link it to `/files`.
@@ -19,14 +19,12 @@ Launch AICA Studio with:
 - Remove the **Hardware Interface**.
 - Add the following components:
   - `Object Detection Components/YOLO Executor`
-  - `Realsense2 Camera`
-
-> If you do not have a camera, you can [create a video player component](#create-a-video-player-component) instead.
+  - `Realsense2 Camera` or if you do not have a camera, you can [create a video player component](#create-a-video-player-component) instead.
 
 - Connect both components’ **load nodes** to load on program start.
-- Connect the **RGB Image** output of the `Realsense2 Camera` to the **RGB Image** input of the `YOLO Executor`.
+- Connect the **RGB Image** output of the Realsense2 Camera or video player to the **RGB Image** input of the YOLO Executor.
 
-### Configuring YOLO Executor
+**Configuring YOLO Executor**
 
 - Set to **auto-configure** and **auto-activate**.
 - Set the following:
@@ -327,20 +325,16 @@ For more accurate 3D tracking, explore AICA’s `foundation_pose_estimator` with
 ## Create a Video Player Component
 To emulate a camera by playing a video frame by frame, [create a custom component](#tracking-an-object-with-yolo).
 
-1. **Create files and classes:**
+**Create files and classes:**
 
-   - In `source/component_utils/component_utils/`:
-     - Create `videoplayer.py`
+- Create `videoplayer.py` in `source/component_utils/component_utils/`.
+- Create `videoplayer.json` in `source/component_utils/component_descriptions/`.
+- Register the component in `source/component_utils/setup.cfg` with:
+  ```cfg
+  component_utils::VideoPlayer = component_utils.videoplayer:VideoPlayer
+  ```
+**Create Python component.**
 
-   - In `source/component_utils/component_descriptions/`:
-     - Create `videoplayer.json`
-
-   - In `source/component_utils/setup.cfg`:
-     - Register the component with:
-       ```cfg
-       component_utils::VideoPlayer = component_utils.videoplayer:VideoPlayer
-       ```
-2. **Create Python component.**
 Update videoplayer.py with the following:
 
 ```python
@@ -418,7 +412,7 @@ We can add these as requirements in `source/component_utils/requirements.txt
 cv_bridge
 opencv-python==4.11.0.86
 ```
-3. **Update json.**
+**Update videoplayer.json.**
 
 Replace the contents of `videoplayer.json` with the following:
 
@@ -454,14 +448,11 @@ Replace the contents of `videoplayer.json` with the following:
 ```
 This defines parameters and inputs.
 
-4. **Build and Load the Component**  
+**Build and Load the Component**  
 In terminal, enter the component folder and run  
 `docker build -f aica-package.toml -t objectdetection .`  
 Next, configure AICA Studio and add `objectdetection` under **Custom Packages**.
 
-You should see `Component Utils` under *Add Component* and be able to add the **Video Player Component**.  
-In the component settings, set the `Video Path` parameter, e.g. `/files/video.MOV`.
+Store your video in the same location as the model files, or add a separate volume.
 
-You should store your video in the same location as the model files.
-
-
+`Component Utils` should be found under *Add Component*, add **Video Player Component** and set **auto-configure** and **auto-activate**. In the component settings, set the `Video Path` parameter, e.g. `/files/video.MOV`.
