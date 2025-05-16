@@ -40,7 +40,7 @@ Any hardware listed in the hardware manager can be loaded and used in an applica
 
 ## Docs
 
-Under the "Docs" tab in the top navbar,reference documentation for installed components and controllers in the AICA
+Under the "Docs" tab in the top navbar, reference documentation for installed components and controllers in the AICA
 System configuration can be accessed.
 
 ![aica-studio-docs-page](./assets/aica-studio-docs-page.png)
