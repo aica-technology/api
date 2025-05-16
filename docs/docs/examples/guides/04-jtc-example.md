@@ -171,7 +171,7 @@ Naturally, the two vectors need to be of the same size. Also, notice that these 
 
 Assuming you have already pressed play and you are currently in the graph view, go ahead and press the trigger button to start the execution of the trajectory. Switch to the 3D view to see the robot moving through the waypoints.
 
-That is all you need to move your robot along predifined poses! Once the trajectory is executed, a predicate is set and the application will automatically stop.
+That is all you need to move your robot along predefined poses! Once the trajectory is executed, a predicate is set and the application will automatically stop.
 
 Take the time to experiment with different times and/or frame order. While the application is stopped, you may also go into 3D view and drag the waypoints around such that you alter the trajectory.
 
