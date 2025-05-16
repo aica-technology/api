@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# A joint trajectory example
+# A joint trajectory execution example
 
 ## Launcher configuration requirements
 
@@ -180,9 +180,3 @@ Take the time to experiment with different times and/or frame order. While the a
 The Joint Trajectory controller is quite feature-rich, allowing fine parametrization of the controller and the way it controls the robot. Furthermore, it offers additional ways of setting a trajectory, such as by joint positions in the payload (istead of Cartesian frames we explored in this example) or by a signal input. 
 
 A full guide on how you can set up an application can be found at TODO -->
-
-
-
-
-
-
