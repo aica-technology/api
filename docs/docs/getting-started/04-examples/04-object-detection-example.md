@@ -111,7 +111,7 @@ class YoloToMarker(LifecycleComponent):
         self.image_size = [480, 840]
         self.object_distance = 0.6
         
-        self.add_parameter(sr.Parameter("to_find", 'person', sr.ParameterType.STRING), "Object to find and track")
+        self.add_parameter(sr.Parameter("to_find", 'person', sr.ParameterType.STRING), "thing to find and track")
         self.add_parameter(sr.Parameter("fov", [69.0, 42.0], sr.ParameterType.DOUBLE_ARRAY), "Camera FoV in X")
         self.add_parameter(sr.Parameter("image_size", [480, 840], sr.ParameterType.DOUBLE_ARRAY), "Size of image (pixels)")
         self.add_parameter(sr.Parameter("object_distance", 0.6, sr.ParameterType.DOUBLE), "Target position (Z)")
@@ -149,25 +149,26 @@ class YoloToMarker(LifecycleComponent):
     def on_step_callback(self):
         try:
             data = json.loads(self.json_input)
-            position = {}
+            # self.get_logger().info(data)
 
-            # get 3D position of everything YOLO saw
-            for key, coords in data.items():
+            position = {}
+            for i, detection in enumerate(data):
                 centre_of_bbox = np.asarray([
-                                        (coords[0] + coords[2]) / 2,
-                                        (coords[1] + coords[3]) / 2
-                                    ])
-                position[key] = self.__centre_pt_to_position(centre_of_bbox)
+                    (detection['x_min'] + detection['x_max']) / 2,
+                    (detection['y_min'] + detection['y_max']) / 2
+                ])
+                position_key = f"{detection['class_name']}"
+                position[position_key] = self.__centre_pt_to_position(centre_of_bbox)
+            
             self.get_logger().info(f'{position}')   
 
             # output pose of target object
             to_find = self.get_parameter_value("to_find")
-            if to_find + '_1' in position:
-                self._marker_pose.set_position(position[to_find + '_1'])
+            if to_find in position:
+                self._marker_pose.set_position(position[to_find])
 
         except Exception as e:
             self.get_logger().error(f'Error in on_step_callback: {e}')
-
 ```
 </details>
 
