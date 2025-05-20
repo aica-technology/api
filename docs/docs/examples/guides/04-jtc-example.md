@@ -16,8 +16,7 @@ Use AICA Core v4.2.0 or higher.
 
 ## Setting up the application
 
-Go to the Editor page using the top navigation bar or at
-[localhost:8080/studio/editor](http://localhost:8080/studio/editor) and create a new application.
+Launch AICA Studio and create a new application by pressing "Create new".
 
 Copy the following YAML and generate the graph.
 
