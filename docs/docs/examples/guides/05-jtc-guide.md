@@ -167,6 +167,8 @@ this->trajectory_->points[1].time_from_start = rclcpp::Duration::from_seconds(4)
 
 this->publish_output("trajectory");
 ```
+</TabItem>
+</Tabs>
 
 :::tip
 The joint names need to correspond to the joint names from your robot description (*i.e.*, URDF). If you are **not**
@@ -175,9 +177,6 @@ using the `Generic six-axis robot arm`, you will need to adjust these names.
 The easiest way to do so if you do not already know them is to head to the `Hardware` menu of your AICA Launcher and
 read through your URDF.
 :::
-
-</TabItem>
-</Tabs>
 
 #### Using JTC's `Set Trajectory` service
 
