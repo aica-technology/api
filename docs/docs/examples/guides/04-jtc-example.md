@@ -12,7 +12,7 @@ import jtcExampleRun from './assets/jtc-example-run.gif'
 
 This example makes use of the built-in Joint Trajectory Controller (JTC) and the generic six-axis robot.
 
-Use AICA Core v4.2.0 or higher.
+Use AICA Core v4.4.0 or higher.
 
 ## Setting up the application
 
@@ -146,7 +146,7 @@ graph:
 ```
 </details>
 
-The application graph should show a hardware interface with a Joint Trajectory controller and an event trigger, as shown
+The application graph should show a hardware interface with a `Joint Trajectory Controller` and an event trigger, as shown
 below:
 
 <div class="text--center">
@@ -155,8 +155,8 @@ below:
 
 ## The example explained
 
-The application starts by loading the Robot State broadcaster and Joint trajectory controllers for the generic six-axis
-robot. You may already play the application.
+The application starts by loading the `Robot State Broadcaster` and `Joint Trajectory controller` for the generic
+six-axis robot. You may already play the application.
 
 After you press play, switch to the 3D view using the corresponding button on the top right of your AICA Studio. You
 should see your robot in its default joint configuration, along with 4 Cartesian frames named
@@ -169,11 +169,11 @@ controls the robot such that it traverses the Cartesian frames in that order.
 
 For now, let us go back to the graph view. Once there, turn your attention to the trigger button that connects to the
 `Set trajectory` service of the Joint Trajectory controller. Click on the gear icon on the edge that connects the button
-to the controller. You will see the following service payload string:
+to the controller. You will see the following service payload:
 
 ```yaml
 {
-  frames: [start, waypoint_1, waypoint_2, waypoint_3, start], 
+  frames: [start, waypoint_1, waypoint_2, waypoint_3, start],
   times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
 }
 ```
