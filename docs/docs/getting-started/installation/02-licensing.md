@@ -45,15 +45,32 @@ If an unauthorized user has gained access to your license key, contact support@a
 An AICA System License will appear in the following format, though the specific license key will be unique for each
 user.
 
-```toml title="aica-license.toml"
-License = "5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3"
+```console title="Example AICA System License"
+5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3
 ```
 
-## Deployment Keys
+## Deployment Key
 
-Once ready, you can deploy your applications seamlessly into production or purchase a pre-built solution with a one-time
-Deployment Key. Deployment Keys are offline with no limitations on consecutive activation time, offering the reliability
-and performance needed in a production environment.
+A Deployment Key authorizes a specific **deployment** to run offline with no limitations on consecutive or total
+activation time. A **deployment** is a single machine (i.e., an industrial edge PC) installed with some configuration
+of the AICA System.
+
+A Deployment Key will appear as a very long string of characters in the following format, though the specific key will
+be unique for each machine.
+
+```console title="Example AICA Deployment Key"
+key/eyJ9df2jfap7IVdIHnlnNpb2482Hh2193L9io8[...]ExMWM3jAuMCJ9.YhsDjwEz8eYnwE21alSBR_tBSIjavblcziV5nBQ==
+```
+
+### Requesting a Deployment Key
+
+Deployment Keys can be requested by AICA System License holders by using AICA Launcher v1.3.2 or newer on the target
+machine. Press the green stamp icon under a selected configuration generate a unique machine fingerprint and follow
+the instructions to send the activation code to the AICA support team.
+
+![aica-launcher-request-deployment-key](../assets/aica-launcher-request-deployment-key.png)
+
+They will then generate and send the unique Deployment Key which contains the encrypted machine fingerprint.
 
 ---
 
