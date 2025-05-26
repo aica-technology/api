@@ -181,7 +181,8 @@ to the controller. You will see the following service payload:
 This message defines 2 of the variables that JTC can use in order to execute a trajectory, namely: 
 
 1. `frames`: a list of the Cartesian frames that you would like to traverse, in the order that they should be visited.
-2. `times_from_start`: the amount of time (in seconds) JTC should take to move to each frame.
+2. `times_from_start`: for each frame, the elapsed time (in seconds) measured from the start point at which JTC should
+arrive.
  
 Naturally, the two vectors need to be of the same size. Also, notice how the payload frame names correspond to the ones
 available in the 3D view (or yaml application) to anticipate what the trajectory execution will look like.
