@@ -25,7 +25,7 @@ Copy the following YAML and generate the graph.
 ```yaml
 schema: 2-0-4
 dependencies:
-  core: v4.0.0
+  core: v4.4.0
 frames:
   start:
     reference_frame: world
@@ -155,7 +155,7 @@ below:
 
 ## The example explained
 
-The application starts by loading the `Robot State Broadcaster` and `Joint Trajectory controller` for the generic
+The application starts by loading the `Robot State Broadcaster` and `Joint Trajectory Controller` for the generic
 six-axis robot. You may already play the application.
 
 After you press play, switch to the 3D view using the corresponding button on the top right of your AICA Studio. You
