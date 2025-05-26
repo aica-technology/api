@@ -180,12 +180,17 @@ read through your URDF.
 
 #### Using JTC's `Set Trajectory` service
 
-The service currently accepts 3 types of variables, namely:
+The service currently accepts 5 variables, namely:
 
 - `times_from_start`: a list of timestamps (in seconds) measured from the start, indicating when JTC should reach each
 frame.
 - `frames`: names of the Cartesian frames to reach with the robot end effector 
 - `joint_positions`: names of joint positions that the robot should achieve
+- `blending_factors`: factors in [0.0, 1.0] indicating the amount of curving allowed between 2 consecutive waypoints.
+The first and last segment are currently not considered in blending, therefore, the vector's size needs to be equal to
+the number of frames or joint positions **minus** 2. **The default blending factors are all set to 0.0.**
+- `blending_samples`: the number of samples **(minimum 10; default 50)** to be used when generating the blended
+trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
 
 While `times_from_start` is always required, only one of `frames` and `joint_positions` can be used at a time. The
 former, is a vector of Cartesian frames from which an Inverse Kinematics (IK) solver will compute the joint positions
@@ -335,6 +340,30 @@ Take a moment and try to create this sequence.
 :::tip
 Your sequence block needs to be started after JTC has been activated, otherwise your service call will fail. Try to
 to ensure that before looking at the solution.
+:::
+
+:::tip
+You may re-play your program by using `blending_factors` this time. Your payloads could now be the following:
+
+```yaml
+{
+  frames: [start, frame_1, frame_2, frame_3, start], 
+  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0],
+  blending_factors: [0.5, 0.5, 0.5]
+}
+```
+
+or
+
+```yaml
+{
+  joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, start], 
+  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0],
+  blending_factors: [0.5, 0.5, 0.5]
+}
+```
+
+Experiment with these values to observe the difference in the resulting trajectory.
 :::
 
 #### Other considerations
