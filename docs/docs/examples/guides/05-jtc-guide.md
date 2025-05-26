@@ -321,7 +321,7 @@ joint_positions:
 
 ### Building an application around JTC
 
-You should now have at least 2 recordings, one in Cartesian and the other in joint space. We can use these create a
+You should now have at least 2 recordings, one in Cartesian and the other in joint space. We can use these to create a
 repetitive motion between them.
 
 
@@ -338,7 +338,7 @@ To loop the execution of the recorded frames and/or joint positions, we need a s
 Take a moment and try to create this sequence.
 
 :::tip
-Your sequence block needs to be started after JTC has been activated, otherwise your service call will fail. Try to
+Your sequence block needs to be started after JTC has been activated, otherwise your service call will fail. Try
 to ensure that before looking at the solution.
 :::
 
