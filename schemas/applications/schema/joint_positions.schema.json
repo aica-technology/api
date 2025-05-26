@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "patternProperties": {
     "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-      "title": "Joint Positions",
+      "title": "Joint Positions Entry",
       "description": "The names and positions of a static joint configuration in the application",
       "type": "object",
       "additionalProperties": false,
@@ -19,14 +19,14 @@
           "uniqueItems": true,
           "items": {
             "type": "string",
-            "example": [
+            "examples": [
               "joint_1",
               "shoulder_joint"
             ]
           }
         },
         "positions": {
-          "title": "Joint Positions",
+          "title": "Joint Position Values",
           "description": "The positions of the joints in the same order as the names (in SI units)",
           "type": "array",
           "minItems": 1,
