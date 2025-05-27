@@ -5,7 +5,7 @@
   "type": "object",
   "additionalProperties": false,
   "patternProperties": {
-    "[a-zA-Z0-9_-]": {
+    "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
       "title": "Frame",
       "description": "The position and orientation of a static frame in the application",
       "type": "object",
@@ -64,7 +64,7 @@
           "description": "The reference frame that the positive and orientation of the frame is defined relative to",
           "type": "string",
           "default": "world",
-          "pattern": "[a-zA-Z0-9_-]"
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
         }
       },
       "required": [

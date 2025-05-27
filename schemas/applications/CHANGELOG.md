@@ -2,6 +2,8 @@
 
 Release Versions:
 
+- [2-0-5](#2-0-5)
+- [2-0-4](#2-0-4)
 - [2-0-3](#2-0-3)
 - [2-0-2](#2-0-2)
 - [2-0-1](#2-0-1)
@@ -15,6 +17,20 @@ Release Versions:
 - [1-1-1](#1-1-1)
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
+
+## 2-0-5
+
+This patch allows parameter values to have the `null` type, which is intended to represent an unset or "empty"
+parameter value. This should be seen as distinct from an empty string value `""` or any other falsey value.
+
+## 2-0-4
+
+This patch relaxes the pattern properties for parameter and frame names in the application schema. Names are now allowed
+to start with any alphanumeric character and can contain underscores, full stops, and dashes.
+
+### Changelog
+
+- feat: more permissive names for frames and parameters (#260)
 
 ## 2-0-3
 
