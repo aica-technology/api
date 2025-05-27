@@ -65,7 +65,7 @@ key/eyJ9df2jfap7IVdIHnlnNpb2482Hh2193L9io8[...]ExMWM3jAuMCJ9.YhsDjwEz8eYnwE21alS
 ### Requesting a Deployment Key
 
 Deployment Keys can be requested by AICA System License holders by using AICA Launcher v1.3.2 or newer on the target
-machine. Press the green stamp icon under a selected configuration generate a unique machine fingerprint and follow
+machine. Press the green stamp icon under a selected configuration to generate a unique machine fingerprint and follow
 the instructions to send the activation code to the AICA support team.
 
 ![aica-launcher-request-deployment-key](../assets/aica-launcher-request-deployment-key.png)
