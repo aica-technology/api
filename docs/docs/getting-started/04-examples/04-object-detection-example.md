@@ -284,20 +284,20 @@ frames:
   camera_frame:
     reference_frame: world
     position:
-      x: 0.291243
-      y: 0.006586
+      x: 0
+      y: 0.3
       z: 0.4
     orientation:
       w: 0
-      x: 1
-      y: 0
+      x: 0
+      y: 1
       z: 0
 on_start:
   load:
     - component: video_player_component
     - hardware: hardware
-    - component: tf_to_signal
     - component: yolo_executor
+    - component: tf_to_signal
 components:
   yolo_executor:
     component: object_detection_components::YOLOExecutor
@@ -319,7 +319,7 @@ components:
       rate: !!float 1.0
       conf_threshold: 0.4
       model_file: /files/best.onnx
-      classes_file: /files/coco8.YAML
+      classes_file: /files/coco8.yaml
     inputs:
       rgb_image: /video_player_component/video_feed
     outputs:
@@ -333,9 +333,6 @@ components:
           lifecycle:
             component: yolo_to_marker
             transition: configure
-          load:
-            controller: robot_state_broadcaster
-            hardware: hardware
         on_configure:
           lifecycle:
             component: yolo_to_marker
@@ -345,12 +342,6 @@ components:
             component: signal_point_attractor
     parameters:
       rate: !!float 5.0
-      fov:
-        - !!float 42.0
-        - !!float 69.0
-      image_size:
-        - !!float 480.0
-        - !!float 840.0
       object_distance: 0.4
     inputs:
       json_input: /yolo_executor/bounding_boxes
@@ -417,7 +408,6 @@ components:
             component: video_player_component
             transition: activate
     parameters:
-      rate: !!float 2.0
       video_path: /files/hand.mp4
     outputs:
       video_feed: /video_player_component/video_feed
@@ -484,7 +474,7 @@ graph:
         y: 100
     hardware:
       hardware:
-        x: 2160
+        x: 1960
         y: -20
   edges:
     yolo_to_marker_state_command_cartesian_transformation_input_2:
@@ -503,40 +493,34 @@ graph:
           y: 40
         - x: 480
           y: 160
-    hardware_hardware_robot_state_broadcaster_cartesian_state_signal_point_attractor_state:
-      path:
-        - x: 1400
-          y: 520
-        - x: 1400
-          y: 780
-    on_start_on_start_tf_to_signal_tf_to_signal:
-      path:
-        - x: 440
-          y: 40
-        - x: 440
-          y: 620
     on_start_on_start_yolo_executor_yolo_executor:
       path:
         - x: 680
           y: 40
         - x: 680
           y: 80
+    on_start_on_start_tf_to_signal_tf_to_signal:
+      path:
+        - x: 440
+          y: 40
+        - x: 440
+          y: 620
+    hardware_hardware_robot_state_broadcaster_cartesian_state_signal_point_attractor_state:
+      path:
+        - x: 1400
+          y: 520
+        - x: 1400
+          y: 780
     yolo_executor_on_activate_yolo_to_marker_yolo_to_marker:
       path:
         - x: 1380
           y: 200
         - x: 1380
           y: 120
-    yolo_to_marker_on_load_hardware_hardware_robot_state_broadcaster:
-      path:
-        - x: 2000
-          y: 240
-        - x: 2000
-          y: 280
     yolo_to_marker_on_activate_signal_point_attractor_signal_point_attractor:
       path:
         - x: 1900
-          y: 280
+          y: 240
         - x: 1900
           y: 540
         - x: 1420
@@ -549,23 +533,16 @@ graph:
           y: 740
         - x: 900
           y: 660
-    yolo_executor_bounding_boxes_yolo_to_marker_json_input:
-      path:
-        - x: 1380
-          y: 320
-        - x: 1380
-          y: 360
     yolo_to_marker_marker_pose_cartesian_transformation_input_2:
       path:
         - x: 1860
-          y: 360
+          y: 320
         - x: 1860
           y: 500
         - x: 920
           y: 500
         - x: 920
           y: 860
-
 ```
 </details>
 
