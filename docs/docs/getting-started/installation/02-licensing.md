@@ -14,7 +14,7 @@ A license regulates both the access rights to download AICA software packages an
 applications. To request an AICA System License, contact the AICA sales team at contact@aica.tech. Each new user will
 receive access instructions to a personal account for the [AICA license manager](https://licensing.aica.tech/list) which
 lists all licenses associated with that user. Every license has a name, an expiration date, the actual license key and a
-list of entitlements. At the [AICA package registry](https://registry.licensing.aica.tech/) the user can see all
+list of entitlements. On the [AICA package registry](https://registry.licensing.aica.tech/) the user can see all
 available packages for one specific license.
 
 :::tip
