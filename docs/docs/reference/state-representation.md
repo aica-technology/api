@@ -17,7 +17,7 @@ can represent such values in an internally consistent way while providing useful
 transformations and other manipulations.
 
 State classes are designed to be extensible to support more abstract state variables or properties. Another type of
-state is a **parameter**, which this library defines as a container class to for generic named variables.
+state is a **parameter**, which this library defines as a container class for generic variables with a name and value.
 
 The following sections describe the properties of the main state classes in the library.
 
@@ -32,13 +32,14 @@ The `State` base class defines the following attributes common to all derived st
 ### Name
 
 The name is used to label a specific state instance, and can be used to disambiguate multiple states or check their
-compatibility. The name can be accessed or modified with `get_name()` and `set_name()` respectively.
+compatibility. The name can be accessed or modified with `get_name()` and `set_name()`, respectively.
 
 ### State Type
 
 A state can hold different data depending on its type. The available state types are defined by the
 `state_representation::StateType` enumeration. The type field is accessible using the `get_type()` method and allows
-introspection when working with state pointers. It is a readonly property, determined by the constructor implementation.
+introspection when working with state pointers. It is a read-only property, determined by the constructor
+implementation.
 
 <Tabs groupId="programming-language">
 <TabItem value="c++" label="C++">
@@ -53,7 +54,6 @@ void check_state_type(const std::shared_ptr<state_representation::State>& state)
 
 </TabItem>
 </Tabs>
-
 
 ### Timestamp
 
@@ -90,7 +90,10 @@ A state can be marked as "empty" by calling `reset()`. The state remains empty u
 
 ## Cartesian state
 
-A `CartesianState` represents a spatial frame in 3D space, containing the following spatial and dynamic properties:
+<!-- TODO: define the clamping and scaling methods -->
+
+A `CartesianState` represents a spatial frame in 3D space. It inherits all the properties of the `State` base class and
+additionally defines the following spatial and dynamic properties:
 
 - `position`
 - `orientation`
@@ -122,6 +125,8 @@ represented as a 7D vector (3 for `position` and 4 for `orientation`).
 The spatial properties are expressed relative to a named reference frame. For a `CartesianState` with name "A" and
 reference frame "B", each state variable represents the instantaneous spatial property measured at or around frame A
 from the perspective of frame B.
+
+The reference frame can be accessed or modified with `get_reference_frame()` and `set_reference_frame()`, respectively.
 
 In some contexts, `twist` or `wrench` vectors may be interpreted differently. For example, there is a concept of
 "body twist" and "spatial twist". See the sections on [`CartesianTwist`](#cartesian-twist) and
@@ -193,8 +198,7 @@ state.set_orientation(0, 0, 0, 1); // 180º rotation around Z
 </TabItem>
 </Tabs>
 
-
-Whenever setting the orientation, the values are automatically normalized to ensure a unit quaternion.
+When setting the orientation, the values are automatically normalized to ensure a unit quaternion.
 
 <Tabs groupId="programming-language">
 <TabItem value="c++" label="C++">
@@ -244,8 +248,8 @@ state.set_wrench(Eigen::VectorXd::Random(6)); // update the force and torque
 
 ### Cartesian addition and subtraction
 
-In robotics and control, a state variable can represent a command or desired value, rather than a real measurement.
-For this reason, it's often desirable to combine and manipulate state variables in different ways.
+In robotics and control theory, a state variable can represent a command or desired value, rather than a real
+measurement. For this reason, it's often desirable to combine and manipulate state variables in different ways.
 
 For example, a simple controller might be driving the linear velocity of a robot to approach a moving object. Then,
 the desired velocity of the robot would be the velocity of the object _plus_ some additional velocity in the direction
@@ -303,13 +307,13 @@ In the simplest case, the relative distance between each frame is combined to yi
 In another example, if frame A is rotated by 45 degrees relative to B and B is rotated 45 degrees relative to C, then A
 is rotated 90 degrees relative to C.
 
-When states have non-zero position, orientation, velocity or acceleration offsets, the transformation involves a more
+When states have non-zero position, orientation, velocity, or acceleration offsets, the transformation involves a more
 complicated combination of the different state variables.
 
 If there is an orientation difference between the frames, the vectors representing each state variable are rotated into
 the new reference frame accordingly.
 
-Transformations including twist will include radially-induced linearly velocity that scales with the distance between
+Transformations including twist will include radially-induced linear velocity that scales with the distance between
 frames and their relative angular velocities. Finally, the transformation of accelerating frames will include
 Coriolis and centrifugal effects.
 
@@ -467,10 +471,11 @@ std::vector<double> distance = state.norms(CartesianStateVariable::POSITION);
 </TabItem>
 </Tabs>
 
-Finally, state variables can be scaled to a unit vector state using the `normalize()` / `normalized()` operations.
-This does not affect the orientation, which is always expressed as a unit quaternion.
+Finally, state variables can be scaled to a unit vector state using the `normalize()` or `normalized()` operations.
 
 The former normalizes a state in place, while the latter returns a normalized copy without modifying the original state.
+
+This does not affect the orientation, which is always expressed as a unit quaternion.
 
 As with the other operations, the normalization can be selectively applied to specific state variables.
 
@@ -583,6 +588,8 @@ position and orientation, it can be converted into linear and angular velocity t
 
 Operations with time use `std::chrono::duration` types, such as `std::chrono::milliseconds`, `std::chrono::seconds`, or
 definitions with `std::literals::chrono_literals`.
+
+<!-- TODO: describe the integrate() and differentiate() methods -->
 
 <Tabs groupId="programming-language">
 <TabItem value="c++" label="C++">
@@ -767,14 +774,14 @@ The internal `CartesianTwist` representation is arguably the most intuitive out 
 Still, depending on the geometric operations involved, both the body and spatial twist vectors can be useful.
 
 The equations above have shown the derivations of each in terms of the original `CartesianTwist`. For completeness,
-it is also worth mentioning the direct transformation between body and spatial representations, using the Adjoint map.
+it is also worth mentioning the direct transformation between body and spatial representations using the Adjoint map:
 
 $$
 \mathcal{V}_s = [Ad_{T}] \mathcal{V}_b
 $$
 
-The Adjoint map is defined for a given transformation matrix $T$ (with rotation matrix $R$ and displacement
-vector $t$) as the adjoint matrix $[Ad_{T}]$:
+where $[Ad_{T}]$ is the adjoint matrix, defined for a given transformation matrix $T$ (with rotation matrix $R$ and
+displacement vector $t$) as follows:
 
 $$
 [Ad_{T}] =
@@ -962,8 +969,8 @@ The inverse of a state will set the wrench to zero.
 
 ## Joint state
 
-A `JointState` represents the instantaneous properties of a collection of joints, containing the following spatial and
-dynamic properties:
+A `JointState` represents the instantaneous properties of a collection of joints. It inherits all the properties of the
+`State` base class and additionally defines the following spatial and dynamic properties:
 
 - `positions`
 - `velocities`
@@ -972,16 +979,17 @@ dynamic properties:
 
 Each state variable is represented as an N-dimensional vector (`Eigen::VectorXd`), where N is the number of joints.
 
-By design, a `JointState` most appropriately describes a serial linkage of revolute joints as found in typical
-robot arms or manipulators. The values are assumed to be in standard SI units (radians, seconds, Newton-meters).
+By design, a `JointState` most appropriately describes a serial linkage of revolute or prismatic joints as found in
+typical robot arms or manipulators. The values are assumed to be in standard SI units; radians and Newton-meters for
+revolute joints and meters and Newtons for prismatic joints, respectively, with all time scales defined in seconds.
 
 ### Joint names
 
 Each joint in a `JointState` collection has a name. This can make it easier to reference the state variable value of a
 specific joint in the collection.
 
-The names can be set on construction or using the `set_names()` method. As an example, a three-link robot might be
-given joint names `{"shoulder", "elbow", "wrist"}`.
+The names can be set on construction and accessed or modified or using `get_names()` or `set_names()`, respectively.
+As an example, a three-link robot might be given joint names `{"shoulder", "elbow", "wrist"}`.
 
 By default, the names are assigned based on their index, starting from 0: `{"joint0", "joint1", ..., "jointX"}`.
 
@@ -1087,7 +1095,8 @@ js.set_torque(2.0, "knee"); // set the torque of the knee joint to 2 Nm
 
 ### Joint state addition, subtraction and scaling
 
-Two `JointState` objects can be combined with addition or subtraction, provided they have the same name and joint names.
+Two `JointState` objects can be combined with addition or subtraction, provided they have the same number of joints with
+the same joint names.
 
 <Tabs groupId="programming-language">
 <TabItem value="c++" label="C++">
@@ -1435,7 +1444,7 @@ In robotics, the Jacobian is used to map state variables between joint space and
 is a matrix containing the set of partial derivatives for a vector function.
 
 Most commonly, it is used to convert joint velocities of a robot into the Cartesian velocity of the end-effector.
-Conversely, the transpose can map a Cartesian wrench applied at the end-effector to the associated torques at each
+Conversely, its transpose can map a Cartesian wrench applied at the end-effector to the associated torques at each
 joint. The Jacobian matrix has additional uses for inverse kinematics and null-space control.
 
 The `Jacobian` class is a wrapper for the underlying matrix that works directly with `JointState` and `CartesianState`
@@ -1456,7 +1465,7 @@ Each property is initialized on construction and has a corresponding setter for 
 <!-- an HTML header is here used in place of ### to create a unique reference anchor for the generic header name -->
 <h3 id="jacobian-construction">Construction</h3>
 
-`Jacobian` constructors take a name, a number of joints or optional vector of joint names, a frame name and an optional
+`Jacobian` constructors take a name, a number of joints or optional vector of joint names, a frame name, and an optional
 reference frame. As with `JointState`, joint names are default initialized based on their index, starting from 0:
 `{"joint0", "joint1", ..., "jointX"}`. As with `CartesianState`, the reference frame is "world" by default.
 
