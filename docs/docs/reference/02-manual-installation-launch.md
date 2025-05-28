@@ -37,7 +37,7 @@ docker context ls
 
 You should see a `default` choice alongside `desktop-linux` that Docker Desktop for Linux created. If you do not see
 it, then you may have missed some of the installation steps (refer to the 
-[installation guide](../getting-started/03-installation-and-launch.md)). If it is indeed there, make sure it is active:
+[installation guide](../getting-started/installation/03-installation-and-launch.md)). If it is indeed there, make sure it is active:
 
 ```shell
 docker context use default

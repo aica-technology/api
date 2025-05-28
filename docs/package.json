@@ -12,7 +12,8 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "start:docker": "npm install && npm start -- --host 0.0.0.0"
   },
   "dependencies": {
     "@docusaurus/core": "^3.7.0",

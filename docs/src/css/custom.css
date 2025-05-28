@@ -37,3 +37,7 @@
 [data-theme='dark'] .themedSVG {
   filter: invert(93%) hue-rotate(180deg)
 }
+
+.inlineEdgeHandleSVG {
+  margin-bottom: -7px;
+}

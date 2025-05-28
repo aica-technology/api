@@ -2,44 +2,59 @@
 sidebar_position: 1
 ---
 
-# Getting started
+import SystemOverview from './assets/system-overview-embedded.svg';
+import ComponentsControllersHardware from './assets/components-controllers-hardware-embedded.svg';
 
-This guide will cover the basic steps to get started with the AICA System, from installation to application examples.
+# Introduction
 
-## Compatibility
+AICA is committed to making robotics more accessible by providing smart software solutions for advanced robot control.
 
-The AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
+Robotics software has many layers and comprises many different parts. The following terms are used to distinguish
+between different parts of the AICA software stack.
 
-AICA Core runs in a Docker container based on Ubuntu 24.04. Thanks to containerization, the majority of the
-installation and usage steps in this guide will be the same for macOS or Ubuntu host platforms unless otherwise
-indicated.
+<SystemOverview className="themedSVG" style={{width: "100%"}}/>
 
-:::info
+## AICA Core
 
-There are some limitations with Docker on macOS compared to Docker on Ubuntu, which can affect advanced usage.
-For the best developer experience, use a modern Ubuntu host machine (20.04 or higher) with Docker v19 or higher. 
+**AICA Core** is a virtual robotics workspace pre-configured with a growing collection of software modules
+for motion generation, signal processing, machine learning and control algorithms. It includes hardware interfaces for
+real-time external control of popular robot brands, force-torque sensors and cameras.
+The workspace is the foundation and the software modules are the building blocks.
 
-### Network sharing
+<ComponentsControllersHardware className="themedSVG" style={{width: "100%"}}/>
 
-While it is possible to grant a container access to the full host network on Ubuntu, sharing a network between a Mac
-host and one or more containers requires slightly more work. This can affect connections to peripheral network devices
-such as robots or sensors, or to a wider ROS network, or to other containers or processes on the host.
+## AICA applications
 
-### Display sharing
+An **application** is a particular configuration of components, controllers and hardware interfaces from the AICA
+Core, generally designed to perform a particular task.
 
-Graphical user interfaces and application windows opened inside a container will fail to open and render on a Mac host
-without explicit display forwarding. Further, support for OpenGL rendering is limited on macOS, which affects certain
-3D programs and simulators commonly used in robotics. For example, opening an RViz window in the container on a Mac host
-will fail, while it will work natively on an Ubuntu host.
+:::tip
+AICA develops bespoke applications to solve specific automation challenges for clients, and offers more general smart
+applications built around a particular use-case (for example, mechanical assembly) that can be re-configured in only a
+few steps.
 
-AICA Studio is continually being extended to include more live data visualization including interactive 2D and 3D data
-views directly in the browser. As a result, the reliance on display sharing and the associated operating system
-limitations will be reduced.
-
-### Real-time capabilities
-
-To fully leverage the real-time capabilities of AICA controllers, the host machine needs a configured real-time kernel.
-This is currently possible with the Ubuntu Pro 24.04 real-time kernel or the `PREEMPT_RT` kernel patch on standard
-Ubuntu, but not possible on macOS.
-
+Visit [our website](https://aica.tech) or [contact us](mailto:contact@aica.tech) to learn more about our service
+offerings.
 :::
+
+## AICA Studio
+
+**AICA Studio** is the graphical user interface layer to AICA Core that empowers developers to build and
+extend their own advanced robotic applications. The interactive application editor can be used to dynamically edit, run
+and monitor robot behaviors. Monitor robot and sensor state data directly in the browser, and manage application states
+and events precisely through predicates, transitions, conditions, sequences or interactive buttons.
+
+## AICA System
+
+The **AICA System** is the software ecosystem that extends AICA Core and Studio. While AICA Core comes bundled with
+the basics, AICA is continually developing additional collections of components, controllers or hardware interfaces
+that suit particular use-cases or types of robots. These first-party add-on packages are available to download from
+the AICA registry.
+
+In addition to AICA Core, AICA Studio and our package registry, the AICA System additionally includes the following
+products and resources:
+
+- **AICA Launcher** is a desktop app that can install and run AICA Studio with Core and add-on packages in just a few
+  clicks
+- The **Component SDK** allows developers to extend the base library with custom functionality that will work seamlessly
+  alongside native components

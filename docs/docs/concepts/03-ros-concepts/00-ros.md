@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 0
 ---
 
 # Built on ROS 2
@@ -30,6 +30,3 @@ At a glance, the AICA System extends ROS 2 with the following features:
 - Advanced message types and object bindings for Cartesian and joint state signals necessary for robot control
 - Standardized component interfaces for effortless connectivity and modularity
 - Dynamic, reconfigurable, event-driven application engine
-
-Read on to learn more about key ROS 2 concepts in the next sections, or skip ahead to learn more
-about [AICA applications](./04-aica-applications.md).
