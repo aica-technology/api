@@ -16,15 +16,16 @@ Often, the message topic and message type is hardcoded within the implementation
 difficult to rearrange the network topology of ROS nodes without modifying and recompiling the node implementation
 itself.
 
+<!-- TODO: we now support all message types and not just standardized -->
 Signals then are ROS 2 publishers and subscribers with dynamically assigned topics and standardized message types.
 This makes it easy to reconfigure the signal connections between different components and controllers in the application
 graph without modifying or recompiling any source code. By using standard message types, the signal compatibility
-between components and controllers is also simplified.
+between components and controllers is also simplified. When components and controllers are connected by a signal in an
+application graph, the application interpreter will try to assert that the signals have a matching type.
 
 Additionally, ROS 2 messages are data packets, not data objects. Parsing data from a message, manipulating it and
-writing it back into a message can involve a fair amount of boilerplate code.
-
-When developing an AICA component, signals are automatically converted to and from the corresponding data object.
+writing it back into a message can involve a fair amount of boilerplate code. When developing an AICA component, signals
+are usually automatically converted to and from the corresponding data object.
 
 ## Basic signal types
 
@@ -74,24 +75,26 @@ The following state variables can be exchanged as signals:
 <!-- TODO: copy and link the markdown documentation of the state representation library directly in the programming reference -->
 
 AICA state signals are built on the
-open-source [`state_representation`](https://aica-technology.github.io/control-libraries/versions/v7.1.0/md__github_workspace_source_state_representation__r_e_a_d_m_e.html)
+open-source [`state_representation`](https://aica-technology.github.io/control-libraries/versions/9.0.1/md__2github_2workspace_2source_2state__representation_2_r_e_a_d_m_e.html)
 library for Cartesian and joint state classes in C++ and Python.
+
+<!-- TODO: all other state rep types too -->
 
 :::
 
 ## Custom messages
 
-The standard primitive and state message types are generally enough to cover the majority of messaging needs in
-an AICA application. Having a reduced message definition set is important to maximizing the modularity and compatibility
-of components. When components are connected by a signal in an application graph, the application interpreter will try
-to assert that the signals have a matching type.
+The set of basic and state signal types is generally enough to cover the majority of messaging needs in an AICA
+application. Having a reduced message definition set is important to maximizing the modularity and compatibility
+of components.
 
-However, any ROS 2 message can be implemented as a signal using the `custom` signal type. As long as the custom type
-between two connected components has the same name, the application will be valid.
+However, any ROS 2 message type can be implemented as a signal in an AICA application. The syntax for doing this is
+corresponding to basic and state signals with the downside that any conversion from the data packet to a data object and
+back is not automatic.
 
 :::tip
 
-The AICA component library includes signal translator components for commonly used ROS messages (namely `std_msgs`
-and `geometry_msgs`) for AICA components to communicate with traditional ROS nodes in an external process.
+The AICA component library includes signal translator components for commonly used ROS messages, namely
+`sensor_msgs/JointState`, `geometry_msgs/PoseStamped`, `geometry_msgs/TwistStamped` and `geometry_msgs/WrenchStamped`.
 
 :::
