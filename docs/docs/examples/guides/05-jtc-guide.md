@@ -14,12 +14,12 @@ import jtcGuideRecordJoint from './assets/jtc-guide-record-joint.gif'
 # A guide on Joint Trajectory workflows
 
 In our concepts page for the [Joint Trajectory Controller](../../concepts/05-building-blocks/04-controllers/jtc.md)
-(JTC) we already covered why trajectory controllers are oftentimes needed in robotics. Feel free to refer to the linked
+(JTC) we already covered why trajectory controllers are quite often needed in robotics. Feel free to refer to the linked
 page. In short, executing trajectories, in joint- or Cartesian-space, is quite often a fundamental piece of a robotics
-application workflow. Whether you need to address pick n' place tasks, or to simply move through predetermined locations,
-you are in need of a controller that is able to traverse space accurately and timely.
+application workflow. Whether you need to address pick and place tasks, or to simply move through predetermined
+locations, you are in need of a controller that is able to traverse space accurately and timely.
 
-While in TODO: we covered a basic example of how JTC can be used, here we will focus more on its integration with AICA
+While in `TODO:` we covered a basic example of how JTC can be used, here we will focus more on its integration with AICA
 Studio and suggest workflows and/or parametrizations that might aid you when building big applications.
 
 ## Setting up your environment
@@ -27,10 +27,10 @@ Studio and suggest workflows and/or parametrizations that might aid you when bui
 JTC has a plethora of parameters that can be set to alter its performance according to an application's requirements.
 Let us start by creating a new application that we can use as a reference point for this guide.
 
-First, start AICA Launcher and create a configuration with at least `AICA Core v4.4.0` (TODO: joint positions). For the
-remainder of this guide, we will be using the generic six-axis robot that is part of our core hardware collection.
-However, if you have the appropriate entitlements and want to experiment with a different robot brand, feel free to add
-the corresponding collection to your configuration before launching it. 
+First, start AICA Launcher and create a configuration with at least `AICA Core v4.4.1`. For the remainder of this guide,
+we will be using the generic six-axis robot that is part of our core hardware collection. However, if you have the
+appropriate entitlements and want to experiment with a different robot brand, feel free to add the corresponding
+collection to your configuration before launching it. 
 
 ## Configuring your hardware interface
 
@@ -88,11 +88,11 @@ There are 2 ways of setting a trajectory in JTC:
 1. by using a `JointTrajectory` signal
 2. by calling the `set_trajectory` service
 
-In both cases, receiving a new joint trajectory will first trigger cancellation of the active (if any) trajectory. That
-is, **there is no trajectory buffering or appending taking place**. As with many things in the AICA Universe, behaviors
-are event-driven. If you wish to send multiple trajectories back-to-back, you will have to rely on the execution status
-of the active trajectory handled by JTC. There is a practical example of how do this in following sections
-(see [Putting an application together](#putting-an-application-together)). 
+In both cases, receiving a new joint trajectory will first trigger cancellation of an active trajectory, if there is
+one. That is, **there is no trajectory buffering or appending taking place**. As with many things in the AICA Universe,
+behaviors are event-driven. If you wish to send multiple trajectories back-to-back, you will have to rely on the
+execution status of the active trajectory handled by JTC. There is a practical example of how do this in following
+sections (see [Putting an application together](#putting-an-application-together)). 
 
 #### Using JTC with signals
 
