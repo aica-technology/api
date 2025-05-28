@@ -153,17 +153,17 @@ this->trajectory_ = std::make_shared<trajectory_msgs::msg::JointTrajectory>();
 this->add_output("trajectory", this->trajectory_, "", false, false);
 
 // Typically in a conditional block that will write the output upon the success of some criteria
-this->trajectory_->header.stamp = this->get_clock()->now();
+this->trajectory_->header.stamp = this->get_node()->get_clock()->now();
 this->trajectory_->joint_names = {"joint_0", "joint_1", "joint_2", "joint_3", "joint_4", "joint_5"};
 this->trajectory_->points.resize(2);
 
-this->trajectory_->points[0].positions = {0.0, 0.5, 1.0, -0.5, 0.0, 0.2};
+this->trajectory_->points[0].positions = {0.6, 0.2, 0.0, 0.0, -0.2, 0.0};
 this->trajectory_->points[0].velocities = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-this->trajectory_->points[0].time_from_start = rclcpp::Duration::from_seconds(2);
+this->trajectory_->points[0].time_from_start = rclcpp::Duration::from_seconds(2.0);
 
-this->trajectory_->points[1].positions = {0.2, 0.4, 0.8, -0.2, 0.1, 0.3};
+this->trajectory_->points[1].positions = {-0.6, -0.2, 0.0, 0.0, 0.2, 0.0};
 this->trajectory_->points[1].velocities = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-this->trajectory_->points[1].time_from_start = rclcpp::Duration::from_seconds(4);
+this->trajectory_->points[1].time_from_start = rclcpp::Duration::from_seconds(4.0);
 
 this->publish_output("trajectory");
 ```
