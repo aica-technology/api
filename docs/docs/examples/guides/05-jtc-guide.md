@@ -106,6 +106,7 @@ If you are writing the signal logic yourself, the following code indicates what 
 <TabItem value="python" label="Python">
 
 ```python title="py_component.py"
+import rclpy
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 # Typically in your constructor
@@ -113,18 +114,18 @@ self._trajectory = JointTrajectory()
 self.add_output("trajectory", "_trajectory", JointTrajectory, publish_on_step=False)
 
 # Typically in a conditional block that will write the output upon the success of some criteria
-self._trajectory.header.stamp = rospy.Time.now()
+self._trajectory.header.stamp = self.get_clock().now().to_msg()
 self._trajectory.joint_names = ['joint_0', 'joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5']
 
 p1 = JointTrajectoryPoint()
-p1.positions = [0.0, 0.5, 1.0, -0.5, 0.0, 0.2]
+p1.positions = [0.6, 0.2, 0.0, 0.0, -0.2, 0.0]
 p1.velocities = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-p1.time_from_start = rospy.Duration(2.0)
+p1.time_from_start = rclpy.time.Duration(seconds=2.0).to_msg()
 
 p2 = JointTrajectoryPoint()
-p2.positions = [0.2, 0.4, 0.8, -0.2, 0.1, 0.3]
+p2.positions = [-0.6, -0.2, 0.0, 0.0, 0.2, 0.0]
 p2.velocities = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-p2.time_from_start = rospy.Duration(4.0)
+p2.time_from_start = rclpy.time.Duration(seconds=4.0).to_msg()
 
 self._trajectory.points = [p1, p2]
 
