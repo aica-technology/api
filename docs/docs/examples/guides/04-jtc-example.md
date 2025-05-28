@@ -184,8 +184,9 @@ This message defines 2 of the variables that JTC can use in order to execute a t
 2. `times_from_start`: a list of times (in seconds) measured from the start, indicating when JTC should reach each 
 frame.
  
-Naturally, the two vectors need to be of the same size. Also, notice how the payload frame names correspond to the ones
-available in the 3D view (or yaml application) to anticipate what the trajectory execution will look like.
+Ensure both vectors have the same length and that each payload frame name matches those shown in the
+3D view or YAML application. This way, you can verify that your payload is correct and anticipate the 
+trajectory execution.
 
 ## Executing the trajectory
 
