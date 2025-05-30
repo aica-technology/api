@@ -14,12 +14,14 @@ import jtcGuideRecordJoint from './assets/jtc-guide-record-joint.gif'
 # A guide on Joint Trajectory workflows
 
 In our concepts page for the [Joint Trajectory Controller](../../concepts/05-building-blocks/04-controllers/jtc.md)
-(JTC) we already covered why trajectory controllers are quite often needed in robotics. In short, executing trajectories, in joint- or Cartesian-space, is quite often a fundamental piece of a robotics application workflow. Whether you need to
+(JTC) we already covered why trajectory controllers are quite often needed in robotics. In short, executing trajectories,
+in joint- or Cartesian-space, is quite often a fundamental piece of a robotics application workflow. Whether you need to
 address pick and place tasks, or to simply move through predetermined locations, you are in need of a controller that is
 able to traverse space accurately and timely.
 
-While in `TODO:` we covered a basic example of how JTC can be used, here we will focus more on its integration with AICA
-Studio and suggest workflows and/or parametrizations that might aid you when building big applications.
+While in ["A joint trajectory execution example"](./04-jtc-example.md) we covered a basic example of how JTC can be
+used, here we will focus more on its integration with AICA Studio and suggest workflows and/or parametrizations that
+might aid you when building big applications.
 
 ## Setting up your environment
 
