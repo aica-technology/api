@@ -14,34 +14,33 @@ import jtcGuideRecordJoint from './assets/jtc-guide-record-joint.gif'
 # A guide on Joint Trajectory workflows
 
 In our concepts page for the [Joint Trajectory Controller](../../concepts/05-building-blocks/04-controllers/jtc.md)
-(JTC) we already covered why trajectory controllers are quite often needed in robotics. In short, executing trajectories,
-in joint- or Cartesian-space, is quite often a fundamental piece of a robotics application workflow. Whether you need to
-address pick and place tasks, or to simply move through predetermined locations, you are in need of a controller that is
+(JTC) we already covered why trajectory controllers are often needed in robotics. In short, executing trajectories,
+in joint or Cartesian space, is often a fundamental piece of a robotics application workflow. Whether you need to
+address pick and place tasks, or simply move through predetermined locations, you are in need of a controller that is
 able to traverse space accurately and timely.
 
-While in ["A joint trajectory execution example"](./04-jtc-example.md) we covered a basic example of how JTC can be
-used, here we will focus more on its integration with AICA Studio and suggest workflows and/or parametrizations that
-might aid you when building big applications.
+While we covered a basic exmaple of JTC in [a previous example](./04-jtc-example.md), here we will focus more on its integration with AICA Studio and suggest workflows and/or parametrizations that might aid you when building big
+applications.
 
 ## Setting up your environment
 
 JTC has a plethora of parameters that can be set to alter its performance according to an application's requirements.
 Let us start by creating a new application that we can use as a reference point for this guide.
 
-First, start AICA Launcher and create a configuration with at least `AICA Core v4.4.1`. For the remainder of this guide,
-we will be using the generic six-axis robot that is part of our core hardware collection. However, if you have the
-appropriate entitlements and want to experiment with a different robot brand, feel free to add the corresponding
+First, start AICA Launcher and create a configuration with **AICA Core v4.4.1** or higher. For the remainder of this
+guide, we will be using the generic six-axis robot that is part of our core hardware collection. However, if you have
+the appropriate entitlements and want to experiment with a different robot brand, feel free to add the corresponding
 collection to your configuration before launching it. 
 
 ## Configuring your hardware interface
 
 Create a new application, connect an edge from the start block to the hardware interface and: 
 
-1. Open the settings menu of the hardware interface and set the robot description to `Generic six-axis robot arm`, then
+1. Open the settings menu of the hardware interface and set the URDF to `Generic six-axis robot arm`, then
 proceed to close this menu.
 2. Add a `Joint Trajectory Controller` to the hardware interface and set it to:
-   - Auto-load
-   - Auto-activate
+   - auto-load
+   - auto-activate
 3. Connect the start block to the hardware interface to load it on start.
 
 Your application should look like this:
@@ -76,7 +75,8 @@ in velocity but your trajectory has positions. Then, a PID control will be appli
 through the trajectory.
 
 You will also notice tolerance values for trajectory execution times and position offsets. These should be set on a
-per-application basis.
+per-application basis, as failing to satisfy the corresponding constraints would lead to the trajectory failing
+mid-execution.
 
 You may find advanced parameters in the `Docs` tab under the `Joint Trajectory Controller` page. These parameters can be
 used to further tune JTC's performance and functionality, but may also require more advanced knowledge in order to tune
@@ -94,6 +94,17 @@ one. That is, **there is no trajectory buffering or appending taking place**. As
 behaviors are event-driven. If you wish to send multiple trajectories back-to-back, you will have to rely on the
 execution status of the active trajectory handled by JTC. There is a practical example of how do this in following
 sections (see [Putting an application together](#putting-an-application-together)). 
+
+### Trajectory execution status
+
+The controller exposes 4 predicates to reflect the the execution status of a trajectory, namely:
+
+- `Has active trajectory`: A trajectory has been set and is being executed
+- `Has trajectory succeeded`: A trajectory was executed successfully (i.e., reached the final waypoint respecting all 
+tolerances in the way)
+- `Has trajectory failed`: A trajectory failed to execute because a tolerance was violatted (i.e., desired waypoint was
+not reached and/or time duration was exceeded)
+- `Is trajectory cancelled`: A user-triggered request to cancel the trajectory was successfully processed
 
 #### Using JTC with signals
 
@@ -173,7 +184,7 @@ this->publish_output("trajectory");
 </Tabs>
 
 :::tip
-The joint names need to correspond to the joint names from your robot description (*i.e.*, URDF). If you are **not**
+The joint names need to correspond to the joint names from your URDF. If you are **not**
 using the `Generic six-axis robot arm`, you will need to adjust these names.
 
 The easiest way to do so if you do not already know them is to head to the `Hardware` menu of your AICA Launcher and
@@ -287,9 +298,9 @@ frames:
       z: 0.000001
 ```
 
-You may also try the inverse, that is, copy one of the above code blocks and paste it right below the `dependencies`
-block replacing your recording and generate the graph. If you switch back to `3D Viz` you should see the same frame as
-depicted in the above image.
+You may also try the inverse, that is, copy one of the above code blocks and paste it at the top-level scope of your 
+YAML application (similar to `dependencies`, `components`, `controllers`, ...) block replacing your recording and 
+generate the graph. If you switch back to `3D Viz` you should see the same frame as depicted in the above image.
 
 #### Record joint positions
 
@@ -349,7 +360,7 @@ You may re-play your program by using `blending_factors` this time. Your payload
 
 ```yaml
 {
-  frames: [start, frame_1, frame_2, frame_3, start], 
+  frames: [start, frame_1, frame_2, frame_3, stop], 
   times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0],
   blending_factors: [0.5, 0.5, 0.5]
 }
@@ -359,13 +370,15 @@ or
 
 ```yaml
 {
-  joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, start], 
+  joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, stop], 
   times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0],
   blending_factors: [0.5, 0.5, 0.5]
 }
 ```
 
-Experiment with these values to observe the difference in the resulting trajectory.
+Experiment with these values to observe the difference in the resulting trajectory. Note that, you will need at least
+3 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. If you need to,
+go to 3D Viz and record some additinal frames.
 :::
 
 #### Other considerations
