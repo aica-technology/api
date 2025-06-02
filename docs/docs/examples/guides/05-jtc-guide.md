@@ -102,7 +102,7 @@ The controller exposes 4 predicates to reflect the the execution status of a tra
 - `Has active trajectory`: A trajectory has been set and is being executed
 - `Has trajectory succeeded`: A trajectory was executed successfully (i.e., reached the final waypoint respecting all 
 tolerances in the way)
-- `Has trajectory failed`: A trajectory failed to execute because a tolerance was violatted (i.e., desired waypoint was
+- `Has trajectory failed`: A trajectory failed to execute because a tolerance was violated (i.e., desired waypoint was
 not reached and/or time duration was exceeded)
 - `Is trajectory cancelled`: A user-triggered request to cancel the trajectory was successfully processed
 
@@ -378,7 +378,7 @@ or
 
 Experiment with these values to observe the difference in the resulting trajectory. Note that, you will need at least
 3 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. If you need to,
-go to 3D Viz and record some additinal frames.
+go to 3D Viz and record some additional frames.
 :::
 
 #### Other considerations
