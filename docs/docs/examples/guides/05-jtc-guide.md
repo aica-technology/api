@@ -34,7 +34,7 @@ collection to your configuration before launching it.
 
 ## Configuring your hardware interface
 
-Create a new application, connect an edge from the start block to the hardware interface and: 
+Create a new application and: 
 
 1. Open the settings menu of the hardware interface and set the URDF to `Generic six-axis robot arm`, then
 proceed to close this menu.
