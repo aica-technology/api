@@ -51,8 +51,8 @@ Your application should look like this:
 
 ### Parametrizing JTC
 
-Click on the small gear icon on the `Joint Trajectory Controller` block we just added. You will be presented with a few
-basic parameters that JTC has to offer and that AICA curated: 
+Click on the small gear icon on the `Joint Trajectory Controller` block we just added to view and edit the available
+parameters.
 
 <div class="text--center">
   <img src={jtcGuideParameters} alt="Basic JTC parameters" />
@@ -82,7 +82,7 @@ You may find advanced parameters in the `Docs` tab under the `Joint Trajectory C
 used to further tune JTC's performance and functionality, but may also require more advanced knowledge in order to tune
 them. Make sure to carefully read the descriptions next to each parameter before making changes.
 
-### Setting a trajectory for execution
+## Setting a trajectory for execution
 
 There are 2 ways of setting a trajectory in JTC:
 
@@ -100,13 +100,13 @@ sections (see [Putting an application together](#putting-an-application-together
 The controller exposes 4 predicates to reflect the the execution status of a trajectory, namely:
 
 - `Has active trajectory`: A trajectory has been set and is being executed
-- `Has trajectory succeeded`: A trajectory was executed successfully (i.e., reached the final waypoint respecting all 
-tolerances in the way)
+- `Has trajectory succeeded`: A trajectory was executed successfully (i.e., reached the final waypoint within all
+tolerances)
 - `Has trajectory failed`: A trajectory failed to execute because a tolerance was violated (i.e., desired waypoint was
 not reached and/or time duration was exceeded)
 - `Is trajectory cancelled`: A user-triggered request to cancel the trajectory was successfully processed
 
-#### Using JTC with signals
+### Using JTC with signals
 
 In practice, this requires publishing a single
 [`JointTrajectory`](https://docs.ros.org/en/noetic/api/trajectory_msgs/html/msg/JointTrajectory.html) message. In AICA
@@ -154,7 +154,7 @@ self.publish_output("trajectory")
 #include <trajectory_msgs/msg/joint_trajectory.hpp>
 #include <trajectory_msgs/msg/joint_trajectory_point.hpp>
 
-// ... 
+// typically in your header, define a member variable for the trajectory
 std::shared_ptr<trajectory_msgs::msg::JointTrajectory> trajectory_;
 ```
 
@@ -183,7 +183,7 @@ this->publish_output("trajectory");
 </TabItem>
 </Tabs>
 
-:::tip
+:::note
 The joint names need to correspond to the joint names from your URDF. If you are **not**
 using the `Generic six-axis robot arm`, you will need to adjust these names.
 
@@ -191,7 +191,7 @@ The easiest way to do so if you do not already know them is to head to the `Hard
 read through your URDF.
 :::
 
-#### Using JTC's `Set Trajectory` service
+### Using JTC's `Set trajectory` service
 
 The service currently accepts 5 variables, namely:
 
@@ -206,7 +206,7 @@ the number of frames or joint positions **minus** 2. **The default blending fact
 trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
 
 While `times_from_start` is always required, only one of `frames` and `joint_positions` can be used at a time. The
-former, is a vector of Cartesian frames from which an Inverse Kinematics (IK) solver will compute the joint positions
+former is a vector of Cartesian frames from which an Inverse Kinematics (IK) solver will compute the joint positions
 that the robot should reach, while the latter refers to joint positions that have been recorded and are being published
 as named joint positions.
 
@@ -298,9 +298,9 @@ frames:
       z: 0.000001
 ```
 
-You may also try the inverse, that is, copy one of the above code blocks and paste it at the top-level scope of your 
-YAML application (similar to `dependencies`, `components`, `controllers`, ...) block replacing your recording and 
-generate the graph. If you switch back to `3D Viz` you should see the same frame as depicted in the above image.
+You may also try the inverse, that is, copy one of the above code blocks, paste it at the top-level scope of your YAML
+application, and generate the graph. If you switch back to `3D Viz` you should see the same frame as depicted in the
+above image.
 
 #### Record joint positions
 
