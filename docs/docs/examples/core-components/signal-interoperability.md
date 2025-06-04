@@ -12,11 +12,11 @@ common ROS message types for interoperability.
 
 :::tip
 
-This documentation contains a section entirely dedicated to [signals](../../concepts/05-building-blocks/01-signals.md).
+Review the [Signals concept page](../../concepts/05-building-blocks/01-signals.md) for signals before starting this example.
 
 :::
 
-## Example 1
+## AICA signals to standard ROS messages
 
 The first example uses the `Joint Signal To Joint State Message` component to translate the joint state output from the
 hardware interface to a `sensor_msgs::msg::JointState` message and the `Cartesian Signal to Pose Stamped` component to
@@ -131,7 +131,7 @@ in the live topic view.
     ```
 </details>
 
-## Example 2
+## Standard ROS messages to AICA signals
 
 Conversly to the first example, this application uses the `Wrench Stamped Message To Cartesian Signal` component to
 translate a `geometry_msgs::msg::WrenchStamped` from a motion generation component (implementation not provided, could
