@@ -2,8 +2,10 @@
 sidebar_position: 1
 ---
 
-import signalToRos from './assets/signal-ros-example.png'
 import rosToSignal from './assets/ros-signal-example.png'
+import signalToRos from './assets/signal-ros-example.png'
+import signalRosJoint from './assets/signal-ros-joint.png'
+import signalRosPose from './assets/signal-ros-pose.png'
 
 # Signal interoperability
 
@@ -41,9 +43,25 @@ With the application loaded and playing, the two components will publish the con
 each time a new message is received from the hardware interface. A jsonified version of those messages can be observed
 in the live topic view.
 
-![signal ros pose](./assets/signal-ros-pose.png)
+<div class="text--center">
+  <img src={signalRosPose} alt="ROS Topic for Cartesian signal to Pose Stamped Message" />
+</div>
 
-![signal ros joint](./assets/signal-ros-joint.png)
+With content
+
+```json
+{"header":{"stamp":{"sec":1749019367,"nanosec":736960997},"frame_id":"world"},"pose":{"position":{"x":0.37246365888399174,"y":0.048146868357851064,"z":0.4299999920960212},"orientation":{"x":0.7073880448768991,"y":0.7068251811053661,"z":8.971607761328708e-7,"w":-0.0005633114591638605}}}
+```
+
+<div class="text--center">
+  <img src={signalRosJoint} alt="ROS Topic for joint signal to Joint State Message" />
+</div>
+
+With content
+
+```json
+{"header":{"stamp":{"sec":1749019239,"nanosec":277825301},"frame_id":""},"name":["joint_0","joint_1","joint_2","joint_3","joint_4","joint_5"],"position":[0,0,0,0,0,0],"velocity":[0,0,0,0,0,0],"effort":[0,0,0,0,0,0]}
+```
 
 <details>
   <summary>Application YAML</summary>
