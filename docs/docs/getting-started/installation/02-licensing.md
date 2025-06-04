@@ -37,7 +37,7 @@ If an unauthorized user has gained access to your license key, contact support@a
 
 :::info
 
-- AICA System Licenses are online and require an active internet connection for the entire duration of the application.
+- AICA System Licenses are online-only and require an active internet connection while AICA Studio is being used.
 - An AICA System License can be used on any machine, but only one instance can be running at any one time.
 
 :::
