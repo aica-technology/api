@@ -1,9 +1,7 @@
 ---
-sidebar_position: 1.5
+sidebar_position: 2
 title: Licensing
 ---
-
-# Licensing
 
 A valid AICA System License is required to access and use AICA System software. Holders of an AICA System License can
 also request a Deployment Key for unrestricted offline usage rights of specific deployments.

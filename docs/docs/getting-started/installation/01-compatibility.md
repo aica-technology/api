@@ -1,8 +1,7 @@
 ---
 sidebar_position: 1
+title: Compatibility
 ---
-
-# Compatibility
 
 The AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
 

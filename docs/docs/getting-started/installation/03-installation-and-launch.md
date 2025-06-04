@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Installation and Launch
+title: Installation and launch
 ---
 
 ## Pre-requisites

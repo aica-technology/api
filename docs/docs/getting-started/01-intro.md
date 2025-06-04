@@ -1,11 +1,10 @@
 ---
 sidebar_position: 1
+title: Introduction
 ---
 
 import SystemOverview from './assets/system-overview-embedded.svg';
 import ComponentsControllersHardware from './assets/components-controllers-hardware-embedded.svg';
-
-# Introduction
 
 AICA is committed to making robotics more accessible by providing smart software solutions for advanced robot control.
 
