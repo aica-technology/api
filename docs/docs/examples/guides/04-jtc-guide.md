@@ -10,6 +10,7 @@ import jtcGuideParameters from './assets/jtc-guide-parameters.png'
 import jtcGuideRecordFrame from './assets/jtc-guide-record-frame.gif'
 import jtcGuideCreateFrame from './assets/jtc-guide-create-frame.gif'
 import jtcGuideRecordJoint from './assets/jtc-guide-record-joint.gif'
+import jtcGuideFinalApp from './assets/jtc-guide-final-app.gif'
 
 # A guide on Joint Trajectory workflows
 
@@ -395,12 +396,19 @@ sequence to stop.
 
 Your final application may look something like the following:
 
+<div class="text--center">
+  <img src={jtcGuideFinalApp} alt="Final JTC application with looping logic" />
+</div>
+
+If your application appears different, there is no cause for concern. There are multiple valid ways to achieve the same
+result. You may compare your final application to the one shown above using the YAML application provided below.
+
 <details>
   <summary>Advanced JTC application example</summary>
 ```yaml
 schema: 2-0-4
 dependencies:
-  core: v4.4.0
+  core: v4.4.1
 frames:
   frame_1:
     reference_frame: world
