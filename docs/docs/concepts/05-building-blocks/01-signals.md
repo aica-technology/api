@@ -94,4 +94,6 @@ between two connected components has the same name, the application will be vali
 The AICA component library includes signal translator components for commonly used ROS messages (namely `std_msgs`
 and `geometry_msgs`) for AICA components to communicate with traditional ROS nodes in an external process.
 
+<!-- TODO: link relevant examples -->
+
 :::
