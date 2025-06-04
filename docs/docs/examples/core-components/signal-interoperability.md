@@ -12,23 +12,26 @@ common ROS message types for interoperability.
 
 :::tip
 
-Review the [Signals concept page](../../concepts/05-building-blocks/01-signals.md) for signals before starting this example.
+Review the [Signals concept page](../../concepts/05-building-blocks/01-signals.md) for signals before starting this
+example.
 
 :::
 
 ## AICA signals to standard ROS messages
 
-The first example uses the `Joint Signal To Joint State Message` component to translate the joint state output from the
-hardware interface to a `sensor_msgs::msg::JointState` message and the `Cartesian Signal to Pose Stamped` component to
-translate the Cartesian state output to a `geometry_msgs::msg::PoseStamped` message.
+AICA state signals carrying Cartesian or joint space information can be converted to standard ROS message types using
+the following components:
 
-:::note
+| Component name                             | Input signal type                             | Output message type                 |
+|--------------------------------------------|-----------------------------------------------|-------------------------------------|
+| Cartesian Signal to Pose Stamped Message   | Cartesian state or pose                       | `geometry_msgs::msg::PoseStamped`   |
+| Cartesian Signal to Twist Stamped Message  | Cartesian state or twist                      | `geometry_msgs::msg::TwistStamped`  |
+| Cartesian Signal to Wrench Stamped Message | Cartesian state or wrench                     | `geometry_msgs::msg::WrenchStamped` |
+| Joint Signal To Joint State Message        | Joint state, positions, velocities or torques | `sensor_msgs::msg::JointState`      |
 
-Instead of the `Cartesian Signal to Pose Stamped`, one could also use the `Cartesian Signal to Twist Stamped` or
-`Cartesian Signal to Wrench Stamped` to translate to a `geometry_msgs::msg::TwistStamped` or
-`geometry_msgs::msg::WrenchStamped`, respectively.
-
-:::
+This example uses the `Joint Signal To Joint State Message` component to translate the joint state output from the
+hardware interface to a `sensor_msgs::msg::JointState` message and the `Cartesian Signal to Pose Stamped Message`
+component to translate the Cartesian state output to a `geometry_msgs::msg::PoseStamped` message.
 
 <div class="text--center">
   <img src={signalToRos} alt="Signal interoperability example 1" />
@@ -133,19 +136,24 @@ in the live topic view.
 
 ## Standard ROS messages to AICA signals
 
-Conversly to the first example, this application uses the `Wrench Stamped Message To Cartesian Signal` component to
-translate a `geometry_msgs::msg::WrenchStamped` from a motion generation component (implementation not provided, could
-be any custom component) to a Cartesian signal that is connected to the force controller of the hardware interface.
+Mirroring the first example, standard ROS message types carrying Cartesian or joint space information can be converted
+back into AICA state signals using the following components:
+
+| Component name                             | Input message type                  | Output signal type                            | 
+|--------------------------------------------|-------------------------------------|-----------------------------------------------|
+| Pose Stamped Message to Cartesian Signal   | `geometry_msgs::msg::PoseStamped`   | Cartesian state containing pose information   | 
+| Twist Stamped Message to Cartesian Signal  | `geometry_msgs::msg::TwistStamped`  | Cartesian state containing twist information  | 
+| Wrench Stamped Message to Cartesian Signal | `geometry_msgs::msg::WrenchStamped` | Cartesian state containing wrench information | 
+| Joint State Message to Joint Signal        | `sensor_msgs::msg::JointState`      | Joint state                                   | 
+
+The next example uses the `Wrench Stamped Message To Cartesian Signal` component to translate a
+`geometry_msgs::msg::WrenchStamped` from some custom component to a Cartesian signal that is connected to the force
+controller of the hardware interface.
 
 :::note
 
-Instead of the `Wrench Stamped Message To Cartesian Signal`, one could also use the 
-`Twist Stamped Message To Cartesian Signal` with an IK velocity controller or
-`Pose Stamped Message To Cartesian Signal` with an IK position controller if the motion generator would output a twist
-or a pose, respectively.
-
-If the generated motion is in joint space, the `Joint State Message To Joint Signal` with a
-joint space controller would be the adequate choice.
+The custom component is just an example placeholder in for any implementation that has a ROS standard message output,
+which might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
 
 :::
 
