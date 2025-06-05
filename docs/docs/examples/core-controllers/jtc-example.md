@@ -12,7 +12,7 @@ import jtcExampleRun from './assets/jtc-example-run.gif'
 
 This example makes use of the built-in Joint Trajectory Controller (JTC) and the generic six-axis robot.
 
-Use AICA Core v4.4.0 or higher.
+Use AICA Core v4.4.1 or higher.
 
 ## Setting up the application
 
@@ -25,7 +25,7 @@ Copy the following YAML and generate the graph.
 ```yaml
 schema: 2-0-4
 dependencies:
-  core: v4.4.0
+  core: v4.4.1
 frames:
   start:
     reference_frame: world
