@@ -69,7 +69,7 @@ your AICA System License. As an example, the online license key to enter might l
 
 Once the license is copied into the text field, it will automatically check the validity of the license and log in if
 successful. If the license is not recognized, check your internet connection
-or [contact AICA support](mailto:support@aica.tech).
+or contact AICA support.
 
 ### Configuring the AICA System image
 

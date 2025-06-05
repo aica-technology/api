@@ -29,7 +29,7 @@ Your license key should be kept secret. Do not share your license key with unaut
 other than the official AICA domain. License abuse may prevent your application from running or lead to your license
 being revoked.
 
-If an unauthorized user has gained access to your license key, contact support@aica.tech to reset your license.
+If an unauthorized user has gained access to your license key, contact AICA support to reset your license.
 
 :::
 
