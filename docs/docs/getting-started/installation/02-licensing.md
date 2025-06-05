@@ -1,25 +1,25 @@
 ---
-sidebar_position: 1.5
+sidebar_position: 2
 title: Licensing
 ---
 
-# Licensing
+A valid AICA System License is required to access and use AICA System software. Holders of an AICA System License can
+also request a Deployment Key for unrestricted offline usage rights of specific deployments.
 
-A valid license is required to use AICA System. A license regulates both the access rights to download AICA software
-packages and the usage rights to run AICA applications.
+## AICA System License
 
-To request an AICA System License, contact the AICA sales team at contact@aica.tech. Each new user will receive access
-instructions to a personal account for the [AICA license manager](https://licensing.aica.tech/list) which lists all
-licenses associated with that user. Every license has a name, an expiration date, the actual license key and a list of
-entitlements. The link on the top right forwards directly to the
-[AICA package registry](https://registry.licensing.aica.tech/) where the user can see all available packages for one
-specific license. 
+A license regulates both the access rights to download AICA software packages and the usage rights to run AICA
+applications. To request an AICA System License, contact the AICA sales team at contact@aica.tech. Each new user will
+receive access instructions to a personal account for the [AICA license manager](https://licensing.aica.tech/list) which
+lists all licenses associated with that user. Every license has a name, an expiration date, the actual license key and a
+list of entitlements. On the [AICA package registry](https://registry.licensing.aica.tech/) the user can see all
+available packages for one specific license.
 
 :::tip
 
-An AICA license includes specific entitlements that determine which add-on packages and versions can be accessed and
-used. To discover and access additional components and hardware collections, contact your AICA representative to upgrade
-your license.
+An AICA System License includes specific entitlements that determine which add-on packages and versions can be accessed
+and used. To discover and access additional components and hardware collections, contact your AICA representative to
+upgrade your license.
 
 :::
 
@@ -29,69 +29,48 @@ Your license key should be kept secret. Do not share your license key with unaut
 other than the official AICA domain. License abuse may prevent your application from running or lead to your license
 being revoked.
 
-If an unauthorized user has gained access to your license key, contact support@aica.tech to reset your license.
+If an unauthorized user has gained access to your license key, contact AICA support to reset your license.
 
 :::
-
-Additionally, an AICA System License can come in two variants: **online** and **offline**.
-
-## Online licenses
 
 :::info
 
-- Online licenses require an active internet connection for the entire duration of the application.
-- Online licenses can be used on any machine, but only one instance can be running at any one time.
+- AICA System Licenses are online-only and require an active internet connection while AICA Studio is being used.
+- An AICA System License can be used on any machine, but only one instance can be running at any one time.
 
 :::
 
-An online license will appear in the following format, though the specific license key will be unique for each user.
+An AICA System License will appear in the following format, though the specific license key will be unique for each
+user.
 
-```toml title="aica-license.toml"
-License = "5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3"
+```console title="Example AICA System License"
+5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3
 ```
 
-## Offline licenses
+## Deployment Key
 
-:::info
+A Deployment Key authorizes a specific **deployment** to run offline with no limitations on consecutive or total
+activation time. A **deployment** is a single machine (i.e., an industrial edge PC) installed with some configuration
+of the AICA System.
 
-- Offline licenses can be used without an active internet connection.
-- Offline licenses must be registered and activated on a specific machine, and can only be used on that machine.
-- Offline licenses are a premium service and are available on request for customers with strict network limitations or
-  requirements.
+A Deployment Key will appear as a very long string of characters in the following format, though the specific key will
+be unique for each machine.
 
-:::
-
-To prepare a target machine for an offline license, run the following command to identify its unique machine
-fingerprint.
-
-```shell
-docker run --privileged --rm ghcr.io/aica-technology/machine-fingerprint
+```console title="Example AICA Deployment Key"
+key/eyJ9df2jfap7IVdIHnlnNpb2482Hh2193L9io8[...]ExMWM3jAuMCJ9.YhsDjwEz8eYnwE21alSBR_tBSIjavblcziV5nBQ==
 ```
 
-If it is not possible to temporarily provide network access to the target machine, first pull and save
-the `ghcr.io/aica-technology/machine-fingerprint` utility docker image on an online machine, then transfer and load it
-on the target machine:
+### Requesting a Deployment Key
 
-```shell
-# download the machine fingerprint helper an online machine
-user@online-machine:~$ docker pull ghcr.io/aica-technology/machine-fingerprint
-user@online-machine:~$ docker save ghcr.io/aica-technology/machine-fingerprint > machine-fingerprint.tar
+Deployment Keys can be requested by AICA System License holders by using AICA Launcher v1.3.2 or newer on the target
+machine. Press the green stamp icon under a selected configuration to generate a unique machine fingerprint and follow
+the instructions to send the activation code to the AICA support team.
 
-# copy the machine-fingerprint.tar file to the offline machine, then load and run it
-user@offline-machine:~$ docker load < machine-fingerprint.tar
-user@offline-machine:~$ docker run --privileged --rm ghcr.io/aica-technology/machine-fingerprint
-```
+![aica-launcher-request-deployment-key](../assets/aica-launcher-request-deployment-key.png)
 
-Executing this command should print out a long string of characters containing a machine-specific fingerprint. Copy the
-output of the command and send it to the established contact person in the AICA support team. They will then generate
-and send a unique license key which contains the encrypted machine fingerprint. It will appear as a long string in the
-following format:
-
-```toml title="aica-license.toml"
-License = "key/eyJ9df2jfap7IVdIHnlnNpb24[...]alSBR_tBSIjavblcziV5nBQ=="
-```
+They will then generate and send the unique Deployment Key which contains the encrypted machine fingerprint.
 
 ---
 
 Continue to the next section to learn how to use the AICA Launcher with the AICA System License to access and install
-AICA Studio: Edge.
+AICA Studio.

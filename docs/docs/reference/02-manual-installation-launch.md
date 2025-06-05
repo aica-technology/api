@@ -49,6 +49,26 @@ You may need to repeat these steps upon a restart of your system.
 
 :::
 
+## Setting up the AICA license file
+
+To use your AICA System License or Deployment Key for manual installation and launch, it should be saved into a
+TOML-formatted file. In this guide, we use `aica-license.toml` to refer to the license file, though this filename is
+a convention only and not enforced.
+
+For an AICA System License, the contents of the file should be formatted as:
+
+```toml title="aica-license.toml"
+License = "5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3"
+```
+
+Similarly, for an AICA Deployment Key, it should be formatted as:
+
+```toml title="aica-license.toml"
+License = "key/eyJ9df2jfap7IVdIHnlnNpb24[...]alSBR_tBSIjavblcziV5nBQ=="
+```
+
+Of course, replace the license key in the example with your actual license key.
+
 ## Logging in to the AICA package registry
 
 To authenticate docker to login and pull images from the registry, run the following command (no replacement of
@@ -162,7 +182,7 @@ You can start the AICA application container with the following command.
 
 :::note
 
-Change `/path/to/license` in the command below to the location of the `aica-license.toml` file from above. For example,
+Change `/path/to/aica-license.toml` in the command below to the location of the `aica-license.toml` file from above. For example,
 use `~/.aica-license.toml` to keep the license file hidden in the home folder.
 
 :::
@@ -176,7 +196,7 @@ use `~/.aica-license.toml` to keep the license file hidden in the home folder.
 docker run -it --rm \
   --privileged \
   --net=host \
-  -v /path/to/license:/license:ro \
+  -v /path/to/aica-license.toml:/license:ro \
   aica-runtime
 ```
 
@@ -187,7 +207,7 @@ docker run -it --rm \
 docker run -it --rm \
   --privileged \
   -p 8080:8080 -p 18000-18100:18000-18100/udp \
-  -v /path/to/license:/license:ro \
+  -v /path/to/aica-license.toml:/license:ro \
   aica-runtime
 ```
 
@@ -266,7 +286,7 @@ Change `/path/to/data` in the command below to a desired location for the data (
 docker run -it --rm \
   --privileged \
   --net=host \
-  -v /path/to/license:/license:ro \
+  -v /path/to/aica-license.toml:/license:ro \
   #highlight-next-line
   -v /path/to/data:/data:rw \
   aica-runtime
@@ -279,7 +299,7 @@ docker run -it --rm \
 docker run -it --rm \
   --privileged \
   -p 8080:8080 -p 18000-18100:18000-18100/udp \
-  -v /path/to/license:/license:ro \
+  -v /path/to/aica-license.toml:/license:ro \
   #highlight-next-line
   -v /path/to/data:/data:rw \
   aica-runtime
@@ -301,7 +321,7 @@ be set through an environment variable which grants full administration rights.
 docker run -it --rm \
   --privileged \
   --net=host \
-  -v /path/to/license:/license:ro \
+  -v /path/to/aica-license.toml:/license:ro \
   #highlight-next-line
   -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
   aica-runtime
@@ -314,7 +334,7 @@ docker run -it --rm \
 docker run -it --rm \
   --privileged \
   -p 8080:8080 -p 18000-18100:18000-18100/udp \
-  -v /path/to/license:/license:ro \
+  -v /path/to/aica-license.toml:/license:ro \
   #highlight-next-line
   -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
   aica-runtime
