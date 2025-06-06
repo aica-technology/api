@@ -5,55 +5,49 @@ sidebar_position: 4
 # Using YOLO to Track Objects
 
 This example provides a use case for `Object Detection Components`. We show how to create a custom component which
-converts bounding boxes into a 3D pose. The example works with either a realsense camera using
+converts bounding boxes into a 3D pose. The example works with either an Intel Realsense camera using
 `collections/intel-realsense-collection` or a video played through a custom component which is provided.
 
-### Setup
+## Setup
 
 In AICA Launcher, create a configuration with the following core version and packages:
 
 - AICA Core v4.3.2
 - `collections/object-detection` (TODO: specify version)
-- `collections/intel-realsense-collection` (TODO: specify version)
+- `collections/intel-realsense-collection v1.0.0`
 
-Under Advanced Settings, add a volume containing the folder where you will store your YOLO model files and link it to
-`/files`.
+Under Advanced Settings, add a volume containing the folder where you will store your YOLO model files and link it to `/files`.
 
 ## Using the YOLO Executor
 
-The YOLO Executor component observes an image from a camera or video feed, runs the YOLO segmentation model on it, and
-outputs the segmented image as well as the locations of bounding boxes on the image. The predicate `Object Detected` is
-set to `True` when the object specified by the parameter `Object Class` is found in the image. To test the YOLO
+The *YOLO Executor* component observes an image from a camera or video feed, runs the YOLO segmentation model on it, and outputs the segmented image as well as the locations of bounding boxes on the image. The predicate `Object Detected` is set to `True` when the object specified by the parameter `Object Class` is found in the image. To test the YOLO
 executor:
 
-- Remove the `Hardware Interface`.
+- Remove the `*Hardware Interface*`.
 - Add the following components:
-    - `Object Detection Components/YOLO Executor`
-    - `Realsense2 Camera/Realsense Camera` if you have an Intel Realsense camera,
-      otherwise, [create a video player component](#create-a-video-player-component) which can be used as a drop in
-      replacement.
 
-- Connect both components’ *load nodes* to load on program start.
-- Connect the `RGB Image` output of the `Realsense2 Camera` or `Video Player` to the `RGB Image` input of the YOLO
-  Executor.
+  - `Object Detection Components/YOLO Executor`
+  - `Realsense2 Camera/Realsense Camera` if you have an Intel Realsense camera,
+    otherwise, [create a video player component](#create-a-video-player-component) which can be used as a drop in
+    replacement
 
-To configure the YOLO Executor, set the following parameters:
+- Connect both components’ _load nodes_ to load on program start
+- Connect the `RGB Image` output of the `Realsense2 Camera` or `Video Player` to the `RGB Image` input of the *YOLO Executor*
 
-- Set "auto-configure" and "auto-activate" switches to on.
-- Model Path: YOLO model in .onnx format e.g., `/files/yolo12n.onnx`
-- Classes Path: Path to the class labels in YAML format e.g., `/files/coco.YAML`
-- Rate: This is hardware dependent but 3 should work on most machines.
+To configure the *YOLO Executor*, set the following parameters:
 
-The parameter `Confidence Threshold` is the confidence threshold is the minimum score a predicted bounding box must have
-to be considered a valid detection. `IOU Threshold` is used during Non-Maximum Suppression (NMS) to decide whether two
-bounding boxes represent the same object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than
-50% with a higher-scoring box will be discarded. For now we leave them as default values.
+- Turn on the **auto-configure** and **auto-activate** switches
+- Set `Model Path` to the `.onnx` file, e.g., `/files/yolo12n.onnx`
+- Set `Classes Path` to the yaml label file, e.g., `/files/coco.yaml`
+- Set `Rate` to 3 (works on most machines)
+
+The parameter `Confidence Threshold` is the minimum score a predicted bounding box must have to be considered a valid detection. `IOU Threshold` is used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box will be discarded. For now we leave them as default values.
 
 :::info
 
 **Converting YOLO Model files to ONNX format**
 
-The YOLO Executor component expects an ONNX file. These can be created from a pretrained [
+The *YOLO Executor* component expects an ONNX file. These can be created from a pretrained [
 `.pt`](https://github.com/sunsmarterjie/yolov12) model (we use the lightweight version — YOLO12n).
 
 Run the following Python script (with [`ultralytics`](https://pypi.org/project/ultralytics/) installed) to convert a
@@ -68,8 +62,8 @@ model.export(format="onnx")  # creates 'yolov12n.onnx'
 :::
 
 These YOLO models are pre-trained on coco - classes file for
-found [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.YAML). A fine-tuned
-model may require a custom YAML file.
+found [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml). A fine-tuned
+model may require a custom yaml file.
 
 ### Running the Application
 
@@ -77,7 +71,7 @@ Start the application in AICA Studio. Then open **RViz**: bottom-right gear icon
 topic → `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated output. It should show the camera
 images with bounding boxes drawn around key objects in it. The bounding boxes are published on the
 `yolo_executor/bounding_boxes` topic as `std_msgs/msg/String` and can be viewed in AICA Studio in the "ROS Topics" tab.
-Changing the "Confidence Threshold" and "IOU Threshold" parameters will change how often and how many bounding boxes the
+Changing the `Confidence Threshold` and `IOU Threshold` parameters will change how often and how many bounding boxes the
 model outputs.
 
 :::note
@@ -98,30 +92,30 @@ make 3 simplifying assumptions:
 
 1. Camera is fixed and angled downward
 2. Known camera position pointing down: `(x=0, y=0.6, z=0.6)`
-2. Objects are on a flat surface at `z=0`
+3. Objects are on a flat surface at `z=0`
 
-**Set up the repository:**
+#### Set up the repository
 
-- Create a git repository from the [component-template](https://github.com/aica-technology/component-template).
-- Clone it, enter the directory, and run:
+- Create a git repository from the [component-template](https://github.com/aica-technology/component-template)
+- Clone the repository, enter the directory, and run:
+
   ```bash
   ./initialize_package.sh
   ```
-  Name it `component_utils`, Include a Python Lifecycle component.
 
-**Create files and classes:**
+  Name it `component_utils` and include a Python Lifecycle component
 
-- Rename `py_lifecycle_component.py` to `yolo_to_marker.py` in `source/component_utils/component_utils/`.
-- Rename `py_lifecycle_component.json` to `yolo_to_marker.json` in `source/component_utils/component_descriptions/`.
-- Register the component in `source/component_utils/setup.cfg` with:
+- Rename `py_lifecycle_component.py` to `yolo_to_marker.py` in `source/component_utils/component_utils/`
+- Rename `py_lifecycle_component.json` to `yolo_to_marker.json` in `source/component_utils/component_descriptions/`
+- Register the component in `source/component_utils/setup.cfg` under `[options.entry_points]` like this:
+
   ```cfg
   component_utils::YoloToMarker = component_utils.yolo_to_marker:YoloToMarker
   ```
 
 #### Component Code
 
-Below is the core implementation, which can be copied into the respective files. The component reads a JSON input from
-YOLO Executor, projects bounding boxes into 3D using FoV, camera height, outputs a `CartesianState` for robot control.
+Below is the core implementation, which can be copied into the respective files. The component reads a JSON from *YOLO Executor*, projects bounding boxes into 3D using FoV, camera height, outputs a `CartesianState` for robot control.
 
 <details>
 <summary> yolo_to_marker.py </summary>
@@ -154,16 +148,16 @@ class YoloToMarker(LifecycleComponent):
         self.fov = [69, 42]
         self.image_size = [480, 840]
         self.object_distance = 0.6
-        
+
         self.add_parameter(sr.Parameter("to_find", 'person', sr.ParameterType.STRING), "thing to find and track")
         self.add_parameter(sr.Parameter("fov", [69.0, 42.0], sr.ParameterType.DOUBLE_ARRAY), "Camera FoV in X")
         self.add_parameter(sr.Parameter("image_size", [480, 840], sr.ParameterType.DOUBLE_ARRAY), "Size of image (pixels)")
         self.add_parameter(sr.Parameter("object_distance", 0.6, sr.ParameterType.DOUBLE), "Target position (Z)")
-        
+
     def on_validate_parameter_callback(self, parameter: sr.Parameter) -> bool:
         # validate an incoming parameter value according to some criteria
         return True
-    
+
     def on_configure_callback(self) -> bool:
         # configuration steps before running
         self.fov = self.get_parameter_value("fov")
@@ -172,24 +166,16 @@ class YoloToMarker(LifecycleComponent):
         self.object_distance = self.get_parameter_value("object_distance")
         return True
 
-    def on_activate_callback(self) -> bool:
-        # activation steps before running
-        return True
-
-    def on_deactivate_callback(self) -> bool:
-        # deactivatio steps
-        return True
-
     def __centre_pt_to_position(self, xy):
         # function to find find the 3d position of an object based on position in the image.
         image_size = np.asarray(self.image_size)
         ratio = np.clip((xy - image_size / 2) / (image_size / 2), -1, 1)
 
-        position = ratio * self.object_distance * np.tan(self.fov/2)    
+        position = ratio * self.object_distance * np.tan(self.fov/2)
 
         position = (np.append(position, self.object_distance)).reshape((3,1))
         return position
-    
+
     def on_step_callback(self):
         try:
             data = json.loads(self.json_input)
@@ -203,8 +189,8 @@ class YoloToMarker(LifecycleComponent):
                 ])
                 position_key = f"{detection['class_name']}"
                 position[position_key] = self.__centre_pt_to_position(centre_of_bbox)
-            
-            self.get_logger().info(f'{position}')   
+
+            self.get_logger().info(f'{position}')
 
             # output pose of target object
             to_find = self.get_parameter_value("to_find")
@@ -259,20 +245,14 @@ class YoloToMarker(LifecycleComponent):
       "description": "Camera field of view in degrees [horizontal, vertical]",
       "parameter_name": "fov",
       "parameter_type": "double_array",
-      "default_value": [
-        69.0,
-        42.0
-      ]
+      "default_value": [69.0, 42.0]
     },
     {
       "display_name": "Image Size",
       "description": "Image resolution [width, height] in pixels",
       "parameter_name": "image_size",
       "parameter_type": "double_array",
-      "default_value": [
-        480,
-        840
-      ]
+      "default_value": [480, 840]
     },
     {
       "display_name": "Object Distance",
@@ -288,32 +268,33 @@ class YoloToMarker(LifecycleComponent):
 
 </details>
 
-Enter the component folder in terminal and run  
-`docker build -f aica-package.toml -t objectdetection .`
+Enter the component folder in terminal and run
 
-Next, configure AICA Studio and add `objectdetection` under Custom Packages. After launching, you should see
-`Component Utils` under "Add Component" and be able to add `YOLO to Marker`.
+```bash 
+docker build -f aica-package.toml -t objectdetection .
+```
+
+Next, configure AICA Studio and add **objectdetection** under Custom Packages. After launching, you should see
+**Component Utils** under **Add Component** and be able to add *YOLO to Marker*.
 
 ### Application Setup
 
-Connect the `Bounding Boxes` output of YOLO Executor to the `JSON Input` of YOLO to Marker then configure it with
-"auto-configure" and "auto-activate". You should also set the parameters based on your camera and what you are filming.
-Set the "rate" parameter to match that of YOLO Executor. The `Object to track` parameter can be set to "person" to track
-yourself in the frame. With the application running the logs should show the 3D position in the camera_frame.
+Connect the `Bounding Boxes` output of *YOLO Executor* to `JSON Input` on *YOLO to Marker* then configure it with
+**auto-configure** and **auto-activate**. You should also set the parameters based on your camera and what you are filming.
+Set `rate` to match that of *YOLO Executor*. Set the `Object to Track` parameter to "person" to track yourself in the frame. With the application running the logs should show the 3D position in the camera_frame.
 
 #### Creating a Frame and Converting it to a Signal
 
-Add in a hardware interface if it is not already there, and run the application. When it is running, select *3D Viz* at
+Add in a *Hardware Interface* if it is not already there, and run the application. When it is running, select _3D Viz_ at
 the top right. Record a frame `tool0` and name it `camera_frame`, this is the position of the camera. It can be moved by
 dragging the axis markers, with the Z direction as the direction in which the camera is pointing. Note that the robot
 will move to where the objects are detected, which may be unreachable depending on the camera position, and cause the
 robot controller to stop.
 
-Stop the application, and go back to *graph*, open the YAML code and check that the recorded frame is there, for
+Stop the application, and go back to _graph_, open the yaml code and check that the recorded frame is there, for
 example:
 
-```YAML
-
+```yaml
 frames:
   camera_frame:
     reference_frame: world
@@ -328,34 +309,28 @@ frames:
       z: 0
 ```
 
-To convert the frame to a signal add *TF to Signal* from *AICA Core Components*, connect the load node to the on start
-block (purple square with a black play symbol), and configure the component to auto-configure, auto-activate, set Frame
-to `camera_frame` and `Reference frame` to world. With the application running the camera frame can be observed under
+To convert the frame to a signal add *TF to Signal* from **AICA Core Components**, connect the **load** node to the *on start* block (purple square with a black play symbol), and configure the component to **auto-configure**, **auto-activate**, set `camera_frame` and `Reference frame` to world. With the application running the camera frame can be observed under
 `ROS Topics/tf_to_signal/pose(modulo_interfaces/msg/EncodedState)`.
 
 #### Tranforming a Frame to World
 
-To drive the robot towards the object position it needs to be in `world` frame. The *Cartesian Transformation* component
-can convert from `camera_frame` to `world`. Add it to the application and connect the load node. Finally, connect the
-pose output from *TF to Signal* to Input 1, and the output of *YOLO to Marker* to input 2. The output of *Cartesian
-Transformation* is now the object position in the world frame.
+To drive the robot towards the object position it needs to be in `world` frame. The *Cartesian Transformation* component can convert from `camera_frame` to `world`. Add it to the application and connect the load node. Finally, connect the `pose` output from *TF to Signal* to `Input 1`, and the output of *YOLO to Marker* to `Input 2`. The output of *Cartesian Transformation* is now the object position in the world frame.
 
 #### Moving a Robot Towards a Frame
 
 We can use a *Signal Point Attractor* to move the robot end effector towards the object. Add the component to the
-application, and set it to auto-configure and auto-activate. The load node can be connected to the `On Activate`
-transition in YOLO to Marker. This means that the robot will not move until after YOLO to Marker has started. The
-Cartesian State, under *Robot State Broadcaster* should be connected to the *Input State* of *Signal Point Attractor*,
-while the object position (output of *Cartesian Transformation*) is connected to *Attractor State*. Finally, the output
-of the component - *Output twist* should be connected to an IK Velocity Controller on the Hardware Interface, this can
-be added under *Controllers*.
+application, and set it to **auto-configure** and **auto-activate**. The load node can be connected to the `On Activate`
+transition in *YOLO to Marker*. This means that the robot will not move until after *YOLO to Marker* has started. The
+`Cartesian State`, under *Robot State Broadcaster* should be connected to the `Input State`_` of *Signal Point Attractor*,
+while the `object position` (output of *Cartesian Transformation*) is connected to `Attractor State`. Finally, 'Output twist' should be connected to an *IK Velocity Controller* on the *Hardware Interface*, this can
+be added under **Controllers**.
 
 ### Application Code
 
 <details>
-<summary>YAML application</summary>
+<summary>yaml application</summary>
 
-```YAML
+```yaml
 schema: 2-0-3
 dependencies:
   core: v4.2.0
@@ -487,7 +462,7 @@ components:
             component: video_player_component
             transition: activate
     parameters:
-      video_path: /files/hand.mp4
+      video_path: /files/video.MOV
     outputs:
       video_feed: /video_player_component/video_feed
 hardware:
@@ -632,9 +607,10 @@ To emulate a camera by playing a video frame by frame, [create a custom componen
 
 **Create files and classes:**
 
-- Create `videoplayer.py` in `source/component_utils/component_utils/`.
-- Create `videoplayer.json` in `source/component_utils/component_descriptions/`.
+- Create `videoplayer.py` in `source/component_utils/component_utils/`
+- Create `videoplayer.json` in `source/component_utils/component_descriptions/`
 - Register the component in `source/component_utils/setup.cfg` with:
+
   ```cfg
   component_utils::VideoPlayer = component_utils.videoplayer:VideoPlayer
   ```
@@ -660,17 +636,14 @@ class VideoPlayer(LifecycleComponent):
         # Create Placeholders
         self.video_feed = None
         self.video_path = ''
-        self._cap = None 
+        self._cap = None
         self._cv_bridge = CvBridge()
 
         # Define parameters
-        self.add_parameter(sr.Parameter('video_path', sr.ParameterType.STRING), "Path to the video file.")     
+        self.add_parameter(sr.Parameter('video_path', sr.ParameterType.STRING), "Path to the video file.")
 
         # Define outputs
         self.add_output("video_feed", "video_feed", SensorImage)
-
-    def on_activate_callback(self) -> bool:
-        return True
 
     def on_activate_callback(self) -> bool:
         # Load video, create open cv VideoCapture instance.
@@ -705,19 +678,20 @@ class VideoPlayer(LifecycleComponent):
             if not ret:
                 self.get_logger().error("Failed to read video frame after rewind")
                 return
-        
+
         # publish frame using cv_bridge
         self.video_feed = self._cv_bridge.cv2_to_imgmsg(frame, encoding="bgr8")
 ```
 
 </details>
 Note that we are using
+
 ```python
 from cv_bridge import CvBridge
 import cv2
 ```
 
-We can add these as requirements in `source/component_utils/requirements.txt
+We can add these as requirements in `source/component_utils/requirements.txt`
 
 ```txt
 cv_bridge
@@ -725,6 +699,7 @@ opencv-python==4.11.0.86
 ```
 
 The component description is defined by `videoplayer.json` which should be replaced with the following:
+
 <details>
 <summary>videoplayer.json</summary>
 ```json
@@ -733,7 +708,7 @@ The component description is defined by `videoplayer.json` which should be repla
   "name": "Video Player Component",
   "description": {
     "brief": "Outputs a video as if it is a camera.",
-    "details": "TODO"
+    "details": "This component simulates a live camera feed by reading frames from a video file and outputting them as ROS Image messages."
   },
   "registration": "component_utils::VideoPlayer",
   "inherits": "modulo_components::LifecycleComponent",
@@ -767,5 +742,4 @@ Next, configure AICA Studio and add `objectdetection` under **Custom Packages**.
 
 Store your video in the same location as the model files, or add a separate volume.
 
-`Component Utils` should be found under *Add Component*, add **Video Player Component** and set **auto-configure** and *
-*auto-activate**. In the component settings, set the `Video Path` parameter, e.g. `/files/video.MOV`.
+**Component Utils** should be found under **Add Component**, add *Video Player Component* and set **auto-configure** and **auto-activate**. In the component settings, set the `Video Path` parameter, e.g. `/files/video.MOV`(ensure this video is added to your volume).
