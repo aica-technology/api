@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2-0-6](#2-0-6)
 - [2-0-5](#2-0-5)
 - [2-0-4](#2-0-4)
 - [2-0-3](#2-0-3)
@@ -17,6 +18,12 @@ Release Versions:
 - [1-1-1](#1-1-1)
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
+
+## 2-0-6
+
+This patch makes parameter values more type-safe by providing the option to explicitly specify the parameter type for
+component and controller parameters or when setting a parameter through an event. The previous way of specifying the
+parameter value directly is still compatible with this new version.
 
 ## 2-0-5
 

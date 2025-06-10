@@ -21,24 +21,6 @@
       "type": "string",
       "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
     },
-    "value": {
-      "title": "New Parameter Value",
-      "description": "The value of the parameter to set",
-      "type": [
-        "null",
-        "boolean",
-        "number",
-        "string",
-        "array"
-      ],
-      "items": {
-        "type": [
-          "boolean",
-          "number",
-          "string"
-        ]
-      }
-    },
     "set_parameter_object": {
       "title": "Set Parameter Object",
       "oneOf": [
@@ -54,7 +36,13 @@
               "$ref": "#/$defs/parameter"
             },
             "value": {
-              "$ref": "#/$defs/value"
+              "$ref": "../parameters.schema.json#/$defs/parameter_value"
+            },
+            "type": {
+              "$ref": "../parameters.schema.json#/$defs/parameter_type"
+            },
+            "state_type": {
+              "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
             }
           },
           "required": [
@@ -78,7 +66,13 @@
               "$ref": "#/$defs/parameter"
             },
             "value": {
-              "$ref": "#/$defs/value"
+              "$ref": "../parameters.schema.json#/$defs/parameter_value"
+            },
+            "type": {
+              "$ref": "../parameters.schema.json#/$defs/parameter_type"
+            },
+            "state_type": {
+              "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
             }
           },
           "required": [
