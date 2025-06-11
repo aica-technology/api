@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+title: A joint trajectory execution example
 ---
 
 import jtcExampleOverview from './assets/jtc-example-overview.png'

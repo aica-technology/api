@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+title: Signal interoperability
 ---
 
 import rosToSignal from './assets/ros-signal-example.png'
@@ -14,7 +15,7 @@ common ROS message types for interoperability.
 
 :::tip
 
-Review the [Signals concept page](../../concepts/05-building-blocks/01-signals.md) for signals before starting this
+Review the [Signals concept page](../../concepts/building-blocks/signals.md) for signals before starting this
 example.
 
 :::
