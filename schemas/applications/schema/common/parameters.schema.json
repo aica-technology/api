@@ -29,7 +29,19 @@
           "required": [
             "value",
             "type"
-          ]
+          ],
+          "if": {
+            "properties": {
+              "type": {
+                "const": "state"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "state_type"
+            ]
+          }
         }
       ]
     }

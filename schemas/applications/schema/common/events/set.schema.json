@@ -49,7 +49,19 @@
             "component",
             "parameter",
             "value"
-          ]
+          ],
+          "if": {
+            "properties": {
+              "type": {
+                "const": "state"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "state_type"
+            ]
+          }
         },
         {
           "title": "Set Controller Parameter Object",
@@ -80,7 +92,19 @@
             "hardware",
             "parameter",
             "value"
-          ]
+          ],
+          "if": {
+            "properties": {
+              "type": {
+                "const": "state"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "state_type"
+            ]
+          }
         }
       ]
     }
