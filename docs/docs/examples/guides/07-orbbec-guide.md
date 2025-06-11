@@ -58,7 +58,7 @@ to the workspace.
 **TODO:** Will the component appear as it shows in the GIF, or under Core? 
 
 <div class="text--center">
-  <img src={orbbecNewApp} alt="Creating a frame in AICA Studio" />
+  <img src={orbbecNewApp} alt="Creating a new Orbbec Camera component" />
 </div>
 
 4. Select **Play** to start the application. 
@@ -68,7 +68,7 @@ to the workspace.
 live color image. The depth image can also be found under _/depth_image > Image_.
 
 <div class="text--center">
-  <img src={orbbecRvizColor} alt="Creating a frame in AICA Studio" />
+  <img src={orbbecRvizColor} alt="Starting and checking camera live stream" />
 </div>
 
 ## Parametrizing Orbbec camera
