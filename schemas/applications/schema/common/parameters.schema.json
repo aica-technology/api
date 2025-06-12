@@ -6,6 +6,48 @@
   "additionalProperties": false,
   "patternProperties": {
     "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/parameter_value"
+        },
+        {
+          "title": "Typed Parameter Value",
+          "description": "An object containing a parameter value and explicit type",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "$ref": "#/$defs/parameter_value"
+            },
+            "type": {
+              "$ref": "#/$defs/parameter_type"
+            },
+            "state_type": {
+              "$ref": "#/$defs/parameter_state_type"
+            }
+          },
+          "required": [
+            "value",
+            "type"
+          ],
+          "if": {
+            "properties": {
+              "type": {
+                "const": "state"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "state_type"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "parameter_value": {
       "title": "Parameter Value",
       "description": "The value assigned to the named parameter",
       "type": [
@@ -22,6 +64,12 @@
           "string"
         ]
       }
+    },
+    "parameter_type": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/parameter_type"
+    },
+    "parameter_state_type": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/1-0-0/interfaces.schema.json#/$defs/encoded_state_type"
     }
   }
 }
