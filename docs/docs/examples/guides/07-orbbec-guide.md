@@ -15,9 +15,16 @@ import orbbecThresholdParameters from './assets/orbbec-threshold-params.png'
 
 # Orbbec camera component
 
-AICA's `orbbec` package includes support for a range of Orbbec camera models, including the
-Gemini 33X models, Gemini 435Le, Gemini 2/2L, Femto Bolt/Mega and Astra 2. This guide describes all
-necessary steps to install, configure and run the component, using AICA Studio.  
+AICA's `orbbec` package includes support for a range of Orbbec camera models, including:
+
+- Gemini 33X
+- Gemini 435Le
+- Gemini 2/2L
+- Femto Bolt/Mega
+- Astra 2
+
+This guide describes all necessary steps to install, configure and run the component,
+using AICA Studio.  
 
 ## Installation
 
@@ -28,22 +35,24 @@ For now, the Orbbec camera component has only been tested on Linux machines. Oth
 :::
 
 To ensure proper access to the camera device, special udev rules have to be applied to the Linux system
-the camera is connected to. Simply run the following commands in a terminal: 
+the camera is connected to. Run the following commands in a terminal: 
 
 ```shell
 wget -O 99-obsensor-libusb.rules https://raw.githubusercontent.com/aica-technology/OrbbecSDK_ROS2/refs/tags/aica/v2.4.3/orbbec_camera/scripts/99-obsensor-libusb.rules
 sudo cp 99-obsensor-libusb.rules /etc/udev/rules.d/99-obsensor-libusb.rules
 sudo udevadm control --reload-rules && sudo udevadm trigger
-
 ```
 
+:::tip
 These commands will download and apply the udev rules. To ensure that the rules have been applied
 correctly, the [Orbbec Viewer](https://github.com/orbbec/OrbbecSDK/releases) can be used to check 
 the camera feed.
+:::
+
 
 Additionally, in order to ensure the camera can be accessed from within the container, the `/run/udev/` volume
 has to be mounted. In AICA Launcher, expand the **Advanced Settings** at the bottom, select
-**Add a volume mount** and define the volume, as shown in the following image:
+**Add a volume mount** and define the volume as shown in the following image:
 
 <div class="text--center">
   <img src={orbbecMountedVolume} alt="Mounted udev volume" />
@@ -87,16 +96,20 @@ Let's explain some of these here:
 
 - `Color/Depth Width/Height/FPS`: these refer to the resolution and frame rate of the color and depth
 images. Keep in mind that only specific pairs of integer values apply here. For more information 
-check the camera's documentation. The Orbbec Viewer can also come in handy here, as it can be used 
-to see what profiles are available.
+check the camera's documentation. 
+
+:::tip
+The Orbbec Viewer can also come in handy here, as it can be used to see the available profiles.
+:::
+
 - `Enable Alignment`: boolean that activates the spatial alignment of the depth image to the
 corresponding color image. Generates a depth image with the same size as the color, with depth
 expressed in the color camera coordinate system. 
 - `Enable Threshold Filter`: boolean that activates a threshold filter in the depth image. Activation
-of the filter allows the optional definition of some additional parameters - if they are not defined, the
-default values will be used. To see what parameters can be defined, hover over the exclamation mark. To 
-avoid cluttering the parameter tab of the component, these parameters can only be defined in the YAML.
-Activate the filter and set them so the YAML component section looks as follows:
+of the filter allows the optional definition of some additional parameters directly in the YAML editor. 
+If they are not defined, the default values will be used. To see what parameters can be defined, hover 
+over the exclamation mark. Activate the filter and set them so the YAML component section looks as
+follows:
 
 <div class="text--center">
   <img src={orbbecThresholdParameters} alt="Threshold filter tooltip parameters" />
