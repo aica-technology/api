@@ -41,7 +41,7 @@ These commands will download and apply the udev rules. To ensure that the rules 
 correctly, the [Orbbec Viewer](https://github.com/orbbec/OrbbecSDK/releases) can be used to check 
 the camera feed.
 
-In order to also ensure the camera can be accessed from within the container, the `/run/udev/` volume
+Additionally, in order to ensure the camera can be accessed from within the container, the `/run/udev/` volume
 has to be mounted. In AICA Launcher, expand the **Advanced Settings** at the bottom, select
 **Add a volume mount** and define the volume, as shown in the following image:
 
@@ -117,6 +117,6 @@ components:
 Click on **Generate Graph** to make the changes take effect. Start the application, launch RViz and add
 a panel for the depth image. Only objects between 0.5 and 2 meters should appear. Keep in mind that most
 cameras have a minimum Z depth; if the maximum threshold is set below this value, the image will appear
-blank. For more information about that, check the camera's documentation. 
+blank, but noisy and arbitrarily small/large depth values may still be published. For more information about that, check the camera's documentation. 
 
 If needed, follow the same process to activate and configure other available filters.  
