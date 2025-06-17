@@ -11,7 +11,7 @@ import orbbecNewApp from './assets/orbbec-new-app.gif'
 import orbbecRvizColor from './assets/orbbec-play-rviz.gif'
 import orbbecCameraParameters from './assets/orbbec-camera-parameters.png'
 import orbbecThresholdParameters from './assets/orbbec-threshold-params.png'
-
+import orbbecPackage from './assets/orbbec-package.gif'
 
 # Orbbec camera component
 
@@ -48,6 +48,12 @@ These commands will download and apply the udev rules. To ensure that the rules 
 correctly, the [Orbbec Viewer](https://github.com/orbbec/OrbbecSDK/releases) can be used to check 
 the camera feed.
 :::
+
+Start the AICA Launcher and add the `orbbec` package to your configuration. 
+
+<div class="text--center">
+  <img src={orbbecPackage} alt="Adding the Orbbec package" />
+</div>
 
 
 Additionally, in order to ensure the camera can be accessed from within the container, the `/run/udev/` volume
