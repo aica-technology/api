@@ -41,14 +41,9 @@ applications. This integration provides several key benefits:
 With this integration, users can build complete automation pipelines in Isaac Lab, interact with them using AICA System,
 validate performance, switch the hardware interface to a real robot, and hit play with no code changes required.
 
-# Prerequisites
+# Installing Isaac Lab
 
-Both **Isaac Lab** and **AICA System** require Docker to be installed on your host machine. Ensure Docker is properly
-installed and running before continuing.
-
-## Installing Isaac Lab
-
-Begin by cloning the AICA fork of [Isaac Lab](https://github.com/aica-technology/isaac-lab).
+Begin by cloning AICA's fork of [Isaac Lab](https://github.com/aica-technology/isaac-lab).
 
 Once the repository is cloned, build and start the Docker container by running:
 
@@ -78,15 +73,11 @@ was successful and you are ready to proceed with the next steps.
 
 If not, carefully go over the instructions again or reach out to our [support email](contact@aica.tech) for help.
 
-## Installing AICA System
-
-To run **AICA System**, you also need to install the **AICA Launcher**. Follow the installation instructions available
-in the [official documentation](https://docs.aica.tech/docs/getting-started/installation/installation-and-launch).
 
 # Connecting AICA System to Isaac Lab
 
 In this section, we’ll walk through a simple example of using a point attractor to move a UR5e simulated robot in Isaac
-Lab to a target frame and then manipulate that frame within the **AICA Studio** 3D Visualizer.
+Lab to a target frame and then manipulate that frame in the 3D visualization of AICA Studio.
 
 ## Creating an AICA Application
 
