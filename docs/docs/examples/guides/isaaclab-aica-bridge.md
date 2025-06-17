@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: A guide on using Isaac Lab as a simulator for AICA System
+title: A guide for using Isaac Lab as a simulator for AICA System
 ---
 
 import application from './assets/isaaclab-aica-bridge-application.png'
