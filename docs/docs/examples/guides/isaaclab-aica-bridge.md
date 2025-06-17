@@ -23,14 +23,14 @@ transitions between simulated and real-world deployments.
 # Motivation
 
 By integrating the AICA System with Isaac Lab, we establish a workflow for developing, testing, and deploying robotic
-applications
+applications. This integration provides several key benefits:
 
 1. **RL Policy Testing**: AICA’s RL Policy Component SDK allows developers to deploy Reinforcement Learning (RL) models
    directly onto real hardware through components. These models can be trained in Isaac Lab, and with AICA System
    interacting directly with Isaac Lab, users can validate the trained policies under the same conditions in which they
    were learned.
 
-2. **Reliable Policy Validation**: Developers can monitor the behaviors of the trained policies and test the effect of
+2. **Reliable Policy Validation**: Developers can monitor the behavior of the trained policies and test the effect of
    various parameters, enabling confident transitions from simulation to real-world deployment.
 
 3. **Digital Twin Control**: Beyond RL, running AICA System with Isaac Lab provides users with ways to interact with
@@ -76,7 +76,7 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene
 This will spawn a UR5e robot, a ground plane and lights. If you see the UR5e robot in the scene, then the installation
 was successful and you are ready to proceed with the next steps.
 
-If not, go carefully go over the instructions again or reach out to our [support email](contact@aica.tech) for help.
+If not, carefully go over the instructions again or reach out to our [support email](contact@aica.tech) for help.
 
 ## Installing AICA System
 
