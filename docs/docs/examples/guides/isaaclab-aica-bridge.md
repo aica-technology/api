@@ -5,7 +5,7 @@ title: A guide on using Isaac Lab as a simulator for AICA System
 
 import application from './assets/isaaclab-aica-bridge-application.png'
 
-# Motivation
+## Motivation
 
 By interfacing the AICA System with Isaac Lab, we establish a workflow for developing, testing, and deploying robotic
 applications. This connection provides several key benefits:
