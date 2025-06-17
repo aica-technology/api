@@ -76,7 +76,7 @@ to the graph.
 4. Press **Play** to start the application. 
 5. To see the live camera feed, click on the gear icon on the bottom right and select
 **Launch RViz**.
-6. In RViz, select _Add > By topic > orbbec_camera/color_image > Image_. This adds a panel that shows the
+6. In RViz, select _Add > By topic > /orbbec_camera/color_image > Image_. This adds a panel that shows the
 live color image. The depth image can also be found under _/orbbec_camera/depth_image > Image_.
 
 <div class="text--center">
@@ -99,33 +99,31 @@ images. Keep in mind that only specific pairs of integer values apply here. For 
 check the camera's documentation. 
 
 :::tip
-The Orbbec Viewer can also come in handy here, as it can be used to see the available profiles.
+The Orbbec Viewer can also come in handy here, as it shows the available profiles for the connected camera.
 :::
 
-- `Enable Alignment`: boolean that activates the spatial alignment of the depth image to the
+- `Enable Alignment`: flag that activates the spatial alignment of the depth image to the
 corresponding color image. Generates a depth image with the same size as the color, with depth
 expressed in the color camera coordinate system. 
-- `Enable Threshold Filter`: boolean that activates a threshold filter in the depth image. Activation
-of the filter allows the optional definition of some additional parameters directly in the YAML editor. 
-If they are not defined, the default values will be used. To see what parameters can be defined, hover 
-over the exclamation mark. Activate the filter and set them so the YAML component section looks as
-follows:
+- `Enable Threshold Filter`: flag that activates a threshold filter in the depth image. If activated, corresponding
+filter parameters can be directly defined in the YAML editor to configure the filter behavior. To see what parameters
+can be defined, read the description by hovering over the exclamation mark.
+    <div class="text--center">
+      <img src={orbbecThresholdParameters} alt="Threshold filter tooltip parameters" />
+    </div>
+    If the additional parameters are not provided, default values will be used. For instance, activating and configuring
+    the threshold filter would look like this in the YAML editor: 
 
-<div class="text--center">
-  <img src={orbbecThresholdParameters} alt="Threshold filter tooltip parameters" />
-</div>
-
-
-```yaml
-components:
-  orbbec_camera:
-    component: orbbec_camera::OBCameraNodeDriver
-    display_name: Orbbec Camera
-    parameters:
-      enable_threshold_filter: true
-      threshold_filter_max: 2000
-      threshold_filter_min: 500
-```
+    ```yaml
+    components:
+      orbbec_camera:
+        component: orbbec_camera::OBCameraNodeDriver
+        display_name: Orbbec Camera
+        parameters:
+          enable_threshold_filter: true
+          threshold_filter_max: 2000
+          threshold_filter_min: 500
+    ```
 
 Click on **Generate Graph** to make the changes take effect. Start the application, launch RViz and add
 a panel for the depth image. Only objects between 0.5 and 2 meters should appear. Keep in mind that most
