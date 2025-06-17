@@ -23,7 +23,7 @@ AICA's `orbbec` package includes support for a range of Orbbec camera models, in
 - Femto Bolt/Mega
 - Astra 2
 
-This guide describes all necessary steps to install, configure and run the component,
+This guide describes all necessary steps to install, configure and run the component
 using AICA Studio.  
 
 ## Installation
