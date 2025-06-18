@@ -68,7 +68,7 @@ Lab to a target frame and then manipulate that frame in the 3D visualization of 
 ### Creating a New Scene in Isaac Lab
 
 To create a new scene, you should define a scene configuration class that inherits from `InteractiveSceneCfg`. Various examples
-of scene config classes can be found in the [`scenes`](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes) directory of the Isaac Lab
+of scene config classes can be found in the [scenes](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes) directory of the Isaac Lab
 repository.
 
 The scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined there. The
@@ -98,10 +98,10 @@ The simulator includes several important parameters that you should be familiar 
   force feedback.
 - **state_port**: Defines the port used to stream state updates from the simulator to the hardware interface in AICA Studio.
 The default is `1801`, and it must match the `state_port` parameter specified in the hardware interface configuration (see below).
-- **command_port**: Sets the port for receiving commands from the AICA application. The default is `1802`, and it should
-  match the `command_port` in the hardware interface.
-- **force_port**: Sets the port for sending force-torque sensor data. The default is `1803`, and it should align with
-  the `ft_sensor_port` defined in the hardware interface.
+- **command_port**: Defines the port used to stream commands from hardware interface in AICA Studio to the simulator.
+The default is `1802`, and it must match the `command_port` parameter specified in the hardware interface configuration (see below).
+- **force_port**: Defines the port used to stream force/torque measurements from the simulator to the hardware interface in AICA Studio
+The default is `1803`, and it must match the `ft_sensor_port` parameter specified in the hardware interface configuration (see below).
 - **command_interface**: Specifies the type of command the simulator accepts. The default is `"position"`, meaning it
   expects position commands. You can change this to `"velocity"` if required. If a mismatched command type is received,
   the simulator will terminate with a `ValueError` indicating the mismatch.
@@ -117,37 +117,6 @@ command in the `run_bridge.py` script:
 ```shell
 python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rate <simulation_rate> --end_effector <end_effector_link_name> --force_sensor <true/false> --state_port <state_port> --command_port <command_port> --force_port <force_port> --command_interface <position/velocity> --headless <true/false> --device <cuda/cpu>
 ```
-
-### Creating an AICA Application
-
-1. Open **AICA Launcher** and launch a configuration using the latest core image along with the latest Universal Robots
-   collection.
-2. Click the **New Application** button located in the top-left corner of the **AICA Studio** interface.
-3. In the new application, add the following components:
-
-   - **Signal Point Attractor**: Drives the robot’s movement toward a specified target frame.
-   - **Frame to Signal**: Converts the target frame into a signal that feeds into the point attractor.
-   - **Hardware Interface**: Connects your application to the Isaac Lab simulator, allowing you to control the UR5e
-     robot and receive real-time state updates.
-   - **IK Velocity Controller**: Calculates the inverse kinematics for the UR5e, enabling smooth motion toward the
-     target frame.
-
-4. Connect the events and signals as shown in the image. Make sure to auto-configure and auto-activate all components
-   and controllers.
-
-<div class="text--center">
-  <img src={application} alt="Signal Point Attractor Application" />
-</div>
-
-5. Press **Play**, then switch to the **3D Visualizer** tab in **AICA Studio**. You should see the UR5e robot in the
-   scene. Use the **Record Frame** button to capture a target frame at the robot's tool, specify the tool frame name
-   (for UR robots from the collection, that is `ur_tool0`), and then move the frame to your desired target position.
-6. Once the target frame is set, parametrize the **Frame to Signal** component with the name of the target frame you
-   just created.
-
-Now that you have set up the application, let's go over the necessary steps that needs to be done on the Hardware
-Interface level to connect **AICA System** to the Isaac Lab simulator.
-
 ### Configuring the Hardware Interface
 
 The **Hardware Interface** serves as the communication bridge between the **AICA System** and external hardware or
@@ -182,6 +151,37 @@ receiving both state and sensor data.
 
 With the hardware interface now configured, let's jump into running the Isaac Lab simulator and running your AICA
 application.
+
+### Creating an AICA Application
+
+1. Open **AICA Launcher** and launch a configuration using the latest core image along with the latest Universal Robots
+   collection.
+2. Click the **New Application** button located in the top-left corner of the **AICA Studio** interface.
+3. In the new application, add the following components:
+
+   - **Signal Point Attractor**: Drives the robot’s movement toward a specified target frame.
+   - **Frame to Signal**: Converts the target frame into a signal that feeds into the point attractor.
+   - **Hardware Interface**: Connects your application to the Isaac Lab simulator, allowing you to control the UR5e
+     robot and receive real-time state updates.
+   - **IK Velocity Controller**: Calculates the inverse kinematics for the UR5e, enabling smooth motion toward the
+     target frame.
+
+4. Connect the events and signals as shown in the image. Make sure to auto-configure and auto-activate all components
+   and controllers.
+
+<div class="text--center">
+  <img src={application} alt="Signal Point Attractor Application" />
+</div>
+
+5. Press **Play**, then switch to the **3D Visualizer** tab in **AICA Studio**. You should see the UR5e robot in the
+   scene. Use the **Record Frame** button to capture a target frame at the robot's tool, specify the tool frame name
+   (for UR robots from the collection, that is `ur_tool0`), and then move the frame to your desired target position.
+6. Once the target frame is set, parametrize the **Frame to Signal** component with the name of the target frame you
+   just created.
+
+Now that you have set up the application, let's go over the necessary steps that needs to be done on the Hardware
+Interface level to connect **AICA System** to the Isaac Lab simulator.
+
 
 ### Running the AICA Application
 
