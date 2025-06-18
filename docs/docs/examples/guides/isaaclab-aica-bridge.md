@@ -30,7 +30,7 @@ System, validate performance, switch the hardware interface to a real robot, and
 
 ## Installing Isaac Lab
 
-Begin by cloning AICA's fork of [Isaac Lab](https://github.com/aica-technology/isaac-lab).
+Begin by cloning AICA's fork of [Isaac Lab](https://github.com/aica-technology/isaac-lab/tree/f17384a1b487630128b4782ce02166565ef4464f/).
 
 Once the repository is cloned, build and start the Docker container by running:
 
