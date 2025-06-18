@@ -1,9 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 6
 title: A guide for using Isaac Lab as a simulator for AICA System
 ---
 
 import application from './assets/isaaclab-aica-bridge-application.png'
+
+# A guide for using Isaac Lab as a simulator for AICA System
 
 ## Motivation
 
@@ -47,7 +49,7 @@ python3 docker/container.py enter
 This ensures you are inside a development environment where Isaac Lab and all required dependencies are already
 installed.
 
-Once done, verify the installation by running
+Run the following command in the same terminal to verify the installation:
 
 ```shell
 python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene
@@ -56,7 +58,7 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene
 This will spawn a UR5e robot, a ground plane and lights. If you see the UR5e robot in the scene, then the installation
 was successful and you are ready to proceed with the next steps.
 
-If not, carefully go over the instructions again or reach out to our [support email](contact@aica.tech) for help.
+If not, carefully go over the instructions again or reach out to AICA for help.
 
 # Connecting AICA System to Isaac Lab
 
@@ -65,12 +67,12 @@ Lab to a target frame and then manipulate that frame in the 3D visualization of 
 
 ## Creating a New Scene in Isaac Lab
 
-To create a new scene, you should define a scene config class that inherits from InteractiveSceneCfg. Various examples
+To create a new scene, you should define a scene configuration class that inherits from `InteractiveSceneCfg`. Various examples
 of scene config classes can be found in the [`scenes`](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes) directory of the Isaac Lab
 repository.
 
 The scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined there. The
-3D Visualizer in **AICA Studio** will only display the robot and mirror the robot's movements, but it will not display
+3D visualization in **AICA Studio** will only display the robot and mirror the robot's movements, but it will not display
 the scene itself.
 
 Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
@@ -94,8 +96,8 @@ The simulator includes several important parameters that you should be familiar 
 - **end_effector**: Indicates the name of the end-effector link on the robot being controlled.
 - **force_sensor**: Enables the robot's force sensor when set to `true`. This is useful for applications that require
   force feedback.
-- **state_port**: Defines the port used to send state updates from the simulator to the AICA application. The default is
-  `1801`, and it must match the `state_port` specified in the hardware interface configuration.
+- **state_port**: Defines the port used to stream state updates from the simulator to the hardware interface in AICA Studio.
+The default is `1801`, and it must match the `state_port` parameter specified in the hardware interface configuration (see below).
 - **command_port**: Sets the port for receiving commands from the AICA application. The default is `1802`, and it should
   match the `command_port` in the hardware interface.
 - **force_port**: Sets the port for sending force-torque sensor data. The default is `1803`, and it should align with
@@ -117,8 +119,6 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rat
 ```
 
 ## Creating an AICA Application
-
-To get started, follow these steps to create a new application in **AICA Studio**:
 
 1. Open **AICA Launcher** and launch a configuration using the latest core image along with the latest Universal Robots
    collection.
