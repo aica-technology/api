@@ -66,7 +66,7 @@ Lab to a target frame and then manipulate that frame in the 3D visualization of 
 ## Creating a New Scene in Isaac Lab
 
 To create a new scene, you should define a scene config class that inherits from InteractiveSceneCfg. Various examples
-of scene config classes can be found in the [`scenes`](https://github.com/aica-technology/isaac-lab/blob/main/scripts/custom/aica_bridge/scenes) directory of the Isaac Lab
+of scene config classes can be found in the [`scenes`](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes) directory of the Isaac Lab
 repository.
 
 The scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined there. The
@@ -74,7 +74,7 @@ The scene lives entirely in Isaac Lab and the definitions of the assets used in 
 the scene itself.
 
 Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
-located in [this file](https://github.com/aica-technology/isaac-lab/blob/main/scripts/custom/aica_bridge/scenes/__init__.py).
+located in [this file](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes/__init__.py).
 
 After registering the scene, you can launch it by running the following command in the `run_bridge.py` script:
 
