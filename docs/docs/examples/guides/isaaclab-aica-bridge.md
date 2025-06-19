@@ -69,8 +69,8 @@ To create a new scene, you should define a scene configuration class that inheri
 of scene config classes can be found in the [scenes](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes) directory of the Isaac Lab
 repository.
 
-Note that, the scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined there. The
-3D visualization in the **AICA Studio** will only display the robot and mirror the robot's movements, but it will not display
+Note that the scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined there. The
+3D visualization in the AICA Studio will only display the robot and mirror the robot's movements, but it will not display
 the scene itself.
 
 Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
@@ -117,12 +117,9 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rat
 ```
 ### Configuring the Hardware Interface
 
-The **Hardware Interface** serves as the communication bridge between the **AICA System** and external hardware or
-simulators. In this example, we’ll use it to connect with the Isaac Lab simulator via ZMQ sockets.
+To set up the hardware interface that communicates with the simulator, a new hardware has to be created:
 
-To set up the hardware interface, follow these steps:
-
-1. Go to the **Hardware** tab in the **AICA Studio**.
+1. Go to the Hardware tab in AICA Studio.
 2. Click on the Universal Robot 5e URDF to open it.
 3. Click **Save As** to create a copy of the URDF file for the UR5e robot in the **AICA Studio**.
 4. In the **hardware** tag, replace the existing plugin with the lightweight interface plugin shown below.
