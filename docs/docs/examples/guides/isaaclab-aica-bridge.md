@@ -38,8 +38,6 @@ Once the repository is cloned, build and start the Docker container by running:
 python3 docker/container.py start
 ```
 
-This command will build the Docker image and start the container in the background.
-
 Next, enter the running container using:
 
 ```shell
