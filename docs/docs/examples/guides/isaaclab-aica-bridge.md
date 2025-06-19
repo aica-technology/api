@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: A guide for using Isaac Lab as a simulator for AICA System
+title: A guide for using Isaac Lab as a simulator for the AICA System
 ---
 
 import application from './assets/isaaclab-aica-bridge-application.png'
@@ -63,7 +63,7 @@ If not, carefully go over the instructions again or reach out to AICA for help.
 ## Connecting AICA System to Isaac Lab
 
 In this section, we’ll walk through a simple example of using a point attractor to move a UR5e simulated robot in Isaac
-Lab to a target frame and then manipulate that frame in the 3D visualization of AICA Studio.
+Lab to a target frame and then manipulate that frame in the 3D visualization of the AICA Studio.
 
 ### Creating a New Scene in Isaac Lab
 
@@ -72,7 +72,7 @@ of scene config classes can be found in the [scenes](https://github.com/aica-tec
 repository.
 
 Note that, the scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined there. The
-3D visualization in **AICA Studio** will only display the robot and mirror the robot's movements, but it will not display
+3D visualization in the **AICA Studio** will only display the robot and mirror the robot's movements, but it will not display
 the scene itself.
 
 Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
@@ -96,11 +96,11 @@ The simulator includes several important parameters that you should be familiar 
 - **end_effector**: Indicates the name of the end-effector link on the robot being controlled.
 - **force_sensor**: Enables the robot's force sensor when set to `true`. This is useful for applications that require
   force feedback.
-- **state_port**: Defines the port used to stream state updates from the simulator to the hardware interface in AICA Studio.
+- **state_port**: Defines the port used to stream state updates from the simulator to the hardware interface in the AICA Studio.
 The default is `1801`, and it must match the `state_port` parameter specified in the hardware interface configuration (see below).
-- **command_port**: Defines the port used to stream commands from hardware interface in AICA Studio to the simulator.
+- **command_port**: Defines the port used to stream commands from hardware interface in the AICA Studio to the simulator.
 The default is `1802`, and it must match the `command_port` parameter specified in the hardware interface configuration (see below).
-- **force_port**: Defines the port used to stream force/torque measurements from the simulator to the hardware interface in AICA Studio
+- **force_port**: Defines the port used to stream force/torque measurements from the simulator to the hardware interface in the AICA Studio
 The default is `1803`, and it must match the `ft_sensor_port` parameter specified in the hardware interface configuration (see below).
 - **command_interface**: Specifies the type of command the simulator accepts. The default is `"position"`, meaning it
   expects position commands. You can change this to `"velocity"` if required. If a mismatched command type is received,
@@ -124,12 +124,12 @@ simulators. In this example, we’ll use it to connect with the Isaac Lab simula
 
 To set up the hardware interface, follow these steps:
 
-1. Go to the **Hardware** tab in **AICA Studio**.
+1. Go to the **Hardware** tab in the **AICA Studio**.
 2. Click on the Universal Robot 5e URDF to open it.
-3. Click **Save As** to create a copy of the URDF file for the UR5e robot in **AICA Studio**.
+3. Click **Save As** to create a copy of the URDF file for the UR5e robot in the **AICA Studio**.
 4. In the **hardware** tag, replace the existing plugin with the lightweight interface plugin shown below.
 
-
+```xml
 <hardware>
    <plugin>aica_core_interfaces/LightWeightInterface</plugin>
    <param name="ip">0.0.0.0</param>
@@ -140,10 +140,10 @@ To set up the hardware interface, follow these steps:
    <param name="bind_command_port">False</param>
    <param name="bind_ft_sensor_port">False</param>
 </hardware>
+```
 
-5. Remove any unused tags, such as GPIO or other unnecessary hardware interfaces, from the URDF file.
-6. Save your changes.
-7. In the **Hardware Interface** component on the graph view, select the modified URDF file for the UR5e robot from the
+5. Save your changes.
+6. In the **Hardware Interface** component on the graph view, select the modified URDF file for the UR5e robot from the
    drop down menu in the hardware interface.
 
 
@@ -174,7 +174,7 @@ application.
   <img src={application} alt="Signal Point Attractor Application" />
 </div>
 
-5. Press **Play**, then switch to the **3D Visualizer** tab in **AICA Studio**. You should see the UR5e robot in the
+5. Press **Play**, then switch to the **3D Visualizer** tab in the **AICA Studio**. You should see the UR5e robot in the
    scene. Use the **Record Frame** button to capture a target frame at the robot's tool, specify the tool frame name
    (for UR robots from the collection, that is `ur_tool0`), and then move the frame to your desired target position.
 6. Once the target frame is set, parametrize the **Frame to Signal** component with the name of the target frame you
@@ -199,7 +199,7 @@ safe and reliable performance:
    Lab. In the current implementation, there are two sources of truth for joint names: the URDF file and USD file. If
    these names do not match, the simulator will not be able to send the states correctly to the AICA application.
 
-2. **Hardware Interface Rate in AICA Studio**: The hardware interface rate in **AICA Studio** should be greater than the
+2. **Hardware Interface Rate in the AICA Studio**: The hardware interface rate in the **AICA Studio** should be greater than the
    simulation rate in Isaac Lab. This ensures that the AICA application can send commands to the simulator at a rate
    that matches or exceeds the simulation updates, preventing command loss or delays.
 
@@ -216,4 +216,4 @@ safe and reliable performance:
 
 ## Conclusion
 
-By following the steps in this guide, you should be able to connect and run your AICA applications (e.g., those developed in **AICA Studio**) with a physics simulator such as Isaac Lab, leveraging it as a digital twin environment.
+By following the steps in this guide, you should be able to connect and run your AICA applications (e.g., those developed in the **AICA Studio**) with a physics simulator such as Isaac Lab, leveraging it as a digital twin environment.
