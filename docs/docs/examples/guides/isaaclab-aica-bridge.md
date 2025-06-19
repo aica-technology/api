@@ -117,10 +117,7 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rat
 ```
 ### Configuring the Hardware Interface
 
-The **Hardware Interface** serves as the communication bridge between the **AICA System** and external hardware or
-simulators. In this example, we’ll use it to connect with the Isaac Lab simulator via ZMQ sockets.
-
-To set up the hardware interface, follow these steps:
+To set up the hardware interface that communicates with the simulator, a new hardware has to be created:
 
 1. Go to the Hardware tab in AICA Studio.
 2. Click on the Universal Robot 5e URDF to open it.
