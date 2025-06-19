@@ -25,7 +25,7 @@ applications. This connection provides several key benefits:
    connecting to actual hardware. This improves safety and enables rapid iteration in early stages, helping streamline
    the overall development cycle.
 
-With Isaac Lab as simulator, users can build complete automation pipelines in Isaac Lab, interact with them using AICA
+With Isaac Lab as simulator, users can build scenes in Isaac Lab, command simulated robots using AICA
 System, validate performance, switch the hardware interface to a real robot, and hit play with no code changes required.
 
 ## Installing Isaac Lab
