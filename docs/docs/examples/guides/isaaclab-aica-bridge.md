@@ -115,14 +115,18 @@ command in the `run_bridge.py` script:
 ```shell
 python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rate <simulation_rate> --end_effector <end_effector_link_name> --force_sensor <true/false> --state_port <state_port> --command_port <command_port> --force_port <force_port> --command_interface <position/velocity> --headless <true/false> --device <cuda/cpu>
 ```
+
 ### Configuring the Hardware Interface
 
-To set up the hardware interface that communicates with the simulator, a new hardware has to be created:
+On the AICA side, you need to set up a hardware interface that communicates with the Isaac Lab simulator:
 
-1. Go to the Hardware tab in AICA Studio.
-2. Click on the Universal Robot 5e URDF to open it.
-3. Click **Save As** to create a copy of the URDF file for the UR5e robot in the **AICA Studio**.
-4. In the **hardware** tag, replace the existing plugin with the lightweight interface plugin shown below.
+1. Open **AICA Launcher** and launch a configuration using the latest core image along with the latest Universal Robots
+   collection.
+2. Click the **New Application** button located in the top-left corner of the **AICA Studio** interface.
+3. Go to the Hardware tab in AICA Studio.
+4. Click on the Universal Robot 5e URDF to open it.
+5. Click **Save As** to create a copy of the URDF file for the UR5e robot in the **AICA Studio**.
+6. In the **hardware** tag, replace the existing plugin with the lightweight interface plugin shown below.
 
 ```xml
 <hardware>
@@ -137,10 +141,9 @@ To set up the hardware interface that communicates with the simulator, a new har
 </hardware>
 ```
 
-5. Save your changes.
-6. In the **Hardware Interface** component on the graph view, select the modified URDF file for the UR5e robot from the
+7. Save your changes.
+8. In the **Hardware Interface** component on the graph view, select the modified URDF file for the UR5e robot from the
    drop down menu in the hardware interface.
-
 
 This configuration enables the UR5e robot model to communicate with the Isaac Lab simulator by sending commands and
 receiving both state and sensor data.
@@ -150,10 +153,7 @@ application.
 
 ### Creating an AICA Application
 
-1. Open **AICA Launcher** and launch a configuration using the latest core image along with the latest Universal Robots
-   collection.
-2. Click the **New Application** button located in the top-left corner of the **AICA Studio** interface.
-3. In the new application, add the following components:
+1. In the new application, add the following components:
 
    - **Signal Point Attractor**: Drives the robot’s movement toward a specified target frame.
    - **Frame to Signal**: Converts the target frame into a signal that feeds into the point attractor.
