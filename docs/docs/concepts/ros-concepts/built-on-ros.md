@@ -17,11 +17,13 @@ ROS comes from the abstractions provided by community packages and extensions th
 can be combined to solve complex problems.
 
 The AICA System is built on ROS 2, but it is not intended to supersede existing ROS 2 distributions, packages or
-tools. AICA applications and building blocks are fully compatible with existing ROS packages and community tools and
+tools. AICA applications and building blocks are **fully compatible with existing ROS packages** and community tools and
 can be used and deployed alongside them.
 
-For new developers, AICA provides an easy springboard into the wider world of ROS. Advanced users can take the
-modularity and dynamic nature of the AICA System to new frontiers.
+<!-- TODO: make an example showing that with Launcher -->
+
+**For new developers, AICA provides an easy springboard into the wider world of ROS. Advanced users can take the
+modularity and dynamic nature of the AICA System to new frontiers.**
 
 At a glance, the AICA System extends ROS 2 with the following features:
 
