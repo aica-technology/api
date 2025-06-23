@@ -27,16 +27,29 @@ The components' full names refer to the geometrical object that is used to check
 - Sphere Collider
 - Plane Collider
 
+## Interfaces
+
 <div class="text--center">
   <img src={colliderInterfaces} alt="Collider interfaces" />
 </div>
 
-All colliders have the same input signals and predicates, see above. Additionally, the collider variants come with their
- individual parameters that are required to define the geometrical object:
+All colliders have the same input signals and predicates, as seen in the image above.
+The target pose input refers to the Cartesian pose that is checked against the collider region.
+The center pose input defines the center of the region (the barycenter of the geometric object).
+The predicate "is in collision" is true whenever the target is within the collider region (or, in the
+case of the Plane Collider, when the target is below the plane), and conversely the predicate
+"is not in collision" is true in the opposite case.
 
-- Box Collider: size of the box in x, y, and z direction
-- Cyclinder Collider: radius and height of the cylinder
-- Sphere Collider: radius of the sphere
+### Parameters
+
+Additionally, each collider variant has different parameters that are required to define specific properties.
+For the following colliders, the parameters define the size and shape of the geometric object.
+
+- Box Collider: the side lengths of the box in the x, y, and z direction
+- Cylinder Collider: the radius of the cylinder in the x-y plane and the height in the z direction
+- Sphere Collider: the radius of the sphere
+
+For the plane collider, the parameter "Flip normal" determines which side of the plane is considered "in collision"; by default, this is when the z position of the target pose is negative in the coordinate system of the center pose.
 
 :::note
 
