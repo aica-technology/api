@@ -45,9 +45,7 @@ python3 docker/container.py enter
 ```
 
 This ensures you are inside a development environment where Isaac Lab and all required dependencies are already
-installed.
-
-Run the following command in the same terminal to verify the installation:
+installed. Run the following command in the same terminal to verify the installation:
 
 ```shell
 python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene
