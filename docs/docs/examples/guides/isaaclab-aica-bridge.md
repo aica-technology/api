@@ -75,7 +75,6 @@ the scene itself.
 
 Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
 located in [this file](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes/__init__.py).
-
 After registering the scene, you can launch it by running the following command in the `run_bridge.py` script:
 
 ```shell
@@ -118,15 +117,13 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rat
 
 ### Configuring the Hardware Interface
 
-On the AICA side, you need to set up a hardware interface that communicates with the Isaac Lab simulator:
+In AICA Studio, you need to set up a hardware interface that communicates with the Isaac Lab simulator:
 
-1. Open **AICA Launcher** and launch a configuration using the latest core image along with the latest Universal Robots
+1. Open AICA Launcher and launch a configuration using the latest core image along with the latest Universal Robots
    collection.
-2. Click the **New Application** button located in the top-left corner of the **AICA Studio** interface.
-3. Go to the Hardware tab in AICA Studio.
-4. Click on the Universal Robot 5e URDF to open it.
-5. Click **Save As** to create a copy of the URDF file for the UR5e robot in the **AICA Studio**.
-6. In the **hardware** tag, replace the existing plugin with the lightweight interface plugin shown below.
+2. In AICA Studio, go to the Hardware tab.
+3. Click on the Universal Robot 5e entry to open it and use "Save As" to create a copy with a new name and description.
+4. Inspect the content of the copied robot description to find the `hardware` tag. Replace it with the following:
 
 ```xml
 <hardware>
@@ -141,24 +138,16 @@ On the AICA side, you need to set up a hardware interface that communicates with
 </hardware>
 ```
 
-7. Save your changes.
-8. In the **Hardware Interface** component on the graph view, select the modified URDF file for the UR5e robot from the
-   drop down menu in the hardware interface.
-
-This configuration enables the UR5e robot model to communicate with the Isaac Lab simulator by sending commands and
-receiving both state and sensor data.
-
-With the hardware interface now configured, let's jump into running the Isaac Lab simulator and running your AICA
-application.
+5. Save your changes.
 
 ### Creating an AICA Application
 
-1. In the new application, add the following components:
+1. Go back to the Editor tab and create a new application.
+2. In the default hardware interface, open the URDF drop down and select the hardware created in the previous section.
+3. Add the following components to the application:
 
    - **Signal Point Attractor**: Drives the robot’s movement toward a specified target frame.
    - **Frame to Signal**: Converts the target frame into a signal that feeds into the point attractor.
-   - **Hardware Interface**: Connects your application to the Isaac Lab simulator, allowing you to control the UR5e
-     robot and receive real-time state updates.
    - **IK Velocity Controller**: Calculates the inverse kinematics for the UR5e, enabling smooth motion toward the
      target frame.
 
