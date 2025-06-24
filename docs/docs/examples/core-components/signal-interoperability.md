@@ -3,9 +3,9 @@ sidebar_position: 1
 title: Signal interoperability
 ---
 
-import rosToSignal from './assets/ros-signal-example.png';
-import signalToRos from './assets/signal-ros-example.png';
-import signalRosJoint from './assets/signal-ros-joint.png';
+import rosToSignal from './assets/ros-signal-example.png'
+import signalToRos from './assets/signal-ros-example.png'
+import signalRosJoint from './assets/signal-ros-joint.png'
 import signalRosPose from './assets/signal-ros-pose.png'
 
 # Signal interoperability
