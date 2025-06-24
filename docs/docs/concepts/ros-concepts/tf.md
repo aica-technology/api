@@ -8,9 +8,7 @@ import tfTree from './assets/tf-tree.png'
 # TF in ROS
 
 In robotics, different components, such as sensors, actuators, and robot links, often operate in their own local
-coordinate frames.
-
-One might ask questions like:
+coordinate frames. One might ask questions like:
 
 - What is the pose of an object detected by the camera relative to the robot base frame?
 - Where was the tracked object relative to the world frame 5 seconds ago?
