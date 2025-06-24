@@ -3,9 +3,9 @@ sidebar_position: 1
 title: Signal interoperability
 ---
 
-import rosToSignal from './assets/ros-signal-example.png'
-import signalToRos from './assets/signal-ros-example.png'
-import signalRosJoint from './assets/signal-ros-joint.png'
+import rosToSignal from './assets/ros-signal-example.png';
+import signalToRos from './assets/signal-ros-example.png';
+import signalRosJoint from './assets/signal-ros-joint.png';
 import signalRosPose from './assets/signal-ros-pose.png'
 
 # Signal interoperability
@@ -15,22 +15,11 @@ common ROS message types for interoperability.
 
 :::tip
 
-Review the [Signals concept page](../../concepts/building-blocks/signals.md) for signals before starting this
-example.
+Review the corresponding [concepts page](../../concepts/building-blocks/components/signal-interoperability.md) first.
 
 :::
 
 ## AICA signals to standard ROS messages
-
-AICA state signals carrying Cartesian or joint space information can be converted to standard ROS message types using
-the following components:
-
-| Component name                             | Input signal type                             | Output message type                 |
-|--------------------------------------------|-----------------------------------------------|-------------------------------------|
-| Cartesian Signal to Pose Stamped Message   | Cartesian state or pose                       | `geometry_msgs::msg::PoseStamped`   |
-| Cartesian Signal to Twist Stamped Message  | Cartesian state or twist                      | `geometry_msgs::msg::TwistStamped`  |
-| Cartesian Signal to Wrench Stamped Message | Cartesian state or wrench                     | `geometry_msgs::msg::WrenchStamped` |
-| Joint Signal To Joint State Message        | Joint state, positions, velocities or torques | `sensor_msgs::msg::JointState`      |
 
 This example uses the `Joint Signal To Joint State Message` component to translate the joint state output from the
 hardware interface to a `sensor_msgs::msg::JointState` message and the `Cartesian Signal to Pose Stamped Message`
@@ -51,7 +40,18 @@ in the live topic view.
 With content
 
 ```json
-{"header":{"stamp":{"sec":1749019367,"nanosec":736960997},"frame_id":"world"},"pose":{"position":{"x":0.37246365888399174,"y":0.048146868357851064,"z":0.4299999920960212},"orientation":{"x":0.7073880448768991,"y":0.7068251811053661,"z":8.971607761328708e-7,"w":-0.0005633114591638605}}}
+{
+  "header": { "stamp": { "sec": 1749019367, "nanosec": 736960997 }, "frame_id": "world" },
+  "pose": {
+    "position": { "x": 0.37246365888399174, "y": 0.048146868357851064, "z": 0.4299999920960212 },
+    "orientation": {
+      "x": 0.7073880448768991,
+      "y": 0.7068251811053661,
+      "z": 8.971607761328708e-7,
+      "w": -0.0005633114591638605
+    }
+  }
+}
 ```
 
 <div class="text--center">
@@ -61,7 +61,13 @@ With content
 With content
 
 ```json
-{"header":{"stamp":{"sec":1749019239,"nanosec":277825301},"frame_id":""},"name":["joint_0","joint_1","joint_2","joint_3","joint_4","joint_5"],"position":[0,0,0,0,0,0],"velocity":[0,0,0,0,0,0],"effort":[0,0,0,0,0,0]}
+{
+  "header": { "stamp": { "sec": 1749019239, "nanosec": 277825301 }, "frame_id": "" },
+  "name": ["joint_0", "joint_1", "joint_2", "joint_3", "joint_4", "joint_5"],
+  "position": [0, 0, 0, 0, 0, 0],
+  "velocity": [0, 0, 0, 0, 0, 0],
+  "effort": [0, 0, 0, 0, 0, 0]
+}
 ```
 
 <details>
@@ -151,28 +157,19 @@ With content
             - x: 140
               y: 840
     ```
+
 </details>
 
 ## Standard ROS messages to AICA signals
 
-Mirroring the first example, standard ROS message types carrying Cartesian or joint space information can be converted
-back into AICA state signals using the following components:
-
-| Component name                             | Input message type                  | Output signal type                            | 
-|--------------------------------------------|-------------------------------------|-----------------------------------------------|
-| Pose Stamped Message to Cartesian Signal   | `geometry_msgs::msg::PoseStamped`   | Cartesian state containing pose information   | 
-| Twist Stamped Message to Cartesian Signal  | `geometry_msgs::msg::TwistStamped`  | Cartesian state containing twist information  | 
-| Wrench Stamped Message to Cartesian Signal | `geometry_msgs::msg::WrenchStamped` | Cartesian state containing wrench information | 
-| Joint State Message to Joint Signal        | `sensor_msgs::msg::JointState`      | Joint state                                   | 
-
-The next example uses the `Wrench Stamped Message To Cartesian Signal` component to translate a
-`geometry_msgs::msg::WrenchStamped` from some custom component to a Cartesian signal that is connected to the force
-controller of the hardware interface.
+Mirroring the first example, this application uses the `Wrench Stamped Message To Cartesian Signal` component to
+translate a `geometry_msgs::msg::WrenchStamped` from some custom component to a Cartesian signal that is connected to
+the force controller of the hardware interface.
 
 :::note
 
 The custom component is just an example placeholder in for any implementation that has a ROS standard message output,
-which might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
+which might occur when porting existing ROS nodes into AICA Studio using the Component SDK.
 
 :::
 
@@ -304,4 +301,5 @@ which might occur when porting existing ROS nodes into AICA Studio using the AIC
             - x: 80
               y: 1040
     ```
+
 </details>
