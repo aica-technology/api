@@ -38,9 +38,15 @@ using the following components:
 | Wrench Stamped Message to Cartesian Signal | `geometry_msgs::msg::WrenchStamped` | Cartesian state containing wrench information |
 | Joint State Message to Joint Signal        | `sensor_msgs::msg::JointState`      | Joint state                                   |
 
+## Behavior
+
+All of these components are simple single-input single-output blocks. Each time a new message is received, it is
+translated and immediately published. For that reason, the `rate` parameter doesn't affect the behavior of these
+components.
+
 :::tip
 
-See [this page](../../../examples/core-components/signal-interoperability.md) for example applications using these
+See [this page](../../../examples/core-components/signal-interoperability.md) for examples using signal translator
 components in AICA Studio.
 
 :::

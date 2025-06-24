@@ -15,7 +15,8 @@ common ROS message types for interoperability.
 
 :::tip
 
-Review the corresponding [concepts page](../../concepts/building-blocks/components/signal-interoperability.md) first.
+If you haven't done so already, review the corresponding
+[concepts page](../../concepts/building-blocks/components/signal-interoperability.md) first.
 
 :::
 
