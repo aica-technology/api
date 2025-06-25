@@ -20,7 +20,7 @@ The AICA System is built on ROS 2, but it is not intended to supersede existing 
 tools. AICA applications and building blocks are **fully compatible with existing ROS packages** and community tools and
 can be used and deployed alongside them.
 
-<!-- TODO: make an example showing that with Launcher -->
+<!-- TODO: make an example showing that with Launcher (in a different place) -->
 
 **For new developers, AICA provides an easy springboard into the wider world of ROS. Advanced users can take the
 modularity and dynamic nature of the AICA System to new frontiers.**

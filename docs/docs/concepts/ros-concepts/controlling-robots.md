@@ -40,7 +40,7 @@ interface depends on the actuators, but commonly includes joint positions, veloc
 velocity and torque are the preferred command modes. For other actuators such as robot grippers, the command interface
 might instead specify a gripper finger distance or force through a GPIO.
 
-<!-- TODO: I feel like there is a missing link between these interfaces and the URDF; URDF should be a key concept too -->
+<!-- TODO: tie this together with the new URDF concept page -> what is a ros2 control plugin -->
 
 ## Hardware interfaces
 
