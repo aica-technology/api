@@ -198,7 +198,7 @@ and the application is stopped immediately.
           parameters:
             frame: center
             initial_pose:
-              - !!float 0.0
+              - 0.1
               - !!float 0.0
               - 0.3
               - !!float 1.0
