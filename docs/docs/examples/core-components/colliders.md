@@ -18,8 +18,8 @@ If you haven't done so already, review the corresponding
 
 :::note
 
-Until colliders are natively integrated in AICA Studio, these examples use RViz to visualize and move the collision
-targets in space. RViz can be started directly from AICA Launcher.
+Until collider visualizations are natively integrated in AICA Studio, these examples use RViz to visualize and move the
+collision targets in space. RViz can be started directly from AICA Launcher.
 
 <!-- TODO: Link to launcher page -->
 
@@ -28,16 +28,16 @@ targets in space. RViz can be started directly from AICA Launcher.
 ## Box Collider example
 
 This example uses two `Interactive Marker` components for the target and center pose of the collider. The `Box Collider`
-is parametrize to define a box of dimensions 10cm x 20cm x 5cm around the center pose. Note that the
-`Publish geometric object` flag is also toggled for better visualization in RViz.
+is parametrized to define a box of dimensions 10cm x 20cm x 5cm around the center pose. Note that the
+`Publish geometric object` flag is also toggled on to generate a visualization in RViz.
 
 <div class="text--center">
   <img src={boxCollider} alt="Box Collider" />
 </div>
 
 Start the application from AICA Studio, then go to RViz. Add the interactive marker frame and the geometric object
-marker as shown below. Observe how the predicates on the collider component switch when the target pose enters and exits
-the box.
+marker as shown below. Observe how moving the interactive marker triggers the predicates of the collider component to
+update when the target pose enters and exits the box.
 
 <details>
   <summary>Application YAML</summary>
@@ -150,7 +150,7 @@ the box.
 
 ## Plane Collider example
 
-Switching from the Box Colldier to the Cyclinder or Sphere Collider components is straight forward. However, it is worth
+Switching from the Box Colldier to the Cyclinder or Sphere Collider components is straightforward. However, it is worth
 looking at the Plane Collder separately because it is not immediately obvious on which side of the plane the target _is_
 _in collision_ with the plane and on which side it _is not in collision_.
 

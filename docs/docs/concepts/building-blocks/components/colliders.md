@@ -17,7 +17,7 @@ many robotic applications because it provides the ability to:
 - **Trigger context-aware actions** such as stopping or slowing down movement, initiating grasping, or sending alerts
   when a target enters or exits a region.
 
-The components' name refers to the geometric object that is used to check for collision:
+Each components' name refers to the geometric object that is used to check for collision:
 
 - Box Collider
 - Cylinder Collider
@@ -38,8 +38,8 @@ predicate "is not in collision" is true in the opposite case.
 
 ### Parameters
 
-Additionally, each collider variant has different parameters that are required to define specific properties. For the
-following colliders, the parameters define the size and shape of the geometric object.
+Additionally, each collider variant may have different parameters that are required to define specific properties. For
+the following colliders, the parameters define the size and shape of the geometric object.
 
 - Box Collider: the side lengths of the box in the x, y, and z direction
 - Cylinder Collider: the radius of the cylinder in the x-y plane and the height in the z direction
