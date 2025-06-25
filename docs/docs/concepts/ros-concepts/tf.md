@@ -70,7 +70,7 @@ transform:
     w: 0.0
 ```
 
-Understanding the concept of TF, coordinate frames and their reference frames is crucial because it forms the foundation
+Understanding the concepts of TF, coordinate frames and their reference frames is crucial because it forms the foundation
 for how spatial relationships are represented and managed in ROS-based robotic systems.
 
 :::info
