@@ -10,10 +10,10 @@ thought of as a live database that keeps track of coordinate frames and their re
 programming, it might often be necessary to extract the pose of one specific frame from TF in real time and publish that
 information as a continuous signal.
 
-For instance, an vision component might publish the pose of a detected object to TF and a motion generator component
+For instance, a vision component might publish the pose of a detected object to TF, while a motion generator component
 requires the target pose to be received as a signal. Ideally, the vision component would output the pose as a signal,
-but this is not always given. For these cases, the AICA Core provides components that can extract the pose of a desired
-frame from TF and publish it as a signal, or conversly receive a pose from a signal and send it to TF.
+but this is not always the case. For these situations, the AICA Core provides components that can extract the pose of a
+desired frame from TF and publish it as a signal, or conversely, receive a pose from a signal and send it to TF.
 
 ## Frame to Signal
 
