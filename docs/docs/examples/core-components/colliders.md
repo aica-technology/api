@@ -9,6 +9,13 @@ import planeColliderExample from './assets/plane-collider-example.gif'
 
 # Colliders
 
+:::tip
+
+If you haven't done so already, review the corresponding
+[concepts page](../../concepts/building-blocks/components/colliders.md) first.
+
+:::
+
 :::note
 
 Until colliders are natively integrated in AICA Studio, these examples use RViz to visualize and move the collision
