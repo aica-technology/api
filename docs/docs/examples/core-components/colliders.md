@@ -27,7 +27,7 @@ collision targets in space. RViz can be started directly from AICA Launcher.
 
 ## Box Collider example
 
-This example uses two `Interactive Marker` components for the target and center pose of the collider. The `Box Collider`
+This example uses two Interactive Marker components for the target and center pose of the collider. The `Box Collider`
 is parametrized to define a box of dimensions 10cm x 20cm x 5cm around the center pose. Note that the
 `Publish geometric object` flag is also toggled on to generate a visualization in RViz.
 
