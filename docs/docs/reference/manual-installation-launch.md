@@ -13,7 +13,12 @@ line without the use of AICA Launcher. The pre-requisites are still a valid lice
 For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
 on the host machine.
 
-## Configuring your system when Docker Desktop for Linux is installed
+## Configuring your Linux or MacOS system 
+
+<details>
+<summary>Linux</summary>
+
+### Configuring your system when Docker Desktop for Linux is installed
 
 If you are using Linux but do not have Docker Desktop for Linux installed, you may skip this section.
 
@@ -26,7 +31,7 @@ contaminating other parts of your system. However, creating a custom context wit
 means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that 
 some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal). 
 
-### Configuring Docker context
+##### Configuring the Docker context
 
 `desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations, 
 make sure to change the context before building or executing AICA applications, or running AICA Launcher.
@@ -50,6 +55,33 @@ docker context use default
 You may need to repeat these steps upon a restart of your system.
 
 :::
+
+</details>
+
+<details>
+<summary>MacOS</summary>
+
+### Configuring Docker Desktop
+
+With Docker Desktop installed all the requirements should already be present on your system. Note that to access the
+`docker` command through the terminal, Docker Desktop must be running.
+
+The default settings of Docker Desktop are usually sufficient for everything AICA Studio needs. However, in some cases
+(e.g., settings carried over from older Docker Desktop installations) you may need to verify the following:
+
+- Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to 
+`Allow the default Docker socket to be used (requires password)`.
+- If you are experiencing or experience performance issues, from the Settings menu go to Resources and increase the CPU
+- and memory limits.
+
+# TODO: add images/gifs here
+
+### Installing and configuring Docker Engine manually
+
+If you have Docker Desktop installed, you may skip this section but do refer to the previous section for additional
+configuration if you have not done so.
+
+</details>
 
 ## Setting up the AICA license file
 

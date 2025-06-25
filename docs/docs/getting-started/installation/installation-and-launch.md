@@ -9,9 +9,17 @@ title: Installation and launch
 
 AICA System software is distributed with Docker images and executed with Docker containers.
 
-Before proceeding, [install Docker Engine](https://docs.docker.com/engine/install/) on the host machine.
+Before proceeding, you will need to install the Docker Engine on the host machine. Depending on your platform, the
+installation process may vary or require additional steps. Below, you will find instructions per operating system:
 
-:::info
+<details>
+<summary>Linux</summary>
+
+AICA suggests Ubuntu Linux as the main platform, but other distributions work equally as well. You may find
+distribution-specific instructions to install Docker Engine [here](https://docs.docker.com/engine/install/).
+Note that you can and it is recommended that you skip the installation of Docker Desktop.
+
+:::note
 
 For Ubuntu users, make sure to follow
 the [post installation steps](https://docs.docker.com/engine/install/linux-postinstall/) to create the `docker` group
@@ -29,6 +37,40 @@ Additionally, you may experience some issues when using AICA System software due
 configuration (see [manual installation](../../reference/manual-installation-launch.md) for more details).
 
 :::
+
+</details>
+
+<details>
+<summary>MacOS</summary>
+
+The simplest way to install Docker Engine on MacOS is through 
+[Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/). However, some limitations may exist
+regarding commercial use (see relevant article 
+[here](https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/)). If your use of
+Docker Desktop is within the terms of use, ensure that 
+[these](../../reference/manual-installation-launch.md#configuring-docker-desktop) additional configuration steps are
+taken.
+
+Alternatively, you can install Docker Engine through homebrew manually. To do so, refer to our 
+[manual installation page](../../reference/manual-installation-launch.md#installing-and-configuring-docker-engine-manually).
+
+:::note
+
+The majority of AICA Studio and Launcher features are available in MacOS. However:
+
+- Forwarding graphics is currently impossible due to MacOS' incompatibility with OpenGL 2.1+
+- Realtime applications may be prone to subpar performance due to MacOS' resource management TODO: haven't tested on my end yet, just guessing
+
+:::
+
+</details>
+
+<details>
+<summary>Windows</summary>
+
+Although AICA Docker containers can be used on Windows, communicating with external devices, especially in realtime, is currently infeasible. **No official support is currently provided for Windows machines.**
+
+</details>
 
 ## AICA Launcher
 
