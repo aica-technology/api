@@ -13,8 +13,8 @@ Interfacing with hardware peripherals imposes additional challenges, including:
 
 - networking and communication beyond the ROS Middleware (RMW) publisher / subscriber mechanism
 - hardware-specific control interfaces and requirements
-- safety and reliability around controller and hardware limits
-- potential real-time requirements for deterministic control performance
+- **safety and reliability** around controller and hardware limits
+- potential **real-time requirements** for deterministic control performance
 
 The `ros2_control` project defines an open standard for writing controllers and hardware interfaces with the aim of
 simplifying the integration of new and existing robot hardware within a ROS-based applications through hardware
@@ -40,10 +40,12 @@ interface depends on the actuators, but commonly includes joint positions, veloc
 velocity and torque are the preferred command modes. For other actuators such as robot grippers, the command interface
 might instead specify a gripper finger distance or force through a GPIO.
 
+<!-- TODO: tie this together with the new URDF concept page -> what is a ros2 control plugin -->
+
 ## Hardware interfaces
 
 Communication protocols and message standards vary between robot brands. Hardware interfaces, also known as hardware
-components or hardware plugins, are software packages that implement robot-specific communication drivers. They are
+components or hardware plugins, are **software packages that implement robot-specific communication drivers**. They are
 responsible for reading data from the robot and translating them into the standard state interface format for the
 Controller Manager. They are also responsible for translating command interfaces from the Controller Manager into real
 robot control actions.
