@@ -44,7 +44,12 @@ to the camera and the pose of the `ur_tool0` frame is given by successive transf
 
 To drive the robot towards the object, one needs to know where the object is relative to the robot coordinate system.
 Doing the math to chain all these transformations manually is cumbersome and prone to errors. TF provides an easy way
-out by allowing to look up the transform between two frames that are part of the same tree directly:
+to look up the transform between any two frames that are part of the same tree directly.
+
+Transforms are defined in a `geometry_msgs::msg::TransformStamped` message. It is stamped, meaning it has a time
+associated with the transform. It also has a `frame_id` that refers to the reference frame of the transform, and a
+`child_frame_id`, which is the name of the transform. Latstly, it contains the values for the translation vector and
+the unit quaternion representing the rotation.
 
 ```
 header:
@@ -65,11 +70,7 @@ transform:
     w: 0.0
 ```
 
-A transform message is stamped, i.e. it has a time associated with the transform. It also has a `frame_id` that refers
-to the reference frame of the transform, and a `child_frame_id`, which is the name of the transform. Last but not least
-are the values for the translation vector and the unit quaternion of the rotation.
-
-Understanding the concept of TF, coordinate frames and their reference frames is crucial because if forms the foundation
+Understanding the concepts of TF, coordinate frames and their reference frames is crucial because it forms the foundation
 for how spatial relationships are represented and managed in ROS-based robotic systems.
 
 :::info
