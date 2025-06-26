@@ -61,10 +61,10 @@ You may need to repeat these steps upon a restart of your system.
 <details>
 <summary>MacOS</summary>
 
-### Configuring Docker Desktop
+### [Option 1] Configuring and using Docker Desktop
 
-With Docker Desktop installed all the requirements should already be present on your system. Note that to access the
-`docker` command through the terminal, Docker Desktop must be running.
+If you installed Docker Desktop, all the requirements should already be present on your system. Note that to access
+the `docker` command through the terminal, Docker Desktop must be running.
 
 The default settings of Docker Desktop are usually sufficient for everything AICA Studio needs. However, in some cases
 (e.g., settings carried over from older Docker Desktop installations) you may need to verify the following:
@@ -72,14 +72,66 @@ The default settings of Docker Desktop are usually sufficient for everything AIC
 - Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to 
 `Allow the default Docker socket to be used (requires password)`.
 - If you are experiencing or experience performance issues, from the Settings menu go to Resources and increase the CPU
-- and memory limits.
+and memory limits.
 
-# TODO: add images/gifs here
+### [Option 2] Installing and configuring Docker Engine manually without Docker Desktop
 
-### Installing and configuring Docker Engine manually
+If you do not want to install Docker Desktop, you can use an open-source solution that manages Virtual Machines for
+Docker runtime, namely `Colima`. First, you need to have `Homebrew` installed, if you do not, type the following command
+in a terminal:
 
-If you have Docker Desktop installed, you may skip this section but do refer to the previous section for additional
-configuration if you have not done so.
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Note that you may be prompted for your password a few times. Once the `Homebrew` installation is done, you can proceed
+to install the necessary dependencies as follows:
+
+```shell
+brew install docker docker-compose docker-credential-helper colima
+```
+
+You can start `Colima` by:
+
+
+```shell
+colima start --runtime docker
+```
+
+or even specify system resources to be allocated by:
+
+```shell
+colima start --runtime docker --memory 4 --cpus 2
+```
+
+Upon a system restart, you will have to restart `Colima`. If you want to make it persistent then issue the following
+command:
+
+```shell
+brew services start colima
+```
+
+:::tip
+
+If you are using AICA Launcher, you will have to start it from a terminal and inform it about the Docker context. To do
+that, type `docker context ls` and copy the endpoint path. Then:
+
+```shell
+export DOCKER_HOST=unix://YOUR_PATH/docker.sock
+```
+
+You can then start AICA Launcher by navigating to the location where it is downloaded in the terminal you issued the
+previous command. Once there, type:
+
+```shell
+open AICA\ Launcher.app
+```
+
+You can consider adding the `export` command in your `.zshrc` (or equivalent) such that you do not have to repeat this
+command in different terminals.
+
+:::
+
 
 </details>
 

@@ -68,7 +68,7 @@ The majority of AICA Studio and Launcher features are available in MacOS. Howeve
 <details>
 <summary>Windows</summary>
 
-Although AICA Docker containers can be used on Windows, communicating with external devices, especially in realtime, is currently infeasible. **No official support is currently provided for Windows machines.**
+**No official support is currently provided for Windows machines.** However, with the correct WSL configuration can use the AICA framework manually (see [manual installation instructions](../../reference/manual-installation-launch.md) for reference).
 
 </details>
 
