@@ -6,15 +6,50 @@ title: Colliders
 import boxCollider from './assets/box-collider.png'
 import boxColliderExample from './assets/box-collider-example.gif'
 import planeColliderExample from './assets/plane-collider-example.gif'
+import colliderInterfaces from './assets/collider-interfaces.png'
 
 # Colliders
 
-:::tip
+The core components in AICA Studio contain several so-called _Collider_ components that detect whether a specific target
+pose is inside or outside a virtual geometric object defined around a center pose. This functionality is crucial for
+many robotic applications because it provides the ability to:
 
-If you haven't done so already, review the corresponding
-[concepts page](../../concepts/building-blocks/components/colliders.md) first.
+- **Avoid collisions** by ensuring that robot parts or tools do not enter restricted or hazardous areas;
+- **Enable safe interaction** by detecting when a gripper or end-effector is within a workspace or in contact with an
+  object;
+- **Trigger context-aware actions** such as stopping or slowing down movement, initiating grasping, or sending alerts
+  when a target enters or exits a region.
 
-:::
+Each components' name refers to the geometric object that is used to check for collision:
+
+- Box Collider
+- Cylinder Collider
+- Sphere Collider
+- Plane Collider
+
+## Interfaces
+
+All colliders have the same input signals and predicates, as seen in the image below. The target pose input refers to
+the Cartesian pose that is checked against the collider region. The center pose input defines the center of the region
+(the barycenter of the geometric object). The predicate "is in collision" is true whenever the target is within the
+collider region (or, in the case of the Plane Collider, when the target is below the plane), and conversely the
+predicate "is not in collision" is true in the opposite case.
+
+<div class="text--center">
+  <img src={colliderInterfaces} alt="Collider interfaces" />
+</div>
+
+### Parameters
+
+Additionally, each collider variant may have different parameters that are required to define specific properties. For
+the following colliders, the parameters define the size and shape of the geometric object.
+
+- Box Collider: the side lengths of the box in the x, y, and z direction
+- Cylinder Collider: the radius of the cylinder in the x-y plane and the height in the z direction
+- Sphere Collider: the radius of the sphere
+
+For the Plane Collider, the parameter "Flip normal" determines which side of the plane is considered "in collision"; by
+default, this is when the z position of the target pose is negative in the coordinate system of the center pose.
 
 :::note
 
@@ -28,7 +63,7 @@ collision targets in space. RViz can be started directly from AICA Launcher.
 ## Box Collider example
 
 This example uses two Interactive Marker components for the target and center pose of the collider. The `Box Collider`
-is parametrized to define a box of dimensions 10cm x 20cm x 5cm around the center pose. Note that the
+is parametrized to define a box of dimensions 10 by 20 by 5 centimeters around the center pose. Note that the
 `Publish geometric object` flag is also toggled on to generate a visualization in RViz.
 
 <div class="text--center">
@@ -38,6 +73,10 @@ is parametrized to define a box of dimensions 10cm x 20cm x 5cm around the cente
 Start the application from AICA Studio, then go to RViz. Add the interactive marker frame and the geometric object
 marker as shown below. Observe how moving the interactive marker triggers the predicates of the collider component to
 update when the target pose enters and exits the box.
+
+<div class="text--center">
+  <img src={boxColliderExample} alt="Box Collider example" />
+</div>
 
 <details>
   <summary>Application YAML</summary>
@@ -144,10 +183,6 @@ update when the target pose enters and exits the box.
 
 </details>
 
-<div class="text--center">
-  <img src={boxColliderExample} alt="Box Collider example" />
-</div>
-
 ## Plane Collider example
 
 Switching from the Box Colldier to the Cyclinder or Sphere Collider components is straightforward. However, it is worth
@@ -169,6 +204,10 @@ The example below shows an application that is stopped entirely if the robot end
 demonstrates how soft safety mechanisms can be implemented in AICA Studio. As soon as the target pose, which is the
 end-effector in this case, has a negative z coordinate relative to the center pose, the _in collision_ predicate fires
 and the application is stopped immediately.
+
+<div class="text--center">
+  <img src={planeColliderExample} alt="Plane Collider example" />
+</div>
 
 <details>
   <summary>Application YAML</summary>
@@ -329,7 +368,3 @@ and the application is stopped immediately.
     ```
 
 </details>
-
-<div class="text--center">
-  <img src={planeColliderExample} alt="Plane Collider example" />
-</div>
