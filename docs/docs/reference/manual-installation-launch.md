@@ -88,7 +88,6 @@ and memory limits to your application's needs.
 
 :::
 
-
 </details>
 
 ## Setting up the AICA license file
