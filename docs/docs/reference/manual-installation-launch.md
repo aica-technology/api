@@ -6,6 +6,9 @@ title: Manual installation and launch
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import MacosDockerAdvanced from './assets/macos-docker-advanced.png'
+import MacosDockerResources from './assets/macos-docker-resources.png'
+
 # Manual installation and launch
 
 The following sections explain how to install and launch AICA Core and any additional packages manually from the command
@@ -70,9 +73,18 @@ The default settings of Docker Desktop are usually sufficient for everything AIC
 (e.g., settings carried over from older Docker Desktop installations) you may need to verify the following:
 
 - Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to 
-`Allow the default Docker socket to be used (requires password)`.
+`Allow the default Docker socket to be used (requires password)` and `Allow privileged port mapping (requires password)`.
+
+<div class="text--center">
+  <img src={MacosDockerAdvanced} alt="Required advanced options" />
+</div>
+
 - If you are experiencing or experience performance issues, from the Settings menu go to Resources and increase the CPU
-and memory limits.
+and memory limits to your application's needs.
+
+<div class="text--center">
+  <img src={MacosDockerResources} alt="Optional resource allocation" />
+</div>
 
 :::
 
