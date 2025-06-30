@@ -9,7 +9,7 @@ title: Installation and launch
 
 AICA System software is distributed with Docker images and executed with Docker containers.
 
-Before proceeding, you will need to install the Docker Engine on the host machine. Depending on your platform, the
+Before proceeding, you will need to install Docker Engine on the host machine. Depending on your platform, the
 installation process may vary or require additional steps. Below, you will find instructions per operating system:
 
 <details>
