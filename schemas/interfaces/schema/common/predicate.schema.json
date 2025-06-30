@@ -13,13 +13,13 @@
       "type": "string"
     },
     "predicate_name": {
-      "description": "The lower_snake_case predicate name as it is declared in the component or controller.",
+      "deprecated": true,
+      "description": "The lower_snake_case predicate name as it is declared in the component or controller. This property is deprecated and predicates should be mapped by their predicate name in future usage.",
       "type": "string"
     }
   },
   "required": [
     "display_name",
-    "description",
-    "predicate_name"
+    "description"
   ]
 }

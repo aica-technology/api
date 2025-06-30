@@ -18,7 +18,8 @@
       "type": "string"
     },
     "parameter_name": {
-      "description": "The lower_snake_case parameter name as it is declared in the implementation.",
+      "deprecated": true,
+      "description": "The lower_snake_case parameter name as it is declared in the implementation. This property is deprecated and parameters should be mapped by their parameter name in future usage.",
       "examples": [
         "reference_frame",
         "gain"
@@ -34,20 +35,8 @@
       "$ref": "encoded_state_type.schema.json"
     },
     "default_value": {
-      "description": "The string representation of the default parameter value, or null if the parameter has no valid default value.",
-      "examples": [
-        "foo",
-        "[ 1.0, 2.0, 3.0 ]",
-        null
-      ],
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "description": "The default parameter value, or null if the parameter has no valid default value.",
+      "$ref": "parameter_value.schema.json"
     },
     "optional": {
       "description": "Specify if this parameter is optional (only applicable if the default value is null)",
@@ -66,7 +55,6 @@
   "required": [
     "display_name",
     "description",
-    "parameter_name",
     "parameter_type",
     "default_value"
   ],

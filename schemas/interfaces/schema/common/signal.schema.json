@@ -18,7 +18,8 @@
       "type": "string"
     },
     "signal_name": {
-      "description": "The registered name of the signal from which the default topic and parameter '<$signal_name>_topic' are determined.",
+      "deprecated": true,
+      "description": "The registered name of the signal from which the default topic and parameter '<$signal_name>_topic' are determined. This property is deprecated and signals should be mapped by their signal name in future usage.",
       "examples": [
         "target_pose",
         "sum",
@@ -66,7 +67,6 @@
   "required": [
     "display_name",
     "description",
-    "signal_name",
     "signal_type"
   ],
   "if": {

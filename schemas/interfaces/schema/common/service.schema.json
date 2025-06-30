@@ -13,7 +13,8 @@
       "type": "string"
     },
     "service_name": {
-      "description": "The lower_snake_case service name as it is declared in the component or controller.",
+      "deprecated": true,
+      "description": "The lower_snake_case service name as it is declared in the component or controller. This property is deprecated and services should be mapped by their service name in future usage.",
       "type": "string"
     },
     "payload_format": {
@@ -23,7 +24,6 @@
   },
   "required": [
     "display_name",
-    "description",
-    "service_name"
+    "description"
   ]
 }
