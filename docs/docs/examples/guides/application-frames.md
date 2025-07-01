@@ -11,6 +11,13 @@ import editFrame from './assets/edit-frame.gif'
 
 This guide explains the various methods to create and modify application frames in AICA Studio.
 
+:::tip
+
+If you haven't done so already, review the corresponding [concepts page](../../concepts/building-blocks/frames.md)
+first.
+
+:::
+
 ## Create frame in 3D scene view
 
 Using the "Create a frame" dropdown in the 3D scene view in AICA Studio, users can create a new named frame which can
