@@ -12,18 +12,106 @@
       "description": "A brief description of the service.",
       "type": "string"
     },
+    "service_type": {
+      "default": "empty",
+      "enum": [
+        "empty",
+        "string",
+        "object"
+      ]
+    },
     "service_name": {
       "deprecated": true,
       "description": "The lower_snake_case service name as it is declared in the component or controller. This property is deprecated and services should be mapped by their service name in future usage.",
       "type": "string"
     },
     "payload_format": {
-      "description": "Optional description of the payload format if the service has a string payload. If omitted, the service is assumed to be an empty trigger.",
+      "deprecated": true,
+      "description": "Optional description of the payload format if the service has a string payload. This property is deprecated and the service_type, payload_description and payload_schema properties should be used instead.",
       "type": "string"
+    },
+    "payload_description": {
+      "description": "A description of the service payload.",
+      "type": "string"
+    },
+    "payload_schema": {
+      "description": "A JSON schema defining the expected payload structure of the service when the service has an object type.",
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "enum": [
+            "https://json-schema.org/draft-07/schema",
+            "https://json-schema.org/draft/2019-09/schema",
+            "https://json-schema.org/draft/2020-12/schema"
+          ]
+        }
+      },
+      "required": [
+        "$schema"
+      ]
     }
   },
   "required": [
     "display_name",
     "description"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "service_type": {
+            "const": "empty"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "payload_description",
+            "payload_schema"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "service_type": {
+            "const": "string"
+          }
+        },
+        "required": [
+          "service_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "payload_description"
+        ],
+        "not": {
+          "required": [
+            "payload_schema"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "service_type": {
+            "const": "object"
+          }
+        },
+        "required": [
+          "service_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "payload_description",
+          "payload_schema"
+        ]
+      }
+    }
   ]
 }
