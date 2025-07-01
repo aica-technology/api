@@ -24,10 +24,12 @@ functionality that is not present includes:
 
 For more information, please refer to the [installation page](https://www.universal-robots.com/download/software-ur-series/simulator-linux/offline-simulator-ur-series-e-series-ur-sim-for-linux-5220/). 
 
-<!-- :::note
-URSim is made for Linux. For other operating systems, a virtual machine is needed. For more instructions, check the 
-[installation page](https://www.universal-robots.com/download/software-ur-series/simulator-non-linux/offline-simulator-ur-series-e-series-ur-sim-for-non-linux-5220/). 
-::: -->
+TBD: Should we keep the following note?
+
+:::note
+URSim is made for Linux. For other operating systems, a virtual machine is needed. For more information, check the 
+[official installation instructions](https://www.universal-robots.com/download/software-ur-series/simulator-non-linux/offline-simulator-ur-series-e-series-ur-sim-for-non-linux-5220/). 
+:::
 
 
 ## Installation
@@ -40,9 +42,8 @@ Executing the following instructions runs URSim in a Docker container.
 git clone https://github.com/aica-technology/simulators.git
 ```
 
-
-TODO: must have Docker installed. Should we add something about that? Probably people reading t
-his have already done that. 
+TBD: must have Docker installed. Should we add something about that?
+Probably people reading this have already done that. 
 
 2. Navigate to the `ursim` folder inside this repository. 
 
