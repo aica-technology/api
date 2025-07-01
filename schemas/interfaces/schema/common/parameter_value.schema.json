@@ -5,6 +5,7 @@
   "type": [
     "null",
     "boolean",
+    "integer",
     "number",
     "string",
     "array"
@@ -12,6 +13,7 @@
   "items": {
     "type": [
       "boolean",
+      "integer",
       "number",
       "string"
     ]
