@@ -16,14 +16,14 @@ converted into smart data classes that provide useful functions for conversions,
 manipulations.
 
 Even though there is no official standard, there are a few signal types that are very commonly used in ROS. For ease of
-interoperability, the AICA Core includes several components that translate AICA signals to common ROS messages and back.
+interoperability, AICA Core includes several components that translate AICA signals to common ROS messages and back.
 These components can be especially valuable when porting existing ROS nodes into AICA Studio using the Component SDK or
 when communicating with ROS nodes outside the AICA System.
 
 ## AICA signals to common ROS messages
 
-AICA state signals carrying Cartesian or joint space information can be converted to common ROS message types using the
-following components:
+AICA state signals carrying Cartesian or joint space information can be converted into common ROS message types using
+the following components:
 
 | Component name                             | Input signal type                             | Output message type                 |
 | ------------------------------------------ | --------------------------------------------- | ----------------------------------- |
@@ -46,9 +46,8 @@ using the following components:
 
 ## Behavior
 
-All of these components are simple single-input single-output blocks. Each time a new message is received, it is
-translated and immediately published. For that reason, the `rate` parameter doesn't affect the behavior of these
-components.
+All of these components are single-input single-output blocks. Each time a new message is received, it is translated and
+immediately published. For that reason, the `rate` parameter doesn't affect the behavior of these components.
 
 ## AICA Signal to ROS message example
 
@@ -199,8 +198,8 @@ the force controller of the hardware interface.
 
 :::note
 
-The custom component is just an example placeholder in for any implementation that has a ROS standard message output,
-which might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
+The custom component is just an example placeholder for any implementation that has a ROS standard message output, which
+might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
 
 :::
 
