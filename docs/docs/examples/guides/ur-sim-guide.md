@@ -106,8 +106,10 @@ followed by **START** to activate, then click **Exit**.
 :::tip
 Setting the robot to **Remote Control** mode is not strictly required for the simulator.
 It is possible to switch to **Local Control**, where the **Installation** tab can be used to visualize 
-the robot's motions. But always keep in mind that Remote Control is always required on the real robot. 
+the robot's motions. But keep in mind that Remote Control is always required on the real robot. 
 :::
+
+TBD: Probably not always required, since there can be exchange of control. Should we elaborate?
 
 ## Connecting to AICA Studio
 
