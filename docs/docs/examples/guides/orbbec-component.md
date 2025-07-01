@@ -55,15 +55,6 @@ Start the AICA Launcher and add the `orbbec` package to your configuration.
   <img src={orbbecPackage} alt="Adding the Orbbec package" />
 </div>
 
-
-Additionally, in order to ensure the camera can be accessed from within the container, the `/run/udev/` volume
-has to be mounted. In AICA Launcher, expand the **Advanced Settings** at the bottom, select
-**Add a volume mount** and define the volume as shown in the following image:
-
-<div class="text--center">
-  <img src={orbbecMountedVolume} alt="Mounted udev volume" />
-</div>
-
 Select **Launch AICA Studio** to proceed. 
 
 ## Creating and running the example
@@ -88,6 +79,16 @@ live color image. The depth image can also be found under _/orbbec_camera/depth_
 <div class="text--center">
   <img src={orbbecRvizColor} alt="Starting and checking camera live stream" />
 </div>
+
+:::tip
+In case the component does not produce a video stream, try mounting the `/run/udev/` volume. 
+In AICA Launcher, expand the **Advanced Settings** at the bottom, select
+**Add a volume mount** and define the volume as shown in the following image:
+
+<div class="text--center">
+  <img src={orbbecMountedVolume} alt="Mounted udev volume" />
+</div>
+:::
 
 ## Parametrizing the Orbbec camera component
 
@@ -137,3 +138,5 @@ cameras have a minimum Z depth; if the maximum threshold is set below this value
 blank, but noisy and arbitrarily small/large depth values may still be published. For more information about that, check the camera's documentation. 
 
 If needed, follow the same process to activate and configure other available filters.  
+
+
