@@ -39,13 +39,13 @@
     },
     "signal_type": {
       "description": "The fixed type of this signal.",
-      "$ref": "signal_type.schema.json"
+      "$ref": "../interfaces.schema.json#/$defs/signal_type"
     },
     "signal_types": {
       "description": "An array of signal types supported by configurable typing. The active type is set through the '<$signal_name>_type' parameter, and the default type is determined by the `signal_type` property.",
       "type": "array",
       "items": {
-        "$ref": "signal_type.schema.json"
+        "$ref": "../interfaces.schema.json#/$defs/signal_type"
       },
       "minItems": 1,
       "uniqueItems": true
@@ -74,11 +74,21 @@
       "signal_type": {
         "const": "other"
       }
-    }
+    },
+    "required": [
+      "signal_type"
+    ]
   },
   "then": {
     "required": [
       "custom_signal_type"
     ]
+  },
+  "else": {
+    "not": {
+      "required": [
+        "custom_signal_type"
+      ]
+    }
   }
 }
