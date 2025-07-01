@@ -40,7 +40,8 @@
     },
     "optional": {
       "description": "Specify if this parameter is optional (only applicable if the default value is null)",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "dynamic": {
       "description": "Specify if this parameter can be dynamically reconfigured.",
@@ -63,13 +64,19 @@
       "if": {
         "properties": {
           "default_value": {
-            "not": {
-              "const": null
-            }
+            "const": null
           }
-        }
+        },
+        "required": [
+          "default_value"
+        ]
       },
       "then": {
+        "required": [
+          "optional"
+        ]
+      },
+      "else": {
         "not": {
           "required": [
             "optional"
@@ -83,14 +90,23 @@
           "parameter_type": {
             "const": "state"
           }
-        }
+        },
+        "required": [
+          "parameter_type"
+        ]
       },
       "then": {
         "required": [
           "parameter_state_type"
         ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "parameter_state_type"
+          ]
+        }
       }
     }
-
   ]
 }
