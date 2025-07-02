@@ -43,10 +43,10 @@ sudo cp 99-obsensor-libusb.rules /etc/udev/rules.d/99-obsensor-libusb.rules
 sudo udevadm control --reload-rules && sudo udevadm trigger
 ```
 
-:::tip 
+:::tip
 
 These commands will download and apply the udev rules. To ensure that the rules have been applied correctly, the
-[Orbbec Viewer](https://github.com/orbbec/OrbbecSDK/releases) can be used to check the camera feed. 
+[Orbbec Viewer](https://github.com/orbbec/OrbbecSDK/releases) can be used to check the camera feed.
 
 :::
 
@@ -79,11 +79,11 @@ Start by creating a new application.
   <img src={orbbecRvizColor} alt="Starting and checking camera live stream" />
 </div>
 
-:::tip 
+:::tip
 
-In case the component does not produce a video stream, try mounting the `/run/udev/` volume. In AICA Launcher,
-expand the **Advanced Settings** at the bottom, select **Add a volume mount** and define the volume as shown below. If
-you still encounter problems getting the video stream, contact the AICA support team.
+In case the component does not produce a video stream, try mounting the `/run/udev/` volume. In AICA Launcher, expand
+the **Advanced Settings** at the bottom, select **Add a volume mount** and define the volume as shown below. If you
+still encounter problems getting the video stream, contact the AICA support team.
 
 <div class="text--center">
   <img src={orbbecMountedVolume} alt="Mounted udev volume" />
@@ -105,10 +105,10 @@ explain some of these here:
 - `Color/Depth Width/Height/FPS`: these refer to the resolution and frame rate of the color and depth images. Keep in
   mind that only specific pairs of integer values apply here. For more information check the camera's documentation.
 
-  :::tip 
-  
-  The Orbbec Viewer can also come in handy here, as it shows the available profiles for the connected camera. 
-  
+  :::tip
+
+  The Orbbec Viewer can also come in handy here, as it shows the available profiles for the connected camera.
+
   :::
 
 - `Enable Alignment`: flag that activates the spatial alignment of the depth image to the corresponding color image.
