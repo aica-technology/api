@@ -64,7 +64,7 @@ Start by creating a new application.
 1. Remove the hardware interface that is included in new applications by default.
 2. Press the (+) button on the top right, and locate the **Orbbec Camera** component. Click to add
 to the graph. 
-3. Next, connect the start block to the component.
+3. Next, connect the component to the start block.
 
 <div class="text--center">
   <img src={orbbecNewApp} alt="Creating a new Orbbec Camera component" />
@@ -81,9 +81,9 @@ live color image. The depth image can also be found under _/orbbec_camera/depth_
 </div>
 
 :::tip
-In case the component does not produce a video stream, try mounting the `/run/udev/` volume. 
-In AICA Launcher, expand the **Advanced Settings** at the bottom, select
-**Add a volume mount** and define the volume as shown in the following image:
+In case the component does not produce a video stream, try mounting the `/run/udev/` volume. In AICA Launcher, expand
+the **Advanced Settings** at the bottom, select **Add a volume mount** and define the volume as shown below. If you
+still encounter problems getting the video stream, contact the AICA support team.
 
 <div class="text--center">
   <img src={orbbecMountedVolume} alt="Mounted udev volume" />
@@ -98,16 +98,17 @@ Click on the small gear icon on the `Orbbec Camera` block to view and edit the a
   <img src={orbbecCameraParameters} alt="Basic Orbbec camera parameters" />
 </div>
 
-Hovering over the exclamation marks next to the names shows a detailed decription of the parameter. 
+Hovering over the exclamation marks next to the names shows a detailed description of the corresponding parameter. 
 Let's explain some of these here:
 
 - `Color/Depth Width/Height/FPS`: these refer to the resolution and frame rate of the color and depth
 images. Keep in mind that only specific pairs of integer values apply here. For more information 
 check the camera's documentation. 
 
-:::tip
-The Orbbec Viewer can also come in handy here, as it shows the available profiles for the connected camera.
-:::
+  :::tip
+  The Orbbec Viewer can also come in handy here, as it shows the available profiles for the 
+  connected camera.
+  :::
 
 - `Enable Alignment`: flag that activates the spatial alignment of the depth image to the
 corresponding color image. Generates a depth image with the same size as the color, with depth
@@ -132,10 +133,10 @@ can be defined, read the description by hovering over the exclamation mark.
           threshold_filter_min: 500
     ```
 
-Click on **Generate Graph** to make the changes take effect. Start the application, launch RViz and add
-a panel for the depth image. Only objects between 0.5 and 2 meters should appear. Keep in mind that most
-cameras have a minimum Z depth; if the maximum threshold is set below this value, the image will appear
-blank, but noisy and arbitrarily small/large depth values may still be published. For more information about that, check the camera's documentation. 
+  Click on **Generate Graph** to make the changes take effect. Start the application, launch RViz and add a panel for
+  the depth image. Only objects between 0.5 and 2 meters should appear. Keep in mind that most cameras have a minimum Z
+  depth; if the maximum threshold is set below this value, the image will appear blank, but noisy and arbitrarily
+  small/large depth values may still be published. For more information about that, check the camera's documentation.
 
 If needed, follow the same process to activate and configure other available filters.  
 
