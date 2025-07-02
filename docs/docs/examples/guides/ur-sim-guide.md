@@ -57,8 +57,9 @@ to simulate a different robot model, the `-m` argument can be used.
 ```
 
 Another useful argument is `-v`, which defines the URSim version to be used. It is preferable to make sure that the
-URSim version matches the Polyscope version in the actual hardware to avoid incompatibilities. For example, with the
-recent addition of OptiMove, UR programs built in 5.21 and upwards might not be backwards compatible.
+[URSim version](https://hub.docker.com/r/universalrobots/ursim_e-series/tags) matches the Polyscope version in the
+actual hardware to avoid incompatibilities. For example, with the recent addition of OptiMove, UR programs built in 5.21
+and upwards might not be backwards compatible.
 
 ```bash
 ./run.sh -v 5.16.1
