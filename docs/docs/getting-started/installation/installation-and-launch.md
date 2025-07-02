@@ -44,10 +44,10 @@ configuration (see [manual installation](../../reference/manual-installation-lau
 <summary>MacOS</summary>
 
 The simplest way to install Docker Engine on MacOS is through 
-[Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/). However, some limitations may exist
+[Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/). However, some limitations may apply
 regarding commercial use (see relevant article 
-[here](https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/)). If your use of
-Docker Desktop is within the terms of use, ensure that 
+[here](https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/)). If you intend to
+operate Docker Desktop within the terms of service, make that 
 [these](../../reference/manual-installation-launch.md#configuring-docker-desktop) additional configuration steps are
 taken.
 
