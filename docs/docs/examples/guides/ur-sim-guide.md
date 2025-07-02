@@ -11,10 +11,10 @@ import ursimHardwareParams from './assets/ursimHarwareParams.png'
 
 # URSim guide
 
-URSim is a software-in-the-loop simulation tool that allows the behavior of the real Universal Robots controller to be
-emulated on a computer. This environment can be utilized to become familiar with the robot interface, as well as to
+URSim is a software-in-the-loop simulation tool that allows to emulate the behavior of the real Universal Robots controller
+on a computer. This environment can be utilized to become familiar with the robot interface, as well as to
 create and run programs. Please note that compared to the real robot, there are some limitations to the simulator.
-Especially the force mode will be limited in use, since there is no physics engine to simulate valid foce values from
+Especially the force mode will be limited in use, since there is no physics engine to simulate valid force values from
 the sensor. Other functionality that is not present includes:
 
 - Emergency stop button
@@ -31,8 +31,7 @@ application operation and safe execution before moving to the actual hardware.
 
 Executing the following instructions runs URSim in a Docker container. This guide assumes that users have already
 installed and configured Docker, as it is also required for AICA Studio. For more information you can check the
-[installation and launch instructions](../../getting-started/installation/installation-and-launch.md) on the Getting
-started page of our documentation.
+section about Docker from our [installation and launch instructions](../../getting-started/installation/installation-and-launch.md).
 
 Executing the following commands runs URSim in a Docker container:
 
@@ -49,10 +48,8 @@ to simulate a different robot model, the `-m` argument can be used.
 ./run.sh -m ur10e
 ```
 
-Another useful argument is `-v`, which defines the URSim version to be used. It is important to make sure that the URSim
-version matches the Polyscope version in the actual hardware to avoid incompatibilities. Please also note that there
-might be incompatibilites between 5.1x and 5.2x, with applications built in newer versions not being backwards
-compatible.
+Another useful argument is `-v`, which defines the URSim version to be used. It is preferable to make sure that the URSim
+version matches the Polyscope version in the actual hardware to avoid incompatibilities. For example, with the recent addition of OptiMove, UR programs built in 5.21 and upwards might not be backwards compatible.
 
 ```bash
 ./run.sh -v 5.16.1
@@ -99,7 +96,8 @@ Follow the terminal link in a browser to access the simulated robot.
 4. Click **Enable** and then **Exit** at the bottom left of the screen.
 5. Turn on the robot by pressing the red button located in the bottom left corner of the screen. Click **ON** followed
    by **START** to activate, then click **Exit**.
-6. The simulator is now ready to interface with an AICA application.
+
+The simulator is now ready to interface with an AICA application. The next section dives a bit deeper into the reasons for which Remote Control needed to be enabled.
 
 **TODO: Re-capture the process without switching to remote control**
 
