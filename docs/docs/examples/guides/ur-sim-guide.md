@@ -11,8 +11,8 @@ import ursimHardwareParams from './assets/ursimHarwareParams.png'
 
 # URSim guide
 
-URSim is a software-in-the-loop simulation tool that allows to emulate the behavior of the real Universal Robots controller
-on a computer. This environment can be utilized to become familiar with the robot interface, as well as to
+URSim is a software-in-the-loop simulation tool that allows to emulate the behavior of the real Universal Robots
+controller on a computer. This environment can be utilized to become familiar with the robot interface, as well as to
 create and run programs. Please note that compared to the real robot, there are some limitations to the simulator.
 Especially the force mode will be limited in use, since there is no physics engine to simulate valid force values from
 the sensor. Other functionality that is not present includes:
@@ -30,8 +30,16 @@ application operation and safe execution before moving to the actual hardware.
 ## Installation
 
 Executing the following instructions runs URSim in a Docker container. This guide assumes that users have already
-installed and configured Docker, as it is also required for AICA Studio. For more information you can check the
-section about Docker from our [installation and launch instructions](../../getting-started/installation/installation-and-launch.md).
+installed and configured Docker, as it is also required for AICA Studio. For more information you can check the section
+about Docker from our
+[installation and launch instructions](../../getting-started/installation/installation-and-launch.md).
+
+:::note
+
+URSim is made for Linux. For other operating systems, a virtual machine is needed. For more information, check the
+[official installation instructions](https://www.universal-robots.com/download/software-ur-series/simulator-non-linux/offline-simulator-ur-series-e-series-ur-sim-for-non-linux-5220/).
+
+:::
 
 Executing the following commands runs URSim in a Docker container:
 
@@ -42,14 +50,15 @@ cd simulators
 ```
 
 The last command installs and runs the URSim Docker container, simulating the UR5e robot by default. In case users want
-to simulate a different robot model, the `-m` argument can be used. 
+to simulate a different robot model, the `-m` argument can be used.
 
 ```bash
 ./run.sh -m ur10e
 ```
 
-Another useful argument is `-v`, which defines the URSim version to be used. It is preferable to make sure that the URSim
-version matches the Polyscope version in the actual hardware to avoid incompatibilities. For example, with the recent addition of OptiMove, UR programs built in 5.21 and upwards might not be backwards compatible.
+Another useful argument is `-v`, which defines the URSim version to be used. It is preferable to make sure that the
+URSim version matches the Polyscope version in the actual hardware to avoid incompatibilities. For example, with the
+recent addition of OptiMove, UR programs built in 5.21 and upwards might not be backwards compatible.
 
 ```bash
 ./run.sh -v 5.16.1
@@ -78,13 +87,6 @@ To access PolyScope, open the following URL in a web browser.
 To exit, press CTRL+C
 ```
 
-:::note
-
-URSim is made for Linux. For other operating systems, a virtual machine is needed. For more information, check the
-[official installation instructions](https://www.universal-robots.com/download/software-ur-series/simulator-non-linux/offline-simulator-ur-series-e-series-ur-sim-for-non-linux-5220/).
-
-:::
-
 ## Accessing and configuring the simulated robot
 
 Follow the terminal link in a browser to access the simulated robot.
@@ -97,7 +99,8 @@ Follow the terminal link in a browser to access the simulated robot.
 5. Turn on the robot by pressing the red button located in the bottom left corner of the screen. Click **ON** followed
    by **START** to activate, then click **Exit**.
 
-The simulator is now ready to interface with an AICA application. The next section dives a bit deeper into the reasons for which Remote Control needed to be enabled.
+The simulator is now ready to interface with an AICA application. The next section dives a bit deeper into the reasons
+for which Remote Control has to be enabled.
 
 **TODO: Re-capture the process without switching to remote control**
 
