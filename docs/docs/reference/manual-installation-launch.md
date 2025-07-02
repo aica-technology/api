@@ -79,8 +79,8 @@ The default settings of Docker Desktop are usually sufficient for everything AIC
   <img src={MacosDockerAdvanced} alt="Required advanced options" />
 </div>
 
-- If you are experiencing or experience performance issues, from the Settings menu go to Resources and increase the CPU
-and memory limits to your application's needs.
+- If you notice any performance issues, go to Resources in the Settings menu and increase the CPU and memory limits to
+your application's needs.
 
 <div class="text--center">
   <img src={MacosDockerResources} alt="Optional resource allocation" />
