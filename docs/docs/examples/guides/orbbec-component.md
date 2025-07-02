@@ -3,14 +3,14 @@ sidebar_position: 5
 title: Orbbec camera component
 ---
 
-import Tabs from '@theme/Tabs'; 
+import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import orbbecMountedVolume from './assets/orbbec-mounted-udev-volume.png' 
-import orbbecNewApp from './assets/orbbec-new-app.gif' 
-import orbbecRvizColor from './assets/orbbec-play-rviz.gif' 
-import orbbecCameraParameters from './assets/orbbec-camera-parameters.png' 
-import orbbecThresholdParameters from './assets/orbbec-threshold-params.png' 
+import orbbecMountedVolume from './assets/orbbec-mounted-udev-volume.png'
+import orbbecNewApp from './assets/orbbec-new-app.gif'
+import orbbecRvizColor from './assets/orbbec-play-rviz.gif'
+import orbbecCameraParameters from './assets/orbbec-camera-parameters.png'
+import orbbecThresholdParameters from './assets/orbbec-threshold-params.png'
 import orbbecPackage from './assets/orbbec-package.gif'
 
 # Orbbec camera component
