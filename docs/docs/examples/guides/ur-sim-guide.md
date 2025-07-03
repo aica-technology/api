@@ -13,16 +13,16 @@ import ursimHardwareParams from './assets/ursimHarwareParams.png'
 
 URSim is a software-in-the-loop simulation tool that allows to emulate the behavior of the real Universal Robots
 controller on a computer. This environment can be utilized to become familiar with the robot interface, as well as to
-create and run programs. Please note that compared to the real robot, there are some limitations to the simulator.
-Especially the force mode will be limited in use, since there is no physics engine to simulate valid force values from
-the sensor. Other functionality that is not present includes:
+create and run programs. Note that compared to the real robot, there are some limitations to the simulator. Especially
+the force mode will be limited in use, since there is no physics engine to simulate valid force values from the sensor.
+Other functionality that is not present includes:
 
 - Emergency stop button
 - Input IO state
 - Self or surrounding object collisions
 
-For more information, please refer to the
-[installation page](https://www.universal-robots.com/download/software-ur-series/simulator-linux/offline-simulator-ur-series-e-series-ur-sim-for-linux-5220/).
+For more information, please refer to UR's
+[download page](https://www.universal-robots.com/download/software-ur-series/simulator-linux/offline-simulator-ur-series-e-series-ur-sim-for-linux-5220/).
 
 This guide aims to support users with running URSim and connecting it to AICA Studio. This is a great way to validate
 application operation and safe execution before moving to the actual hardware.
@@ -100,8 +100,10 @@ Follow the terminal link in a browser to access the simulated robot.
 5. Turn on the robot by pressing the red button located in the bottom left corner of the screen. Click **ON** followed
    by **START** to activate, then click **Exit**.
 
-The simulator is now ready to interface with an AICA application. The next section dives a bit deeper into the reasons
-for which Remote Control has to be enabled.
+The simulator is now ready to interface with an AICA application.
+
+<!-- The next section gives some background information on
+why AICA suggests to enable Remote Control. -->
 
 **TODO: Re-capture the process without switching to remote control**
 
@@ -109,38 +111,28 @@ for which Remote Control has to be enabled.
   <img src={ursimActivate} alt="Activating the simulator" />
 </div>
 
-## Local VS Remote Control
+<!-- ## Local and Remote Control
 
-The robot can operate in two modes, namely **Local** and **Remote Control**. These mostly differ in their accessibility
-and method of interaction. Local Control involves direct operation through the teach pendant and robot's physical
-interface, while Remote Control allows for operation from an external device through a network connection. In order to
-use the Remote Control, the `external_control` URCap has to be installed. Then, there are two options to operate the
-robot remotely:
+The concept of Local and Remote Control on PolyScope can be easiest explained with the terms _master_ and _slave_. In
+Local Control, the controller is the master and has full authority on loading and starting programs. In other words, the
+robot has to be used in person through the teach pendant and any commands sent from an external source will be rejected.
+On the other hand, Remote Control allows to control the robot via external sources, such as sockets, I/Os and the
+Dashboard Server. In this case, the controller is the slave and external sources can load and start programs or directly
+send URScript commands to the controller.
 
-1. There is a touchpad icon labeled **Local** in the top right corner of the simulator. Click on this icon and then
-   select **Remote Control**.
-2. Leave this option in **Local Control**, but use the ExternalControl node in the program. This allows the exchange of
-   control between remote and local wherever it is desired in the program's execution flow.
+:::note
 
-TODO: I mention this below, but should we add some more details on headless mode? I remember that depending on the mode
-you need to switch between true and false. But probably it's better to mention this in the hardware interface
-description below.
-
-:::tip
-
-Setting the robot to Remote Control is not strictly required for the simulator. It is possible to send commands while in
-Local Control, where the **Installation** tab can be used to visualize the robot's motions.
+Safety features remain active in Remote Control.
 
 :::
 
-## Connecting to AICA Studio
+Choosing one of the two modes depends on the specific situation at hand. During a development phase, it might be
+preferable to create the programs in Local Mode, whereas in a production setting, PLCs would responsible to load and
+start the desired programs while the robot is in Remote Control. With the AICA System, users have the possiblity to get
+the best of both modes:
 
-In AICA Studio, open the Hardware section and select the same UR description as the simulated robot. Ensure that the IP
-address in the **Robot Ip** field matches the IP address displayed in the terminal. The application can now be run with
-the simulated robot being used instead of the real one. Also make sure the **Headless Mode** is set to **true**.
+- Take full control of the robot from an AICA application (requires Remote Control)
+- Run an AICA application as one node of a program (works in both Local and Remote Control)
 
-TODO: Some more details on headless mode?
-
-<div class="text--center">
-  <img src={ursimHardwareParams} alt="Setting hardware parameters" />
-</div>
+For the first case, no additional installation steps are required. TODO example here
+The second case requires th External Control URCap to be installed. TODO link here to urcap then link to example. -->
