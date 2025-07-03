@@ -196,18 +196,16 @@ read through your URDF.
 
 ### Using JTC's `Set trajectory` service
 
-The service currently accepts 5 variables, namely:
+The service currently accepts 6 variables, namely:
 
 - `times_from_start`: a list of timestamps (in seconds) measured from the start, indicating when JTC should reach each
 frame.
-- `durations`: a list of absolute durations (in seconds) that correspond to each waypoint (mutually exclusive with 
-`times_from_start`).
+- `durations`: a list of absolute durations (in seconds) that correspond to each waypoint.
 - `frames`: names of the Cartesian frames to reach with the robot end effector 
 - `joint_positions`: names of joint positions that the robot should achieve
 - `blending_factors`: factors in [0.0, 1.0] indicating the amount of curving allowed between 2 consecutive waypoints.
 The default blending factors are all set to 0.0. The last trajectory segment is not considered in blending, therefore,
 the vector's size needs to be equal to the number of frames or joint positions **minus** 1.
- 
 - `blending_samples`: the number of samples **(minimum 10; default 50)** to be used when generating the blended
 trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
 
@@ -215,15 +213,16 @@ At least one of `times_from_start` or `durations` and one of `frames` and `joint
 When `frames` are provided, an Inverse Kinematics (IK) solver will compute the joint positions that the robot should
 reach. In the case of `joint_positions`, the recorded joint configurations are directly used in the joint trajectory. 
 
-In both cases, the length of `times_from_start` or`durations` and `frames` or `joint_positions` need to be equal, such that every time
-corresponds to exactly one waypoint.
+When using `times_from_start`, the length of `frames` or `joint_positions` need to be equal to the times provided and
+each value corresponds to exactly one waypoint. Similarly, `durations` can have the same length as your waypoints vector,
+or be expressed as a single-element vector whose value will be applied to all waypoints.
 
 For example, you could use:
 
 ```yaml
 {
   frames: [start, frame_1, frame_2, frame_3, start], 
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
+  durations: [2.0]
 }
 ```
 
@@ -232,7 +231,7 @@ or
 ```yaml
 {
   joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, start], 
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
+  durations: [2.0]
 }
 ```
 
@@ -242,7 +241,7 @@ The above payloads can also be written as:
 ```yaml
 {
   frames: [start, frame_1, frame_2, frame_3, start], 
-  durations: [2.0, 2.0, 2.0, 2.0, 2.0] # or simply [2.0] applied to all waypoints
+  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
 }
 ```
 
@@ -251,7 +250,7 @@ or
 ```yaml
 {
   joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, start], 
-  durations: [2.0, 2.0, 2.0, 2.0, 2.0] # or simply [2.0] applied to all waypoints
+  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
 }
 ```
 
@@ -393,7 +392,7 @@ You may re-play your program by using `blending_factors` this time. Your payload
 ```yaml
 {
   frames: [start, frame_1, frame_2, frame_3, stop], 
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0],
+  durations: [2.0],
   blending_factors: [0.5]
 }
 ```
@@ -403,7 +402,7 @@ or
 ```yaml
 {
   joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, stop], 
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0],
+  durations: [2.0],
   blending_factors: [0.5]
 }
 ```
@@ -483,7 +482,7 @@ sequences:
           payload: |-
             {
               frames: [frame_1],
-              times_from_start: [1.5]
+              durations: [1.5]
             }
       - check:
           condition:
@@ -498,7 +497,7 @@ sequences:
           payload: |-
             {
               joint_positions: [jconfig_1],
-              times_from_start: [1.5]
+              durations: [1.5]
             }
       - check:
           condition:
