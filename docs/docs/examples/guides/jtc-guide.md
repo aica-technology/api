@@ -205,7 +205,8 @@ frame.
 - `joint_positions`: names of joint positions that the robot should achieve
 - `blending_factors`: factors in [0.0, 1.0] indicating the amount of curving allowed between 2 consecutive waypoints.
 The default blending factors are all set to 0.0. The last trajectory segment is not considered in blending, therefore,
-the vector's size needs to be equal to the number of frames or joint positions **minus** 1.
+the vector's size needs to be equal to the number of frames or joint positions **minus** 1 or simply contain a single
+value to be applied to all waypoints that support blending.
 - `blending_samples`: the number of samples **(minimum 10; default 50)** to be used when generating the blended
 trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
 
