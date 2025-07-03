@@ -184,7 +184,7 @@ This message defines 2 of the variables that JTC can use in order to execute a t
 1. `frames`: a list of the Cartesian frames that you would like to traverse, in the order that they should be visited.
 2. `times_from_start`: a list of times (in seconds) measured from the start, indicating when JTC should reach each
 frame.
-1. AICA Core v4.4.2 introduces `durations` alongside `times_from_start`, allowing for setting lists of absolute
+3. AICA Core v4.4.2 introduces `durations` alongside `times_from_start`, allowing for setting lists of absolute
 durations for each waypoint.
  
 Ensure both vectors have the same length and that each payload frame name matches those shown in the 3D view or YAML
