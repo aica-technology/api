@@ -212,10 +212,10 @@ size needs to be equal to the number of frames or joint positions **minus** 1.
 - `blending_samples`: the number of samples **(minimum 10; default 50)** to be used when generating the blended
 trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
 
-While `times_from_start` (or in newer releases `durations`) is always required, only one of `frames` and 
-`joint_positions` can be used at a time. The former is a vector of Cartesian frames from which an Inverse Kinematics
-(IK) solver will compute the joint positions that the robot should reach, while the latter refers to joint positions
-that have been recorded and are being published as named joint positions.
+While `times_from_start` or `durations` (for AICA Core v4.4.2+; mutually exclusive) is always required, only one of
+`frames` and `joint_positions` can be used at a time. The former is a vector of Cartesian frames from which an Inverse
+Kinematics (IK) solver will compute the joint positions that the robot should reach, while the latter refers to joint
+positions that have been recorded and are being published as named joint positions.
 
 In both cases, the length of `times_from_start` or`durations` and `frames` or `joint_positions` need to be equal, such that every time
 corresponds to exactly one waypoint.
