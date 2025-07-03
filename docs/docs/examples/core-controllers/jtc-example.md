@@ -135,7 +135,7 @@ graph:
           payload: |-
             {
               frames: [start, waypoint_1, waypoint_2, waypoint_3, start],
-              times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
+              durations: [2.0]
             }
   edges:
     hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_on_stop_on_stop:
@@ -175,20 +175,18 @@ to the controller. You will see the following service payload:
 ```yaml
 {
   frames: [start, waypoint_1, waypoint_2, waypoint_3, start],
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
+  durations: [2.0]
 }
 ```
 
 This message defines 2 of the variables that JTC can use in order to execute a trajectory, namely:
 
 1. `frames`: a list of the Cartesian frames that you would like to traverse, in the order that they should be visited.
-2. `times_from_start`: a list of times (in seconds) measured from the start, indicating when JTC should reach each
-frame.
-3. `durations`: a list of absolute durations (in seconds) that correspond to each waypoint (mutually exclusive with 
-`times_from_start`).
+2. `durations`: a list of absolute durations (in seconds) that correspond to each waypoint.
  
-Ensure both vectors have the same length and that each payload frame name matches those shown in the 3D view or YAML
-application. This way, you can verify that your payload is correct and anticipate the trajectory execution.
+Ensure the `durations` vector is either of the same length or has a single element which will be used for all waypoints.
+You can also validate your payload's frame names, by verifying they match with those shown in the 3D view or YAML
+application. This way, you can intuitively anticipate the trajectory execution.
 
 ## Executing the trajectory
 
