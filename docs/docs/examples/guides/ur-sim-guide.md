@@ -105,8 +105,6 @@ The simulator is now ready to interface with an AICA application.
 <!-- The next section gives some background information on
 why AICA suggests to enable Remote Control. -->
 
-**TODO: Re-capture the process without switching to remote control**
-
 <div class="text--center">
   <img src={ursimActivate} alt="Activating the simulator" />
 </div>
