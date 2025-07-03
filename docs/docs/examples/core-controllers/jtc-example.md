@@ -13,7 +13,7 @@ import jtcExampleRun from './assets/jtc-example-run.gif'
 
 This example makes use of the built-in Joint Trajectory Controller (JTC) and the generic six-axis robot.
 
-Use AICA Core v4.4.1 or higher.
+Use AICA Core v4.4.2 or higher.
 
 ## Setting up the application
 
@@ -26,7 +26,7 @@ Copy the following YAML and generate the graph.
 ```yaml
 schema: 2-0-4
 dependencies:
-  core: v4.4.1
+  core: v4.4.2
 frames:
   start:
     reference_frame: world
@@ -184,8 +184,8 @@ This message defines 2 of the variables that JTC can use in order to execute a t
 1. `frames`: a list of the Cartesian frames that you would like to traverse, in the order that they should be visited.
 2. `times_from_start`: a list of times (in seconds) measured from the start, indicating when JTC should reach each
 frame.
-3. `durations`: AICA Core v4.4.2 introduces `durations` alongside `times_from_start`, allowing for setting lists of
-absolute durations for each waypoint.
+3. `durations`: a list of absolute durations (in seconds) that correspond to each waypoint (mutually exclusive with 
+`times_from_start`).
  
 Ensure both vectors have the same length and that each payload frame name matches those shown in the 3D view or YAML
 application. This way, you can verify that your payload is correct and anticipate the trajectory execution.

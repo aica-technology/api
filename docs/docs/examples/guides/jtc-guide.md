@@ -30,7 +30,7 @@ applications.
 JTC has a plethora of parameters that can be set to alter its performance according to an application's requirements.
 Let us start by creating a new application that we can use as a reference point for this guide.
 
-First, start AICA Launcher and create a configuration with **AICA Core v4.4.1** or higher. For the remainder of this
+First, start AICA Launcher and create a configuration with **AICA Core v4.4.2** or higher. For the remainder of this
 guide, we will be using the generic six-axis robot that is part of our core hardware collection. However, if you have
 the appropriate entitlements and want to experiment with a different robot brand, feel free to add the corresponding
 collection to your configuration before launching it. 
@@ -200,22 +200,20 @@ The service currently accepts 5 variables, namely:
 
 - `times_from_start`: a list of timestamps (in seconds) measured from the start, indicating when JTC should reach each
 frame.
-- `durations`: [available starting AICA Core v4.4.2] a list of absolute durations for each waypoint
+- `durations`: a list of absolute durations (in seconds) that correspond to each waypoint (mutually exclusive with 
+`times_from_start`).
 - `frames`: names of the Cartesian frames to reach with the robot end effector 
 - `joint_positions`: names of joint positions that the robot should achieve
-- `blending_factors`: factors in [0.0, 1.0] indicating the amount of curving allowed between 2 consecutive waypoints. The default blending factors are all set to 0.0.
-  - **[AICA Core v4.4.1]** The first and last segment are currently not considered in blending, therefore, the vector's
-size needs to be equal to the number of frames or joint positions **minus** 2.
-  - **[AICA Core v4.4.2+]** Only the last segment is not considered in blending, therefore, the vector's
-size needs to be equal to the number of frames or joint positions **minus** 1.
+- `blending_factors`: factors in [0.0, 1.0] indicating the amount of curving allowed between 2 consecutive waypoints.
+The default blending factors are all set to 0.0. The last trajectory segment is not considered in blending, therefore,
+the vector's size needs to be equal to the number of frames or joint positions **minus** 1.
  
 - `blending_samples`: the number of samples **(minimum 10; default 50)** to be used when generating the blended
 trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
 
-While `times_from_start` or `durations` (for AICA Core v4.4.2+; mutually exclusive) is always required, only one of
-`frames` and `joint_positions` can be used at a time. The former is a vector of Cartesian frames from which an Inverse
-Kinematics (IK) solver will compute the joint positions that the robot should reach, while the latter refers to joint
-positions that have been recorded and are being published as named joint positions.
+At least one of `times_from_start` or `durations` and one of `frames` and `joint_positions` are always required. 
+When `frames` are provided, an Inverse Kinematics (IK) solver will compute the joint positions that the robot should
+reach. In the case of `joint_positions`, the recorded joint configurations are directly used in the joint trajectory. 
 
 In both cases, the length of `times_from_start` or`durations` and `frames` or `joint_positions` need to be equal, such that every time
 corresponds to exactly one waypoint.
@@ -239,12 +237,12 @@ or
 ```
 
 :::tip
-Starting AICA Core v4.4.2, the above payloads can also be written as:
+The above payloads can also be written as:
 
 ```yaml
 {
   frames: [start, frame_1, frame_2, frame_3, start], 
-  durations: [2.0, 2.0, 2.0, 2.0, 2.0] # or simply [2.0] which will be applied to all waypoints
+  durations: [2.0, 2.0, 2.0, 2.0, 2.0] # or simply [2.0] applied to all waypoints
 }
 ```
 
@@ -253,7 +251,7 @@ or
 ```yaml
 {
   joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, start], 
-  durations: [2.0, 2.0, 2.0, 2.0, 2.0] # or simply [2.0] which will be applied to all waypoints
+  durations: [2.0, 2.0, 2.0, 2.0, 2.0] # or simply [2.0] applied to all waypoints
 }
 ```
 
@@ -441,7 +439,7 @@ result. You may compare your final application to the one shown above using the 
 ```yaml
 schema: 2-0-4
 dependencies:
-  core: v4.4.1
+  core: v4.4.2
 frames:
   frame_1:
     reference_frame: world
