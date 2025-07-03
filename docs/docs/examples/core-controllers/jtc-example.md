@@ -184,9 +184,9 @@ This message defines 2 of the variables that JTC can use in order to execute a t
 1. `frames`: a list of the Cartesian frames that you would like to traverse, in the order that they should be visited.
 2. `durations`: a list of absolute durations (in seconds) that correspond to each waypoint.
  
-Ensure the `durations` vector is either of the same length or has a single element which will be used for all waypoints.
-You can also validate your payload's frame names, by verifying they match with those shown in the 3D view or YAML
-application. This way, you can intuitively anticipate the trajectory execution.
+Ensure the `durations` vector is either of the same length as `frames` or has a single element which will be used for
+all waypoints. You can also validate your payload's frame names, by verifying they match with those shown in the 3D view
+or YAML application. This way, you can intuitively anticipate the trajectory execution.
 
 ## Executing the trajectory
 
