@@ -30,15 +30,13 @@ supported in the future.
 :::
 
 To ensure proper access to the camera device, special udev rules have to be applied to the Linux system the camera is
-connected to. The following commands clone the `librealsense` repo, apply the rules and then remove the directory:
+connected to. Run the following commands in a terminal:
 
 ```shell
 git clone --branch v2.54.1 --depth 1 https://github.com/IntelRealSense/librealsense
 cd librealsense
-git checkout development
 sudo ./scripts/setup_udev_rules.sh
 ```
-
 
 Start the AICA Launcher and add the `intel-realsense-collection` package to your configuration.
 
