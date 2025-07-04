@@ -1,6 +1,6 @@
 ---
 sidebar_position: 8
-title: Realsense camera component
+title: RealSense camera component
 ---
 
 import Tabs from '@theme/Tabs';
@@ -31,8 +31,6 @@ supported in the future.
 
 To ensure proper access to the camera device, special udev rules have to be applied to the Linux system the camera is
 connected to. The following commands clone the `librealsense` repo, apply the rules and then remove the directory:
-
-TODO: Is this version specific? Are we going to discuss different Ubuntu versions?
 
 ```shell
 git clone --branch v2.54.1 --depth 1 https://github.com/IntelRealSense/librealsense
@@ -70,9 +68,6 @@ Start by creating a new application.
 <div class="text--center">
   <img src={realsenseRvizColor} alt="Starting and checking camera live stream" />
 </div>
-
-TBD: Are we keeping the tip? Since it is not even needed for Orbbec, I think we can remove it.
-
 
 ## Parametrizing the RealSense Camera component
 
