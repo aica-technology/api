@@ -15,7 +15,7 @@ import realsensePackage from './assets/realsense-collection.gif'
 
 # RealSense camera component
 
-AICA's `realsense` package includes support for a range of Realsense camera models. This guide describes all necessary
+AICA's `intel-realsense-collection` package includes support for a range of RealSense camera models. This guide describes all necessary
 steps to install, configure and run the component using AICA Studio.
 
 TODO: Are we adding a list of supported camera models here as well?
@@ -36,23 +36,13 @@ TODO: Is this version specific? Are we going to discuss different Ubuntu version
 
 ```shell
 git clone --branch v2.54.1 --depth 1 https://github.com/IntelRealSense/librealsense
-cd realsense
+cd librealsense
 git checkout development
 sudo ./scripts/setup_udev_rules.sh
-# should we provide the commands to remove the directory to reduce clutter and also make
-# clear no further installation or libraries are needed?
-cd ..
-rm -r librealsense
 ```
 
-:::tip
 
-The color, depth and infrared image streams should work without having to install the udev rules, but there might be
-issues when the IMU measurement streams are activated. For this reason, it is suggested to install the rules anyway.
-
-:::
-
-Start the AICA Launcher and add the `intel-realsense` package to your configuration.
+Start the AICA Launcher and add the `intel-realsense-collection` package to your configuration.
 
 <div class="text--center">
   <img src={realsensePackage} alt="Adding the RealSense package" />
@@ -83,17 +73,6 @@ Start by creating a new application.
 
 TBD: Are we keeping the tip? Since it is not even needed for Orbbec, I think we can remove it.
 
-:::tip
-
-In case the component does not produce a video stream, try mounting the `/run/udev/` volume. In AICA Launcher, expand
-the **Advanced Settings** at the bottom, select **Add a volume mount** and define the volume as shown below. If you
-still encounter problems getting the video stream, contact the AICA support team.
-
-<div class="text--center">
-  <img src={orbbecMountedVolume} alt="Mounted udev volume" />
-</div>
-
-:::
 
 ## Parametrizing the RealSense Camera component
 
@@ -137,4 +116,4 @@ explain some of these here:
 
 If needed, follow the same process to activate and configure other available filters. For more information and detailed
 description of the filters, check the
-[librealsense repository](https://github.com/IntelRealSense/librealsense/blob/master/doc/post-processing-filters.md).
+[librealsense documentation](https://github.com/IntelRealSense/librealsense/blob/master/doc/post-processing-filters.md).
