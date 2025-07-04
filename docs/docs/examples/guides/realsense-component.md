@@ -15,10 +15,8 @@ import realsensePackage from './assets/realsense-collection.gif'
 
 # RealSense camera component
 
-AICA's `intel-realsense-collection` package includes support for a range of RealSense camera models. This guide describes all necessary
-steps to install, configure and run the component using AICA Studio.
-
-TODO: Are we adding a list of supported camera models here as well?
+AICA's `intel-realsense-collection` package includes support for L515 and D4XX camera series from RealSense. This guide
+describes all necessary steps to install, configure and run the component using AICA Studio.
 
 ## Installation
 
