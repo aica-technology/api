@@ -1,6 +1,6 @@
 ---
 sidebar_position: 8
-title: URSim Guide
+title: URSim guide
 ---
 
 import Tabs from '@theme/Tabs';
