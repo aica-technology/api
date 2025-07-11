@@ -86,8 +86,6 @@ your application's needs.
   <img src={MacosDockerResources} alt="Optional resource allocation" />
 </div>
 
-:::
-
 </details>
 
 ## Setting up the AICA license file

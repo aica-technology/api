@@ -7,7 +7,9 @@ title: Installation and launch
 
 ## Pre-requisites
 
-AICA System software is distributed with Docker images and executed with Docker containers.
+AICA System software is distributed with Docker images and executed with Docker containers. That is, it can practically
+be installed on any system that supports recent Docker versions. However, due to performance advantages (e.g., real-time
+task execution), AICA suggests using Linux-based platforms that can be easily configured for such considerations. 
 
 Before proceeding, you will need to install Docker Engine on the host machine. Depending on your platform, the
 installation process may vary or require additional steps. Below, you will find instructions per operating system:
@@ -15,15 +17,17 @@ installation process may vary or require additional steps. Below, you will find 
 <details>
 <summary>Linux</summary>
 
-AICA suggests Ubuntu Linux as the main platform, but other distributions where Docker can be installed work equally as 
-well. You may find distribution-specific instructions to install Docker Engine [here](https://docs.docker.com/engine/install/).
-Note that you can and it is **recommended** that you skip the installation of Docker Desktop for Linux.
+While AICA currently distributes AICA Launcher for Debian-based systems, other distributions where Docker can be
+installed work equally as well through any browser. You may find distribution-specific instructions to install Docker
+Engine [here](https://docs.docker.com/engine/install/) and follow the manual installation steps to build and run AICA
+Core [here](../../reference/manual-installation-launch.md). Note that you can and it is **recommended** that you skip
+the installation of Docker Desktop for Linux.
 
 :::note
 
 For Ubuntu users, make sure to follow
-the [post installation steps](https://docs.docker.com/engine/install/linux-postinstall/) to create the `docker` group
-and add your user.
+the [post installation steps](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
+to create the `docker` group and add your user.
 
 :::
 
@@ -47,8 +51,8 @@ The simplest way to install Docker Engine on MacOS is through
 [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/). However, some limitations may apply
 regarding commercial use (see relevant article 
 [here](https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/)). If you intend to
-operate Docker Desktop within the terms of service, make that 
-[these](../../reference/manual-installation-launch.md#configuring-docker-desktop) additional configuration steps are
+operate Docker Desktop within the terms of service, make sure that 
+[these](.../../reference/manual-installation-launch.md#configuring-docker-on-your-linux-or-macos-system) additional configuration steps are
 taken.
 
 :::note
