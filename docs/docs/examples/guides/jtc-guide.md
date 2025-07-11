@@ -409,9 +409,10 @@ or
 ```
 
 Experiment with these values to observe the difference in the resulting trajectory. Note that, you will need at least
-3 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. If you need to,
-go to 3D Viz and record some additional frames. You can also try to apply different blending values for each waypoint to
-compare the difference in smoothness.
+2 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. Note that if
+the first waypoint is identical to the robot's current configuration, this would also result in a straight-line motion
+to the final waypoint even though blending is in effect. If you need to, go to 3D Viz and record some additional frames.
+You can also try to apply different blending values for each waypoint to compare the difference in smoothness.
 :::
 
 #### Other considerations
