@@ -10,17 +10,46 @@ import signalRosPose from './assets/signal-ros-pose.png'
 
 # Signal interoperability
 
-The examples below show how signal translator components included in the core components can be used with a selection of
-common ROS message types for interoperability.
+As described in the [signals page](../../concepts/building-blocks/signals.md), AICA signals make it easy to exchange
+Cartesian and joint state variables in an internally consistent way. In components, state signals are automatically
+converted into smart data classes that provide useful functions for conversions, transformations and other
+manipulations.
 
-:::tip
+Even though there is no official standard, there are a few signal types that are very commonly used in ROS. For ease of
+interoperability, AICA Core includes several components that translate AICA signals to common ROS messages and back.
+These components can be especially valuable when porting existing ROS nodes into AICA Studio using the Component SDK or
+when communicating with ROS nodes outside the AICA System.
 
-If you haven't done so already, review the corresponding
-[concepts page](../../concepts/building-blocks/components/signal-interoperability.md) first.
+## AICA signals to common ROS messages
 
-:::
+AICA state signals carrying Cartesian or joint space information can be converted into common ROS message types using
+the following components:
 
-## AICA signals to standard ROS messages
+| Component name                             | Input signal type                             | Output message type                 |
+| ------------------------------------------ | --------------------------------------------- | ----------------------------------- |
+| Cartesian Signal to Pose Stamped Message   | Cartesian state or pose                       | `geometry_msgs::msg::PoseStamped`   |
+| Cartesian Signal to Twist Stamped Message  | Cartesian state or twist                      | `geometry_msgs::msg::TwistStamped`  |
+| Cartesian Signal to Wrench Stamped Message | Cartesian state or wrench                     | `geometry_msgs::msg::WrenchStamped` |
+| Joint Signal To Joint State Message        | Joint state, positions, velocities or torques | `sensor_msgs::msg::JointState`      |
+
+## Common ROS messages to AICA signals
+
+Common ROS message types carrying Cartesian or joint space information can be converted back into AICA state signals
+using the following components:
+
+| Component name                             | Input message type                  | Output signal type                            |
+| ------------------------------------------ | ----------------------------------- | --------------------------------------------- |
+| Pose Stamped Message to Cartesian Signal   | `geometry_msgs::msg::PoseStamped`   | Cartesian state containing pose information   |
+| Twist Stamped Message to Cartesian Signal  | `geometry_msgs::msg::TwistStamped`  | Cartesian state containing twist information  |
+| Wrench Stamped Message to Cartesian Signal | `geometry_msgs::msg::WrenchStamped` | Cartesian state containing wrench information |
+| Joint State Message to Joint Signal        | `sensor_msgs::msg::JointState`      | Joint state                                   |
+
+## Behavior
+
+All of these components are single-input single-output blocks. Each time a new message is received, it is translated and
+immediately published. For that reason, the `rate` parameter doesn't affect the behavior of these components.
+
+## AICA Signal to ROS message example
 
 This example uses the `Joint Signal To Joint State Message` component to translate the joint state output from the
 hardware interface to a `sensor_msgs::msg::JointState` message and the `Cartesian Signal to Pose Stamped Message`
@@ -161,16 +190,16 @@ With content
 
 </details>
 
-## Standard ROS messages to AICA signals
+## ROS message to AICA Signal example
 
-Mirroring the first example, this application uses the `Wrench Stamped Message To Cartesian Signal` component to
-translate a `geometry_msgs::msg::WrenchStamped` from some custom component to a Cartesian signal that is connected to
+Mirroring the first example, the following application uses the `Wrench Stamped Message To Cartesian Signal` component
+to translate a `geometry_msgs::msg::WrenchStamped` from some custom component to a Cartesian signal that is connected to
 the force controller of the hardware interface.
 
 :::note
 
-The custom component is just an example placeholder in for any implementation that has a ROS standard message output,
-which might occur when porting existing ROS nodes into AICA Studio using the Component SDK.
+The custom component is just an example placeholder for any implementation that has a ROS standard message output, which
+might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
 
 :::
 
