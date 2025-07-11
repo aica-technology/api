@@ -52,7 +52,7 @@ The simplest way to install Docker Engine on MacOS is through
 regarding commercial use (see relevant article 
 [here](https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/)). If you intend to
 operate Docker Desktop within the terms of service, make sure that 
-[these](.../../reference/manual-installation-launch.md#configuring-docker-on-your-linux-or-macos-system) additional configuration steps are
+[these](../../reference/manual-installation-launch.md#configuring-docker-on-your-linux-or-macos-system) additional configuration steps are
 taken.
 
 :::note
