@@ -34,7 +34,7 @@ contaminating other parts of your system. However, creating a custom context wit
 means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that 
 some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal). 
 
-##### Configuring the Docker context
+#### Configuring the Docker context
 
 `desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations, 
 make sure to change the context before building or executing AICA applications, or running AICA Launcher.
