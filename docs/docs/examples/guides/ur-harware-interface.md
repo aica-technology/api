@@ -24,7 +24,7 @@ without needing physical hardware.
 
 This guide introduces the hardware interface for UR robots, covering how to integrate and connect to UR manipulators
 using AICA Studio. To connect to the simulation environment, check the
-[respective documentation page](./timer-example.md).
+[respective documentation page](./ur-sim-guide.md).
 
 TO ADD, TBD:
 
