@@ -71,7 +71,7 @@ RViz will not be made available through AICA Launcher.
 <summary>Windows</summary>
 
 **No official support is currently provided for Windows machines.** However, with the correct Windows Subsystem for
-Linux (WSL) configuration can use the AICA framework manually. 
+Linux (WSL) configuration you can install the AICA framework manually. 
 <!-- TODO: update/provide link (see [manual installation instructions](../../reference/manual-installation-launch.md) for reference). -->
 
 </details>
