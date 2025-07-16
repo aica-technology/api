@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Signal Type",
-  "description": "Supported signal value types as simple atomic types or encoded state types.",
+  "description": "A signal value type as a simple atomic type or an encoded state type.",
   "anyOf": [
     {
       "type": "string",

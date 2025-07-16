@@ -31,7 +31,6 @@
       "$ref": "parameter_type.schema.json"
     },
     "parameter_state_type": {
-      "description": "The state type of the parameter, if the value type is an encoded state.",
       "$ref": "encoded_state_type.schema.json"
     },
     "default_value": {
