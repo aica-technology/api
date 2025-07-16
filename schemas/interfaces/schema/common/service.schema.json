@@ -3,6 +3,7 @@
   "title": "Service",
   "description": "A service endpoint of a component or controller.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "display_name": {
       "description": "The human-readable service name.",

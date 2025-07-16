@@ -3,6 +3,7 @@
   "title": "Signal",
   "description": "A continuous data signal in the AICA framework that can be an input or an output.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "display_name": {
       "description": "The short name of this signal (to be displayed on the edge of the node in the graph view).",
@@ -15,16 +16,6 @@
     },
     "description": {
       "description": "A description of the signal for tool-tips and documentation.",
-      "type": "string"
-    },
-    "signal_name": {
-      "deprecated": true,
-      "description": "The registered name of the signal from which the default topic and parameter '<$signal_name>_topic' are determined. This property is deprecated and signals should be mapped by their signal name in future usage.",
-      "examples": [
-        "target_pose",
-        "sum",
-        "command_torque"
-      ],
       "type": "string"
     },
     "default_topic": {

@@ -17,15 +17,6 @@
       "description": "A brief description of the parameter.",
       "type": "string"
     },
-    "parameter_name": {
-      "deprecated": true,
-      "description": "The lower_snake_case parameter name as it is declared in the implementation. This property is deprecated and parameters should be mapped by their parameter name in future usage.",
-      "examples": [
-        "reference_frame",
-        "gain"
-      ],
-      "type": "string"
-    },
     "parameter_type": {
       "description": "The parameter value type.",
       "$ref": "parameter_type.schema.json"
