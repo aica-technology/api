@@ -55,7 +55,8 @@ runs:
         echo "Ensuring directory branch name: docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}"
         mkdir -p docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}
         echo "Moving schema to path docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}"
-        mv ${{ inputs.schema }} docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}
+        mv ${{ inputs.schema }}.schema.json docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}
+        mv ${{ inputs.schema }}.types.schema.json docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}
         git config --global user.name github-actions[bot]
         git config --global user.email github-actions[bot]@users.noreply.github.com
         git fetch
