@@ -29,7 +29,18 @@
       "type": "boolean"
     },
     "signal_type": {
-      "$ref": "signal_type.schema.json"
+      "title": "Signal Type",
+      "description": "A signal value type as a simple atomic type or an encoded state type.",
+      "type": "string",
+      "enum": [
+        "bool",
+        "int",
+        "double",
+        "double_array",
+        "string",
+        "encoded_state",
+        "external"
+      ]
     },
     "signal_state_type": {
       "$ref": "encoded_state_type.schema.json"

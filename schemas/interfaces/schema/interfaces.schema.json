@@ -27,12 +27,6 @@
     },
     "signal": {
       "$ref": "common/signal.schema.json"
-    },
-    "signal_collection": {
-      "$ref": "common/signal_collection.schema.json"
-    },
-    "signal_type": {
-      "$ref": "common/signal_type.schema.json"
     }
   }
 }
