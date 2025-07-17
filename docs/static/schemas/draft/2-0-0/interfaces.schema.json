@@ -390,24 +390,24 @@
           "type": "boolean"
         },
         "signal_type": {
-          "$ref": "#/$defs/signal_type"
+          "title": "Signal Type",
+          "description": "A signal value type as a simple atomic type or an encoded state type.",
+          "type": "string",
+          "enum": [
+            "bool",
+            "int",
+            "double",
+            "double_array",
+            "string",
+            "encoded_state",
+            "external"
+          ]
         },
-        "signal_types": {
-          "description": "An array of signal types supported by configurable typing. The active type is set through the '<$signal_name>_type' parameter, and the default type is determined by the `signal_type` property.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/signal_type"
-          },
-          "minItems": 1,
-          "uniqueItems": true
+        "signal_state_type": {
+          "$ref": "#/$defs/encoded_state_type"
         },
-        "reconfigurable_type": {
-          "description": "Indicate if the signal type is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_type' parameter.",
-          "default": false,
-          "type": "boolean"
-        },
-        "custom_signal_type": {
-          "description": "The custom signal type of the signal",
+        "external_signal_type": {
+          "description": "The external message type of the signal",
           "examples": [
             "sensor_msgs::msg::JointState",
             "geometry_msgs::msg::Pose"
@@ -420,98 +420,54 @@
         "description",
         "signal_type"
       ],
-      "if": {
-        "properties": {
-          "signal_type": {
-            "const": "other"
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "signal_type": {
+                "const": "encoded_state"
+              }
+            },
+            "required": [
+              "signal_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "signal_state_type"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "signal_state_type"
+              ]
+            }
           }
         },
-        "required": [
-          "signal_type"
-        ]
-      },
-      "then": {
-        "required": [
-          "custom_signal_type"
-        ]
-      },
-      "else": {
-        "not": {
-          "required": [
-            "custom_signal_type"
-          ]
-        }
-      }
-    },
-    "signal_collection": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "Input Signal Collection",
-      "description": "A dynamic collection of input signals that can have zero or more topics of the same type.",
-      "type": "object",
-      "properties": {
-        "display_name": {
-          "description": "The short name of this input signal collection (to be displayed on the edge of the component).",
-          "type": "string"
-        },
-        "description": {
-          "description": "A description of the signal collection for tool-tips and documentation.",
-          "type": "string"
-        },
-        "default_topics": {
-          "description": "The optional default array of topic names in this signal collection. Setting the parameter '<$input_collection_name>_topics' will override the default value.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "uniqueItems": true
-        },
-        "reconfigurable_topics": {
-          "description": "Indicate if the array of input collection topics is reconfigurable and can be changed while the component is inactive through the '<$input_collection_name>_topics' parameter.",
-          "default": false,
-          "type": "boolean"
-        },
-        "signal_type": {
-          "$ref": "#/$defs/signal_type"
-        },
-        "signal_types": {
-          "description": "An array of signal types supported by configurable typing. The active type is set through the '<$input_collection_name>_type' parameter, and the default type is determined by the `signal_type` property.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/signal_type"
-          },
-          "minItems": 1,
-          "uniqueItems": true
-        },
-        "reconfigurable_type": {
-          "description": "Indicate if the signal type is reconfigurable and can be changed while the component is inactive through the '<$input_collection_name>_type' parameter.",
-          "default": false,
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "display_name",
-        "description",
-        "signal_type"
-      ]
-    },
-    "signal_type": {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "Signal Type",
-      "description": "A signal value type as a simple atomic type or an encoded state type.",
-      "anyOf": [
         {
-          "type": "string",
-          "enum": [
-            "bool",
-            "int",
-            "double",
-            "double_array",
-            "string",
-            "other"
-          ]
-        },
-        {
-          "$ref": "#/$defs/encoded_state_type"
+          "if": {
+            "properties": {
+              "signal_type": {
+                "const": "external"
+              }
+            },
+            "required": [
+              "signal_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "external_signal_type"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "external_signal_type"
+              ]
+            }
+          }
         }
       ]
     }
