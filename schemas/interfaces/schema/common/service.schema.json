@@ -26,11 +26,6 @@
       "description": "The lower_snake_case service name as it is declared in the component or controller. This property is deprecated and services should be mapped by their service name in future usage.",
       "type": "string"
     },
-    "payload_format": {
-      "deprecated": true,
-      "description": "Optional description of the payload format if the service has a string payload. This property is deprecated and the service_type, payload_description and payload_schema properties should be used instead.",
-      "type": "string"
-    },
     "payload_description": {
       "description": "A description of the service payload.",
       "type": "string"
