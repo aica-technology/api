@@ -6,6 +6,7 @@ if [ "$#" -ne 2 ]; then
   echo
   echo "Currently supported schema collections:"
   echo "  - applications"
+  echo "  - extensions"
   echo "  - component-descriptions"
   echo "  - controller-descriptions"
   echo "  - interfaces"
@@ -27,6 +28,9 @@ elif [ "$SCHEMA" == "controller-descriptions" ]; then
 elif [ "$SCHEMA" == "interfaces" ]; then
   echo "Using AICA interfaces schema"
   SCHEMA_ENTRYPOINT="interfaces.schema.json"
+elif [ "$SCHEMA" == "extensions" ]; then
+  echo "Using AICA extensions schema"
+  SCHEMA_HTML="extension.schema.html"
 else
   echo "Invalid schema option: $SCHEMA"
   exit 0
