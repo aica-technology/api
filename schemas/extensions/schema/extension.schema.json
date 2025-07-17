@@ -1,0 +1,197 @@
+{
+  "$id": "/draft/1-0-0/extension.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICA Extension Description",
+  "description": "A description of the properties and interfaces of a component or controller as a modular extension to the AICA application framework.",
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "class": {
+      "title": "Registered Class Name",
+      "description": "The full registered class name of the exported extension required for run-time loading. The registration must start with the package name and may include additional namespaces. For components, these are delimited by double colons `::`, while for controllers the are delimited by forward slashes `/`.",
+      "type": "string",
+      "examples": [
+        "modulo_components::Component",
+        "foo_package::other_namespace::Foo",
+        "modulo_controllers/RobotStateBroadcaster",
+        "foo_package/velocity/IKVelocityController"
+      ]
+    },
+    "assignment": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/assignment"
+    },
+    "encoded_state_type": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/encoded_state_type"
+    },
+    "parameter": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter"
+    },
+    "parameter_type": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_type"
+    },
+    "predicate": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/predicate"
+    },
+    "service": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/service"
+    },
+    "signal": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/signal"
+    },
+    "signals": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "$ref": "#/$defs/signal"
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema": {
+      "title": "Extension Schema",
+      "description": "The schema version of the extension description syntax",
+      "default": "1-0-0",
+      "examples": [
+        "1-0-0",
+        "draft/2-0-0",
+        "2-1-0"
+      ],
+      "type": "string",
+      "pattern": "^(draft/)?[0-9]+-[0-9]+-[0-9]+$"
+    },
+    "name": {
+      "description": "The human-readable name of the extension.",
+      "examples": [
+        "Point Attractor",
+        "Interactive Marker",
+        "Weighted Sum"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "description": "The human-readable description of this extension and its behaviour.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "brief": {
+          "description": "A brief (one-line) description of the extension for quick reference and tool-tips.",
+          "examples": [
+            "Generates a velocity command towards a target attractor"
+          ],
+          "type": "string"
+        },
+        "details": {
+          "description": "An optional detailed description of the extension.",
+          "examples": [
+            "Given an input Cartesian pose and parameterized target pose, this component generates a Cartesian twist output towards the target linearly proportional to the distance multiplied by the gain parameter."
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "brief"
+      ]
+    },
+    "type": {
+      "title": "Extension Type",
+      "description": "The type of the extension.",
+      "type": "string",
+      "enum": [ "component", "lifecycle_component", "controller"]
+    },
+    "class": {
+      "$ref": "#/$defs/class"
+    },
+    "inherits": {
+      "$ref": "#/$defs/class"
+    },
+    "virtual": {
+      "title": "Virtual Extension",
+      "description": "If true, this property indicates that the extension is an abstract or virtual base class and not directly instantiable.",
+      "type": "boolean",
+      "default": false
+    },
+    "assignments": {
+      "title": "Assignments",
+      "description": "The assignments declared by the extension.",
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "$ref": "#/$defs/assignment"
+        }
+      }
+    },
+    "inputs": {
+      "title": "Inputs",
+      "description": "The fixed input signals (subscriptions) of the extension.",
+      "$ref": "#/$defs/signals"
+    },
+    "outputs": {
+      "title": "Outputs",
+      "description": "The output signals (publications) of the extension.",
+      "$ref": "#/$defs/signals"
+    },
+    "parameters": {
+      "title": "Parameters",
+      "description": "The parameters declared by the extension.",
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "$ref": "#/$defs/parameter"
+        }
+      }
+    },
+    "predicates": {
+      "title": "Predicates",
+      "description": "The predicates provided by the extension.",
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "$ref": "#/$defs/predicate"
+        }
+      }
+    },
+    "services": {
+      "title": "Services",
+      "description": "The services provided by the extension.",
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "$ref": "#/$defs/service"
+        }
+      }
+    },
+    "control_type": {
+      "title": "Control Type",
+      "description": "The control type of the controller",
+      "type": "string",
+      "enum": [
+        "position",
+        "velocity",
+        "acceleration",
+        "effort"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "type",
+    "class",
+    "inherits"
+  ],
+  "if": {
+    "properties": {
+      "type": { "const": "controller" }
+    },
+    "required": ["type"]
+  },
+  "then": {
+    "required": ["control_type"]
+  },
+  "else": {
+    "not": {
+      "required": ["control_type"]
+    }
+  }
+}
