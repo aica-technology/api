@@ -18,7 +18,6 @@
       "type": "string"
     },
     "parameter_type": {
-      "description": "The parameter value type.",
       "$ref": "parameter_type.schema.json"
     },
     "parameter_state_type": {

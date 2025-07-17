@@ -27,6 +27,7 @@ The 2-0-0 version of the interfaces schema includes major changes for more consi
 - Add `service_type`, `payload_description` and `payload_schema` properties with conditional validation rules to better
   describe service interfaces
 - Add signal collection subschema
+- Add assignment subschema
 
 ## 1-0-0
 

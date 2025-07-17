@@ -4,6 +4,9 @@
   "title": "Common Interfaces",
   "description": "This schema includes definitions for common interfaces across the AICA System",
   "$defs": {
+    "assignment": {
+      "$ref": "common/assignment.schema.json"
+    },
     "encoded_state_type": {
       "$ref": "common/encoded_state_type.schema.json"
     },
