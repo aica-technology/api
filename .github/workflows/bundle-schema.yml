@@ -49,7 +49,7 @@ jobs:
       - uses: ./.github/actions/bundle-schema
         with:
           schema-path: ${{ matrix.schema-path }}/${{ matrix.schema }}.schema.json
-          schema: ${{ matrix.schema }}.schema.json
+          schema: ${{ matrix.schema }}
           branch-name: ${{ needs.setup.outputs.branch_name }}
 
   push-schemas:
