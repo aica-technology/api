@@ -17,41 +17,20 @@
       "description": "A brief description of the parameter.",
       "type": "string"
     },
-    "parameter_name": {
-      "description": "The lower_snake_case parameter name as it is declared in the implementation.",
-      "examples": [
-        "reference_frame",
-        "gain"
-      ],
-      "type": "string"
-    },
     "parameter_type": {
-      "description": "The parameter value type.",
       "$ref": "parameter_type.schema.json"
     },
     "parameter_state_type": {
-      "description": "The state type of the parameter, if the value type is an encoded state.",
       "$ref": "encoded_state_type.schema.json"
     },
     "default_value": {
-      "description": "The string representation of the default parameter value, or null if the parameter has no valid default value.",
-      "examples": [
-        "foo",
-        "[ 1.0, 2.0, 3.0 ]",
-        null
-      ],
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "description": "The default parameter value, or null if the parameter has no valid default value.",
+      "$ref": "parameter_value.schema.json"
     },
     "optional": {
       "description": "Specify if this parameter is optional (only applicable if the default value is null)",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "dynamic": {
       "description": "Specify if this parameter can be dynamically reconfigured.",
@@ -66,7 +45,6 @@
   "required": [
     "display_name",
     "description",
-    "parameter_name",
     "parameter_type",
     "default_value"
   ],
@@ -75,13 +53,19 @@
       "if": {
         "properties": {
           "default_value": {
-            "not": {
-              "const": null
-            }
+            "const": null
           }
-        }
+        },
+        "required": [
+          "default_value"
+        ]
       },
       "then": {
+        "required": [
+          "optional"
+        ]
+      },
+      "else": {
         "not": {
           "required": [
             "optional"
@@ -95,14 +79,23 @@
           "parameter_type": {
             "const": "state"
           }
-        }
+        },
+        "required": [
+          "parameter_type"
+        ]
       },
       "then": {
         "required": [
           "parameter_state_type"
         ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "parameter_state_type"
+          ]
+        }
       }
     }
-
   ]
 }

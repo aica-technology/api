@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Parameter Value",
+  "description": "The value assigned to a parameter",
+  "type": [
+    "null",
+    "boolean",
+    "integer",
+    "number",
+    "string",
+    "array"
+  ],
+  "items": {
+    "type": [
+      "boolean",
+      "integer",
+      "number",
+      "string"
+    ]
+  }
+}
