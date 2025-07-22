@@ -18,25 +18,25 @@
       ]
     },
     "assignment": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/assignment"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/assignment"
     },
     "encoded_state_type": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/encoded_state_type"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/encoded_state_type"
     },
     "parameter": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/parameter"
     },
     "parameter_type": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_type"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/parameter_type"
     },
     "predicate": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/predicate"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/predicate"
     },
     "service": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/service"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/service"
     },
     "signal": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/signal"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/signal"
     },
     "signals": {
       "type": "object",
