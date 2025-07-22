@@ -51,10 +51,8 @@
         ]
       },
       "else": {
-        "not": {
-          "required": [
-            "assignment_state_type"
-          ]
+        "properties": {
+          "assignment_state_type": false
         }
       }
     },
@@ -152,10 +150,8 @@
             ]
           },
           "else": {
-            "not": {
-              "required": [
-                "optional"
-              ]
+            "properties": {
+              "optional": false
             }
           }
         },
@@ -176,10 +172,8 @@
             ]
           },
           "else": {
-            "not": {
-              "required": [
-                "parameter_state_type"
-              ]
+            "properties": {
+              "parameter_state_type": false
             }
           }
         }
@@ -262,7 +256,6 @@
           "type": "string"
         },
         "service_type": {
-          "default": "empty",
           "enum": [
             "empty",
             "string",
@@ -297,7 +290,8 @@
       },
       "required": [
         "display_name",
-        "description"
+        "description",
+        "service_type"
       ],
       "allOf": [
         {
@@ -309,11 +303,9 @@
             }
           },
           "then": {
-            "not": {
-              "required": [
-                "payload_description",
-                "payload_schema"
-              ]
+            "properties": {
+              "payload_description": false,
+              "payload_schema": false
             }
           }
         },
@@ -323,19 +315,14 @@
               "service_type": {
                 "const": "string"
               }
-            },
-            "required": [
-              "service_type"
-            ]
+            }
           },
           "then": {
             "required": [
               "payload_description"
             ],
-            "not": {
-              "required": [
-                "payload_schema"
-              ]
+            "properties": {
+              "payload_schema": false
             }
           }
         },
@@ -345,10 +332,7 @@
               "service_type": {
                 "const": "object"
               }
-            },
-            "required": [
-              "service_type"
-            ]
+            }
           },
           "then": {
             "required": [
@@ -438,10 +422,8 @@
             ]
           },
           "else": {
-            "not": {
-              "required": [
-                "signal_state_type"
-              ]
+            "properties": {
+              "signal_state_type": false
             }
           }
         },
@@ -462,10 +444,8 @@
             ]
           },
           "else": {
-            "not": {
-              "required": [
-                "external_signal_type"
-              ]
+            "properties": {
+              "external_signal_type": false
             }
           }
         }
