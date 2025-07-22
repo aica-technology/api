@@ -97,7 +97,11 @@
       "title": "Extension Type",
       "description": "The type of the extension.",
       "type": "string",
-      "enum": [ "component", "lifecycle_component", "controller"]
+      "enum": [
+        "component",
+        "lifecycle_component",
+        "controller"
+      ]
     },
     "class": {
       "$ref": "#/$defs/class"
@@ -182,16 +186,22 @@
   ],
   "if": {
     "properties": {
-      "type": { "const": "controller" }
+      "type": {
+        "const": "controller"
+      }
     },
-    "required": ["type"]
+    "required": [
+      "type"
+    ]
   },
   "then": {
-    "required": ["control_type"]
+    "required": [
+      "control_type"
+    ]
   },
   "else": {
-    "not": {
-      "required": ["control_type"]
+    "properties": {
+      "control_type": false
     }
   }
 }
