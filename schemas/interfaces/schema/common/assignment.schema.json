@@ -45,10 +45,8 @@
     ]
   },
   "else": {
-    "not": {
-      "required": [
-        "assignment_state_type"
-      ]
+    "properties": {
+      "assignment_state_type": false
     }
   }
 }

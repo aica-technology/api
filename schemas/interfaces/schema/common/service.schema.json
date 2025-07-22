@@ -14,7 +14,6 @@
       "type": "string"
     },
     "service_type": {
-      "default": "empty",
       "enum": [
         "empty",
         "string",
@@ -49,7 +48,8 @@
   },
   "required": [
     "display_name",
-    "description"
+    "description",
+    "service_type"
   ],
   "allOf": [
     {
@@ -61,11 +61,9 @@
         }
       },
       "then": {
-        "not": {
-          "required": [
-            "payload_description",
-            "payload_schema"
-          ]
+        "properties": {
+          "payload_description": false,
+          "payload_schema": false
         }
       }
     },
@@ -75,19 +73,14 @@
           "service_type": {
             "const": "string"
           }
-        },
-        "required": [
-          "service_type"
-        ]
+        }
       },
       "then": {
         "required": [
           "payload_description"
         ],
-        "not": {
-          "required": [
-            "payload_schema"
-          ]
+        "properties": {
+          "payload_schema": false
         }
       }
     },
@@ -97,10 +90,7 @@
           "service_type": {
             "const": "object"
           }
-        },
-        "required": [
-          "service_type"
-        ]
+        }
       },
       "then": {
         "required": [

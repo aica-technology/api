@@ -66,10 +66,8 @@
         ]
       },
       "else": {
-        "not": {
-          "required": [
-            "optional"
-          ]
+        "properties": {
+          "optional": false
         }
       }
     },
@@ -90,10 +88,8 @@
         ]
       },
       "else": {
-        "not": {
-          "required": [
-            "parameter_state_type"
-          ]
+        "properties": {
+          "parameter_state_type": false
         }
       }
     }
