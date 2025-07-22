@@ -64,10 +64,8 @@
         ]
       },
       "else": {
-        "not": {
-          "required": [
-            "assignment_state_type"
-          ]
+        "properties": {
+          "assignment_state_type": false
         }
       }
     },
@@ -221,7 +219,6 @@
           "type": "string"
         },
         "service_type": {
-          "default": "empty",
           "enum": [
             "empty",
             "string",
@@ -256,7 +253,8 @@
       },
       "required": [
         "display_name",
-        "description"
+        "description",
+        "service_type"
       ]
     },
     "signal": {
@@ -403,7 +401,7 @@
       "description": "The assignments declared by the extension.",
       "type": "object",
       "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+        "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
           "$ref": "#/$defs/assignment"
         }
       }
@@ -423,7 +421,7 @@
       "description": "The parameters declared by the extension.",
       "type": "object",
       "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+        "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
           "$ref": "#/$defs/parameter"
         }
       }
@@ -483,10 +481,8 @@
     ]
   },
   "else": {
-    "not": {
-      "required": [
-        "control_type"
-      ]
+    "properties": {
+      "control_type": false
     }
   }
 }
