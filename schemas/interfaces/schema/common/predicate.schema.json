@@ -3,6 +3,7 @@
   "title": "Predicate",
   "description": "A predicate of a component or controller.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "display_name": {
       "description": "The human-readable predicate name.",
@@ -11,15 +12,10 @@
     "description": {
       "description": "A brief description of the predicate.",
       "type": "string"
-    },
-    "predicate_name": {
-      "description": "The lower_snake_case predicate name as it is declared in the component or controller.",
-      "type": "string"
     }
   },
   "required": [
     "display_name",
-    "description",
-    "predicate_name"
+    "description"
   ]
 }

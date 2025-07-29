@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 title: A guide on joint trajectory workflows
 ---
 
@@ -30,7 +30,7 @@ applications.
 JTC has a plethora of parameters that can be set to alter its performance according to an application's requirements.
 Let us start by creating a new application that we can use as a reference point for this guide.
 
-First, start AICA Launcher and create a configuration with **AICA Core v4.4.1** or higher. For the remainder of this
+First, start AICA Launcher and create a configuration with **AICA Core v4.4.2** or higher. For the remainder of this
 guide, we will be using the generic six-axis robot that is part of our core hardware collection. However, if you have
 the appropriate entitlements and want to experiment with a different robot brand, feel free to add the corresponding
 collection to your configuration before launching it. 
@@ -196,32 +196,34 @@ read through your URDF.
 
 ### Using JTC's `Set trajectory` service
 
-The service currently accepts 5 variables, namely:
+The service currently accepts 6 variables, namely:
 
 - `times_from_start`: a list of timestamps (in seconds) measured from the start, indicating when JTC should reach each
 frame.
-- `frames`: names of the Cartesian frames to reach with the robot end effector 
-- `joint_positions`: names of joint positions that the robot should achieve
+- `durations`: a list of absolute durations (in seconds) that correspond to each waypoint.
+- `frames`: names of the Cartesian frames to reach with the robot end effector.
+- `joint_positions`: names of joint positions that the robot should achieve.
 - `blending_factors`: factors in [0.0, 1.0] indicating the amount of curving allowed between 2 consecutive waypoints.
-The first and last segment are currently not considered in blending, therefore, the vector's size needs to be equal to
-the number of frames or joint positions **minus** 2. **The default blending factors are all set to 0.0.**
+The default blending factors are all set to 0.0. The last trajectory segment is not considered in blending, therefore,
+the vector's size needs to be equal to the number of frames or joint positions **minus** 1 or simply contain a single
+value to be applied to all waypoints that support blending.
 - `blending_samples`: the number of samples **(minimum 10; default 50)** to be used when generating the blended
 trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
 
-While `times_from_start` is always required, only one of `frames` and `joint_positions` can be used at a time. The
-former is a vector of Cartesian frames from which an Inverse Kinematics (IK) solver will compute the joint positions
-that the robot should reach, while the latter refers to joint positions that have been recorded and are being published
-as named joint positions.
+The payload can only contain one of `frames` and `joint_positions` and either `times_from_start` or `durations`. 
+When `frames` are provided, an Inverse Kinematics (IK) solver will compute the joint positions that the robot should
+reach. In the case of `joint_positions`, the recorded joint configurations are directly used in the joint trajectory. 
 
-In both cases, the length of `times_from_start` and `frames` or `joint_positions` need to be equal, such that every time
-corresponds to exactly one waypoint.
+When using `times_from_start`, the length of `frames` or `joint_positions` need to be equal to the times provided and
+each value corresponds to exactly one waypoint. Similarly, `durations` can have the same length as your waypoints vector,
+or be expressed as a single-element vector whose value will be applied to all waypoints.
 
 For example, you could use:
 
 ```yaml
 {
   frames: [start, frame_1, frame_2, frame_3, start], 
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
+  durations: [2.0, 1.5, 2.5, 1.75, 1.5]
 }
 ```
 
@@ -230,9 +232,30 @@ or
 ```yaml
 {
   joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, start], 
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
+  durations: [2.0, 1.5, 2.5, 1.75, 1.5]
 }
 ```
+
+:::tip
+The above payloads can also be written as:
+
+```yaml
+{
+  frames: [start, frame_1, frame_2, frame_3, start], 
+  times_from_start: [2.0, 3.5, 6.0, 7.75, 9.25]
+}
+```
+
+or
+
+```yaml
+{
+  joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, start], 
+  times_from_start: [2.0, 3.5, 6.0, 7.75, 9.25]
+}
+```
+
+:::
 
 In the following section, we will demonstrate how these frames or joint positions can be easily recorded through the
 `3D Viz` and used with JTC in a matter of clicks.
@@ -244,6 +267,12 @@ Let us now go back to the application we created earlier in the guide, that cons
 
 
 ### Recording frames and joint positions
+
+:::info 
+
+A dedicated example on recording application frames can be found [here](./application-frames.md).
+
+:::
 
 #### Create a frame from scratch
 
@@ -364,8 +393,8 @@ You may re-play your program by using `blending_factors` this time. Your payload
 ```yaml
 {
   frames: [start, frame_1, frame_2, frame_3, stop], 
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0],
-  blending_factors: [0.5, 0.5, 0.5]
+  durations: [2.0],
+  blending_factors: [0.5]
 }
 ```
 
@@ -374,14 +403,16 @@ or
 ```yaml
 {
   joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, stop], 
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0],
-  blending_factors: [0.5, 0.5, 0.5]
+  durations: [2.0],
+  blending_factors: [0.5]
 }
 ```
 
 Experiment with these values to observe the difference in the resulting trajectory. Note that, you will need at least
-3 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. If you need to,
-go to 3D Viz and record some additional frames.
+2 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. Note that if
+the first waypoint is identical to the robot's current configuration, this would also result in a straight-line motion
+to the final waypoint even though blending is in effect. If you need to, go to 3D Viz and record some additional frames.
+You can also try to apply different blending values for each waypoint to compare the difference in smoothness.
 :::
 
 #### Other considerations
@@ -409,7 +440,7 @@ result. You may compare your final application to the one shown above using the 
 ```yaml
 schema: 2-0-4
 dependencies:
-  core: v4.4.1
+  core: v4.4.2
 frames:
   frame_1:
     reference_frame: world
@@ -453,7 +484,7 @@ sequences:
           payload: |-
             {
               frames: [frame_1],
-              times_from_start: [1.5]
+              durations: [1.5]
             }
       - check:
           condition:
@@ -468,7 +499,7 @@ sequences:
           payload: |-
             {
               joint_positions: [jconfig_1],
-              times_from_start: [1.5]
+              durations: [1.5]
             }
       - check:
           condition:

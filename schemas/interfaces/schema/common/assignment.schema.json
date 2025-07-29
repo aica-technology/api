@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Assignment",
+  "description": "A generated value that can be assigned to a parameter or variable value.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "display_name": {
+      "description": "The human-readable assignment name.",
+      "examples": [
+        "Index",
+        "Target Frame"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "description": "A brief description of the assignment.",
+      "type": "string"
+    },
+    "assignment_type": {
+      "$ref": "parameter_type.schema.json"
+    },
+    "assignment_state_type": {
+      "$ref": "encoded_state_type.schema.json"
+    }
+  },
+  "required": [
+    "display_name",
+    "description",
+    "assignment_type"
+  ],
+  "if": {
+    "properties": {
+      "assignment_type": {
+        "const": "state"
+      }
+    },
+    "required": [
+      "assignment_type"
+    ]
+  },
+  "then": {
+    "required": [
+      "assignment_state_type"
+    ]
+  },
+  "else": {
+    "properties": {
+      "assignment_state_type": false
+    }
+  }
+}

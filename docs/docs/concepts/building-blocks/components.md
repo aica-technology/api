@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Components
 ---
 
@@ -7,9 +7,9 @@ title: Components
 
 Within an AICA System application, components are the building blocks of advanced robot behaviors.
 
-AICA components are wrappers for [ROS 2 nodes](../../ros-concepts/nodes.md)
-and [lifecycle nodes](../../ros-concepts/lifecycle-nodes.md)
-using [dynamic composition](../../ros-concepts/dynamic-composition.md) with additional abstractions for enhanced modularity
+AICA components are wrappers for [ROS 2 nodes](../ros-concepts/nodes.md)
+and [lifecycle nodes](../ros-concepts/lifecycle-nodes.md)
+using [dynamic composition](../ros-concepts/dynamic-composition.md) with additional abstractions for enhanced modularity
 and developer convenience.
 
 Components process data in a periodic step function, are configured using parameters and transfer data as signals to
@@ -60,7 +60,7 @@ the [`state_representation` library](https://aica-technology.github.io/control-l
 
 ## Signals
 
-Components define signals as inputs (subscribers) and outputs (publishers). Refer to [Signals](../signals.md) for more
+Components define signals as inputs (subscribers) and outputs (publishers). Refer to [Signals](./signals.md) for more
 information.
 
 :::note
@@ -72,7 +72,7 @@ By default, lifecycle components only publish outputs when they are in the `ACTI
 ## Predicates
 
 Components declare and broadcast key internal states as predicate messages, which are used by the Event Engine
-to trigger events. Refer to [Events](../events.md) for more information.
+to trigger events. Refer to [Events](./events.md) for more information.
 
 ### Auto lifecycle events
 
@@ -80,7 +80,7 @@ When a lifecycle components is loaded, it starts in the unconfigured state and n
 transition into different states.
 
 In the AICA System, lifecycle components can auto-configure and auto-activate themselves
-using [transition events](../events.md#transitions). Associating the `on_load` state transition with a
+using [transition events](./events.md#transitions). Associating the `on_load` state transition with a
 `lifecycle: configure` event enables the component to automatically configure itself. Equivalently, the `on_configure`
 transition can be used to trigger a `lifecycle: activate` event.
 
