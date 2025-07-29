@@ -3,15 +3,12 @@ sidebar_position: 9
 title: UR Hardware Interface
 ---
 
-import eventEdge from './assets/event-edge.png'
-import eventSourceHandle from './assets/event-source-handle.png'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import timerSettings from './assets/timer-settings.png'
-import triggerButtons from './assets/trigger-buttons.gif'
+
 import urHWIExternalControl from './assets/ur-hwi-external-control.png'
-import urHWITimerGraph from './assets/ur-hwi-timer-graph.png'
-import urHWITimerPlaying from './assets/urhwi-timer-running.gif'
+import urHWISequenceGraph from './assets/ur-hwi-sequence-graph.png'
+import urHWISequenceRunning from './assets/ur-hwi-sequence-running.gif'
 
 # Universal Robots
 
@@ -90,6 +87,8 @@ and zero the force-torque sensor. Examples in this section describe how to set u
 
 ### Exchange of control
 
+TODO: Remove the title, since we describe both exchange and payload adjustement, and nothing else will be added probably.
+
 A node running on the teaching pendant can be modified to hand over control to an AICA application that will perform a
 task. Once this task is finished, the application will hand over control to the pendant, so that the rest of the program
 runs. The following example shows how to achieve that:
@@ -107,28 +106,39 @@ runs. The following example shows how to achieve that:
 
 4. Click on the **+** icon in the **Controllers** list, and select the **UR Dashboard Controller**.
 
-5. Set up what the AICA application should be doing. For the purposes of this example, the application will just wait
-   for 3 seconds and then finish. Click on the **+** icon on the top right and add the **Timer** component from the core
-   collection.
+5. Set up what the AICA application should be doing. For the purposes of this example, the paylod of the robot will be
+   adjusted, using the same controller. Click on the **+** icon on the top right and add a new sequence.
 
-6. In the component's parameters, set the timeout to 3 seconds and enable the auto-configure and auto-activate options.
+6. Set the first step of the sequence to a delay of 2 seconds. Then, click on the **+** icon right next to the sequence
+   block to add a second step, which should be an event. Connect it to the **Set payload** service of the Dashboard
+   Controller, and click on the gear icon on top of the line to modify the arguments.
 
-7. Connect the **Is timed out** predicate to the **Hand back control** service of the Dashboard Controller, as well as
-   to the component itself, setting the event action to **Unload**.
+7. The service call should be formatted as a dictionary of the required values, the mass and the center of gravity. For
+   example, it could look like the following:
 
-8. Finally, connect the **Program running** predicate of the Dashboard Controller to the timer, and set the event action
-   to **Load**. The application graph should look like the following:
+```yaml
+{ mass: 1.2, 
+  cog: [0.15, 0.1, 0.05] 
+}
+```
+
+8. Add another delay of 2 seconds, and finally another event, connected to the **Hand back control** service of the
+   Dashboard Controller.
+
+9. The sequence should start when the pendant hands over control. To achieve that, connect the **Programm running**
+   predicate of the controller to the sequence block, setting the event to **Start**. The application graph should look
+   like the following:
 
 <div class="text--center">
-  <img src={urHWITimerGraph} alt="Timer application graph" />
+  <img src={urHWISequenceGraph} alt="Sequence application graph" />
 </div>
 
 Click on **Play** to run the AICA application. Repeat the same at the teaching pendant's screen to run the program. The
-robot moves through the positions and stops to hand over control to AICA Studio. When the timeout occurs, control is
+robot moves through the positions and stops to hand over control to AICA Studio. The payload is adjusted, and control is
 handed back to the pendant.
 
 <div class="text--center">
-  <img src={urHWITimerPlaying} alt="Exchange of control" />
+  <img src={urHWISequenceRunning} alt="Exchange of control" />
 </div>
 
 ## Hand-guiding controller
