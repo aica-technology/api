@@ -23,7 +23,7 @@ on the host machine.
 
 ### Configuring your system when Docker Desktop for Linux is installed
 
-If you are using Linux but do not have Docker Desktop for Linux installed, you may skip this section entirely.
+If you are using Linux with Docker Engine only, you may skip this section entirely.
 
 For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that 
 AICA System software is used at its full potential.
