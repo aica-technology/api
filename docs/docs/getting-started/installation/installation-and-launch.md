@@ -9,7 +9,7 @@ title: Installation and launch
 
 AICA System software is distributed with Docker images and executed with Docker containers. That is, it can practically
 be installed on any system that supports recent Docker versions. However, due to performance advantages (e.g., real-time
-task execution), AICA suggests using Linux-based platforms that can be easily configured for such considerations. 
+task execution), AICA suggests using Linux-based platforms that can be easily configured for such considerations.
 
 Before proceeding, you will need to install Docker Engine on the host machine. Depending on your platform, the
 installation process may vary or require additional steps. Below, you will find instructions per operating system:
@@ -36,7 +36,7 @@ to create the `docker` group and add your user.
 For Ubuntu users that need **Docker Desktop for Linux**, note that its installation does **not** include all the
 necessary dependencies. Follow the instructions from the provided link to ensure that all requirements are met.
 
-When installed, Docker Desktop for Linux can **not** be used to manage images and containers created by the AICA System. 
+When installed, Docker Desktop for Linux can **not** be used to manage images and containers created by the AICA System.
 Additionally, you may experience some issues when using AICA System software due to Docker Desktop's custom
 configuration (see [manual installation](../../reference/manual-installation-launch.md) for more details).
 
@@ -47,11 +47,11 @@ configuration (see [manual installation](../../reference/manual-installation-lau
 <details>
 <summary>MacOS</summary>
 
-The simplest way to install Docker Engine on MacOS is through 
-[Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/). Ensure that 
+The simplest way to install Docker Engine on MacOS is through
+[Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/). Ensure that
 [these](../../reference/manual-installation-launch.md#configuring-docker-on-your-linux-or-macos-system) additional configuration steps are
 taken.
-Note that some limitations may apply regarding commercial use (see relevant article 
+Note that some limitations may apply regarding commercial use (see relevant article
 [here](https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/)).
 
 :::note
@@ -70,8 +70,7 @@ RViz will not be made available through AICA Launcher.
 <summary>Windows</summary>
 
 **No official support is currently provided for Windows machines.** However, with the correct Windows Subsystem for
-Linux (WSL) configuration you can install the AICA framework manually. 
-<!-- TODO: update/provide link (see [manual installation instructions](../../reference/manual-installation-launch.md) for reference). -->
+Linux (WSL) configuration you can install the AICA framework manually.
 
 </details>
 

@@ -16,7 +16,7 @@ line without the use of AICA Launcher. The pre-requisites are still a valid lice
 For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
 on the host machine.
 
-## Configuring Docker on your Linux or MacOS system 
+## Configuring Docker on your Linux or MacOS system
 
 <details>
 <summary>Linux</summary>
@@ -25,18 +25,18 @@ on the host machine.
 
 If you are using Linux with Docker Engine only, you may skip this section entirely.
 
-For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that 
+For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that
 AICA System software is used at its full potential.
 
 The main issue originates from Docker Desktop for Linux creating a custom Docker context (`desktop-linux`) and endpoint
 to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, without
 contaminating other parts of your system. However, creating a custom context with an endpoint in your `/home` directory
-means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that 
-some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal). 
+means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that
+some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal).
 
 #### Configuring the Docker context
 
-`desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations, 
+`desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations,
 make sure to change the context before building or executing AICA applications, or running AICA Launcher.
 
 See the available contexts on your system:
@@ -46,7 +46,7 @@ docker context ls
 ```
 
 You should see a `default` choice alongside `desktop-linux` that Docker Desktop for Linux created. If you do not see
-it, then you may have missed some of the installation steps (refer to the 
+it, then you may have missed some of the installation steps (refer to the
 [installation guide](../getting-started/installation/installation-and-launch.md)). If it is indeed there, make sure it is active:
 
 ```shell
@@ -72,7 +72,7 @@ the `docker` command through the terminal, Docker Desktop must be running.
 The default settings of Docker Desktop are usually sufficient for everything AICA Studio needs. However, in some cases
 (e.g., settings carried over from older Docker Desktop installations) you may need to verify the following:
 
-- Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to 
+- Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to
 `Allow the default Docker socket to be used (requires password)` and `Allow privileged port mapping (requires password)`.
 
 <div class="text--center">
