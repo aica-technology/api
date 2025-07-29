@@ -3,15 +3,16 @@ sidebar_position: 1
 title: Motion generation
 ---
 
-import signalRosPose from './assets/signal-ros-pose.png'
+import pointAttractor2d from './assets/point-attractor-2d.png'
+import pointAttractor3d from './assets/point-attractor-3d.png'
 
 # Motion generation
 
 Motion generation plays an important role in robotics because it determines how a robot moves to accomplish its task. At
-its core, motion generation is about planning and executing that allow a robot to reach a desired position or follow a
-specific path, while taking into account constraints such as obstacles, joint limits, and safety requirements. This
-process is essential for enabling robots to perform useful work, whether it's picking up objects, assembling parts, or
-navigating through an environment.
+its core, motion generation is about planning and executing trajectories that allow a robot to reach a desired position
+or follow a specific path, while taking into account constraints such as obstacles, joint limits, and safety
+requirements. This process is essential for enabling robots to perform useful work, whether it's picking up objects,
+assembling parts, or navigating safely through an environment.
 
 One can differentiate between two approaches to motion generation; offline and online.
 
@@ -38,7 +39,7 @@ combination of both approaches is used:
 - or the task is divided into motions that simply move the robot from one point to another using fast and optimized
   trajectories and complex behaviors where the desired robot state is recomputed and adapted online.
 
-AICA Core comes with a few online motion generator components that use the current pose of the robot to calculate the
+AICA Core comes with several online motion generator components that use the current state of the robot to calculate the
 next command using a mathematical concept called _Dynamical System_.
 
 ## Dynamical Systems
@@ -51,13 +52,13 @@ $$
 \frac{\mathrm{d}}{\mathrm{d}t}x = \dot x = f(x), x \in \R^n.
 $$
 
-This equation says that the temporal rate of change of the state, e.g. the _velocity_ of the state, is purely a function
-of the _current state_, for all states $x$. In other words, the function $f(x)$ generates a motion given the
-instantaneous position of the robot, independent of the point in time. The time-independence is a crucial point that
-makes such systems very capable for reactive motion generation. As offline trajectories are commonly parameterized over
-time, any disturbances or changes in target will either require replanning or result in failure of the execution because
-the system detects a deviation from the desired path. On the other hand, a DS is able to reject such disturbances
-because at any point in space, it still knows where to go next in order to reach the target.
+This equation says that the temporal rate of change of the state, e.g. the _velocity_ $\dot x$ of the state, is purely a
+function of the _current state_ $x$, for all states $x$. In other words, the function $f(x)$ generates a motion given
+the instantaneous position of the robot, independent of time. The time-independence is a crucial point that makes such
+systems very capable for reactive motion generation. As offline trajectories are commonly parameterized over time, any
+disturbances or changes in target will either require replanning or result in failure of the execution because the
+system detects a deviation from the desired path. On the other hand, a DS is able to reject such disturbances because at
+any point in space, it still knows where to go next in order to reach the target.
 
 :::tip
 
@@ -71,4 +72,23 @@ online.
 
 ### Point Attractor Dynamical System
 
+In a Point Attractor DS, the motion is always directed toward a specific point in space, known as the attractor.
+Independent of where the state of the system is initialized, it will be drawn toward the attractor in a straight line,
+the strength of the attraction being proportional to the distance to the attractor. The differential equation of this DS
+can be written as
 
+$$
+\dot x = f(x) = K(x^{\ast} - x), x \in \R^n,
+$$
+
+where $x^{\ast}$ represents the attractor, and $K$ is an additional scaling constant. The figures below show the
+response of such a DS in 2D and 3D. It can be observed that all arrows point directly at the attractor and the further
+away from the attractor they are, the longer they are.
+
+<div class="text--center" style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
+  <img src={pointAttractor2d} alt="2D Point Attractor" style={{ maxWidth: '45%', height: 'auto' }} />
+  <img src={pointAttractor3d} alt="3D Point Attractor" style={{ maxWidth: '45%', height: 'auto' }} />
+</div>
+
+Point Attractor DS are especially useful for tasks like reaching or positioning, as they provide stable and predictable
+convergence to a (potentially moving) desired goal.
