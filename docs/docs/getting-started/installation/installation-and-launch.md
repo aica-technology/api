@@ -20,8 +20,8 @@ installation process may vary or require additional steps. Below, you will find 
 While AICA currently distributes AICA Launcher for Debian-based systems, other distributions where Docker can be
 installed work equally as well through any browser. You may find distribution-specific instructions to install Docker
 Engine [here](https://docs.docker.com/engine/install/) and follow the manual installation steps to build and run AICA
-Core [here](../../reference/manual-installation-launch.md). Note that you can and it is **recommended** that you skip
-the installation of Docker Desktop for Linux.
+Core [here](../../reference/manual-installation-launch.md). It is **recommended** that you skip the installation of
+Docker Desktop for Linux (see below).
 
 :::note
 
@@ -33,7 +33,7 @@ to create the `docker` group and add your user.
 
 :::caution
 
-For Ubuntu users that need a **Docker Desktop for Linux**, note that its installation does **not** include all the
+For Ubuntu users that need **Docker Desktop for Linux**, note that its installation does **not** include all the
 necessary dependencies. Follow the instructions from the provided link to ensure that all requirements are met.
 
 When installed, Docker Desktop for Linux can **not** be used to manage images and containers created by the AICA System. 
@@ -48,16 +48,15 @@ configuration (see [manual installation](../../reference/manual-installation-lau
 <summary>MacOS</summary>
 
 The simplest way to install Docker Engine on MacOS is through 
-[Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/). However, some limitations may apply
-regarding commercial use (see relevant article 
-[here](https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/)). If you intend to
-operate Docker Desktop within the terms of service, make sure that 
+[Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/). Ensure that 
 [these](../../reference/manual-installation-launch.md#configuring-docker-on-your-linux-or-macos-system) additional configuration steps are
 taken.
+Note that some limitations may apply regarding commercial use (see relevant article 
+[here](https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/)).
 
 :::note
 
-The majority of AICA Studio and Launcher features are available in MacOS. However:
+The majority of AICA Studio and Launcher features are available on macOS. However:
 
 - Forwarding graphics is currently impossible due to MacOS' incompatibility with OpenGL 2.1+. As a result, tools like
 RViz will not be made available through AICA Launcher.
