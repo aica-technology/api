@@ -144,16 +144,12 @@ class YoloToMarker(LifecycleComponent):
         self.fov = [69, 42]
         self.image_size = [480, 840]
         self.object_distance = 0.6
-
+        
         self.add_parameter(sr.Parameter("to_find", 'person', sr.ParameterType.STRING), "thing to find and track")
         self.add_parameter(sr.Parameter("fov", [69.0, 42.0], sr.ParameterType.DOUBLE_ARRAY), "Camera FoV in X")
         self.add_parameter(sr.Parameter("image_size", [480, 840], sr.ParameterType.DOUBLE_ARRAY), "Size of image (pixels)")
         self.add_parameter(sr.Parameter("object_distance", 0.6, sr.ParameterType.DOUBLE), "Target position (Z)")
-
-    def on_validate_parameter_callback(self, parameter: sr.Parameter) -> bool:
-        # validate an incoming parameter value according to some criteria
-        return True
-
+    
     def on_configure_callback(self) -> bool:
         # configuration steps before running
         self.fov = self.get_parameter_value("fov")
@@ -167,14 +163,14 @@ class YoloToMarker(LifecycleComponent):
         image_size = np.asarray(self.image_size)
         ratio = np.clip((xy - image_size / 2) / (image_size / 2), -1, 1)
 
-        position = ratio * self.object_distance * np.tan(self.fov/2)
+        position = ratio * self.object_distance * np.tan(self.fov/2)    
 
         position = (np.append(position, self.object_distance)).reshape((3,1))
         return position
-
+    
     def on_step_callback(self):
         try:
-            data = json.loads(self.json_input)
+            data = json.loads(self.json_input)['detections']
             # self.get_logger().info(data)
 
             position = {}
@@ -185,8 +181,8 @@ class YoloToMarker(LifecycleComponent):
                 ])
                 position_key = f"{detection['class_name']}"
                 position[position_key] = self.__centre_pt_to_position(centre_of_bbox)
-
-            self.get_logger().info(f'{position}')
+            
+            self.get_logger().info(f'{position}')   
 
             # output pose of target object
             to_find = self.get_parameter_value("to_find")
