@@ -12,9 +12,8 @@ converts bounding boxes into a 3D pose. The example works with either an Intel R
 `collections/intel-realsense-collection` or the Camera Streamer from `components/core-vision`. The final application will be able to track an object with a robot based on a fixed camera position.
 
 <div class="text--center">
-  <img src={rvizgif} alt="Moving the robot towards an object in RVis" />
+  <img src={rvizgif} alt="Moving the robot towards an object in RViz" />
 </div>
-
 
 ## Setup
 To run a YOLO executor, you need a yolo model file in ONNX format and a YAML class file. Yolo models are widely available in PT formats. For example, download the lightweight YOLO12n.pt from ultralytics [here](https://github.com/sunsmarterjie/yolov12).
@@ -32,7 +31,7 @@ Move the ONNX model file and the YAML class file into a new directory.
 
 In AICA Launcher, create a configuration with the following core version and packages:
 
-- AICA Core v4.3.2
+- AICA Core v4.4.2
 - `collections/object-detection` (TODO: specify version)
 - `collections/intel-realsense-collection v1.0.0`
 - `components/core-vision v1.0.0`
@@ -64,7 +63,6 @@ The complete application is shown below:
 The YOLO Executors parameters are as follows:
 ![Graph](./assets/object-detection-yolo-parameters.png)
 
-
 ### Running the application
 Start the application in AICA Studio. Then open **RViz**: bottom-right gear icon → "Launch RViz", then RViz → Add → By
 topic → `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated output. It should show the camera
@@ -75,7 +73,7 @@ model outputs.
 
 :::note
 
-Only users with a Linux host can visualize the robot with RViz. On macOS, AICA Launcher will not show the RViz option.
+Only users with a Linux host can visualize the image stream RViz. On macOS, AICA Launcher will not show the RViz option.
 
 :::
 
@@ -101,7 +99,6 @@ make 3 simplifying assumptions:
   ```bash
   ./initialize_package.sh
   ```
-
   Name it `component_utils` and include a Python Lifecycle component
 
 - Rename `py_lifecycle_component.py` to `yolo_to_marker.py` in `source/component_utils/component_utils/`
@@ -326,7 +323,7 @@ To drive the robot towards the object position it needs to be in `world` frame. 
 We can use a *Signal Point Attractor* to move the robot end effector towards the object. Add the component to the
 application, and set it to **auto-configure** and **auto-activate**. The load node can be connected to the `On Activate`
 transition in *YOLO to Marker*. This means that the robot will not move until after *YOLO to Marker* has started. The
-`Cartesian State`, under *Robot State Broadcaster* should be connected to the `Input State`_` of *Signal Point Attractor*,
+`Cartesian State`, under *Robot State Broadcaster* should be connected to the `Input State` of *Signal Point Attractor*,
 while the `object position` (output of *Cartesian Transformation*) is connected to `Attractor State`. Finally, 'Output twist' should be connected to an *IK Velocity Controller* on the *Hardware Interface*, this can
 be added under **Controllers**. The final graph is shown below:
 
