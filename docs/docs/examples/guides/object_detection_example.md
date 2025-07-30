@@ -336,7 +336,7 @@ be added under **Controllers**. The final graph is shown below:
 <summary>yaml application</summary>
 
 ```yaml
-schema: 2-0-3
+schema: 2-0-4
 dependencies:
   core: v4.2.0
 frames:
@@ -353,36 +353,12 @@ frames:
       z: 0
 on_start:
   load:
-    - component: video_player_component
     - hardware: hardware
     - component: yolo_executor
+    - component: camera_streamer
     - component: tf_to_signal
+    - component: yolo_to_marker
 components:
-  yolo_executor:
-    component: object_detection_components::YOLOExecutor
-    display_name: YOLO Executor
-    events:
-      transitions:
-        on_configure:
-          lifecycle:
-            component: yolo_executor
-            transition: activate
-        on_load:
-          lifecycle:
-            component: yolo_executor
-            transition: configure
-        on_activate:
-          load:
-            component: yolo_to_marker
-    parameters:
-      rate: !!float 1.0
-      conf_threshold: 0.4
-      model_file: /files/best.onnx
-      classes_file: /files/coco8.yaml
-    inputs:
-      rgb_image: /video_player_component/video_feed
-    outputs:
-      bounding_boxes: /yolo_executor/bounding_boxes
   yolo_to_marker:
     component: component_utils::YoloToMarker
     display_name: YOLO to marker
@@ -453,23 +429,45 @@ components:
       frame: camera_frame
     outputs:
       pose: /tf_to_signal/pose
-  video_player_component:
-    component: component_utils::VideoPlayer
-    display_name: Video Player Component
+  camera_streamer:
+    component: core_vision_components::image_streaming::CameraStreamer
+    display_name: Camera Streamer
     events:
       transitions:
         on_load:
           lifecycle:
-            component: video_player_component
+            component: camera_streamer
             transition: configure
         on_configure:
           lifecycle:
-            component: video_player_component
+            component: camera_streamer
             transition: activate
     parameters:
-      video_path: /files/video.MOV
+      source: /files/videos/hand.mp4
+      undistorted_image_cropping: false
     outputs:
-      video_feed: /video_player_component/video_feed
+      image: /camera_streamer/image
+  yolo_executor:
+    component: object_detection_components::YOLOExecutor
+    display_name: YOLO Executor
+    events:
+      transitions:
+        on_load:
+          lifecycle:
+            component: yolo_executor
+            transition: configure
+        on_configure:
+          lifecycle:
+            component: yolo_executor
+            transition: activate
+    parameters:
+      rate: !!float 1.0
+      model_file: /files/onnx/best.onnx
+      classes_file: /files/onnx/coco8.yaml
+    inputs:
+      rgb_image: /camera_streamer/image
+    outputs:
+      bounding_boxes: /yolo_executor/bounding_boxes
 hardware:
   hardware:
     display_name: Hardware Interface
@@ -513,9 +511,6 @@ graph:
       x: 300
       y: 100
     components:
-      yolo_executor:
-        x: 940
-        y: 20
       yolo_to_marker:
         x: 1440
         y: 60
@@ -526,10 +521,13 @@ graph:
         x: 960
         y: 600
       tf_to_signal:
-        x: 480
+        x: 460
         y: 560
-      video_player_component:
-        x: 500
+      camera_streamer:
+        x: 520
+        y: 160
+      yolo_executor:
+        x: 1020
         y: 100
     hardware:
       hardware:
@@ -546,35 +544,47 @@ graph:
           y: 580
         - x: 940
           y: 860
-    on_start_on_start_video_player_component_video_player_component:
+    yolo_executor_on_activate_yolo_to_marker_yolo_to_marker:
       path:
-        - x: 480
-          y: 40
-        - x: 480
-          y: 160
+        - x: 1380
+          y: 200
+        - x: 1380
+          y: 120
     on_start_on_start_yolo_executor_yolo_executor:
       path:
         - x: 680
           y: 40
         - x: 680
-          y: 80
-    on_start_on_start_tf_to_signal_tf_to_signal:
+          y: 160
+    on_start_on_start_camera_streamer_camera_streamer:
       path:
-        - x: 440
+        - x: 480
           y: 40
-        - x: 440
-          y: 620
+        - x: 480
+          y: 220
     hardware_hardware_robot_state_broadcaster_cartesian_state_signal_point_attractor_state:
       path:
         - x: 1400
           y: 520
         - x: 1400
           y: 780
-    yolo_executor_on_activate_yolo_to_marker_yolo_to_marker:
+    camera_streamer_image_yolo_executor_rgb_image:
       path:
-        - x: 1380
-          y: 200
-        - x: 1380
+        - x: 980
+          y: 420
+        - x: 980
+          y: 360
+    on_start_on_start_tf_to_signal_tf_to_signal:
+      path:
+        - x: 440
+          y: 40
+        - x: 440
+          y: 620
+    on_start_on_start_yolo_to_marker_yolo_to_marker:
+      path:
+        - x: 920
+          y: 40
+        - x: 920
           y: 120
     yolo_to_marker_on_activate_signal_point_attractor_signal_point_attractor:
       path:
@@ -588,10 +598,16 @@ graph:
           y: 580
     tf_to_signal_on_load_cartesian_transformation_cartesian_transformation:
       path:
-        - x: 900
+        - x: 880
           y: 740
-        - x: 900
+        - x: 880
           y: 660
+    yolo_executor_bounding_boxes_yolo_to_marker_json_input:
+      path:
+        - x: 1420
+          y: 360
+        - x: 1420
+          y: 320
     yolo_to_marker_marker_pose_cartesian_transformation_input_2:
       path:
         - x: 1860
