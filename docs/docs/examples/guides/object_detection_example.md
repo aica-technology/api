@@ -73,7 +73,7 @@ model outputs.
 
 :::note
 
-Only users with a Linux host can visualize the image stream RViz. On macOS, AICA Launcher will not show the RViz option.
+Only users with a Linux host can visualize the image stream with RViz. On macOS, AICA Launcher will not show the RViz option.
 
 :::
 
