@@ -20,7 +20,7 @@ One can differentiate between two approaches to motion generation; offline and o
 enables optimized, collision-free paths and is ideal for predictable, structured settings. Generated trajectories are
 rolled out in **open loop**, meaning that there is no feedback mechanism that would inform the system about
 disturbances. In other words, it lacks adaptability to real-time changes or sensor feedback. In the AICA System, the
-[Joint Trajectory Controller](../guides/jtc-guide.md) often acts as simple offline motion generator, creating and
+[Joint Trajectory Controller](../controllers/jtc.md) often acts as simple offline motion generator, creating and
 rolling out a trajectory through a certain number of waypoints in a given amount of time without taking into account the
 environment.
 
@@ -92,3 +92,5 @@ away from the attractor they are, the longer they are.
 
 Point Attractor DS are especially useful for tasks like reaching or positioning, as they provide stable and predictable
 convergence to a (potentially moving) desired goal.
+
+<!-- TODO: link to examples -->
