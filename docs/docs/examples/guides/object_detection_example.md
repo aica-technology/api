@@ -282,7 +282,7 @@ With the application running the logs should show the 3D position in the camera_
 
 #### Creating a frame and converting it to a signal
 
-Add a *Hardware Interface* node to the application and select the `Generic six-axis robot arm` in the `URDF` selection, then run the application. When it is running, select "3D Viz" at
+Add a Hardware Interface node to the application and select the `Generic six-axis robot arm` in the `URDF` selection, then run the application. When it is running, select "3D Viz" at
 the top right. Record a frame `tool0` and name it `camera_frame`; this is the position of the camera. It can be moved by
 dragging the axis markers, with the Z direction as the direction in which the camera is pointing. Note that the robot
 will move to where the objects are detected, which may be unreachable depending on the camera position, and cause the
@@ -312,21 +312,29 @@ frames:
       z: 0
 ```
 
-To convert the frame to a signal add *TF to Signal* from **AICA Core Components**, connect the **load** node to the *on start* block (purple square with a black play symbol), and configure the component to **auto-configure**, **auto-activate**, set `camera_frame` and `Reference frame` to world. With the application running the camera frame can be observed under
+To convert the frame to a signal: 
+- Add TF to Signal from AICA Core Components package
+  - Connect the load node to the On Start block (purple square with a black play symbol)
+  - Configure the component to **auto-configure**, **auto-activate**
+  - Set camera_frame and Reference frame to world. 
+With the application running the camera frame can be observed under
 `ROS Topics/tf_to_signal/pose(modulo_interfaces/msg/EncodedState)`.
 
 #### Transforming a frame to world
 
-To drive the robot towards the object position it needs to be in `world` frame. The *Cartesian Transformation* component can convert from `camera_frame` to `world`. Add it to the application and connect the load node. Finally, connect the `pose` output from *TF to Signal* to `Input 1`, and the output of *YOLO to Marker* to `Input 2`. The output of *Cartesian Transformation* is now the object position in the world frame.
+To drive the robot towards the object position it needs to be in world frame. The Cartesian Transformation component can convert from camera_frame to world. Add it to the application and connect the load node, connect the `Pose Output` from TF to Signal to `Input 1`, and the output of YOLO to Marker to `Input 2`. The output of Cartesian Transformation is now the object position in the world frame.
 
 #### Moving a robot towards an object
 
-We can use a *Signal Point Attractor* to move the robot end effector towards the object. Add the component to the
-application, and set it to **auto-configure** and **auto-activate**. The load node can be connected to the `On Activate`
-transition in *YOLO to Marker*. This means that the robot will not move until after *YOLO to Marker* has started. The
-`Cartesian State`, under *Robot State Broadcaster* should be connected to the `Input State` of *Signal Point Attractor*,
-while the `object position` (output of *Cartesian Transformation*) is connected to `Attractor State`. Finally, 'Output twist' should be connected to an *IK Velocity Controller* on the *Hardware Interface*, this can
-be added under **Controllers**. The final graph is shown below:
+We can use a Signal Point Attractor to move the robot end effector towards the object. 
+- Add the Signal Point Attractor to the application
+  - Configure the component to **auto-configure** and **auto-activate**. 
+  - Connect the load node to the On Activate transition in YOLO to Marker. This means that the robot will not move until after YOLO to Marker has started. 
+  - Connect `Cartesian state`, under Robot State Broadcaster to the `Input pose` of Signal Point Attractor.
+  - Connect the output from Cartesian Transformation to `Attractor pose`. 
+  - Connect `Output twist` to an IK Velocity Controller on the Hardware Interface, this can be added under Controllers. 
+
+The final graph is shown below:
 
 ![Graph](./assets/object-detection-example-graph.png)
 
