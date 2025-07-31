@@ -14,7 +14,7 @@ import urHWISequenceRunning from './assets/ur-hwi-sequence-running.gif'
 
 Universal Robots (UR) offers a variety of collaborative robotic arms widely adopted across industries and research for
 their ease of use, simplicity and flexibility. UR robots are easy to use and integrate thanks to a graphical interface
-on their teaching pendant and support for tailor-made, customized scripting via URScript.
+on their teach pendant and support for tailor-made, customized scripting via URScript.
 
 The ecosystem around UR robots is highly developer-friendly, with open-source drivers, documentation, and integration
 support for frameworks such as ROS (Robot Operating System). Their modular architecture and standardized communication
@@ -56,7 +56,7 @@ Safety features remain active in Remote Control.
 
 :::
 
-Choosing one of the two modes depends on the specific situation at hand. During a development phase, it might be
+Choosing one of the two modes depends on the specific task at hand. During a development phase, it might be
 preferable to create the programs in Local Mode, whereas in a production setting, PLCs would be responsible to load and
 start the desired programs while the robot is in Remote Control. With the AICA System, users have the possiblity to get
 the best of both modes:
@@ -117,7 +117,8 @@ runs. The following example shows how to achieve that:
    example, it could look like the following:
 
 ```yaml
-{ mass: 1.2, 
+{ 
+  mass: 1.2, 
   cog: [0.15, 0.1, 0.05] 
 }
 ```
