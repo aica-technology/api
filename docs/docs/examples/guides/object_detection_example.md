@@ -1,15 +1,16 @@
 ---
 sidebar_position: 6
-title: Using YOLO to Track Objects
+title: Using YOLO to track objects
+unlisted: true
 ---
 
 import rvizgif from './assets/object-detection-example-rviz.gif'
 
 # Using YOLO to track objects
 
+<!-- TODO: replace `Object Detection Components` with whatever the package name would be in Launcher -->
 This example provides a use case for `Object Detection Components`. We show how to create a custom component which
-converts bounding boxes into a 3D pose. The example works with either an Intel Realsense camera using
-`collections/intel-realsense-collection` or the Camera Streamer from `components/core-vision`. The final application will be able to track an object with a robot based on a fixed camera position.
+converts bounding boxes into a 3D pose. The example works with any RBG `sensor_msgs::msg::Image` signal, such as provided by the Camera Streamer component from `components/core-vision`. The final application will be able to track an object with a robot based on a fixed camera position.
 
 <div class="text--center">
   <img src={rvizgif} alt="Moving the robot towards an object in RViz" />
@@ -32,30 +33,29 @@ Move the ONNX model file and the YAML class file into a new directory.
 In AICA Launcher, create a configuration with the following core version and packages:
 
 - AICA Core v4.4.2
-- `collections/object-detection` (TODO: specify version)
-- `collections/intel-realsense-collection v1.0.0`
-- `components/core-vision v1.0.0`
+- `collections/object-detection` for the YOLO Executor component (TODO: check package name post-release and specify version)
+- `components/core-vision v1.0.0` for the Camera Streamer component
 
 Under Advanced Settings, add a volume containing the folder where you stored your YOLO model files and link it to `/files`.
 
 ## Using the YOLO Executor
 
-The *YOLO Executor* component observes runs the YOLO segmentation model on an image. 
+The YOLO Executor component observes runs the YOLO segmentation model on an image. 
 It takes a camera stream and outputs the segmented image as well as the locations of bounding boxes on the image. The user can set the `Object Class` parameter, which will cause the component to set the predicate `Object Detected` to `True` when the specified object is found in the image. The `Confidence Threshold` parameter is the minimum score a predicted bounding box must have to be considered a valid detection. `IOU Threshold` is used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box will be discarded. For now we leave them as default values.
 
 To test the YOLO executor:
-- Remove the `*Hardware Interface*`.
-- Add the following components:
-  - `Realsense2 Camera/Realsense Camera` if you have an Intel Realsense camera.
-    Otherwise, use the `Core Vision Components/Camera Streamer`, setting the `source` parameter.
+- Create a new application
+- Remove the default Hardware Interface node
+- Add the Camera Streamer component from the core vision package
+  - Set the `Source` parameter to a video device or file accordingly.
+  - Turn on the **auto-configure** and **auto-activate** switches
+- Add the YOLO Executor component
+    - Set the `Model Path` parameter to the `.onnx` file, e.g., `/files/yolo12n.onnx`
+    - Set the `Classes Path` parameter to the yaml label file, e.g., `/files/coco.yaml`
+    - Set the `Rate` parameter to 3 (works on most machines), on a machine with a GPU this can be set to higher.
     - Turn on the **auto-configure** and **auto-activate** switches
-  - `Object Detection Components/YOLO Executor`
-    - Set `Model Path` to the `.onnx` file, e.g., `/files/yolo12n.onnx`
-    - Set `Classes Path` to the yaml label file, e.g., `/files/coco.yaml`
-    - Set `Rate` to 3 (works on most machines), on a machine with a GPU this can be set to higher.
-    - Turn on the **auto-configure** and **auto-activate** switches
-- Connect both components’ _load nodes_ to load on program start
-- Connect the `Image` output of the `Realsense2 Camera`/`Camera Streamer` to the `RGB Image` input of the *YOLO Executor*
+- Connect the output of the start node to each component to load them when the application is started
+- Connect the `Image` output of the Camera Streamer to the `RGB Image` input of the YOLO Executor
 
 The complete application is shown below:
 ![Graph](./assets/object-detection-using-yolo-graph.png)
@@ -111,7 +111,7 @@ make 3 simplifying assumptions:
 
 #### Component code
 
-Below is the core implementation, which can be copied into the respective files. The component reads a JSON from *YOLO Executor*, projects bounding boxes into 3D using FoV, camera height, outputs a `CartesianState` for robot control.
+Below is the core implementation, which can be copied into the respective files. The component expects a JSON string as input provided by the YOLO Executor component, projects bounding boxes into 3D based on camera height and field of view, and outputs a `CartesianState` for robot control.
 
 <details>
 <summary> yolo_to_marker.py </summary>
@@ -266,30 +266,35 @@ Enter the component folder in terminal and run
 docker build -f aica-package.toml -t objectdetection .
 ```
 
-Next, configure AICA Studio and add **objectdetection** under Custom Packages. After launching, you should see
-**Component Utils** under **Add Component** and be able to add *YOLO to Marker*.
+Next, edit the AICA Launcher configuration and enter `objectdetection` under Custom Packages. After launching, you should see 
+the Component Utils package listed in the "Add Component" menu and be able to add the custom YOLO to Marker component.
 
 ### Application setup
 
-Connect the `Bounding Boxes` output of *YOLO Executor* to `JSON Input` on *YOLO to Marker* then configure it with
-**auto-configure** and **auto-activate**. You should also set the parameters based on your camera and what you are filming.
-Set `rate` to match that of *YOLO Executor*. Set the `Object to Track` parameter to "person" to track yourself in the frame. With the application running the logs should show the 3D position in the camera_frame.
+- Add the YOLO to Marker component to the previously configured application
+  - Set the `Rate` parameter to match the rate of the YOLO Executor
+  - Set the `Object to Track` parameter to `person` to track yourself in the frame
+  - Set the remaining parameters based on your camera configuration
+  - Turn on the **auto-configure** and **auto-activate** switches
+- Connect the `Bounding Boxes` output of the YOLO Executor component to the `JSON Input` input of the YOLO to Marker component
+
+With the application running the logs should show the 3D position in the camera_frame.
 
 #### Creating a frame and converting it to a signal
 
-Add in a *Hardware Interface* if it is not already there and select Generic six-axis robot arm, and run the application. When it is running, select _3D Viz_ at
-the top right. Record a frame `tool0` and name it `camera_frame`, this is the position of the camera. It can be moved by
+Add a *Hardware Interface* node to the application and select the `Generic six-axis robot arm` in the `URDF` selection, then run the application. When it is running, select "3D Viz" at
+the top right. Record a frame `tool0` and name it `camera_frame`; this is the position of the camera. It can be moved by
 dragging the axis markers, with the Z direction as the direction in which the camera is pointing. Note that the robot
 will move to where the objects are detected, which may be unreachable depending on the camera position, and cause the
 robot controller to stop.
 
 :::note
 
-tool0 is the end effector frame for Generic six-axis robot arm, if using a different robot then the frame should be changed accordingly.
+`tool0` is the end effector frame for Generic six-axis robot arm. If using a different robot then the frame should be changed accordingly.
 
 :::
 
-Stop the application, and go back to _graph_, open the yaml code and check that the recorded frame is there, for
+Stop the application, and go back to "Graph", open the yaml code and check that the recorded frame is there, for
 example:
 
 ```yaml
