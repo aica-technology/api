@@ -10,14 +10,19 @@ import rvizgif from './assets/object-detection-example-rviz.gif'
 
 <!-- TODO: replace `Object Detection Components` with whatever the package name would be in Launcher -->
 This example provides a use case for `Object Detection Components`. We show how to create a custom component which
-converts bounding boxes into a 3D pose. The example works with any RBG `sensor_msgs::msg::Image` signal, such as provided by the Camera Streamer component from `components/core-vision`. The final application will be able to track an object with a robot based on a fixed camera position.
+converts bounding boxes into a 3D pose. The example works with any RBG `sensor_msgs::msg::Image` signal, such as
+provided by the Camera Streamer component from `components/core-vision`. The final application will be able to track an
+object with a robot based on a fixed camera position.
 
 <div class="text--center">
   <img src={rvizgif} alt="Moving the robot towards an object in RViz" />
 </div>
 
 ## Setup
-To run a YOLO executor, you need a yolo model file in ONNX format and a YAML class file. Yolo models are widely available in PT formats. For example, download the lightweight YOLO12n.pt from ultralytics [here](https://github.com/sunsmarterjie/yolov12).
+
+To run a YOLO executor, you need a yolo model file in ONNX format and a YAML class file. Yolo models are widely
+available in PT formats. For example, download the lightweight YOLO12n.pt from
+ultralytics [here](https://github.com/sunsmarterjie/yolov12).
 
 To convert a PT file to ONNX, run the following Python code with ultralytics installed:
 
@@ -27,28 +32,38 @@ model = YOLO("yolov12n.pt")
 model.export(format="onnx")  # creates 'yolov12n.onnx'
 ```
 
-For this example, also download the standard coco.yaml class file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml).
+For this example, also download the standard coco.yaml class
+file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml).
 Move the ONNX model file and the YAML class file into a new directory.
 
 In AICA Launcher, create a configuration with the following core version and packages:
 
 - AICA Core v4.4.2
-- `collections/object-detection` for the YOLO Executor component (TODO: check package name post-release and specify version)
+- `collections/object-detection` for the YOLO Executor component (TODO: check package name post-release and specify
+  version)
 - `components/core-vision v1.0.0` for the Camera Streamer component
 
-Under Advanced Settings, add a volume containing the folder where you stored your YOLO model files and link it to `/files`.
+Under Advanced Settings, add a volume containing the folder where you stored your YOLO model files and link it to
+`/files`.
 
 ## Using the YOLO Executor
 
-The YOLO Executor component observes runs the YOLO segmentation model on an image. 
-It takes a camera stream and outputs the segmented image as well as the locations of bounding boxes on the image. The user can set the `Object Class` parameter, which will cause the component to set the predicate `Object Detected` to `True` when the specified object is found in the image. The `Confidence Threshold` parameter is the minimum score a predicted bounding box must have to be considered a valid detection. `IOU Threshold` is used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box will be discarded. For now we leave them as default values.
+The YOLO Executor component observes runs the YOLO segmentation model on an image.
+It takes a camera stream and outputs the segmented image as well as the locations of bounding boxes on the image. The
+user can set the `Object Class` parameter, which will cause the component to set the predicate `Object Detected` to
+`True` when the specified object is found in the image. The `Confidence Threshold` parameter is the minimum score a
+predicted bounding box must have to be considered a valid detection. `IOU Threshold` is used during Non-Maximum
+Suppression (NMS) to decide whether two bounding boxes represent the same object. For example, if `IOU threshold` is set
+to 0.5, any box that overlaps more than 50% with a higher-scoring box will be discarded. For now we leave them as
+default values.
 
 To test the YOLO executor:
+
 - Create a new application
 - Remove the default Hardware Interface node
 - Add the Camera Streamer component from the core vision package
-  - Set the `Source` parameter to a video device or file accordingly.
-  - Turn on the **auto-configure** and **auto-activate** switches
+    - Set the `Source` parameter to a video device or file accordingly.
+    - Turn on the **auto-configure** and **auto-activate** switches
 - Add the YOLO Executor component
     - Set the `Model Path` parameter to the `.onnx` file, e.g., `/files/yolo12n.onnx`
     - Set the `Classes Path` parameter to the yaml label file, e.g., `/files/coco.yaml`
@@ -64,6 +79,7 @@ The YOLO Executors parameters are as follows:
 ![Graph](./assets/object-detection-yolo-parameters.png)
 
 ### Running the application
+
 Start the application in AICA Studio. Then open **RViz**: bottom-right gear icon → "Launch RViz", then RViz → Add → By
 topic → `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated output. It should show the camera
 images with bounding boxes drawn around key objects in it. The bounding boxes are published on the
@@ -73,7 +89,8 @@ model outputs.
 
 :::note
 
-Only users with a Linux host can visualize the image stream with RViz. On macOS, AICA Launcher will not show the RViz option.
+Only users with a Linux host can visualize the image stream with RViz. On macOS, AICA Launcher will not show the RViz
+option.
 
 :::
 
@@ -111,7 +128,9 @@ make 3 simplifying assumptions:
 
 #### Component code
 
-Below is the core implementation, which can be copied into the respective files. The component expects a JSON string as input provided by the YOLO Executor component, projects bounding boxes into 3D based on camera height and field of view, and outputs a `CartesianState` for robot control.
+Below is the core implementation, which can be copied into the respective files. The component expects a JSON string as
+input provided by the YOLO Executor component, projects bounding boxes into 3D based on camera height and field of view,
+and outputs a `CartesianState` for robot control.
 
 <details>
 <summary> yolo_to_marker.py </summary>
@@ -237,14 +256,20 @@ class YoloToMarker(LifecycleComponent):
       "description": "Camera field of view in degrees [horizontal, vertical]",
       "parameter_name": "fov",
       "parameter_type": "double_array",
-      "default_value": [69.0, 42.0]
+      "default_value": [
+        69.0,
+        42.0
+      ]
     },
     {
       "display_name": "Image Size",
       "description": "Image resolution [width, height] in pixels",
       "parameter_name": "image_size",
       "parameter_type": "double_array",
-      "default_value": [480, 840]
+      "default_value": [
+        480,
+        840
+      ]
     },
     {
       "display_name": "Object Distance",
@@ -266,23 +291,26 @@ Enter the component folder in terminal and run
 docker build -f aica-package.toml -t objectdetection .
 ```
 
-Next, edit the AICA Launcher configuration and enter `objectdetection` under Custom Packages. After launching, you should see 
+Next, edit the AICA Launcher configuration and enter `objectdetection` under Custom Packages. After launching, you
+should see
 the Component Utils package listed in the "Add Component" menu and be able to add the custom YOLO to Marker component.
 
 ### Application setup
 
 - Add the YOLO to Marker component to the previously configured application
-  - Set the `Rate` parameter to match the rate of the YOLO Executor
-  - Set the `Object to Track` parameter to `person` to track yourself in the frame
-  - Set the remaining parameters based on your camera configuration
-  - Turn on the **auto-configure** and **auto-activate** switches
-- Connect the `Bounding Boxes` output of the YOLO Executor component to the `JSON Input` input of the YOLO to Marker component
+    - Set the `Rate` parameter to match the rate of the YOLO Executor
+    - Set the `Object to Track` parameter to `person` to track yourself in the frame
+    - Set the remaining parameters based on your camera configuration
+    - Turn on the **auto-configure** and **auto-activate** switches
+- Connect the `Bounding Boxes` output of the YOLO Executor component to the `JSON Input` input of the YOLO to Marker
+  component
 
 With the application running the logs should show the 3D position in the camera_frame.
 
 #### Creating a frame and converting it to a signal
 
-Add a Hardware Interface node to the application and select the `Generic six-axis robot arm` in the `URDF` selection, then run the application. When it is running, select "3D Viz" at
+Add a Hardware Interface node to the application and select the `Generic six-axis robot arm` in the `URDF` selection,
+then run the application. When it is running, select "3D Viz" at
 the top right. Record a frame `tool0` and name it `camera_frame`; this is the position of the camera. It can be moved by
 dragging the axis markers, with the Z direction as the direction in which the camera is pointing. Note that the robot
 will move to where the objects are detected, which may be unreachable depending on the camera position, and cause the
@@ -290,7 +318,8 @@ robot controller to stop.
 
 :::note
 
-`tool0` is the end effector frame for Generic six-axis robot arm. If using a different robot then the frame should be changed accordingly.
+`tool0` is the end effector frame for Generic six-axis robot arm. If using a different robot then the frame should be
+changed accordingly.
 
 :::
 
@@ -312,32 +341,38 @@ frames:
       z: 0
 ```
 
-To convert the frame to a signal: 
+To convert the frame to a signal:
+
 - Add TF to Signal from AICA Core Components package
-  - Connect the load node to the On Start block (purple square with a black play symbol)
-  - Configure the component to **auto-configure**, **auto-activate**
-  - Set camera_frame and Reference frame to world. 
-With the application running the camera frame can be observed under
-`ROS Topics/tf_to_signal/pose(modulo_interfaces/msg/EncodedState)`.
+    - Connect the load node to the On Start block (purple square with a black play symbol)
+    - Configure the component to **auto-configure**, **auto-activate**
+    - Set camera_frame and Reference frame to world.
+      With the application running the camera frame can be observed under
+      `ROS Topics/tf_to_signal/pose(modulo_interfaces/msg/EncodedState)`.
 
 #### Transforming a frame to world
 
-To drive the robot towards the object position it needs to be in world frame. The Cartesian Transformation component can convert from camera_frame to world. Add it to the application and connect the load node, connect the `Pose Output` from TF to Signal to `Input 1`, and the output of YOLO to Marker to `Input 2`. The output of Cartesian Transformation is now the object position in the world frame.
+To drive the robot towards the object position it needs to be in world frame. The Cartesian Transformation component can
+convert from camera_frame to world. Add it to the application and connect the load node, connect the `Pose Output` from
+TF to Signal to `Input 1`, and the output of YOLO to Marker to `Input 2`. The output of Cartesian Transformation is now
+the object position in the world frame.
 
 #### Moving a robot towards an object
 
-We can use a Signal Point Attractor to move the robot end effector towards the object. 
+We can use a Signal Point Attractor to move the robot end effector towards the object.
+
 - Add the Signal Point Attractor to the application
-  - Configure the component to **auto-configure** and **auto-activate**. 
-  - Connect the load node to the On Activate transition in YOLO to Marker. This means that the robot will not move until after YOLO to Marker has started. 
-  - Connect `Cartesian state`, under Robot State Broadcaster to the `Input pose` of Signal Point Attractor.
-  - Connect the output from Cartesian Transformation to `Attractor pose`. 
-  - Connect `Output twist` to an IK Velocity Controller on the Hardware Interface, this can be added under Controllers. 
+    - Configure the component to **auto-configure** and **auto-activate**.
+    - Connect the load node to the On Activate transition in YOLO to Marker. This means that the robot will not move
+      until after YOLO to Marker has started.
+    - Connect `Cartesian state`, under Robot State Broadcaster to the `Input pose` of Signal Point Attractor.
+    - Connect the output from Cartesian Transformation to `Attractor pose`.
+    - Connect `Output twist` to an IK Velocity Controller on the Hardware Interface, this can be added under
+      Controllers.
 
 The final graph is shown below:
 
 ![Graph](./assets/object-detection-example-graph.png)
-
 
 ### Application code
 
