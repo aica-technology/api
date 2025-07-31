@@ -9,6 +9,8 @@ import TabItem from '@theme/TabItem';
 import urHWIExternalControl from './assets/ur-hwi-external-control.png'
 import urHWISequenceGraph from './assets/ur-hwi-sequence-graph.png'
 import urHWISequenceRunning from './assets/ur-hwi-sequence-running.gif'
+import urHWIHandGuidingGraph from './assets/ur-hwi-hand-guiding-graph.png'
+import urHWIHandGuidingParams from './assets/ur-hwi-hand-guiding-params.png'
 
 # Universal Robots
 
@@ -56,10 +58,10 @@ Safety features remain active in Remote Control.
 
 :::
 
-Choosing one of the two modes depends on the specific task at hand. During a development phase, it might be
-preferable to create the programs in Local Mode, whereas in a production setting, PLCs would be responsible to load and
-start the desired programs while the robot is in Remote Control. With the AICA System, users have the possiblity to get
-the best of both modes:
+Choosing one of the two modes depends on the specific task at hand. During a development phase, it might be preferable
+to create the programs in Local Mode, whereas in a production setting, PLCs would be responsible to load and start the
+desired programs while the robot is in Remote Control. With the AICA System, users have the possiblity to get the best
+of both modes:
 
 1. Take full control of the robot from an AICA application (requires Remote Control)
 2. Run an AICA application as one node of a program (works in both Local and Remote Control)
@@ -87,7 +89,8 @@ and zero the force-torque sensor. Examples in this section describe how to set u
 
 ### Exchange of control
 
-TODO: Remove the title, since we describe both exchange and payload adjustement, and nothing else will be added probably.
+TODO: Remove the title, since we describe both exchange and payload adjustement, and nothing else will be added
+probably.
 
 A node running on the teaching pendant can be modified to hand over control to an AICA application that will perform a
 task. Once this task is finished, the application will hand over control to the pendant, so that the rest of the program
@@ -142,11 +145,52 @@ handed back to the pendant.
   <img src={urHWISequenceRunning} alt="Exchange of control" />
 </div>
 
-## Hand-guiding controller
+## Hand Guiding controller
 
-TODO: Add hand guiding controller example.
+NOTE: Did not really know what to write in the next paragraph, the reason we did not just implement simple freedrive.
+
+It is quite common that users need to manually adjust the position of the manipulator, either for practical -move to a
+part approach location and teach it to the robot- or safety reasons. While in Local mode, this can be achieved through
+the Freedrive function of the teach pendant, which is, however, in some senses limited as it demands users to press on
+the button behind the pendant and then adjust the configuration almost joint by joint.
+
+For that purpose, AICA offers a hand guiding controller as a part of the UR hardware collection, based on UR's native
+force mode, and enriched with additional functionality such as spatial limits, compliant axes and more. To use it,
+simply click on the **+** icon in the **Controllers** list, and select the **UR Hand Guiding Controller**.
+
+<div class="text--center">
+  <img src={urHWIHandGuidingGraph} alt="Hand guiding controller graph" />
+</div>
+
+Since the controller uses force mode, it needs the name and the reference frame of the force/torque (FT) sensor. In the
+settings of the controller set the name of the sensor as **ur_tcp_fts_sensor** and the frame as **ur_tool0**.
+
+:::note
+
+Attempts to guide the robot by pushing on individual links will fail, as the forces must act on the FT sensor on the end effector.
+
+:::
+
+After pressing **Play**, the manipulator can be hand guided to points in space, driven by the forces applied on its end
+effector. In other words, it reads forces in the FT sensor, and "admits" them, trying to set the measured force to zero.
+The controller can be further tuned and adjusted by using its parameters:
+
+- Velocity/Force limits: the velocities and forces that can be applied by the controller in force mode (X, Y, Z, RZ, RY, RZ).
+- Force/Torque threshold: the thresholds above which the hand guiding behavior is activated. 
+- Compliant axes selection: the axes along which the robot can be hand guided (1-enabled, 0-disabled).  
+- Hold delay: forces below the thresholds above for this duration will disable hand guiding. 
+- X/Y/Z limits: spatial boundaries for the end effector motion, vectors of two values for the lower and upper limit.
+- Reference orientation: quaternion representing a desired orientation in base frame 
+- Angular limit: allowed deviation from the reference orientation  
+- Linear/Angular boundary strength: gains to apply restitution forces/torques, in case linear or angular limits are exceeded.
+
+<div class="text--center">
+  <img src={urHWIHandGuidingParams} alt="Hand guiding controller parameters" style={{ width: '40%' }} />
+</div>
 
 Maybe a good point to break into a second page since the impedance controller and force mode might have more things to
 discuss.
 
 ## Impedance controller
+
+Force mode already mentioned above. Should we expand and say more?
