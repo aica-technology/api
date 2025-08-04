@@ -40,7 +40,7 @@ combination of both approaches is used:
   trajectories and complex behaviors where the desired robot state is recomputed and adapted online.
 
 AICA Core comes with several online motion generator components that use the current state of the robot to calculate the
-next command using a mathematical concept called _Dynamical System_.
+next command using a mathematical concept called _Dynamical Systems_.
 
 ## Dynamical Systems
 
@@ -62,7 +62,7 @@ any point in space, it still knows where to go next in order to reach the target
 
 :::tip
 
-Dynamical Systems for robotic motion planning is an active area of scientific research, with ongoing work focused on
+Dynamical Systems for robotic motion planning are an active area of scientific research, with ongoing work focused on
 improving adaptability, robustness, and learning Dynamical Systems from real world data. More on this topic can be found
 online.
 
@@ -73,7 +73,7 @@ online.
 ### Point Attractor Dynamical System
 
 In a Point Attractor DS, the motion is always directed toward a specific point in space, known as the attractor.
-Independent of where the state of the system is initialized, it will be drawn toward the attractor in a straight line,
+Regardless of where the state of the system is initialized, it will be drawn toward the attractor in a straight line,
 the strength of the attraction being proportional to the distance to the attractor. The differential equation of this DS
 can be written as
 
@@ -82,8 +82,8 @@ $$
 $$
 
 where $x^{\ast}$ represents the attractor, and $K$ is an additional scaling constant. The figures below show the
-response of such a DS in 2D and 3D. It can be observed that all arrows point directly at the attractor and the further
-away from the attractor they are, the longer they are.
+response of such a DS in 2D and 3D. It can be observed that all arrows point directly at the attractor, and the arrows
+become longer the further they are from the attractor, indicating a greater magnitude of attraction.
 
 <div class="text--center" style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
   <img src={pointAttractor2d} alt="2D Point Attractor" style={{ maxWidth: '45%', height: 'auto' }} />
