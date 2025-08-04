@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 title: A guide on joint trajectory workflows
 ---
 
@@ -24,6 +24,14 @@ able to traverse space accurately and timely.
 While we cover the basics of JTC in [a separate example](../core-controllers/jtc-example.md), here we will focus more
 on its integration with AICA Studio and suggest workflows and/or parametrizations that might aid you when building big
 applications.
+
+:::tip
+
+Visit our learning platform AICAdemy for an interactive training module with a real robot on this topic:
+
+[Module 41 - Trajectory Control on Industrial Manipulators](https://aica.thinkific.com/courses/trajectory-control-on-industrial-manipulators-m41)
+
+:::
 
 ## Setting up your environment
 
