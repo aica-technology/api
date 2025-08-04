@@ -155,8 +155,8 @@ the Freedrive function of the teach pendant, which is, however, in some senses l
 the button behind the pendant and then adjust the configuration almost joint by joint.
 
 For that purpose, AICA offers a hand guiding controller as a part of the UR hardware collection, based on UR's native
-force mode, and enriched with additional functionality such as spatial limits, compliant axes and more. To use it,
-simply click on the **+** icon in the **Controllers** list, and select the **UR Hand Guiding Controller**.
+force mode, and enriched with additional functionality such as spatial limits. To use it, simply click on the **+** icon
+in the **Controllers** list, and select the **UR Hand Guiding Controller**.
 
 <div class="text--center">
   <img src={urHWIHandGuidingGraph} alt="Hand guiding controller graph" />
@@ -167,7 +167,8 @@ settings of the controller set the name of the sensor as **ur_tcp_fts_sensor** a
 
 :::note
 
-Attempts to guide the robot by pushing on individual links will fail, as the forces must act on the FT sensor on the end effector.
+Attempts to guide the robot by pushing on individual links will fail, as the forces must act on the FT sensor on the end
+effector.
 
 :::
 
@@ -175,14 +176,16 @@ After pressing **Play**, the manipulator can be hand guided to points in space, 
 effector. In other words, it reads forces in the FT sensor, and "admits" them, trying to set the measured force to zero.
 The controller can be further tuned and adjusted by using its parameters:
 
-- Velocity/Force limits: the velocities and forces that can be applied by the controller in force mode (X, Y, Z, RZ, RY, RZ).
-- Force/Torque threshold: the thresholds above which the hand guiding behavior is activated. 
-- Compliant axes selection: the axes along which the robot can be hand guided (1-enabled, 0-disabled).  
-- Hold delay: forces below the thresholds above for this duration will disable hand guiding. 
+- Velocity/Force limits: the velocities and forces that can be applied by the controller in force mode (X, Y, Z, RZ, RY,
+  RZ).
+- Force/Torque threshold: the thresholds above which the hand guiding behavior is activated.
+- Compliant axes selection: the axes along which the robot can be hand guided (1-enabled, 0-disabled).
+- Hold delay: forces below the thresholds above for this duration will disable hand guiding.
 - X/Y/Z limits: spatial boundaries for the end effector motion, vectors of two values for the lower and upper limit.
-- Reference orientation: quaternion representing a desired orientation in base frame 
-- Angular limit: allowed deviation from the reference orientation  
-- Linear/Angular boundary strength: gains to apply restitution forces/torques, in case linear or angular limits are exceeded.
+- Reference orientation: quaternion representing a desired orientation in base frame
+- Angular limit: allowed deviation from the reference orientation
+- Linear/Angular boundary strength: gains to apply restitution forces/torques, in case linear or angular limits are
+  exceeded.
 
 <div class="text--center">
   <img src={urHWIHandGuidingParams} alt="Hand guiding controller parameters" style={{ width: '40%' }} />
