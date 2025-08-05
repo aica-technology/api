@@ -9,6 +9,14 @@ import jtcExampleRun from './assets/jtc-example-run.gif'
 
 # A joint trajectory execution example
 
+:::tip
+
+Visit our learning platform AICAdemy for an interactive training module with a real robot on this topic:
+
+[Trajectory Control on Industrial Manipulators](https://aica.thinkific.com/courses/trajectory-control-on-industrial-manipulators-m41)
+
+:::
+
 ## Launcher configuration requirements
 
 This example makes use of the built-in Joint Trajectory Controller (JTC) and the generic six-axis robot.
