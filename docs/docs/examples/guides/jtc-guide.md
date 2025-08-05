@@ -29,7 +29,7 @@ applications.
 
 Visit our learning platform AICAdemy for an interactive training module with a real robot on this topic:
 
-[Module 41 - Trajectory Control on Industrial Manipulators](https://aica.thinkific.com/courses/trajectory-control-on-industrial-manipulators-m41)
+[Trajectory Control on Industrial Manipulators](https://aica.thinkific.com/courses/trajectory-control-on-industrial-manipulators-m41)
 
 :::
 
