@@ -15,14 +15,14 @@ import urHWIHandGuidingParams from './assets/ur-hwi-hand-guiding-params.png'
 # Universal Robots
 
 Universal Robots (UR) offers a variety of collaborative robotic arms widely adopted across industries and research for
-their ease of use, simplicity and flexibility. UR robots are easy to use and integrate thanks to a graphical interface
-on their teach pendant and support for tailor-made, customized scripting via URScript.
+their ease of use, simplicity and flexibility. UR robots are easy to program and integrate thanks to a graphical
+interface on their teach pendant and support for tailor-made, customized scripting via URScript.
 
 The ecosystem around UR robots is highly developer-friendly, with open-source drivers, documentation, and integration
-support for frameworks such as ROS (Robot Operating System). Their modular architecture and standardized communication
-interfaces (e.g., TCP/IP, Modbus, RTDE) make them a popular choice for building custom applications. UR also provides
-its own simulation environment (URSim), which allows developers to test and validate robot programs and interfaces
-without needing physical hardware.
+support for frameworks such as ROS (Robot Operating System). Their configurable architecture and standardized
+communication interfaces (e.g., TCP/IP, Modbus, RTDE) make them a popular choice for building custom applications. UR
+also provides its own simulation environment (URSim), which allows developers to test and validate robot programs and
+interfaces without needing physical hardware.
 
 This guide introduces the hardware interface for UR robots, covering how to integrate and connect to UR manipulators
 using AICA Studio. To connect to the simulation environment, check the
@@ -151,8 +151,9 @@ NOTE: Did not really know what to write in the next paragraph, the reason we did
 
 It is quite common that users need to manually adjust the position of the manipulator, either for practical -move to a
 part approach location and teach it to the robot- or safety reasons. While in Local mode, this can be achieved through
-the Freedrive function of the teach pendant, which is, however, in some senses limited as it demands users to press on
-the button behind the pendant and then adjust the configuration almost joint by joint.
+the Freedrive function of the teach pendant, which is, however, in some senses limited. It demands users to press on the
+button behind the pendant and then adjust the configuration almost joint by joint, with the feedback being quite light
+and unresponsive at times.
 
 For that purpose, AICA offers a hand guiding controller as a part of the UR hardware collection, based on UR's native
 force mode, and enriched with additional functionality such as spatial limits. To use it, simply click on the **+** icon
