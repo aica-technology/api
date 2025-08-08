@@ -29,6 +29,9 @@
     "parameter_type": {
       "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/parameter_type"
     },
+    "parameter_value": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/parameter_value"
+    },
     "predicate": {
       "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/predicate"
     },
