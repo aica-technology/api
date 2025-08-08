@@ -132,28 +132,104 @@
           "$ref": "#/$defs/encoded_state_type"
         },
         "default_value": {
+          "title": "Default Value",
           "description": "The default parameter value, or null if the parameter has no valid default value.",
+          "$ref": "#/$defs/parameter_value"
+        },
+        "validation": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "title": "Parameter Value",
-          "type": [
-            "null",
-            "boolean",
-            "integer",
-            "number",
-            "string",
-            "array"
-          ],
-          "items": {
-            "type": [
-              "boolean",
-              "integer",
-              "number",
-              "string"
-            ]
-          }
+          "title": "Parameter Validation",
+          "description": "Validation rules to define either an enumeration of fixed options, ranges for numeric parameters, length specifiers for arrays and strings or regular expression patterns for strings.",
+          "oneOf": [
+            {
+              "type": "object",
+              "title": "Parameter Validation Options",
+              "description": "A list of permitted parameter value options.",
+              "additionalProperties": false,
+              "properties": {
+                "options": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/$defs/parameter_value"
+                  }
+                }
+              },
+              "required": [
+                "options"
+              ]
+            },
+            {
+              "type": "object",
+              "title": "Parameter Range Validation",
+              "description": "Range constraints for numeric parameters as either inclusive or exclusive minimum or maximum bounds",
+              "additionalProperties": false,
+              "properties": {
+                "minimum": {
+                  "type": "number"
+                },
+                "exclusive_minimum": {
+                  "type": "number"
+                },
+                "maximum": {
+                  "type": "number"
+                },
+                "exclusive_maximum": {
+                  "type": "number"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "title": "Parameter Fixed Length",
+              "description": "Fixed length constraint for array or string parameters",
+              "additionalProperties": false,
+              "properties": {
+                "length": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "length"
+              ]
+            },
+            {
+              "type": "object",
+              "title": "Parameter Variable Length",
+              "description": "Variable length constraints for array or string parameters as inclusive minimum or maximum bounds",
+              "additionalProperties": false,
+              "properties": {
+                "minimum_length": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "maximum_length": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "title": "Parameter Pattern",
+              "description": "Pattern constraint for string parameters as a regular expression",
+              "additionalProperties": false,
+              "properties": {
+                "pattern": {
+                  "title": "Regular Expression Pattern",
+                  "description": "Refer to: https://json-schema.org/understanding-json-schema/reference/regular_expressions",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "pattern"
+              ]
+            }
+          ]
         },
         "optional": {
-          "description": "Specify if this parameter is optional (only applicable if the default value is null)",
+          "description": "Specify if this parameter is optional (only applicable if the default value is null).",
           "type": "boolean",
           "default": false
         },
@@ -193,6 +269,27 @@
         "matrix",
         "state"
       ]
+    },
+    "parameter_value": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Parameter Value",
+      "description": "The value assigned to a parameter",
+      "type": [
+        "null",
+        "boolean",
+        "integer",
+        "number",
+        "string",
+        "array"
+      ],
+      "items": {
+        "type": [
+          "boolean",
+          "integer",
+          "number",
+          "string"
+        ]
+      }
     },
     "predicate": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
