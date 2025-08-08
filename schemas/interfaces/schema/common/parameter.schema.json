@@ -29,11 +29,15 @@
       "$ref": "encoded_state_type.schema.json"
     },
     "default_value": {
+      "title": "Default Value",
       "description": "The default parameter value, or null if the parameter has no valid default value.",
       "$ref": "parameter_value.schema.json"
     },
+    "validation": {
+      "$ref": "parameter_validation.schema.json"
+    },
     "optional": {
-      "description": "Specify if this parameter is optional (only applicable if the default value is null)",
+      "description": "Specify if this parameter is optional (only applicable if the default value is null).",
       "type": "boolean",
       "default": false
     },

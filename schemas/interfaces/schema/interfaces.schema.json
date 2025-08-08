@@ -19,6 +19,9 @@
     "parameter_value": {
       "$ref": "common/parameter_value.schema.json"
     },
+    "parameter_validation": {
+      "$ref": "common/parameter_validation.schema.json"
+    },
     "predicate": {
       "$ref": "common/predicate.schema.json"
     },
