@@ -14,13 +14,13 @@ import abbFirewallManager from './assets/abb-firewall-manager.png'
 
 # ABB manipulators
 
-ABB offers a wide range of industrial articulated manipulators, from compact 6-axis robots for small-part 
-handling and payloads of a few kilograms to heavy-duty models capable of lifting up to 800 kg. This guide aims
-to support the integration of ABB robots in AICA System applications, from the mock interface and a simulated
-environment to the real robot. 
+ABB offers a wide range of industrial articulated manipulators, from compact 6-axis robots for small-part handling and
+payloads of a few kilograms to heavy-duty models capable of lifting up to 800 kg. This guide aims to support the
+integration of ABB robots in AICA System applications, from the mock interface and a simulated environment to the real
+robot.
 
-To use the ABB collection, add the latest version of `collections/abb` to your configuration in AICA Launcher,
-currently supporting the following robot models:
+To use the ABB collection, add the latest version of `collections/abb` to your configuration in AICA Launcher, currently
+supporting the following robot models:
 
 - IRB 1010
 - GoFa CRB 15000, 12 Kg
@@ -154,7 +154,7 @@ actual robot or simulator.
 :::note
 
 The mock interface is only a visualization tool and does not include a physics engine, or dynamics calculations. For
-that purpose, check RobotStudio in the following section.
+that purpose, check out RobotStudio in the following section.
 
 :::
 
@@ -186,7 +186,7 @@ The RobotStudio software suite is available for Windows so it would require a se
 Setting up a virtual workstation and controller is the next step after using the mock interface. This can be achieved by
 following the next steps:
 
-1. In RobotStudio, navigate to the **Add-Ins** tab and go to the Gallery. There is a list of all available robot models
+1. In RobotStudio, navigate to the **Add-Ins** tab and go to **Gallery**. There is a list of all available robot models
    and RobotWare versions, the internal controller software. Make sure to install the versions present in the actual
    robot controller, to ensure consistency between simulation and reality.
 
@@ -225,8 +225,8 @@ restart the controller.
 </div>
 
 Next step is enabling RWS connection. This requires either using a proxy or whitelisting the IP address of the device
-trying to access RWS, in this case the device running the AICA application. The first approach is preferable and described
-analytically in a
+trying to access RWS, in this case the device running the AICA application. The first approach is preferable and
+described analytically in a
 [RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
 (read until the end and the last comment for a critical fix). Omnicore controllers and RobotWare 7.x versions by default
 listen on HTTPS and port 80. This can be modified by following the instructions in this
@@ -234,8 +234,8 @@ listen on HTTPS and port 80. This can be modified by following the instructions 
 
 :::tip
 
-To communicate with the RWS running in the Windows device, the firewall in the respective network (usually
-Public) needs to be deactivated.
+To communicate with the RWS running in the Windows device, the firewall in the respective network (usually Public) needs
+to be deactivated.
 
 :::
 
@@ -244,7 +244,7 @@ simulated robot. The EGM port should be set to the same value defined in the UDP
 configuration, and the RWS IP and port to the address of the Windows device and listening port respectively. Running the
 application now can successfully connect to the simulated robot and get information about the setup. It also takes
 advantage of RWS to automatically start and stop the simulation along with the application without any interaction with
-the RobotStudio. The simulated robot is now ready to receive commands.
+RobotStudio. The simulated robot is now ready to receive commands.
 
 <div class="text--center">
   <img src={abbRSSuccessfulConnection} alt="Connected to RobotStudio successfully." />
@@ -252,22 +252,25 @@ the RobotStudio. The simulated robot is now ready to receive commands.
 
 ### Omnicore controller & real robot
 
-Connecting to the real robot and running the application there is the final step after verifying the operation in 
-the simulated environment. The steps to follow are quite similar to those described above, there are only some additional steps of configurations. 
+Connecting to the real robot and running the application there is the final step after verifying the operation in the
+simulated environment. The steps to follow are quite similar to those described above, there are only some additional
+steps of configurations.
 
-RobotStudio can be used to configure the address of the external control device. Navigate to the Controller tab
-and select **Add Controller > Connect to Controller**. This will allow to detect and connect to the running controller
-in Omnicore, provided of course that the devices are on the same network. After locating and connecting to the controller, configure the UDPUC device as described above. To do that, click on **Request Write Access** and confirm on the pendant's screen. 
+RobotStudio can be used to configure the address of the external control device. Navigate to the Controller tab and
+select **Add Controller > Connect to Controller**. This will allow to detect and connect to the running controller in
+Omnicore, provided of course that the devices are on the same network. After locating and connecting to the controller,
+configure the UDPUC device as described above. To do that, click on **Request Write Access** and confirm on the
+pendant's screen.
 
 <div class="text--center">
   <img src={abbConnectController} alt="Connect to the robot controller." />
 </div>
 
-Next, make sure that UDPUC and RobotWebServices are active in the network that is being used. 
+Next, make sure that UDPUC and RobotWebServices are active in the network that is being used.
 
 <div class="text--center">
   <img src={abbFirewallManager} alt="Firewall manager options." />
 </div>
 
-Again, the controller needs to be restarted for he changes to take effect. While this takes seconds in simulation,
-in the real robot it might take a few minutes, so make all necessary changes and then restart. 
+Again, the controller needs to be restarted for he changes to take effect. While this takes seconds in simulation, in
+the real robot it might take a few minutes, so make all necessary changes and then restart.
