@@ -25,8 +25,6 @@ supporting the following robot models:
 - IRB 1010
 - GoFa CRB 15000, 12 Kg
 
-**TODO: Where are we mentioning the RWS controller, if at all?**
-
 ## General
 
 In this section, some of the prerequisites to use the AICA ABB collection are introduced and discussed.
@@ -69,7 +67,7 @@ this if the robot needs to receive position commands.
 
 ## Mock interface
 
-You can use the ABB manipulator mock interface variant to check the application execution, visualize trajectory
+The ABB manipulator mock interface variant can be used to check the application execution, visualize trajectory
 execution and ensure correct frame definition, among else. The mock interface is a very useful tool during early
 development stages, as it does not require connection to the actual hardware and provides a safe environment to
 experiment. After correct operation is verified, users can just switch to the real hardware interface to connect to the
@@ -85,7 +83,7 @@ that purpose, check out RobotStudio in the following section.
 ## Connecting to a robot
 
 The provided hardware interface can be used to connect and control either a simulated or a real robot. The following 
-sections provide the necessary steps to connect to both. 
+sections provide the necessary steps to do both. 
 
 ### RobotStudio simulation
 
@@ -111,7 +109,7 @@ following the next steps:
   <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
 </div>
 
-2. Go back to to File > New > Project.
+2. Go back to to **File > New > Project**.
 3. Select to create a new controller and define the robot model and variant, as well as the RobotWare version.
 4. Make sure to activate the **Customize Options** button. This is required to add EGM in a next step.
 
@@ -164,7 +162,7 @@ restart the controller.
 :::tip
 
 While this takes seconds in simulation, the restart procedure in the real robot might take a few minutes, so make all necessary 
-changes and then restart.
+changes, after the next section, and then restart.
 
 :::
 
@@ -194,8 +192,9 @@ It is possible that this is not actually required for the simulation, but this s
 
 While integrating in the AICA ecosystem, in the simplest case all that is required is a module that uses EGM to control
 the robot externally. An example of such a module is as follows, users only need to make sure the UCDevice is the one
-defined in the controller settings. The module can be placed in the controller's home directory, and uploaded to task by
-right clicking on it and selecting Upload to Task. 
+defined in the controller settings. So for example, if this specific module is used, the UCDevice must be named **AICA_PC**
+in the configuration step above. The module can be placed in the controller's home directory, and uploaded to task by
+right clicking on it and selecting **Load in Task > #Task_Name**. 
 
 <details>
   <summary>Example RAPID module</summary>
@@ -273,14 +272,14 @@ ENDMODULE
 ## Hardware interface
 
 Returning to AICA studio and the hardware interface, it is now possible to define the parameters and connect to the
-robot.The majority of the hardware interface parameters enable connection to EGM and RWS:
+robot. The majority of the hardware interface parameters enable connection to EGM and RWS:
 
 - EGM port: the port that EGM uses to send commands.
 - RWS port & IP: port and address of the RWS.
 - Connection timeout: for RWS connection.
 - Rapid File Path: the path for the module to be loaded in the controller home directory.
-- Target module name: the name for the module file in the controller home directory.
-- Tf prefix: the prefix for the robot in the URDF file.
+- Headless Mode: if true, the hardware interface handles the whole initialization procedure of starting and stopping the
+RAPID program and the motors without requiringn any user interaction.
 
 The EGM port should be set to the same value defined in the UDPUC device in the controller
 configuration, and the RWS IP and port to the address of the Windows device and listening port respectively. Running the
