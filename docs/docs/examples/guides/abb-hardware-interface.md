@@ -173,17 +173,18 @@ trying to access RWS, in this case the device running the AICA application. The 
 described analytically in a
 [RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
 (read until the end and the last comment for a critical fix). Omnicore controllers and RobotWare 7.x versions by default
-listen on HTTPS and port 443. This can be modified by following the instructions in this
-[forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
+listen on HTTPS and port (80 for RobotStudio and 443 for the real robot). This can be modified by following the instructions in this
+[forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x). 
+Additionally, to communicate with the RWS running in the Windows device, the firewall in the respective network (usually Public) needs
+to be deactivated.
+
+Next, make sure that UDPUC and RobotWebServices are active in the network that is being used.
 
 :::tip
 
-To communicate with the RWS running in the Windows device, the firewall in the respective network (usually Public) needs
-to be deactivated.
+It is possible that this is not actually required for the simulation, but this step is definitely needed for the real robot.
 
 :::
-
-Next, make sure that UDPUC and RobotWebServices are active in the network that is being used.
 
 <div class="text--center">
   <img src={abbFirewallManager} alt="Firewall manager options." />
