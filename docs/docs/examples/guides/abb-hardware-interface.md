@@ -60,9 +60,141 @@ RAPID is the programming language of ABB robots. Users can utilize RAPID to set 
 processes. This is enabled by user-defined libraries called **Modules**, that contain variables and functions or
 processes **(PROCs)**. Modules can then be loaded in controller **Tasks**, and called as required.
 
+<!-- :::note
+
+The example above drives the robot in velocity by setting the **PosCorrGain** parameter to 0 in the control loop. Remove
+this if the robot needs to receive position commands.
+
+::: -->
+
+## Mock interface
+
+You can use the ABB manipulator mock interface variant to check the application execution, visualize trajectory
+execution and ensure correct frame definition, among else. The mock interface is a very useful tool during early
+development stages, as it does not require connection to the actual hardware and provides a safe environment to
+experiment. After correct operation is verified, users can just switch to the real hardware interface to connect to the
+actual robot or simulator.
+
+:::note
+
+The mock interface is only a visualization tool and does not include a physics engine, or dynamics calculations. For
+that purpose, check out RobotStudio in the following section.
+
+:::
+
+## Connecting to a robot
+
+The provided hardware interface can be used to connect and control either a simulated or a real robot. The following 
+sections provide the necessary steps to connect to both. 
+
+### RobotStudio simulation
+
+[RobotStudio](https://new.abb.com/products/robotics/software-and-digital/robotstudio) is the official ABB offline
+programming and simulation tool for robotics applications. It allows to run virtual controllers that mimic the behavior
+of the real robot, ensuring seamless transition between simulation and hardware. It can also be used to configure
+several aspects of the real controller.
+
+:::note
+
+The RobotStudio software suite is available for Windows so it would require a second device.
+
+:::
+
+Setting up a virtual workstation and controller is the next step after using the mock interface. This can be achieved by
+following the next steps:
+
+1. In RobotStudio, navigate to the **Add-Ins** tab and go to **Gallery**. There is a list of all available robot models
+   and RobotWare versions, the internal controller software. Make sure to install the versions present in the actual
+   robot controller, to ensure consistency between simulation and reality.
+
+<div class="text--center">
+  <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
+</div>
+
+2. Go back to to File > New > Project.
+3. Select to create a new controller and define the robot model and variant, as well as the RobotWare version.
+4. Make sure to activate the **Customize Options** button. This is required to add EGM in a next step.
+
+<div class="text--center">
+  <img src={abbNewProject} alt="Create a new RobotStudio project." />
+</div>
+
+5. Select **Create** to create the new project.
+6. In the window that pops up, in the **Options** tab, look for **EGM** and **RobotStudio Connect** and add them in the
+   controller. Then select **Apply and Reset** to finalize.
+
+<div class="text--center">
+  <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
+</div>
+
+
+### Omnicore controller & real robot
+
+RobotStudio can be used to configure the address of the external control device. Navigate to the Controller tab and
+select **Add Controller > Connect to Controller**. This will allow to detect and connect to the running controller in
+Omnicore, provided of course that the devices are on the same network. 
+
+<div class="text--center">
+  <img src={abbConnectController} alt="Connect to the robot controller." />
+</div>
+
+## Network and device configuration
+
+:::note
+
+Modifications in the real robot controller require write access. To get it, click on **Request Write Access** and confirm on the
+pendant's screen.
+
+:::
+
+After connecting to the robot, the controller should be configured to accept commands from an external device.
+Navigate to the Controller tab > Configuration > Communication > UDP Unicast Device, and add a new UDPUC device (or
+modify the existing one), configured as shown below. This is the device that will be running the AICA application, the
+external control device, so the address should be set accordingly. Finally, for the changes to take effect, you need to
+restart the controller.
+
+<div class="text--center">
+  <img src={abbControllerConfiguration} alt="Controller configuration settings." />
+</div>
+
+<div class="text--center">
+  <img src={abbNewUDPUCDevice} alt="Add a new UDPUS device." />
+</div>
+
+:::tip
+
+While this takes seconds in simulation, the restart procedure in the real robot might take a few minutes, so make all necessary 
+changes and then restart.
+
+:::
+
+Next step is enabling RWS connection. For the simulation specifically, this requires either using a proxy or whitelisting the IP address of the device
+trying to access RWS, in this case the device running the AICA application. The first approach is preferable and
+described analytically in a
+[RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
+(read until the end and the last comment for a critical fix). Omnicore controllers and RobotWare 7.x versions by default
+listen on HTTPS and port 443. This can be modified by following the instructions in this
+[forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
+
+:::tip
+
+To communicate with the RWS running in the Windows device, the firewall in the respective network (usually Public) needs
+to be deactivated.
+
+:::
+
+Next, make sure that UDPUC and RobotWebServices are active in the network that is being used.
+
+<div class="text--center">
+  <img src={abbFirewallManager} alt="Firewall manager options." />
+</div>
+
+## RAPID module
+
 While integrating in the AICA ecosystem, in the simplest case all that is required is a module that uses EGM to control
 the robot externally. An example of such a module is as follows, users only need to make sure the UCDevice is the one
-defined in the controller settings:
+defined in the controller settings. The module can be placed in the controller's home directory, and uploaded to task by
+right clicking on it and selecting Upload to Task. 
 
 <details>
   <summary>Example RAPID module</summary>
@@ -136,32 +268,11 @@ ENDMODULE
 
 </details>
 
-<!-- :::note
-
-The example above drives the robot in velocity by setting the **PosCorrGain** parameter to 0 in the control loop. Remove
-this if the robot needs to receive position commands.
-
-::: -->
-
-## Mock interface
-
-You can use the ABB manipulator mock interface variant to check the application execution, visualize trajectory
-execution and ensure correct frame definition, among else. The mock interface is a very useful tool during early
-development stages, as it does not require connection to the actual hardware and provides a safe environment to
-experiment. After correct operation is verified, users can just switch to the real hardware interface to connect to the
-actual robot or simulator.
-
-:::note
-
-The mock interface is only a visualization tool and does not include a physics engine, or dynamics calculations. For
-that purpose, check out RobotStudio in the following section.
-
-:::
 
 ## Hardware interface
 
-The real hardware interface is used to connect with actual or simulated ABB manipulators. The majority of the hardware
-interface parameters enable connection to EGM and RWS:
+Returning to AICA studio and the hardware interface, it is now possible to define the parameters and connect to the
+robot.The majority of the hardware interface parameters enable connection to EGM and RWS:
 
 - EGM port: the port that EGM uses to send commands.
 - RWS port & IP: port and address of the RWS.
@@ -170,107 +281,13 @@ interface parameters enable connection to EGM and RWS:
 - Target module name: the name for the module file in the controller home directory.
 - Tf prefix: the prefix for the robot in the URDF file.
 
-### RobotStudio & Virtual controllers
-
-[RobotStudio](https://new.abb.com/products/robotics/software-and-digital/robotstudio) is the official ABB offline
-programming and simulation tool for robotics applications. It allows to run virtual controllers that mimic the behavior
-of the real robot, ensuring seamless transition between simulation and hardware. It can also be used to configure
-several aspects of the real controller.
-
-:::note
-
-The RobotStudio software suite is available for Windows so it would require a second device.
-
-:::
-
-Setting up a virtual workstation and controller is the next step after using the mock interface. This can be achieved by
-following the next steps:
-
-1. In RobotStudio, navigate to the **Add-Ins** tab and go to **Gallery**. There is a list of all available robot models
-   and RobotWare versions, the internal controller software. Make sure to install the versions present in the actual
-   robot controller, to ensure consistency between simulation and reality.
-
-<div class="text--center">
-  <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
-</div>
-
-2. Go back to to File > New > Project.
-3. Select to create a new controller and define the robot model and variant, as well as the RobotWare version.
-4. Make sure to activate the **Customize Options** button. This is required to add EGM in a next step.
-
-<div class="text--center">
-  <img src={abbNewProject} alt="Create a new RobotStudio project." />
-</div>
-
-5. Select **Create** to create the new project.
-6. In the window that pops up, in the **Options** tab, look for **EGM** and **RobotStudio Connect** and add them in the
-   controller. Then select **Apply and Reset** to finalize.
-
-<div class="text--center">
-  <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
-</div>
-
-After setting up the workstation, the controller should be configured to accept commands from an external device.
-Navigate to the Controller tab > Configuration > Communication > UDP Unicast Device, and add a new UDPUC device (or
-modify the existing one), configured as shown below. This is the device that will be running the AICA application, the
-external control device, so the address should be set accordingly. Finally, for the changes to take effect, you need to
-restart the controller.
-
-<div class="text--center">
-  <img src={abbControllerConfiguration} alt="Controller configuration settings." />
-</div>
-
-<div class="text--center">
-  <img src={abbNewUDPUCDevice} alt="Add a new UDPUS device." />
-</div>
-
-Next step is enabling RWS connection. This requires either using a proxy or whitelisting the IP address of the device
-trying to access RWS, in this case the device running the AICA application. The first approach is preferable and
-described analytically in a
-[RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
-(read until the end and the last comment for a critical fix). Omnicore controllers and RobotWare 7.x versions by default
-listen on HTTPS and port 80. This can be modified by following the instructions in this
-[forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
-
-:::tip
-
-To communicate with the RWS running in the Windows device, the firewall in the respective network (usually Public) needs
-to be deactivated.
-
-:::
-
-Returning to AICA studio and the hardware interface, it is now possible to define the parameters and connect to the
-simulated robot. The EGM port should be set to the same value defined in the UDPUC device in the controller
+The EGM port should be set to the same value defined in the UDPUC device in the controller
 configuration, and the RWS IP and port to the address of the Windows device and listening port respectively. Running the
 application now can successfully connect to the simulated robot and get information about the setup. It also takes
 advantage of RWS to automatically start and stop the simulation along with the application without any interaction with
-RobotStudio. The simulated robot is now ready to receive commands.
+RobotStudio. The robot is now ready to receive commands.
 
 <div class="text--center">
   <img src={abbRSSuccessfulConnection} alt="Connected to RobotStudio successfully." />
 </div>
 
-### Omnicore controller & real robot
-
-Connecting to the real robot and running the application there is the final step after verifying the operation in the
-simulated environment. The steps to follow are quite similar to those described above, there are only some additional
-steps of configurations.
-
-RobotStudio can be used to configure the address of the external control device. Navigate to the Controller tab and
-select **Add Controller > Connect to Controller**. This will allow to detect and connect to the running controller in
-Omnicore, provided of course that the devices are on the same network. After locating and connecting to the controller,
-configure the UDPUC device as described above. To do that, click on **Request Write Access** and confirm on the
-pendant's screen.
-
-<div class="text--center">
-  <img src={abbConnectController} alt="Connect to the robot controller." />
-</div>
-
-Next, make sure that UDPUC and RobotWebServices are active in the network that is being used.
-
-<div class="text--center">
-  <img src={abbFirewallManager} alt="Firewall manager options." />
-</div>
-
-Again, the controller needs to be restarted for he changes to take effect. While this takes seconds in simulation, in
-the real robot it might take a few minutes, so make all necessary changes and then restart.
