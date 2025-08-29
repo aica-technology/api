@@ -44,7 +44,8 @@ next command using a mathematical concept called _Dynamical Systems_.
 
 ## Dynamical Systems
 
-Dynamical System (DS) based closed loop control is a simple and effective way to generate reactive motion policies that
+Dynamical System (DS) based closed loop control generates motion commands based on the current state of the robot or
+environment, rather than as a function of time, and is an effective way to generate reactive motion policies that
 generalize well to the robotic workspace while retaining stability guarantees. A first order, time invariant DS can be
 expressed as a differential equation
 
@@ -52,13 +53,16 @@ $$
 \frac{\mathrm{d}}{\mathrm{d}t}x = \dot x = f(x), x \in \R^n.
 $$
 
-This equation says that the temporal rate of change of the state, e.g. the _velocity_ $\dot x$ of the state, is purely a
-function of the _current state_ $x$, for all states $x$. In other words, the function $f(x)$ generates a motion given
+This equation says that the rate of change of the state, e.g. the _velocity_ $\dot x$ of the state, is purely a function
+of the _current state_ $x$, for all states $x$. In other words, the function $f(x)$ generates a motion direction from
 the instantaneous position of the robot, independent of time. The time-independence is a crucial point that makes such
 systems very capable for reactive motion generation. As offline trajectories are commonly parameterized over time, any
 disturbances or changes in target will either require replanning or result in failure of the execution because the
 system detects a deviation from the desired path. On the other hand, a DS is able to reject such disturbances because at
 any point in space, it still knows where to go next in order to reach the target.
+
+The function $f(x)$ that defines the behavior of a DS can be implemented analytically from mathematical rules or
+optimized from a set of non-linear functions. The AICA component library includes examples of both kinds of behaviors.
 
 :::tip
 
@@ -92,5 +96,13 @@ become longer the further they are from the attractor, indicating a greater magn
 
 Point Attractor DS are especially useful for tasks like reaching or positioning, as they provide stable and predictable
 convergence to a (potentially moving) desired goal.
+
+### Stable Estimator of Dynamical Systems
+
+A Stable Estimator of Dynamical Systems (SEDS) is a method for learning dynamical systems from demonstration data while
+guaranteeing stability toward a target. SEDS models the provided example motions as a combination of several simple
+patterns, each represented by a Gaussian distribution. By using a mixture of Gaussians, SEDS can capture complex
+behaviors and make is possible to learn smooth and reliable movements from real world data. this makes it a powerful
+tool for task like manipulation and human-robot interaction, where both adaptability and safety are important.
 
 <!-- TODO: link to examples -->
