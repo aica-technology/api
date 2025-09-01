@@ -12,6 +12,8 @@ import urHWISequenceGraph from './assets/ur-hwi-sequence-graph.png'
 import urHWISequenceRunning from './assets/ur-hwi-sequence-running.gif'
 import urHWIHandGuidingGraph from './assets/ur-hwi-hand-guiding-graph.png'
 import urHWIHandGuidingParams from './assets/ur-hwi-hand-guiding-params.png'
+import urHWINetworkingSettings from './assets/ur-hwi-networking-settings.png'
+import urHWIURProgram from './assets/ur-hwi-ur-program.png'
 
 # Universal Robots
 
@@ -124,6 +126,7 @@ to the robot.
 
 <details>
   <summary>Example application</summary>
+
   ```yaml
   schema: 2-0-4
   dependencies:
@@ -257,36 +260,203 @@ to the robot.
 
 ### Run an AICA application as one node of a program
 
-From here on out I would see it the following way
-1. explain that it needs URCap, URCap needs networking settings
-2. say robot should be in local mode, make a simple program with the node
-3. hardware interface headless mode should be false, no controller should be activated on start
-4. Use dashboard controller (link to a specific dashboard controller section below, no need to explain it here) to know
-   program is running and to hand back control
-5. start AICA application first, then run robot program
-6. Use ideally same app as above, except that controller is activated and trajectory is set on dashboard predicate
-
-
-The second case requires the External Control URCap to be installed. This is the easiest way to get started and test the
+This second case requires the [External Control URCap](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver/tree/jazzy/ur_robot_driver/resources) to be installed. This is the easiest way to get started and test the
 integration with AICA functionality, as it allows users to keep their workflows intact, and only hand over control to an
-AICA application in a controlled manner and whenever that is required. After the application, completes its task,
-control may be hand over back to the main node.
+AICA application in a controlled manner and whenever that is required. After the application completes its task,
+control may be hand over back to the main node. To do that, follow the next steps:
 
-TODO link here to urcap
+1. The external control URCap needs to be configured to the right remote control address. Navigate to the **Installation** tab
+and set the address to the one of the device that will be running the AICA application.
 
-TODO link to example. Screenshot of a proram with the external control node.
+<div class="text--center">
+  <img src={urHWINetworkingSettings} alt="External control URCap networking settings" />
+</div>
+
+2. The robot should remain in local mode, and the external control node placed within the program in the desired location.
+
+<div class="text--center">
+  <img src={urHWIURProgram} alt="UR Program with external control URCap" style={{ width: '40%' }} />
+</div>
+
+3. Headless mode in the hardware interface should be set to false, and no controller should be activated when the program starts. 
+**(other than the dashboard controller, right?)**
+
+4. The dashboard controller should be used to take and hand back control, check the next section.
+
+5. The AICA application should be started first, the the robot program run. 
+
+Below there is an example of the exact same application, that can be run as a program node. The next section about the dashboard 
+controller explains in detail how this works.
+
+<details>
+  <summary>Example application, local mode</summary>
+
+  ```yaml
+schema: 2-0-4
+dependencies:
+  core: v4.4.2
+frames:
+  wp_1:
+    reference_frame: world
+    position:
+      x: -0.027943
+      y: 0.600701
+      z: 0.202217
+    orientation:
+      w: 0.171776
+      x: 0.985056
+      y: 0.002386
+      z: -0.012313
+  wp_2:
+    reference_frame: world
+    position:
+      x: 0.260809
+      y: 0.604927
+      z: 0.194871
+    orientation:
+      w: 0.132343
+      x: 0.95897
+      y: -0.030587
+      z: -0.248852
+  wp_3:
+    reference_frame: world
+    position:
+      x: 0.147083
+      y: 0.552997
+      z: 0.328354
+    orientation:
+      w: 0.012478
+      x: 0.999843
+      y: 0.000392
+      z: -0.012536
+on_start:
+  load:
+    hardware: hardware
+sequences:
+  sequence:
+    display_name: Sequence
+    steps:
+      - delay: 2
+      - call_service:
+          controller: joint_trajectory_controller
+          hardware: hardware
+          service: set_trajectory
+          payload: "{frames: [wp_1, wp_2, wp_3], durations: [1.0, 1.0, 1.0],
+            blending_factors: [1.0]}"
+hardware:
+  hardware:
+    display_name: Hardware Interface
+    urdf: Universal Robots 5e
+    rate: 500
+    events:
+      transitions:
+        on_load:
+          load:
+            - controller: robot_state_broadcaster
+              hardware: hardware
+            - controller: joint_trajectory_controller
+              hardware: hardware
+            - controller: ur_dashboard_controller
+              hardware: hardware
+    parameters:
+      headless_mode: "false"
+    controllers:
+      robot_state_broadcaster:
+        plugin: aica_core_controllers/RobotStateBroadcaster
+        events:
+          transitions:
+            on_load:
+              switch_controllers:
+                hardware: hardware
+                activate: robot_state_broadcaster
+      joint_trajectory_controller:
+        plugin: aica_core_controllers/trajectory/JointTrajectoryController
+        events:
+          predicates:
+            has_trajectory_succeeded:
+              call_service:
+                controller: ur_dashboard_controller
+                hardware: hardware
+                service: hand_back_control
+          transitions:
+            on_activate:
+              sequence:
+                start: sequence
+      ur_dashboard_controller:
+        plugin: aica_ur_controllers/URDashboardController
+        events:
+          predicates:
+            program_running:
+              switch_controllers:
+                hardware: hardware
+                activate: joint_trajectory_controller
+            hand_back_control_success:
+              application: stop
+          transitions:
+            on_load:
+              switch_controllers:
+                hardware: hardware
+                activate: ur_dashboard_controller
+graph:
+  positions:
+    hardware:
+      hardware:
+        x: 780
+        y: 0
+    sequences:
+      sequence:
+        x: 80
+        y: 380
+  edges:
+    sequence_sequence_event_trigger_2_hardware_hardware_joint_trajectory_controller_set_trajectory:
+      path:
+        - x: 420
+          y: 1060
+        - x: 620
+          y: 1060
+        - x: 620
+          y: 900
+    on_start_on_start_hardware_hardware:
+      path:
+        - x: 440
+          y: 40
+        - x: 440
+          y: 60
+    hardware_hardware_joint_trajectory_controller_on_activate_sequence_sequence:
+      path:
+        - x: 20
+          y: 760
+        - x: 20
+          y: 440
+    sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
+      path:
+        - x: 280
+          y: 920
+    hardware_hardware_ur_dashboard_controller_program_running_hardware_hardware_joint_trajectory_controller:
+      path:
+        - x: 460
+          y: 1300
+        - x: 460
+          y: 640
+    hardware_hardware_ur_dashboard_controller_hand_back_control_success_on_stop_on_stop:
+      path:
+        - x: -20
+          y: 1260
+        - x: -20
+          y: 140
+    hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_ur_dashboard_controller_hand_back_control:
+      path:
+        - x: 680
+          y: 840
+        - x: 680
+          y: 1380
+  ```
+</details>
 
 ## Dashboard controller
 
-TODO: Add dashboard controller example. Should we extend beyond the exchange of control, e.g. set a payload?
-
 Dashboard controller allows interaction with UR's dashboard server to, among else, exchange control, set the payload,
 and zero the force-torque sensor. Examples in this section describe how to set up and use this functionality.
-
-### Exchange of control
-
-TODO: Remove the title, since we describe both exchange and payload adjustement, and nothing else will be added
-probably.
 
 A node running on the teaching pendant can be modified to hand over control to an AICA application that will perform a
 task. Once this task is finished, the application will hand over control to the pendant, so that the rest of the program
@@ -342,8 +512,6 @@ handed back to the pendant.
 </div>
 
 ## Hand Guiding controller
-
-NOTE: Did not really know what to write in the next paragraph, the reason we did not just implement simple freedrive.
 
 It is quite common that users need to manually adjust the position of the manipulator, either for practical -move to a
 part approach location and teach it to the robot- or safety reasons. While in Local mode, this can be achieved through
