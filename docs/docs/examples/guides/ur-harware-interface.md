@@ -14,6 +14,7 @@ import urHWIHandGuidingGraph from './assets/ur-hwi-hand-guiding-graph.png'
 import urHWIHandGuidingParams from './assets/ur-hwi-hand-guiding-params.png'
 import urHWINetworkingSettings from './assets/ur-hwi-networking-settings.png'
 import urHWIURProgram from './assets/ur-hwi-ur-program.png'
+import urHWIImpedanceController from './assets/ur-hwi-impedance-controller.png'
 
 # Universal Robots
 
@@ -556,9 +557,21 @@ The controller can be further tuned and adjusted by using its parameters:
   <img src={urHWIHandGuidingParams} alt="Hand guiding controller parameters" style={{ width: '40%' }} />
 </div>
 
-Maybe a good point to break into a second page since the impedance controller and force mode might have more things to
-discuss.
-
 ## Impedance controller
 
-Force mode already mentioned above. Should we expand and say more?
+AICA's tailored impedance controller for UR robots takes advantage of UR's force mode to drive the robot in a compliant manner, 
+enabling safe, adaptive interaction with the environment.
+
+The controller takes a Cartesian state as input, and based on the error with respect to the current state, as well as the defined
+stiffness and damping parameters, tries to apply a wrench in space. In cases of free space, this will result in uninterrupted motion,
+while the robot will react compliantly to disturbances and forces applied on the end effector (where the force sensor lies).   
+
+:::note
+
+For the controller to operate, the names of the sensor and the reference frame need to be defined as before. 
+
+:::
+
+<div class="text--center">
+  <img src={urHWIImpedanceController} alt="UR Impedance controller parameters" style={{ width: '40%' }} />
+</div>
