@@ -32,13 +32,13 @@ In this section, some of the prerequisites to use the AICA ABB collection are in
 ### EGM
 
 ABB permits remote control of its manipulator range using the optional **Externally Guided Motion (EGM)** feature. EGM
-provides external devices with the ability to send commands and control ABB robotic arms, using Google Protocol Buffers
-transported through UDP sockets. For more information, check out the
+provides external devices with the ability to send commands and control ABB robotic arms, using Google's Protocol Buffers (Protobuf) serialization library to transport 
+information through UDP sockets. For more information, check out the
 [official product documentation](https://library.e.abb.com/public/344f15f0f43341eb944fe35279d9fa2e/3HAC073319+AM+Externally+Guided+Motion+RW6-en.pdf?x-sign=WlxgV7Vao27KV3d3hlsfaoykgctYqoA0F98ch89S%2FPEaGwQg47ou%2FioylQtzvLaV).
 
 :::tip
 
-For best results, always set the rate of the hardware interface to 250 Hertz, which corresponds to the suggested stable
+For best results, always set the rate of the hardware interface to 250 Hertz, which corresponds to the ABB-suggested stable
 UDP data exchange limit.
 
 :::
@@ -75,8 +75,8 @@ actual robot or simulator.
 
 :::note
 
-The mock interface is only a visualization tool and does not include a physics engine, or dynamics calculations. For
-that purpose, check out RobotStudio in the following section.
+The mock interface does not include a physics engine, or dynamics calculations, and merely sets the commands as state. For
+more sophisticated simulation capabilities, check out RobotStudio in the following section.
 
 :::
 
@@ -94,7 +94,7 @@ several aspects of the real controller.
 
 :::note
 
-The RobotStudio software suite is available for Windows so it would require a second device.
+The RobotStudio software suite is available only for Windows, so you may need to set it up on a secondary device or a virtual machine .
 
 :::
 
@@ -271,7 +271,7 @@ ENDMODULE
 
 ## Hardware interface
 
-Returning to AICA studio and the hardware interface, it is now possible to define the parameters and connect to the
+Returning to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
 robot. The majority of the hardware interface parameters enable connection to EGM and RWS:
 
 - EGM port: the port that EGM uses to send commands.
