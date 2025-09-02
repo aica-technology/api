@@ -559,16 +559,16 @@ The controller can be further tuned and adjusted by using its parameters:
 
 ## Impedance controller
 
-AICA's tailored impedance controller for UR robots takes advantage of UR's force mode to drive the robot in a compliant manner, 
+AICA's UR impedance controller is tailored to take advantage of UR's force mode to drive the robot in a compliant manner, 
 enabling safe, adaptive interaction with the environment.
 
-The controller takes a Cartesian state as input, and based on the error with respect to the current state, as well as the defined
-stiffness and damping parameters, tries to apply a wrench in space. In cases of free space, this will result in uninterrupted motion,
+The controller takes a desired Cartesian state as input. Then, it computes the error between input and current state. Using the defined
+stiffness and damping parameters, it applies a desired wrench in space. In cases of obstacle-free space this will result in uninterrupted motion,
 while the robot will react compliantly to disturbances and forces applied on the end effector (where the force sensor lies).   
 
 :::note
 
-For the controller to operate, the names of the sensor and the reference frame need to be defined as before. 
+For the controller to operate, the names of the sensor and the reference frame need to be defined similarly to previous sections. 
 
 :::
 
