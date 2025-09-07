@@ -5,6 +5,11 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "parameter_name": {
+      "description": "The parameter name as it is declared in the implementation",
+      "type": "string",
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+    },
     "display_name": {
       "description": "The human-readable parameter name.",
       "examples": [
@@ -43,6 +48,7 @@
     }
   },
   "required": [
+    "parameter_name",
     "display_name",
     "description",
     "parameter_type",

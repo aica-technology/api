@@ -5,6 +5,11 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "assignment_name": {
+      "description": "The assignment name as it is declared in the implementation",
+      "type": "string",
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+    },
     "display_name": {
       "description": "The human-readable assignment name.",
       "examples": [
@@ -25,6 +30,7 @@
     }
   },
   "required": [
+    "assignment_name",
     "display_name",
     "description",
     "assignment_type"

@@ -5,6 +5,11 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "signal_name": {
+      "description": "The signal name as it is declared in the implementation",
+      "type": "string",
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+    },
     "display_name": {
       "description": "The short name of this signal (to be displayed on the edge of the node in the graph view).",
       "examples": [
@@ -55,6 +60,7 @@
     }
   },
   "required": [
+    "signal_name",
     "display_name",
     "description",
     "signal_type"
