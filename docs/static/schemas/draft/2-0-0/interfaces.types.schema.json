@@ -14,7 +14,7 @@
         "assignment_name": {
           "description": "The assignment name as it is declared in the implementation",
           "type": "string",
-          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
         },
         "display_name": {
           "description": "The human-readable assignment name.",
@@ -98,7 +98,7 @@
         "parameter_name": {
           "description": "The parameter name as it is declared in the implementation",
           "type": "string",
-          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
         },
         "display_name": {
           "description": "The human-readable parameter name.",
