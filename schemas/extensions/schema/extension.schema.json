@@ -39,11 +39,10 @@
       "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/signal"
     },
     "signals": {
-      "type": "object",
-      "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-          "$ref": "#/$defs/signal"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/signal"
       }
     }
   },
@@ -118,11 +117,10 @@
     "assignments": {
       "title": "Assignments",
       "description": "The assignments declared by the extension.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
-          "$ref": "#/$defs/assignment"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/assignment"
       }
     },
     "inputs": {
@@ -138,31 +136,28 @@
     "parameters": {
       "title": "Parameters",
       "description": "The parameters declared by the extension.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
-          "$ref": "#/$defs/parameter"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/parameter"
       }
     },
     "predicates": {
       "title": "Predicates",
       "description": "The predicates provided by the extension.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-          "$ref": "#/$defs/predicate"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/predicate"
       }
     },
     "services": {
       "title": "Services",
       "description": "The services provided by the extension.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-          "$ref": "#/$defs/service"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/service"
       }
     },
     "control_type": {

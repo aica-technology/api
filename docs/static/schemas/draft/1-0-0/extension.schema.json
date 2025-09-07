@@ -24,6 +24,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "assignment_name": {
+          "description": "The assignment name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
         "display_name": {
           "description": "The human-readable assignment name.",
           "examples": [
@@ -44,6 +49,7 @@
         }
       },
       "required": [
+        "assignment_name",
         "display_name",
         "description",
         "assignment_type"
@@ -102,6 +108,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "parameter_name": {
+          "description": "The parameter name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
         "display_name": {
           "description": "The human-readable parameter name.",
           "examples": [
@@ -157,6 +168,7 @@
         }
       },
       "required": [
+        "parameter_name",
         "display_name",
         "description",
         "parameter_type",
@@ -235,6 +247,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "predicate_name": {
+          "description": "The predicate name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
         "display_name": {
           "description": "The human-readable predicate name.",
           "type": "string"
@@ -245,6 +262,7 @@
         }
       },
       "required": [
+        "predicate_name",
         "display_name",
         "description"
       ]
@@ -256,6 +274,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "service_name": {
+          "description": "The service name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
         "display_name": {
           "description": "The human-readable service name.",
           "type": "string"
@@ -270,11 +293,6 @@
             "string",
             "object"
           ]
-        },
-        "service_name": {
-          "deprecated": true,
-          "description": "The lower_snake_case service name as it is declared in the component or controller. This property is deprecated and services should be mapped by their service name in future usage.",
-          "type": "string"
         },
         "payload_description": {
           "description": "A description of the service payload.",
@@ -298,6 +316,7 @@
         }
       },
       "required": [
+        "service_name",
         "display_name",
         "description",
         "service_type"
@@ -359,6 +378,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "signal_name": {
+          "description": "The signal name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
         "display_name": {
           "description": "The short name of this signal (to be displayed on the edge of the node in the graph view).",
           "examples": [
@@ -409,6 +433,7 @@
         }
       },
       "required": [
+        "signal_name",
         "display_name",
         "description",
         "signal_type"
@@ -461,11 +486,10 @@
       ]
     },
     "signals": {
-      "type": "object",
-      "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-          "$ref": "#/$defs/signal"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/signal"
       }
     }
   },
@@ -540,11 +564,10 @@
     "assignments": {
       "title": "Assignments",
       "description": "The assignments declared by the extension.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
-          "$ref": "#/$defs/assignment"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/assignment"
       }
     },
     "inputs": {
@@ -560,31 +583,28 @@
     "parameters": {
       "title": "Parameters",
       "description": "The parameters declared by the extension.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
-          "$ref": "#/$defs/parameter"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/parameter"
       }
     },
     "predicates": {
       "title": "Predicates",
       "description": "The predicates provided by the extension.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-          "$ref": "#/$defs/predicate"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/predicate"
       }
     },
     "services": {
       "title": "Services",
       "description": "The services provided by the extension.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-          "$ref": "#/$defs/service"
-        }
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/service"
       }
     },
     "control_type": {
