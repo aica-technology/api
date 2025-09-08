@@ -20,10 +20,11 @@ The 2-0-0 version of the interfaces schema includes major changes for more consi
 - Forbid `parameter_state_type` when `parameter_type` is not `state`
 - Reduce permitted options in `signal_type` by removing all encoded state types except for `state` and replace `other`
   with `external`
+- Remove the `default_value` annotation for default signal topics
 
 ### Features
 
-- Allow any real value default parameter value can now be any real value type, not just null or string
+- Allow any real value default parameter value, not just null or string
 - Use `signal_state_type` to define the encoded state variant when `signal_type` is `state`
 - More explicit validation rules for optional properties
 - Include `integer` in parameter value type for languages that differentiate between integer and floating point numbers
