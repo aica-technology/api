@@ -389,7 +389,6 @@
         },
         "default_topic": {
           "description": "The default topic name assigned to this signal. If unspecified, it is assumed to be '~/<$signal_name>'. Setting the parameter '<$signal_name>_topic' will override the default value.",
-          "default": "~/signal_name",
           "type": "string"
         },
         "reconfigurable_topic": {
