@@ -5,6 +5,11 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "service_name": {
+      "description": "The service name as it is declared in the implementation",
+      "type": "string",
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+    },
     "display_name": {
       "description": "The human-readable service name.",
       "type": "string"
@@ -19,11 +24,6 @@
         "string",
         "object"
       ]
-    },
-    "service_name": {
-      "deprecated": true,
-      "description": "The lower_snake_case service name as it is declared in the component or controller. This property is deprecated and services should be mapped by their service name in future usage.",
-      "type": "string"
     },
     "payload_description": {
       "description": "A description of the service payload.",
@@ -47,6 +47,7 @@
     }
   },
   "required": [
+    "service_name",
     "display_name",
     "description",
     "service_type"

@@ -5,6 +5,11 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "predicate_name": {
+      "description": "The predicate name as it is declared in the implementation",
+      "type": "string",
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+    },
     "display_name": {
       "description": "The human-readable predicate name.",
       "type": "string"
@@ -15,6 +20,7 @@
     }
   },
   "required": [
+    "predicate_name",
     "display_name",
     "description"
   ]
