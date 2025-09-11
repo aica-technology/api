@@ -2,6 +2,7 @@
 sidebar_position: 4
 title: Users and authentication
 ---
+
 import newPassword from './assets/aica-studio-new-password.png'
 
 # Users and authentication
@@ -36,22 +37,21 @@ identifier and can be granted a combination of [scopes](#scopes).
 :::note
 
 The email address used to create a new user is only used as an identifier and is unrelated to the email address used for
-[licensing](installation/licensing.md). Users are defined locally to a specific AICA System Configuration, and
-access scopes or passwords are not inferred or shared between different configurations, even if the same email address
-is used.
+[licensing](installation/licensing.md). Users are defined locally to a specific AICA System Configuration, and access
+scopes or passwords are not inferred or shared between different configurations, even if the same email address is used.
 
 :::
 
-If AICA Studio is accessed from a browser external to AICA Launcher, or if the user of AICA Launcher logs out of the 
+If AICA Studio is accessed from a browser external to AICA Launcher, or if the user of AICA Launcher logs out of the
 current session, a valid user email and password must be supplied to log back in to AICA Studio. To create a new user
 account, click on the **New User** button in the **Settings** tab, provide an email address and the desired scopes.
 
 ![aica-studio-create-user](assets/aica-studio-create-user.png)
 
-A random password is generated for the newly created user which can later be changed. It is highly 
-suggested to reset this password at once. To achieve that, copy it, log out from the `super-admin` initial user, and 
-log in with the new credentials. Alternatively, if this user is created for a third person, make sure to save the 
-initial password and share it with them directly, since it will not be possible to access again. 
+A random password is generated for the newly created user which can later be changed. It is highly suggested to reset
+this password at once. To achieve that, copy it, log out from the `super-admin` initial user, and log in with the new
+credentials. Alternatively, if this user is created for a third person, make sure to save the initial password and share
+it with them directly, since it will not be possible to access again.
 
 <div class="text--center">
   <img src={newPassword} alt="Starting and checking camera live stream" width="300"/>
@@ -82,8 +82,8 @@ Read-only access to high-level information about the AICA System such as the ava
 
 ### `monitor`
 
-Read-only access to specific information about the AICA System such as configuration database entries or the
-state and live telemetry of running application.
+Read-only access to specific information about the AICA System such as configuration database entries or the state and
+live telemetry of running application.
 
 ### `control`
 
