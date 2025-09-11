@@ -66,15 +66,15 @@ create API keys.
 
 ## API Keys
 
-Other than accessing Studio through a browser, users can conneinteract with the AICA Core using the AICA API client. For
-For AICA Core v4.3.0 and later, an API key is required for authentication. This can be generated in the User page in AICA Studio,
-by clicking on the **New API Key** button. Provide a name and the desired scopes - note that these can not surpass the scope of the logged
-in user. 
+Other than accessing Studio through a browser, users can interact with the AICA Core using the AICA API client. For AICA
+Core v4.3.0 and later, an API key is required for authentication. This can be generated in the User page in AICA Studio,
+by clicking on the **New API Key** button. Provide a name and the desired scopes - note that these can not surpass the
+scope of the logged in user.
 
 ![aica-studio-new-key](assets/aica-studio-new-api-key.png)
 
-As was the case with the new user password, the newly created key has to be copied and saved right away, as it cannot be accessed later.
-It can then be shared with interested parties, that can use it to authenticate and access AICA Core. 
+As was the case with the new user password, the newly created key has to be copied and saved right away, as it cannot be
+accessed later. It can then be shared with interested parties, that can use it to authenticate and access AICA Core.
 
 :::tip
 
