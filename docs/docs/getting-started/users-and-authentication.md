@@ -2,6 +2,7 @@
 sidebar_position: 4
 title: Users and authentication
 ---
+import newPassword from './assets/aica-studio-new-password.png'
 
 # Users and authentication
 
@@ -41,11 +42,20 @@ is used.
 
 :::
 
+If AICA Studio is accessed from a browser external to AICA Launcher, or if the user of AICA Launcher logs out of the 
+current session, a valid user email and password must be supplied to log back in to AICA Studio. To create a new user
+account, click on the **New User** button in the **Settings** tab, provide an email address and the desired scopes.
+
 ![aica-studio-create-user](assets/aica-studio-create-user.png)
 
-A random password is generated for a newly created user and can later be changed by the respective user. If AICA Studio
-is accessed from a browser external to AICA Launcher, or if the user of AICA Launcher logs out of the current session, a
-valid user email and password must be supplied to log back in to AICA Studio.
+A random password is generated for the newly created user which can later be changed. It is highly 
+suggested to reset this password at once. To achieve that, copy it, log out from the `super-admin` initial user, and 
+log in with the new credentials. Alternatively, if this user is created for a third person, make sure to save the 
+initial password and share it with them directly, since it will not be possible to access again. 
+
+<div class="text--center">
+  <img src={newPassword} alt="Starting and checking camera live stream" width="300"/>
+</div>
 
 ![aica-studio-user-login](assets/aica-studio-user-login.png)
 
