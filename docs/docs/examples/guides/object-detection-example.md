@@ -6,6 +6,8 @@ unlisted: true
 
 import applicationRvizView from './assets/object-detection-example-rviz.gif'
 import cameraCalibration from './assets/camera-calibration.gif'
+import yoloExecutor from './assets/object-detection-yolo-executor.jpg'
+import yoloExecutorParameters from './assets/object-detection-yolo-executor-parameters.jpg'
 
 # Using YOLO to track objects
 
@@ -14,7 +16,7 @@ directly from an image in a single pass through a neural network. Unlike older m
 YOLO processes the entire image at once, making it extremely fast and well-suited for many applications, including
 robotics.
 
-## A YOLO example using the AICA framework # TODO: I suggest we make this a standalone (short) example since we need it in other components (e.g., marker detectors)
+## A YOLO example using the AICA framework <!-- TODO: I suggest we make this a standalone (short) example since we need it in other components (e.g., marker detectors) -->
 
 This page details how to run a `YoloExecutor` component (i.e., a component that can use various YOLO models for
 inference), and demonstrates how it could be used as part of an AICA application. We show how to create a custom
@@ -88,7 +90,7 @@ For custom components, make sure to read the camera parameters and apply the nec
 
 The `YoloExecutor` component works with `.onnx` model files. However, many of the available YOLO models are widely
 available in Pytorch (`.pt`) formats instead. To convert between formats, you can use AICA's utilities to do so within
-a Docker container and maintaining your host system unpolluted.
+a Docker container and maintain your host system unpolluted.
 
 
 First, clone our docker image repository (if you followed the calibration section, you should already have it!):
@@ -138,50 +140,66 @@ file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg
 
 In AICA Launcher, create a configuration with the following core version and packages:
 
-- AICA Core v4.4.2 # TODO: v5 here
+- AICA Core v4.4.2 <!-- TODO: v5 here -->
 - `collections/advanced_perception v1.0.0` for the `YoloExecutor` component
-- `components/core-vision v1.0.0` for the `CameraStreamer` component TODO: bump the version here
+- `components/core-vision v1.0.0` for the `CameraStreamer` component  <!-- TODO: bump the version here -->
+
+<!-- TODO: add toolkit images here -->
 
 ## Using the YOLO executor
 
-The YOLO Executor component observes runs the YOLO segmentation model on an image.
-It takes a camera stream and outputs the segmented image as well as the locations of bounding boxes on the image. The
-user can set the `Object Class` parameter, which will cause the component to set the predicate `Object Detected` to
-`True` when the specified object is found in the image. The `Confidence Threshold` parameter is the minimum score a
-predicted bounding box must have to be considered a valid detection. `IOU Threshold` is used during Non-Maximum
-Suppression (NMS) to decide whether two bounding boxes represent the same object. For example, if `IOU threshold` is set
-to 0.5, any box that overlaps more than 50% with a higher-scoring box will be discarded. For now we leave them as
-default values.
-
-To test the YOLO executor:
+Let us a YOLO application from scratch.
 
 - Create a new application
-- Remove the default Hardware Interface node
+- Remove the default Hardware Interface node for now
 - Add the Camera Streamer component from the core vision package
-    - Set the `Source` parameter to a video device or file accordingly.
-    - Turn on the **auto-configure** and **auto-activate** switches
+    - Set the `Source` parameter to a video device or file accordingly
+    - Enable **auto-configure** and **auto-activate**
 - Add the YOLO Executor component
-    - Set the `Model Path` parameter to the `.onnx` file, e.g., `/files/yolo12n.onnx`
-    - Set the `Classes Path` parameter to the yaml label file, e.g., `/files/coco.yaml`
-    - Set the `Rate` parameter to 3 (works on most machines), on a machine with a GPU this can be set to higher.
-    - Turn on the **auto-configure** and **auto-activate** switches
+    - Set the `Model path` parameter to the `.onnx` file, e.g., `/files/yolo12n.onnx`
+    - Set the `Classes path` parameter to the yaml label file, e.g., `/files/coco.yaml`
+    - Set the `Rate` parameter to match your camera's FPS (actual publishing rate may vary depending on your system's
+computational power, especially if running on a CPU)
+    - Enable the **auto-configure** and **auto-activate** switches
 - Connect the output of the start node to each component to load them when the application is started
-- Connect the `Image` output of the Camera Streamer to the `RGB Image` input of the YOLO Executor
+- Connect the `Image` output of the Camera Streamer to the `Image` input of the `YoloExecutor`
 
-The complete application is shown below:
-![Graph](./assets/object-detection-using-yolo-graph.png)
+Additional parameters can be used to tune the performance of YoloExecutor (both in the computational and predication
+sense). The following picture shows the available parameters:
 
-The YOLO Executors parameters are as follows:
-![Graph](./assets/object-detection-yolo-parameters.png)
+<div class="text--center">
+  <img src={yoloExecutorParameters} alt="Overview of a YoloExecutor parameters" />
+</div>
+
+More specifically, you can adapt the `Number of CPU threads` to get the most out of your system's resources. Notice that
+this parameter has no effect when a GPU is used. The `Device` parameter is used to determine which device should be used
+to run the inference, but is subject to the way you bundle your AICA configuration. That is, if you use a CPU toolkit
+image, then the component will ultimately gracefully fall back to using the CPU. You can set a list of objects to detect
+through the `Object class` array, which will narrow the `Detections` output to the selected classes alone. Finally,
+adjust the `IOU threshold` and/or `Confidence threshold` to tune the inference's output. The `Confidence threshold`
+is the minimum score a predicted bounding box must have to be considered a valid detection. The `IOU Threshold` is used
+during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same object. For example, if
+`IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box will be discarded.
+
+To complement the parameters and enable event-driven logic when using the component, two predicates exist, namely:
+- `Is selected object detected`: True if one of the objects in the `Object class` list is detected
+- `Is any object detected`: True if there is any known object in the image stream (including but not limited to
+`Object class`)
+
+Your application should now look similar to the following picture:
+
+<div class="text--center">
+  <img src={yoloExecutor} alt="Overview of a YoloExecutor application" />
+</div>
 
 ### Running the application
 
-Start the application in AICA Studio. Then open **RViz**: bottom-right gear icon → "Launch RViz", then RViz → Add → By
-topic → `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated output. It should show the camera
-images with bounding boxes drawn around key objects in it. The bounding boxes are published on the
-`yolo_executor/bounding_boxes` topic as `std_msgs/msg/String` and can be viewed in AICA Studio in the "ROS Topics" tab.
-Changing the `Confidence Threshold` and `IOU Threshold` parameters will change how often and how many bounding boxes the
-model outputs.
+Open the application we built in the previous step, if you are not already there. Then:
+- open **RViz**: from the bottom-right gear icon **→** "Launch RViz"
+- in **RViz**: press Add **→** By topic **→** `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated
+output. It should show the camera images with bounding boxes drawn around key objects in it. The bounding boxes are
+published on the `yolo_executor/detections` topic as `std_msgs/msg/String`, which is in fact a JSON string with
+object-related information (e.g., bounding box coordinates, class name, class id, ...).
 
 :::note
 
@@ -192,7 +210,9 @@ option.
 
 ## Tracking an object with YOLO
 
-The bounding boxes generated by YOLO can be used to move a robot towards an object.
+The bounding boxes generated by YOLO can be used to move a robot towards an object. Let use take an example were we will
+emulate a camera mounted on a robot arm's tool and we want to command the robot such that it tries to maintain a
+selected class in the middle of the image frame.
 
 ### Creating a custom component to estimate position from bounding boxes
 
@@ -206,7 +226,7 @@ make 3 simplifying assumptions:
 
 #### Set up the repository
 
-- Create a git repository from the [component-template](https://github.com/aica-technology/component-template)
+- Create a git repository from the [package-template](https://github.com/aica-technology/package-template)
 - Clone the repository, enter the directory, and run:
 
   ```bash
