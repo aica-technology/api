@@ -4,7 +4,8 @@ title: Using YOLO to track objects
 unlisted: true
 ---
 
-import rvizgif from './assets/object-detection-example-rviz.gif'
+import applicationRvizView from './assets/object-detection-example-rviz.gif'
+import cameraCalibration from './assets/camera-calibration.gif'
 
 # Using YOLO to track objects
 
@@ -13,7 +14,7 @@ directly from an image in a single pass through a neural network. Unlike older m
 YOLO processes the entire image at once, making it extremely fast and well-suited for many applications, including
 robotics.
 
-## A YOLO example using the AICA framework
+## A YOLO example using the AICA framework # TODO: I suggest we make this a standalone (short) example since we need it in other components (e.g., marker detectors)
 
 This page details how to run a `YoloExecutor` component (i.e., a component that can use various YOLO models for
 inference), and demonstrates how it could be used as part of an AICA application. We show how to create a custom
@@ -23,7 +24,7 @@ but any signal of the same type can be used instead. The YOLO executor component
 can be found under`collections/advanced-perception` with a valid AICA license.
 
 <div class="text--center">
-  <img src={rvizgif} alt="Moving the robot towards an object in RViz" />
+  <img src={applicationRvizView} alt="Moving the robot towards an object in RViz" />
 </div>
 
 ## Setup
@@ -70,16 +71,18 @@ After executing the script, and perhaps a moment for Docker to put the image tog
 stream will appear if all went well. If the window is not displaying the image stream, make sure that you specified that
 your image streaming component is running and, for non-`CameraStreamer` nodes, that the correct topic name is set.
 
-<!-- add gif here -->
-
-Move the checkerboard in various positions and orientations until the `Calibrate` camera is no longer grayed out (and
+Move the checkerboard in various positions and orientations until the `CALIBRATE` camera is no longer grayed out (and
 most of the bars are green, indicating good sample size). Once it becomes available, press on it to start computing the
-camera matrices. After a few seconds, the `Save` button will also become available. Do not forget to press `Save`. You
+camera matrices. After a few seconds, the `Save` button will also become available. Do not forget to press `SAVE`. You
 will notice a `calibration` directory has been created on your host machine under `docker-image/camera_calibration` that
 contains a compressed file. The file itself contains the images that were sampled along with a yaml file containing the
 camera calibration information. Finally, move this file into the `data` folder of your AICA configuration such that it
 becomes available within AICA containers. When using `CameraStreamer`, you only need to specify the calibration's path.
 For custom components, make sure to read the camera parameters and apply the necessary undistortion technique(s).
+
+<div class="text--center">
+  <img src={cameraCalibration} alt="Camera calibration process" />
+</div>
 
 ### Obtaining YOLO inference models
 
@@ -101,7 +104,8 @@ cd yolo_model_converter
 ./build-run.sh
 ```
 
-By default, this will download and convert `yolo12n` for you. If you wish to specify one of the other models that Ultralytics is offering, simply specify it as follows:
+By default, this will download and convert `yolo12n` for you. If you wish to specify one of the other models that
+Ultralytics is offering, simply specify it as follows:
 
 ```shell
 ./build-run.sh --model yoloZZZZ
@@ -120,8 +124,9 @@ from ultralytics import YOLO
 model = YOLO("yolo12n.pt")
 model.export(format="onnx")  # creates 'yolov12n.onnx'
 ```
-:::
 
+This approach is also necessary if you are using custom models instead of the ones distributed by Ultralytics.
+:::
 
 ## Class file
 
@@ -135,7 +140,6 @@ In AICA Launcher, create a configuration with the following core version and pac
 
 - AICA Core v4.4.2 # TODO: v5 here
 - `collections/advanced_perception v1.0.0` for the `YoloExecutor` component
-  version)
 - `components/core-vision v1.0.0` for the `CameraStreamer` component TODO: bump the version here
 
 ## Using the YOLO executor
@@ -379,7 +383,7 @@ class YoloToMarker(LifecycleComponent):
 
 Enter the component folder in terminal and run
 
-```bash 
+```bash
 docker build -f aica-package.toml -t objectdetection .
 ```
 
