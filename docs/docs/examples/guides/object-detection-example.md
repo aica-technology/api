@@ -8,11 +8,19 @@ import rvizgif from './assets/object-detection-example-rviz.gif'
 
 # Using YOLO to track objects
 
-<!-- TODO: replace `Object Detection Components` with whatever the package name would be in Launcher -->
-This example provides a use case for `Object Detection Components`. We show how to create a custom component which
-converts bounding boxes into a 3D pose. The example works with any RBG `sensor_msgs::msg::Image` signal, such as
-provided by the Camera Streamer component from `components/core-vision`. The final application will be able to track an
-object with a robot based on a fixed camera position.
+YOLO (You Only Look Once) is a real-time object detection algorithm that predicts bounding boxes and class probabilities
+directly from an image in a single pass through a neural network. Unlike older methods that scan an image multiple times,
+YOLO processes the entire image at once, making it extremely fast and well-suited for many applications, including
+robotics.
+
+## A YOLO example using the AICA framework
+
+This page details how to run a `YoloExecutor` component (i.e., a component that can use various YOLO models for
+inference), and demonstrates how it could be used as part of an AICA application. We show how to create a custom
+component which makes use of a bounding box to adapt an arm's motion such that it maintains the subject centered. Here,
+we will use the `CameraStreamer` component from `components/core-vision` to access a `sensor_msgs::msg::Image` signal,
+but any signal of the same type can be used instead. The YOLO executor component that is covered in following sections
+can be found under`collections/advanced-perception` with a valid AICA license.
 
 <div class="text--center">
   <img src={rvizgif} alt="Moving the robot towards an object in RViz" />
@@ -20,33 +28,117 @@ object with a robot based on a fixed camera position.
 
 ## Setup
 
-To run a YOLO executor, you need a yolo model file in ONNX format and a YAML class file. Yolo models are widely
-available in PT formats. For example, download the lightweight YOLO12n.pt from
-ultralytics [here](https://github.com/sunsmarterjie/yolov12).
+### [optional] Camera calibration
 
-To convert a PT file to ONNX, run the following Python code with ultralytics installed:
+Depending on how you are generating the `sensor_msgs::msg::Image` signal and/or the camera you are using, you may want
+to consider running a calibration to ensure accurate predications in terms of bounding box pixel coordinates. To
+facilitate the process, AICA provides a docker image you can use to run one of ROS' main packages for this task.
+
+First, clone our docker image repository:
+
+```shell
+https://github.com/aica-technology/docker-images.git
+```
+
+and open a terminal at the root of `docker-images`. Then:
+
+```shell
+cd camera_calibration
+```
+
+Within that folder you will find a `build-run.sh` that, as the name suggests, will build a Docker image and run a
+container with the camera calibration software an an entrypoint.
+
+Before running the script, make sure to generate a **checkerboard** pattern (e.g., from
+[here](https://calib.io/pages/camera-calibration-pattern-generator)). The calibrator will use this pattern to determine
+how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort an image from
+coming from your camera. Take note of the checkerboard width, height, and box size. Notice that the calibrator is
+detecting the internal corners of the outermost boxes, so a 8x11 checkerboard will have a 7x10 area with which the
+calibrator will work. Print the checkerboard and attach it to a flat surface throughout the calibration process.
+Then, run the `build-run.sh` script specifying the necessary parameters similarly to:
+
+```shell
+./build-run.sh --calibration-height 7 --calibration-width 11 --calibration-square 0.015
+```
+
+Notice that the calibration square side size is in meters. If you are using AICA's `CameraStreamer` component to produce
+an image stream, the above command should already work. If you are using your own node to stream images, you will more
+than likely need to specify which topic the calibrator needs to subscribe to by adding the
+`--calibration-topic YOUR_ROS_TOPIC` argument.
+
+After executing the script, and perhaps a moment for Docker to put the image together, a window displaying your image
+stream will appear if all went well. If the window is not displaying the image stream, make sure that you specified that
+your image streaming component is running and, for non-`CameraStreamer` nodes, that the correct topic name is set.
+
+<!-- add gif here -->
+
+Move the checkerboard in various positions and orientations until the `Calibrate` camera is no longer grayed out (and
+most of the bars are green, indicating good sample size). Once it becomes available, press on it to start computing the
+camera matrices. After a few seconds, the `Save` button will also become available. Do not forget to press `Save`. You
+will notice a `calibration` directory has been created on your host machine under `docker-image/camera_calibration` that
+contains a compressed file. The file itself contains the images that were sampled along with a yaml file containing the
+camera calibration information. Finally, move this file into the `data` folder of your AICA configuration such that it
+becomes available within AICA containers. When using `CameraStreamer`, you only need to specify the calibration's path.
+For custom components, make sure to read the camera parameters and apply the necessary undistortion technique(s).
+
+### Obtaining YOLO inference models
+
+The `YoloExecutor` component works with `.onnx` model files. However, many of the available YOLO models are widely
+available in Pytorch (`.pt`) formats instead. To convert between formats, you can use AICA's utilities to do so within
+a Docker container and maintaining your host system unpolluted.
+
+
+First, clone our docker image repository (if you followed the calibration section, you should already have it!):
+
+```shell
+https://github.com/aica-technology/docker-images.git
+```
+
+and open a terminal at the root of `docker-images`. Then:
+
+```shell
+cd yolo_model_converter
+./build-run.sh
+```
+
+By default, this will download and convert `yolo12n` for you. If you wish to specify one of the other models that Ultralytics is offering, simply specify it as follows:
+
+```shell
+./build-run.sh --model yoloZZZZ
+```
+
+:::note
+
+If you have `ultralytics` installed in your Python environment or you are willing to install it, then download any of
+the models available [here](https://github.com/sunsmarterjie/yolov12). For the purposes of this example, you can opt
+for a smaller model such as the `yolo12n`.
+
+To convert a `.pt` file to `.onnx`, run the following Python code with `ultralytics` installed:
 
 ```python
 from ultralytics import YOLO
-model = YOLO("yolov12n.pt")
+model = YOLO("yolo12n.pt")
 model.export(format="onnx")  # creates 'yolov12n.onnx'
 ```
+:::
 
-For this example, also download the standard coco.yaml class
-file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml).
-Move the ONNX model file and the YAML class file into a new directory.
+
+## Class file
+
+For this example, also download the standard `coco.yaml` class
+file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml) and move it to your
+`data` folder, where you also stored your YOLO model.
+
+## AICA Launcher configuration
 
 In AICA Launcher, create a configuration with the following core version and packages:
 
-- AICA Core v4.4.2
-- `collections/object-detection` for the YOLO Executor component (TODO: check package name post-release and specify
+- AICA Core v4.4.2 # TODO: v5 here
+- `collections/advanced_perception v1.0.0` for the `YoloExecutor` component
   version)
-- `components/core-vision v1.0.0` for the Camera Streamer component
+- `components/core-vision v1.0.0` for the `CameraStreamer` component TODO: bump the version here
 
-Under Advanced Settings, add a volume containing the folder where you stored your YOLO model files and link it to
-`/files`.
-
-## Using the YOLO Executor
+## Using the YOLO executor
 
 The YOLO Executor component observes runs the YOLO segmentation model on an image.
 It takes a camera stream and outputs the segmented image as well as the locations of bounding boxes on the image. The
