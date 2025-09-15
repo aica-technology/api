@@ -54,7 +54,7 @@ credentials. Alternatively, if this user is created for a third person, make sur
 it with them directly, since it will not be possible to access again.
 
 <div class="text--center">
-  <img src={newPassword} alt="Starting and checking camera live stream" width="300"/>
+  <img src={newPassword} alt="New password created for new user" width="300"/>
 </div>
 
 ![aica-studio-user-login](assets/aica-studio-user-login.png)
@@ -70,6 +70,12 @@ Other than accessing Studio through a browser, users can interact with the AICA 
 Core v4.3.0 and later, an API key is required for authentication. This can be generated in the User page in AICA Studio,
 by clicking on the **New API Key** button. Provide a name and the desired scopes - note that these can not surpass the
 scope of the logged in user.
+
+:::warning
+
+For security reasons, the privileged `super-admin` user cannot be used to create or manage API keys. Create a new user with the necessary scopes before creating an API key as that user.
+
+:::
 
 ![aica-studio-new-key](assets/aica-studio-new-api-key.png)
 
