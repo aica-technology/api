@@ -48,10 +48,10 @@ account, click on the **New User** button in the **Settings** tab, provide an em
 
 ![aica-studio-create-user](assets/aica-studio-create-user.png)
 
-A random password is generated for the newly created user which can later be changed. It is highly suggested to reset
-this password at once. To achieve that, copy it, log out from the `super-admin` initial user, and log in with the new
-credentials. Alternatively, if this user is created for a third person, make sure to save the initial password and share
-it with them directly, since it will not be possible to access again.
+A random password is generated for the newly created user. It is only shown once, so it should be copied and stored for
+later use. If the password needs to be changed, first log out from the **User** screen (or open AICA Studio in a new
+browser session), and log in as the new user with the generated password. Then, change the password in the User screen
+by entering the generated (old) and the desired (new) password.
 
 <div class="text--center">
   <img src={newPassword} alt="New password created for new user" width="300"/>
@@ -73,7 +73,8 @@ scope of the logged in user.
 
 :::warning
 
-For security reasons, the privileged `super-admin` user cannot be used to create or manage API keys. Create a new user with the necessary scopes before creating an API key as that user.
+For security reasons, the privileged `super-admin` user cannot be used to create or manage API keys. Create a new user
+with the necessary scopes before creating an API key as that user.
 
 :::
 
