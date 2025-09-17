@@ -7,11 +7,14 @@ import newPassword from './assets/aica-studio-new-password.png'
 
 # Users and authentication
 
-Authentication prevents unauthorized users or software clients from accessing or controlling AICA Studio or the API,
-even if they have access to the IP address and port of the AICA Core server.
+Developing and deploying AICA applications is a process that might involve several different people (users). These
+different users, depending on their role, may be granted different access levels, for example for simple visualization
+of running applications, or for providing active control over hardware. Authentication prevents unauthorized users or
+software clients from accessing or controlling AICA Studio or the API, even if they have access to the IP address and
+port of the AICA Core server.
 
-The AICA System License owner launching an AICA System configuration from AICA Launcher is treated as the system
-administrator and has full access to create, manage, control and deploy applications and configurations.
+The AICA System user launching an AICA System configuration from AICA Launcher is treated as the system administrator
+and has full access to create, manage, control and deploy applications and configurations.
 
 This section describes how to manage users with specific access scopes to explicitly authorize access to the running
 AICA System through a web browser or API client.
@@ -102,7 +105,7 @@ Read-only access to high-level information about the AICA System such as the ava
 ### `monitor`
 
 Read-only access to specific information about the AICA System such as configuration database entries or the state and
-live telemetry of running application.
+live telemetry of running applications.
 
 ### `control`
 
