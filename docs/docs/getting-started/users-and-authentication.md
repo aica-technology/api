@@ -7,14 +7,22 @@ import newPassword from './assets/aica-studio-new-password.png'
 
 # Users and authentication
 
-Developing and deploying AICA applications is a process that might involve several different people (users). These
-different users, depending on their role, may be granted different access levels, for example for simple visualization
-of running applications, or for providing active control over hardware. Authentication prevents unauthorized users or
-software clients from accessing or controlling AICA Studio or the API, even if they have access to the IP address and
-port of the AICA Core server.
+The concept of "Users" in this section refers to creating distinct access credentials (or service accounts) for
+different operational purposes, such as for a monitoring dashboard with view-only permissions or an operator interface
+that can start and stop applications.
 
-The AICA System user launching an AICA System configuration from AICA Launcher is treated as the system administrator
-and has full access to create, manage, control and deploy applications and configurations.
+:::note
+
+An AICA System License is a **single-user** license intended for one primary developer. The platform does not currently
+support live, simultaneous collaboration with other developers on the same system instance.
+
+:::
+
+Authentication prevents unauthorized users or software clients from accessing or controlling a running instance of the
+AICA System through AICA Studio or the API, even if they have access to the IP address and port of the AICA Core server.
+
+The user launching an AICA System configuration from AICA Launcher is treated as the system administrator and has full
+access to create, manage, control and deploy applications and configurations.
 
 This section describes how to manage users with specific access scopes to explicitly authorize access to the running
 AICA System through a web browser or API client.
@@ -69,10 +77,10 @@ create API keys.
 
 ## API Keys
 
-Other than accessing Studio through a browser, users can interact with the AICA Core using the AICA API client. For AICA
-Core v4.3.0 and later, an API key is required for authentication. This can be generated in the User page in AICA Studio,
-by clicking on the **New API Key** button. Provide a name and the desired scopes - note that these can not surpass the
-scope of the logged in user.
+Other than accessing Studio through a browser, users or software clients can interact with the AICA System using API.
+For AICA Core v4.3.0 and later, an API key is required for authentication. This can be generated in the User page in
+AICA Studio, by clicking on the **New API Key** button. Provide a name and the desired scopes - note that these cannot
+surpass the scope of the logged-in user.
 
 :::warning
 
@@ -83,8 +91,10 @@ with the necessary scopes before creating an API key as that user.
 
 ![aica-studio-new-key](assets/aica-studio-new-api-key.png)
 
-As was the case with the new user password, the newly created key has to be copied and saved right away, as it cannot be
-accessed later. It can then be shared with interested parties, that can use it to authenticate and access AICA Core.
+As was the case with the new user password, the newly created key should be copied and saved in a secure place, as it
+cannot be accessed later. It can then be used it to authenticate and access AICA Core through the API.
+
+If an API key is lost or compromised, delete it from the Users page and generate a new one.
 
 :::tip
 
