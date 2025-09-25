@@ -8,15 +8,17 @@ title: Creating a component package
 :::info
 
 The creation of a component package can be greatly simplified by using
-our [Component Template](https://github.com/aica-technology/component-template). It comes with a boilerplate project
-which supports both C++ and Python.
+our [Package Template](https://github.com/aica-technology/package-template). It comes with an interactive wizard that
+will guide you through the first initialization of the package. The wizard supports initializing a package with both C++
+and Python components, as well as, controllers.
 
 A lot of the information in this page is also available in the README of the template repository.
 
 :::
 
-Custom components can be defined in ROS 2 packages and used alongside the standard library of AICA components in AICA Core. Components can be implemented in C++ or Python. A component package can contain multiple
-components in either language.
+Custom components can be defined in ROS 2 packages and used alongside the standard library of AICA components in AICA
+Core. Components can be implemented in C++ or Python. A component package can contain multiple components in either
+language.
 
 ## Package infrastructure
 
