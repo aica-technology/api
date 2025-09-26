@@ -147,7 +147,8 @@ restart procedure in the real robot might take a few minutes, so make all necess
 :::
 
 After connecting to the robot, the controller should be configured to accept commands from an external device.
-Navigate to the Controller tab > Configuration > Communication > UDP Unicast Device, and add a new UDPUC device (or
+
+1. Navigate to the Controller tab > Configuration > Communication > UDP Unicast Device, and add a new UDPUC device (or
 modify the existing one), configured as shown below. This is the device that will be running the AICA application, the
 external control device, so the address should be set accordingly. 
 
@@ -159,17 +160,18 @@ external control device, so the address should be set accordingly.
   <img src={abbNewUDPUCDevice} alt="Add a new UDPUS device." />
 </div>
 
-Next step is enabling RWS connection. For the simulation specifically, this requires either using a proxy or whitelisting the IP address of the device
+2. Next step is enabling RWS connection. For the simulation specifically, this requires either using a proxy or whitelisting the IP address of the device
 trying to access RWS, in this case the device running the AICA application. The first approach is preferable and
 described analytically in a
 [RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
 (read until the end and the last comment for a critical fix). Omnicore controllers and RobotWare 7.x versions by default
 listen on HTTPS and port 80 for RobotStudio and 443 for the real robot. This would not really be necessary, but if needed, it can be modified by 
 following the instructions in this [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x)
-(set to 9876 in the example at the end of this guide). Additionally, to communicate with the RWS running in the Windows device, the firewall in the 
+(set to 9876 in the example at the end of this guide). 
+3. (Optional, for connection with the RobotStudio simulation) To communicate with the RWS running in the Windows device, the firewall in the 
 respective network (usually Public) needs to be deactivated.
 
-Next, make sure that UDPUC and RobotWebServices are active in the network that is being used. Finally, for the changes to take effect, you need to
+4. Finally, make sure that UDPUC and RobotWebServices are active in the network that is being used. Finally, for the changes to take effect, you need to
 restart the controller.
 
 :::tip
