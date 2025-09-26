@@ -32,14 +32,15 @@ In this section, some of the prerequisites to use the AICA ABB collection are in
 ### EGM
 
 ABB permits remote control of its manipulator range using the optional **Externally Guided Motion (EGM)** feature. EGM
-provides external devices with the ability to send commands and control ABB robotic arms, using Google's Protocol Buffers (Protobuf) serialization library to transport 
-information through UDP sockets. For more information, check out the
+provides external devices with the ability to send commands and control ABB robotic arms, using Google's Protocol
+Buffers (Protobuf) serialization library to transport information through UDP sockets. For more information, check out
+the
 [official product documentation](https://library.e.abb.com/public/344f15f0f43341eb944fe35279d9fa2e/3HAC073319+AM+Externally+Guided+Motion+RW6-en.pdf?x-sign=WlxgV7Vao27KV3d3hlsfaoykgctYqoA0F98ch89S%2FPEaGwQg47ou%2FioylQtzvLaV).
 
 :::tip
 
-For best results, always set the rate of the hardware interface to 250 Hertz, which corresponds to the ABB-suggested stable
-UDP data exchange limit.
+For best results, always set the rate of the hardware interface to 250 Hertz, which corresponds to the ABB-suggested
+stable UDP data exchange limit.
 
 :::
 
@@ -67,23 +68,23 @@ this if the robot needs to receive position commands.
 
 ## Mock interface
 
-The mock interface variant of different ABB manipulators can be used to check the application execution, visualize trajectory
-execution and ensure correct frame definition, among else. The mock interface is a very useful tool during early
-development stages, as it does not require connection to the actual hardware and provides a safe environment to
+The mock interface variant of different ABB manipulators can be used to check the application execution, visualize
+trajectory execution and ensure correct frame definition, among else. The mock interface is a very useful tool during
+early development stages, as it does not require connection to the actual hardware and provides a safe environment to
 experiment. After correct operation is verified, users can just switch to the real hardware interface to connect to the
 actual robot or simulator.
 
 :::note
 
-The mock interface does not include a physics engine, or dynamics calculations, and merely sets the commands as state. For
-more sophisticated simulation capabilities, check out RobotStudio in the following section.
+The mock interface does not include a physics engine, or dynamics calculations, and merely sets the commands as state.
+For more sophisticated simulation capabilities, check out RobotStudio in the following section.
 
 :::
 
 ## Connecting to a robot
 
-The provided hardware interface can be used to connect and control either a simulated or a real robot. The following 
-sections provide the necessary steps to do both. 
+The provided hardware interface can be used to connect and control either a simulated or a real robot. The following
+sections provide the necessary steps to do both.
 
 ### RobotStudio simulation
 
@@ -94,7 +95,8 @@ several aspects of the real controller.
 
 :::note
 
-The RobotStudio software suite is available only for Windows, so you may need to set it up on a secondary device or a virtual machine .
+The RobotStudio software suite is available only for Windows, so you may need to set it up on a secondary device or a
+virtual machine .
 
 :::
 
@@ -125,12 +127,11 @@ following the next steps:
   <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
 </div>
 
-
 ### Omnicore controller & real robot
 
 RobotStudio can be used to configure the address of the external control device. Navigate to the Controller tab and
 select **Add Controller > Connect to Controller**. This will allow to detect and connect to the running controller in
-Omnicore, provided of course that the devices are on the same network. 
+Omnicore, provided of course that the devices are on the same network.
 
 <div class="text--center">
   <img src={abbConnectController} alt="Connect to the robot controller." />
@@ -140,17 +141,18 @@ Omnicore, provided of course that the devices are on the same network.
 
 :::tip
 
-Modifications in the real robot controller require write access. To get it, click on **Request Write Access** and confirm on the
-pendant's screen. To save these modifications, the controller has to be restarted. While this takes seconds in simulation, the 
-restart procedure in the real robot might take a few minutes, so make all necessary changes, and then restart.
+Modifications in the real robot controller require write access. To get it, click on **Request Write Access** and
+confirm on the pendant's screen. To save these modifications, the controller has to be restarted. While this takes
+seconds in simulation, the restart procedure in the real robot might take a few minutes, so make all necessary changes,
+and then restart.
 
 :::
 
 After connecting to the robot, the controller should be configured to accept commands from an external device.
 
 1. Navigate to the Controller tab > Configuration > Communication > UDP Unicast Device, and add a new UDPUC device (or
-modify the existing one), configured as shown below. This is the device that will be running the AICA application, the
-external control device, so the address should be set accordingly. 
+   modify the existing one), configured as shown below. This is the device that will be running the AICA application,
+   the external control device, so the address should be set accordingly.
 
 <div class="text--center">
   <img src={abbControllerConfiguration} alt="Controller configuration settings." />
@@ -160,23 +162,25 @@ external control device, so the address should be set accordingly.
   <img src={abbNewUDPUCDevice} alt="Add a new UDPUS device." />
 </div>
 
-2. Next step is enabling RWS connection. For the simulation specifically, this requires either using a proxy or whitelisting the IP address of the device
-trying to access RWS, in this case the device running the AICA application. The first approach is preferable and
-described analytically in a
-[RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
-(read until the end and the last comment for a critical fix). Omnicore controllers and RobotWare 7.x versions by default
-listen on HTTPS and port 80 for RobotStudio and 443 for the real robot. This would not really be necessary, but if needed, it can be modified by 
-following the instructions in this [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x)
-(set to 9876 in the example at the end of this guide). 
-3. (Optional, for connection with the RobotStudio simulation) To communicate with the RWS running in the Windows device, the firewall in the 
-respective network (usually Public) needs to be deactivated.
+2. Next step is enabling RWS connection. For the simulation specifically, this requires either using a proxy or
+   whitelisting the IP address of the device trying to access RWS, in this case the device running the AICA application.
+   The first approach is preferable and described analytically in a
+   [RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
+   (read until the end and the last comment for a critical fix). Omnicore controllers and RobotWare 7.x versions by
+   default listen on HTTPS and port 80 for RobotStudio and 443 for the real robot. This would not really be necessary,
+   but if needed, it can be modified by following the instructions in this
+   [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x)
+   (set to 9876 in the example at the end of this guide).
+3. (Optional, for connection with the RobotStudio simulation) To communicate with the RWS running in the Windows device,
+   the firewall in the respective network (usually Public) needs to be deactivated.
 
-4. Finally, make sure that UDPUC and RobotWebServices are active in the network that is being used. Finally, for the changes to take effect, you need to
-restart the controller.
+4. Finally, make sure that UDPUC and RobotWebServices are active in the network that is being used. Finally, for the
+   changes to take effect, you need to restart the controller.
 
 :::tip
 
-It is possible that this is not actually required for the simulation, but this step is definitely needed for the real robot.
+It is possible that this is not actually required for the simulation, but this step is definitely needed for the real
+robot.
 
 :::
 
@@ -188,9 +192,9 @@ It is possible that this is not actually required for the simulation, but this s
 
 While integrating in the AICA ecosystem, in the simplest case all that is required is a module that uses EGM to control
 the robot externally. An example of such a module is as follows, users only need to make sure the UCDevice is the one
-defined in the controller settings. So for example, if this specific module is used, the UCDevice must be named **AICA_PC**
-in the configuration step above. The module can be placed in the controller's home directory, and uploaded to task by
-right clicking on it and selecting **Load in Task > #Task_Name**. 
+defined in the controller settings. So for example, if this specific module is used, the UCDevice must be named
+**AICA_PC** in the configuration step above. The module can be placed in the controller's home directory, and uploaded
+to task by right clicking on it and selecting **Load in Task > #Task_Name**.
 
 <details>
   <summary>Example RAPID module</summary>
@@ -264,26 +268,25 @@ ENDMODULE
 
 </details>
 
-
 ## Hardware interface
 
 Returning to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
 robot. The majority of the hardware interface parameters enable connection to EGM and RWS:
 
 - EGM port: the port that EGM uses to send commands (6511, the Remote port of the UDPUC device defined in RobotStudio).
-- RWS IP & port: address and port of the RWS (the address of the RobotStudio device or real robot, 192.168.137.1 and 9876 in the picture below respectively).
+- RWS IP & port: address and port of the RWS (the address of the RobotStudio device or real robot, 192.168.137.1 and
+  9876 in the picture below respectively).
 - Connection timeout: for RWS connection.
 - Rapid File Path: the path for the module to be loaded in the controller home directory.
 - Headless Mode: if true, the hardware interface handles the whole initialization procedure of starting and stopping the
-RAPID program and the motors without requiringn any user interaction.
+  RAPID program and the motors without requiringn any user interaction.
 
-The EGM port should be set to the same value defined in the UDPUC device in the controller
-configuration, and the RWS IP and port to the address of the Windows device and listening port respectively. Running the
-application now can successfully connect to the simulated robot and get information about the setup. It also takes
-advantage of RWS to automatically start and stop the simulation along with the application without any interaction with
-RobotStudio. The robot is now ready to receive commands.
+The EGM port should be set to the same value defined in the UDPUC device in the controller configuration, and the RWS IP
+and port to the address of the Windows device and listening port respectively. Running the application now can
+successfully connect to the simulated robot and get information about the setup. It also takes advantage of RWS to
+automatically start and stop the simulation along with the application without any interaction with RobotStudio. The
+robot is now ready to receive commands.
 
 <div class="text--center">
   <img src={abbRSSuccessfulConnection} alt="Connected to RobotStudio successfully." />
 </div>
-
