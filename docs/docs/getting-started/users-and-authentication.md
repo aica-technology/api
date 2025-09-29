@@ -82,7 +82,7 @@ create API keys.
 
 ## API Keys
 
-Other than accessing Studio through a browser, users or software clients can interact with the AICA System using API.
+Other than accessing AICA Studio through a browser, users or software clients can interact with the AICA System using the API.
 For AICA Core v4.3.0 and later, an API key is required for authentication. This can be generated in the User page in
 AICA Studio, by clicking on the **New API Key** button. Provide a name and the desired scopes - note that these cannot
 surpass the scope of the logged-in user.
