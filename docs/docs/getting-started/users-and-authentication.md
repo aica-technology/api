@@ -55,13 +55,13 @@ scopes or passwords are not inferred or shared between different configurations,
 
 If AICA Studio is accessed from a browser external to AICA Launcher, or if the user of AICA Launcher logs out of the
 current session, a valid user email and password must be supplied to log back in to AICA Studio. To create a new user
-account, click on the **New User** button in the **Settings** tab, provide an email address and the desired scopes.
+, click on the **New User** button in the **Settings** tab, provide an email address and the desired scopes.
 
 ![aica-studio-create-user](assets/aica-studio-create-user.png)
 
 A random password is generated for the newly created user. It is only shown once, so it should be copied and stored for
 later use. If the password needs to be changed, first log out from the **User** screen (or open AICA Studio in a new
-browser session), and log in as the new user with the generated password. Then, change the password in the User screen
+browser session), and log in as the new user with the generated password. Then, change the password in the **User** screen
 by entering the generated (old) and the desired (new) password.
 
 <div class="text--center">
@@ -84,7 +84,7 @@ surpass the scope of the logged-in user.
 
 :::warning
 
-For security reasons, the privileged `super-admin` user cannot be used to create or manage API keys. Create a new user
+For security reasons, the default `super-admin` user cannot be used to create or manage API keys. Create a new user
 with the necessary scopes before creating an API key as that user.
 
 :::
