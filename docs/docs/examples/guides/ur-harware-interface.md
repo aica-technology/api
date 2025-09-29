@@ -279,7 +279,7 @@ and set the address to the one of the device that will be running the AICA appli
   <img src={urHWIURProgram} alt="UR Program with external control URCap" style={{ width: '40%' }} />
 </div>
 
-3. Headless mode in the hardware interface should be set to false, and no controller should be activated when the program starts. 
+3. **Headless mode** in the hardware interface should be set to **false**, and no controller should be activated when the program starts. 
 **(other than the dashboard controller, right?)**
 
 4. The dashboard controller should be used to take and hand back control, check the next section.
@@ -528,8 +528,9 @@ in the **Controllers** list, and select the **UR Hand Guiding Controller**.
   <img src={urHWIHandGuidingGraph} alt="Hand guiding controller graph" />
 </div>
 
-Since the controller uses force mode, it needs the name and the reference frame of the force/torque (FT) sensor. In the
-settings of the controller set the name of the sensor as **ur_tcp_fts_sensor** and the frame as **ur_tool0**.
+Since the controller uses force mode, it needs the name, the reference frame of the force/torque (FT) sensor, as well
+as the maximum forces the robot is allowed to apply (force limits). In the settings of the controller set the name of 
+the sensor as **ur_tcp_fts_sensor** and the frame as **ur_tool0**. 
 
 :::note
 
@@ -542,15 +543,15 @@ After pressing **Play**, the manipulator can be hand guided to points in space, 
 effector. In other words, it reads forces in the FT sensor, and "admits" them, trying to set the measured force to zero.
 The controller can be further tuned and adjusted by using its parameters:
 
-- Velocity/Force limits: the velocities and forces that can be applied by the controller in force mode (X, Y, Z, RZ, RY,
+- **Velocity/Force limits**: the velocities and forces that can be applied by the controller in force mode (X, Y, Z, RZ, RY,
   RZ).
-- Force/Torque threshold: the thresholds above which the hand guiding behavior is activated.
-- Compliant axes selection: the axes along which the robot can be hand guided (1-enabled, 0-disabled).
-- Hold delay: forces below the thresholds above for this duration will disable hand guiding.
-- X/Y/Z limits: spatial boundaries for the end effector motion, vectors of two values for the lower and upper limit.
-- Reference orientation: quaternion representing a desired orientation in base frame
-- Angular limit: allowed deviation from the reference orientation
-- Linear/Angular boundary strength: gains to apply restitution forces/torques, in case linear or angular limits are
+- **Force/Torque threshold**: the thresholds above which the hand guiding behavior is activated.
+- **Compliant axes selection**: the axes along which the robot can be hand guided (1-enabled, 0-disabled).
+- **Hold delay**: forces below the thresholds above for this duration will disable hand guiding.
+- **X/Y/Z limits**: spatial boundaries for the end effector motion, vectors of two values for the lower and upper limit.
+- **Reference orientation**: quaternion representing a desired orientation in base frame
+- **Angular limit**: allowed deviation from the reference orientation
+- **Linear/Angular boundary strength**: gains to apply restitution forces/torques, in case linear or angular limits are
   exceeded.
 
 <div class="text--center">
@@ -568,7 +569,7 @@ while the robot will react compliantly to disturbances and forces applied on the
 
 :::note
 
-For the controller to operate, the names of the sensor and the reference frame need to be defined similarly to previous sections. 
+For the controller to operate, the names of the sensor, the reference frame and the force limits need to be defined similarly to previous sections. 
 
 :::
 
