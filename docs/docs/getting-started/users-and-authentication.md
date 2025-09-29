@@ -53,25 +53,26 @@ scopes or passwords are not inferred or shared between different configurations,
 
 :::
 
-To create a new user, click on the **New User** button in the **Settings** tab, provide an email address and the desired 
+To create a new user, click on the **New User** button in the Settings page, provide an email address and the desired 
 scopes.
 
 ![aica-studio-create-user](assets/aica-studio-create-user.png)
 
 A random password is generated for the newly created user. It is only shown once, so it should be copied and stored for
-later use. If the password needs to be changed, first log out from the **User** screen (or open AICA Studio in a new
-browser session), and log in as the new user with the generated password. Then, change the password in the **User** screen
-by entering the generated (old) and the desired (new) password.
-
-:::tip
-
-If AICA Studio is accessed from a web browser, or if the user logs out of the current AICA Studio session, a valid user email and password must be supplied to log in to AICA Studio.
-
-:::
+later use. If the password needs to be changed, first log out from the User page (or open AICA Studio in a new browser
+session), and log in as the new user with the generated password. Then, change the password in the User page by entering
+the generated (old) and the desired (new) password.
 
 <div class="text--center">
   <img src={newPassword} alt="New password created for new user" width="300"/>
 </div>
+
+:::tip
+
+If AICA Studio is accessed from a web browser, or if the user logs out of the current AICA Studio session, a valid user
+email and password must be supplied to log in to AICA Studio.
+
+:::
 
 ![aica-studio-user-login](assets/aica-studio-user-login.png)
 
@@ -82,10 +83,10 @@ create API keys.
 
 ## API Keys
 
-Other than accessing AICA Studio through a browser, users or software clients can interact with the AICA System using the API.
-For AICA Core v4.3.0 and later, an API key is required for authentication. This can be generated in the User page in
-AICA Studio, by clicking on the **New API Key** button. Provide a name and the desired scopes - note that these cannot
-surpass the scope of the logged-in user.
+Other than accessing AICA Studio through a browser, users or software clients can interact with the AICA System using
+the API. For AICA Core v4.3.0 and later, an API key is required for authentication. This can be generated in the User
+page in AICA Studio, by clicking on the **New API Key** button. Provide a name and the desired scopes - note that these
+cannot surpass the scope of the logged-in user.
 
 :::warning
 
@@ -103,7 +104,7 @@ If an API key is lost or compromised, delete it from the Users page and generate
 
 :::tip
 
-Refer to our [API client documentation](https://pypi.org/project/aica-api/) for more info on API keys.
+Refer to our [API client documentation](https://pypi.org/project/aica-api/) for more info on the usage of API keys.
 
 :::
 
