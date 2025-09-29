@@ -20,13 +20,13 @@ import urHWIImpedanceController from './assets/ur-hwi-impedance-controller.png'
 
 Universal Robots (UR) offers a range of collaborative robotic arms in different sizes and with different payloads that
 are widely adopted across industries and research for their accessibility and flexibility. A graphical interface on the
-teach pendant allows to easily and intuitively program and integrate UR robots. At the same time, skilled users can get
+teach pendant allows to easily and intuitively program and integrate UR robots. At the same time, advanced users can get
 access to the full capabilities of the manipulators through scripting in URScript language or even by developing
 software add-ons, so-called URCaps.
 
 The ecosystem around UR robots is highly developer-friendly, with open-source communication libraries, drivers,
 documentation, and integration support for frameworks such as ROS. Additionally, their simulation tool URSim allows
-developers to test and validate robot programs and interfaces without needing access to the physical hardware and makes
+developers to test and validate robot programs and interfaces without needing access to physical hardware and makes
 UR a popular choice building custom applications.
 
 :::note
@@ -88,7 +88,7 @@ Safety features remain active in Remote Control.
 
 Choosing one of the two modes depends on the specific task at hand. During a development phase, it might be preferable
 to create the programs in Local Mode, whereas in a production setting, PLCs would be responsible to load and start the
-desired programs while the robot is in Remote Control. With the AICA System, users have the possibility to get the best
+desired programs while the robot is in Remote Control. With the AICA System, users have the chance to get the best
 of both modes:
 
 1. Take full control of the robot from an AICA application (requires Remote Control)
@@ -264,7 +264,7 @@ to the robot.
 This second case requires the [External Control URCap](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver/tree/jazzy/ur_robot_driver/resources) to be installed. This is the easiest way to get started and test the
 integration with AICA functionality, as it allows users to keep their workflows intact, and only hand over control to an
 AICA application in a controlled manner and whenever that is required. After the application completes its task,
-control may be hand over back to the main node. To do that, follow the next steps:
+control may be handed over back to the main node. To do that, follow the next steps:
 
 1. The external control URCap needs to be configured to the right remote control address. Navigate to the **Installation** tab
 and set the address to the one of the device that will be running the AICA application.
