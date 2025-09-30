@@ -11,8 +11,9 @@ require.
 
 :::note
 
-This list is work in progress and regularly updated. If your hardware is not listed, please reach out to the AICA team
-for assistance or further details.
+This list is work in progress and regularly updated. If your hardware is not listed, please submit a ticket to the  
+[AICA Community Feedback board](https://github.com/aica-technology/community) or reach out to the AICA team for
+assistance or further details.
 
 As described in [this section](../../concepts/ros-concepts/built-on-ros.md), the AICA System can integrate existing ROS
 drivers. This allows you to expand the supported hardware list by using open source or custom-developed ROS packages.
