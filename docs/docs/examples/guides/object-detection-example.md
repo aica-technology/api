@@ -3,7 +3,7 @@ sidebar_position: 8
 title: Using YOLO to track objects
 ---
 
-import applicationRvizView from './assets/object-detection-example-rviz.gif'
+import exampleApp from './assets/object-detection-example-app.gif'
 import cameraCalibration from './assets/camera-calibration.gif'
 import yoloExecutor from './assets/object-detection-yolo-executor.jpg'
 import yoloExecutorParameters from './assets/object-detection-yolo-executor-parameters.jpg'
@@ -26,7 +26,7 @@ but any signal of the same type can be used instead. The YOLO executor component
 can be found under `collections/advanced-perception` with a valid AICA license.
 
 <div class="text--center">
-  <img src={applicationRvizView} alt="Moving the robot towards an object in RViz" />
+  <img src={exampleApp} alt="Moving the robot towards an object in RViz" />
 </div>
 
 ## Setup
