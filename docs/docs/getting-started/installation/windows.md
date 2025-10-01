@@ -7,6 +7,7 @@ import winFeatures from './assets/win-features.png';
 import winHyperV from './assets/win-hyper-v.png';
 import wslInstall from './assets/wsl-install.png';
 import dockerSettings from './assets/win-docker-settings.png';
+import dockerResources from './assets/win-docker-resources.png';
 
 # Installation on Windows
 
@@ -31,7 +32,7 @@ reach out to the AICA team.
 
 :::
 
-## Setup steps
+## Engineering System Setup
 
 1. Ensure that the Hyper-V feature is on. Open the Windows Features from the Control panel, locate Hyper-V and check the
    box if necessary. Switching it on requires a restart of the system. Alternatively,
@@ -73,5 +74,17 @@ reach out to the AICA team.
      <img src={dockerSettings} alt="Install WSL" />
    </div>
 
-6. Launch Ubuntu either with the icon from the start menu or by entering `wsl` in a Windows terminal. Verify the Docker
-   installation by running `docker run hello-world`.
+   If there are several WSL 2 distros installed on the system, it might be necessary to enable integration manually in
+   the Settings under Resources.
+
+   <div class="text--center">
+     <img src={dockerResources} alt="Enable integration per distro" />
+   </div>
+
+6. Download and install [Visual Studio Code](https://code.visualstudio.com/). 
+
+7. Launch Ubuntu either with the icon from the start menu or by entering `wsl` in a Windows terminal. Enter `code .` in
+   the WSL terminal. This will open Visual Studio Code in
+   [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+   mode. In the top menu, navigate to Terminal and choose *New Terminal*. Verify the Docker installation by running
+   `docker run hello-world`.
