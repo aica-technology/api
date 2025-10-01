@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Item Validation",
-  "description": "Validation rules to define either an enumeration of fixed options, ranges for numeric parameters, length specifiers for arrays and strings or regular expression patterns for strings.",
+  "description": "Validation rules for scalar items and strings to define either an enumeration of fixed options, value ranges for numeric parameters, or length and regular expression pattern constraints for strings.",
   "oneOf": [
     {
       "$ref": "options.schema.json"
@@ -10,10 +10,7 @@
       "$ref": "range.schema.json"
     },
     {
-      "$ref": "length.schema.json"
-    },
-    {
-      "$ref": "pattern.schema.json"
+      "$ref": "string_validation.schema.json"
     }
   ]
 }
