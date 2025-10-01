@@ -25,25 +25,31 @@ supporting the following robot models out of the box:
 - IRB 1010
 - GoFa CRB 15000, 12 Kg
 
-## General
+## Prerequisites
 
-In this section, some of the prerequisites to use the AICA ABB collection are introduced and discussed.
+This guide and the provided drivers are designed for ABB robots connected to OmniCore controllers, whether in simulation
+or with real hardware. Ensure your setup uses **RobotWare for OmniCore** for full compatibility with the instructions
+and features described below.
 
-### EGM
+:::warning
 
-ABB permits remote control of its manipulator range using the optional **Externally Guided Motion (EGM)** feature. EGM
-provides external devices with the ability to send commands and control ABB robotic arms, using Google's Protocol
-Buffers (Protobuf) serialization library to transport information through UDP sockets. For more information, check out
-the
-[official product documentation](https://library.e.abb.com/public/344f15f0f43341eb944fe35279d9fa2e/3HAC073319+AM+Externally+Guided+Motion+RW6-en.pdf?x-sign=WlxgV7Vao27KV3d3hlsfaoykgctYqoA0F98ch89S%2FPEaGwQg47ou%2FioylQtzvLaV).
-
-:::tip
-
-For best results, always set the rate of the hardware interface to 250 Hertz, which corresponds to the ABB-suggested
-stable UDP data exchange limit.
+This collection supports RobotWare versions 7.X and above. For older versions, please contact the AICA support team.
 
 :::
 
+### Externally Guided Motion
+
+ABB permits remote control of its manipulator range using the Externally Guided Motion (EGM) feature. EGM
+provides external devices with the ability to send commands and control ABB robotic arms, using Google's Protocol
+Buffers (Protobuf) serialization library to transport information through UDP sockets. For more information, check out
+the
+[official product documentation](https://library.e.abb.com/public/344f15f0f43341eb944fe35279d9fa2e/3HAC073319+AM+Externally+Guided+Motion+RW6-en.pdf?x-sign=WlxgV7Vao27KV3d3hlsfaoykgctYqoA0F98ch89S%2FPEaGwQg47ou%2FioylQtzvLaV). 
+
+:::warning
+
+EGM is an optional add-in and has to be purchased separately. 
+
+:::
 
 ### Robot Web Services
 
@@ -59,28 +65,6 @@ which will be explained in the following sections. More information can be found
 RAPID is the programming language of ABB robots. Users can utilize RAPID to set up and execute their workflows and
 processes. This is enabled by user-defined libraries called *Modules*, that contain variables and functions or
 processes (*PROCs*). Modules can then be loaded in controller *Tasks*, and called as required.
-
-<!-- :::note
-
-The example above drives the robot in velocity by setting the **PosCorrGain** parameter to 0 in the control loop. Remove
-this if the robot needs to receive position commands.
-
-::: -->
-
-## Mock interface
-
-The mock interface variant of different ABB manipulators can be used to check the application execution, visualize
-trajectory execution and ensure correct frame definition, among else. The mock interface is a very useful tool during
-early development stages, as it does not require connection to the actual hardware and provides a safe environment to
-experiment. After correct operation is verified, users can just switch to the real hardware interface to connect to the
-actual robot or simulator.
-
-:::note
-
-The mock interface does not include a physics engine, or dynamics calculations, and merely sets the commands as state.
-For more sophisticated simulation capabilities, check out RobotStudio in the following section.
-
-:::
 
 ## Connecting to a robot
 
@@ -101,12 +85,11 @@ virtual machine .
 
 :::
 
-Setting up a virtual workstation and controller is the next step after using the mock interface. This can be achieved by
-following the next steps:
+Setting up a virtual workstation and controller can be achieved by following the next steps:
 
 1. In RobotStudio, navigate to the **Add-Ins** tab and go to **Gallery**. There is a list of all available robot models
-   and RobotWare versions, the internal controller software. Make sure to install the versions present in the actual
-   robot controller, to ensure consistency between simulation and reality.
+   and RobotWare versions, the internal controller software. To ensure consistency between simulation and reality, make 
+   sure to install the versions matching the real robot controller, if one is available.
 
     <div class="text--center">
       <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
@@ -124,11 +107,25 @@ following the next steps:
 6. In the window that pops up, in the **Options** tab, look for **EGM** and **RobotStudio Connect** and add them in the
    controller. Then select **Apply and Reset** to finalize.
 
+:::note
+
+The **3119-1 RobotStudio Connect** add-in is required to connect a controller to RobotStudio over a public network. For more
+information, see the RobotStudio instruction manual. 
+
+:::
+
 <div class="text--center">
   <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
 </div>
 
-### Omnicore controller & real robot
+:::tip
+
+Another way of ensuring applications are set up correctly is to use the provided mock interfaces. The mock interface 
+does not include a physics engine, or dynamics calculations, and merely sets the commands as state.
+
+::: 
+
+### Real robot controller
 
 RobotStudio can be used to configure the address of the external control device. Navigate to the Controller tab and
 select **Add Controller > Connect to Controller**. This will allow to detect and connect to the running controller in
@@ -270,6 +267,13 @@ ENDMODULE
 </details>
 
 ## Hardware interface
+
+:::tip
+
+For best results, always set the rate of the hardware interface to 250 Hertz, which corresponds to the ABB-suggested
+stable UDP data exchange limit.
+
+:::
 
 Returning to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
 robot. The majority of the hardware interface parameters enable connection to EGM and RWS:
