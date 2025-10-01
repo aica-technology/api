@@ -34,7 +34,7 @@
       "$ref": "parameter_value.schema.json"
     },
     "validation": {
-      "$ref": "parameter_validation.schema.json"
+      "$ref": "parameter_validation/parameter_validation.schema.json"
     },
     "optional": {
       "description": "Specify if this parameter is optional (only applicable if the default value is null).",

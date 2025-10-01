@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "Parameter Validation Options",
+  "description": "A list of permitted parameter value options.",
+  "additionalProperties": false,
+  "properties": {
+    "options": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "../parameter_value.schema.json"
+      }
+    }
+  },
+  "required": [
+    "options"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "Parameter Length Constraint",
+  "description": "Variable length constraints for array or string parameters as inclusive minimum or maximum bounds",
+  "additionalProperties": false,
+  "properties": {
+    "length": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "minimum_length": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maximum_length": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "dependentSchemas": {
+    "length": {
+      "not": {
+        "required": [
+          "minimum_length",
+          "maximum_length"
+        ]
+      }
+    },
+    "minimum_length": {
+      "not": {
+        "required": [
+          "length"
+        ]
+      }
+    },
+    "maximum_length": {
+      "not": {
+        "required": [
+          "length"
+        ]
+      }
+    }
+  }
+}
