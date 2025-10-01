@@ -23,6 +23,7 @@
       "type": "string"
     },
     "parameter_type": {
+      "title": "Parameter Type",
       "$ref": "parameter_type.schema.json"
     },
     "parameter_state_type": {
