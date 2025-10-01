@@ -29,6 +29,15 @@
     "parameter_type": {
       "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/parameter_type"
     },
+    "parameter_value": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/parameter_value"
+    },
+    "parameter_length_validation": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/parameter_length_validation"
+    },
+    "parameter_item_validation": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/parameter_item_validation"
+    },
     "predicate": {
       "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/draft/2-0-0/interfaces.schema.json#/$defs/predicate"
     },
