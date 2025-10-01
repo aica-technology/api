@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 9
 title: ABB manipulators
 ---
 
@@ -15,12 +15,12 @@ import abbFirewallManager from './assets/abb-firewall-manager.png'
 # ABB manipulators
 
 ABB offers a wide range of industrial articulated manipulators, from compact 6-axis robots for small-part handling and
-payloads of a few kilograms to heavy-duty models capable of lifting up to 800 kg. This guide aims to support the
-integration of ABB robots in AICA System applications, from the mock interface and a simulated environment to the real
-robot.
+payloads of a few kilograms to heavy-duty models capable of lifting up to 800 kg. This guide provides instructions for
+using ABB robots within the AICA System, focusing on connecting and configuring both simulated environments using
+RobotStudio and real hardware setups.
 
 To use the ABB collection, add the latest version of `collections/abb` to your configuration in AICA Launcher, currently
-supporting the following robot models:
+supporting the following robot models out of the box:
 
 - IRB 1010
 - GoFa CRB 15000, 12 Kg
@@ -44,9 +44,10 @@ stable UDP data exchange limit.
 
 :::
 
-### RWS
 
-The second ABB feature that AICA system utilizes to connect to the robot is RobotWebServices (RWS). RWS is a platform
+### Robot Web Services
+
+The second ABB feature that AICA system utilizes to connect to the robot is Robot Web Services (RWS). RWS is a platform
 that enables developers to create applications that interact with the robot controller, using RESTful APIs that leverage
 the HTTPS protocol. The hardware interface uses RWS for auxiliary functionality, such as starting/stopping the program
 and the motors, and setting IOs. Setting up RWS in the simulator and the actual robot requires slightly different steps,
@@ -56,8 +57,8 @@ which will be explained in the following sections. More information can be found
 ### RAPID
 
 RAPID is the programming language of ABB robots. Users can utilize RAPID to set up and execute their workflows and
-processes. This is enabled by user-defined libraries called **Modules**, that contain variables and functions or
-processes **(PROCs)**. Modules can then be loaded in controller **Tasks**, and called as required.
+processes. This is enabled by user-defined libraries called *Modules*, that contain variables and functions or
+processes (*PROCs*). Modules can then be loaded in controller *Tasks*, and called as required.
 
 <!-- :::note
 
@@ -107,9 +108,9 @@ following the next steps:
    and RobotWare versions, the internal controller software. Make sure to install the versions present in the actual
    robot controller, to ensure consistency between simulation and reality.
 
-<div class="text--center">
-  <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
-</div>
+    <div class="text--center">
+      <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
+    </div>
 
 2. Go back to to **File > New > Project**.
 3. Select to create a new controller and define the robot model and variant, as well as the RobotWare version.
