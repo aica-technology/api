@@ -129,7 +129,7 @@ does not include a physics engine, or dynamics calculations, and merely sets the
 
 RobotStudio can be used to configure the address of the external control device. Navigate to the Controller tab and
 select **Add Controller > Connect to Controller**. This will allow to detect and connect to the running controller in
-Omnicore, provided of course that the devices are on the same network.
+OmniCore, provided of course that the devices are on the same network.
 
 <div class="text--center">
   <img src={abbConnectController} alt="Connect to the robot controller." />
@@ -166,7 +166,7 @@ After connecting to the robot, the controller should be configured to accept com
    [RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
    (read until the end and the last comment for a critical fix).
    :::note
-   Omnicore controllers and RobotWare 7.x versions by default listen on HTTPS and port 80 for RobotStudio and 443 for
+   OmniCore controllers and RobotWare 7.x versions by default listen on HTTPS and port 80 for RobotStudio and 443 for
    the real robot. If necessary, the port numbers can be modified by following the instructions in this
    [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
 3. (Only for connection with the RobotStudio simulation) To communicate with the RWS running in the Windows device,
