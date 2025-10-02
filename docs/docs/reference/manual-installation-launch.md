@@ -346,6 +346,23 @@ If port 8080 is already used on the host, use `-p HOST_PORT:8080` to avoid confl
 :::
 
 </TabItem>
+<TabItem value="wsl" label="WSL">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -v /path/to/aica-license.toml:/license:ro \
+  aica-runtime
+```
+
+:::note
+
+If port 8080 is already used on the host, use `-p HOST_PORT:8080` to avoid conflicts. Do not remap ports `18000-18100`.
+
+:::
+
+</TabItem>
 </Tabs>
 
 When the container starts up, it will generate some initial output in the terminal window that should look something
@@ -434,6 +451,19 @@ docker run -it --rm \
 ```
 
 </TabItem>
+<TabItem value="wsl" label="WSL">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -v /path/to/aica-license.toml:/license:ro \
+  #highlight-next-line
+  -v /path/to/data:/data:rw \
+  aica-runtime
+```
+
+</TabItem>
 </Tabs>
 
 ### Setting a super-admin password
@@ -457,6 +487,19 @@ docker run -it --rm \
 
 </TabItem>
 <TabItem value="mac" label="macOS">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -v /path/to/aica-license.toml:/license:ro \
+  #highlight-next-line
+  -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
+  aica-runtime
+```
+
+</TabItem>
+<TabItem value="wsl" label="WSL">
 
 ```bash
 docker run -it --rm \
