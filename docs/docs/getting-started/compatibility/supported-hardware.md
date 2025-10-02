@@ -24,7 +24,7 @@ drivers. This allows you to expand the supported hardware list by using open sou
 
 | Brand        | Robot Controller            | Add-ons | Additional Notes | 
 |--------------|-----------------------------|---------|------------------|
-| ABB | OmniCore | Robot Web Services, Externally Guided Motion | |
+| ABB | OmniCore | Robot Web Services, Externally Guided Motion | RobotWare 7.X |
 | KUKA | KR C5 | RobotSensorInterface | |
 | Mecademic | n/a | n/a | TCP/IP & EtherCAT drivers for Meca500 |
 | Stäubli | CS9, CS8C | alter, advCtrlFunctions  | TX2 series |
@@ -42,7 +42,7 @@ drivers. This allows you to expand the supported hardware list by using open sou
 | ATI | Force / Torque Sensors | Net F/T interface | |
 | Bota Systems | Force / Torque Sensors | Serial or EtherCAT interface | |
 | [Orbbec](../../examples/guides/orbbec-component.md) | Gemini 33X/435Le/2/2L, Femto Bolt/Mega, Astra 2  | n/a | |
-| [RealSense](../../examples/guides/realsense-component.md) |  L515, D4XX | n/a | |
+| [Intel RealSense](../../examples/guides/realsense-component.md) |  L515, D4XX | n/a | |
 
 :::tip
 
