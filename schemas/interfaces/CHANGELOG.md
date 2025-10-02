@@ -2,16 +2,16 @@
 
 Release Versions:
 
+- [2-0-0](#2-0-0)
 - [1-0-0](#1-0-0)
 
-## Upcoming changes
+## 2-0-0
 
 The 2-0-0 version of the interfaces schema includes major changes for more consistent and versatile usage.
 
 ### Breaking changes
 
 - Forbid additional properties for signals, services and predicates
-- Remove the `<interface>_name` property for all interface types
 - Remove the `payload_format` property from services
 - Remove the `signal_types` and `reconfigurable_type` properties from signals
 - Remove the `signal_type.schema.json` subschema and define inline in signal.schema.json
@@ -32,6 +32,7 @@ The 2-0-0 version of the interfaces schema includes major changes for more consi
 - Add `service_type`, `payload_description` and `payload_schema` properties with conditional validation rules to better
   describe service interfaces
 - Add assignment subschema
+- Add parameter validation options
 
 ## 1-0-0
 
