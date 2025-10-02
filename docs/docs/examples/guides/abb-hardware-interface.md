@@ -68,8 +68,8 @@ processes (*PROCs*). Modules can then be loaded in controller *Tasks*, and calle
 
 ## Connecting to a robot
 
-The provided hardware interface can be used to connect and control either a simulated or a real robot. The following
-sections provide the necessary steps to do both.
+The hardware interface provided by the ABB collection can be used to control either a simulated or a real robot. The
+following sections provide the necessary steps to do both.
 
 ### RobotStudio simulation
 
@@ -160,39 +160,31 @@ After connecting to the robot, the controller should be configured to accept com
   <img src={abbNewUDPUCDevice} alt="Add a new UDPUS device." />
 </div>
 
-2. Next step is enabling RWS connection. For the simulation specifically, this requires either using a proxy or
-   whitelisting the IP address of the device trying to access RWS, in this case the device running the AICA application.
+2. The next step is enabling RWS connection. For the RobotStudio simulation, this requires either using a proxy or
+   whitelisting the IP address of the device trying to access RWS, which is the device running AICA Core.
    The first approach is preferable and described analytically in a
    [RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
-   (read until the end and the last comment for a critical fix). Omnicore controllers and RobotWare 7.x versions by
-   default listen on HTTPS and port 80 for RobotStudio and 443 for the real robot. This would not really be necessary,
-   but if needed, it can be modified by following the instructions in this
-   [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x)
-   (set to 9876 in the example at the end of this guide).
-3. (Optional, for connection with the RobotStudio simulation) To communicate with the RWS running in the Windows device,
+   (read until the end and the last comment for a critical fix).
+   :::note
+   Omnicore controllers and RobotWare 7.x versions by default listen on HTTPS and port 80 for RobotStudio and 443 for
+   the real robot. If necessary, the port numbers can be modified by following the instructions in this
+   [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
+3. (Only for connection with the RobotStudio simulation) To communicate with the RWS running in the Windows device,
    the firewall in the respective network (usually Public) needs to be deactivated.
 
-4. Finally, make sure that UDPUC and RobotWebServices are active in the network that is being used. Finally, for the
-   changes to take effect, you need to restart the controller.
+4. In the firewall settings of RobotStudio, make sure that UDPUC and RobotWebServices are enabled in the network that is
+   being used (see picture below). Finally, for the changes to take effect, restart the controller.
 
-:::tip
-
-It is possible that this is not actually required for the simulation, but this step is definitely needed for the real
-robot.
-
-:::
-
-<div class="text--center">
-  <img src={abbFirewallManager} alt="Firewall manager options." />
-</div>
+    <div class="text--center">
+      <img src={abbFirewallManager} alt="Firewall manager options." />
+    </div>
 
 ## RAPID module
 
-While integrating in the AICA ecosystem, in the simplest case all that is required is a module that uses EGM to control
-the robot externally. An example of such a module is as follows, users only need to make sure the UCDevice is the one
-defined in the controller settings. So for example, if this specific module is used, the UCDevice must be named
-**AICA_PC** in the configuration step above. The module can be placed in the controller's home directory, and uploaded
-to task by right clicking on it and selecting **Load in Task > #Task_Name**.
+The ABB hardware interface needs a suitable RAPID module that uses EGM to allow external control to be running on the
+robot. An example of such a module is shown below. It's important to make sure that the UCDevice name used in the RAPID
+module corresponds to the UDPUC device configured during step 1 above. The module can be placed in the controller's home
+ directory, and uploaded to task by right clicking on it and selecting **Load in Task > #Task_Name**.
 
 <details>
   <summary>Example RAPID module</summary>
@@ -257,7 +249,7 @@ MODULE AICAMain
 
   ERROR
       IF ERRNO = ERR_UDPUC_COMM THEN
-          TPWrite "Communication timedout";
+          TPWrite "Communication timed out";
           TRYNEXT;
       ENDIF
   ENDPROC
