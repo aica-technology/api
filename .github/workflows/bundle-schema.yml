@@ -40,6 +40,8 @@ jobs:
             schema-path: ./schemas/component-descriptions/schema
           - schema: controller
             schema-path: ./schemas/controller-descriptions/schema
+          - schema: extension
+            schema-path: ./schemas/extensions/schema
           - schema: interfaces
             schema-path: ./schemas/interfaces/schema
     name: Bundle the ${{ matrix.schema }} schema
