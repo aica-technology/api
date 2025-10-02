@@ -8,11 +8,11 @@ import TabItem from '@theme/TabItem';
 
 import MacosDockerAdvanced from './assets/macos-docker-advanced.png'
 import MacosDockerResources from './assets/macos-docker-resources.png'
-import winFeatures from '../getting-started/installation/assets/win-features.png';
-import winHyperV from '../getting-started/installation/assets/win-hyper-v.png';
-import wslInstall from '../getting-started/installation/assets/wsl-install.png';
-import dockerSettings from '../getting-started/installation/assets/win-docker-settings.png';
-import dockerResources from '../getting-started/installation/assets/win-docker-resources.png';
+import winFeatures from './assets/win-features.png';
+import winHyperV from './assets/win-hyper-v.png';
+import wslInstall from './assets/wsl-install.png';
+import dockerSettings from './assets/win-docker-settings.png';
+import dockerResources from './assets/win-docker-resources.png';
 
 # Manual installation and launch
 
@@ -103,7 +103,7 @@ The AICA System can be installed and run on Windows by leveraging **WSL**, short
 [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/about). WSL is a feature of Windows that
 allows running a Linux environment on a Windows machine without the need for a separate virtual machine or dual booting.
 While most Linux distributions can be run with either WSL 1 or WSL 2 architecture, WSL 2 has superior performance over
-WSL 1 and will be assumed throughout these instrucations.
+WSL 1 and will be assumed throughout these instructions.
 
 On a high level, there are two main requirements for running the AICA System on Windows:
 
