@@ -351,7 +351,7 @@ If port 8080 is already used on the host, use `-p HOST_PORT:8080` to avoid confl
 ```bash
 docker run -it --rm \
   --privileged \
-  -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -p 8080:8080 \
   -v /path/to/aica-license.toml:/license:ro \
   aica-runtime
 ```
@@ -456,7 +456,7 @@ docker run -it --rm \
 ```bash
 docker run -it --rm \
   --privileged \
-  -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -p 8080:8080 \
   -v /path/to/aica-license.toml:/license:ro \
   #highlight-next-line
   -v /path/to/data:/data:rw \
@@ -504,7 +504,7 @@ docker run -it --rm \
 ```bash
 docker run -it --rm \
   --privileged \
-  -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -p 8080:8080 \
   -v /path/to/aica-license.toml:/license:ro \
   #highlight-next-line
   -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
