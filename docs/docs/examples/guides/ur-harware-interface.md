@@ -94,24 +94,28 @@ of both modes:
 1. Take full control of the robot from an AICA application (requires Remote Control)
 2. Run an AICA application as one node of a program (works in both Local and Remote Control)
 
+:::tip
+
+The two examples below work out of the box with the [URSim](./ur-sim-guide.md#installation).
+
+:::
+
 ### Full control of the robot from an AICA application
 
-For this first, simpler case, no additional installation steps are required. Apart from setting the correct robot IP in
-the hardware interface, two requirements have to be met:
+For this first case, no additional installation steps are required. The robot becomes the secondary device and all
+motions are coordinated through AICA Studio. Apart from setting the correct robot IP in the hardware interface, two
+requirements have to be met:
 
 - On the robot, Remote Control has to be activated. For that, first activate Remote Control in the system settings as
   explained [here](./ur-sim-guide.md#accessing-and-configuring-the-simulated-robot), then switch from _Local_ to
   _Remote_ mode on the top right corner of the teach pendant. The interface automatically switches to the _Run_ tab and
   disables other tabs, indicating that control has been handed over to external sources.
-
   <div class="text--center">
     <img src={urHwiSwitchMode} alt="Switch mode from Local to Remote" />
   </div>
-
 - In AICA Studio, make sure that the parameter `Headless Mode` that can be found under the hardware interface parameters
   is set to `True`. This will notify the hardware interface that it will be running headless, i.e. it is in charge of
   providing the full UR program to the robot controller.
-
   <div class="text--center">
     <img src={urHwiHeadlessMode} alt="Headless Mode" />
   </div>
@@ -123,7 +127,6 @@ to the robot.
 <div class="text--center">
   <img src={urHwiRemoteExample} alt="Example with Remote Control" />
 </div>
-
 
 <details>
   <summary>Example application, remote control</summary>
@@ -261,32 +264,30 @@ to the robot.
 
 ### Run an AICA application as one node of a program
 
-This second case requires the [External Control URCap](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver/tree/jazzy/ur_robot_driver/resources) to be installed.
-This is a possible way to get started and test the integration with AICA functionality, as it allows users to keep their 
-workflows intact, and only hand over control to an AICA application in a controlled manner and whenever that is required.
-After the application completes its task, control may be handed over back to the main node. To do that, follow the next steps:
+The second case requires the
+[External Control URCap](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver/tree/jazzy/ur_robot_driver/resources)
+to be installed. While the robot stays the primary device, the URCap comes with a program node that allows to hand over
+control to secondary devices during the execution of that program node. This is especially useful for integrating
+smaller, single purpose AICA applications into bigger, existing cells. Once the AICA application has finished its task,
+it hands back control to the robot which will continue the execution of the main UR program. To set this up, follow the
+these steps:
 
-1. The external control URCap needs to be configured to the right remote control address. Navigate to the *Installation* tab
-and set the address to the one of the device that will be running the AICA application.
-
-    <div class="text--center">
-      <img src={urHWINetworkingSettings} alt="External control URCap networking settings" />
-    </div>
-
-2. Insert the `Control by <IP>` program node from the External Control URCap at the desired location of a new or existing
-UR program. The robot remains in local mode.
-
-<div class="text--center">
-  <img src={urHWIURProgram} alt="UR Program with external control URCap" style={{ width: '40%' }} />
-</div>
-
-3. `Headless mode` in the hardware interface should be set to **false**, and no controller should be activated when the program starts. 
-**(other than the dashboard controller, right?)**
-
+1. The external control URCap needs to be configured to the right remote control address. Navigate to the *Installation*
+   tab and set the address to the one of the device that will be running the AICA application.
+   <div class="text--center">
+     <img src={urHWINetworkingSettings} alt="External control URCap networking settings" />
+   </div>
+2. Insert the `Control by <IP>` program node from the External Control URCap at the desired location of a new or
+   existing UR program. The robot remains in local mode.
+   <div class="text--center">
+     <img src={urHWIURProgram} alt="UR Program with external control URCap" style={{ width: '40%' }} />
+   </div>
+3. `Headless mode` in the hardware interface should be set to `false`, and no controller should be activated when the
+   program starts. **(other than the dashboard controller, right?)**
 4. In AICA Studio, the UR Dashboard Controller should be added to the hardware interface. Its `program_running`
-predicate notifies that the UR program has arrived at the `Control by <IP>` node and is ready to receive control
-commands. After completion of the task in AICA Studio, control is handed back using a service call and the UR program
-resumes execution. More details about this controller follow in the next section.
+   predicate notifies that the UR program has arrived at the `Control by <IP>` node and is ready to receive control
+   commands. After completion of the task in AICA Studio, control is handed back using a service call and the UR program
+   resumes execution. More details about this controller follow in the next section.
 
 The example with a joint trajectory controller from above is given here in its local control version. Be sure to start
 the application in AICA Studio first, and the UR program second.
