@@ -282,14 +282,17 @@ these steps:
    <div class="text--center">
      <img src={urHWIURProgram} alt="UR Program with external control URCap" style={{ width: '40%' }} />
    </div>
-3. `Headless mode` in the hardware interface should be set to `false`, and no controller should be activated when the
-   program starts. **(other than the dashboard controller, right?)**
+3. Set the `Headless Mode` in the hardware interface `false`.
 4. In AICA Studio, the UR Dashboard Controller should be added to the hardware interface. Its `program_running`
    predicate notifies that the UR program has arrived at the `Control by <IP>` node and is ready to receive control
    commands. After completion of the task in AICA Studio, control is handed back using a service call and the UR program
    resumes execution. More details about this controller follow in the next section.
+   :::warning
+   Sending motion commands to the robot should exclusively happen while the `program_running` predicate is true.
+   Activate motion controllers using this predicate and deactivate them upon handing back control.
+   :::
 
-The example with a joint trajectory controller from above is given here in its local control version. Be sure to start
+The example with a joint trajectory controller from above is given here in its Local Control version. Be sure to start
 the application in AICA Studio first, and the UR program second.
 
 <details>
@@ -457,7 +460,7 @@ graph:
   ```
 </details>
 
-## Dashboard controller
+<!-- ## Dashboard controller
 
 Dashboard controller allows interaction with UR's dashboard server to, among else, exchange control, set the payload,
 and zero the force-torque sensor. Examples in this section describe how to set up and use this functionality.
@@ -578,4 +581,4 @@ For the controller to operate, the names of the sensor, the reference frame and 
 
 <div class="text--center">
   <img src={urHWIImpedanceController} alt="UR Impedance controller parameters" style={{ width: '40%' }} />
-</div>
+</div> -->
