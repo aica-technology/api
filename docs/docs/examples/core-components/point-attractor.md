@@ -9,7 +9,10 @@ import pointAttractorExample from './assets/point-attractor-example.gif'
 # Point Attractors
 
 This page shows how Dynamical Systems (DS), and in particular Point Attractor components, can be used to generate
-dynamic motions in AICA Studio. Point Attractor DS are valuable in robotics because they provide a simple and robust way to guide a robot toward a specific target. By continuously generating motion commands that drive to the attractor, these components enable reaching, positioning, and interaction tasks, making them useful for applications such as pick-and-place, assembly, and human-robot collaboration.
+dynamic motions in AICA Studio. Point Attractor DS are valuable in robotics because they provide a simple and robust way
+to guide a robot toward a specific target. By continuously generating motion commands that drive to the attractor, these
+components enable reaching, positioning, and interaction tasks, making them useful for applications such as
+pick-and-place, assembly, and human-robot collaboration.
 
 As described [here](../../concepts/robotics-concepts/motion-generation.md), the motion
 of a Point Attractor DS is always directed toward a point in space, the attractor. The core components come with two
