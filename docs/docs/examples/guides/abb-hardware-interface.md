@@ -11,6 +11,7 @@ import abbNewProject from './assets/abb-new-project.png'
 import abbInstallAddins from './assets/abb-install-addins.png'
 import abbConnectController from './assets/abb-connect-controller.png'
 import abbFirewallManager from './assets/abb-firewall-manager.png'
+import abbHIParameters from './assets/abb-hi-parameters.png'
 
 # ABB manipulators
 
@@ -25,7 +26,7 @@ supporting the following robot models out of the box:
 - IRB 1010
 - GoFa CRB 15000, 12 Kg
 
-## Prerequisites
+## General
 
 This guide and the provided drivers are designed for ABB robots connected to OmniCore controllers, whether in simulation
 or with real hardware. Ensure your setup uses **RobotWare for OmniCore** for full compatibility with the instructions
@@ -184,7 +185,7 @@ After connecting to the robot, the controller should be configured to accept com
 The ABB hardware interface needs a suitable RAPID module that uses EGM to allow external control to be running on the
 robot. An example of such a module is shown below. It's important to make sure that the UCDevice name used in the RAPID
 module corresponds to the UDPUC device configured during step 1 above. The module can be placed in the controller's home
- directory, and uploaded to task by right clicking on it and selecting **Load in Task > #Task_Name**.
+ directory and uploaded to the current task.
 
 <details>
   <summary>Example RAPID module</summary>
@@ -270,13 +271,19 @@ stable UDP data exchange limit.
 Returning to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
 robot. The majority of the hardware interface parameters enable connection to EGM and RWS:
 
+<div class="text--center">
+  <img src={abbHIParameters} alt="ABB Hardware interface parameters." />
+</div>
+
 - EGM port: the port that EGM uses to send commands (6511, the Remote port of the UDPUC device defined in RobotStudio).
 - RWS IP & port: address and port of the RWS (the address of the RobotStudio device or real robot, 192.168.137.1 and
   9876 in the picture below respectively).
 - Connection timeout: for RWS connection.
+- Settling time constant: the time within which the robot will reach a certain percentage of the target position (only 
+  used for position commands). Lower values make the motion faster and the robot more responsive.  
 - Rapid File Path: the path for the module to be loaded in the controller home directory.
 - Headless Mode: if true, the hardware interface handles the whole initialization procedure of starting and stopping the
-  RAPID program and the motors without requiringn any user interaction.
+  RAPID program and the motors without requiring any user interaction.
 
 The EGM port should be set to the same value defined in the UDPUC device in the controller configuration, and the RWS IP
 and port to the address of the Windows device and listening port respectively. Running the application now can
