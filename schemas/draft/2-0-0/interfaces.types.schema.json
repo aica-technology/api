@@ -11,6 +11,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "assignment_name": {
+          "description": "The assignment name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
+        },
         "display_name": {
           "description": "The human-readable assignment name.",
           "examples": [
@@ -24,6 +29,7 @@
           "type": "string"
         },
         "assignment_type": {
+          "title": "Assignment Type",
           "$ref": "#/$defs/parameter_type"
         },
         "assignment_state_type": {
@@ -31,6 +37,7 @@
         }
       },
       "required": [
+        "assignment_name",
         "display_name",
         "description",
         "assignment_type"
@@ -89,6 +96,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "parameter_name": {
+          "description": "The parameter name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
+        },
         "display_name": {
           "description": "The human-readable parameter name.",
           "examples": [
@@ -102,17 +114,48 @@
           "type": "string"
         },
         "parameter_type": {
+          "title": "Parameter Type",
           "$ref": "#/$defs/parameter_type"
         },
         "parameter_state_type": {
           "$ref": "#/$defs/encoded_state_type"
         },
         "default_value": {
+          "title": "Default Value",
           "description": "The default parameter value, or null if the parameter has no valid default value.",
           "$ref": "#/$defs/parameter_value"
         },
+        "validation": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Parameter Validation",
+          "description": "Validation rules for parameter values",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/parameter_item_validation"
+            },
+            {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Array Validation",
+              "description": "Validation rules to define length specifiers for arrays and item constraints for array elements",
+              "additionalProperties": false,
+              "properties": {
+                "array": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "length": {
+                      "$ref": "#/$defs/parameter_length_validation"
+                    },
+                    "items": {
+                      "$ref": "#/$defs/parameter_item_validation"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
         "optional": {
-          "description": "Specify if this parameter is optional (only applicable if the default value is null)",
+          "description": "Specify if this parameter is optional (only applicable if the default value is null).",
           "type": "boolean",
           "default": false
         },
@@ -127,6 +170,7 @@
         }
       },
       "required": [
+        "parameter_name",
         "display_name",
         "description",
         "parameter_type",
@@ -135,7 +179,6 @@
     },
     "parameter_type": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "Parameter Type",
       "description": "The value type of a parameter from a collection of supported types.",
       "type": "string",
       "enum": [
@@ -173,6 +216,124 @@
         ]
       }
     },
+    "parameter_length_validation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "description": "Fixed length constraint for array or string parameters",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "object",
+          "title": "Parameter Variable Length",
+          "description": "Variable length constraint for array or string parameters as inclusive minimum or maximum bounds",
+          "additionalProperties": false,
+          "properties": {
+            "minimum": {
+              "description": "Lower bound on length as an inclusive minimum",
+              "type": "integer",
+              "minimum": 0
+            },
+            "maximum": {
+              "description": "Upper bound on length as an inclusive maximum",
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        }
+      ]
+    },
+    "parameter_item_validation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Item Validation",
+      "description": "Validation rules for scalar items and strings to define either an enumeration of fixed options, value ranges for numeric parameters, or length and regular expression pattern constraints for strings.",
+      "oneOf": [
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Parameter Validation Options",
+          "description": "A list of permitted parameter value options.",
+          "additionalProperties": false,
+          "properties": {
+            "options": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/parameter_value"
+              }
+            }
+          },
+          "required": [
+            "options"
+          ]
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Parameter Range Validation",
+          "description": "Range constraints for numeric parameters as either inclusive or exclusive minimum or maximum bounds",
+          "additionalProperties": false,
+          "properties": {
+            "range": {
+              "additionalProperties": false,
+              "properties": {
+                "minimum": {
+                  "type": "number"
+                },
+                "exclusive_minimum": {
+                  "type": "number"
+                },
+                "maximum": {
+                  "type": "number"
+                },
+                "exclusive_maximum": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "title": "String Parameter Validation",
+          "description": "Validation for string parameters with character length and pattern constraints as a regular expression",
+          "additionalProperties": false,
+          "properties": {
+            "string": {
+              "oneOf": [
+                {
+                  "title": "String Length",
+                  "additionalProperties": false,
+                  "properties": {
+                    "length": {
+                      "$ref": "#/$defs/parameter_length_validation"
+                    }
+                  },
+                  "required": [
+                    "length"
+                  ]
+                },
+                {
+                  "title": "String Pattern",
+                  "additionalProperties": false,
+                  "properties": {
+                    "pattern": {
+                      "title": "Regular Expression Pattern",
+                      "description": "Refer to: https://json-schema.org/understanding-json-schema/reference/regular_expressions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "pattern"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
     "predicate": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "Predicate",
@@ -180,6 +341,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "predicate_name": {
+          "description": "The predicate name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
         "display_name": {
           "description": "The human-readable predicate name.",
           "type": "string"
@@ -190,6 +356,7 @@
         }
       },
       "required": [
+        "predicate_name",
         "display_name",
         "description"
       ]
@@ -201,6 +368,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "service_name": {
+          "description": "The service name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
         "display_name": {
           "description": "The human-readable service name.",
           "type": "string"
@@ -215,11 +387,6 @@
             "string",
             "object"
           ]
-        },
-        "service_name": {
-          "deprecated": true,
-          "description": "The lower_snake_case service name as it is declared in the component or controller. This property is deprecated and services should be mapped by their service name in future usage.",
-          "type": "string"
         },
         "payload_description": {
           "description": "A description of the service payload.",
@@ -243,6 +410,7 @@
         }
       },
       "required": [
+        "service_name",
         "display_name",
         "description",
         "service_type"
@@ -255,6 +423,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "signal_name": {
+          "description": "The signal name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
         "display_name": {
           "description": "The short name of this signal (to be displayed on the edge of the node in the graph view).",
           "examples": [
@@ -270,7 +443,6 @@
         },
         "default_topic": {
           "description": "The default topic name assigned to this signal. If unspecified, it is assumed to be '~/<$signal_name>'. Setting the parameter '<$signal_name>_topic' will override the default value.",
-          "default": "~/signal_name",
           "type": "string"
         },
         "reconfigurable_topic": {
@@ -305,6 +477,7 @@
         }
       },
       "required": [
+        "signal_name",
         "display_name",
         "description",
         "signal_type"
