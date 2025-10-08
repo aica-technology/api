@@ -58,11 +58,10 @@
   "properties": {
     "schema": {
       "title": "Extension Schema",
-      "description": "The schema version of the extension description syntax",
-      "default": "1-0-0",
+      "description": "The schema version of the extension description syntax.",
       "examples": [
         "1-0-0",
-        "2-0-0",
+        "draft/2-0-0",
         "2-1-0"
       ],
       "type": "string",
@@ -182,6 +181,7 @@
     }
   },
   "required": [
+    "schema",
     "name",
     "description",
     "type",
