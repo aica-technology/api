@@ -124,51 +124,36 @@ reach out to the AICA team.
    box if necessary. Switching it on requires a restart of the system. Alternatively,
    [use the terminal](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-3---enable-virtual-machine-feature)
    to enable it.
-
-    <div style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
-        <img src={winFeatures} alt="Windows Features" width="45%" />
-        <img src={winHyperV} alt="Enable Hyper-V" width="45%" />
-    </div>
-
-2. [Optional]
-   [Download the Linux kernel update package](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package).
-
+   <div style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
+     <img src={winFeatures} alt="Windows Features" width="45%" />
+     <img src={winHyperV} alt="Enable Hyper-V" width="45%" />
+   </div>
+2. [Download the Linux kernel update package](https://learn.microsoft.com/en-us/windows/wsl/   install-manual#step-4---download-the-linux-kernel-update-package).
 3. Open PowerShell or Windows Command Prompt in **administrator** mode and run
-
    ```shell
    wsl --install
    ```
-
    The installation procedure will prompt for a username and password. The result of this step should look like this:
-
    <div class="text--center">
      <img src={wslInstall} alt="Install WSL" />
    </div>
-
    Verify that the installed Ubuntu version is either 22.04 or 24.04 by typing `lsb_release -a` in the terminal above.
    If that's not the case, consult
    [this page](http://learn.microsoft.com/en-us/windows/wsl/install#change-the-default-linux-distribution-installed) to
    find out how to install a different Ubuntu distribution with WSL.
-
 4. Restart your machine for the changes to take effect.
-
 5. Install Docker Desktop and enable WSL 2 backend by following
    [steps 1 to 6 of this guide](https://docs.docker.com/desktop/features/wsl/#turn-on-docker-desktop-wsl-2). After
    restarting Docker Desktop, navigate to the settings and verify that the WSL 2 based engine is enabled:
-
    <div class="text--center">
      <img src={dockerSettings} alt="Install WSL" />
    </div>
-
    If there are several WSL 2 distros installed on the system, it might be necessary to enable integration manually in
    the Settings under Resources.
-
    <div class="text--center">
      <img src={dockerResources} alt="Enable integration per distro" />
    </div>
-
 6. Download and install [Visual Studio Code](https://code.visualstudio.com/).
-
 7. Launch Ubuntu either with the icon from the start menu or by entering `wsl` in a Windows terminal. Enter `code .` in
    the WSL terminal. This will open Visual Studio Code in
    [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
