@@ -34,7 +34,7 @@ and features described below.
 
 :::warning
 
-This collection supports RobotWare versions 7.X and above. For older versions, please contact the AICA support team.
+This collection supports RobotWare versions 7.X and above. For older versions, contact the AICA support team.
 
 :::
 
@@ -54,11 +54,11 @@ EGM is an optional add-in and has to be purchased separately.
 
 ### Robot Web Services
 
-The second ABB feature that AICA system utilizes to connect to the robot is Robot Web Services (RWS). RWS is a platform
+The second ABB feature that AICA System utilizes to connect to the robot is Robot Web Services (RWS). RWS is a platform
 that enables developers to create applications that interact with the robot controller, using RESTful APIs that leverage
 the HTTPS protocol. The hardware interface uses RWS for auxiliary functionality, such as starting/stopping the program
-and the motors, and setting IOs. Setting up RWS in the simulator and the actual robot requires slightly different steps,
-which will be explained in the following sections. More information can be found in the
+and the motors, and setting IOs. Setting up RWS on the simulator and on the actual robot requires slightly different steps,
+which will be explained in the following sections. More information can be found on the
 [product reference page](https://developercenter.robotstudio.com/api/RWS).
 
 ### RAPID
