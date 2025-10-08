@@ -91,33 +91,25 @@ Setting up a virtual workstation and controller can be achieved by following the
 1. In RobotStudio, navigate to the **Add-Ins** tab and go to **Gallery**. There is a list of all available robot models
    and RobotWare versions, the internal controller software. To ensure consistency between simulation and reality, make 
    sure to install the versions matching the real robot controller, if one is available.
-
-    <div class="text--center">
-      <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
-    </div>
-
+   <div class="text--center">
+     <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
+   </div>
 2. Go back to to **File > New > Project**.
 3. Select to create a new controller and define the robot model and variant, as well as the RobotWare version.
 4. Make sure to activate the **Customize Options** button. This is required to add EGM in a next step.
-
-<div class="text--center">
-  <img src={abbNewProject} alt="Create a new RobotStudio project." />
-</div>
-
+   <div class="text--center">
+     <img src={abbNewProject} alt="Create a new RobotStudio project." />
+   </div>
 5. Select **Create** to create the new project.
 6. In the window that pops up, in the **Options** tab, look for **EGM** and **RobotStudio Connect** and add them in the
    controller. Then select **Apply and Reset** to finalize.
-
-:::note
-
-The **3119-1 RobotStudio Connect** add-in is required to connect a controller to RobotStudio over a public network. For more
-information, see the RobotStudio instruction manual. 
-
-:::
-
-<div class="text--center">
-  <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
-</div>
+   :::note
+   The **3119-1 RobotStudio Connect** add-in is required to connect a controller to RobotStudio over a public network. For more
+   information, see the RobotStudio instruction manual. 
+   :::
+   <div class="text--center">
+     <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
+   </div>
 
 :::tip
 
@@ -152,15 +144,12 @@ After connecting to the robot, the controller should be configured to accept com
 1. Navigate to the Controller tab > Configuration > Communication > UDP Unicast Device, and add a new UDPUC device (or
    modify the existing one), configured as shown below. This is the device that will be running the AICA application,
    the external control device, so the address should be set accordingly.
-
-<div class="text--center">
-  <img src={abbControllerConfiguration} alt="Controller configuration settings." />
-</div>
-
-<div class="text--center">
-  <img src={abbNewUDPUCDevice} alt="Add a new UDPUS device." />
-</div>
-
+   <div class="text--center">
+     <img src={abbControllerConfiguration} alt="Controller configuration settings." />
+   </div>
+   <div class="text--center">
+     <img src={abbNewUDPUCDevice} alt="Add a new UDPUS device." />
+   </div>
 2. The next step is enabling RWS connection. For the RobotStudio simulation, this requires either using a proxy or
    whitelisting the IP address of the device trying to access RWS, which is the device running AICA Core.
    The first approach is preferable and described analytically in a
@@ -170,15 +159,15 @@ After connecting to the robot, the controller should be configured to accept com
    OmniCore controllers and RobotWare 7.x versions by default listen on HTTPS and port 80 for RobotStudio and 443 for
    the real robot. If necessary, the port numbers can be modified by following the instructions in this
    [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
+   :::
+   <!-- TODO: write down actual commands -->
 3. (Only for connection with the RobotStudio simulation) To communicate with the RWS running in the Windows device,
    the firewall in the respective network (usually Public) needs to be deactivated.
-
 4. In the firewall settings of RobotStudio, make sure that UDPUC and RobotWebServices are enabled in the network that is
    being used (see picture below). Finally, for the changes to take effect, restart the controller.
-
-    <div class="text--center">
-      <img src={abbFirewallManager} alt="Firewall manager options." />
-    </div>
+   <div class="text--center">
+     <img src={abbFirewallManager} alt="Firewall manager options." />
+   </div>
 
 ## RAPID module
 
