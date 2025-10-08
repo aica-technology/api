@@ -73,11 +73,11 @@ To set up this example, follow the steps below.
    :::tip
    Learn more about the `Frame to Signal` component [here](../../concepts/building-blocks/frames.md#frame-to-signal).
    :::
-3. Add the `Signal Point Attractor` to the graph and enable auto-configure and auto-activate. Then, connect the Pose
-   output of the component from step 2 with the Attractor pose input. Also connect the Cartesian state output of the
-   Robot State Broadcaster in the hardware with the Input pose input.
-4. Add the `IK Velocity Controller` to the hardware, enable auto-load and auto-activate, and connect the Output twist of
-   the Point Attractor with the Command input of the controller.
+3. Add the `Signal Point Attractor` to the graph and enable auto-configure and auto-activate. Then, connect the `Pose`
+   output of the component from step 2 with the `Attractor pose` input. Also connect the `Cartesian state` output of the
+   `Robot State Broadcaster` in the hardware with the `Input pose` input.
+4. Add the `IK Velocity Controller` to the hardware, enable auto-load and auto-activate, and connect the `Output twist`
+   of the `Point Attractor` with the `Command` input of the controller.
 5. Finally, make sure to load all components on start by creating the necessary event edges.
 
 Start the application from AICA Studio, then switch to the 3D view. Drag the frame around and observe how the robot is
