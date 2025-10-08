@@ -265,21 +265,17 @@ robot. The majority of the hardware interface parameters enable connection to EG
 </div>
 
 - EGM port: the port that EGM uses to send commands (6511, the Remote port of the UDPUC device defined in RobotStudio).
-- RWS IP & port: address and port of the RWS (the address of the RobotStudio device or real robot, 192.168.137.1 and
-  9876 in the picture below respectively).
+- RWS IP & port: address and port of the RWS (the address of the RobotStudio device or real robot).
 - Connection timeout: for RWS connection.
 - Settling time constant: the time within which the robot will reach a certain percentage of the target position (only 
   used for position commands). Lower values make the motion faster and the robot more responsive.  
-- Rapid File Path: the path for the module to be loaded in the controller home directory.
-- Headless Mode: if true, the hardware interface handles the whole initialization procedure of starting and stopping the
-  RAPID program and the motors without requiring any user interaction.
+<!-- - Rapid File Path: the path for the module to be loaded in the controller home directory. -->
+<!--- Headless Mode: if true, the hardware interface handles the whole initialization procedure of starting and stopping the
+  RAPID program and the motors without requiring any user interaction. -->
 
-The EGM port should be set to the same value defined in the UDPUC device in the controller configuration, and the RWS IP
-and port to the address of the Windows device and listening port respectively. Running the application now can
-successfully connect to the simulated robot and get information about the setup. It also takes advantage of RWS to
-automatically start and stop the simulation along with the application without any interaction with RobotStudio. The
-robot is now ready to receive commands.
+Running the application can successfully connect to the robot and get information about the setup. Starting the motors and
+the RAPID program must be done manually through the pendant. After that, the robot is ready to receive commands. 
 
-<div class="text--center">
+<!-- <div class="text--center">
   <img src={abbRSSuccessfulConnection} alt="Connected to RobotStudio successfully." />
-</div>
+</div> -->
