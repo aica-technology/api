@@ -76,7 +76,8 @@ configuration, it is possible to
 
 :::note
 
-AICA Launcher is not available on Windows. In addition, the following limitations may apply:
+AICA Launcher is not available on Windows, nor does the Ubuntu version of Launcher work with WSL. In addition, the
+following limitations may apply:
 - Networking, port and graphics forwarding may require additional configuration.
 - Realtime applications may be subject to performance limitations due to Windows hypervisor resource management, which
   might be particularly problematic when working with robots, sensors, and other peripherals.
