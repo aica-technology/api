@@ -164,7 +164,7 @@ computational power, especially if running on a CPU)
 - Connect the output of the start node to each component to load them when the application is started
 - Connect the `Image` output of the Camera Streamer to the `Image` input of the `YoloExecutor`
 
-Additional parameters can be used to tune the performance of YoloExecutor (both in the computational and predication
+Additional parameters can be used to tune the performance of YoloExecutor (both in the computational and prediction
 sense). The following picture shows the available parameters:
 
 <div class="text--center">
