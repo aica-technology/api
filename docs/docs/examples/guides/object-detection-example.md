@@ -171,15 +171,17 @@ sense). The following picture shows the available parameters:
   <img src={yoloExecutorParameters} alt="Overview of a YoloExecutor parameters" />
 </div>
 
-More specifically, you can adapt the `Number of CPU threads` to get the most out of your system's resources. Notice that
-this parameter has no effect when a GPU is used. The `Device` parameter is used to determine which device should be used
-to run the inference, but is subject to the way you bundle your AICA configuration. That is, if you use a CPU toolkit
-image, then the component will ultimately gracefully fall back to using the CPU. You can set a list of objects to detect
-through the `Object class` array, which will narrow the `Detections` output to the selected classes alone. Finally,
-adjust the `IOU threshold` and/or `Confidence threshold` to tune the inference's output. The `Confidence threshold`
-is the minimum score a predicted bounding box must have to be considered a valid detection. The `IOU Threshold` is used
-during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same object. For example, if
-`IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box will be discarded.
+More specifically, you can adapt:
+- `Number of CPU threads`: to get the most out of your system's resources. Notice that this parameter has no effect when
+a GPU is used
+- `Device`: to determine which device should be used to run the inference, but is subject to the way you bundle your
+AICA configuration. That is, if you use a CPU toolkit image but set `Device` to GPU, then the component will ultimately
+gracefully fall back to using the CPU
+- `Object class`: will narrow the `Detections` output to the selected classes alone
+- `Confidence threshold`: the minimum score a predicted bounding box must have to be considered a valid detection
+- `IOU Threshold`: used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same
+object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box
+will be discarded.
 
 To complement the parameters and enable event-driven logic when using the component, two predicates exist, namely:
 - `Is selected object detected`: True if one of the objects in the `Object class` list is detected
