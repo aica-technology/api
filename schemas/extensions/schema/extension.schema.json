@@ -187,25 +187,5 @@
     "type",
     "class",
     "inherits"
-  ],
-  "if": {
-    "properties": {
-      "type": {
-        "const": "controller"
-      }
-    },
-    "required": [
-      "type"
-    ]
-  },
-  "then": {
-    "required": [
-      "control_type"
-    ]
-  },
-  "else": {
-    "properties": {
-      "control_type": false
-    }
-  }
+  ]
 }
