@@ -75,7 +75,7 @@ your image streaming component is running and, for non-`CameraStreamer` nodes, t
 
 Move the checkerboard in various positions and orientations until the `CALIBRATE` button is no longer grayed out (and
 most of the bars are green, indicating good sample size). Once it becomes available, press on it to start computing the
-camera matrices. After a few seconds, the `Save` button will also become available. Do not forget to press `SAVE`. You
+camera matrices. After it becomes available, click on the `SAVE` button to save a recording of the process. You
 will notice a `calibration` directory has been created on your host machine under `docker-image/camera_calibration` that
 contains a compressed file. The file itself contains the images that were sampled along with a yaml file containing the
 camera calibration information. Finally, move this file into the `data` folder of your AICA configuration such that it
