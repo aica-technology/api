@@ -13,6 +13,10 @@ Release Versions:
 - [1.0.1](#101)
 - [1.0.0](#100)
 
+## Upcoming changes
+
+- fix(python): convert loaded application to json (#349)
+
 ## 3.1.0
 
 Version 3.1.0 of the AICA API client is compatible with AICA Core v4.3.0. This version introduces authentication and
