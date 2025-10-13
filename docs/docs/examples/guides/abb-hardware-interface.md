@@ -252,8 +252,8 @@ ENDMODULE
 
 :::tip
 
-For best results, always set the rate of the hardware interface to 250 Hertz, which corresponds to the ABB-suggested
-stable UDP data exchange limit.
+For optimal performance, set the hardware interface rate to 250 Hertz. This matches ABB's recommended stable limit for
+UDP data exchange.
 
 :::
 
@@ -261,20 +261,24 @@ Returning to AICA Studio and the hardware interface, it is now possible to defin
 robot. The majority of the hardware interface parameters enable connection to EGM and RWS:
 
 <div class="text--center">
-  <img src={abbHIParameters} alt="ABB Hardware interface parameters." />
+  <img src={abbHIParameters} alt="ABB Hardware interface parameters" />
 </div>
 
-- EGM port: the port that EGM uses to send commands (6511, the Remote port of the UDPUC device defined in RobotStudio).
-- RWS IP & port: address and port of the RWS (the address of the RobotStudio device or real robot).
-- Connection timeout: for RWS connection.
+- RWS IP & port: the address and port of the RWS server, e.g. the address of the real robot or the RobotStudio device
+- EGM port: the port of the EGM server, e.g. the *Remote Port Number* of the UDPUC device defined in RobotStudio above
+- Connection timeout: the amount of time the hardware interface tries to connect to the RWS and EGM servers before
+  reporting an error
 - Settling time constant: the time within which the robot will reach a certain percentage of the target position (only 
-  used for position commands). Lower values make the motion faster and the robot more responsive.  
+  used for position commands). Lower values make the motion faster and the robot more responsive.
 <!-- - Rapid File Path: the path for the module to be loaded in the controller home directory. -->
 <!--- Headless Mode: if true, the hardware interface handles the whole initialization procedure of starting and stopping the
   RAPID program and the motors without requiring any user interaction. -->
 
-Running the application can successfully connect to the robot and get information about the setup. Starting the motors and
-the RAPID program must be done manually through the pendant. After that, the robot is ready to receive commands. 
+Before starting an application with an ABB hardware interface in AICA Studio, the motors and RAPID program on the robot
+must be started manually through the teach pendant or RobotStudio. After that, running the application will connect to
+the robot and get information about the mechanical setup of the robot being used.
+
+<!-- TODO: link example --> 
 
 <!-- <div class="text--center">
   <img src={abbRSSuccessfulConnection} alt="Connected to RobotStudio successfully." />
