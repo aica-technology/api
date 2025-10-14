@@ -301,19 +301,27 @@ class AICA:
 
         version_info = semver.parse_version_info(self._core_version)
 
-        if version_info.major == 4:
-            if version_info.minor > 2 and self.__api_key is None:
-                self._logger.warning(
-                    f'The detected AICA Core version v{self._core_version} requires an API key for '
-                    f'authentication. Please provide an API key to the client for this version.'
-                )
-                return False
+        if version_info.major == 5:
             return True
-        elif version_info.major > 4:
+        elif version_info.major > 5:
             self._logger.error(
                 f'The detected AICA Core version v{self._core_version} is newer than the maximum AICA '
                 f'Core version supported by this client (v{self.client_version()}). Please upgrade the '
                 f'Python API client version for newer versions of Core.'
+            )
+            return False
+        elif version_info.major == 4:
+            if version_info.minor >= 3:
+                self._logger.error(
+                    f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
+                    f'Core version supported by this client (v{self.client_version()}). Please downgrade '
+                    f'the Python API client to version v3.1.0 for API server versions v4.3.X and later.'
+                )
+                return False
+            self._logger.error(
+                f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
+                f'Core version supported by this client (v{self.client_version()}). Please downgrade '
+                f'the Python API client to version v3.0.0 for API server versions v4.0.X, v4.1.X, or v4.2.X.'
             )
             return False
         elif version_info.major == 3:
