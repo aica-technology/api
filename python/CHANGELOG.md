@@ -26,6 +26,8 @@ A few argument types have also been changed similarly.
 This allows for better type-checking, avoid using dictionary everywhere and leaving JSON parsing to the user.
 Finally, nearly all exceptions are now subclasses of `AICAError` to allow for easier exception handling. The only exception is `ValueError` while constructing `AICA`.
 
+Two functions were removed: `license` and `api_version` as they aren't available through the API anymore. Moreover, `component_descriptions` and `controller_descriptions` have been deprecated in favor of `extension_descriptions`, they will be removed in 5.0.0.
+
 ## 3.1.1
 
 Version 3.1.1 is a patch release to ensure that content sent with the `set_application` function is always converted to
