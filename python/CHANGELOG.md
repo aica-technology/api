@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [4.0.0](#400)
 - [3.1.1](#311)
 - [3.1.0](#310)
 - [3.0.0](#300)
@@ -13,6 +14,17 @@ Release Versions:
 - [1.0.2](#102)
 - [1.0.1](#101)
 - [1.0.0](#100)
+
+## 4.0.0
+
+Version 4.0.0 of the AICA API client is compatible with AICA Core v5.0.0.
+
+## Breaking changes
+
+Methods of the `AICA` stop returning `requests.Response` but instead an appropriate class containing the data (or `None`).
+A few argument types have also been changed similarly.
+This allows for better type-checking, avoid using dictionary everywhere and leaving JSON parsing to the user.
+Finally, nearly all exceptions are now subclasses of `AICAError` to allow for easier exception handling.
 
 ## 3.1.1
 
