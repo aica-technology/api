@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "String Parameter Validation",
+  "description": "Validation for string parameters with character length and pattern constraints as a regular expression",
+  "additionalProperties": false,
+  "properties": {
+    "string": {
+      "oneOf": [
+        {
+          "title": "String Length",
+          "additionalProperties": false,
+          "properties": {
+            "length": {
+              "$ref": "length.schema.json"
+            }
+          },
+          "required": [
+            "length"
+          ]
+        },
+        {
+          "title": "String Pattern",
+          "additionalProperties": false,
+          "properties": {
+            "pattern": {
+              "title": "Regular Expression Pattern",
+              "description": "Refer to: https://json-schema.org/understanding-json-schema/reference/regular_expressions",
+              "type": "string"
+            }
+          },
+          "required": [
+            "pattern"
+          ]
+        }
+      ]
+    }
+  }
+}

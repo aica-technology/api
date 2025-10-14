@@ -3,7 +3,13 @@
   "title": "Service",
   "description": "A service endpoint of a component or controller.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
+    "service_name": {
+      "description": "The service name as it is declared in the implementation",
+      "type": "string",
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+    },
     "display_name": {
       "description": "The human-readable service name.",
       "type": "string"
@@ -12,18 +18,87 @@
       "description": "A brief description of the service.",
       "type": "string"
     },
-    "service_name": {
-      "description": "The lower_snake_case service name as it is declared in the component or controller.",
+    "service_type": {
+      "enum": [
+        "empty",
+        "string",
+        "object"
+      ]
+    },
+    "payload_description": {
+      "description": "A description of the service payload.",
       "type": "string"
     },
-    "payload_format": {
-      "description": "Optional description of the payload format if the service has a string payload. If omitted, the service is assumed to be an empty trigger.",
-      "type": "string"
+    "payload_schema": {
+      "description": "A JSON schema defining the expected payload structure of the service when the service has an object type.",
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "enum": [
+            "https://json-schema.org/draft-07/schema",
+            "https://json-schema.org/draft/2019-09/schema",
+            "https://json-schema.org/draft/2020-12/schema"
+          ]
+        }
+      },
+      "required": [
+        "$schema"
+      ]
     }
   },
   "required": [
+    "service_name",
     "display_name",
     "description",
-    "service_name"
+    "service_type"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "service_type": {
+            "const": "empty"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload_description": false,
+          "payload_schema": false
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "service_type": {
+            "const": "string"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "payload_description"
+        ],
+        "properties": {
+          "payload_schema": false
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "service_type": {
+            "const": "object"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "payload_description",
+          "payload_schema"
+        ]
+      }
+    }
   ]
 }

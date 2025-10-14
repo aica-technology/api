@@ -1,9 +1,12 @@
 {
-  "$id": "/1-0-0/interfaces.schema.json",
+  "$id": "/2-0-0/interfaces.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Common Interfaces",
   "description": "This schema includes definitions for common interfaces across the AICA System",
   "$defs": {
+    "assignment": {
+      "$ref": "common/assignment.schema.json"
+    },
     "encoded_state_type": {
       "$ref": "common/encoded_state_type.schema.json"
     },
@@ -13,6 +16,15 @@
     "parameter_type": {
       "$ref": "common/parameter_type.schema.json"
     },
+    "parameter_value": {
+      "$ref": "common/parameter_value.schema.json"
+    },
+    "parameter_length_validation": {
+      "$ref": "common/parameter_validation/length.schema.json"
+    },
+    "parameter_item_validation": {
+      "$ref": "common/parameter_validation/item_validation.schema.json"
+    },
     "predicate": {
       "$ref": "common/predicate.schema.json"
     },
@@ -21,9 +33,6 @@
     },
     "signal": {
       "$ref": "common/signal.schema.json"
-    },
-    "signal_type": {
-      "$ref": "common/signal_type.schema.json"
     }
   }
 }

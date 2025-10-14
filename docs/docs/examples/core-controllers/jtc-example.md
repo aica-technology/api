@@ -9,11 +9,19 @@ import jtcExampleRun from './assets/jtc-example-run.gif'
 
 # A joint trajectory execution example
 
+:::tip
+
+Visit our learning platform AICAdemy for an interactive training module with a real robot on this topic:
+
+[Trajectory Control on Industrial Manipulators](https://aica.thinkific.com/courses/trajectory-control-on-industrial-manipulators-m41)
+
+:::
+
 ## Launcher configuration requirements
 
 This example makes use of the built-in Joint Trajectory Controller (JTC) and the generic six-axis robot.
 
-Use AICA Core v4.4.1 or higher.
+Use AICA Core v4.4.2 or higher.
 
 ## Setting up the application
 
@@ -26,7 +34,7 @@ Copy the following YAML and generate the graph.
 ```yaml
 schema: 2-0-4
 dependencies:
-  core: v4.4.1
+  core: v4.4.2
 frames:
   start:
     reference_frame: world
@@ -135,7 +143,7 @@ graph:
           payload: |-
             {
               frames: [start, waypoint_1, waypoint_2, waypoint_3, start],
-              times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
+              durations: [2.0]
             }
   edges:
     hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_on_stop_on_stop:
@@ -175,18 +183,18 @@ to the controller. You will see the following service payload:
 ```yaml
 {
   frames: [start, waypoint_1, waypoint_2, waypoint_3, start],
-  times_from_start: [2.0, 4.0, 6.0, 8.0, 10.0]
+  durations: [2.0]
 }
 ```
 
 This message defines 2 of the variables that JTC can use in order to execute a trajectory, namely:
 
 1. `frames`: a list of the Cartesian frames that you would like to traverse, in the order that they should be visited.
-2. `times_from_start`: a list of times (in seconds) measured from the start, indicating when JTC should reach each
-frame.
+2. `durations`: a list of absolute durations (in seconds) that correspond to each waypoint.
  
-Ensure both vectors have the same length and that each payload frame name matches those shown in the 3D view or YAML
-application. This way, you can verify that your payload is correct and anticipate the trajectory execution.
+Ensure the `durations` vector is either of the same length as `frames` or has a single element which will be used for
+all waypoints. You can also validate your payload's frame names, by verifying they match with those shown in the 3D view
+or YAML application. This way, you can intuitively anticipate the trajectory execution.
 
 ## Executing the trajectory
 

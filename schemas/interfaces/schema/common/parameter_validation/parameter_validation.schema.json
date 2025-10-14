@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Parameter Validation",
+  "description": "Validation rules for parameter values",
+  "oneOf": [
+    {
+      "$ref": "item_validation.schema.json"
+    },
+    {
+      "$ref": "array_validation.schema.json"
+    }
+  ]
+}

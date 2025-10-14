@@ -40,6 +40,8 @@ jobs:
             schema-path: ./schemas/component-descriptions/schema
           - schema: controller
             schema-path: ./schemas/controller-descriptions/schema
+          - schema: extension
+            schema-path: ./schemas/extensions/schema
           - schema: interfaces
             schema-path: ./schemas/interfaces/schema
     name: Bundle the ${{ matrix.schema }} schema
@@ -49,7 +51,7 @@ jobs:
       - uses: ./.github/actions/bundle-schema
         with:
           schema-path: ${{ matrix.schema-path }}/${{ matrix.schema }}.schema.json
-          schema: ${{ matrix.schema }}.schema.json
+          schema: ${{ matrix.schema }}
           branch-name: ${{ needs.setup.outputs.branch_name }}
 
   push-schemas:

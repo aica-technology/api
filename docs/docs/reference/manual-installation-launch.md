@@ -6,6 +6,9 @@ title: Manual installation and launch
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import MacosDockerAdvanced from './assets/macos-docker-advanced.png'
+import MacosDockerResources from './assets/macos-docker-resources.png'
+
 # Manual installation and launch
 
 The following sections explain how to install and launch AICA Core and any additional packages manually from the command
@@ -13,22 +16,27 @@ line without the use of AICA Launcher. The pre-requisites are still a valid lice
 For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
 on the host machine.
 
-## Configuring your system when Docker Desktop for Linux is installed
+## Configuring Docker on your Linux or MacOS system
 
-If you are using Linux but do not have Docker Desktop for Linux installed, you may skip this section.
+<details>
+<summary>Linux</summary>
 
-For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that 
+### Configuring your system when Docker Desktop for Linux is installed
+
+If you are using Linux with Docker Engine only, you may skip this section entirely.
+
+For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that
 AICA System software is used at its full potential.
 
 The main issue originates from Docker Desktop for Linux creating a custom Docker context (`desktop-linux`) and endpoint
 to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, without
 contaminating other parts of your system. However, creating a custom context with an endpoint in your `/home` directory
-means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that 
-some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal). 
+means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that
+some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal).
 
-### Configuring Docker context
+#### Configuring the Docker context
 
-`desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations, 
+`desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations,
 make sure to change the context before building or executing AICA applications, or running AICA Launcher.
 
 See the available contexts on your system:
@@ -38,7 +46,7 @@ docker context ls
 ```
 
 You should see a `default` choice alongside `desktop-linux` that Docker Desktop for Linux created. If you do not see
-it, then you may have missed some of the installation steps (refer to the 
+it, then you may have missed some of the installation steps (refer to the
 [installation guide](../getting-started/installation/installation-and-launch.md)). If it is indeed there, make sure it is active:
 
 ```shell
@@ -50,6 +58,35 @@ docker context use default
 You may need to repeat these steps upon a restart of your system.
 
 :::
+
+</details>
+
+<details>
+<summary>MacOS</summary>
+
+### Configuring and using Docker Desktop
+
+If you installed Docker Desktop, all the requirements should already be present on your system. Note that to access
+the `docker` command through the terminal, Docker Desktop must be running.
+
+The default settings of Docker Desktop are usually sufficient for everything AICA Studio needs. However, in some cases
+(e.g., settings carried over from older Docker Desktop installations) you may need to verify the following:
+
+- Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to
+`Allow the default Docker socket to be used (requires password)` and `Allow privileged port mapping (requires password)`.
+
+<div class="text--center">
+  <img src={MacosDockerAdvanced} alt="Required advanced options" />
+</div>
+
+- If you notice any performance issues, go to Resources in the Settings menu and increase the CPU and memory limits to
+your application's needs.
+
+<div class="text--center">
+  <img src={MacosDockerResources} alt="Optional resource allocation" />
+</div>
+
+</details>
 
 ## Setting up the AICA license file
 
