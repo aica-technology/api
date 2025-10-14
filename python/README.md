@@ -97,6 +97,7 @@ Use the following compatability table to determine which client version to use.
 
 | AICA Core version | API protocol version | Matching Python client version |
 |-------------------|----------------------|--------------------------------|
+| `>= 5.0`          | `v3`                 | `>= 4.0.0`                     |
 | `>= 4.3`          | `v2`                 | `>= 3.1.0`                     |
 | `>= 4.0, < 4.3`   | `v2`                 | `>= 3.0.0`                     |
 | `3.x`             | `v2`                 | `>= 2.0.0`                     |
@@ -129,6 +130,8 @@ the actual API server version.
 
 AICA Core versions `v4.3` and later introduce authentication and access scopes to the API server. An API key with
 appropriate scopes is required to access the respective endpoints and functionalities.
+
+AICA Core versions `v5` and later change some endpoints paths, methods and payloads. This is mostly internal to the client implementation.
 
 ### Checking compatibility
 
