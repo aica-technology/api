@@ -8,8 +8,10 @@ import httpx
 import semver
 from deprecation import deprecated
 
+from aica_api.errors import APIError
 from aica_api.sdk.sdk import errors
 from aica_api.sdk.sdk.api.api import get_api_version
+from aica_api.sdk.sdk.api.applications import get_applications
 from aica_api.sdk.sdk.api.auth import login
 from aica_api.sdk.sdk.api.descriptions import (
     get_component_descriptions,
@@ -27,6 +29,7 @@ from aica_api.sdk.sdk.api.engine import (
     set_component_parameter,
     set_controller_parameter,
     set_current_application,
+    set_current_application_by_id,
     switch_controllers,
     trigger_application_transition,
     trigger_component_transition,
@@ -68,34 +71,24 @@ CLIENT_VERSION = importlib.metadata.version('aica_api')
 T = TypeVar('T')
 
 
-class APIError(Exception):
-    pass
-
-
 class AICA:
     """API client for AICA applications."""
 
     def __init__(
         self,
-        url: str = 'localhost',
-        port: Union[str, int] = '8080',
+        *,
+        api_key: str,
+        url: str = 'http://localhost:8080/api',
         log_level=INFO,
-        api_key: Optional[str] = None,
     ):
         """
         Construct the API client with the address of the AICA application.
 
-        :param url: The IP address of the AICA application
-        :param port: The API port for HTTP REST endpoints (default 8080)
+        :param url: The URL of the AICA Core instance
+        :param api_key: The API key for authentication
         :param log_level: The desired log level
-
-        Raises:
-            ValueError: If no API key is provided.
         """
-        if '://' in url:
-            self.__address = f'{url}:{port}/api'
-        else:
-            self.__address = f'http://{url}:{port}/api'
+        self.__address = url
 
         self._logger = getLogger(__name__)
         self._logger.setLevel(log_level)
@@ -105,8 +98,6 @@ class AICA:
         self.__raw_client = Client(base_url=self.__address, raise_on_unexpected_status=True)
         self.__client: AuthenticatedClient | None = None
 
-        if api_key is None:
-            raise ValueError('API key authentication is mandatory for AICA Core >= 5.0.0')
         self.__api_key = api_key
         self.__token = None
 
@@ -120,8 +111,10 @@ class AICA:
                     return None  # type: ignore
                 raise APIError('Expected a valid response, but got None')
             return res
-        except (errors.UnexpectedStatus, httpx.TimeoutException) as e:
-            raise APIError('Failed request') from e
+        except errors.UnexpectedStatus as e:
+            raise APIError('Unexpected status') from e
+        except httpx.TimeoutException as e:
+            raise APIError('Timeout') from e
 
     def __log_api_error(self, e: APIError):
         self._logger.error(
@@ -484,11 +477,31 @@ class AICA:
 
         :param payload: The filepath of an application or the application content as a YAML-formatted string
         """
-        if payload.endswith('.yaml') and os.path.isfile(payload):
+        if (payload.endswith('.yaml') or payload.endswith('.yml')) and os.path.isfile(payload):
             with open(payload, 'r') as file:
                 payload = file.read()
         self.__handle_errors(
             lambda: set_current_application.sync(client=self.__get_client(), body=SetCurrentApplication(yaml=payload)),
+            expect_empty=True,
+        )
+
+    def load_application(self, name: str) -> None:
+        """
+        Load an application by name from the applications directory.
+
+        Raises:
+            aica_api.client.APIError: If the API call fails.
+            ValueError: If the application name is invalid.
+        """
+        apps = self.__handle_errors(
+            lambda: get_applications.sync(client=self.__get_client()),
+            expect_empty=True,
+        )
+        app_id = next((app.id for app in apps.applications if app.name == name), None)
+        if app_id is None:
+            raise ValueError(f'No application with name "{name}" found in the application database')
+        self.__handle_errors(
+            lambda: set_current_application_by_id.sync(client=self.__get_client(), id=app_id),
             expect_empty=True,
         )
 
@@ -707,6 +720,9 @@ class AICA:
         Wait for a component to be in a particular state. Components can be in any of the following states:
             ['unloaded', 'loaded', 'unconfigured', 'inactive', 'active', 'finalized']
 
+        Raises:
+            aica_api.client.APIError: If the API call fails.
+
         :param component: The name of the component
         :param state: The state of the component to wait for
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
@@ -729,6 +745,9 @@ class AICA:
         """
         Wait for a hardware interface to be in a particular state. Hardware can be in any of the following states:
             ['unloaded', 'loaded']
+
+        Raises:
+            aica_api.client.APIError: If the API call fails.
 
         :param hardware: The name of the hardware interface
         :param state: The state of the hardware to wait for
@@ -759,6 +778,9 @@ class AICA:
         Wait for a controller to be in a particular state. Controllers can be in any of the following states:
             ['unloaded', 'loaded', 'active', 'finalized']
 
+        Raises:
+            aica_api.client.APIError: If the API call fails.
+
         :param hardware: The name of the hardware interface responsible for the controller
         :param controller: The name of the controller
         :param state: The state of the controller to wait for
@@ -783,6 +805,9 @@ class AICA:
     ) -> bool:
         """
         Wait until a component predicate is true.
+
+        Raises:
+            aica_api.client.APIError: If the API call fails.
 
         :param component: The name of the component
         :param predicate: The name of the predicate
@@ -812,6 +837,9 @@ class AICA:
         """
         Wait until a controller predicate is true.
 
+        Raises:
+            aica_api.client.APIError: If the API call fails.
+
         :param hardware: The name of the hardware interface responsible for the controller
         :param controller: The name of the controller
         :param predicate: The name of the predicate
@@ -834,6 +862,9 @@ class AICA:
         """
         Wait until a condition is true.
 
+        Raises:
+            aica_api.client.APIError: If the API call fails.
+
         :param condition: The name of the condition
         :param timeout: Timeout duration in seconds. If set to None, block indefinitely
         :return: True if the condition is true before the timeout duration, False otherwise
@@ -855,6 +886,9 @@ class AICA:
         """
         Wait for a sequence to be in a particular state. Sequences can be in any of the following states:
             ['active', 'inactive', 'aborted']
+
+        Raises:
+            aica_api.client.APIError: If the API call fails.
 
         :param sequence: The name of the sequence
         :param state: The state of the sequence to wait for
