@@ -6,11 +6,16 @@ from typing import Callable, List, Optional, TypeVar, Union
 
 import httpx
 import semver
+from deprecation import deprecated
 
 from aica_api.sdk.sdk import errors
 from aica_api.sdk.sdk.api.api import get_api_version
 from aica_api.sdk.sdk.api.auth import login
-from aica_api.sdk.sdk.api.descriptions import get_component_descriptions, get_controller_descriptions
+from aica_api.sdk.sdk.api.descriptions import (
+    get_component_descriptions,
+    get_controller_descriptions,
+    get_extension_descriptions,
+)
 from aica_api.sdk.sdk.api.engine import (
     call_component_service,
     call_controller_service,
@@ -30,7 +35,7 @@ from aica_api.sdk.sdk.api.engine import (
     unload_controller,
     unload_hardware,
 )
-from aica_api.sdk.sdk.api.licensing import get_core_version, get_licensing_status
+from aica_api.sdk.sdk.api.licensing import get_core_version
 from aica_api.sdk.sdk.client import AuthenticatedClient
 from aica_api.sdk.sdk.models.application_lifecycle_transition import ApplicationLifecycleTransition
 from aica_api.sdk.sdk.models.application_lifecycle_transition_transition import ApplicationLifecycleTransitionTransition
@@ -44,8 +49,8 @@ from aica_api.sdk.sdk.models.component_reference import ComponentReference
 from aica_api.sdk.sdk.models.controller_descriptions import ControllerDescriptions
 from aica_api.sdk.sdk.models.current_application import CurrentApplication
 from aica_api.sdk.sdk.models.error_response import ErrorResponse
+from aica_api.sdk.sdk.models.extension_descriptions import ExtensionDescriptions
 from aica_api.sdk.sdk.models.hardware_reference import HardwareReference
-from aica_api.sdk.sdk.models.licensing_status import LicensingStatus
 from aica_api.sdk.sdk.models.load_controller_request import LoadControllerRequest
 from aica_api.sdk.sdk.models.sequence_lifecycle_transition import SequenceLifecycleTransition
 from aica_api.sdk.sdk.models.sequence_lifecycle_transition_transition import SequenceLifecycleTransitionTransition
@@ -225,25 +230,6 @@ class AICA:
 
         return decorator
 
-    def api_version(self) -> Union[str, None]:
-        """
-        Get the specific version the AICA API server as a sub-package of AICA Core
-
-        Raises:
-            aica_api.client.APIError: If the API call fails.
-
-        :return: The version of the API server or None in case of connection failure
-        """
-        try:
-            api_server_version = self.license().signed_packages['aica_api_server']
-            self._logger.debug(f'AICA API server version identified as {api_server_version}')
-            return api_server_version
-        except APIError as e:
-            self.__log_api_error(e)
-        except KeyError as e:
-            self._logger.error(f'Error getting version details, expected packages to include `aica_api_server`: {e}')
-        return None
-
     def core_version(self) -> Union[str, None]:
         """
         Get the version of the AICA Core
@@ -351,16 +337,21 @@ class AICA:
             )
             return False
 
-    def license(self) -> LicensingStatus:
+    def extension_descriptions(self) -> ExtensionDescriptions:
         """
-        Get licensing status details for the AICA Core session, including the type of license, a list of entitlements
-        for the licensed user and a map of installed packages and versions included in the license.
+        Retrieve descriptions of all installed extensions.
 
         Raises:
             aica_api.client.APIError: If the API call fails.
         """
-        return self.__handle_errors(lambda: get_licensing_status.sync(client=self.__get_client()))
+        return self.__handle_errors(lambda: get_extension_descriptions.sync(client=self.__get_client()))
 
+    @deprecated(
+        deprecated_in='4.0.0',
+        removed_in='5.0.0',
+        current_version=CLIENT_VERSION,
+        details='Use the extension_descriptions function instead',
+    )
     def component_descriptions(self) -> ComponentDescriptions:
         """
         Retrieve descriptions of all installed components.
@@ -370,6 +361,12 @@ class AICA:
         """
         return self.__handle_errors(lambda: get_component_descriptions.sync(client=self.__get_client()))
 
+    @deprecated(
+        deprecated_in='4.0.0',
+        removed_in='5.0.0',
+        current_version=CLIENT_VERSION,
+        details='Use the extension_descriptions function instead',
+    )
     def controller_descriptions(self) -> ControllerDescriptions:
         """
         Retrieve descriptions of all installed controllers.
