@@ -21,10 +21,16 @@ Version 4.0.0 of the AICA API client is compatible with AICA Core v5.0.0.
 
 ## Breaking changes
 
+The `AICA` constructor now takes only keyword arguments:
+
+* `url`: optional, a valid URL pointing to your AICA Core instance (defaults to `http://localhost:8080/api`), this is different to the current `url` which only covers the host itself
+* `api_key`: required, an API key with appropriate scopes
+* `log_level`: optional, a log level from `logging` module (defaults to `logging.INFO`)
+
 Methods of the `AICA` stop returning `requests.Response` but instead an appropriate class containing the data (or `None`).
 A few argument types have also been changed similarly.
 This allows for better type-checking, avoid using dictionary everywhere and leaving JSON parsing to the user.
-Finally, nearly all exceptions are now subclasses of `AICAError` to allow for easier exception handling. The only exception is `ValueError` while constructing `AICA`.
+Finally, nearly all exceptions are now subclasses of `AICAError` to allow for easier exception handling. The only exception is `ValueError` when calling the new `load_application` (allows to load application by name). The Socket.IO-based functions also raise exceptions now.
 
 Two functions were removed: `license` and `api_version` as they aren't available through the API anymore. Moreover, `component_descriptions` and `controller_descriptions` have been deprecated in favor of `extension_descriptions`, they will be removed in 5.0.0.
 
