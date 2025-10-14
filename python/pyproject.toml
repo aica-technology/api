@@ -2,6 +2,17 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+# force the inclusion of the gitignore'd sdk
+[tool.hatch.build.targets.sdist]
+artifacts = [
+  "src/aica_api/sdk/sdk/**/*.py",
+]
+
+[tool.hatch.build.targets.wheel]
+artifacts = [
+  "src/aica_api/sdk/sdk/**/*.py",
+]
+
 [project]
 name = "aica_api"
 version = "4.0.0"
