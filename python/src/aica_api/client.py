@@ -58,6 +58,7 @@ from aica_api.sdk.sdk.models.set_component_parameter import SetComponentParamete
 from aica_api.sdk.sdk.models.set_controller_parameter import SetControllerParameter
 from aica_api.sdk.sdk.models.set_current_application import SetCurrentApplication
 from aica_api.sdk.sdk.models.switch_controllers_request import SwitchControllersRequest
+from aica_api.sdk.sdk.types import UNSET
 from aica_api.sio_client import read_until
 
 from .sdk.sdk import Client
@@ -310,34 +311,6 @@ class AICA:
                 f'Python API client version for newer versions of Core.'
             )
             return False
-        elif version_info.major == 4:
-            if version_info.minor >= 3:
-                self._logger.error(
-                    f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
-                    f'Core version supported by this client (v{self.client_version()}). Please downgrade '
-                    f'the Python API client to version v3.1.0 for API server versions v4.3.X and later.'
-                )
-                return False
-            self._logger.error(
-                f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
-                f'Core version supported by this client (v{self.client_version()}). Please downgrade '
-                f'the Python API client to version v3.0.0 for API server versions v4.0.X, v4.1.X, or v4.2.X.'
-            )
-            return False
-        elif version_info.major == 3:
-            self._logger.error(
-                f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
-                f'Core version supported by this client (v{self.client_version()}). Please downgrade '
-                f'the Python API client to version v2.1.0 for API server versions v3.X.'
-            )
-            return False
-        elif version_info.major == 2:
-            self._logger.error(
-                f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
-                f'Core version supported by this client (v{self.client_version()}). Please downgrade '
-                f'the Python API client to version v1.2.0 for API server versions v2.X.'
-            )
-            return False
         else:
             self._logger.error(
                 f'The detected AICA Core version v{self._core_version} is deprecated and not supported '
@@ -384,7 +357,7 @@ class AICA:
         """
         return self.__handle_errors(lambda: get_controller_descriptions.sync(client=self.__get_client()))
 
-    def call_component_service(self, component: str, service: str, payload: str) -> None:
+    def call_component_service(self, component: str, service: str, payload: Optional[str] = None) -> None:
         """
         Call a service on a component.
 
@@ -398,12 +371,14 @@ class AICA:
         self.__handle_errors(
             lambda: call_component_service.sync(
                 client=self.__get_client(),
-                body=CallComponentService(component=component, service=service, payload=payload),
+                body=CallComponentService(component=component, service=service, payload=payload if payload else UNSET),
             ),
             expect_empty=True,
         )
 
-    def call_controller_service(self, hardware: str, controller: str, service: str, payload: str) -> None:
+    def call_controller_service(
+        self, hardware: str, controller: str, service: str, payload: Optional[str] = None
+    ) -> None:
         """
         Call a service on a controller.
 
@@ -418,7 +393,9 @@ class AICA:
         self.__handle_errors(
             lambda: call_controller_service.sync(
                 client=self.__get_client(),
-                body=CallControllerService(hardware=hardware, controller=controller, service=service, payload=payload),
+                body=CallControllerService(
+                    hardware=hardware, controller=controller, service=service, payload=payload if payload else UNSET
+                ),
             ),
             expect_empty=True,
         )
