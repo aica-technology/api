@@ -8,6 +8,11 @@ import TabItem from '@theme/TabItem';
 
 import MacosDockerAdvanced from './assets/macos-docker-advanced.png'
 import MacosDockerResources from './assets/macos-docker-resources.png'
+import winFeatures from './assets/win-features.png';
+import winHyperV from './assets/win-hyper-v.png';
+import wslInstall from './assets/wsl-install.png';
+import dockerSettings from './assets/win-docker-settings.png';
+import dockerResources from './assets/win-docker-resources.png';
 
 # Manual installation and launch
 
@@ -16,7 +21,7 @@ line without the use of AICA Launcher. The pre-requisites are still a valid lice
 For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
 on the host machine.
 
-## Configuring Docker on your Linux or MacOS system
+## Configuring Docker manually on Linux, macOS or Windows
 
 <details>
 <summary>Linux</summary>
@@ -64,7 +69,7 @@ You may need to repeat these steps upon a restart of your system.
 <details>
 <summary>MacOS</summary>
 
-### Configuring and using Docker Desktop
+### Configuring and using Docker Desktop on macOS
 
 If you installed Docker Desktop, all the requirements should already be present on your system. Note that to access
 the `docker` command through the terminal, Docker Desktop must be running.
@@ -85,6 +90,75 @@ your application's needs.
 <div class="text--center">
   <img src={MacosDockerResources} alt="Optional resource allocation" />
 </div>
+
+</details>
+
+
+<details>
+<summary>Windows</summary>
+
+## Configuring and using WSL and Docker on Windows
+
+The AICA System can be installed and run on Windows by leveraging **WSL**, short for
+[Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/about). WSL is a feature of Windows that
+allows running a Linux environment on a Windows machine without the need for a separate virtual machine or dual booting.
+While most Linux distributions can be run with either WSL 1 or WSL 2 architecture, WSL 2 has superior performance over
+WSL 1 and will be assumed throughout these instructions.
+
+On a high level, there are two main requirements for running the AICA System on Windows:
+
+- Ubuntu 22.04 or 24.04 installed through WSL 2
+- Docker Desktop that uses the WSL 2 based engine
+
+:::note
+
+The following instructions for running the AICA System have been tested and validated on a fresh installation of Windows
+11 Professional with full administrator access. Depending on the machine at hand, some steps might be slightly different
+or extended access might be required. For questions, consult the
+[official documentation](https://learn.microsoft.com/en-us/windows/wsl/install-manual), contact your IT support, or
+reach out to the AICA team.
+
+:::
+
+1. Ensure that the Hyper-V feature is on. Open the Windows Features from the Control panel, locate Hyper-V and check the
+   box if necessary. Switching it on requires a restart of the system. Alternatively,
+   [use the terminal](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-3---enable-virtual-machine-feature)
+   to enable it.
+   <div style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
+     <img src={winFeatures} alt="Windows Features" width="45%" />
+     <img src={winHyperV} alt="Enable Hyper-V" width="45%" />
+   </div>
+2. [Download the Linux kernel update package](https://learn.microsoft.com/en-us/windows/wsl/   install-manual#step-4---download-the-linux-kernel-update-package).
+3. Open PowerShell or Windows Command Prompt in **administrator** mode and run
+   ```shell
+   wsl --install
+   ```
+   The installation procedure will prompt for a username and password. The result of this step should look like this:
+   <div class="text--center">
+     <img src={wslInstall} alt="Install WSL" />
+   </div>
+   Verify that the installed Ubuntu version is either 22.04 or 24.04 by typing `lsb_release -a` in the terminal above.
+   If that's not the case, consult
+   [this page](http://learn.microsoft.com/en-us/windows/wsl/install#change-the-default-linux-distribution-installed) to
+   find out how to install a different Ubuntu distribution with WSL.
+4. Restart your machine for the changes to take effect.
+5. Install Docker Desktop and enable WSL 2 backend by following
+   [steps 1 to 6 of this guide](https://docs.docker.com/desktop/features/wsl/#turn-on-docker-desktop-wsl-2). After
+   restarting Docker Desktop, navigate to the settings and verify that the WSL 2 based engine is enabled:
+   <div class="text--center">
+     <img src={dockerSettings} alt="Install WSL" />
+   </div>
+   If there are several WSL 2 distros installed on the system, it might be necessary to enable integration manually in
+   the Settings under Resources.
+   <div class="text--center">
+     <img src={dockerResources} alt="Enable integration per distro" />
+   </div>
+6. Download and install [Visual Studio Code](https://code.visualstudio.com/).
+7. Launch Ubuntu either with the icon from the start menu or by entering `wsl` in a Windows terminal. Enter `code .` in
+   the WSL terminal. This will open Visual Studio Code in
+   [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+   mode. In the top menu, navigate to Terminal and choose *New Terminal*. Verify the Docker installation by running
+   `docker run hello-world`.
 
 </details>
 
@@ -257,6 +331,23 @@ If port 8080 is already used on the host, use `-p HOST_PORT:8080` to avoid confl
 :::
 
 </TabItem>
+<TabItem value="wsl" label="WSL">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  -p 8080:8080 \
+  -v /path/to/aica-license.toml:/license:ro \
+  aica-runtime
+```
+
+:::note
+
+If port 8080 is already used on the host, use `-p HOST_PORT:8080` to avoid conflicts. Do not remap ports `18000-18100`.
+
+:::
+
+</TabItem>
 </Tabs>
 
 When the container starts up, it will generate some initial output in the terminal window that should look something
@@ -345,6 +436,19 @@ docker run -it --rm \
 ```
 
 </TabItem>
+<TabItem value="wsl" label="WSL">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  -p 8080:8080 \
+  -v /path/to/aica-license.toml:/license:ro \
+  #highlight-next-line
+  -v /path/to/data:/data:rw \
+  aica-runtime
+```
+
+</TabItem>
 </Tabs>
 
 ### Setting a super-admin password
@@ -373,6 +477,19 @@ docker run -it --rm \
 docker run -it --rm \
   --privileged \
   -p 8080:8080 -p 18000-18100:18000-18100/udp \
+  -v /path/to/aica-license.toml:/license:ro \
+  #highlight-next-line
+  -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
+  aica-runtime
+```
+
+</TabItem>
+<TabItem value="wsl" label="WSL">
+
+```bash
+docker run -it --rm \
+  --privileged \
+  -p 8080:8080 \
   -v /path/to/aica-license.toml:/license:ro \
   #highlight-next-line
   -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
