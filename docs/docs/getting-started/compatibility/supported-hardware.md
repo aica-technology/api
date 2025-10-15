@@ -51,8 +51,7 @@ provided your host machine can natively mount them as USB devices.
 
 :::
 
-
-## Industrial PCs (IPCs) support
+## Industrial PC (IPC) support
 
 Along with consumer-level computers that can be configured to work with the AICA framework, we have extensively used and validated the operation of the framework with the following IPCs:
 
