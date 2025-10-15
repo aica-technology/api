@@ -131,7 +131,6 @@ it to `"velocities"` or `"torques"` as needed. If a mismatched command type is r
 - **headless**: When set to `true`, runs the simulator in headless mode (without a user interface), useful for remote simulations or running the simulation at high frequencies.  
 - **device**: Specifies the compute device for the simulation. The default is `"cuda"` for GPU acceleration, but you can switch to `"cpu"` if GPU resources are unavailable.  
 
-
 Ensure these parameters are correctly configured to enable seamless communication between the simulator and your AICA
 application. In case you want to run the simulator with different parameters, you can do so by running the following
 command in the `run_bridge.py` script:
@@ -140,11 +139,10 @@ command in the `run_bridge.py` script:
 python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rate <simulation_rate> --force_sensor <force_sensor_name_in_urdf> --state_port <state_port> --command_port <command_port> --force_port <force_port> --joint_names <comma_separated_joint_names_to_control> --command_interface <positions/velocities/torques> --headless <true/false> --device <cuda/cpu>
 ```
 
-
 ### Running the AICA Application
 
-When the simulator is running, you can execute your AICA application by first chosing the UR5e URDF file that you just
-created with the hardware plugin being the `LightWeightInterface`, and then starting the applicationby clicking the
+When the simulator is running, you can execute your AICA application by first choosing the UR5e URDF file that you just
+created with the hardware plugin being the `LightWeightInterface`, and then starting the application by clicking the
 **Play** button in the **AICA Studio**.
 
 ## Beware
