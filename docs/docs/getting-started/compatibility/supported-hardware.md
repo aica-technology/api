@@ -58,8 +58,8 @@ Along with consumer-level computers that can be configured to work with the AICA
 
 | Manufacturer | Model            | GPU / GPU Support   | Notes                                                                             |
 |--------------|------------------|:---------------------:|-----------------------------------------------------------------------------------|
-| Siemens      | SIMATIC BX-39A   | ❌ / ❌             | Industrial OS; various hardware configurations supported                          |
-| Siemens      | SIMATIC IPC 547J | ❌ / ❌             | Ubuntu real-time OS; various hardware configurations supported                    |
-| Beckhoff     | C6043            | ✅ / ✅           | Ubuntu real-time OS; various hardware configurations supported, incl. GPU support |
-| Bosch        | ctrlX X3         | ❌ / ❌             | ctrlX OS (development purposes only; limited computational resources |
-| Bosch        | ctrlX X7         | ✅ (optional) / ❌ | ctrlX OS |
+| Siemens      | SIMATIC BX-39A   | No / No             | Industrial OS; various hardware configurations supported                          |
+| Siemens      | SIMATIC IPC 547J | No / No             | Ubuntu real-time OS; various hardware configurations supported                    |
+| Beckhoff     | C6043            | Yes / Yes           | Ubuntu real-time OS; various hardware configurations supported, incl. GPU support |
+| Bosch        | ctrlX X3         | No / No             | ctrlX OS (development purposes only; limited computational resources |
+| Bosch        | ctrlX X7         | Yes (optional) / No | ctrlX OS |
