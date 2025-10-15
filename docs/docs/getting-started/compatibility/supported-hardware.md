@@ -11,7 +11,7 @@ require.
 
 :::note
 
-This list is work in progress and regularly updated. If your hardware is not listed, please submit a ticket to the  
+This list is work in progress and regularly updated. If your hardware is not listed, please submit a ticket to the
 [AICA Community Feedback board](https://github.com/aica-technology/community) or reach out to the AICA team for
 assistance or further details.
 
@@ -22,7 +22,7 @@ drivers. This allows you to expand the supported hardware list by using open sou
 
 ## Robotic manipulators
 
-| Brand        | Robot Controller            | Add-ons | Additional Notes | 
+| Brand        | Robot Controller            | Add-ons | Additional Notes |
 |--------------|-----------------------------|---------|------------------|
 | [ABB](../../examples/guides/abb-hardware-interface.md) | OmniCore | Robot Web Services, Externally Guided Motion | RobotWare 7.X |
 | KUKA | KR C5 | RobotSensorInterface | |
@@ -36,7 +36,7 @@ drivers. This allows you to expand the supported hardware list by using open sou
 
 ## Peripherals
 
-| Brand        | Supported Devices            | Requirements | Additional Notes | 
+| Brand        | Supported Devices            | Requirements | Additional Notes |
 |--------------|-----------------------------|------------------------------|------------------|
 | SCHUNK | EGU, EGK, EZU mechatronic grippers | Modbus RTU or Ethernet-based (PROFINET, Ethernet/IP, and EtherCAT) interface | |
 | ATI | Force / Torque Sensors | Net F/T interface | |
@@ -50,3 +50,19 @@ You can also use generic cameras and webcams with the Camera Streamer from the `
 provided your host machine can natively mount them as USB devices.
 
 :::
+
+## Industrial PC (IPC) support
+
+Along with consumer-grade computers that can be configured to work with the AICA framework, we have extensively used and
+validated the operation of the framework with the following IPCs:
+
+| Manufacturer | Model            | Available GPU  | GPU Support   | Notes                                                                             |
+|--------------|------------------|:--------------:|:-------------:|-----------------------------------------------------------------------------------|
+| Siemens      | SIMATIC BX-39A   | No             | No            | Industrial OS; various hardware configurations supported                          |
+| Siemens      | SIMATIC IPC 547J | No             | No            | Ubuntu real-time OS; various hardware configurations supported                    |
+| Beckhoff     | C6043            | Yes            | Yes           | Ubuntu real-time OS; various hardware configurations supported, incl. GPU support |
+| Bosch        | ctrlX X3         | No             | No            | ctrlX OS (development purposes only; limited computational resources              |
+| Bosch        | ctrlX X7         | Yes (optional) | No            | ctrlX OS                                                                          |
+
+In many occasions, setting up these machines/OSs may require some more nuanced configuration steps. For additional
+or specialized support on getting these machines up and running you may always [contact us](mailto:contact@aica.tech).
