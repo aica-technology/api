@@ -3,7 +3,7 @@ sidebar_position: 1
 title: Operating System
 ---
 
-# Operating System
+# Operating System (OS)
 
 The AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
 
@@ -14,7 +14,7 @@ indicated.
 :::info
 
 There are some limitations with Docker on macOS compared to Docker on Ubuntu, which can affect advanced usage.
-For the best developer experience, use a modern Ubuntu host machine (20.04 or higher) with Docker v19 or higher. 
+For the best developer experience, use a modern Ubuntu host machine (20.04 or higher) with Docker v19 or higher.
 
 ### Network sharing
 
@@ -40,3 +40,12 @@ This is currently possible with the Ubuntu Pro 24.04 real-time kernel or the `PR
 Ubuntu, but not possible on macOS.
 
 :::
+
+### Summary of OS support
+
+| OS                        | AICA Launcher support | Notes                                                                            |
+|---------------------------|:------------------:|----------------------------------------------------------------------------------|
+| Ubuntu/Debian             | ✅              | Real-time kernel patch highly recommended                                        |
+| Other linux distributions | ❌               | Requires launching AICA Core manually. Real-time kernel patch highly recommended |
+| macOS                     | ✅              | Limited graphics forwarding due to dropped OpenGL support                                |
+| Windows                   | ❌               | Requires WSL and launching AICA Core manually                                    |
