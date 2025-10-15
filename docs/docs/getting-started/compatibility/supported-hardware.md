@@ -24,11 +24,11 @@ drivers. This allows you to expand the supported hardware list by using open sou
 
 | Brand        | Robot Controller            | Add-ons | Additional Notes | 
 |--------------|-----------------------------|---------|------------------|
-| ABB | OmniCore | Robot Web Services, Externally Guided Motion | RobotWare 7.X |
+| [ABB](../../examples/guides/abb-hardware-interface.md) | OmniCore | Robot Web Services, Externally Guided Motion | RobotWare 7.X |
 | KUKA | KR C5 | RobotSensorInterface | |
 | Mecademic | n/a | n/a | TCP/IP & EtherCAT drivers for Meca500 |
 | Stäubli | CS9, CS8C | alter, advCtrlFunctions  | TX2 series |
-| Universal Robots | Polyscope > 5.X | n/a | |
+| [Universal Robots](../../examples/guides/ur-harware-interface.md) | Polyscope > 5.X | n/a | |
 | Franka Emika | n/a | Fast Research Interface | beta version available |
 | Kassow | n/a | KORD CBun | beta version available |
 | Kinova | Gen3 | n/a | beta version available |
