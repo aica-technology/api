@@ -1,4 +1,5 @@
 import importlib.metadata
+import json
 import os
 import urllib.parse
 from functools import wraps
