@@ -44,8 +44,8 @@ Ubuntu, but not possible on macOS.
 ### Summary of OS support
 
 | OS                        | AICA Launcher support | Notes                                                                            |
-|---------------------------|:------------------:|----------------------------------------------------------------------------------|
-| Ubuntu/Debian             | Yes              | Real-time kernel patch highly recommended                                        |
-| Other Linux distributions | No               | Requires launching AICA Core manually. Real-time kernel patch highly recommended |
-| macOS                     | Yes              | Limited graphics forwarding due to dropped OpenGL support                                |
-| Windows                   | No               | Requires WSL and launching AICA Core manually                                    |
+|---------------------------|:---------------------:|----------------------------------------------------------------------------------|
+| Ubuntu/Debian             | Yes                   | Real-time kernel patch highly recommended                                        |
+| Other Linux distributions | No                    | Requires launching AICA Core manually. Real-time kernel patch highly recommended |
+| macOS                     | Yes                   | Limited graphics forwarding due to dropped OpenGL support                        |
+| Windows                   | No                    | Requires WSL and additional Docker configuration steps                           |

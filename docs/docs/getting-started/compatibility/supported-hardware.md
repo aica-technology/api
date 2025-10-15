@@ -53,12 +53,16 @@ provided your host machine can natively mount them as USB devices.
 
 ## Industrial PC (IPC) support
 
-Along with consumer-level computers that can be configured to work with the AICA framework, we have extensively used and validated the operation of the framework with the following IPCs:
+Along with consumer-grade computers that can be configured to work with the AICA framework, we have extensively used and
+validated the operation of the framework with the following IPCs:
 
-| Manufacturer | Model            | GPU / GPU Support   | Notes                                                                             |
-|--------------|------------------|:---------------------:|-----------------------------------------------------------------------------------|
-| Siemens      | SIMATIC BX-39A   | No / No             | Industrial OS; various hardware configurations supported                          |
-| Siemens      | SIMATIC IPC 547J | No / No             | Ubuntu real-time OS; various hardware configurations supported                    |
-| Beckhoff     | C6043            | Yes / Yes           | Ubuntu real-time OS; various hardware configurations supported, incl. GPU support |
-| Bosch        | ctrlX X3         | No / No             | ctrlX OS (development purposes only; limited computational resources |
-| Bosch        | ctrlX X7         | Yes (optional) / No | ctrlX OS |
+| Manufacturer | Model            | Available GPU  | GPU Support   | Notes                                                                             |
+|--------------|------------------|:--------------:|:-------------:|-----------------------------------------------------------------------------------|
+| Siemens      | SIMATIC BX-39A   | No             | No            | Industrial OS; various hardware configurations supported                          |
+| Siemens      | SIMATIC IPC 547J | No             | No            | Ubuntu real-time OS; various hardware configurations supported                    |
+| Beckhoff     | C6043            | Yes            | Yes           | Ubuntu real-time OS; various hardware configurations supported, incl. GPU support |
+| Bosch        | ctrlX X3         | No             | No            | ctrlX OS (development purposes only; limited computational resources              |
+| Bosch        | ctrlX X7         | Yes (optional) | No            | ctrlX OS                                                                          |
+
+In many occasions, setting up these machines/OSs may require some more nuanced configuration steps. For additional
+or specialized support on getting these machines up and running you may always [contact us](mailto:contact@aica.tech).
