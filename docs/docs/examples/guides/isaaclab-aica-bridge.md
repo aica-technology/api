@@ -59,69 +59,11 @@ If not, carefully go over the instructions again or reach out to AICA for help.
 
 ## Connecting AICA System to Isaac Lab
 
-In this section, we’ll walk through a simple example of using a point attractor to move a UR5e simulated robot in Isaac
-Lab to a target frame and then manipulate that frame in the 3D visualization of the AICA Studio.
-
-### Creating a New Scene in Isaac Lab
-
-To create a new scene, you should define a scene configuration class that inherits from `InteractiveSceneCfg`. Various
-examples of scene config classes can be found in the
-[scenes](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes)
-directory of the Isaac Lab repository.
-
-Note that the scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined
-there. The 3D visualization in the AICA Studio will only display the robot and mirror the robot's movements, but it will
-not display the scene itself.
-
-Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
-located in
-[this file](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes/__init__.py).
-After registering the scene, you can launch it by running the following command in the `run_bridge.py` script:
-
-```shell
-python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name>
-```
-
-In this example we will run the `basic_scene` scene, which is already registered in the `scenes` dictionary.
-
-### Running the Isaac Lab Simulator
-
-The simulator includes several important parameters that you should be familiar with:
-
-- **scene**: Specifies the scene to load in the simulator.
-- **rate**: Sets the simulation update rate in Hz. The default is 100 Hz, but you can adjust this to meet your
-  application's needs.
-- **end_effector**: Indicates the name of the end-effector link on the robot being controlled.
-- **force_sensor**: Enables the robot's force sensor when set to `true`. This is useful for applications that require
-  force feedback.
-- **state_port**: Defines the port used to stream state updates from the simulator to the hardware interface in the AICA
-  Studio. The default is `1801`, and it must match the `state_port` parameter specified in the hardware interface
-  configuration (see below).
-- **command_port**: Defines the port used to stream commands from hardware interface in the AICA Studio to the
-  simulator. The default is `1802`, and it must match the `command_port` parameter specified in the hardware interface
-  configuration (see below).
-- **force_port**: Defines the port used to stream force/torque measurements from the simulator to the hardware interface
-  in the AICA Studio The default is `1803`, and it must match the `ft_sensor_port` parameter specified in the hardware
-  interface configuration (see below).
-- **command_interface**: Specifies the type of command the simulator accepts. The default is `"position"`, meaning it
-  expects position commands. You can change this to `"velocity"` if required. If a mismatched command type is received,
-  the simulator will terminate with a `ValueError` indicating the mismatch.
-- **headless**: When set to `true`, the simulator runs in headless mode, which is useful for running simulations without
-  a graphical interface.
-- **device**: Specifies the device to use for simulation. The default is `cuda`, which utilizes GPU acceleration. You
-  can change this to `cpu` if you want to run the simulation on the CPU instead.
-
-Ensure these parameters are correctly configured to enable seamless communication between the simulator and your AICA
-application. In case you want to run the simulator with different parameters, you can do so by running the following
-command in the `run_bridge.py` script:
-
-```shell
-python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rate <simulation_rate> --end_effector <end_effector_link_name> --force_sensor <true/false> --state_port <state_port> --command_port <command_port> --force_port <force_port> --command_interface <position/velocity> --headless <true/false> --device <cuda/cpu>
-```
+In this section, we’ll demonstrate a simple example of using a point attractor to move a simulated UR5e robot in Isaac Lab toward a target frame, and then manipulate that frame within the 3D visualization of AICA Studio. If you haven’t already, please follow the [Point Attractor Example](../core-components/point-attractor) to create an AICA application that moves a robot’s end-effector using a point attractor. We’ll use that application as the foundation for this guide.
 
 ### Configuring the Hardware Interface
 
-In AICA Studio, you need to set up a hardware interface that communicates with the Isaac Lab simulator:
+Once you have your AICA application ready, the next step is to configure the hardware interface in AICA Studio to communicate with the Isaac Lab simulator. This involves creating a new hardware interface configuration that uses the `LightWeightInterface` plugin to connect to the simulator.
 
 1. Open AICA Launcher and launch a configuration using the latest core image along with the latest Universal Robots
    collection.
@@ -144,34 +86,60 @@ In AICA Studio, you need to set up a hardware interface that communicates with t
 
 5. Save your changes.
 
-### Creating an AICA Application
+### Creating a New Scene in Isaac Lab
 
-1. Go back to the Editor tab and create a new application.
-2. In the default hardware interface, open the URDF drop down and select the hardware created in the previous section.
-3. Press **Play**, then switch to the **3D Visualizer** tab in the **AICA Studio**. You should see the UR5e robot in the
-   scene. Use the **Record Frame** button to capture a target frame at the robot's tool, specify the tool frame name
-   (for UR robots from the collection, that is `ur_tool0`), and then move the frame to your desired target position.
-4. Add the following components to the application:
+To create a new scene, you should define a scene configuration class that inherits from `InteractiveSceneCfg`. Various
+examples of scene config classes can be found in the
+[scenes](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes)
+directory of the Isaac Lab repository.
 
-   - **Signal Point Attractor**: Drives the robot’s movement toward a specified target frame.
-   - **Frame to Signal**: Converts the target frame (the name of the frame that is recorded above) into a signal that
-     feeds into the point attractor.
-   - **IK Velocity Controller**: Calculates the inverse kinematics for the UR5e, enabling smooth motion toward the
-     target frame.
+Note that the scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined
+there. The 3D visualization in AICA Studio will only display the robot and mirror the robot's movements, but it will
+not display the scene itself.
 
-5. Parametrize the **Frame to Signal** component with the name of the target frame you recorded.
+Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
+located in
+[this file](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes/__init__.py).
+After registering the scene, you can launch it by running the following command in the `run_bridge.py` script:
 
-6. Connect the events and signals as shown in the image. Make sure to auto-configure and auto-activate all components
-   and controllers.
+```shell
+python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name>
+```
 
-<div class="text--center">
-  <img src={application} alt="Signal Point Attractor Application" />
-</div>
+In this example we will run the `basic_scene` scene, which is already registered in the `scenes` dictionary.
+
+### Running the Isaac Lab Simulator
+
+The simulator provides several key parameters that you should understand before configuring it:
+
+- **scene**: Specifies which scene to load in the simulator.  
+- **rate**: Sets the simulation update frequency in hertz (Hz). The default is **100 Hz**, but you can adjust this value based on your application’s requirements.  
+- **force_sensor**: Defines the name of the force sensor specified in the URDF. If present, the simulator will attach this sensor to the end-effector link.  
+- **ip_address**: Indicates the IP address of the machine running AICA Core. If the simulator and AICA Core are on the same network, keep the default `"*"`.  
+- **state_port**: The port used to stream state updates from the simulator to the hardware interface in AICA Studio. The default is **1801**, and 
+it must match the `state_port` specified in the hardware interface configuration.  
+- **command_port**: The port used to stream commands from the AICA Studio hardware interface to the simulator. The default is **1802**, and 
+it must match the `command_port` in the hardware interface configuration.  
+- **force_port**: The port used to stream force/torque measurements from the simulator to the hardware interface in AICA Studio. The default 
+is **1803**, and it must match the `ft_sensor_port` in the hardware interface configuration.  
+- **joint_names**: Lists the joint names from the URDF that AICA will command. For example, if you are using a Franka Panda robot with a gripper 
+but only want to control the arm, you can specify:  
+  `"panda_joint1", "panda_joint2", "panda_joint3", "panda_joint4", "panda_joint5", "panda_joint6", "panda_joint7"`.
+  The simulator will then only send states and accept commands for those joints.  If you want to control all joints, you can keep the default `"*"`.
+- **command_interface**: Defines the command type accepted by the simulator. The default is `"positions"`, but you can set 
+it to `"velocities"` or `"torques"` as needed. If a mismatched command type is received, the simulator will stop with a `ValueError`.  
+- **headless**: When set to `true`, runs the simulator in headless mode (without a user interface), useful for remote simulations or running the simulation at high frequencies.  
+- **device**: Specifies the compute device for the simulation. The default is `"cuda"` for GPU acceleration, but you can switch to `"cpu"` if GPU resources are unavailable.  
 
 
+Ensure these parameters are correctly configured to enable seamless communication between the simulator and your AICA
+application. In case you want to run the simulator with different parameters, you can do so by running the following
+command in the `run_bridge.py` script:
 
-Now that you have set up the application, let's go over the necessary steps that needs to be done on the Hardware
-Interface level to connect **AICA System** to the Isaac Lab simulator.
+```shell
+python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name> --rate <simulation_rate> --force_sensor <force_sensor_name_in_urdf> --state_port <state_port> --command_port <command_port> --force_port <force_port> --joint_names <comma_separated_joint_names_to_control> --command_interface <positions/velocities/torques> --headless <true/false> --device <cuda/cpu>
+```
+
 
 ### Running the AICA Application
 
