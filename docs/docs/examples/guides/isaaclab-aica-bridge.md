@@ -1,14 +1,11 @@
 ---
-sidebar_position: 6
+sidebar_position: 11
 title: A guide for using Isaac Lab as a simulator for AICA System
 ---
 
 import application from './assets/isaaclab-aica-bridge-application.png'
 
 # A guide for using Isaac Lab as a simulator for AICA System
-
-## Motivation
-
 By interfacing the AICA System with Isaac Lab, we establish a workflow for developing, testing, and deploying robotic
 applications. This connection provides several key benefits:
 
@@ -59,7 +56,9 @@ If not, carefully go over the instructions again or reach out to AICA for help.
 
 ## Connecting AICA System to Isaac Lab
 
-In this section, we’ll demonstrate a simple example of using a point attractor to move a simulated UR5e robot in Isaac Lab toward a target frame, and then manipulate that frame within the 3D visualization of AICA Studio. If you haven’t already, please follow the [Point Attractor Example](../core-components/point-attractor) to create an AICA application that moves a robot’s end-effector using a point attractor. We’ll use that application as the foundation for this guide.
+In this section, the Point Attractor example from [this page](../core-components/point-attractor.md) is adapted to
+control a simulated UR5e robot in Isaac Lab. Follow this example before proceeding here, as it serves as the foundation
+for the next steps. 
 
 ### Configuring the Hardware Interface
 
@@ -147,7 +146,7 @@ created with the hardware plugin being the `LightWeightInterface`, and then star
 
 ## Beware
 
-When running the **AICA System** and Isaac Lab simulator, there are several important points to keep in mind to ensure
+When running the AICA System and Isaac Lab simulator, there are several important points to keep in mind to ensure
 safe and reliable performance:
 
 1. **Robot joint names**: Ensure that the joint names in your URDF file match those expected by the USD file in Isaac
