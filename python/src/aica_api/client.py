@@ -1,4 +1,5 @@
 import importlib.metadata
+import json
 import os
 import urllib.parse
 from functools import wraps
@@ -425,7 +426,7 @@ class AICA:
         if payload.endswith('.yaml') and os.path.isfile(payload):
             with open(payload, 'r') as file:
                 payload = yaml.safe_load(file)
-        data = {'payload': payload}
+        data = {'payload': json.dumps(payload)}
         return self._request('PUT', 'application', json=data)
 
     def start_application(self) -> requests.Response:
