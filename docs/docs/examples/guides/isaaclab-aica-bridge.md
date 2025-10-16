@@ -133,7 +133,6 @@ python3 scripts/custom/aica_bridge/run_bridge.py \
   --command_interface <positions/velocities/torques> \
   --headless <true/false> \
   --device <cuda/cpu>
-
 ```
 
 ### Configuring the AICA Application
