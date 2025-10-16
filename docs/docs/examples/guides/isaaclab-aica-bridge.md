@@ -6,6 +6,7 @@ title: A guide for using Isaac Lab as a simulator for AICA System
 import application from './assets/isaaclab-aica-bridge-application.png'
 
 # A guide for using Isaac Lab as a simulator for AICA System
+
 By interfacing the AICA System with Isaac Lab, we establish a workflow for developing, testing, and deploying robotic
 applications. This connection provides several key benefits:
 
@@ -98,24 +99,31 @@ In this example we will run the `basic_scene` scene, which is already registered
 
 The simulator provides several key parameters that you should understand before configuring it:
 
-- **scene**: Specifies which scene to load in the simulator.  
-- **rate**: Sets the simulation update frequency in hertz (Hz). The default is **100 Hz**, but you can adjust this value based on your application’s requirements.  
-- **force_sensor**: Defines the name of the force sensor specified in the URDF. If present, the simulator will attach this sensor to the end-effector link.  
-- **ip_address**: Indicates the IP address of the machine running AICA Core. If the simulator and AICA Core are on the same network, keep the default `"*"`.  
-- **state_port**: The port used to stream state updates from the simulator to the hardware interface in AICA Studio. The default is **1801**, and 
-it must match the `state_port` specified in the hardware interface configuration.  
-- **command_port**: The port used to stream commands from the AICA Studio hardware interface to the simulator. The default is **1802**, and 
-it must match the `command_port` in the hardware interface configuration.  
-- **force_port**: The port used to stream force/torque measurements from the simulator to the hardware interface in AICA Studio. The default 
-is **1803**, and it must match the `ft_sensor_port` in the hardware interface configuration.  
-- **joint_names**: Lists the joint names from the URDF that AICA will command. For example, if you are using a Franka Panda robot with a gripper 
-but only want to control the arm, you can specify:  
-  `"panda_joint1", "panda_joint2", "panda_joint3", "panda_joint4", "panda_joint5", "panda_joint6", "panda_joint7"`.
-  The simulator will then only send states and accept commands for those joints.  If you want to control all joints, you can keep the default `"*"`.
-- **command_interface**: Defines the command type accepted by the simulator. The default is `"positions"`, but you can set 
-it to `"velocities"` or `"torques"` as needed. If a mismatched command type is received, the simulator will stop with a `ValueError`.  
-- **headless**: When set to `true`, runs the simulator in headless mode (without a user interface), useful for remote simulations or running the simulation at high frequencies.  
-- **device**: Specifies the compute device for the simulation. The default is `"cuda"` for GPU acceleration, but you can switch to `"cpu"` if GPU resources are unavailable.  
+- **scene**: Specifies which scene to load in the simulator.
+- **rate**: Sets the simulation update frequency in hertz (Hz). The default is **100 Hz**, but you can adjust this value
+  based on your application’s requirements.
+- **force_sensor**: Defines the name of the force sensor specified in the URDF. If present, the simulator will attach
+  this sensor to the end-effector link.
+- **ip_address**: Indicates the IP address of the machine running AICA Core. If the simulator and AICA Core are on the
+  same network, keep the default `"*"`.
+- **state_port**: The port used to stream state updates from the simulator to the hardware interface in AICA Studio. The
+  default is **1801**, and it must match the `state_port` specified in the hardware interface configuration.
+- **command_port**: The port used to stream commands from the AICA Studio hardware interface to the simulator. The
+  default is **1802**, and it must match the `command_port` in the hardware interface configuration.
+- **force_port**: The port used to stream force/torque measurements from the simulator to the hardware interface in AICA
+  Studio. The default is **1803**, and it must match the `ft_sensor_port` in the hardware interface configuration.
+- **joint_names**: Lists the joint names from the URDF that AICA will command. For example, if you are using a Franka
+  Panda robot with a gripper but only want to control the arm, you can specify:  
+   `"panda_joint1", "panda_joint2", "panda_joint3", "panda_joint4", "panda_joint5", "panda_joint6", "panda_joint7"`. The
+  simulator will then only send states and accept commands for those joints. If you want to control all joints, you can keep
+  the default `"*"`.
+- **command_interface**: Defines the command type accepted by the simulator. The default is `"positions"`, but you can
+  set it to `"velocities"` or `"torques"` as needed. If a mismatched command type is received, the simulator will stop
+  with a `ValueError`.
+- **headless**: When set to `true`, runs the simulator in headless mode (without a user interface), useful for remote
+  simulations or running the simulation at high frequencies.
+- **device**: Specifies the compute device for the simulation. The default is `"cuda"` for GPU acceleration, but you can
+  switch to `"cpu"` if GPU resources are unavailable.
 
 Ensure these parameters are correctly configured to enable seamless communication between the simulator and your AICA
 application. In case you want to run the simulator with different parameters, you can do so by running the following
@@ -668,31 +676,33 @@ created with the hardware plugin being the `LightWeightInterface`, and then star
 **Play** button in the **AICA Studio**.
 
 Here is a screenshot of the AICA application running with the Isaac Lab simulator:
+
 <div class="text--center">
   <img src={application} alt="Point Attractor Example" />
 </div>
 
 ## Beware
 
-When running the AICA System and Isaac Lab simulator, there are several important points to keep in mind to ensure
-safe and reliable performance:
+When running the AICA System and Isaac Lab simulator, there are several important points to keep in mind to ensure safe
+and reliable performance:
 
 1. **Robot joint names**: Ensure that the joint names in your URDF file match those expected by the USD file in Isaac
    Lab. In the current implementation, there are two sources of truth for joint names: the URDF file and USD file. If
    these names do not match, the simulator will not be able to send the states correctly to the AICA application.
 
-2. **Hardware Interface Rate in the AICA Studio**: The hardware interface rate in the **AICA Studio** should be equal to
-   the simulation rate set in Isaac Lab. This ensures that the AICA application can send commands to the simulator at a
-   rate that matches the simulation updates, preventing command loss or delays.
+2. **Hardware Interface Rate in the AICA Studio**: The hardware interface rate in the **AICA Studio** should match the
+   simulation rate set in Isaac Lab. This ensures that the AICA application can send commands to the simulator at a rate
+   that matches the simulation updates, preventing command loss or delays.
 
 3. **Simulation Rate**: The simulation rate in Isaac Lab should be set to a value that allows for smooth and realistic
    updates. Commands are updated at the simulation rate, so if the rate is too low, then the robot may not respond as
    expected.
 
-4. **Force Sensor**: If you enable the force sensor in the hardware interface, ensure that the simulator is configured
-   to provide force-torque data. This is done by setting the `force_sensor` parameter to the name of the force sensor
-   present in the URDF file. If the force sensor is not configured correctly, the simulator will not send force-torque
-   data, and the AICA application may not function as expected.
+4. **Force Sensor**: If you enable the force sensor in the hardware interface by typing it's name in the robot state
+   broadcaster, ensure that the simulator is configured to provide force-torque data. This is done by setting the
+   `force_sensor` parameter to the name of the force sensor present in the URDF file. If the force sensor is not
+   configured correctly, the simulator will not send force-torque data, and the AICA application may not function as
+   expected.
 
 5. **Command Interface**: Ensure that the command interface in the simulator matches the type of commands being sent.
 
