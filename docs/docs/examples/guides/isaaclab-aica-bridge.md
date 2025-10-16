@@ -668,6 +668,11 @@ When the simulator is running, you can execute your AICA application by first ch
 created with the hardware plugin being the `LightWeightInterface`, and then starting the application by clicking the
 **Play** button in the **AICA Studio**.
 
+Here is a screenshot of the AICA application running with the Isaac Lab simulator:
+<div class="text--center">
+  <img src={application} alt="Point Attractor Example" />
+</div>
+
 ## Beware
 
 When running the AICA System and Isaac Lab simulator, there are several important points to keep in mind to ensure
