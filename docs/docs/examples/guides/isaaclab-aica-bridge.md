@@ -149,8 +149,8 @@ communicate with the Isaac Lab simulator. This involves creating a new hardware 
 
 1. In AICA Studio, go to the Hardware tab.
 2. Click on the Universal Robot 5e using `Mock Interface` to open it and use "Save As" to create a copy with a new name
-   and description. For example, you can name it `Universal Robots 5e (LightWeightInterface)` as this is the named used
-   with the attached example (below).
+   and description. For example, you can name it `Universal Robots 5e (LightWeightInterface)` as this is the name used
+   in the attached example (below).
 3. Inspect the content of the copied robot description to find the `hardware` tag. Replace it with the following:
 
 ```xml
