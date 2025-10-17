@@ -9,6 +9,11 @@ import cameraCalibration from './assets/camera-calibration.gif'
 import yoloExecutor from './assets/object-detection-yolo-executor.jpg'
 import yoloExecutorParameters from './assets/object-detection-yolo-executor-parameters.png'
 import boundingBoxTracker from './assets/object-detection-robot-control.jpg'
+import launcherToolkitsCPU from './assets/launcher-toolkits-cpu.png'
+import launcherToolkitsGPU from './assets/launcher-toolkits-gpu.png'
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Using YOLO to track objects
 
@@ -144,8 +149,33 @@ In AICA Launcher, create a configuration with the following core version and pac
 - AICA Core v4.4.2
 - `collections/advanced_perception v1.0.0` for the `YoloExecutor` component <!-- TBD -->
 - `components/core-vision v1.0.0` for the `CameraStreamer` component  <!-- TODO: bump the version here -->
+- CPU or GPU toolkit at v1.0.0 or higher
 
-<!-- TODO: add toolkit images here -->
+:::info
+AICA toolkits are the curated way of bundling Machine Learning (ML) and GPU (specifically CUDA) acceleration libraries.
+In short:
+- ML toolkits contain a broad range of libraries that are often required to conduct ML inference and/or training
+(e.g., pytorch, scipy, etc)
+- CUDA toolkits contain libraries pertinent to interface CUDA-compatible code and libraries
+with a NVIDIA GPU.
+
+If you do not own a GPU or want CPU accleration only, bundling our CUDA toolkits is not necessary. For instance, your
+AICA Launcher configuration could look as follows:
+
+<Tabs groupId="toolkits">
+<TabItem value="cpu" label="CPU">
+<div class="text--center">
+  <img src={launcherToolkitsCPU} alt="AICA Launcher configuration for CPU-only runtime" />
+</div>
+</TabItem>
+<TabItem value="gpu" label="GPU">
+<div class="text--center">
+  <img src={launcherToolkitsGPU} alt="AICA Launcher configuration for CPU and GPU runtime" />
+</div>
+</TabItem>
+</Tabs>
+
+:::
 
 ## Using the YOLO executor
 
