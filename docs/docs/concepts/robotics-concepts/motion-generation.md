@@ -5,6 +5,7 @@ title: Motion generation
 
 import pointAttractor2d from './assets/point-attractor-2d.png'
 import pointAttractor3d from './assets/point-attractor-3d.png'
+import seds2d from './assets/seds-2d.png'
 
 # Motion generation
 
@@ -102,7 +103,12 @@ convergence to a (potentially moving) desired goal.
 A Stable Estimator of Dynamical Systems (SEDS) is a method for learning dynamical systems from demonstration data while
 guaranteeing stability toward a target. SEDS models the provided example motions as a combination of several simple
 patterns, each represented by a Gaussian distribution. By using a mixture of Gaussians, SEDS can capture complex
-behaviors and make is possible to learn smooth and reliable movements from real world data. this makes it a powerful
-tool for task like manipulation and human-robot interaction, where both adaptability and safety are important.
+behaviors and make is possible to learn smooth and reliable movements from real world data. This makes it a powerful
+tool for tasks like manipulation and human-robot interaction, where both adaptability and safety are important. The
+figure below shows an example of a SEDS that was learned based on seven demonstrations of a *G* shape and then
+integrated from three different starting points along the vector field. 
 
+<div class="text--center">
+  <img src={seds2d} alt="2D SEDS" style={{ maxWidth: '45%', height: 'auto' }}/>
+</div>
 <!-- TODO: link to examples -->
