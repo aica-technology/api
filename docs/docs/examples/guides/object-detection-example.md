@@ -4,88 +4,239 @@ title: Using YOLO to track objects
 unlisted: true
 ---
 
-import rvizgif from './assets/object-detection-example-rviz.gif'
+import exampleApp from './assets/object-detection-example-app.gif'
+import cameraCalibration from './assets/camera-calibration.gif'
+import yoloExecutor from './assets/object-detection-yolo-executor.jpg'
+import yoloExecutorParameters from './assets/object-detection-yolo-executor-parameters.png'
+import boundingBoxTracker from './assets/object-detection-robot-control.jpg'
+import launcherToolkitsCPU from './assets/launcher-toolkits-cpu.png'
+import launcherToolkitsGPU from './assets/launcher-toolkits-gpu.png'
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Using YOLO to track objects
 
-<!-- TODO: replace `Object Detection Components` with whatever the package name would be in Launcher -->
-This example provides a use case for `Object Detection Components`. We show how to create a custom component which
-converts bounding boxes into a 3D pose. The example works with any RBG `sensor_msgs::msg::Image` signal, such as
-provided by the Camera Streamer component from `components/core-vision`. The final application will be able to track an
-object with a robot based on a fixed camera position.
+YOLO (You Only Look Once) is a real-time object detection algorithm that predicts bounding boxes and class probabilities
+directly from an image in a single pass through a neural network. Unlike older methods that scan an image multiple times,
+YOLO processes the entire image at once, making it extremely fast and well-suited for many applications, including
+robotics.
+
+## A YOLO example using the AICA framework <!-- TODO: I suggest we make this a standalone (short) example since we need it in other components (e.g., marker detectors) -->
+
+This page details how to run a `YoloExecutor` component (i.e., a component that can use various YOLO models for
+inference), and demonstrates how it could be used as part of an AICA application. We show how to create a custom
+component which makes use of a bounding box to adapt an arm's motion such that it maintains the subject centered. Here,
+we will use the `CameraStreamer` component from `components/core-vision` to access a `sensor_msgs::msg::Image` signal,
+but any signal of the same type can be used instead. The YOLO executor component that is covered in following sections
+can be found under `collections/advanced-perception` with a valid AICA license.
 
 <div class="text--center">
-  <img src={rvizgif} alt="Moving the robot towards an object in RViz" />
+  <img src={exampleApp} alt="Moving the robot towards an object in RViz" />
 </div>
 
 ## Setup
 
-To run a YOLO executor, you need a yolo model file in ONNX format and a YAML class file. Yolo models are widely
-available in PT formats. For example, download the lightweight YOLO12n.pt from
-ultralytics [here](https://github.com/sunsmarterjie/yolov12).
+### [optional] Camera calibration
 
-To convert a PT file to ONNX, run the following Python code with ultralytics installed:
+Depending on how you are generating the `sensor_msgs::msg::Image` signal and/or the camera you are using, you may want
+to consider running a calibration to ensure accurate predications in terms of bounding box pixel coordinates. To
+facilitate the process, AICA provides a docker image you can use to run one of ROS' main packages for this task.
+
+First, clone our docker image repository:
+
+```shell
+https://github.com/aica-technology/docker-images.git
+```
+
+and open a terminal at the root of `docker-images`. Then:
+
+```shell
+cd camera_calibration
+```
+
+Within that folder you will find a `build-run.sh` script that, as the name suggests, will build a Docker image and run a
+container with the camera calibration software as an entrypoint.
+
+Before running the script, make sure to generate a **checkerboard** pattern (e.g., from
+[here](https://calib.io/pages/camera-calibration-pattern-generator)). The calibrator will use this pattern to determine
+how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort an image
+coming from your camera. Take note of the checkerboard width, height, and box size. Notice that the calibrator is
+detecting the internal corners of the outermost boxes, so a 8x11 checkerboard will have a 7x10 area with which the
+calibrator will work. Print the checkerboard and attach it to a flat surface throughout the calibration process.
+Then, run the `build-run.sh` script specifying the necessary parameters similarly to:
+
+```shell
+./build-run.sh --calibration-height 7 --calibration-width 11 --calibration-square 0.015
+```
+
+Notice that the calibration square side size is in meters. If you are using AICA's `CameraStreamer` component to produce
+an image stream, the above command should already work. If you are using your own node to stream images, you will more
+than likely need to specify which topic the calibrator needs to subscribe to by adding the
+`--calibration-topic YOUR_ROS_TOPIC` argument.
+
+After successfully executing the script, a pop-up window displaying your image
+stream should appear. If the window is not displaying the image stream, make sure that
+your image streaming component is running and, for non-`CameraStreamer` nodes, that the correct topic name is set.
+
+Move the checkerboard in various positions and orientations until the `CALIBRATE` button is no longer grayed out (and
+most of the bars are green, indicating good sample size). Once it becomes available, press on it to start computing the
+camera matrices. After it becomes available, click on the `SAVE` button to save a recording of the process. You
+will notice a `calibration` directory has been created on your host machine under `docker-image/camera_calibration` that
+contains a compressed file. The file itself contains the images that were sampled along with a yaml file containing the
+camera calibration information. Finally, move this file into the `data` folder of your AICA configuration such that it
+becomes available within AICA containers. When using `CameraStreamer`, you only need to specify the calibration's path.
+For custom components, make sure to read the camera parameters and apply the necessary undistortion technique(s).
+
+<div class="text--center">
+  <img src={cameraCalibration} alt="Camera calibration process" />
+</div>
+
+### Obtaining YOLO inference models
+
+The `YoloExecutor` component works with `.onnx` model files. However, many of the available YOLO models are widely
+available in Pytorch (`.pt`) formats instead. To convert between formats, you can use AICA's utilities to do so within
+a Docker container and maintain your host system unpolluted.
+
+
+First, clone our docker image repository (if you followed the calibration section, you should already have it!):
+
+```shell
+https://github.com/aica-technology/docker-images.git
+```
+
+and open a terminal at the root of `docker-images`. Then:
+
+```shell
+cd yolo_model_converter
+./build-run.sh
+```
+
+By default, this will download and convert `yolo12n` for you. If you wish to specify one of the other models that
+Ultralytics is offering, simply specify it as follows:
+
+```shell
+./build-run.sh --model yoloZZZZ
+```
+
+:::note
+
+If you have `ultralytics` installed in your Python environment or you are willing to install it, then download any of
+the models available [here](https://github.com/sunsmarterjie/yolov12). For the purposes of this example, you can opt
+for a smaller model such as the `yolo12n`.
+
+To convert a `.pt` file to `.onnx`, run the following Python code with `ultralytics` installed:
 
 ```python
 from ultralytics import YOLO
-model = YOLO("yolov12n.pt")
-model.export(format="onnx")  # creates 'yolov12n.onnx'
+model = YOLO("yolo12n.pt")
+model.export(format="onnx")  # creates 'yolo12n.onnx'
 ```
 
-For this example, also download the standard coco.yaml class
-file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml).
-Move the ONNX model file and the YAML class file into a new directory.
+This approach is also necessary if you are using custom models instead of the ones distributed by Ultralytics.
+:::
+
+## Class file
+
+For this example, also download the standard `coco.yaml` class
+file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml) and move it to your
+`data` folder, where you also stored your YOLO model.
+
+## AICA Launcher configuration
 
 In AICA Launcher, create a configuration with the following core version and packages:
 
 - AICA Core v4.4.2
-- `collections/object-detection` for the YOLO Executor component (TODO: check package name post-release and specify
-  version)
-- `components/core-vision v1.0.0` for the Camera Streamer component
+- `collections/advanced_perception` v1.0.0 for the `YoloExecutor` component <!-- TBD -->
+- `components/core-vision` v1.0.0 or higher for the `CameraStreamer` component  <!-- TODO: bump the version here -->
+- CPU or GPU toolkit at v1.0.0
+- AICA Launcher v1.4.1 or higher
 
-Under Advanced Settings, add a volume containing the folder where you stored your YOLO model files and link it to
-`/files`.
+:::info
+AICA toolkits are the curated way of bundling Machine Learning (ML) and GPU (specifically CUDA) acceleration libraries.
+In short:
+- ML toolkits contain a broad range of libraries that are often required to conduct ML inference and/or training
+(e.g., pytorch, scipy, etc)
+- CUDA toolkits contain libraries pertinent to interface CUDA-compatible code and libraries
+with a NVIDIA GPU.
 
-## Using the YOLO Executor
+If you do not own a GPU or want CPU accleration only, bundling our CUDA toolkits is not necessary. For instance, your
+AICA Launcher configuration could look as follows:
 
-The YOLO Executor component observes runs the YOLO segmentation model on an image.
-It takes a camera stream and outputs the segmented image as well as the locations of bounding boxes on the image. The
-user can set the `Object Class` parameter, which will cause the component to set the predicate `Object Detected` to
-`True` when the specified object is found in the image. The `Confidence Threshold` parameter is the minimum score a
-predicted bounding box must have to be considered a valid detection. `IOU Threshold` is used during Non-Maximum
-Suppression (NMS) to decide whether two bounding boxes represent the same object. For example, if `IOU threshold` is set
-to 0.5, any box that overlaps more than 50% with a higher-scoring box will be discarded. For now we leave them as
-default values.
+<Tabs groupId="toolkits">
+<TabItem value="cpu" label="CPU">
+<div class="text--center">
+  <img src={launcherToolkitsCPU} alt="AICA Launcher configuration for CPU-only runtime" />
+</div>
+</TabItem>
+<TabItem value="gpu" label="GPU">
+<div class="text--center">
+  <img src={launcherToolkitsGPU} alt="AICA Launcher configuration for CPU and GPU runtime" />
+</div>
+</TabItem>
+</Tabs>
 
-To test the YOLO executor:
+:::
+
+## Using the YOLO executor
+
+Let us build a YOLO application from scratch.
 
 - Create a new application
-- Remove the default Hardware Interface node
+- Remove the default Hardware Interface node for now
 - Add the Camera Streamer component from the core vision package
-    - Set the `Source` parameter to a video device or file accordingly.
-    - Turn on the **auto-configure** and **auto-activate** switches
+    - Set the `Source` parameter to a video device or file accordingly
+    - Enable **auto-configure** and **auto-activate**
 - Add the YOLO Executor component
-    - Set the `Model Path` parameter to the `.onnx` file, e.g., `/files/yolo12n.onnx`
-    - Set the `Classes Path` parameter to the yaml label file, e.g., `/files/coco.yaml`
-    - Set the `Rate` parameter to 3 (works on most machines), on a machine with a GPU this can be set to higher.
-    - Turn on the **auto-configure** and **auto-activate** switches
+    - Set the `Model path` parameter to the `.onnx` file, e.g., `/data/yolo12n.onnx`
+    - Set the `Classes path` parameter to the yaml label file, e.g., `/data/coco.yaml`
+    - Set the `Rate` parameter to match your camera's FPS (actual publishing rate may vary depending on your system's
+computational power, especially if running on a CPU)
+    - Enable **auto-configure** and **auto-activate**
 - Connect the output of the start node to each component to load them when the application is started
-- Connect the `Image` output of the Camera Streamer to the `RGB Image` input of the YOLO Executor
+- Connect the `Image` output of the Camera Streamer to the `Image` input of the `YoloExecutor`
 
-The complete application is shown below:
-![Graph](./assets/object-detection-using-yolo-graph.png)
+Additional parameters can be used to tune the performance of YoloExecutor (both in the computational and prediction
+sense). The following picture shows the available parameters:
 
-The YOLO Executors parameters are as follows:
-![Graph](./assets/object-detection-yolo-parameters.png)
+<div class="text--center">
+  <img src={yoloExecutorParameters} alt="Overview of a YoloExecutor parameters" />
+</div>
+
+More specifically, you can adapt:
+- `Model path`: filepath to your YOLO model
+- `Classes path`: filepath to your classes file, making the mapping between predicted object IDs and object names
+- `Object class`: will narrow the `Detections` output to the selected classes alone (one or more classes included in the
+class file)
+- `Confidence threshold`: the minimum score a predicted bounding box must have to be considered a valid detection
+- `IOU Threshold`: used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same
+object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box
+will be discarded.
+- `Device`: to determine which device should be used to run the inference, but is subject to the way you bundle your
+AICA configuration. That is, if you use a CPU toolkit image but set `Device` to GPU, then the component will ultimately
+gracefully fall back to using the CPU
+- `Number of CPU threads`: to get the most out of your system's resources. Notice that this parameter has no effect when
+a GPU is used
+
+To complement the parameters and enable event-driven logic when using the component, two predicates exist, namely:
+- `Is any selected object detected`: True if one of the objects in the `Object class` list is detected
+- `Is any object detected`: True if there is any known object (i.e., as per the class file provided) in the image stream
+(including but not limited to `Object class`)
+
+Your application should now look similar to the following picture:
+
+<div class="text--center">
+  <img src={yoloExecutor} alt="Overview of a YoloExecutor application" />
+</div>
 
 ### Running the application
 
-Start the application in AICA Studio. Then open **RViz**: bottom-right gear icon → "Launch RViz", then RViz → Add → By
-topic → `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated output. It should show the camera
-images with bounding boxes drawn around key objects in it. The bounding boxes are published on the
-`yolo_executor/bounding_boxes` topic as `std_msgs/msg/String` and can be viewed in AICA Studio in the "ROS Topics" tab.
-Changing the `Confidence Threshold` and `IOU Threshold` parameters will change how often and how many bounding boxes the
-model outputs.
+Open the application we built in the previous step, if you are not already there. Then:
+- open **RViz**: from the bottom-right gear icon **→** "Launch RViz"
+- in **RViz**: press Add **→** By topic **→** `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated
+output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
+published on the `yolo_executor/detections` topic as `std_msgs/msg/String`, which is in fact a JSON string with
+object-related information (e.g., bounding box coordinates, class name, class id, ...).
 
 :::note
 
@@ -96,188 +247,248 @@ option.
 
 ## Tracking an object with YOLO
 
-The bounding boxes generated by YOLO can be used to move a robot towards an object.
+The bounding boxes generated by YOLO can be used to move a robot towards an object. Let us take an example were we will
+emulate a camera mounted on a robot arm and we want to command the robot such that it tries to maintain a
+selected class in the middle of the image frame. For simplicity, we specify a single object class for the `YoloExecutor`
+to detect, and assume that only one object of the type can appear in the image at any time.
 
-### Creating a custom component to estimate position from bounding boxes
+### Creating a custom twist generator component
 
-We first need to create a custom component which can estimate a 3D pose from a position in the camera frame. More
-information about custom components can be found [here](https://docs.aica.tech/docs/category/custom-components/). We
-make 3 simplifying assumptions:
+We first need to create a custom component that given a bounding box of an item will generate a twist indicating where
+the frame should move to keep the object centered. More information about custom components can be found
+[here](https://docs.aica.tech/docs/category/custom-components/). The following component has been designed with regular
+off-the-self webcams and the standard YOLO models in mind, meaning:
 
-1. Camera is fixed and angled downward
-2. Known camera position pointing down: `(x=0, y=0.6, z=0.6)`
-3. Objects are on a flat surface at `z=0`
+1. The object orientation is not taken into account when generating a twist. That is, no angular velocity is generated.
+2. No depth information is available and/or considered. The component operates in pixel space and is invariant to an
+object's movement along the depth axis. That is, only 2D motion will be observed, and the depth axis will have zero
+velocity.
 
 #### Set up the repository
 
-- Create a git repository from the [component-template](https://github.com/aica-technology/component-template)
+- Create a git repository from the [package-template](https://github.com/aica-technology/package-template)
 - Clone the repository, enter the directory, and run:
 
   ```bash
   ./initialize_package.sh
   ```
-  Name it `component_utils` and include a Python Lifecycle component
+  Name it `object_detection_utils` and include a Python Lifecycle component
 
-- Rename `py_lifecycle_component.py` to `yolo_to_marker.py` in `source/component_utils/component_utils/`
-- Rename `py_lifecycle_component.json` to `yolo_to_marker.json` in `source/component_utils/component_descriptions/`
-- Register the component in `source/component_utils/setup.cfg` under `[options.entry_points]` like this:
+- Rename `py_lifecycle_component.py` to `bounding_box_tracker.py` in `source/component_utils/object_detection_utils/`
+- Rename `py_lifecycle_component.json` to `object_detection_utils_bounding_box_tracker.json` in
+`source/component_utils/component_descriptions/`
+- Register the component in `source/component_utils/setup.cfg` like this:
 
-  ```cfg
-  component_utils::YoloToMarker = component_utils.yolo_to_marker:YoloToMarker
-  ```
+```cfg
+[options.entry_points]
+python_components =
+    object_detection_utils::BoundingBoxTracker = object_detection_utils.bounding_box_tracker:BoundingBoxTracker
+```
 
 #### Component code
 
-Below is the core implementation, which can be copied into the respective files. The component expects a JSON string as
-input provided by the YOLO Executor component, projects bounding boxes into 3D based on camera height and field of view,
-and outputs a `CartesianState` for robot control.
+As discussed, the component expects a JSON string as input (e.g. from `YoloExecutor`) containing a bounding box. From
+that bounding box, it generates a `CartesianTwist` which can be used to control a robot. Below you will find the
+implementation of the component, which can be copied directly into your `bounding_box_tracker.py`.
 
 <details>
-<summary> yolo_to_marker.py </summary>
+<summary>bounding_box_tracker.py</summary>
 
 ```python
-import state_representation as sr
-from modulo_components.lifecycle_component import LifecycleComponent
-from std_msgs.msg import String
-from modulo_core import EncodedState
-import clproto
 import json
 import numpy as np
 
-from rclpy.duration import Duration
-from copy import deepcopy
+from std_msgs.msg import String
+from lifecycle_msgs.msg import State as LifecycleState
 
-class YoloToMarker(LifecycleComponent):
+from modulo_components.lifecycle_component import LifecycleComponent
+from modulo_core import EncodedState
+import state_representation as sr
+
+
+class BoundingBoxTracker(LifecycleComponent):
     def __init__(self, node_name: str, *args, **kwargs):
         super().__init__(node_name, *args, **kwargs)
-        # inputs
-        self.json_input = ""
-        self.add_input("json_input", "json_input", String)
+        self._decay_rate: sr.Parameter = sr.Parameter("decay_rate", 1.0, sr.ParameterType.DOUBLE)
+        self._twist = sr.CartesianTwist.Zero("object", "camera_frame")
+        self._latest_twist = sr.CartesianTwist()
+        self._camera_frame = sr.Parameter("camera_frame", "camera_frame", sr.ParameterType.STRING)
+        self._reference_frame = sr.Parameter("reference_frame", sr.ParameterType.STRING)
 
-        # outputs
-        self._marker_pose = sr.CartesianPose("object", "camera_frame") #pose with name object, referenced to camera frame
-        self.add_output("marker_pose", "_marker_pose", EncodedState)
+        self.add_parameter(
+            sr.Parameter("image_size", [640, 480], sr.ParameterType.DOUBLE_ARRAY),
+            "Image resolution [width, height] in pixels",
+        )
+        self.add_parameter("_camera_frame", "Reference frame for the output twist")
+        self.add_parameter(
+            "_reference_frame", "Optional reference frame with respect to which the output twist should be recomputed"
+        )
+        self.add_parameter(sr.Parameter("gains", [0.0001, 0.0001], sr.ParameterType.DOUBLE_ARRAY), "Control gains (Kp)")
+        self.add_parameter(
+            sr.Parameter("deadband", [15.0, 15.0], sr.ParameterType.DOUBLE_ARRAY),
+            "Deadband for the error measurements [width, height], within which no twist is generated",
+        )
+        self.add_parameter("_decay_rate", "Exponential decay rate")
 
-        # parameters
-        self.to_find = 'person'
-        self.fov = [69, 42]
-        self.image_size = [480, 840]
-        self.object_distance = 0.6
-        
-        self.add_parameter(sr.Parameter("to_find", 'person', sr.ParameterType.STRING), "thing to find and track")
-        self.add_parameter(sr.Parameter("fov", [69.0, 42.0], sr.ParameterType.DOUBLE_ARRAY), "Camera FoV in X")
-        self.add_parameter(sr.Parameter("image_size", [480, 840], sr.ParameterType.DOUBLE_ARRAY), "Size of image (pixels)")
-        self.add_parameter(sr.Parameter("object_distance", 0.6, sr.ParameterType.DOUBLE), "Target position (Z)")
-    
-    def on_configure_callback(self) -> bool:
-        # configuration steps before running
-        self.fov = self.get_parameter_value("fov")
-        self.fov = np.radians(np.asarray(self.fov))
+        self.add_input("detections", self._on_receive_detections, String)
+        self.add_output("twist", "_twist", EncodedState)
 
-        self.object_distance = self.get_parameter_value("object_distance")
+        self.add_tf_listener()
+
+    def on_validate_parameter_callback(self, parameter: sr.Parameter) -> bool:
+        name = parameter.get_name()
+        match name:
+            case "image_size" | "deadband" | "gains":
+                if len(parameter.get_value()) != 2:
+                    self.get_logger().error(f"{name} must be a list of two floats")
+                    return False
+                if any(g < 0 for g in parameter.get_value()):
+                    self.get_logger().error(f"{name} must be non-negative")
+                    return False
+            case "reference_frame" | "camera_frame":
+                if not parameter.is_empty() and not parameter.get_value():
+                    self.get_logger().error(f"{name} parameter cannot be empty")
+                    return False
+            case "decay_rate":
+                if parameter.get_value() < 0:
+                    self.get_logger().error("Decay rate must be non-negative")
+                    return False
         return True
 
-    def __centre_pt_to_position(self, xy):
-        # function to find find the 3d position of an object based on position in the image.
-        image_size = np.asarray(self.image_size)
-        ratio = np.clip((xy - image_size / 2) / (image_size / 2), -1, 1)
+    def on_activate_callback(self) -> bool:
+        if self._reference_frame.is_empty():
+            self._reference_frame.set_value(self._camera_frame.get_value())
+        self._twist = sr.CartesianTwist.Zero("object", self._reference_frame.get_value())
+        self._latest_twist = sr.CartesianTwist.Zero("object", self._camera_frame.get_value())
+        return True
 
-        position = ratio * self.object_distance * np.tan(self.fov/2)    
+    def on_step_callback(self) -> None:
+        decay_factor = np.exp(-self._decay_rate.get_value() * self._latest_twist.get_age())
+        twist = sr.CartesianTwist.Zero("object", self._camera_frame.get_value())
+        twist.set_linear_velocity(np.array(self._latest_twist.get_linear_velocity()) * decay_factor)
 
-        position = (np.append(position, self.object_distance)).reshape((3,1))
-        return position
-    
-    def on_step_callback(self):
+        if not self._camera_frame.get_value() == self._reference_frame.get_value():
+            try:
+                tf = self.lookup_transform(self._camera_frame.get_value(), self._reference_frame.get_value())
+            except Exception as e:
+                self.get_logger().error(f"Failed to lookup transform: {e}")
+                return
+            self._twist = tf * twist
+        else:
+            self._twist = twist
+
+    def _on_receive_detections(self, msg: String):
+        if self.get_lifecycle_state().state_id != LifecycleState.PRIMARY_STATE_ACTIVE:
+            self.get_logger().warning("Component is not active. Ignoring incoming detections.")
+            return
+
+        image_size = self.get_parameter("image_size").get_value()  # type: ignore
+        gains = self.get_parameter("gains").get_value()  # type: ignore
         try:
-            data = json.loads(self.json_input)['detections']
-            # self.get_logger().info(data)
+            detections = json.loads(msg.data)["detections"]
+            positions = {}
+            for i, d in enumerate(detections):
+                center = np.asarray([d["box"]["x"] + d["box"]["width"] / 2.0, d["box"]["y"] + d["box"]["height"] / 2.0])
+                positions[f"{d['class_name']}_{i}"] = center
 
-            position = {}
-            for i, detection in enumerate(data):
-                centre_of_bbox = np.asarray([
-                    (detection['x_min'] + detection['x_max']) / 2,
-                    (detection['y_min'] + detection['y_max']) / 2
-                ])
-                position_key = f"{detection['class_name']}"
-                position[position_key] = self.__centre_pt_to_position(centre_of_bbox)
-            
-            self.get_logger().info(f'{position}')   
+            if len(positions):
+                obj = positions[
+                    list(positions.keys())[0]
+                ]  # ! naively assumes we are tracking only the first object detected
+                width_error = obj[0] - image_size[0] / 2
+                height_error = obj[1] - image_size[1] / 2
+                vx = 0.0
+                vy = 0.0
+                if abs(width_error) > self.get_parameter("deadband").get_value()[1]:  # type: ignore
+                    vx = width_error * gains[0]
+                if abs(height_error) > self.get_parameter("deadband").get_value()[0]:  # type: ignore
+                    vy = height_error * gains[1]
 
-            # output pose of target object
-            to_find = self.get_parameter_value("to_find")
-            if to_find in position:
-                self._marker_pose.set_position(position[to_find])
-
-        except Exception as e:
-            self.get_logger().error(f'Error in on_step_callback: {e}')
+                self._latest_twist.set_linear_velocity(
+                    vx, vy, 0.0
+                )  # !z is explicitly zero for the purposes of this component
+        except json.JSONDecodeError as e:
+            self.get_logger().error(f"Failed to decode JSON: {e}")
+        except KeyError as e:
+            self.get_logger().error(f"Missing key in JSON: {e}")
 ```
 
 </details>
 
+And its corresponding description file:
+
 <details>
-<summary>yolo_to_marker.json</summary>
+<summary>object_detection_utils_bounding_box_tracker.json</summary>
 
 ```json
 {
   "$schema": "https://docs.aica.tech/schemas/1-1-1/component.schema.json",
-  "name": "YOLO to marker",
+  "name": "Bounding box tracker",
   "description": {
     "brief": "Reads bounding boxes and outputs an interactive marker",
-    "details": "This component receives YOLO object detection outputs in JSON format, identifies a specified target object, and converts its bounding box coordinates into a 3D Cartesian pose relative to the camera frame. The pose is computed assuming a fixed distance from the camera and using the camera's field of view and image resolution. If the target object is detected, its 3D position is output as an interactive marker pose."
+    "details": "This component receives object detection outputs in JSON format and computes the corresponding twist command for the detected object to remain at the middle of the frame. The Z axis is not considered (i.e., only X-Y plane commands will be issued)."
   },
-  "registration": "component_utils::YoloToMarker",
+  "registration": "object_detection_utils::BoundingBoxTracker",
   "inherits": "modulo_components::LifecycleComponent",
   "inputs": [
     {
-      "display_name": "Json Input",
-      "description": "Bounding boxes from YOLO model",
-      "signal_name": "json_input",
+      "display_name": "Detections",
+      "description": "Detection JSON string containing bounding box information",
+      "signal_name": "detections",
       "signal_type": "string"
     }
   ],
   "outputs": [
     {
-      "display_name": "Pose Command",
-      "description": "The pose command",
-      "signal_name": "marker_pose",
-      "signal_type": "cartesian_state"
+      "display_name": "Twist",
+      "description": "The twist command",
+      "signal_name": "twist",
+      "signal_type": "cartesian_twist"
     }
   ],
   "parameters": [
     {
-      "display_name": "Object to Track",
-      "description": "The name of the object to track, matching a class from the YOLO model.",
-      "parameter_name": "to_find",
-      "parameter_type": "string",
-      "default_value": "person"
-    },
-    {
-      "display_name": "Field of View (FoV)",
-      "description": "Camera field of view in degrees [horizontal, vertical]",
-      "parameter_name": "fov",
-      "parameter_type": "double_array",
-      "default_value": [
-        69.0,
-        42.0
-      ]
-    },
-    {
-      "display_name": "Image Size",
+      "display_name": "Image size",
       "description": "Image resolution [width, height] in pixels",
       "parameter_name": "image_size",
       "parameter_type": "double_array",
-      "default_value": [
-        480,
-        840
-      ]
+      "default_value": "[640, 480]"
     },
     {
-      "display_name": "Object Distance",
-      "description": "Assumed distance from the camera to the object in meters",
-      "parameter_name": "object_distance",
+      "display_name": "Camera frame",
+      "description": "Reference frame for the output twist",
+      "parameter_name": "camera_frame",
+      "parameter_type": "string",
+      "default_value": "camera_frame"
+    },
+    {
+      "display_name": "Reference frame",
+      "description": "Optional reference frame with respect to which the output twist should be recomputed",
+      "parameter_name": "reference_frame",
+      "parameter_type": "string",
+      "default_value": null,
+      "optional": true
+    },
+    {
+      "display_name": "Control gains",
+      "description": "Control gains (Kp) for the twist command",
+      "parameter_name": "gains",
+      "parameter_type": "double_array",
+      "default_value": "[0.0001, 0.0001]"
+    },
+    {
+      "display_name": "Deadband",
+      "description": "Deadband for the error measurements, within which no twist is generated",
+      "parameter_name": "deadband",
+      "parameter_type": "double_array",
+      "default_value": "[15.0, 15.0]"
+    },
+    {
+      "display_name": "Decay rate",
+      "description": "Exponential decay rate for the twist (per second)",
+      "parameter_name": "decay_rate",
       "parameter_type": "double",
-      "default_value": 0.6,
-      "dynamic": true
+      "default_value": "1.0"
     }
   ]
 }
@@ -287,192 +498,113 @@ class YoloToMarker(LifecycleComponent):
 
 Enter the component folder in terminal and run
 
-```bash 
-docker build -f aica-package.toml -t objectdetection .
+```bash
+docker build -f aica-package.toml -t object-detection-utils .
 ```
 
-Next, edit the AICA Launcher configuration and enter `objectdetection` under Custom Packages. After launching, you
-should see
-the Component Utils package listed in the "Add Component" menu and be able to add the custom YOLO to Marker component.
+Next, edit the AICA Launcher configuration and enter `object-detection-utils` under `Custom Packages`. After launching,
+you should see the `Object detection utils` package listed in the `Add Component` menu, as well as a `BoundingBoxTracker`
+component under that menu.
 
 ### Application setup
 
-- Add the YOLO to Marker component to the previously configured application
-    - Set the `Rate` parameter to match the rate of the YOLO Executor
-    - Set the `Object to Track` parameter to `person` to track yourself in the frame
-    - Set the remaining parameters based on your camera configuration
-    - Turn on the **auto-configure** and **auto-activate** switches
-- Connect the `Bounding Boxes` output of the YOLO Executor component to the `JSON Input` input of the YOLO to Marker
-  component
+- Add the `BoundingBoxTracker` component to the previously configured application
+    - Turn on **auto-configure** and **auto-activate**
+    - Set the `Rate` to roughly match your camera's FPS, e.g., to 30
+    - Set the `Control gains` to values that are sensible for your robot and your desired responsiveness
+    - Set `Deadband` (i.e., a banded region of acceptable error within which no twist is generated) to your liking
+    - Set the `Decay rate` (i.e., the rate at which a twist will decay if no object is detected) per your application's
+  needs
+- Connect the `Detections` output of `YoloExecutor` to the `Detections` input of `BoundingBoxTracker`
 
-With the application running the logs should show the 3D position in the camera_frame.
+#### Commanding the robot with the generated twist
 
-#### Creating a frame and converting it to a signal
+Add a Hardware Interface node to the application and select the `Generic six-axis robot arm` in the `URDF` selection.
+Press on the **+** button to add a new controller and select the `IK Velocity Controller`. Make sure to enable the
+**auto-configure** and **auto-activate** options.
 
-Add a Hardware Interface node to the application and select the `Generic six-axis robot arm` in the `URDF` selection,
-then run the application. When it is running, select "3D Viz" at
-the top right. Record a frame `tool0` and name it `camera_frame`; this is the position of the camera. It can be moved by
-dragging the axis markers, with the Z direction as the direction in which the camera is pointing. Note that the robot
-will move to where the objects are detected, which may be unreachable depending on the camera position, and cause the
-robot controller to stop.
+Back at your `BoundingBoxTracker` component:
 
-:::note
+- Open the parameter menu and set `Camera frame` to `tool0`. That means that we assume the camera is mounted on `tool0`,
+the robot's end effector. You can replace this frame with a recorded one or an existing frame in your robot model's tree.
+- From the same menu, set `Reference frame` to `world`. By default, the twist is generated at the same reference frame
+as `Camera frame`, but you can optionally set the output reference frame explicitly. This may be useful when a
+controller, such as the `IK Velocity Controller`, expects a command in a specific reference frame (e.g., `world` in this
+case)
+- Finally, connect the `Twist` output of this component to the `Command` input of the `IK Velocity Controller`.
 
-`tool0` is the end effector frame for Generic six-axis robot arm. If using a different robot then the frame should be
-changed accordingly.
+:::tip
+
+If you are using one of the other robot models that AICA offers, make sure to change the `Camera frame` parameter to
+your robot's end-effector frame, or to record a frame in world coordinates from the `3D Viz` menu.
 
 :::
 
-Stop the application, and go back to "Graph", open the yaml code and check that the recorded frame is there, for
-example:
+You are now all set to run this application. For reference and a quick visual validation, the final graph should look
+like the following picture:
 
-```yaml
-frames:
-  camera_frame:
-    reference_frame: world
-    position:
-      x: 0
-      y: 0.3
-      z: 0.4
-    orientation:
-      w: 0
-      x: 0
-      y: 1
-      z: 0
-```
+<div class="text--center">
+  <img src={boundingBoxTracker} alt="Bounding box tracker application overview" />
+</div>
 
-To convert the frame to a signal:
+If you copied the code from this example, the `YoloExecutor` will be set to track a pair of **scissors** across the frame.
+Pick up a pair, play the application, and see how the robot adapts to your movements. Remember, in a real-world scenario
+the camera would be attached to the robot and motion would stop as soon as the object was centered. Here, however, the
+camera is fixed and motionless, so you have to position the object at the middle of your camera frame to prevent the
+robot from moving in the 2D plane.
 
-- Add TF to Signal from AICA Core Components package
-    - Connect the load node to the On Start block (purple square with a black play symbol)
-    - Configure the component to **auto-configure**, **auto-activate**
-    - Set camera_frame and Reference frame to world.
-      With the application running the camera frame can be observed under
-      `ROS Topics/tf_to_signal/pose(modulo_interfaces/msg/EncodedState)`.
+Once you have tested this application, go ahead and pick another object that is included in the
+[coco](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml) dataset and try again.
+Some objects are easier to recognize than others, so you may have to adapt the `YoloExecutor`'s parameters or even opt
+for a larger YOLO model.
 
-#### Transforming a frame to world
-
-To drive the robot towards the object position it needs to be in world frame. The Cartesian Transformation component can
-convert from camera_frame to world. Add it to the application and connect the load node, connect the `Pose Output` from
-TF to Signal to `Input 1`, and the output of YOLO to Marker to `Input 2`. The output of Cartesian Transformation is now
-the object position in the world frame.
-
-#### Moving a robot towards an object
-
-We can use a Signal Point Attractor to move the robot end effector towards the object.
-
-- Add the Signal Point Attractor to the application
-    - Configure the component to **auto-configure** and **auto-activate**.
-    - Connect the load node to the On Activate transition in YOLO to Marker. This means that the robot will not move
-      until after YOLO to Marker has started.
-    - Connect `Cartesian state`, under Robot State Broadcaster to the `Input pose` of Signal Point Attractor.
-    - Connect the output from Cartesian Transformation to `Attractor pose`.
-    - Connect `Output twist` to an IK Velocity Controller on the Hardware Interface, this can be added under
-      Controllers.
-
-The final graph is shown below:
-
-![Graph](./assets/object-detection-example-graph.png)
+:::tip
+If you are planning to use this demo with a physical robot, consider using a `Velocity Impedance Controller` to
+introduce some compliance/safety into your application. This would merely require replacing your `IK Velocity Controller`
+and parametrizing the `Velocity Impedance Controller` to your liking.
+:::
 
 ### Application code
 
 <details>
-<summary>yaml application</summary>
+<summary>YAML application</summary>
 
 ```yaml
 schema: 2-0-4
 dependencies:
   core: v4.2.0
-frames:
-  camera_frame:
-    reference_frame: world
-    position:
-      x: 0
-      y: 0.3
-      z: 0.4
-    orientation:
-      w: 0
-      x: 0
-      y: 1
-      z: 0
 on_start:
   load:
     - hardware: hardware
-    - component: yolo_executor
     - component: camera_streamer
-    - component: tf_to_signal
-    - component: yolo_to_marker
 components:
-  yolo_to_marker:
-    component: component_utils::YoloToMarker
-    display_name: YOLO to marker
+  yolo_executor:
+    component: advanced_perception::object_detection::YoloExecutor
+    display_name: YOLO Executor
     events:
       transitions:
         on_load:
           lifecycle:
-            component: yolo_to_marker
+            component: yolo_executor
             transition: configure
         on_configure:
           lifecycle:
-            component: yolo_to_marker
+            component: yolo_executor
             transition: activate
         on_activate:
           load:
-            component: signal_point_attractor
+            component: bounding_box_tracker
     parameters:
-      rate: !!float 5.0
-      object_distance: 0.4
+      rate: !!float 30.0
+      model_file: /data/yolo12n.onnx
+      classes_file: /data/coco.yaml
+      object_class:
+        - scissors
+      num_threads: 4
     inputs:
-      json_input: /yolo_executor/bounding_boxes
+      image: /camera_streamer/image
     outputs:
-      marker_pose: /yolo_to_marker/state_command
-  signal_point_attractor:
-    component: aica_core_components::motion::SignalPointAttractor
-    display_name: Signal Point Attractor
-    events:
-      transitions:
-        on_configure:
-          lifecycle:
-            component: signal_point_attractor
-            transition: activate
-        on_load:
-          lifecycle:
-            component: signal_point_attractor
-            transition: configure
-    parameters:
-      rate: !!float 2.0
-    inputs:
-      state: /hardware/robot_state_broadcaster/cartesian_state
-      attractor: /cartesian_transformation/output
-    outputs:
-      twist: /signal_point_attractor/twist
-  cartesian_transformation:
-    component: aica_core_components::signal::CartesianTransformation
-    display_name: Cartesian Transformation
-    inputs:
-      input_1: /tf_to_signal/pose
-      input_2: /yolo_to_marker/state_command
-    outputs:
-      output: /cartesian_transformation/output
-  tf_to_signal:
-    component: aica_core_components::ros::TfToSignal
-    display_name: TF to Signal
-    events:
-      transitions:
-        on_configure:
-          lifecycle:
-            component: tf_to_signal
-            transition: activate
-        on_load:
-          lifecycle:
-            component: tf_to_signal
-            transition: configure
-          load:
-            component: cartesian_transformation
-    parameters:
-      frame: camera_frame
-    outputs:
-      pose: /tf_to_signal/pose
+      detections: /yolo_executor/detections
   camera_streamer:
     component: core_vision_components::image_streaming::CameraStreamer
     display_name: Camera Streamer
@@ -486,32 +618,31 @@ components:
           lifecycle:
             component: camera_streamer
             transition: activate
-    parameters:
-      source: /files/videos/hand.mp4
-      undistorted_image_cropping: false
+        on_activate:
+          load:
+            component: yolo_executor
     outputs:
       image: /camera_streamer/image
-  yolo_executor:
-    component: object_detection_components::YOLOExecutor
-    display_name: YOLO Executor
+  bounding_box_tracker:
+    component: object_detection_utils::BoundingBoxTracker
+    display_name: Bounding box tracker
     events:
       transitions:
         on_load:
           lifecycle:
-            component: yolo_executor
+            component: bounding_box_tracker
             transition: configure
         on_configure:
           lifecycle:
-            component: yolo_executor
+            component: bounding_box_tracker
             transition: activate
     parameters:
-      rate: !!float 1.0
-      model_file: /files/onnx/best.onnx
-      classes_file: /files/onnx/coco8.yaml
+      camera_frame: tool0
+      reference_frame: world
     inputs:
-      rgb_image: /camera_streamer/image
+      detections: /yolo_executor/detections
     outputs:
-      bounding_boxes: /yolo_executor/bounding_boxes
+      twist: /yolo_to_marker/twist
 hardware:
   hardware:
     display_name: Hardware Interface
@@ -528,8 +659,6 @@ hardware:
     controllers:
       robot_state_broadcaster:
         plugin: aica_core_controllers/RobotStateBroadcaster
-        outputs:
-          cartesian_state: /hardware/robot_state_broadcaster/cartesian_state
         events:
           transitions:
             on_load:
@@ -539,7 +668,7 @@ hardware:
       ik_velocity_controller:
         plugin: aica_core_controllers/velocity/IKVelocityController
         inputs:
-          command: /signal_point_attractor/twist
+          command: /yolo_to_marker/twist
         events:
           transitions:
             on_load:
@@ -549,119 +678,78 @@ hardware:
 graph:
   positions:
     on_start:
-      x: 300
-      y: 0
+      x: -20
+      y: -360
     stop:
-      x: 300
-      y: 100
+      x: -20
+      y: -260
     components:
-      yolo_to_marker:
-        x: 1440
-        y: 60
-      signal_point_attractor:
-        x: 1460
-        y: 520
-      cartesian_transformation:
-        x: 960
-        y: 600
-      tf_to_signal:
-        x: 460
-        y: 560
-      camera_streamer:
-        x: 520
-        y: 160
       yolo_executor:
-        x: 1020
-        y: 100
+        x: 720
+        y: -180
+      camera_streamer:
+        x: 200
+        y: -300
+      bounding_box_tracker:
+        x: 1400
+        y: 200
     hardware:
       hardware:
-        x: 1960
-        y: -20
+        x: 1920
+        y: -380
   edges:
-    yolo_to_marker_state_command_cartesian_transformation_input_2:
+    yolo_to_marker_marker_pose_signal_point_attractor_attractor:
       path:
-        - x: 1860
-          y: 280
-        - x: 1860
-          y: 580
-        - x: 940
-          y: 580
-        - x: 940
-          y: 860
-    yolo_executor_on_activate_yolo_to_marker_yolo_to_marker:
+        - x: 1360
+          y: 520
+        - x: 1360
+          y: 680
+    yolo_executor_detections_yolo_to_marker_json_input:
       path:
-        - x: 1380
-          y: 200
-        - x: 1380
+        - x: 1160
           y: 120
-    on_start_on_start_yolo_executor_yolo_executor:
+        - x: 1160
+          y: 220
+        - x: 860
+          y: 220
+        - x: 860
+          y: 520
+    yolo_to_marker_twist_hardware_hardware_ik_velocity_controller_command:
       path:
-        - x: 680
-          y: 40
-        - x: 680
-          y: 160
+        - x: 1820
+          y: 380
+        - x: 1820
+          y: 420
+    yolo_executor_detections_yolo_to_marker_detections:
+      path:
+        - x: 1200
+          y: 120
+        - x: 1200
+          y: 380
     on_start_on_start_camera_streamer_camera_streamer:
       path:
-        - x: 480
-          y: 40
-        - x: 480
-          y: 220
-    hardware_hardware_robot_state_broadcaster_cartesian_state_signal_point_attractor_state:
+        - x: 140
+          y: -320
+        - x: 140
+          y: -240
+    yolo_executor_on_activate_bounding_box_tracker_bounding_box_tracker:
       path:
-        - x: 1400
-          y: 520
-        - x: 1400
-          y: 780
-    camera_streamer_image_yolo_executor_rgb_image:
+        - x: 1300
+          y: 0
+        - x: 1300
+          y: 260
+    camera_streamer_image_yolo_executor_image:
       path:
-        - x: 980
-          y: 420
-        - x: 980
-          y: 360
-    on_start_on_start_tf_to_signal_tf_to_signal:
-      path:
-        - x: 440
-          y: 40
-        - x: 440
-          y: 620
-    on_start_on_start_yolo_to_marker_yolo_to_marker:
-      path:
-        - x: 920
-          y: 40
-        - x: 920
+        - x: 640
+          y: 0
+        - x: 640
           y: 120
-    yolo_to_marker_on_activate_signal_point_attractor_signal_point_attractor:
+    yolo_executor_detections_bounding_box_tracker_detections:
       path:
-        - x: 1900
-          y: 240
-        - x: 1900
-          y: 540
-        - x: 1420
-          y: 540
-        - x: 1420
-          y: 580
-    tf_to_signal_on_load_cartesian_transformation_cartesian_transformation:
-      path:
-        - x: 880
-          y: 740
-        - x: 880
-          y: 660
-    yolo_executor_bounding_boxes_yolo_to_marker_json_input:
-      path:
-        - x: 1420
-          y: 360
-        - x: 1420
-          y: 320
-    yolo_to_marker_marker_pose_cartesian_transformation_input_2:
-      path:
-        - x: 1860
-          y: 320
-        - x: 1860
-          y: 500
-        - x: 920
-          y: 500
-        - x: 920
-          y: 860
+        - x: 1220
+          y: 120
+        - x: 1220
+          y: 420
 ```
 
 </details>
