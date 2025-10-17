@@ -1,12 +1,13 @@
 ---
 sidebar_position: 8
 title: Using YOLO to track objects
+unlisted: true
 ---
 
 import exampleApp from './assets/object-detection-example-app.gif'
 import cameraCalibration from './assets/camera-calibration.gif'
 import yoloExecutor from './assets/object-detection-yolo-executor.jpg'
-import yoloExecutorParameters from './assets/object-detection-yolo-executor-parameters.jpg'
+import yoloExecutorParameters from './assets/object-detection-yolo-executor-parameters.png'
 import boundingBoxTracker from './assets/object-detection-robot-control.jpg'
 
 # Using YOLO to track objects
@@ -140,8 +141,8 @@ file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg
 
 In AICA Launcher, create a configuration with the following core version and packages:
 
-- AICA Core v4.4.2 <!-- TODO: v5 here ? -->
-- `collections/advanced_perception v1.0.0` for the `YoloExecutor` component
+- AICA Core v4.4.2
+- `collections/advanced_perception v1.0.0` for the `YoloExecutor` component <!-- TBD -->
 - `components/core-vision v1.0.0` for the `CameraStreamer` component  <!-- TODO: bump the version here -->
 
 <!-- TODO: add toolkit images here -->
@@ -156,8 +157,8 @@ Let us build a YOLO application from scratch.
     - Set the `Source` parameter to a video device or file accordingly
     - Enable **auto-configure** and **auto-activate**
 - Add the YOLO Executor component
-    - Set the `Model path` parameter to the `.onnx` file, e.g., `/files/yolo12n.onnx`
-    - Set the `Classes path` parameter to the yaml label file, e.g., `/files/coco.yaml`
+    - Set the `Model path` parameter to the `.onnx` file, e.g., `/data/yolo12n.onnx`
+    - Set the `Classes path` parameter to the yaml label file, e.g., `/data/coco.yaml`
     - Set the `Rate` parameter to match your camera's FPS (actual publishing rate may vary depending on your system's
 computational power, especially if running on a CPU)
     - Enable **auto-configure** and **auto-activate**
@@ -172,21 +173,24 @@ sense). The following picture shows the available parameters:
 </div>
 
 More specifically, you can adapt:
-- `Number of CPU threads`: to get the most out of your system's resources. Notice that this parameter has no effect when
-a GPU is used
-- `Device`: to determine which device should be used to run the inference, but is subject to the way you bundle your
-AICA configuration. That is, if you use a CPU toolkit image but set `Device` to GPU, then the component will ultimately
-gracefully fall back to using the CPU
-- `Object class`: will narrow the `Detections` output to the selected classes alone
+- `Model path`: filepath to your YOLO model
+- `Classes path`: filepath to your classes file, making the mapping between predicted object IDs and object names
+- `Object class`: will narrow the `Detections` output to the selected classes alone (one or more classes included in the
+class file)
 - `Confidence threshold`: the minimum score a predicted bounding box must have to be considered a valid detection
 - `IOU Threshold`: used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same
 object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box
 will be discarded.
+- `Device`: to determine which device should be used to run the inference, but is subject to the way you bundle your
+AICA configuration. That is, if you use a CPU toolkit image but set `Device` to GPU, then the component will ultimately
+gracefully fall back to using the CPU
+- `Number of CPU threads`: to get the most out of your system's resources. Notice that this parameter has no effect when
+a GPU is used
 
 To complement the parameters and enable event-driven logic when using the component, two predicates exist, namely:
-- `Is selected object detected`: True if one of the objects in the `Object class` list is detected
-- `Is any object detected`: True if there is any known object in the image stream (including but not limited to
-`Object class`)
+- `Is any selected object detected`: True if one of the objects in the `Object class` list is detected
+- `Is any object detected`: True if there is any known object (i.e., as per the class file provided) in the image stream
+(including but not limited to `Object class`)
 
 Your application should now look similar to the following picture:
 
@@ -217,7 +221,7 @@ emulate a camera mounted on a robot arm and we want to command the robot such th
 selected class in the middle of the image frame. For simplicity, we specify a single object class for the `YoloExecutor`
 to detect, and assume that only one object of the type can appear in the image at any time.
 
-### Creating a custom twist command component
+### Creating a custom twist generator component
 
 We first need to create a custom component that given a bounding box of an item will generate a twist indicating where
 the frame should move to keep the object centered. More information about custom components can be found
@@ -532,7 +536,7 @@ and parametrizing the `Velocity Impedance Controller` to your liking.
 ### Application code
 
 <details>
-<summary>yaml application</summary>
+<summary>YAML application</summary>
 
 ```yaml
 schema: 2-0-4
