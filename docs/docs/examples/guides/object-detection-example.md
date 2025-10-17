@@ -147,9 +147,10 @@ file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg
 In AICA Launcher, create a configuration with the following core version and packages:
 
 - AICA Core v4.4.2
-- `collections/advanced_perception v1.0.0` for the `YoloExecutor` component <!-- TBD -->
-- `components/core-vision v1.0.0` for the `CameraStreamer` component  <!-- TODO: bump the version here -->
-- CPU or GPU toolkit at v1.0.0 or higher
+- `collections/advanced_perception` v1.0.0 for the `YoloExecutor` component <!-- TBD -->
+- `components/core-vision` v1.0.0 or higher for the `CameraStreamer` component  <!-- TODO: bump the version here -->
+- CPU or GPU toolkit at v1.0.0
+- AICA Launcher v1.4.1 or higher
 
 :::info
 AICA toolkits are the curated way of bundling Machine Learning (ML) and GPU (specifically CUDA) acceleration libraries.
