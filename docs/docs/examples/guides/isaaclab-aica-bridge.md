@@ -166,7 +166,7 @@ python3 scripts/custom/aica_bridge/run_bridge.py \
   --device <cuda/cpu>
 ```
 
-For the sake of this example, launch the simulator using 
+For the sake of this example, launch the simulator using: 
 ```shell
 python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene --command_interface velocities
 ```
