@@ -460,7 +460,7 @@ graph:
   ```
 </details>
 
-<!-- ## Dashboard controller
+## Dashboard controller
 
 Dashboard controller allows interaction with UR's dashboard server to, among else, exchange control, set the payload,
 and zero the force-torque sensor. Examples in this section describe how to set up and use this functionality.
@@ -581,4 +581,4 @@ For the controller to operate, the names of the sensor, the reference frame and 
 
 <div class="text--center">
   <img src={urHWIImpedanceController} alt="UR Impedance controller parameters" style={{ width: '40%' }} />
-</div> -->
+</div>
