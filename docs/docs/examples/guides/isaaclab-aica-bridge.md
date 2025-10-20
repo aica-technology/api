@@ -87,7 +87,7 @@ directory of the Isaac Lab repository.
 
 Note that the scene lives entirely in Isaac Lab and the definitions of the assets used in the scene should be defined
 there. The 3D visualization in AICA Studio will only display the robot and mirror the robot's movements, but it will not
-display the scene itself.
+display the scene itself. For advanced users, the scene from Isaac Lab can be exported as a URDF and imported into AICA Studio, allowing you to visualize the entire scene within AICA studio.
 
 Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
 located in
