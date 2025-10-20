@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [3.1.1](#311)
 - [3.1.0](#310)
 - [3.0.0](#300)
 - [2.1.0](#210)
@@ -12,6 +13,15 @@ Release Versions:
 - [1.0.2](#102)
 - [1.0.1](#101)
 - [1.0.0](#100)
+
+## 3.1.1
+
+Version 3.1.1 is a patch release to ensure that content sent with the `set_application` function is always converted to
+JSON format.
+
+### Fixes
+
+- Convert loaded application to json (#349)
 
 ## 3.1.0
 
