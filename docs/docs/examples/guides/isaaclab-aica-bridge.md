@@ -64,7 +64,7 @@ Lab toward a target frame, and then manipulate that frame within the 3D visualiz
 
 First, let’s review the key steps involved in this setup:
 
-1. **Creating a New Scene in Isaac Lab**: Define a scene configuration class that inherits from `InteractiveSceneCfg`
+1. **Creating a new scene in Isaac Lab**: Define a scene configuration class that inherits from `InteractiveSceneCfg`
    and register it in the `scenes` dictionary. This scene will include the robot model and any other objects you want to
    interact with.
 2. **Running the Isaac Lab Simulator**: Launch the simulator with parameters that specify the scene, rate, force sensor,
@@ -73,7 +73,7 @@ First, let’s review the key steps involved in this setup:
    plugin to connect to the simulator.
 4. **Running the AICA Application**: Start the AICA application to control the robot in the simulator.
 
-### Creating a New Scene in Isaac Lab
+### Creating a new scene in Isaac Lab
 
 To create a new scene, you should define a scene configuration class that inherits from `InteractiveSceneCfg`. Various
 examples of scene config classes can be found in the
@@ -145,7 +145,7 @@ python3 scripts/custom/aica_bridge/run_bridge.py \
 
 ### Configuring the AICA Application
 
-If you haven’t already, please follow the [Point Attractor Example](../core-components/point-attractor) to create an
+If you haven’t already, follow the [Point Attractor Example](../core-components/point-attractor) to create an
 AICA application that moves a robot’s end-effector using a point attractor. We’ll use that application as the foundation
 for this guide. You will also need the latest Universal Robots collection so make sure to include that collection when
 launching AICA Studio using AICA Launcher.
