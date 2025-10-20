@@ -67,13 +67,18 @@ First, let’s review the key steps involved in this setup:
 1. **Creating a new scene in Isaac Lab**: Define a scene configuration class that inherits from `InteractiveSceneCfg`
    and register it in the `scenes` dictionary. This scene will include the robot model and any other objects you want to
    interact with.
-2. **Running the Isaac Lab Simulator**: Launch the simulator with parameters that specify the scene, rate, force sensor,
-   ports, joint names, command interface, and device.
+2. **Running the Isaac Lab Simulator**: Launch the simulator with the desired combination of scene, rate, and other
+   parameters.
 3. **Configuring the AICA Application**: Set up a hardware interface in AICA Studio that uses the `LightWeightInterface`
    plugin to connect to the simulator.
 4. **Running the AICA Application**: Start the AICA application to control the robot in the simulator.
 
 ### Creating a new scene in Isaac Lab
+
+A scene is a collection of entities (e.g., terrain, articulations, sensors, lights, etc.) that can be added to the
+simulation. Refer to Isaac Lab documentation on
+[scenes](https://isaac-sim.github.io/IsaacLab/main/source/api/lab/isaaclab.scene.html#isaaclab.scene.InteractiveSceneCfg)
+for more details.
 
 To create a new scene, you should define a scene configuration class that inherits from `InteractiveSceneCfg`. Various
 examples of scene config classes can be found in the
@@ -145,9 +150,9 @@ python3 scripts/custom/aica_bridge/run_bridge.py \
 
 ### Configuring the AICA Application
 
-If you haven’t already, follow the [Point Attractor Example](../core-components/point-attractor) to create an
-AICA application that moves a robot’s end-effector using a point attractor. We’ll use that application as the foundation
-for this guide. You will also need the latest Universal Robots collection so make sure to include that collection when
+If you haven’t already, follow the [Point Attractor Example](../core-components/point-attractor) to create an AICA
+application that moves a robot’s end-effector using a point attractor. We’ll use that application as the foundation for
+this guide. You will also need the latest Universal Robots collection so make sure to include that collection when
 launching AICA Studio using AICA Launcher.
 
 Once you have your AICA application ready, the next step is to configure the hardware interface in AICA Studio to
