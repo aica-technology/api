@@ -122,7 +122,7 @@ introduced below.
 - **scene**: Specifies which scene to load in the simulator.
 - **rate**: Sets the simulation update frequency in hertz (Hz). The default is **100 Hz**, but you can adjust this value
   based on your application’s requirements.
-- **force_sensor**: If provided, a sensor will be attached to the end-effector link.
+- **ft_sensor_name**: If provided, a sensor will be attached to the end-effector link.
   :::caution
   The name of the sensor provided here needs to correspond to the `<sensor>` plugin in the URDF of the hardware
   interface used in AICA Studio.
@@ -133,13 +133,13 @@ introduced below.
   default is 1801, and it must match the `state_port` specified in the hardware interface configuration.
 - **command_port**: The port used to stream commands from the hardware interface in AICA Studio to the simulator. The
   default is 1802, and it must match the `command_port` in the hardware interface configuration.
-- **force_port**: The port used to stream force/torque measurements from the simulator to the hardware interface in AICA
+- **ft_sensor_port**: The port used to stream force/torque measurements from the simulator to the hardware interface in AICA
   Studio. The default is 1803, and it must match the `ft_sensor_port` in the hardware interface configuration.
 - **joint_names**: Lists the joint names that will be controlled through AICA Studio. For example, if you are using a
   Franka Panda robot with a gripper but only want to control the arm, you can specify:  
    `"panda_joint1", "panda_joint2", "panda_joint3", "panda_joint4", "panda_joint5", "panda_joint6", "panda_joint7"`. The
   simulator will then only send states and accept commands for those joints. If you want to control all joints, you can
-  keep the default `"*"`.
+  keep the default `".*"`.
 - **command_interface**: Defines the command type accepted by the simulator. The default is `"positions"`, but you can
   set it to `"velocities"` or `"torques"` as needed. The choice of command type depends on the controller used in AICA
   Studio. If a mismatched command type is received, the simulator will stop with a `ValueError`.
@@ -156,14 +156,19 @@ command in the `run_bridge.py` script:
 python3 scripts/custom/aica_bridge/run_bridge.py \
   --scene <your_scene_name> \
   --rate <simulation_rate> \
-  --force_sensor <force_sensor_name_in_urdf> \
+  --ft_sensor_name <ft_sensor_name_in_urdf> \
   --state_port <state_port> \
   --command_port <command_port> \
-  --force_port <force_port> \
-  --joint_names <comma_separated_joint_names_to_control> \
+  --ft_sensor_port <ft_sensor_port> \
+  --joint_names <comma_separated_joint_names_to_control/ ".*" for all> \
   --command_interface <positions/velocities/torques> \
   --headless <true/false> \
   --device <cuda/cpu>
+```
+
+For the sake of this example, launch the simulator using 
+```shell
+python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene --command_interface velocities
 ```
 
 ## Configuring the AICA Application
@@ -519,14 +524,6 @@ As an alternative to step 3, you can copy and paste the content for a URDF file 
         <param name="initial_value">0.0</param>
       </state_interface>
     </joint>
-    <sensor name="tcp_fts_sensor">
-      <state_interface name="force.x" />
-      <state_interface name="force.y" />
-      <state_interface name="force.z" />
-      <state_interface name="torque.x" />
-      <state_interface name="torque.y" />
-      <state_interface name="torque.z" />
-    </sensor>
   </ros2_control>
 </robot>
 ```
@@ -541,16 +538,16 @@ created `Universal Robots 5e (LightWeightInterface)` URDF:
   <summary>Point Attractor Application</summary>
 
 ```yaml
-schema: 2-0-5
+schema: 2-0-4
 dependencies:
   core: v4.4.2
 frames:
   command:
     reference_frame: world
     position:
-      x: 0.505
-      y: -0.021148
-      z: 0.484999
+      x: 0.328215
+      y: 0.056976
+      z: 0.336586
     orientation:
       w: -0.000004
       x: 1
@@ -558,8 +555,8 @@ frames:
       z: 0
 on_start:
   load:
-    - component: frame_to_signal
     - hardware: hardware
+    - component: frame_to_signal
 components:
   frame_to_signal:
     component: aica_core_components::ros::TfToSignal
@@ -577,9 +574,7 @@ components:
             component: frame_to_signal
             transition: activate
     parameters:
-      frame:
-        value: command
-        type: string
+      frame: command
     outputs:
       pose: /frame_to_signal/pose
   signal_point_attractor:
@@ -603,7 +598,7 @@ components:
 hardware:
   hardware:
     display_name: Hardware Interface
-    urdf: Universal Robots 5e (LightWeightInterface)
+    urdf: UR5e (Isaac Lab)
     rate: 100
     events:
       transitions:
@@ -613,6 +608,8 @@ hardware:
               hardware: hardware
             - controller: ik_velocity_controller
               hardware: hardware
+    parameters:
+      ip: 0.0.0.0
     controllers:
       robot_state_broadcaster:
         plugin: aica_core_controllers/RobotStateBroadcaster
@@ -649,16 +646,16 @@ graph:
         x: 1300
         y: 0
   edges:
-    on_start_on_start_frame_to_signal_frame_to_signal:
+    on_start_on_start_hardware_hardware:
       path:
-        - x: 160
+        - x: 700
+          y: 40
+        - x: 700
           y: 60
-        - x: 160
-          y: 200
     hardware_hardware_robot_state_broadcaster_cartesian_state_signal_point_attractor_state:
       path:
         - x: 1240
-          y: 500
+          y: 540
         - x: 1240
           y: 320
         - x: 720
@@ -670,7 +667,13 @@ graph:
         - x: 1220
           y: 620
         - x: 1220
-          y: 760
+          y: 800
+    on_start_on_start_frame_to_signal_frame_to_signal:
+      path:
+        - x: 160
+          y: 40
+        - x: 160
+          y: 200
     frame_to_signal_on_load_signal_point_attractor_signal_point_attractor:
       path:
         - x: 680
@@ -713,7 +716,7 @@ and reliable performance:
 3. **Hardware interface rate in AICA Studio**: The hardware interface rate in AICA Studio should match the simulation
    rate set in Isaac Lab.
 4. **Force Sensor**: If a force torque sensor is configured in the URDF of AICA Studio, ensure that the simulator is
-   configured to provide force-torque data. This is done by setting the `force_sensor` parameter to the name of the
+   configured to provide force-torque data. This is done by setting the `ft_sensor_name` parameter to the name of the
    force torque sensor present in the URDF.
 5. **Command Interface**: Ensure that the command interface in the simulator matches the type of commands being sent by
    the controllers in AICA Studio.
