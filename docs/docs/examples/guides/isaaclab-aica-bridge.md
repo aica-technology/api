@@ -541,7 +541,6 @@ you plan to connect your own URDF, ensure that the hardware tag is written as sh
 Finally, open the Point Attractor application from your database and modify the hardware interface to use the newly
 created `Universal Robots 5e (LightWeightInterface)` URDF:
 
-<!-- TODO: actually use a copy here -->
 <details>
   <summary>Point Attractor Application</summary>
 
