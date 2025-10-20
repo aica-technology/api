@@ -4,9 +4,10 @@ import os
 
 from aica_api.client import AICA
 
-client = AICA(
-    api_key=os.getenv('AICA_API_KEY', ''),
-)
+api_key = os.getenv('AICA_API_KEY')
+if not api_key:
+    raise ValueError('AICA_API_KEY environment variable is not set')
+client = AICA(api_key=api_key, url=os.getenv('AICA_API_URL', 'http://localhost:8080/api'))
 
 print(f'Check: {"pass" if client.check() else "failed"}')
 print(f'Core Version: {client.core_version()}')

@@ -128,16 +128,9 @@ class AICA:
         if self.__token is not None:
             return self.__token
 
-        # API v5 (protocol v3) requires auth to get the version so we can't do this check
-        # so if we don't have protocol v2, we can skip this
-        if self.protocol() == 'v2':
-            has_version, is_compatible = self._check_version(
-                None,
-                '>=4.3.0',
-                err_undefined=' The function call may fail due to lack of authentication.',
-            )
-            if not has_version or not is_compatible:
-                return ''
+        protocol = self.protocol()
+        if protocol != 'v3':
+            raise APIError(f'Mismatched protocol version (expected v3, got {protocol})')
 
         res = self.__handle_errors(
             lambda: login.sync(
@@ -167,7 +160,7 @@ class AICA:
             self.__ensure_token()
         return self.__token
 
-    def _check_version(
+    def __check_version(
         self,
         name: Optional[str],
         requirement: str,
@@ -210,7 +203,7 @@ class AICA:
         def decorator(func):
             @wraps(func)
             def wrapper(self, *args, **kwargs):
-                _, is_compatible = self._check_version(
+                _, is_compatible = self.__check_version(
                     func.__name__,
                     version,
                     err_undefined=' The function call behavior may be undefined.',
@@ -692,7 +685,6 @@ class AICA:
         """
         return self.__handle_errors(lambda: get_current_application.sync(client=self.__get_client()))
 
-    @_requires_core_version('>=4.0.0')
     def manage_sequence(self, sequence_name: str, transition: SequenceLifecycleTransitionTransition) -> None:
         """
         Manage a sequence. The action label must be one of the following: ['start', 'restart', 'abort']
@@ -741,7 +733,6 @@ class AICA:
             is not None
         )
 
-    @_requires_core_version('>=3.1.0')
     def wait_for_hardware(self, hardware: str, state: str, timeout: Union[None, int, float] = None) -> bool:
         """
         Wait for a hardware interface to be in a particular state. Hardware can be in any of the following states:
@@ -767,7 +758,6 @@ class AICA:
             is not None
         )
 
-    @_requires_core_version('>=3.1.0')
     def wait_for_controller(
         self,
         hardware: str,
@@ -800,7 +790,6 @@ class AICA:
             is not None
         )
 
-    @_requires_core_version('>=3.1.0')
     def wait_for_component_predicate(
         self, component: str, predicate: str, timeout: Union[None, int, float] = None
     ) -> bool:
@@ -827,7 +816,6 @@ class AICA:
             is not None
         )
 
-    @_requires_core_version('>=3.1.0')
     def wait_for_controller_predicate(
         self,
         hardware: str,
@@ -882,7 +870,6 @@ class AICA:
             is not None
         )
 
-    @_requires_core_version('>=4.0.0')
     def wait_for_sequence(self, sequence: str, state: str, timeout=None) -> bool:
         """
         Wait for a sequence to be in a particular state. Sequences can be in any of the following states:
