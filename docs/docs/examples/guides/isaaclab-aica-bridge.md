@@ -150,7 +150,7 @@ introduced below.
   Studio. If a mismatched command type is received, the simulator will stop with a `ValueError`.
 - **headless**: When set to `true`, runs the simulator in headless mode (e.g. without opening user interface), useful
   for remote simulations or running the simulation at high frequencies.
-- **device**: Specifies the compute device for the simulation. The default is `"cuda"` for GPU acceleration, but you can
+- **device**: Specifies the compute device for the simulation. The default is `cuda` for GPU acceleration, but you can
   switch to `"cpu"` if GPU resources are unavailable.
 
 Ensure these parameters are correctly configured to enable seamless communication between the simulator and your AICA
