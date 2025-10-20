@@ -187,24 +187,8 @@ duplicating an existing hardware and swap out the plugin in the URDF.
 2. Click on the `Universal Robots 5e (mock interface)` to open it and use "Save As" to create a copy with a new name
    and description. For example, you can name it `Universal Robots 5e (LightWeightInterface)` as this is the name used
    in the example attached below.
-3. Inspect the content of the new robot description to find the `hardware` tag. Replace it with the following:
-   ```xml
-   <hardware>
-     <plugin>aica_core_interfaces/LightWeightInterface</plugin>
-     <param name="ip">0.0.0.0</param>
-     <param name="state_port">1801</param>
-     <param name="command_port">1802</param>
-     <param name="ft_sensor_port">1803</param>
-     <param name="bind_state_port">False</param>
-     <param name="bind_command_port">False</param>
-     <param name="bind_ft_sensor_port">False</param>
-   </hardware>
-   ```
-4. Save your changes.
 
-As an alternative to step 3, you can copy and paste the content for a URDF file for the UR5e robot with the
-`LightWeightInterface` hardware plugin from below.
-
+3. Replace the content of the URDF, with the URDF present here.
 <details>
   <summary>UR5e URDF using the `LightWeightInterface`</summary>
 
@@ -534,6 +518,25 @@ As an alternative to step 3, you can copy and paste the content for a URDF file 
 ```
 
 </details>
+4. Save your changes.
+
+5. Inspect the content of the new robot description to find the `hardware` tag. You will notice the following content:
+   ```xml
+   <hardware>
+     <plugin>aica_core_interfaces/LightWeightInterface</plugin>
+     <param name="ip">0.0.0.0</param>
+     <param name="state_port">1801</param>
+     <param name="command_port">1802</param>
+     <param name="ft_sensor_port">1803</param>
+     <param name="bind_state_port">False</param>
+     <param name="bind_command_port">False</param>
+     <param name="bind_ft_sensor_port">False</param>
+   </hardware>
+   ```
+
+The `LightWeightInterface` plugin facilitates communication between the AICA Core and Isaac Lab. For future reference, if 
+you plan to connect your own URDF, ensure that the hardware tag is written as shown above.
+
 
 Finally, open the Point Attractor application from your database and modify the hardware interface to use the newly
 created `Universal Robots 5e (LightWeightInterface)` URDF:
