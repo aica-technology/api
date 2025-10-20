@@ -4,6 +4,7 @@ title: Using Isaac Lab as a simulator
 ---
 
 import application from './assets/isaaclab-aica-bridge-application.png'
+import scene from './assets/isaaclab-aica-bridge-sim-scene.png'
 
 # Using Isaac Lab as a simulator
 
@@ -72,8 +73,12 @@ installed. Run the following command in the same terminal to verify the installa
 python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene
 ```
 
-This will spawn a UR5e robot, a ground plane, and lights. If you see the UR5e robot in the scene, then the installation
-was successful and you are ready to proceed with the next steps.
+This will spawn a UR5e robot, a ground plane, and lights. If you see the UR5e robot in the scene as shown in the 
+image below, then the installation was successful and you are ready to proceed with the next steps.
+
+<div class="text--center">
+  <img src={scene} alt="Basic Scene" />
+</div>
 
 If not, carefully go over the instructions again or reach out to AICA for help.
 
@@ -598,7 +603,7 @@ components:
 hardware:
   hardware:
     display_name: Hardware Interface
-    urdf: UR5e (Isaac Lab)
+    urdf: Universal Robots 5e (LightWeightInterface)
     rate: 100
     events:
       transitions:
