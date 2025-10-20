@@ -712,7 +712,8 @@ class AICA:
                     sequence=sequence_name,
                     transition=transition,
                 ),
-            )
+            ),
+            expect_empty=True,
         )
 
     def wait_for_component(self, component: str, state: str, timeout: Union[None, int, float] = None) -> bool:
