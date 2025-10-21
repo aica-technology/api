@@ -1,14 +1,13 @@
 ---
-sidebar_position: 8
+sidebar_position: 10
 title: Using YOLO to track objects
 unlisted: true
 ---
 
 import exampleApp from './assets/object-detection-example-app.gif'
-import cameraCalibration from './assets/camera-calibration.gif'
-import yoloExecutor from './assets/object-detection-yolo-executor.jpg'
+import yoloExecutor from './assets/object-detection-yolo-executor.png'
 import yoloExecutorParameters from './assets/object-detection-yolo-executor-parameters.png'
-import boundingBoxTracker from './assets/object-detection-robot-control.jpg'
+import boundingBoxTracker from './assets/object-detection-robot-control.png'
 import launcherToolkitsCPU from './assets/launcher-toolkits-cpu.png'
 import launcherToolkitsGPU from './assets/launcher-toolkits-gpu.png'
 
@@ -22,13 +21,11 @@ directly from an image in a single pass through a neural network. Unlike older m
 YOLO processes the entire image at once, making it extremely fast and well-suited for many applications, including
 robotics.
 
-## A YOLO example using the AICA framework <!-- TODO: I suggest we make this a standalone (short) example since we need it in other components (e.g., marker detectors) -->
+## A YOLO example using the AICA framework
 
-This page details how to run a `YoloExecutor` component (i.e., a component that can use various YOLO models for
-inference), and demonstrates how it could be used as part of an AICA application. We show how to create a custom
-component which makes use of a bounding box to adapt an arm's motion such that it maintains the subject centered. Here,
-we will use the `CameraStreamer` component from `components/core-vision` to access a `sensor_msgs::msg::Image` signal,
-but any signal of the same type can be used instead. The YOLO executor component that is covered in following sections
+This page details how to run a `YoloExecutor` component, i.e., a component that can use various YOLO models for
+inference. It also demonstrates how it could be used as part of an AICA application. In following paragraphs, we show how to create a custom
+component which makes use of a bounding box to adapt an arm's motion such that it maintains the subject centered. The YOLO executor component that is covered in following sections
 can be found under `collections/advanced-perception` with a valid AICA license.
 
 <div class="text--center">
@@ -39,58 +36,10 @@ can be found under `collections/advanced-perception` with a valid AICA license.
 
 ### [optional] Camera calibration
 
-Depending on how you are generating the `sensor_msgs::msg::Image` signal and/or the camera you are using, you may want
-to consider running a calibration to ensure accurate predications in terms of bounding box pixel coordinates. To
-facilitate the process, AICA provides a docker image you can use to run one of ROS' main packages for this task.
-
-First, clone our docker image repository:
-
-```shell
-https://github.com/aica-technology/docker-images.git
-```
-
-and open a terminal at the root of `docker-images`. Then:
-
-```shell
-cd camera_calibration
-```
-
-Within that folder you will find a `build-run.sh` script that, as the name suggests, will build a Docker image and run a
-container with the camera calibration software as an entrypoint.
-
-Before running the script, make sure to generate a **checkerboard** pattern (e.g., from
-[here](https://calib.io/pages/camera-calibration-pattern-generator)). The calibrator will use this pattern to determine
-how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort an image
-coming from your camera. Take note of the checkerboard width, height, and box size. Notice that the calibrator is
-detecting the internal corners of the outermost boxes, so a 8x11 checkerboard will have a 7x10 area with which the
-calibrator will work. Print the checkerboard and attach it to a flat surface throughout the calibration process.
-Then, run the `build-run.sh` script specifying the necessary parameters similarly to:
-
-```shell
-./build-run.sh --calibration-height 7 --calibration-width 11 --calibration-square 0.015
-```
-
-Notice that the calibration square side size is in meters. If you are using AICA's `CameraStreamer` component to produce
-an image stream, the above command should already work. If you are using your own node to stream images, you will more
-than likely need to specify which topic the calibrator needs to subscribe to by adding the
-`--calibration-topic YOUR_ROS_TOPIC` argument.
-
-After successfully executing the script, a pop-up window displaying your image
-stream should appear. If the window is not displaying the image stream, make sure that
-your image streaming component is running and, for non-`CameraStreamer` nodes, that the correct topic name is set.
-
-Move the checkerboard in various positions and orientations until the `CALIBRATE` button is no longer grayed out (and
-most of the bars are green, indicating good sample size). Once it becomes available, press on it to start computing the
-camera matrices. After it becomes available, click on the `SAVE` button to save a recording of the process. You
-will notice a `calibration` directory has been created on your host machine under `docker-image/camera_calibration` that
-contains a compressed file. The file itself contains the images that were sampled along with a yaml file containing the
-camera calibration information. Finally, move this file into the `data` folder of your AICA configuration such that it
-becomes available within AICA containers. When using `CameraStreamer`, you only need to specify the calibration's path.
-For custom components, make sure to read the camera parameters and apply the necessary undistortion technique(s).
-
-<div class="text--center">
-  <img src={cameraCalibration} alt="Camera calibration process" />
-</div>
+If your camera lens presents a lot of distortion, you may follow the
+[camera calibration walkthrough](./camera-calibration.md) to generate a camera intrinsics file that you can then use
+with `CameraStreamer`. For the purposes of this example, a camera calibration is not required, but may be needed if you
+are using a high-distortion or fish-eye lens camera.
 
 ### Obtaining YOLO inference models
 
@@ -136,9 +85,18 @@ model.export(format="onnx")  # creates 'yolo12n.onnx'
 This approach is also necessary if you are using custom models instead of the ones distributed by Ultralytics.
 :::
 
-## Class file
+### Class file
 
-For this example, also download the standard `coco.yaml` class
+Along with the YOLO model from the previous paragraph, you will also need a **class file** (for example, `coco.yaml`)
+that maps the numeric class IDs predicted by the model to their corresponding class names. This file is specific to the
+model you are using and is typically defined during training, meaning that the mapping between class IDs and labels is
+fixed once the model is trained.
+
+Modifying the class file after training will not affect the model's behavior or predictions. It will only change the
+text labels displayed in your annotations. As a result, manual edits are generally safe but may lead to semantic
+inconsistencies if the names no longer match the model's intended classes.
+
+For the purposes of this example, download the standard `coco.yaml` class
 file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml) and move it to your
 `data` folder, where you also stored your YOLO model.
 
@@ -146,11 +104,11 @@ file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg
 
 In AICA Launcher, create a configuration with the following core version and packages:
 
-- AICA Core v4.4.2
-- `collections/advanced_perception` v1.0.0 for the `YoloExecutor` component <!-- TBD -->
-- `components/core-vision` v1.0.0 or higher for the `CameraStreamer` component  <!-- TODO: bump the version here -->
-- CPU or GPU toolkit at v1.0.0
 - AICA Launcher v1.4.1 or higher
+- AICA Core v5.0.0
+- `collections/advanced_perception` v1.0.0 for the `YoloExecutor` component <!-- TBD -->
+- `components/core-vision` v1.1.0 or higher for the `CameraStreamer` component
+- CPU or GPU toolkit at v1.0.0
 
 :::info
 AICA toolkits are the curated way of bundling Machine Learning (ML) and GPU (specifically CUDA) acceleration libraries.
@@ -570,9 +528,9 @@ and parametrizing the `Velocity Impedance Controller` to your liking.
 <summary>YAML application</summary>
 
 ```yaml
-schema: 2-0-4
+schema: 2-0-6
 dependencies:
-  core: v4.2.0
+  core: v5.0.0
 on_start:
   load:
     - hardware: hardware
@@ -595,12 +553,22 @@ components:
           load:
             component: bounding_box_tracker
     parameters:
-      rate: !!float 30.0
-      model_file: /data/yolo12n.onnx
-      classes_file: /data/coco.yaml
+      rate:
+        value: 30
+        type: double
+      model_file:
+        value: /data/yolo12n.onnx
+        type: string
+      classes_file:
+        value: /data/coco.yaml
+        type: string
       object_class:
-        - scissors
-      num_threads: 4
+        value:
+          - scissors
+        type: string_array
+      num_threads:
+        value: 4
+        type: int
     inputs:
       image: /camera_streamer/image
     outputs:
@@ -637,8 +605,17 @@ components:
             component: bounding_box_tracker
             transition: activate
     parameters:
-      camera_frame: tool0
-      reference_frame: world
+      camera_frame:
+        value: tool0
+        type: string
+      reference_frame:
+        value: world
+        type: string
+      gains:
+        value:
+          - 0.002
+          - 0.002
+        type: double_array
     inputs:
       detections: /yolo_executor/detections
     outputs:
@@ -685,18 +662,18 @@ graph:
       y: -260
     components:
       yolo_executor:
-        x: 720
+        x: 740
         y: -180
       camera_streamer:
         x: 200
         y: -300
       bounding_box_tracker:
         x: 1400
-        y: 200
+        y: 180
     hardware:
       hardware:
-        x: 1920
-        y: -380
+        x: 1940
+        y: -360
   edges:
     yolo_to_marker_marker_pose_signal_point_attractor_attractor:
       path:
@@ -729,7 +706,7 @@ graph:
     on_start_on_start_camera_streamer_camera_streamer:
       path:
         - x: 140
-          y: -320
+          y: -300
         - x: 140
           y: -240
     yolo_executor_on_activate_bounding_box_tracker_bounding_box_tracker:
@@ -737,11 +714,11 @@ graph:
         - x: 1300
           y: 0
         - x: 1300
-          y: 260
+          y: 240
     camera_streamer_image_yolo_executor_image:
       path:
         - x: 640
-          y: 0
+          y: -40
         - x: 640
           y: 120
     yolo_executor_detections_bounding_box_tracker_detections:
@@ -749,7 +726,7 @@ graph:
         - x: 1220
           y: 120
         - x: 1220
-          y: 420
+          y: 400
 ```
 
 </details>
