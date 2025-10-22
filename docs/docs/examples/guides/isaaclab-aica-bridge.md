@@ -39,8 +39,7 @@ simulated in Isaac Lab:
    combination of scene, rate, and other parameters.
 4. [Configuring the AICA Application](#configuring-the-aica-application): Set up a custom hardware in AICA Studio that
    can communicate with the simulator.
-5. [Running the AICA Application](#running-the-aica-application): Start the AICA application to control the robot in the
-   simulator.
+5. [Running the example](#running-the-example): Start the simulator and the AICA application to control the robot.
 
 :::info
 
@@ -74,13 +73,12 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene
 ```
 
 This will spawn a UR5e robot, a ground plane, and lights. If you see the UR5e robot in the scene as shown in the 
-image below, then the installation was successful and you are ready to proceed with the next steps.
+image below, then the installation was successful and you are ready to proceed with the next steps. If not, carefully go
+over the instructions again or reach out to AICA for help.
 
 <div class="text--center">
   <img src={scene} alt="Basic Scene" />
 </div>
-
-If not, carefully go over the instructions again or reach out to AICA for help.
 
 ## Creating a new scene in Isaac Lab
 
@@ -129,8 +127,8 @@ introduced below.
   based on your application’s requirements.
 - **ft_sensor_name**: If provided, a sensor will be attached to the end-effector link.
   :::caution
-  The name of the sensor provided here needs to correspond to the `<sensor>` plugin in the URDF of the hardware
-  interface used in AICA Studio.
+  If a `<sensor>` plugin in the URDF of the hardware interface used in AICA Studio is configured, the name of the sensor
+  here needs to correspond to the name of the sensor in the URDF.
   :::
 - **ip_address**: Indicates the IP address of the machine running AICA Core. If the simulator and AICA Core are on the
   same network, keep the default `"*"`.
@@ -165,15 +163,10 @@ python3 scripts/custom/aica_bridge/run_bridge.py \
   --state_port <state_port> \
   --command_port <command_port> \
   --ft_sensor_port <ft_sensor_port> \
-  --joint_names <comma_separated_joint_names_to_control/ ".*" for all> \
-  --command_interface <positions/velocities/torques> \
-  --headless <true/false> \
-  --device <cuda/cpu>
-```
-
-For the sake of this example, launch the simulator using: 
-```shell
-python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene --command_interface velocities
+  --joint_names <comma_separated_joint_names_to_control> \
+  --command_interface <positions | velocities | torques> \
+  --headless <true | false> \
+  --device <cuda | cpu>
 ```
 
 ## Configuring the AICA Application
@@ -184,342 +177,338 @@ First, configure the hardware interface in AICA Studio to communicate with the I
 duplicating an existing hardware and swap out the plugin in the URDF.
 
 1. In AICA Studio, go to the Hardware tab.
-2. Click on the `Universal Robots 5e (mock interface)` to open it and use "Save As" to create a copy with a new name
-   and description. For example, you can name it `Universal Robots 5e (LightWeightInterface)` as this is the name used
-   in the example attached below.
-
-3. Replace the content of the URDF, with the URDF present here.
-<details>
-  <summary>UR5e URDF using the `LightWeightInterface`</summary>
-
-```xml
-<?xml version="1.0"?>
-<robot name="ur5e">
-  <link name="world" />
-  <link name="base_link" />
-  <link name="base_link_inertia">
-    <visual>
-      <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/visual/base.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/collision/base.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="4.0" />
-      <origin rpy="0 0 0" xyz="0 0 0" />
-      <inertia ixx="0.00443333156" ixy="0.0" ixz="0.0" iyy="0.00443333156" iyz="0.0" izz="0.0072" />
-    </inertial>
-  </link>
-  <link name="shoulder_link">
-    <visual>
-      <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/visual/shoulder.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/collision/shoulder.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="3.761" />
-      <origin rpy="0 0 0" xyz="0 0 0" />
-      <inertia ixx="0.01043677082529" ixy="0.0" ixz="0.0" iyy="0.01043677082529" iyz="0.0"
-        izz="0.006769799999999999" />
-    </inertial>
-  </link>
-  <link name="upper_arm_link">
-    <visual>
-      <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.138" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/visual/upperarm.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.138" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/collision/upperarm.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="8.058" />
-      <origin rpy="0 1.5707963267948966 0" xyz="-0.2125 0.0 0.138" />
-      <inertia ixx="0.128541836083245" ixy="0.0" ixz="0.0" iyy="0.128541836083245" iyz="0.0"
-        izz="0.014504399999999999" />
-    </inertial>
-  </link>
-  <link name="forearm_link">
-    <visual>
-      <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.007" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/visual/forearm.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.007" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/collision/forearm.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="2.846" />
-      <origin rpy="0 1.5707963267948966 0" xyz="-0.1961 0.0 0.007" />
-      <inertia ixx="0.03904256026963631" ixy="0.0" ixz="0.0" iyy="0.03904256026963631" iyz="0.0"
-        izz="0.005122799999999999" />
-    </inertial>
-  </link>
-  <link name="wrist_1_link">
-    <visual>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.127" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/visual/wrist1.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.127" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/collision/wrist1.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="1.37" />
-      <origin rpy="0 0 0" xyz="0 0 0" />
-      <inertia ixx="0.0028769988492000002" ixy="0.0" ixz="0.0" iyy="0.0028769988492000002" iyz="0.0"
-        izz="0.0024660000000000003" />
-    </inertial>
-  </link>
-  <link name="wrist_2_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 -0.0997" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/visual/wrist2.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 -0.0997" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/collision/wrist2.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="1.3" />
-      <origin rpy="0 0 0" xyz="0 0 0" />
-      <inertia ixx="0.002729998908" ixy="0.0" ixz="0.0" iyy="0.002729998908" iyz="0.0" izz="0.00234" />
-    </inertial>
-  </link>
-  <link name="wrist_3_link">
-    <visual>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.0989" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/visual/wrist3.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.0989" />
-      <geometry>
-        <mesh filename="package://ur_description/meshes/ur5e/collision/wrist3.stl" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.365" />
-      <origin rpy="0 0 0" xyz="0.0 0.0 -0.0229" />
-      <inertia ixx="0.00019212345231725498" ixy="0.0" ixz="0.0" iyy="0.00019212345231725498"
-        iyz="0.0" izz="0.000256640625" />
-    </inertial>
-  </link>
-  <joint name="base_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0" />
-    <parent link="world" />
-    <child link="base_link" />
-  </joint>
-  <joint name="base_link-base_link_inertia" type="fixed">
-    <parent link="base_link" />
-    <child link="base_link_inertia" />
-    <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
-  </joint>
-  <joint name="shoulder_pan_joint" type="revolute">
-    <parent link="base_link_inertia" />
-    <child link="shoulder_link" />
-    <origin rpy="0 0 0" xyz="0 0 0.1625" />
-    <axis xyz="0 0 1" />
-    <limit effort="150.0" lower="-6.283185307179586" upper="6.283185307179586"
-      velocity="3.141592653589793" />
-    <dynamics damping="0" friction="0" />
-  </joint>
-  <joint name="shoulder_lift_joint" type="revolute">
-    <parent link="shoulder_link" />
-    <child link="upper_arm_link" />
-    <origin rpy="1.570796327 0 0" xyz="0 0 0" />
-    <axis xyz="0 0 1" />
-    <limit effort="150.0" lower="-6.283185307179586" upper="6.283185307179586"
-      velocity="3.141592653589793" />
-    <dynamics damping="0" friction="0" />
-  </joint>
-  <joint name="elbow_joint" type="revolute">
-    <parent link="upper_arm_link" />
-    <child link="forearm_link" />
-    <origin rpy="0 0 0" xyz="-0.425 0 0" />
-    <axis xyz="0 0 1" />
-    <limit effort="150.0" lower="-3.141592653589793" upper="3.141592653589793"
-      velocity="3.141592653589793" />
-    <dynamics damping="0" friction="0" />
-  </joint>
-  <joint name="wrist_1_joint" type="revolute">
-    <parent link="forearm_link" />
-    <child link="wrist_1_link" />
-    <origin rpy="0 0 0" xyz="-0.3922 0 0.1333" />
-    <axis xyz="0 0 1" />
-    <limit effort="28.0" lower="-6.283185307179586" upper="6.283185307179586"
-      velocity="3.141592653589793" />
-    <dynamics damping="0" friction="0" />
-  </joint>
-  <joint name="wrist_2_joint" type="revolute">
-    <parent link="wrist_1_link" />
-    <child link="wrist_2_link" />
-    <origin rpy="1.570796327 0 0" xyz="0 -0.0997 -2.044881182297852e-11" />
-    <axis xyz="0 0 1" />
-    <limit effort="28.0" lower="-6.283185307179586" upper="6.283185307179586"
-      velocity="3.141592653589793" />
-    <dynamics damping="0" friction="0" />
-  </joint>
-  <joint name="wrist_3_joint" type="revolute">
-    <parent link="wrist_2_link" />
-    <child link="wrist_3_link" />
-    <origin rpy="1.570796326589793 3.141592653589793 3.141592653589793"
-      xyz="0 0.0996 -2.042830148012698e-11" />
-    <axis xyz="0 0 1" />
-    <limit effort="28.0" lower="-6.283185307179586" upper="6.283185307179586"
-      velocity="3.141592653589793" />
-    <dynamics damping="0" friction="0" />
-  </joint>
-  <link name="base" />
-  <joint name="base_link-base_fixed_joint" type="fixed">
-    <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
-    <parent link="base_link" />
-    <child link="base" />
-  </joint>
-  <link name="flange" />
-  <joint name="wrist_3-flange" type="fixed">
-    <parent link="wrist_3_link" />
-    <child link="flange" />
-    <origin rpy="0 -1.5707963267948966 -1.5707963267948966" xyz="0 0 0" />
-  </joint>
-  <link name="tool0" />
-  <joint name="flange-tool0" type="fixed">
-    <origin rpy="1.5707963267948966 0 1.5707963267948966" xyz="0 0 0" />
-    <parent link="flange" />
-    <child link="tool0" />
-  </joint>
-  <ros2_control name="ur5e" type="system">
-   <hardware>
-      <plugin>aica_core_interfaces/LightWeightInterface</plugin>
-      <param name="ip">0.0.0.0</param>
-      <param name="state_port">1801</param>
-      <param name="command_port">1802</param>
-      <param name="ft_sensor_port">1803</param>
-      <param name="bind_state_port">False</param>
-      <param name="bind_command_port">False</param>
-      <param name="bind_ft_sensor_port">False</param>
-   </hardware>
-    <joint name="shoulder_pan_joint">
-      <command_interface name="position" />
-      <command_interface name="velocity" />
-      <state_interface name="position">
-        <!-- initial position for the mock system and simulation -->
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="velocity">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="effort">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-    </joint>
-    <joint name="shoulder_lift_joint">
-      <command_interface name="position" />
-      <command_interface name="velocity" />
-      <state_interface name="position">
-        <!-- initial position for the mock system and simulation -->
-        <param name="initial_value">-1.57</param>
-      </state_interface>
-      <state_interface name="velocity">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="effort">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-    </joint>
-    <joint name="elbow_joint">
-      <command_interface name="position" />
-      <command_interface name="velocity" />
-      <state_interface name="position">
-        <!-- initial position for the mock system and simulation -->
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="velocity">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="effort">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-    </joint>
-    <joint name="wrist_1_joint">
-      <command_interface name="position" />
-      <command_interface name="velocity" />
-      <state_interface name="position">
-        <!-- initial position for the mock system and simulation -->
-        <param name="initial_value">-1.57</param>
-      </state_interface>
-      <state_interface name="velocity">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="effort">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-    </joint>
-    <joint name="wrist_2_joint">
-      <command_interface name="position" />
-      <command_interface name="velocity" />
-      <state_interface name="position">
-        <!-- initial position for the mock system and simulation -->
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="velocity">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="effort">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-    </joint>
-    <joint name="wrist_3_joint">
-      <command_interface name="position" />
-      <command_interface name="velocity" />
-      <state_interface name="position">
-        <!-- initial position for the mock system and simulation -->
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="velocity">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-      <state_interface name="effort">
-        <param name="initial_value">0.0</param>
-      </state_interface>
-    </joint>
-  </ros2_control>
-</robot>
-```
-
-</details>
+2. Click on the `Universal Robots 5e (mock interface)` to open it and use **Save As** to create a copy with a new name
+   and description. For example, name it `Universal Robots 5e (LightWeightInterface)` as this is the name used in the
+   example attached below.
+3. Replace the content of the URDF with the following.
+    <details>
+      <summary>UR5e URDF using the `LightWeightInterface`</summary>
+    ```xml
+    <?xml version="1.0"?>
+    <robot name="ur5e">
+      <link name="world" />
+      <link name="base_link" />
+      <link name="base_link_inertia">
+        <visual>
+          <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/visual/base.dae" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/collision/base.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="4.0" />
+          <origin rpy="0 0 0" xyz="0 0 0" />
+          <inertia ixx="0.00443333156" ixy="0.0" ixz="0.0" iyy="0.00443333156" iyz="0.0" izz="0.0072" />
+        </inertial>
+      </link>
+      <link name="shoulder_link">
+        <visual>
+          <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/visual/shoulder.dae" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/collision/shoulder.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="3.761" />
+          <origin rpy="0 0 0" xyz="0 0 0" />
+          <inertia ixx="0.01043677082529" ixy="0.0" ixz="0.0" iyy="0.01043677082529" iyz="0.0"
+            izz="0.006769799999999999" />
+        </inertial>
+      </link>
+      <link name="upper_arm_link">
+        <visual>
+          <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.138" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/visual/upperarm.dae" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.138" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/collision/upperarm.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="8.058" />
+          <origin rpy="0 1.5707963267948966 0" xyz="-0.2125 0.0 0.138" />
+          <inertia ixx="0.128541836083245" ixy="0.0" ixz="0.0" iyy="0.128541836083245" iyz="0.0"
+            izz="0.014504399999999999" />
+        </inertial>
+      </link>
+      <link name="forearm_link">
+        <visual>
+          <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.007" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/visual/forearm.dae" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin rpy="1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0.007" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/collision/forearm.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="2.846" />
+          <origin rpy="0 1.5707963267948966 0" xyz="-0.1961 0.0 0.007" />
+          <inertia ixx="0.03904256026963631" ixy="0.0" ixz="0.0" iyy="0.03904256026963631" iyz="0.0"
+            izz="0.005122799999999999" />
+        </inertial>
+      </link>
+      <link name="wrist_1_link">
+        <visual>
+          <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.127" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/visual/wrist1.dae" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.127" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/collision/wrist1.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="1.37" />
+          <origin rpy="0 0 0" xyz="0 0 0" />
+          <inertia ixx="0.0028769988492000002" ixy="0.0" ixz="0.0" iyy="0.0028769988492000002" iyz="0.0"
+            izz="0.0024660000000000003" />
+        </inertial>
+      </link>
+      <link name="wrist_2_link">
+        <visual>
+          <origin rpy="0 0 0" xyz="0 0 -0.0997" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/visual/wrist2.dae" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin rpy="0 0 0" xyz="0 0 -0.0997" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/collision/wrist2.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="1.3" />
+          <origin rpy="0 0 0" xyz="0 0 0" />
+          <inertia ixx="0.002729998908" ixy="0.0" ixz="0.0" iyy="0.002729998908" iyz="0.0" izz="0.00234" />
+        </inertial>
+      </link>
+      <link name="wrist_3_link">
+        <visual>
+          <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.0989" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/visual/wrist3.dae" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.0989" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5e/collision/wrist3.stl" />
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="0.365" />
+          <origin rpy="0 0 0" xyz="0.0 0.0 -0.0229" />
+          <inertia ixx="0.00019212345231725498" ixy="0.0" ixz="0.0" iyy="0.00019212345231725498"
+            iyz="0.0" izz="0.000256640625" />
+        </inertial>
+      </link>
+      <joint name="base_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <parent link="world" />
+        <child link="base_link" />
+      </joint>
+      <joint name="base_link-base_link_inertia" type="fixed">
+        <parent link="base_link" />
+        <child link="base_link_inertia" />
+        <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
+      </joint>
+      <joint name="shoulder_pan_joint" type="revolute">
+        <parent link="base_link_inertia" />
+        <child link="shoulder_link" />
+        <origin rpy="0 0 0" xyz="0 0 0.1625" />
+        <axis xyz="0 0 1" />
+        <limit effort="150.0" lower="-6.283185307179586" upper="6.283185307179586"
+          velocity="3.141592653589793" />
+        <dynamics damping="0" friction="0" />
+      </joint>
+      <joint name="shoulder_lift_joint" type="revolute">
+        <parent link="shoulder_link" />
+        <child link="upper_arm_link" />
+        <origin rpy="1.570796327 0 0" xyz="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="150.0" lower="-6.283185307179586" upper="6.283185307179586"
+          velocity="3.141592653589793" />
+        <dynamics damping="0" friction="0" />
+      </joint>
+      <joint name="elbow_joint" type="revolute">
+        <parent link="upper_arm_link" />
+        <child link="forearm_link" />
+        <origin rpy="0 0 0" xyz="-0.425 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="150.0" lower="-3.141592653589793" upper="3.141592653589793"
+          velocity="3.141592653589793" />
+        <dynamics damping="0" friction="0" />
+      </joint>
+      <joint name="wrist_1_joint" type="revolute">
+        <parent link="forearm_link" />
+        <child link="wrist_1_link" />
+        <origin rpy="0 0 0" xyz="-0.3922 0 0.1333" />
+        <axis xyz="0 0 1" />
+        <limit effort="28.0" lower="-6.283185307179586" upper="6.283185307179586"
+          velocity="3.141592653589793" />
+        <dynamics damping="0" friction="0" />
+      </joint>
+      <joint name="wrist_2_joint" type="revolute">
+        <parent link="wrist_1_link" />
+        <child link="wrist_2_link" />
+        <origin rpy="1.570796327 0 0" xyz="0 -0.0997 -2.044881182297852e-11" />
+        <axis xyz="0 0 1" />
+        <limit effort="28.0" lower="-6.283185307179586" upper="6.283185307179586"
+          velocity="3.141592653589793" />
+        <dynamics damping="0" friction="0" />
+      </joint>
+      <joint name="wrist_3_joint" type="revolute">
+        <parent link="wrist_2_link" />
+        <child link="wrist_3_link" />
+        <origin rpy="1.570796326589793 3.141592653589793 3.141592653589793"
+          xyz="0 0.0996 -2.042830148012698e-11" />
+        <axis xyz="0 0 1" />
+        <limit effort="28.0" lower="-6.283185307179586" upper="6.283185307179586"
+          velocity="3.141592653589793" />
+        <dynamics damping="0" friction="0" />
+      </joint>
+      <link name="base" />
+      <joint name="base_link-base_fixed_joint" type="fixed">
+        <origin rpy="0 0 3.141592653589793" xyz="0 0 0" />
+        <parent link="base_link" />
+        <child link="base" />
+      </joint>
+      <link name="flange" />
+      <joint name="wrist_3-flange" type="fixed">
+        <parent link="wrist_3_link" />
+        <child link="flange" />
+        <origin rpy="0 -1.5707963267948966 -1.5707963267948966" xyz="0 0 0" />
+      </joint>
+      <link name="tool0" />
+      <joint name="flange-tool0" type="fixed">
+        <origin rpy="1.5707963267948966 0 1.5707963267948966" xyz="0 0 0" />
+        <parent link="flange" />
+        <child link="tool0" />
+      </joint>
+      <ros2_control name="ur5e" type="system">
+      <hardware>
+          <plugin>aica_core_interfaces/LightWeightInterface</plugin>
+          <param name="ip">0.0.0.0</param>
+          <param name="state_port">1801</param>
+          <param name="command_port">1802</param>
+          <param name="ft_sensor_port">1803</param>
+          <param name="bind_state_port">False</param>
+          <param name="bind_command_port">False</param>
+          <param name="bind_ft_sensor_port">False</param>
+      </hardware>
+        <joint name="shoulder_pan_joint">
+          <command_interface name="position" />
+          <command_interface name="velocity" />
+          <state_interface name="position">
+            <!-- initial position for the mock system and simulation -->
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="velocity">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="effort">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+        </joint>
+        <joint name="shoulder_lift_joint">
+          <command_interface name="position" />
+          <command_interface name="velocity" />
+          <state_interface name="position">
+            <!-- initial position for the mock system and simulation -->
+            <param name="initial_value">-1.57</param>
+          </state_interface>
+          <state_interface name="velocity">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="effort">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+        </joint>
+        <joint name="elbow_joint">
+          <command_interface name="position" />
+          <command_interface name="velocity" />
+          <state_interface name="position">
+            <!-- initial position for the mock system and simulation -->
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="velocity">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="effort">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+        </joint>
+        <joint name="wrist_1_joint">
+          <command_interface name="position" />
+          <command_interface name="velocity" />
+          <state_interface name="position">
+            <!-- initial position for the mock system and simulation -->
+            <param name="initial_value">-1.57</param>
+          </state_interface>
+          <state_interface name="velocity">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="effort">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+        </joint>
+        <joint name="wrist_2_joint">
+          <command_interface name="position" />
+          <command_interface name="velocity" />
+          <state_interface name="position">
+            <!-- initial position for the mock system and simulation -->
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="velocity">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="effort">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+        </joint>
+        <joint name="wrist_3_joint">
+          <command_interface name="position" />
+          <command_interface name="velocity" />
+          <state_interface name="position">
+            <!-- initial position for the mock system and simulation -->
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="velocity">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+          <state_interface name="effort">
+            <param name="initial_value">0.0</param>
+          </state_interface>
+        </joint>
+      </ros2_control>
+    </robot>
+    ```
+    </details>
 4. Save your changes.
-
 5. Inspect the content of the new robot description to find the `hardware` tag. You will notice the following content:
    ```xml
    <hardware>
@@ -533,175 +522,152 @@ duplicating an existing hardware and swap out the plugin in the URDF.
      <param name="bind_ft_sensor_port">False</param>
    </hardware>
    ```
+   The `LightWeightInterface` plugin facilitates communication between the AICA Core and Isaac Lab. For future
+   reference, if you plan to use your own URDF, ensure that the hardware tag is written as shown above.
+6. Finally, open the Point Attractor application from your database and modify the hardware interface to use the newly
+   created `Universal Robots 5e (LightWeightInterface)` hardware:
 
-The `LightWeightInterface` plugin facilitates communication between the AICA Core and Isaac Lab. For future reference, if 
-you plan to connect your own URDF, ensure that the hardware tag is written as shown above.
+    <details>
+      <summary>Point Attractor Application</summary>
 
-
-Finally, open the Point Attractor application from your database and modify the hardware interface to use the newly
-created `Universal Robots 5e (LightWeightInterface)` URDF:
-
-<details>
-  <summary>Point Attractor Application</summary>
-
-```yaml
-schema: 2-0-4
-dependencies:
-  core: v4.4.2
-frames:
-  command:
-    reference_frame: world
-    position:
-      x: 0.328215
-      y: 0.056976
-      z: 0.336586
-    orientation:
-      w: -0.000004
-      x: 1
-      y: 0
-      z: 0
-on_start:
-  load:
-    - hardware: hardware
-    - component: frame_to_signal
-components:
-  frame_to_signal:
-    component: aica_core_components::ros::TfToSignal
-    display_name: Frame to Signal
-    events:
-      transitions:
-        on_load:
-          lifecycle:
-            component: frame_to_signal
-            transition: configure
+        ```yaml
+        schema: 2-0-4
+        dependencies:
+          core: v4.4.2
+        frames:
+          command:
+            reference_frame: world
+            position:
+              x: 0.328215
+              y: 0.056976
+              z: 0.336586
+            orientation:
+              w: -0.000004
+              x: 1
+              y: 0
+              z: 0
+        on_start:
           load:
-            component: signal_point_attractor
-        on_configure:
-          lifecycle:
-            component: frame_to_signal
-            transition: activate
-    parameters:
-      frame: command
-    outputs:
-      pose: /frame_to_signal/pose
-  signal_point_attractor:
-    component: aica_core_components::motion::SignalPointAttractor
-    display_name: Signal Point Attractor
-    events:
-      transitions:
-        on_load:
-          lifecycle:
-            component: signal_point_attractor
-            transition: configure
-        on_configure:
-          lifecycle:
-            component: signal_point_attractor
-            transition: activate
-    inputs:
-      state: /hardware/robot_state_broadcaster/cartesian_state
-      attractor: /frame_to_signal/pose
-    outputs:
-      twist: /signal_point_attractor/twist
-hardware:
-  hardware:
-    display_name: Hardware Interface
-    urdf: Universal Robots 5e (LightWeightInterface)
-    rate: 100
-    events:
-      transitions:
-        on_load:
-          load:
-            - controller: robot_state_broadcaster
-              hardware: hardware
-            - controller: ik_velocity_controller
-              hardware: hardware
-    parameters:
-      ip: 0.0.0.0
-    controllers:
-      robot_state_broadcaster:
-        plugin: aica_core_controllers/RobotStateBroadcaster
-        outputs:
-          cartesian_state: /hardware/robot_state_broadcaster/cartesian_state
-        events:
-          transitions:
-            on_load:
-              switch_controllers:
-                hardware: hardware
-                activate: robot_state_broadcaster
-        display_name: Robot State Broadcaster
-      ik_velocity_controller:
-        plugin: aica_core_controllers/velocity/IKVelocityController
-        inputs:
-          command: /signal_point_attractor/twist
-        events:
-          transitions:
-            on_load:
-              switch_controllers:
-                hardware: hardware
-                activate: ik_velocity_controller
-graph:
-  positions:
-    components:
-      frame_to_signal:
-        x: 240
-        y: 140
-      signal_point_attractor:
-        x: 740
-        y: 360
-    hardware:
-      hardware:
-        x: 1300
-        y: 0
-  edges:
-    on_start_on_start_hardware_hardware:
-      path:
-        - x: 700
-          y: 40
-        - x: 700
-          y: 60
-    hardware_hardware_robot_state_broadcaster_cartesian_state_signal_point_attractor_state:
-      path:
-        - x: 1240
-          y: 540
-        - x: 1240
-          y: 320
-        - x: 720
-          y: 320
-        - x: 720
-          y: 620
-    signal_point_attractor_twist_hardware_hardware_ik_velocity_controller_command:
-      path:
-        - x: 1220
-          y: 620
-        - x: 1220
-          y: 800
-    on_start_on_start_frame_to_signal_frame_to_signal:
-      path:
-        - x: 160
-          y: 40
-        - x: 160
-          y: 200
-    frame_to_signal_on_load_signal_point_attractor_signal_point_attractor:
-      path:
-        - x: 680
-          y: 320
-        - x: 680
-          y: 420
-    frame_to_signal_pose_signal_point_attractor_attractor:
-      path:
-        - x: 680
-          y: 400
-        - x: 680
-          y: 660
+            - component: signal_point_attractor
+            - hardware: hardware
+            - component: frame_to_signal
+        components:
+          frame_to_signal:
+            component: aica_core_components::ros::TfToSignal
+            display_name: Frame to Signal
+            events:
+              transitions:
+                on_load:
+                  lifecycle:
+                    component: frame_to_signal
+                    transition: configure
+                on_configure:
+                  lifecycle:
+                    component: frame_to_signal
+                    transition: activate
+            parameters:
+              frame: target
+            outputs:
+              pose: /frame_to_signal/pose
+          signal_point_attractor:
+            component: aica_core_components::motion::SignalPointAttractor
+            display_name: Signal Point Attractor
+            events:
+              transitions:
+                on_load:
+                  lifecycle:
+                    component: signal_point_attractor
+                    transition: configure
+                on_configure:
+                  lifecycle:
+                    component: signal_point_attractor
+                    transition: activate
+            inputs:
+              state: /hardware/robot_state_broadcaster/cartesian_state
+              attractor: /frame_to_signal/pose
+            outputs:
+              twist: /signal_point_attractor/twist
+        hardware:
+          hardware:
+            display_name: Hardware Interface
+            urdf: Universal Robots 5e (LightWeightInterface)
+            rate: 100
+            events:
+              transitions:
+                on_load:
+                  load:
+                    - controller: robot_state_broadcaster
+                      hardware: hardware
+                    - controller: ik_velocity_controller
+                      hardware: hardware
+            controllers:
+              robot_state_broadcaster:
+                plugin: aica_core_controllers/RobotStateBroadcaster
+                outputs:
+                  cartesian_state: /hardware/robot_state_broadcaster/cartesian_state
+                events:
+                  transitions:
+                    on_load:
+                      switch_controllers:
+                        hardware: hardware
+                        activate: robot_state_broadcaster
+              ik_velocity_controller:
+                plugin: aica_core_controllers/velocity/IKVelocityController
+                inputs:
+                  command: /signal_point_attractor/twist
+                events:
+                  transitions:
+                    on_load:
+                      switch_controllers:
+                        hardware: hardware
+                        activate: ik_velocity_controller
+        graph:
+          positions:
+            components:
+              frame_to_signal:
+                x: 200
+                y: 600
+              signal_point_attractor:
+                x: 660
+                y: 520
+            hardware:
+              hardware:
+                x: 1120
+                y: -20
+          edges:
+            on_start_on_start_signal_point_attractor_signal_point_attractor:
+              path:
+                - x: 380
+                  y: 40
+                - x: 380
+                  y: 580
+            on_start_on_start_frame_to_signal_frame_to_signal:
+              path:
+                - x: 140
+                  y: 40
+                - x: 140
+                  y: 660
+            hardware_hardware_robot_state_broadcaster_cartesian_state_signal_point_attractor_state:
+              path:
+                - x: 620
+                  y: 520
+                - x: 620
+                  y: 780
+        ```
+    </details>
+
+## Running the example
+
+All the pieces to to run this example are now in place.
+
+Launch the simulator inside the Isaac Lab development environment Docker container using:
+
+```shell
+python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene --command_interface velocities
 ```
 
-</details>
-
-### Running the AICA Application
-
-When the simulator is running, you can execute your AICA application by first choosing the UR5e URDF file that you just
-created with the hardware plugin being the `LightWeightInterface`, and then starting the application by clicking the
-**Play** button in the **AICA Studio**.
+Then, play your AICA application from the previous step. Go to the 3D view and drag the `command` frame around to move
+the robot in space.
 
 Here is a screenshot of the AICA application running with the Isaac Lab simulator:
 
@@ -709,7 +675,7 @@ Here is a screenshot of the AICA application running with the Isaac Lab simulato
   <img src={application} alt="Point Attractor Example" />
 </div>
 
-## Beware
+### Beware
 
 When running the AICA System and Isaac Lab simulator, there are several important points to keep in mind to ensure safe
 and reliable performance:
