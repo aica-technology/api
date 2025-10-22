@@ -14,7 +14,14 @@ AICA's `core-vision` package includes, among others, the `CameraStreamer` compon
 USB devices, network streams, or video files. Most of the standard consumer-grade webcams and video formats are
 supported out-of-the-box.
 
-This guide shows the basics on how to use the component with a camera and a video file, two very common choices.
+This guide shows the basics on how to use the component with a camera.
+
+:::tip
+
+Working with a video file or network stream is also possible by providing the absolute file or network address instead
+of a camera device.
+
+:::
 
 ## AICA Launcher configuration
 
