@@ -51,7 +51,7 @@ this guide builds on that example.
 ## Installing Isaac Lab
 
 Begin by cloning AICA's fork of
-[Isaac Lab](https://github.com/aica-technology/isaac-lab/tree/f17384a1b487630128b4782ce02166565ef4464f/).
+[Isaac Lab](https://github.com/aica-technology/isaac-lab/tree/02ea0152d820699185ba3f656e04678c2e691f6e/).
 
 Once the repository is cloned, build and start the Docker container by running:
 
@@ -89,7 +89,7 @@ for more details.
 
 To create a new scene, you should define a scene configuration class that inherits from `InteractiveSceneCfg`. Various
 examples of scene config classes can be found in the
-[scenes](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes)
+[scenes](https://github.com/aica-technology/isaac-lab/blob/02ea0152d820699185ba3f656e04678c2e691f6e/scripts/custom/aica_bridge/scenes)
 directory of the Isaac Lab repository.
 
 :::note
@@ -102,7 +102,7 @@ users may export the scene from Isaac Lab as URDF and install it within AICA Sys
 
 Once you've defined your scene configuration class, register it by adding a corresponding key to the `scenes` dictionary
 located in
-[this file](https://github.com/aica-technology/isaac-lab/blob/f17384a1b487630128b4782ce02166565ef4464f/scripts/custom/aica_bridge/scenes/__init__.py).
+[this file](https://github.com/aica-technology/isaac-lab/blob/02ea0152d820699185ba3f656e04678c2e691f6e/scripts/custom/aica_bridge/scenes/__init__.py).
 After registering the scene, you can launch it by running the following command in the development environment:
 
 ```shell
