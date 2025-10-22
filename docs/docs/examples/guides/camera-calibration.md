@@ -19,12 +19,11 @@ pose reconstruction, depth reasoning, or robot alignment).
 
 ## AICA helpers for calibrating cameras
 
-In a typical ROS scenario, you may have a camera whose image is published as a `sensor_msgs::msg::Image` signal or a USB
-camera that you can use with the [`CameraStreamer` component](./camera-streamer.md) to create said signal. For the
-following guide, we assume, and it is required, that you have a source that publishes the image stream as a
-`sensor_msgs::msg::Image`.
+In a typical ROS scenario, you may have a camera whose image is published as a `sensor_msgs::msg::Image` signal, a camera officially supported by an AICA collection release, or a USB
+camera that you can use with the [`CameraStreamer` component](./camera-streamer.md). For the
+following guide, it is required that you have a source, either a ROS node or an AICA component, that publishes this type of signal.
 
-Once a `sensor_msgs::msg::Image` signal is established for your camera, clone our docker image repository:
+Once the camera is streaming, clone our docker image repository:
 
 ```shell
 https://github.com/aica-technology/docker-images.git
@@ -41,8 +40,7 @@ container with the camera calibration software as an entrypoint.
 
 Before running the script, make sure to generate a **checkerboard** pattern (e.g., from
 [here](https://calib.io/pages/camera-calibration-pattern-generator)). The calibrator will use this pattern to determine
-how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort an image
-coming from your camera. Take note of the checkerboard width, height, and box size. Notice that the calibrator is
+how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort images from your camera. Take note of the checkerboard width, height, and box size. Notice that the calibrator is
 detecting the internal corners of the outermost boxes, so a 8x11 checkerboard will have a 7x10 area with which the
 calibrator will work. Print the checkerboard and attach it to a flat surface throughout the calibration process.
 Then, run the `build-run.sh` script specifying the necessary parameters similarly to:
@@ -52,7 +50,7 @@ Then, run the `build-run.sh` script specifying the necessary parameters similarl
 ```
 
 Notice that the calibration square side size is in meters. If you are using AICA's `CameraStreamer` component to produce
-an image stream, the above command should already work. If you are using your own node to stream images, you will likely
+the image stream, the above command should already work. If you are using your own node to stream images, you will likely
 need to specify which topic the calibrator needs to subscribe to by adding the `--calibration-topic YOUR_ROS_TOPIC`
 argument.
 
