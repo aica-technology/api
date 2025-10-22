@@ -53,7 +53,7 @@ this guide builds on that example.
 Begin by cloning AICA's fork of
 [Isaac Lab](https://github.com/aica-technology/isaac-lab/tree/v0.1.0).
 
-Once the repository is cloned, build and start the Docker container by running:
+Once you’ve cloned the repository, check out the `v0.1.0` tag, then build and start the Docker container by running:
 
 ```shell
 python3 docker/container.py start
