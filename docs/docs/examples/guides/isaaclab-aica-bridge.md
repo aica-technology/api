@@ -136,8 +136,8 @@ introduced below.
   default is 1801, and it must match the `state_port` specified in the hardware interface configuration.
 - **command_port**: The port used to stream commands from the hardware interface in AICA Studio to the simulator. The
   default is 1802, and it must match the `command_port` in the hardware interface configuration.
-- **ft_sensor_port**: The port used to stream force/torque measurements from the simulator to the hardware interface in AICA
-  Studio. The default is 1803, and it must match the `ft_sensor_port` in the hardware interface configuration.
+- **ft_sensor_port**: The port used to stream force/torque measurements from the simulator to the hardware interface in
+  AICA Studio. The default is 1803, and it must match the `ft_sensor_port` in the hardware interface configuration.
 - **joint_names**: Lists the joint names that will be controlled through AICA Studio. For example, if you are using a
   Franka Panda robot with a gripper but only want to control the arm, you can specify:  
    `panda_joint1, panda_joint2, panda_joint3, panda_joint4, panda_joint5, panda_joint6, panda_joint7`. The
