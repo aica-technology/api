@@ -10,12 +10,11 @@ import cameraStreamerExample from './assets/camera-streamer-example.png'
 
 # CameraStreamer camera component
 
-AICA's `core-vision` package includes, among others, the `CameraStreamer` component that is responsible for reading
-image streams from USB devices, network streams, or video files. Most of the standard consumer-grade webcams and video
-formats are supported out-of-the-box.
+AICA's `core-vision` package includes, among others, the `CameraStreamer` component that can read image streams from
+USB devices, network streams, or video files. Most of the standard consumer-grade webcams and video formats are
+supported out-of-the-box.
 
-This guide describes shows the basics on how to use the component with a camera and a video file, two very common
-choices.
+This guide shows the basics on how to use the component with a camera and a video file, two very common choices.
 
 ## AICA Launcher configuration
 
@@ -26,10 +25,6 @@ For a 1-to-1 experience use **AICA Core v5.0.0 or higher**, but note that `Camer
 starting v4.4.2.
 
 Select **Launch AICA Studio** to proceed.
-
-:::note
-It is recommended that you use AICA Launcher v1.4.1 or higher
-:::
 
 ## Using CameraStreamer
 
@@ -52,10 +47,12 @@ By this point, you should have something like the following:
 Before pressing play, let us go through the parameters first. You should see:
 
 - **Rate**: This is the component's rate, but it has no effect on the operation of `CameraStreamer`
-- **Source**: Path to the source device or video file
+- **Source**: Path to the source device or video file. If using a camera, this is typically of the form `/dev/videoX`,
+whereas for video files you need to provide the absolute path to the video, e.g., `/path/to/video`
 - **Camera frame**: The reference frame that will be used when publishing image messages, which should correspond the
 camera's sensor position
-- **Camera configuration**: A YAML-formatted camera configuration file containing the camera intrinsics (optional)
+- **Camera configuration**: A YAML-formatted camera configuration file containing the camera intrinsics (optional).
+<!-- TODO: If you don't have a calibration file for your camera, you can follow our [calibration guide](./camera-calibration.md) -->
 - **Frame width**: The desired image width
 - **Frame height**: The desired image height
 - **Frame rate**: The desired frame rate for image streaming
@@ -77,6 +74,6 @@ requested is not supported.
 
 Once you have selected an appropriate **source**:
 
-6. Press **Play** to start the application.
-7. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
-8. In RViz, select _Add > By topic > /camera_streamer/image > Image_. This adds a panel that shows the live image. The undistorted image (if available) can also be found under _/camera_streamer/undistorted_image > Image_.
+1. Press **Play** to start the application.
+2. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
+3. In RViz, select _Add > By topic > /camera_streamer/image > Image_. This adds a panel that shows the live image. The undistorted image (if available) can also be found under _/camera_streamer/undistorted_image > Image_.
