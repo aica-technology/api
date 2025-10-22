@@ -131,7 +131,7 @@ introduced below.
   here needs to correspond to the name of the sensor in the URDF.
   :::
 - **ip_address**: Indicates the IP address of the machine running AICA Core. If the simulator and AICA Core are on the
-  same network, keep the default `"*"`.
+  same network, keep the default `*`.
 - **state_port**: The port used to stream state updates from the simulator to the hardware interface in AICA Studio. The
   default is 1801, and it must match the `state_port` specified in the hardware interface configuration.
 - **command_port**: The port used to stream commands from the hardware interface in AICA Studio to the simulator. The
@@ -140,16 +140,16 @@ introduced below.
   Studio. The default is 1803, and it must match the `ft_sensor_port` in the hardware interface configuration.
 - **joint_names**: Lists the joint names that will be controlled through AICA Studio. For example, if you are using a
   Franka Panda robot with a gripper but only want to control the arm, you can specify:  
-   `"panda_joint1", "panda_joint2", "panda_joint3", "panda_joint4", "panda_joint5", "panda_joint6", "panda_joint7"`. The
+   `panda_joint1, panda_joint2, panda_joint3, panda_joint4, panda_joint5, panda_joint6, panda_joint7`. The
   simulator will then only send states and accept commands for those joints. If you want to control all joints, you can
-  keep the default `".*"`.
-- **command_interface**: Defines the command type accepted by the simulator. The default is `"positions"`, but you can
-  set it to `"velocities"` or `"torques"` as needed. The choice of command type depends on the controller used in AICA
+  keep the default `.*`.
+- **command_interface**: Defines the command type accepted by the simulator. The default is `positions`, but you can
+  set it to `velocities` or `torques` as needed. The choice of command type depends on the controller used in AICA
   Studio. If a mismatched command type is received, the simulator will stop with a `ValueError`.
 - **headless**: When set to `true`, runs the simulator in headless mode (e.g. without opening user interface), useful
   for remote simulations or running the simulation at high frequencies.
 - **device**: Specifies the compute device for the simulation. The default is `cuda` for GPU acceleration, but you can
-  switch to `"cpu"` if GPU resources are unavailable.
+  switch to `cpu` if GPU resources are unavailable.
 
 Ensure these parameters are correctly configured to enable seamless communication between the simulator and your AICA
 application. In case you want to run the simulator with different parameters, you can do so by running the following
