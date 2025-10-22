@@ -111,7 +111,7 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene <your_scene_name>
 
 In this example we will run the `basic_scene` scene, which is already registered in the `scenes` dictionary.
 
-### Running the Isaac Lab Simulator
+## Running the Isaac Lab Simulator
 
 The simulator provides a list of parameters that you should understand before configuring it:
 
@@ -180,7 +180,7 @@ duplicating an existing hardware and swap out the plugin in the URDF.
 2. Click on the `Universal Robots 5e (mock interface)` to open it and use **Save As** to create a copy with a new name
    and description. For example, name it `Universal Robots 5e (LightWeightInterface)` as this is the name used in the
    example attached below.
-3. Replace the content of the URDF with the following.
+3. Replace the content of the URDF with the following and click **Save**.
     <details>
       <summary>UR5e URDF using the `LightWeightInterface`</summary>
     ```xml
@@ -535,7 +535,7 @@ duplicating an existing hardware and swap out the plugin in the URDF.
         dependencies:
           core: v4.4.2
         frames:
-          command:
+          target:
             reference_frame: world
             position:
               x: 0.328215
