@@ -3,7 +3,7 @@ sidebar_position: 11
 title: Using Isaac Lab as a simulator
 ---
 
-import application from './assets/isaaclab-aica-bridge-application.png'
+import application from './assets/isaaclab-aica-bridge-application.gif'
 import scene from './assets/isaaclab-aica-bridge-sim-scene.png'
 
 # Using Isaac Lab as a simulator
@@ -668,8 +668,6 @@ python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene --command_i
 
 Then, play your AICA application from the previous step. Go to the 3D view and drag the `command` frame around to move
 the robot in space.
-
-Here is a screenshot of the AICA application running with the Isaac Lab simulator:
 
 <div class="text--center">
   <img src={application} alt="Point Attractor Example" />
