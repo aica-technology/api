@@ -41,7 +41,7 @@ Start by creating a new application.
 2. From the `Scene` menu, use the `Add Component` tab and look for the **Camera Streamer** component either by searching
 or by manually going under the `Core Vision Components` menu. Click to add it to the graph.
 3. Next, connect the component to the start block.
-4. Enable **auto-configure** and **auto-activate**
+4. Enable **auto-configure** and **auto-activate**.
 5. With your new component selected, make sure you are in the `Scene` menu, where you may find all the available
 component parameters.
 
@@ -58,7 +58,7 @@ Before pressing play, let us go through the parameters first. You should see:
 whereas for video files you need to provide the absolute path to the video, e.g., `/path/to/video`
 - **Camera frame**: The reference frame that will be used when publishing image messages, which should correspond the
 camera's sensor position
-- **Camera configuration**: A YAML-formatted camera configuration file containing the camera intrinsics (optional).
+- **Camera configuration**: A YAML-formatted camera configuration file containing the camera intrinsics (optional)
 <!-- TODO: If you don't have a calibration file for your camera, you can follow our [calibration guide](./camera-calibration.md) -->
 - **Frame width**: The desired image width
 - **Frame height**: The desired image height
