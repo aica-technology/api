@@ -53,20 +53,20 @@ By this point, you should have something like the following:
 
 Before pressing play, let us go through the parameters first. You should see:
 
-- **Rate**: This is the component's rate, but it has no effect on the operation of `CameraStreamer`
+- **Rate**: This is the component's rate, but it has no effect on the operation of `CameraStreamer`.
 - **Source**: Path to the source device or video file. If using a camera, this is typically of the form `/dev/videoX`,
-whereas for video files you need to provide the absolute path to the video, e.g., `/path/to/video`
+whereas for video files you need to provide the absolute path to the video, e.g., `/path/to/video`.
 - **Camera frame**: The reference frame that will be used when publishing image messages, which should correspond the
-camera's sensor position
-- **Camera configuration**: A YAML-formatted camera configuration file containing the camera intrinsics (optional)
-<!-- TODO: If you don't have a calibration file for your camera, you can follow our [calibration guide](./camera-calibration.md) -->
-- **Frame width**: The desired image width
-- **Frame height**: The desired image height
-- **Frame rate**: The desired frame rate for image streaming
+camera's sensor position.
+- **Camera configuration**: A YAML-formatted camera configuration file containing the camera intrinsics (optional). If
+you don't have a calibration file for your camera, you can follow our [calibration guide](./camera-calibration.md).
+- **Frame width**: The desired image width.
+- **Frame height**: The desired image height.
+- **Frame rate**: The desired frame rate for image streaming.
 - **Crop undistorted image**: If a camera configuration file is available, this option indicates whether black-pixel
 regions created at the edges of the image post-undistortion should be cropped. Mind that this also crops part of the
 image that contains usable pixels.
-- **Stream encoding**: Sets the output encoding of the image stream
+- **Stream encoding**: Sets the output encoding of the image stream.
 
 :::info
 
