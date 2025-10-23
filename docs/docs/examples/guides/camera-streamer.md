@@ -33,7 +33,7 @@ starting v4.4.2.
 
 Select **Launch AICA Studio** to proceed.
 
-## Using CameraStreamer
+## Using the CameraStreamer
 
 Start by creating a new application.
 
