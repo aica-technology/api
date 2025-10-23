@@ -18,7 +18,7 @@ This guide shows the basics on how to use the component with a camera.
 
 :::tip
 
-Working with a video file or network stream is also possible by providing the absolute file or network address instead
+Working with a video file or network stream is also possible by providing the filepath or network address instead
 of a camera device.
 
 :::
