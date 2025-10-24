@@ -14,7 +14,7 @@ to guide a robot toward a specific target. By continuously generating motion com
 components enable reaching, positioning, and interaction tasks, making them useful for applications such as
 pick-and-place, assembly, and human-robot collaboration.
 
-As described [here](../../concepts/robotics-concepts/motion-generation.md), the motion
+As described [here](../../../docs/concepts/robotics-concepts/motion-generation.md), the motion
 of a Point Attractor DS is always directed toward a point in space, the attractor. The core components come with two
 implementations of a Point Attractor, the `Signal Point Attractor` which acts on signals in Cartesian space and the
 `Signal Joint Point Attractor` which has the same behavior in joint space.
@@ -49,7 +49,7 @@ help to detect when that is achieved such that other events can be triggered:
 Changing the parameters of the component will tune the response and decide at which threshold the predicates switch:
 
 - Linear and angular gains: As shown
-  [here](../../concepts/robotics-concepts/motion-generation.md#point-attractor-dynamical-system), the function of the DS
+  [here](../../../docs/concepts/robotics-concepts/motion-generation.md#point-attractor-dynamical-system), the function of the DS
   contains an additional scaling constant $K$, represented by the linear and angular gains parameters here. The higher
   these values are, the higher the generated velocity. Both parameters are of type vector, so it is also possible to set
   different gains per axis, or even disabling motion along some axis entirely.
@@ -71,7 +71,7 @@ To set up this example, follow the steps below.
 2. In the same application, add the `Frame to Signal` component. Open its parameter settings, turn on auto-configure and
    auto-activate and set the required parameter `Frame` to the name of the recorded frame from step 1.
    :::tip
-   Learn more about the `Frame to Signal` component [here](../../concepts/building-blocks/frames.md#frame-to-signal).
+   Learn more about the `Frame to Signal` component [here](../../../docs/concepts/building-blocks/frames.md#frame-to-signal).
    :::
 3. Add the `Signal Point Attractor` to the graph and enable auto-configure and auto-activate. Then, connect the `Pose`
    output of the component from step 2 with the `Attractor pose` input. Also connect the `Cartesian state` output of the

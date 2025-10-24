@@ -15,7 +15,7 @@ import jtcGuideFinalApp from './assets/jtc-guide-final-app.gif'
 
 # A guide on joint trajectory workflows
 
-In our concepts page for the [Joint Trajectory Controller](../../concepts/building-blocks/controllers/jtc.md)
+In our concepts page for the [Joint Trajectory Controller](../../../docs/concepts/building-blocks/controllers/jtc.md)
 (JTC) we already covered why trajectory controllers are often needed in robotics. In short, executing trajectories,
 in joint or Cartesian space, is often a fundamental piece of a robotics application workflow. Whether you need to
 address pick and place tasks, or simply move through predetermined locations, you are in need of a controller that is

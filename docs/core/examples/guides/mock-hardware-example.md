@@ -45,7 +45,7 @@ The mock URDF will be used to demonstrate the hardware interface block in AICA a
 
 :::info
 
-Refer to the overview section [Controlling robots with ros2_control](../../concepts/ros-concepts/controlling-robots.md) for
+Refer to the overview section [Controlling robots with ros2_control](../../../docs/concepts/ros-concepts/controlling-robots.md) for
 more context.
 
 :::
@@ -144,7 +144,7 @@ robot joint states and transforms.
 :::tip
 
 Learn more about available properties for application hardware on
-the [YAML application syntax](../../reference/yaml-syntax.md) reference page.
+the [YAML application syntax](../../../docs/reference/yaml-syntax.md) reference page.
 
 :::
 

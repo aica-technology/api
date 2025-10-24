@@ -37,7 +37,7 @@ component to open its settings panel. The settings panel can be closed with the 
 Because the timer components are lifecycle components, they only count down the time when they are active. By default,
 the "Load" or "Transition" events start the lifecycle component in an unconfigured state. The "auto-configure" and
 "auto-activate" toggle switches can be used to enable or disable
-[auto-lifecycle events](../../concepts/building-blocks/components.md#auto-lifecycle-events).
+[auto-lifecycle events](../../../docs/concepts/building-blocks/components.md#auto-lifecycle-events).
 
 When both toggle switches are enabled, the YAML code will show the corresponding events for the componnts: 
 

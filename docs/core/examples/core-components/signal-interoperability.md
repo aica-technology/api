@@ -10,7 +10,7 @@ import signalRosPose from './assets/signal-ros-pose.png'
 
 # Signal interoperability
 
-As described in the [signals page](../../concepts/building-blocks/signals.md), AICA signals make it easy to exchange
+As described in the [signals page](../../../docs/concepts/building-blocks/signals.md), AICA signals make it easy to exchange
 Cartesian and joint state variables in an internally consistent way. In components, state signals are automatically
 converted into smart data classes that provide useful functions for conversions, transformations and other
 manipulations.
