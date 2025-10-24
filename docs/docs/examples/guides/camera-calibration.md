@@ -61,16 +61,16 @@ container with the camera calibration software as an entrypoint.
 Then, run the `build-run.sh` script specifying the necessary parameters similarly to:
 
 ```shell
-./build-run.sh --calibration-height 7 --calibration-width 11 --calibration-square 0.015
+./build-run.sh --calibration-height 7 --calibration-width 10 --calibration-square 0.015
 ```
 
 where the calibration square sizes are in meters.
 
 :::warning
 
-If you are using AICA's `CameraStreamer` component to produce the image stream, the above command should already work.
+If you are using AICA's `CameraStreamer` example to produce the image stream, the above command should already work.
 If you are using your own node to stream images, you will likely need to specify which topic the calibrator needs to
-subscribe to by adding the `--calibration-topic YOUR_ROS_TOPIC` argument.
+subscribe to by adding the `--calibration-topic YOUR_ROS_TOPIC` argument to the command above.
 
 :::
 
@@ -88,8 +88,8 @@ Back at your host computer's filesystem, you will notice a `calibration` directo
 `docker-image/camera_calibration` that contains a compressed file. The file itself contains the images that were sampled
 along with a YAML file containing the camera calibration information.
 
-Finally, move the YAML file into the `data` folder of your AICA configuration such that it becomes available within AICA
-containers.
+Finally, move the YAML file into the `data` folder of your AICA configuration such that it becomes available from AICA
+Studio.
 
 <div class="text--center">
   <img src={cameraCalibration} alt="Camera calibration process" />
