@@ -46,5 +46,5 @@ traverse.
 
 Additional parameters can be modified to fine tune how JTC behaves (for example, PID gains for velocity control,
 constraints for time and goal accuracy, and more). For more practical information on JTC refer to our
-[basic example](../../../examples/core-controllers/jtc-example.md) and our advanced 
-[guide on JTC workflows](../../../examples/guides/jtc-guide.md).
+[basic example](../../../../core/examples/core-controllers/jtc-example.md) and our advanced 
+[guide on JTC workflows](../../../../core/examples/guides/jtc-guide.md).
