@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 12
 title: Camera calibration
 ---
 
@@ -19,17 +19,38 @@ pose reconstruction, depth reasoning, or robot alignment).
 
 ## AICA helpers for calibrating cameras
 
-In a typical ROS scenario, you may have a camera whose image is published as a `sensor_msgs::msg::Image` signal, a camera officially supported by an AICA collection release, or a USB
-camera that you can use with the [`CameraStreamer` component](./camera-streamer.md). For the
-following guide, it is required that you have a source, either a ROS node or an AICA component, that publishes this type of signal.
+If using the `CameraStreamer` with a camera with unknown calibration, follow this guide. Official camera drivers (such
+as RealSense and Orbbec) do it already and don't need to be calibrated (usually).
 
-Once the camera is streaming, clone our docker image repository:
+:::note
+
+Instead of using `CameraStreamer`, this can be done with any ROS node publishing `sensor_msgs::msg::Image` messages.
+
+:::
+
+Once you have a established an image stream:
+
+1. Make sure to generate a **checkerboard** pattern (e.g., from
+[here](https://calib.io/pages/camera-calibration-pattern-generator)). The calibrator will use this pattern to determine
+how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort images from
+your camera. Take note of the checkerboard width, height, and box size as you will need it later. Print the checkerboard
+and attach it to a flat surface throughout the calibration process.
+
+:::tip
+
+Notice that the calibrator is
+detecting the internal corners of the outermost boxes, so a 8x11 checkerboard will have a 7x10 area with which the
+calibrator will work.
+
+:::
+
+2. Clone our docker image repository in a directory of your choice:
 
 ```shell
-https://github.com/aica-technology/docker-images.git
+git clone https://github.com/aica-technology/docker-images.git && cd docker-images
 ```
 
-and open a terminal at the root of `docker-images`. Then:
+then:
 
 ```shell
 cd camera_calibration
@@ -38,34 +59,39 @@ cd camera_calibration
 Within that folder you will find a `build-run.sh` script that, as the name suggests, will build a Docker image and run a
 container with the camera calibration software as an entrypoint.
 
-Before running the script, make sure to generate a **checkerboard** pattern (e.g., from
-[here](https://calib.io/pages/camera-calibration-pattern-generator)). The calibrator will use this pattern to determine
-how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort images from your camera. Take note of the checkerboard width, height, and box size. Notice that the calibrator is
-detecting the internal corners of the outermost boxes, so a 8x11 checkerboard will have a 7x10 area with which the
-calibrator will work. Print the checkerboard and attach it to a flat surface throughout the calibration process.
+
 Then, run the `build-run.sh` script specifying the necessary parameters similarly to:
 
 ```shell
 ./build-run.sh --calibration-height 7 --calibration-width 11 --calibration-square 0.015
 ```
 
-Notice that the calibration square side size is in meters. If you are using AICA's `CameraStreamer` component to produce
-the image stream, the above command should already work. If you are using your own node to stream images, you will likely
-need to specify which topic the calibrator needs to subscribe to by adding the `--calibration-topic YOUR_ROS_TOPIC`
-argument.
+where the calibration square sizes are in meters.
+
+:::warning
+
+If you are using AICA's `CameraStreamer` component to produce the image stream, the above command should already work.
+If you are using your own node to stream images, you will likely need to specify which topic the calibrator needs to
+subscribe to by adding the `--calibration-topic YOUR_ROS_TOPIC` argument.
+
+:::
 
 After successfully executing the script, a pop-up window displaying your image stream should appear. If the window is
-not displaying the image stream, make sure that your image streaming component is running and, for non-`CameraStreamer`
-nodes, that the correct topic name is set.
+not displaying the image stream, make sure you followed the above steps correctly.
 
-Move the checkerboard in various positions and orientations until the `CALIBRATE` button is no longer grayed out (and
-most of the bars are green, indicating good sample size). Once it becomes available, press on it to start computing the
-camera matrices. After it becomes available, click on the `SAVE` button to save a recording of the process. You
-will notice a `calibration` directory has been created on your host machine under `docker-image/camera_calibration` that
-contains a compressed file. The file itself contains the images that were sampled along with a YAML file containing the
-camera calibration information. Finally, move this file into the `data` folder of your AICA configuration such that it
-becomes available within AICA containers. When using `CameraStreamer`, you only need to specify the calibration's path.
-For custom components, make sure to read the camera parameters and apply the necessary undistortion technique(s).
+When you can see a live feed of your camera:
+
+- Move the checkerboard in various positions and orientations until the `CALIBRATE` button is no longer grayed out (and
+most of the bars are green, indicating good sample size).
+- Once `CALIBRATE` becomes available, press on it to start computing the camera matrices.
+- After it becomes available, click on the `SAVE` button to save a recording of the process.
+
+Back at your host computer's filesystem, you will notice a `calibration` directory has been created on under
+`docker-image/camera_calibration` that contains a compressed file. The file itself contains the images that were sampled
+along with a YAML file containing the camera calibration information.
+
+Finally, move the YAML file into the `data` folder of your AICA configuration such that it becomes available within AICA
+containers.
 
 <div class="text--center">
   <img src={cameraCalibration} alt="Camera calibration process" />
