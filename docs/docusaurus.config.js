@@ -58,11 +58,10 @@ const config = {
 				remarkPlugins: [remarkMath],
 				rehypePlugins: [rehypeKatex],
 				sidebarPath: "./src/layout/coreSidebars.ts",
-				// TODO: define the versions and labels once v4 has been tagged
-				// versions: {
-				// 	current: { label: "AICA Core v5", path: "", banner: "none" },
-				// 	v4: {label: "AICA Core v4", path: "v4"},
-				// },
+				versions: {
+					current: { label: "AICA Core v5", path: "", banner: "none" },
+					v4: {label: "AICA Core v4", path: "v4"},
+				},
 			},
 		],
 	],
@@ -129,13 +128,12 @@ const config = {
 						label: "REST API",
 						position: "left",
 					},
-					// TODO: enable version dropdown once first version has been tagged
-					// {
-					// 	type: "docsVersionDropdown",
-					// 	docsPluginId: "core",
-					// 	position: "right",
-					// 	dropdownActiveClassDisabled: true,
-					// },
+					{
+						type: "docsVersionDropdown",
+						docsPluginId: "core",
+						position: "right",
+						dropdownActiveClassDisabled: true,
+					},
 					{
 						href: "https://www.github.com/aica-technology",
 						label: "GitHub",
