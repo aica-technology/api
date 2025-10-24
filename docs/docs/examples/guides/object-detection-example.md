@@ -106,9 +106,9 @@ In AICA Launcher, create a configuration with the following core version and pac
 
 - AICA Launcher v1.4.1 or higher
 - AICA Core v5.0.0 or higher
-- `collections/advanced_perception` v1.0.0 for the `YoloExecutor` component <!-- TBD -->
-- `components/core-vision` v1.1.0 or higher for the `CameraStreamer` component
-- CPU or GPU toolkit at v1.0.0
+- `advanced_perception` v1.0.0 for the `YoloExecutor` component
+- `core-vision` v1.0.0 or higher for the `CameraStreamer` component
+- CPU or GPU toolkit at v1.0.0 (subject to change in newer versions of `core-vision` and/or `advanced-perception`)
 
 :::info
 AICA toolkits are the curated way of bundling Machine Learning (ML) and GPU (specifically CUDA) acceleration libraries.
