@@ -1,8 +1,8 @@
 {
-  "label": "Core Components",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "This section contains various application examples using the AICA Core Components."
-  }
+	"label": "Core Components",
+	"position": 2,
+	"link": {
+		"type": "generated-index",
+		"description": "This section contains various application examples using the AICA Core Components."
+	}
 }
