@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 import cameraStreamerExample from './assets/camera-streamer-example.png'
 
-# CameraStreamer camera component
+# CameraStreamer component
 
 AICA's `core-vision` package includes, among others, the `CameraStreamer` component that can read image streams from
 USB devices, network streams, or video files. Most of the standard consumer-grade webcams and video formats are
