@@ -13,7 +13,7 @@ frames are directly included in an AICA application and are available to all com
 
 :::tip
 
-[This guide](../../examples/guides/application-frames.md) contains an in-depth review of methods to create, edit, and
+[This guide](../../../core/examples/guides/application-frames.md) contains an in-depth review of methods to create, edit, and
 record application frames in AICA Studio.
 
 :::
