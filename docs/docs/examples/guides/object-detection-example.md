@@ -36,10 +36,11 @@ can be found under `collections/advanced-perception` with a valid AICA license.
 
 ### [optional] Camera calibration
 
-If your camera lens presents a lot of distortion, you may follow the
-[camera calibration walkthrough](./camera-calibration.md) to generate a camera intrinsics file that you can then use
-with `CameraStreamer`. For the purposes of this example, a camera calibration is not required, but may be needed if you
-are using a high-distortion or fish-eye lens camera.
+For the purposes of this example, a camera calibration is not strictly required, but may be needed if you are using a
+high-distortion or fish-eye lens camera and do not have access to your camera's intrinsic parameters.
+
+If this is your case, follow the [camera calibration example](./camera-calibration.md) to generate a camera intrinsics
+file that you can then use with `CameraStreamer`.
 
 ### Obtaining YOLO inference models
 
@@ -47,14 +48,13 @@ The `YoloExecutor` component works with `.onnx` model files. However, many of th
 available in Pytorch (`.pt`) formats instead. To convert between formats, you can use AICA's utilities to do so within
 a Docker container and maintain your host system unpolluted.
 
-
 First, clone our docker image repository (if you followed the calibration section, you should already have it!):
 
 ```shell
-https://github.com/aica-technology/docker-images.git
+git clone https://github.com/aica-technology/docker-images.git && cd docker-images
 ```
 
-and open a terminal at the root of `docker-images`. Then:
+then:
 
 ```shell
 cd yolo_model_converter
