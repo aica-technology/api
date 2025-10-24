@@ -25,8 +25,7 @@ of a camera device.
 
 ## AICA Launcher configuration
 
-Start the AICA Launcher, select AICA Core v4.4.2 or higher, and add the `core-vision` package to your configuration at
-version v1.0.0 or higher.
+Start AICA Launcher, select AICA Core v4.4.2 or higher, and add the `core-vision` package to your configuration.
 
 Select **Launch AICA Studio** to proceed.
 
