@@ -1,7 +1,6 @@
 ---
 sidebar_position: 14
 title: Using YOLO to track objects
-unlisted: true
 ---
 
 import exampleApp from './assets/object-detection-example-app.gif'
