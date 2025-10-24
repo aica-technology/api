@@ -41,3 +41,9 @@
 .inlineEdgeHandleSVG {
 	margin-bottom: -7px;
 }
+
+.theme-doc-version-badge {
+	font-weight: bold;
+	border-radius: 5px;
+	padding: 4px 8px;
+}

@@ -48,6 +48,24 @@ const config = {
 			}),
 		],
 	],
+	plugins: [
+		[
+			"@docusaurus/plugin-content-docs",
+			{
+				id: "core",
+				path: "core",
+				routeBasePath: "core",
+				remarkPlugins: [remarkMath],
+				rehypePlugins: [rehypeKatex],
+				sidebarPath: "./src/layout/coreSidebars.ts",
+				// TODO: define the versions and labels once v4 has been tagged
+				// versions: {
+				// 	current: { label: "AICA Core v5", path: "", banner: "none" },
+				// 	v4: {label: "AICA Core v4", path: "v4"},
+				// },
+			},
+		],
+	],
 
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -73,18 +91,26 @@ const config = {
 						position: "left",
 						label: "Getting started",
 					},
+					// {
+					// 	type: "docSidebar",
+					// 	docsPluginId: "core",
+					// 	sidebarId: "studioSidebar",
+					// 	position: "left",
+					// 	label: "AICA Studio",
+					// },
 					{
 						type: "docSidebar",
 						sidebarId: "conceptsSidebar",
 						position: "left",
 						label: "Concepts",
 					},
-					{
-						type: "docSidebar",
-						sidebarId: "examplesSidebar",
-						position: "left",
-						label: "Examples",
-					},
+					// {
+					// 	type: "docSidebar",
+					// 	docsPluginId: "core",
+					// 	sidebarId: "examplesSidebar",
+					// 	position: "left",
+					// 	label: "Examples",
+					// },
 					{
 						type: "docSidebar",
 						sidebarId: "programmingReferenceSidebar",
@@ -103,6 +129,13 @@ const config = {
 						label: "REST API",
 						position: "left",
 					},
+					// TODO: enable version dropdown once first version has been tagged
+					// {
+					// 	type: "docsVersionDropdown",
+					// 	docsPluginId: "core",
+					// 	position: "right",
+					// 	dropdownActiveClassDisabled: true,
+					// },
 					{
 						href: "https://www.github.com/aica-technology",
 						label: "GitHub",
