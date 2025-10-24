@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Parameter Range Validation",
+  "description": "Range constraints for numeric parameters as either inclusive or exclusive minimum or maximum bounds",
+  "additionalProperties": false,
+  "properties": {
+    "range": {
+      "additionalProperties": false,
+      "properties": {
+        "minimum": {
+          "type": "number"
+        },
+        "exclusive_minimum": {
+          "type": "number"
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "exclusive_maximum": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

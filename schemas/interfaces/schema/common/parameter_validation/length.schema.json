@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "description": "Fixed length constraint for array or string parameters",
+      "type": "integer",
+      "minimum": 0
+    },
+    {
+      "type": "object",
+      "title": "Parameter Variable Length",
+      "description": "Variable length constraint for array or string parameters as inclusive minimum or maximum bounds",
+      "additionalProperties": false,
+      "properties": {
+        "minimum": {
+          "description": "Lower bound on length as an inclusive minimum",
+          "type": "integer",
+          "minimum": 0
+        },
+        "maximum": {
+          "description": "Upper bound on length as an inclusive maximum",
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  ]
+}

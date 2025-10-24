@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Array Validation",
+  "description": "Validation rules to define length specifiers for arrays and item constraints for array elements",
+  "additionalProperties": false,
+  "properties": {
+    "array": {
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "$ref": "length.schema.json"
+        },
+        "items": {
+          "$ref": "item_validation.schema.json"
+        }
+      }
+    }
+  }
+}

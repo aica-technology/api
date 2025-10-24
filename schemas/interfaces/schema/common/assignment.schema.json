@@ -23,6 +23,7 @@
       "type": "string"
     },
     "assignment_type": {
+      "title": "Assignment Type",
       "$ref": "parameter_type.schema.json"
     },
     "assignment_state_type": {

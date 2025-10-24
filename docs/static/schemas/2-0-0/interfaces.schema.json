@@ -1,0 +1,487 @@
+{
+  "$id": "/2-0-0/interfaces.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Common Interfaces",
+  "description": "This schema includes definitions for common interfaces across the AICA System",
+  "$defs": {
+    "assignment": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Assignment",
+      "description": "A generated value that can be assigned to a parameter or variable value.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "assignment_name": {
+          "description": "The assignment name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
+        },
+        "display_name": {
+          "description": "The human-readable assignment name.",
+          "examples": [
+            "Index",
+            "Target Frame"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "description": "A brief description of the assignment.",
+          "type": "string"
+        },
+        "assignment_type": {
+          "title": "Assignment Type",
+          "$ref": "#/$defs/parameter_type"
+        },
+        "assignment_state_type": {
+          "$ref": "#/$defs/encoded_state_type"
+        }
+      },
+      "required": [
+        "assignment_name",
+        "display_name",
+        "description",
+        "assignment_type"
+      ],
+      "if": {
+        "properties": {
+          "assignment_type": {
+            "const": "state"
+          }
+        },
+        "required": [
+          "assignment_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "assignment_state_type"
+        ]
+      },
+      "else": {
+        "properties": {
+          "assignment_state_type": false
+        }
+      }
+    },
+    "encoded_state_type": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Encoded State Type",
+      "description": "The state type of an encoded value from a collection of supported types, as defined in clproto.",
+      "type": "string",
+      "enum": [
+        "state",
+        "spatial_state",
+        "cartesian_state",
+        "cartesian_pose",
+        "cartesian_twist",
+        "cartesian_acceleration",
+        "cartesian_wrench",
+        "jacobian",
+        "joint_state",
+        "joint_positions",
+        "joint_velocities",
+        "joint_accelerations",
+        "joint_torques",
+        "shape",
+        "ellipsoid",
+        "parameter",
+        "digital_io_state",
+        "analog_io_state"
+      ]
+    },
+    "parameter": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Parameter",
+      "description": "A dynamic parameter that is publicly configurable.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "parameter_name": {
+          "description": "The parameter name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
+        },
+        "display_name": {
+          "description": "The human-readable parameter name.",
+          "examples": [
+            "Reference Frame",
+            "Gain"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "description": "A brief description of the parameter.",
+          "type": "string"
+        },
+        "parameter_type": {
+          "title": "Parameter Type",
+          "$ref": "#/$defs/parameter_type"
+        },
+        "parameter_state_type": {
+          "$ref": "#/$defs/encoded_state_type"
+        },
+        "default_value": {
+          "title": "Default Value",
+          "description": "The default parameter value, or null if the parameter has no valid default value.",
+          "$ref": "#/$defs/parameter_value"
+        },
+        "validation": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Parameter Validation",
+          "description": "Validation rules for parameter values",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/parameter_item_validation"
+            },
+            {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Array Validation",
+              "description": "Validation rules to define length specifiers for arrays and item constraints for array elements",
+              "additionalProperties": false,
+              "properties": {
+                "array": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "length": {
+                      "$ref": "#/$defs/parameter_length_validation"
+                    },
+                    "items": {
+                      "$ref": "#/$defs/parameter_item_validation"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "optional": {
+          "description": "Specify if this parameter is optional (only applicable if the default value is null).",
+          "type": "boolean",
+          "default": false
+        },
+        "dynamic": {
+          "description": "Specify if this parameter can be dynamically reconfigured.",
+          "type": "boolean"
+        },
+        "internal": {
+          "description": "Specify if this parameter is for internal use only and should be hidden from public users.",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "parameter_name",
+        "display_name",
+        "description",
+        "parameter_type",
+        "default_value"
+      ]
+    },
+    "parameter_type": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "description": "The value type of a parameter from a collection of supported types.",
+      "type": "string",
+      "enum": [
+        "bool",
+        "bool_array",
+        "int",
+        "int_array",
+        "double",
+        "double_array",
+        "string",
+        "string_array",
+        "vector",
+        "matrix",
+        "state"
+      ]
+    },
+    "parameter_value": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Parameter Value",
+      "description": "The value assigned to a parameter",
+      "type": [
+        "null",
+        "boolean",
+        "integer",
+        "number",
+        "string",
+        "array"
+      ],
+      "items": {
+        "type": [
+          "boolean",
+          "integer",
+          "number",
+          "string"
+        ]
+      }
+    },
+    "parameter_length_validation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "description": "Fixed length constraint for array or string parameters",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "object",
+          "title": "Parameter Variable Length",
+          "description": "Variable length constraint for array or string parameters as inclusive minimum or maximum bounds",
+          "additionalProperties": false,
+          "properties": {
+            "minimum": {
+              "description": "Lower bound on length as an inclusive minimum",
+              "type": "integer",
+              "minimum": 0
+            },
+            "maximum": {
+              "description": "Upper bound on length as an inclusive maximum",
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        }
+      ]
+    },
+    "parameter_item_validation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Item Validation",
+      "description": "Validation rules for scalar items and strings to define either an enumeration of fixed options, value ranges for numeric parameters, or length and regular expression pattern constraints for strings.",
+      "oneOf": [
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Parameter Validation Options",
+          "description": "A list of permitted parameter value options.",
+          "additionalProperties": false,
+          "properties": {
+            "options": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/parameter_value"
+              }
+            }
+          },
+          "required": [
+            "options"
+          ]
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Parameter Range Validation",
+          "description": "Range constraints for numeric parameters as either inclusive or exclusive minimum or maximum bounds",
+          "additionalProperties": false,
+          "properties": {
+            "range": {
+              "additionalProperties": false,
+              "properties": {
+                "minimum": {
+                  "type": "number"
+                },
+                "exclusive_minimum": {
+                  "type": "number"
+                },
+                "maximum": {
+                  "type": "number"
+                },
+                "exclusive_maximum": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "title": "String Parameter Validation",
+          "description": "Validation for string parameters with character length and pattern constraints as a regular expression",
+          "additionalProperties": false,
+          "properties": {
+            "string": {
+              "oneOf": [
+                {
+                  "title": "String Length",
+                  "additionalProperties": false,
+                  "properties": {
+                    "length": {
+                      "$ref": "#/$defs/parameter_length_validation"
+                    }
+                  },
+                  "required": [
+                    "length"
+                  ]
+                },
+                {
+                  "title": "String Pattern",
+                  "additionalProperties": false,
+                  "properties": {
+                    "pattern": {
+                      "title": "Regular Expression Pattern",
+                      "description": "Refer to: https://json-schema.org/understanding-json-schema/reference/regular_expressions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "pattern"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "predicate": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Predicate",
+      "description": "A predicate of a component or controller.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "predicate_name": {
+          "description": "The predicate name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
+        "display_name": {
+          "description": "The human-readable predicate name.",
+          "type": "string"
+        },
+        "description": {
+          "description": "A brief description of the predicate.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "predicate_name",
+        "display_name",
+        "description"
+      ]
+    },
+    "service": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Service",
+      "description": "A service endpoint of a component or controller.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "service_name": {
+          "description": "The service name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
+        "display_name": {
+          "description": "The human-readable service name.",
+          "type": "string"
+        },
+        "description": {
+          "description": "A brief description of the service.",
+          "type": "string"
+        },
+        "service_type": {
+          "enum": [
+            "empty",
+            "string",
+            "object"
+          ]
+        },
+        "payload_description": {
+          "description": "A description of the service payload.",
+          "type": "string"
+        },
+        "payload_schema": {
+          "description": "A JSON schema defining the expected payload structure of the service when the service has an object type.",
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "enum": [
+                "https://json-schema.org/draft-07/schema",
+                "https://json-schema.org/draft/2019-09/schema",
+                "https://json-schema.org/draft/2020-12/schema"
+              ]
+            }
+          },
+          "required": [
+            "$schema"
+          ]
+        }
+      },
+      "required": [
+        "service_name",
+        "display_name",
+        "description",
+        "service_type"
+      ]
+    },
+    "signal": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Signal",
+      "description": "A continuous data signal in the AICA framework that can be an input or an output.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "signal_name": {
+          "description": "The signal name as it is declared in the implementation",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        },
+        "display_name": {
+          "description": "The short name of this signal (to be displayed on the edge of the node in the graph view).",
+          "examples": [
+            "Target Pose",
+            "Sum",
+            "Command Torque"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "description": "A description of the signal for tool-tips and documentation.",
+          "type": "string"
+        },
+        "default_topic": {
+          "description": "The default topic name assigned to this signal. If unspecified, it is assumed to be '~/<$signal_name>'. Setting the parameter '<$signal_name>_topic' will override the default value.",
+          "type": "string"
+        },
+        "reconfigurable_topic": {
+          "description": "Indicate if the signal topic is reconfigurable and can be renamed while the parent node is inactive through the '<$signal_name>_topic' parameter.",
+          "default": false,
+          "type": "boolean"
+        },
+        "signal_type": {
+          "title": "Signal Type",
+          "description": "A signal value type as a simple atomic type or an encoded state type.",
+          "type": "string",
+          "enum": [
+            "bool",
+            "int",
+            "double",
+            "double_array",
+            "string",
+            "encoded_state",
+            "external"
+          ]
+        },
+        "signal_state_type": {
+          "$ref": "#/$defs/encoded_state_type"
+        },
+        "external_signal_type": {
+          "description": "The external message type of the signal",
+          "examples": [
+            "sensor_msgs::msg::JointState",
+            "geometry_msgs::msg::Pose"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "signal_name",
+        "display_name",
+        "description",
+        "signal_type"
+      ]
+    }
+  }
+}

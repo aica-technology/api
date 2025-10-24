@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Parameter Type",
   "description": "The value type of a parameter from a collection of supported types.",
   "type": "string",
   "enum": [
