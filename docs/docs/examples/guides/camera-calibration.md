@@ -5,13 +5,13 @@ title: Camera calibration
 
 import cameraCalibration from './assets/camera-calibration.gif'
 
+# Camera calibration
+
 :::info
 
 This example only works on Linux hosts as it requires graphics forwarding from Docker to your host machine.
 
 :::
-
-# Camera calibration
 
 Accurate camera calibration is essential for ensuring that visual detections and measurements correspond correctly to
 real-world geometry. In many perception pipelines, critical output is expressed in image pixel coordinates. However, if
