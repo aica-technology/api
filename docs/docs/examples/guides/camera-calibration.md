@@ -1,6 +1,6 @@
 ---
 sidebar_position: 9
-title: Camera calibration walkthrough
+title: Camera calibration
 ---
 
 import cameraCalibration from './assets/camera-calibration.gif'
@@ -10,7 +10,7 @@ import cameraCalibration from './assets/camera-calibration.gif'
 Accurate camera calibration is essential for ensuring that visual detections and measurements correspond correctly to
 real-world geometry. In many perception pipelines, critical output is expressed in image pixel coordinates. However, if
 your camera's lens introduces distortion or if the intrinsic parameters are unknown, these pixel coordinates can deviate
-significantly from their true positions.
+significantly from their true position.
 
 A calibration procedure allows you to determine your camera's intrinsic (focal length, optical center) and extrinsic
 (position, orientation) parameters, as well as its distortion coefficients. Once known, these parameters can be used to
@@ -62,7 +62,7 @@ Move the checkerboard in various positions and orientations until the `CALIBRATE
 most of the bars are green, indicating good sample size). Once it becomes available, press on it to start computing the
 camera matrices. After it becomes available, click on the `SAVE` button to save a recording of the process. You
 will notice a `calibration` directory has been created on your host machine under `docker-image/camera_calibration` that
-contains a compressed file. The file itself contains the images that were sampled along with a yaml file containing the
+contains a compressed file. The file itself contains the images that were sampled along with a YAML file containing the
 camera calibration information. Finally, move this file into the `data` folder of your AICA configuration such that it
 becomes available within AICA containers. When using `CameraStreamer`, you only need to specify the calibration's path.
 For custom components, make sure to read the camera parameters and apply the necessary undistortion technique(s).
