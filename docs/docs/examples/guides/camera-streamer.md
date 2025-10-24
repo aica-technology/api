@@ -25,11 +25,8 @@ of a camera device.
 
 ## AICA Launcher configuration
 
-Start the AICA Launcher and add the `core-vision` package to your configuration at version v1.1.0. Mind that some
-`CameraStreamer` options are missing from v1.0.0 of `core-vision`.
-
-For a 1-to-1 experience use **AICA Core v5.0.0 or higher**, but note that `CameraStreamer` is compatible with Core
-starting v4.4.2.
+Start the AICA Launcher, select AICA Core v4.4.2 or higher, and add the `core-vision` package to your configuration at
+version v1.0.0 or higher.
 
 Select **Launch AICA Studio** to proceed.
 
@@ -66,7 +63,6 @@ you don't have a calibration file for your camera, you can follow our [calibrati
 - **Crop undistorted image**: If a camera configuration file is available, this option indicates whether black-pixel
 regions created at the edges of the image post-undistortion should be cropped. Mind that this also crops part of the
 image that contains usable pixels.
-- **Stream encoding**: Sets the output encoding of the image stream.
 
 :::info
 
@@ -79,8 +75,58 @@ requested is not supported.
 
 :::
 
+:::tip
+
+In newer versions of `CameraStreamer` you will also have access to:
+
+- **Stream encoding**: Sets the output encoding of the image stream.
+
+:::
+
 Once you have selected an appropriate **source**:
 
 1. Press **Play** to start the application.
 2. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
-3. In RViz, select _Add > By topic > /camera_streamer/image > Image_. This adds a panel that shows the live image. The undistorted image (if available) can also be found under _/camera_streamer/undistorted_image > Image_.
+3. In RViz, select _Add > By topic > /camera_streamer/image > Image_. This adds a panel that shows the live image. The
+undistorted image (if available) can also be found under _/camera_streamer/undistorted_image > Image_.
+
+:::info
+
+Steps 2 and 3 are only available on Linux as they require Docker to forward graphics to the host machine. However, you
+should still be able to create image streams with connected devices for further use in your application graph.
+
+:::
+
+You may use the following YAML snippet containing the full application:
+
+<details>
+<summary>Application YAML</summary>
+```yaml
+schema: 2-0-4
+dependencies:
+  core: v4.4.2
+on_start:
+  load:
+    component: camera_streamer
+components:
+  camera_streamer:
+    component: core_vision_components::image_streaming::CameraStreamer
+    display_name: Camera Streamer
+    events:
+      transitions:
+        on_load:
+          lifecycle:
+            component: camera_streamer
+            transition: configure
+        on_configure:
+          lifecycle:
+            component: camera_streamer
+            transition: activate
+graph:
+  positions:
+    components:
+      camera_streamer:
+        x: 280
+        y: -20
+```
+</details>
