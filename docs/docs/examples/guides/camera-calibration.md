@@ -17,15 +17,17 @@ A calibration procedure allows you to determine your camera's intrinsic (focal l
 undistort images in real time, improving the spatial accuracy of detections and any downstream estimation tasks (e.g.,
 pose reconstruction, depth reasoning, or robot alignment).
 
-## AICA helpers for calibrating cameras
+## Calibrate camera using AICA Studio and a checkerboard
 
-If using the `CameraStreamer` with a camera with unknown calibration, follow this guide with the code from corresponding
-[`CameraStreamer` example](./camera-streamer.md). Official camera drivers (such as RealSense and Orbbec) do it already
-and don't need to be calibrated (usually).
+If you are using the `CameraStreamer` with a camera with an unknown calibration, we recommend to follow this guide with
+the code from the corresponding [`CameraStreamer` example](./camera-streamer.md). Cameras with first-party drivers (such
+as [RealSense](./realsense-component.md) and [Orbbec](./orbbec-component.md)) usually provide the intrinsic parameters
+and distortion coefficients and don't need to be calibrated.
 
 :::note
 
-Instead of using `CameraStreamer`, this can be done with any ROS node publishing `sensor_msgs::msg::Image` messages.
+Instead of using `CameraStreamer`, advanced users can follow this process with any ROS node publishing
+`sensor_msgs::msg::Image` messages from a camera.
 
 :::
 
