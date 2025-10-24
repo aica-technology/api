@@ -19,8 +19,9 @@ pose reconstruction, depth reasoning, or robot alignment).
 
 ## AICA helpers for calibrating cameras
 
-If using the `CameraStreamer` with a camera with unknown calibration, follow this guide. Official camera drivers (such
-as RealSense and Orbbec) do it already and don't need to be calibrated (usually).
+If using the `CameraStreamer` with a camera with unknown calibration, follow this guide with the code from corresponding
+[`CameraStreamer` example](./camera-streamer.md). Official camera drivers (such as RealSense and Orbbec) do it already
+and don't need to be calibrated (usually).
 
 :::note
 
@@ -28,9 +29,7 @@ Instead of using `CameraStreamer`, this can be done with any ROS node publishing
 
 :::
 
-Once you have a established an image stream:
-
-1. Make sure to generate a **checkerboard** pattern (e.g., from
+Once you have a established an image stream, make sure to generate a **checkerboard** pattern (e.g., from
 [here](https://calib.io/pages/camera-calibration-pattern-generator)). The calibrator will use this pattern to determine
 how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort images from
 your camera. Take note of the checkerboard width, height, and box size as you will need it later. Print the checkerboard
@@ -38,13 +37,12 @@ and attach it to a flat surface throughout the calibration process.
 
 :::tip
 
-Notice that the calibrator is
-detecting the internal corners of the outermost boxes, so a 8x11 checkerboard will have a 7x10 area with which the
-calibrator will work.
+Notice that the calibrator is detecting the internal corners of the outermost boxes, so a 8x11 checkerboard will have a
+7x10 area with which the calibrator will work.
 
 :::
 
-2. Clone our docker image repository in a directory of your choice:
+Clone our docker image repository in a directory of your choice:
 
 ```shell
 git clone https://github.com/aica-technology/docker-images.git && cd docker-images
