@@ -105,7 +105,7 @@ file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg
 In AICA Launcher, create a configuration with the following core version and packages:
 
 - AICA Launcher v1.4.1 or higher
-- AICA Core v5.0.0
+- AICA Core v5.0.0 or higher
 - `collections/advanced_perception` v1.0.0 for the `YoloExecutor` component <!-- TBD -->
 - `components/core-vision` v1.1.0 or higher for the `CameraStreamer` component
 - CPU or GPU toolkit at v1.0.0
