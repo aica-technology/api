@@ -9,7 +9,6 @@ import urHwiHeadlessMode from './assets/ur-hwi-headless-mode.png'
 import urHwiRemoteExample from './assets/ur-hwi-remote-example.gif'
 import urHWIExternalControl from './assets/ur-hwi-external-control.png'
 import urHWISequenceRunning from './assets/ur-hwi-sequence-running.gif'
-import urHWIHandGuidingGraph from './assets/ur-hwi-hand-guiding-graph.png'
 import urHWIHandGuidingParams from './assets/ur-hwi-hand-guiding-params.png'
 import urHWINetworkingSettings from './assets/ur-hwi-networking-settings.png'
 import urHWIURProgram from './assets/ur-hwi-ur-program.png'
@@ -611,21 +610,25 @@ provided.
 
 ### Hand Guiding controller
 
-It is quite common that users need to manually adjust the position of the manipulator, either for practical -move to a
-part approach location and teach it to the robot- or safety reasons. While in Local mode, this can be achieved through
-the Freedrive function of the teach pendant, which is, however, in some senses limited. It demands users to press on the
-button behind the pendant and then adjust the configuration almost joint by joint, with the feedback being quite light
-and unresponsive at times.
+Using the teach pendant with the freedrive button, operators can manually adjust the position of the robot. The
+freedrive mode makes the individual actuators backdriveable but due to the different friction and stiffness, pushing and
+pulling on the robot usually results in rather uncoordinated, clunky movement. To alleviate this and enable smooth
+trajectory recording and kinesthetic teaching for machine learning algorithms, the UR collection comes with the
+`UR Hand Guiding Controller`. This controller is a classic admittance controller that *admits* measured forces by
+transforming them into a motion.
 
-For that purpose, AICA offers a hand guiding controller as a part of the UR hardware collection, based on UR's native
-force mode, and enriched with additional functionality such as spatial limits. To use it, simply click on the **+** icon
-in the **Controllers** list, and select the **UR Hand Guiding Controller**.
+The controller provides additional functionality to limit and maintain the end effector pose in space. For example, this
+can be used to keep the tool frame upright during teaching. As with the `UR Impedance Controller` the compliant axes can
+by enabled and disabled individually.
 
-<div class="text--center">
-  <img src={urHWIHandGuidingGraph} alt="Hand guiding controller graph" />
-</div>
+:::note
 
-Since the controller uses force mode, it needs the name, the reference frame of the force/torque (FT) sensor, as well
+For the controller to operate correctly, the sensor name, the sensor reference frame and the force limits need to be
+provided.
+
+:::
+
+<!-- Since the controller uses force mode, it needs the name, the reference frame of the force/torque (FT) sensor, as well
 as the maximum forces the robot is allowed to apply (force limits). In the settings of the controller set the name of 
 the sensor as **ur_tcp_fts_sensor** and the frame as **ur_tool0**. 
 
@@ -649,7 +652,7 @@ The controller can be further tuned and adjusted by using its parameters:
 - **Reference orientation**: quaternion representing a desired orientation in base frame
 - **Angular limit**: allowed deviation from the reference orientation
 - **Linear/Angular boundary strength**: gains to apply restitution forces/torques, in case linear or angular limits are
-  exceeded.
+  exceeded. -->
 
 <div class="text--center">
   <img src={urHWIHandGuidingParams} alt="Hand guiding controller parameters" style={{ width: '40%' }} />
