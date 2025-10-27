@@ -580,6 +580,35 @@ Find below another example that uses the controller to set the payload on the ro
 
 ## Force Mode
 
+e-Series and UR series robots have an in-built end of arm force torque sensor that can be leveraged for force sensitive
+control. In UR terminology, this feature is called *force mode* and can be used to perform motions along a desired
+direction or path while being force compliant in a specific direction.
+
+With the UR collection in the AICA System, we provide two controllers that very explicitly use and augment the internal
+force mode to behave like impedance and admittance controllers.
+
+### Impedance controller
+
+In robotics, a true impedance controller requires direct joint torque control, a requirement not met in force mode. Yet,
+we can use the impedance law to translate desired displacement and velocities into a wrench command and let the robot
+regulate that through force mode. This enables safe interaction with the environment, making this type of control highly
+adapted for assembly, surface finishing and teleoperation tasks.
+
+Using desired stiffness and damping parameters, the `UR Impedance Controller` calculates and applies a wrench in task
+space from its desired and current state. By default, the controller is compliant in all directions, with the
+possibility to disable certain axes individually. Find a valid configuration of the controller in the image below.
+
+:::note
+
+For the controller to operate correctly, the sensor name, the sensor reference frame and the force limits need to be
+provided.
+
+:::
+
+<div class="text--center">
+  <img src={urHWIImpedanceController} alt="UR Impedance controller parameters" style={{ width: '40%' }} />
+</div>
+
 ### Hand Guiding controller
 
 It is quite common that users need to manually adjust the position of the manipulator, either for practical -move to a
@@ -624,23 +653,4 @@ The controller can be further tuned and adjusted by using its parameters:
 
 <div class="text--center">
   <img src={urHWIHandGuidingParams} alt="Hand guiding controller parameters" style={{ width: '40%' }} />
-</div>
-
-### Impedance controller
-
-AICA's UR impedance controller is tailored to take advantage of UR's force mode to drive the robot in a compliant manner, 
-enabling safe, adaptive interaction with the environment.
-
-The controller takes a desired Cartesian state as input. Then, it computes the error between input and current state. Using the defined
-stiffness and damping parameters, it applies a desired wrench in space. In cases of obstacle-free space this will result in uninterrupted motion,
-while the robot will react compliantly to disturbances and forces applied on the end effector (where the force sensor lies).   
-
-:::note
-
-For the controller to operate, the names of the sensor, the reference frame and the force limits need to be defined similarly to previous sections. 
-
-:::
-
-<div class="text--center">
-  <img src={urHWIImpedanceController} alt="UR Impedance controller parameters" style={{ width: '40%' }} />
 </div>
