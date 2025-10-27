@@ -52,7 +52,8 @@ docker context ls
 
 You should see a `default` choice alongside `desktop-linux` that Docker Desktop for Linux created. If you do not see
 it, then you may have missed some of the installation steps (refer to the
-[installation guide](../getting-started/installation/installation-and-launch.md)). If it is indeed there, make sure it is active:
+[installation guide](../getting-started/installation/installation-and-launch)). If it is indeed there, make sure it
+is active:
 
 ```shell
 docker context use default
@@ -250,7 +251,7 @@ use older versions of certain libraries and packages with newer versions of `app
 ### Including custom packages
 
 The AICA framework allows developers to build their own
-[custom components](../reference/custom-components/component-package.md). These packages can be included under a
+[custom components](../reference/custom-components/component-package). These packages can be included under a
 custom name using the `docker-image://` prefix to specify the docker image name or path. For example, a custom component
 package that was locally built using `docker build [...] --tag my-custom-component-package` could be included as
 `docker-image://my-custom-component-package`. Community and third-party packages may also be available on other docker

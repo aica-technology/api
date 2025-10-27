@@ -10,7 +10,7 @@ title: Joint Trajectory Controller
 A Joint Trajectory Controller (JTC) is designed to track and execute smooth, time-parameterized trajectories for 
 multiple joints simultaneously. Unlike simple position, velocity, acceleration, or effort controllers that command 
 joints to move directly to a target state without regard to time or smoothness, JTC follows a full **_trajectory_**, 
-_i.e._, a sequence of desired positions, velocities, acclerations, or forces each associated with specific timestamps. 
+_i.e._, a sequence of desired positions, velocities, accelerations, or forces each associated with specific timestamps. 
 
 This ensures coordinated, continuous, and physically realistic joint motion. Compared to simple linear movement (where
 joints might move individually or proportionally from one point to another), a joint trajectory approach offers several
@@ -46,5 +46,5 @@ traverse.
 
 Additional parameters can be modified to fine tune how JTC behaves (for example, PID gains for velocity control,
 constraints for time and goal accuracy, and more). For more practical information on JTC refer to our
-[basic example](../../../../core/examples/core-controllers/jtc-example.md) and our advanced 
-[guide on JTC workflows](../../../../core/examples/guides/jtc-guide.md).
+[basic example](/core/examples/core-controllers/jtc-example) and our advanced 
+[guide on JTC workflows](/core/examples/guides/jtc-guide).

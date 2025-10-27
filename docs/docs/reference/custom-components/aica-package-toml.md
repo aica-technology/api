@@ -47,7 +47,7 @@ versions [here](https://github.com/orgs/aica-technology/packages/container/packa
 
 The upcoming sections describe the syntax for the `package-builder` version `1.0.0` and later. If you are migrating from an older version, please refer to the corresponding guide:
 
-- [Migrating from `0.0.X`](./aica-package-migrations.md#migrating-from-00x)
+- [Migrating from `0.0.X`](./aica-package-migrations#migrating-from-00x)
 
 ### `[build]`
 

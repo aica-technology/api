@@ -45,7 +45,7 @@ through [component predicates](#predicate-events),
 automatically [at the start of the application](#on-start). In each of these cases, events are defined in the YAML
 under specific event keywords.
 
-Read more about [events in the Concepts guide](../concepts/building-blocks/events.md).
+Read more about [events in the Concepts guide](../concepts/building-blocks/events).
 
 ### Load or unload a component
 
