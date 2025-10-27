@@ -31,7 +31,7 @@ UR a popular choice building custom applications.
 
 :::note
 
-A guide on installing and running URSim can be found on [this page](./ur-sim-guide.md).
+A guide on installing and running URSim can be found on [this page](./ur-sim-guide).
 
 :::
 
@@ -96,7 +96,7 @@ of both modes:
 
 :::tip
 
-The two examples below work out of the box with the [URSim](./ur-sim-guide.md#installation).
+The two examples below work out of the box with the [URSim](./ur-sim-guide#installation).
 
 :::
 
@@ -107,7 +107,7 @@ motions are coordinated through AICA Studio. Apart from setting the correct robo
 requirements have to be met:
 
 - On the robot, Remote Control has to be activated. For that, first activate Remote Control in the system settings as
-  explained [here](./ur-sim-guide.md#accessing-and-configuring-the-simulated-robot), then switch from _Local_ to
+  explained [here](./ur-sim-guide#accessing-and-configuring-the-simulated-robot), then switch from _Local_ to
   _Remote_ mode on the top right corner of the teach pendant. The interface automatically switches to the _Run_ tab and
   disables other tabs, indicating that control has been handed over to external sources.
   <div class="text--center">

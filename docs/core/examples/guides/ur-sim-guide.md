@@ -32,7 +32,7 @@ application operation and safe execution before moving to the actual hardware.
 Executing the following instructions runs URSim in a Docker container. This guide assumes that users have already
 installed and configured Docker, as it is also required for AICA Studio. For more information you can check the section
 about Docker from our
-[installation and launch instructions](../../../docs/getting-started/installation/installation-and-launch.md).
+[installation and launch instructions](/docs/getting-started/installation/installation-and-launch).
 
 :::note
 

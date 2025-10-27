@@ -51,7 +51,7 @@ The user icon in the top right of the page is used to access and manage the curr
 
 ![aica-studio-user-page](./studio/assets/aica-studio-user-page.png)
 
-Read more about user scopes and API keys in [Users and authentication](../../docs/getting-started/users-and-authentication.md).
+Read more about user scopes and API keys in [Users and authentication](/docs/getting-started/users-and-authentication).
 
 ## Settings
 

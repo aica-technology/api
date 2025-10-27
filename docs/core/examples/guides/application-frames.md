@@ -13,8 +13,7 @@ This guide explains the various methods to create and modify application frames 
 
 :::tip
 
-If you haven't done so already, review the corresponding [concepts page](../../../docs/concepts/building-blocks/frames.md)
-first.
+If you haven't done so already, review the corresponding [concepts page](/docs/concepts/building-blocks/frames) first.
 
 :::
 

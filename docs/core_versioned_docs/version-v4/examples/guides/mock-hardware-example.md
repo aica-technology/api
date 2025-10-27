@@ -45,7 +45,7 @@ The mock URDF will be used to demonstrate the hardware interface block in AICA a
 
 :::info
 
-Refer to the overview section [Controlling robots with ros2_control](../../../docs/concepts/ros-concepts/controlling-robots.md) for
+Refer to the overview section [Controlling robots with ros2_control](/docs/concepts/ros-concepts/controlling-robots) for
 more context.
 
 :::
@@ -143,8 +143,8 @@ robot joint states and transforms.
 
 :::tip
 
-Learn more about available properties for application hardware on
-the [YAML application syntax](../../../docs/reference/yaml-syntax.md) reference page.
+Learn more about available properties for application hardware on the
+[YAML application syntax](/docs/reference/yaml-syntax) reference page.
 
 :::
 
@@ -183,7 +183,7 @@ broadcaster controller. When the trigger button is pressed in the graph editor, 
 :::tip
 
 Controllers can also be "auto-activated", similar to the procedure in the
-[previous example](./editor-example.md#auto-lifecycle-events). Try to modify this example by removing the trigger
+[previous example](./editor-example#auto-lifecycle-events). Try to modify this example by removing the trigger
 button and navigating to the controller settings to toggle the "auto-activate" behavior. Once the application is started
 again, the controller should now automatically be active.
 

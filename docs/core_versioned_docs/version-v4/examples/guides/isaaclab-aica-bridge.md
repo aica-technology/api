@@ -43,7 +43,7 @@ simulated in Isaac Lab:
 
 :::info
 
-Complete the Point Attractor application from [this page](../core-components/point-attractor.md) before proceeding, as
+Complete the Point Attractor application from [this page](../core-components/point-attractor) before proceeding, as
 this guide builds on that example.
 
 :::
