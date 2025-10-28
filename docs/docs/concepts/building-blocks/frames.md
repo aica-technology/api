@@ -47,10 +47,10 @@ rate. The component has two additional parameters to configure its behavior:
 - **Remap frame** (optional): if provided, the name of the transform sent to TF will be set to this value
 - **Remap reference frame** (optional): if provided the reference frame of the transform sent to TF will be set to this
   value
-<!-- 
+
 :::tip
 
-See [this page](../../examples/core-components/signals-tf.md) for examples using these components in AICA Studio.
-TODO: link the examples section of the docs
+See [this page](../../examples/core-components/point-attractor.md) for an example that uses the Frame to Signal
+component in AICA Studio.
 
-::: -->
+:::
