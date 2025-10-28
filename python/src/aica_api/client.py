@@ -9,7 +9,7 @@ import semver
 from deprecation import deprecated
 
 from aica_api.errors import APIError
-from aica_api.sdk.sdk import errors
+from aica_api.sdk.sdk import Client, errors
 from aica_api.sdk.sdk.api.api import get_api_version
 from aica_api.sdk.sdk.api.applications import get_applications
 from aica_api.sdk.sdk.api.auth import login
@@ -47,7 +47,9 @@ from aica_api.sdk.sdk.models.call_component_service import CallComponentService
 from aica_api.sdk.sdk.models.call_controller_service import CallControllerService
 from aica_api.sdk.sdk.models.component_descriptions import ComponentDescriptions
 from aica_api.sdk.sdk.models.component_lifecycle_transition import ComponentLifecycleTransition
-from aica_api.sdk.sdk.models.component_lifecycle_transition_transition import ComponentLifecycleTransitionTransition
+from aica_api.sdk.sdk.models.component_lifecycle_transition_transition import (
+    ComponentLifecycleTransitionTransition as LifecycleTransition,
+)
 from aica_api.sdk.sdk.models.component_reference import ComponentReference
 from aica_api.sdk.sdk.models.controller_descriptions import ControllerDescriptions
 from aica_api.sdk.sdk.models.current_application import CurrentApplication
@@ -56,15 +58,15 @@ from aica_api.sdk.sdk.models.extension_descriptions import ExtensionDescriptions
 from aica_api.sdk.sdk.models.hardware_reference import HardwareReference
 from aica_api.sdk.sdk.models.load_controller_request import LoadControllerRequest
 from aica_api.sdk.sdk.models.sequence_lifecycle_transition import SequenceLifecycleTransition
-from aica_api.sdk.sdk.models.sequence_lifecycle_transition_transition import SequenceLifecycleTransitionTransition
+from aica_api.sdk.sdk.models.sequence_lifecycle_transition_transition import (
+    SequenceLifecycleTransitionTransition as SequenceTransition,
+)
 from aica_api.sdk.sdk.models.set_component_parameter import SetComponentParameter
 from aica_api.sdk.sdk.models.set_controller_parameter import SetControllerParameter
 from aica_api.sdk.sdk.models.set_current_application import SetCurrentApplication
 from aica_api.sdk.sdk.models.switch_controllers_request import SwitchControllersRequest
 from aica_api.sdk.sdk.types import UNSET
 from aica_api.sio_client import read_until
-
-from .sdk.sdk import Client
 
 CLIENT_VERSION = importlib.metadata.version('aica_api')
 
@@ -451,10 +453,13 @@ class AICA:
             expect_empty=True,
         )
 
-    def pause_application(self) -> None:
+    def pause_application_events(self) -> None:
         """
-        Pause the current application. This prevents any events from being triggered or handled, but
-        does not pause the periodic execution of active components.
+        Pause the event handler for a running application.
+        This prevents any new events from being triggered or handled, but does not pause the periodic execution of active components or controllers.
+        Paused events are placed in a queue and actioned when the event handler is resumed.
+
+        The event handler can be resumed using the start_application method.
 
         Raises:
             aica_api.client.APIError: If the API call fails.
@@ -566,7 +571,7 @@ class AICA:
             expect_empty=True,
         )
 
-    def set_lifecycle_transition(self, component: str, transition: ComponentLifecycleTransitionTransition) -> None:
+    def set_lifecycle_transition(self, component: str, transition: LifecycleTransition) -> None:
         """
         Trigger a lifecycle transition on a component. The transition label must be one of the following:
         ['configure', 'activate', 'deactivate', 'cleanup', 'unconfigured_shutdown', 'inactive_shutdown',
@@ -685,7 +690,7 @@ class AICA:
         """
         return self.__handle_errors(lambda: get_current_application.sync(client=self.__get_client()))
 
-    def manage_sequence(self, sequence_name: str, transition: SequenceLifecycleTransitionTransition) -> None:
+    def manage_sequence(self, sequence_name: str, transition: SequenceTransition) -> None:
         """
         Manage a sequence. The action label must be one of the following: ['start', 'restart', 'abort']
 
