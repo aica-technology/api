@@ -11,7 +11,7 @@ In ROS, a **URDF** is an XML-based format used to describe the physical configur
 **robot description** are often used interchangeably. URDF files define the robot's structure in terms of:
 
 - **Links**: Rigid bodies representing parts of the robot (e.g. arms, base, sensors).
-- **Joints**: Connections between links, specifiying how they move relative to each other (e.g. revolut, prismatic,
+- **Joints**: Connections between links, specifying how they move relative to each other (e.g. revolute, prismatic,
   etc.).
 - **Visuals and Collisions**: 3D geometry for visualization and collision checking.
 - **Inertial Properties**: Mass and inertia of links for physics simulation.
@@ -28,9 +28,9 @@ conversion tools.
 
 :::
 
-The XML file belows shows the URDF of a very simple six axis robot arm that consists of a series of links connected by
+The XML file below shows the URDF of a very simple six axis robot arm that consists of a series of links connected by
 revolute joints. Each definition of a link is followed by a joint that connects it to its child link. Links have an
-optional `visual` tag that says how it should be visualized. In this case, cylinders as geometrical primitive are used
+optional `visual` tag that defines how it should be visualized. In this case, cylinders as geometrical primitives are used
 to give the robot a certain look. URDFs of real hardware usually refer to 3D model files (STL, DAE) for this. Note that
 the links are directly related to [TF](./tf.md) as every link will become its own coordinate frame. The image below
 shows the visualization of this robot description with the links as frames in TF.
