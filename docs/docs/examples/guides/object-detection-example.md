@@ -9,6 +9,7 @@ import yoloExecutorParameters from './assets/object-detection-yolo-executor-para
 import boundingBoxTracker from './assets/object-detection-robot-control.png'
 import launcherToolkitsCPU from './assets/launcher-toolkits-cpu.png'
 import launcherToolkitsGPU from './assets/launcher-toolkits-gpu.png'
+import launcherEnableGPU from './assets/launcher-enable-gpu.png'
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -106,7 +107,7 @@ In AICA Launcher, create a configuration with the following core version and pac
 - AICA Launcher v1.4.1 or higher
 - AICA Core v5.0.0 or higher
 - `advanced_perception` v1.0.0 for the `YoloExecutor` component
-- `core-vision` v1.0.0 or higher for the `CameraStreamer` component
+- `core-vision` v1.1.1 or higher for the `CameraStreamer` component
 - CPU or GPU toolkit at v1.0.0 (subject to change in newer versions of `core-vision` and/or `advanced-perception`)
 
 :::info
@@ -130,6 +131,13 @@ AICA Launcher configuration could look as follows:
 <div class="text--center">
   <img src={launcherToolkitsGPU} alt="AICA Launcher configuration for CPU and GPU runtime" />
 </div>
+
+When using the CUDA toolkit, do not forget to enable GPU capabilities under the **Advanced Settings** menu:
+
+<div class="text--center">
+  <img src={launcherEnableGPU} alt="AICA Launcher configuration with GPU capabilities" />
+</div>
+
 </TabItem>
 </Tabs>
 
@@ -192,8 +200,7 @@ Open the application we built in the previous step, if you are not already there
 - open **RViz**: from the bottom-right gear icon **→** "Launch RViz"
 - in **RViz**: press Add **→** By topic **→** `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated
 output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
-published on the `yolo_executor/detections` topic as `std_msgs/msg/String`, which is in fact a JSON string with
-object-related information (e.g., bounding box coordinates, class name, class id, ...).
+published on the `yolo_executor/detections` topic as `vision_msgs/msg/Detection2DArray`, a ROS perception message (e.g., containing bounding box coordinates, class name, score, ...).
 
 :::note
 
@@ -244,18 +251,19 @@ python_components =
 
 #### Component code
 
-As discussed, the component expects a JSON string as input (e.g. from `YoloExecutor`) containing a bounding box. From
-that bounding box, it generates a `CartesianTwist` which can be used to control a robot. Below you will find the
-implementation of the component, which can be copied directly into your `bounding_box_tracker.py`.
+As discussed, the component expects a `Detection2DArray` as input (e.g. from `YoloExecutor`) containing, among other
+things, a bounding box. From that bounding box, it generates a `CartesianTwist` which can be used to control a robot.
+Below you will find the implementation of the component, which can be copied directly into your
+`bounding_box_tracker.py`.
 
 <details>
 <summary>bounding_box_tracker.py</summary>
 
 ```python
-import json
 import numpy as np
 
-from std_msgs.msg import String
+from rclpy.lifecycle import LifecycleState
+from vision_msgs.msg import Detection2DArray, Detection2D
 from lifecycle_msgs.msg import State as LifecycleState
 
 from modulo_components.lifecycle_component import LifecycleComponent
@@ -267,18 +275,14 @@ class BoundingBoxTracker(LifecycleComponent):
     def __init__(self, node_name: str, *args, **kwargs):
         super().__init__(node_name, *args, **kwargs)
         self._decay_rate: sr.Parameter = sr.Parameter("decay_rate", 1.0, sr.ParameterType.DOUBLE)
-        self._twist = sr.CartesianTwist.Zero("object", "camera_frame")
+        self._twist = sr.CartesianTwist.Zero("object", "world")
         self._latest_twist = sr.CartesianTwist()
-        self._camera_frame = sr.Parameter("camera_frame", "camera_frame", sr.ParameterType.STRING)
-        self._reference_frame = sr.Parameter("reference_frame", sr.ParameterType.STRING)
+        self._reference_frame: str = ""
+        self._camera_frame: str = ""
 
         self.add_parameter(
             sr.Parameter("image_size", [640, 480], sr.ParameterType.DOUBLE_ARRAY),
             "Image resolution [width, height] in pixels",
-        )
-        self.add_parameter("_camera_frame", "Reference frame for the output twist")
-        self.add_parameter(
-            "_reference_frame", "Optional reference frame with respect to which the output twist should be recomputed"
         )
         self.add_parameter(sr.Parameter("gains", [0.0001, 0.0001], sr.ParameterType.DOUBLE_ARRAY), "Control gains (Kp)")
         self.add_parameter(
@@ -286,8 +290,12 @@ class BoundingBoxTracker(LifecycleComponent):
             "Deadband for the error measurements [width, height], within which no twist is generated",
         )
         self.add_parameter("_decay_rate", "Exponential decay rate")
+        self.add_parameter(
+            sr.Parameter("reference_frame", sr.ParameterType.STRING),
+            "Optional reference frame for the output twist. If not set, the camera frame will be used.",
+        )
 
-        self.add_input("detections", self._on_receive_detections, String)
+        self.add_input("detections", self._on_receive_detections, Detection2DArray)
         self.add_output("twist", "_twist", EncodedState)
 
         self.add_tf_listener()
@@ -302,9 +310,9 @@ class BoundingBoxTracker(LifecycleComponent):
                 if any(g < 0 for g in parameter.get_value()):
                     self.get_logger().error(f"{name} must be non-negative")
                     return False
-            case "reference_frame" | "camera_frame":
-                if not parameter.is_empty() and not parameter.get_value():
-                    self.get_logger().error(f"{name} parameter cannot be empty")
+            case "reference_frame":
+                if not parameter.is_empty() and len(parameter.get_value()) == 0:
+                    self.get_logger().error("Reference frame must be a non-empty string")
                     return False
             case "decay_rate":
                 if parameter.get_value() < 0:
@@ -313,20 +321,24 @@ class BoundingBoxTracker(LifecycleComponent):
         return True
 
     def on_activate_callback(self) -> bool:
-        if self._reference_frame.is_empty():
-            self._reference_frame.set_value(self._camera_frame.get_value())
-        self._twist = sr.CartesianTwist.Zero("object", self._reference_frame.get_value())
-        self._latest_twist = sr.CartesianTwist.Zero("object", self._camera_frame.get_value())
+        if not self.get_parameter("reference_frame").is_empty():  # type: ignore
+            self._reference_frame = self.get_parameter_value("reference_frame")
         return True
 
     def on_step_callback(self) -> None:
+        if len(self._camera_frame) == 0:
+            self.get_logger().debug(
+                "No detections received yet or no valid camera frame was found in the message",
+                throttle_duration_sec=3.0,
+            )
+            return
         decay_factor = np.exp(-self._decay_rate.get_value() * self._latest_twist.get_age())
-        twist = sr.CartesianTwist.Zero("object", self._camera_frame.get_value())
+        twist = sr.CartesianTwist.Zero("object", self._camera_frame)
         twist.set_linear_velocity(np.array(self._latest_twist.get_linear_velocity()) * decay_factor)
 
-        if not self._camera_frame.get_value() == self._reference_frame.get_value():
+        if len(self._reference_frame) > 0 and not self._camera_frame == self._reference_frame:
             try:
-                tf = self.lookup_transform(self._camera_frame.get_value(), self._reference_frame.get_value())
+                tf = self.lookup_transform(self._camera_frame, self._reference_frame)
             except Exception as e:
                 self.get_logger().error(f"Failed to lookup transform: {e}")
                 return
@@ -334,40 +346,52 @@ class BoundingBoxTracker(LifecycleComponent):
         else:
             self._twist = twist
 
-    def _on_receive_detections(self, msg: String):
+    def on_deactivate_callback(self) -> bool:
+        self._camera_frame = ""
+        return True
+
+    def _on_receive_detections(self, msg: Detection2DArray):
         if self.get_lifecycle_state().state_id != LifecycleState.PRIMARY_STATE_ACTIVE:
-            self.get_logger().warning("Component is not active. Ignoring incoming detections.")
+            self.get_logger().debug("Component is not active. Ignoring incoming detections.", throttle_duration_sec=1.0)
             return
 
         image_size = self.get_parameter("image_size").get_value()  # type: ignore
         gains = self.get_parameter("gains").get_value()  # type: ignore
-        try:
-            detections = json.loads(msg.data)["detections"]
-            positions = {}
-            for i, d in enumerate(detections):
-                center = np.asarray([d["box"]["x"] + d["box"]["width"] / 2.0, d["box"]["y"] + d["box"]["height"] / 2.0])
-                positions[f"{d['class_name']}_{i}"] = center
 
-            if len(positions):
-                obj = positions[
-                    list(positions.keys())[0]
-                ]  # ! naively assumes we are tracking only the first object detected
-                width_error = obj[0] - image_size[0] / 2
-                height_error = obj[1] - image_size[1] / 2
-                vx = 0.0
-                vy = 0.0
-                if abs(width_error) > self.get_parameter("deadband").get_value()[1]:  # type: ignore
-                    vx = width_error * gains[0]
-                if abs(height_error) > self.get_parameter("deadband").get_value()[0]:  # type: ignore
-                    vy = height_error * gains[1]
+        if len(msg.detections) == 0:
+            self.get_logger().warn(
+                "No objects detected. Holding last known position with decay.", throttle_duration_sec=1.0
+            )
+            return
+        elif len(msg.detections) > 1:
+            self.get_logger().warn("Multiple objects detected. Tracking only the first one.", throttle_duration_sec=1.0)
 
-                self._latest_twist.set_linear_velocity(
-                    vx, vy, 0.0
-                )  # !z is explicitly zero for the purposes of this component
-        except json.JSONDecodeError as e:
-            self.get_logger().error(f"Failed to decode JSON: {e}")
-        except KeyError as e:
-            self.get_logger().error(f"Missing key in JSON: {e}")
+        obj: Detection2D = msg.detections[0]  # type: ignore
+
+        if self._camera_frame != obj.header.frame_id:
+            self._twist = sr.CartesianTwist.Zero("object", self._camera_frame)
+            self._latest_twist = sr.CartesianTwist.Zero("object", self._camera_frame)
+        self._camera_frame = obj.header.frame_id
+
+        if not self._reference_frame:
+            self._twist.set_reference_frame(self._reference_frame)
+
+        positions = {}
+        positions[f"{obj.results[0].hypothesis.class_id}"] = np.asarray(  # type: ignore
+            [obj.bbox.center.position.x, obj.bbox.center.position.y]
+        )
+
+        bbox = positions[list(positions.keys())[0]]
+        width_error = bbox[0] - image_size[0] / 2
+        height_error = bbox[1] - image_size[1] / 2
+        vx = 0.0
+        vy = 0.0
+        if abs(width_error) > self.get_parameter("deadband").get_value()[1]:  # type: ignore
+            vx = width_error * gains[0]
+        if abs(height_error) > self.get_parameter("deadband").get_value()[0]:  # type: ignore
+            vy = height_error * gains[1]
+
+        self._latest_twist.set_linear_velocity(vx, vy, 0.0)
 ```
 
 </details>
@@ -382,17 +406,18 @@ And its corresponding description file:
   "$schema": "https://docs.aica.tech/schemas/1-1-1/component.schema.json",
   "name": "Bounding box tracker",
   "description": {
-    "brief": "Reads bounding boxes and outputs an interactive marker",
-    "details": "This component receives object detection outputs in JSON format and computes the corresponding twist command for the detected object to remain at the middle of the frame. The Z axis is not considered (i.e., only X-Y plane commands will be issued)."
+    "brief": "Receive object detection messages and outputs a twist command to keep an object at the center of a camera's frame",
+    "details": "This component receives Detection2DArray messages and computes a twist command for the detected object to remain at the center of the frame. The Z axis is not considered (i.e., only X-Y plane commands will be issued)."
   },
   "registration": "object_detection_utils::BoundingBoxTracker",
   "inherits": "modulo_components::LifecycleComponent",
   "inputs": [
     {
       "display_name": "Detections",
-      "description": "Detection JSON string containing bounding box information",
+      "description": "Detection array containing bounding box information of detected objects",
       "signal_name": "detections",
-      "signal_type": "string"
+      "signal_type": "other",
+      "custom_signal_type": "vision_msgs::msg::Detection2DArray"
     }
   ],
   "outputs": [
@@ -410,21 +435,6 @@ And its corresponding description file:
       "parameter_name": "image_size",
       "parameter_type": "double_array",
       "default_value": "[640, 480]"
-    },
-    {
-      "display_name": "Camera frame",
-      "description": "Reference frame for the output twist",
-      "parameter_name": "camera_frame",
-      "parameter_type": "string",
-      "default_value": "camera_frame"
-    },
-    {
-      "display_name": "Reference frame",
-      "description": "Optional reference frame with respect to which the output twist should be recomputed",
-      "parameter_name": "reference_frame",
-      "parameter_type": "string",
-      "default_value": null,
-      "optional": true
     },
     {
       "display_name": "Control gains",
@@ -446,6 +456,14 @@ And its corresponding description file:
       "parameter_name": "decay_rate",
       "parameter_type": "double",
       "default_value": "1.0"
+    },
+    {
+      "display_name": "Reference frame",
+      "description": "Optional reference frame for the output twist. If not set, the camera frame will be used.",
+      "parameter_name": "reference_frame",
+      "parameter_type": "string",
+      "default_value": null,
+      "optional": true
     }
   ]
 }
@@ -480,15 +498,12 @@ Add a Hardware Interface node to the application and select the `Generic six-axi
 Press on the **+** button to add a new controller and select the `IK Velocity Controller`. Make sure to enable the
 **auto-configure** and **auto-activate** options.
 
-Back at your `BoundingBoxTracker` component:
+In your `CameraStreamer` component's settings, set the `Camera frame` parameter to `tool0`. This way, you are naively
+assuming that your camera lens is attached at the center of the robot tool, hence allowing the controller to translate
+the desired twist.
 
-- Open the parameter menu and set `Camera frame` to `tool0`. That means that we assume the camera is mounted on `tool0`,
-the robot's end effector. You can replace this frame with a recorded one or an existing frame in your robot model's tree.
-- From the same menu, set `Reference frame` to `world`. By default, the twist is generated at the same reference frame
-as `Camera frame`, but you can optionally set the output reference frame explicitly. This may be useful when a
-controller, such as the `IK Velocity Controller`, expects a command in a specific reference frame (e.g., `world` in this
-case)
-- Finally, connect the `Twist` output of this component to the `Command` input of the `IK Velocity Controller`.
+Back at your `BoundingBoxTracker` component, connect the `Twist` output of this component to the `Command` input of the
+`IK Velocity Controller`.
 
 :::tip
 
@@ -588,6 +603,10 @@ components:
         on_activate:
           load:
             component: yolo_executor
+    parameters:
+      camera_frame:
+        value: ur_tool0
+        type: string
     outputs:
       image: /camera_streamer/image
   bounding_box_tracker:
@@ -604,16 +623,13 @@ components:
             component: bounding_box_tracker
             transition: activate
     parameters:
-      camera_frame:
-        value: tool0
-        type: string
-      reference_frame:
-        value: world
-        type: string
+      rate:
+        value: 100
+        type: double
       gains:
         value:
-          - 0.002
-          - 0.002
+          - 0.001
+          - 0.001
         type: double_array
     inputs:
       detections: /yolo_executor/detections
@@ -702,30 +718,30 @@ graph:
           y: 120
         - x: 1200
           y: 380
-    on_start_on_start_camera_streamer_camera_streamer:
-      path:
-        - x: 140
-          y: -300
-        - x: 140
-          y: -240
     yolo_executor_on_activate_bounding_box_tracker_bounding_box_tracker:
       path:
         - x: 1300
           y: 0
         - x: 1300
           y: 240
-    camera_streamer_image_yolo_executor_image:
-      path:
-        - x: 640
-          y: -40
-        - x: 640
-          y: 120
     yolo_executor_detections_bounding_box_tracker_detections:
       path:
         - x: 1220
           y: 120
         - x: 1220
           y: 400
+    on_start_on_start_camera_streamer_camera_streamer:
+      path:
+        - x: 140
+          y: -300
+        - x: 140
+          y: -240
+    camera_streamer_image_yolo_executor_image:
+      path:
+        - x: 640
+          y: -40
+        - x: 640
+          y: 120
 ```
 
 </details>
