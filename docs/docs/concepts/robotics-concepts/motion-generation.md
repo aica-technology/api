@@ -98,6 +98,13 @@ become longer the further they are from the attractor, indicating a greater magn
 Point Attractor DS are especially useful for tasks like reaching or positioning, as they provide stable and predictable
 convergence to a (potentially moving) desired goal.
 
+:::tip
+
+Find an example using a Point Attractor DS in AICA Studio on
+[this page](../../examples/core-components/point-attractor.md).
+
+:::
+
 ### Stable Estimator of Dynamical Systems
 
 A Stable Estimator of Dynamical Systems (SEDS) is a method for learning dynamical systems from demonstration data while
