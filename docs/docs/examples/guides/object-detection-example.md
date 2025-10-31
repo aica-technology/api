@@ -24,9 +24,10 @@ robotics.
 ## A YOLO example using the AICA framework
 
 This page details how to run a `YoloExecutor` component, i.e., a component that can use various YOLO models for
-inference. It also demonstrates how it could be used as part of an AICA application. In the following paragraphs, we show how to create a custom
-component which makes use of a bounding box to adapt an arm's motion such that it maintains the object centered. The YOLO executor component that is covered in following sections
-can be found under `components/advanced-perception` with a valid AICA license.
+inference. It also demonstrates how it could be used as part of an AICA application. In the following paragraphs, we
+show how to create a custom component which makes use of a bounding box to adapt an arm's motion such that it maintains
+the object centered. The YOLO executor component that is covered in following sections can be found under
+`components/advanced-perception` with a valid AICA license.
 
 <div class="text--center">
   <img src={exampleApp} alt="Moving the robot towards an object in RViz" />
@@ -200,7 +201,8 @@ Open the application we built in the previous step, if you are not already there
 - open **RViz**: from the bottom-right gear icon **→** "Launch RViz"
 - in **RViz**: press Add **→** By topic **→** `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated
 output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
-published on the `yolo_executor/detections` topic as `vision_msgs/msg/Detection2DArray`, a ROS perception message (e.g., containing bounding box coordinates, class name, score, ...).
+published on the `yolo_executor/detections` topic as `vision_msgs/msg/Detection2DArray`, a ROS perception message (e.g.,
+containing bounding box coordinates, class name, score, ...).
 
 :::note
 
@@ -519,11 +521,11 @@ like the following picture:
   <img src={boundingBoxTracker} alt="Bounding box tracker application overview" />
 </div>
 
-If you copied the code from this example, the `YoloExecutor` will be set to track a pair of **scissors** across the frame.
-Pick up a pair, play the application, and see how the robot adapts to your movements. Remember, in a real-world scenario
-the camera would be attached to the robot and motion would stop as soon as the object was centered. Here, however, the
-camera is fixed and motionless, so you have to position the object at the middle of your camera frame to prevent the
-robot from moving in the 2D plane.
+If you copied the code from this example, the `YoloExecutor` will be set to track a pair of **scissors** across the
+frame. Pick up a pair, play the application, and see how the robot adapts to your movements. Remember, in a real-world
+scenario the camera would be attached to the robot and motion would stop as soon as the object was centered. Here,
+however, the camera is fixed and motionless, so you have to position the object at the middle of your camera frame to
+prevent the robot from moving in the 2D plane.
 
 Once you have tested this application, go ahead and pick another object that is included in the
 [coco](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml) dataset and try again.
@@ -605,7 +607,7 @@ components:
             component: yolo_executor
     parameters:
       camera_frame:
-        value: ur_tool0
+        value: tool0
         type: string
     outputs:
       image: /camera_streamer/image
