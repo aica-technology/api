@@ -572,3 +572,30 @@ docker container exec -it -u ros2 -e DISPLAY="$DISPLAY" -e XAUTHORITY="$XAUTH" C
 ```
 
 You should then be able to run `rviz2` inside the container and see the window appear.
+
+<details>
+<summary>WSL</summary>
+
+With the right configuration, display sharing can also be achieved with [WSLg](https://github.com/microsoft/wslg). For
+that, modify the command to run AICA Core to include the following lines:
+
+```bash
+docker run -it --rm \
+  --privileged \
+  --net=host \
+  -v /path/to/aica-license.toml:/license:ro \
+  -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
+  #highlight-next-line
+  -e DISPLAY=$DISPLAY \
+  #highlight-next-line
+  -e WAYLAND_DISPLAY=$WAYLAND_DISPLAY \
+  #highlight-next-line
+  -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+  #highlight-next-line
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  #highlight-next-line
+  -e $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR \
+  aica-runtime
+```
+
+</details>
