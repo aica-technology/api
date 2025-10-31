@@ -48,7 +48,7 @@ identifier and can be granted a combination of [scopes](#scopes).
 :::note
 
 The email address used to create a new user is only used as an identifier and is unrelated to the email address used for
-[licensing](installation/licensing.md). Users are defined locally to a specific AICA System Configuration, and access
+[licensing](./installation/licensing). Users are defined locally to a specific AICA System Configuration, and access
 scopes or passwords are not inferred or shared between different configurations, even if the same email address is used.
 
 :::
