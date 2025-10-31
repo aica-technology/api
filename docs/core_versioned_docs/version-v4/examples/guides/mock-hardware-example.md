@@ -45,7 +45,7 @@ The mock URDF will be used to demonstrate the hardware interface block in AICA a
 
 :::info
 
-Refer to the overview section [Controlling robots with ros2_control](/docs/concepts/ros-concepts/controlling-robots) for
+Refer to the overview section [Controlling robots with ros2_control](../../../../docs/concepts/ros-concepts/controlling-robots) for
 more context.
 
 :::
@@ -135,7 +135,7 @@ hardware:
 The `urdf` field specifies the `Universal Robots 5e (mock interface)` URDF as identified on the hardware manager page.
 
 The `events` field lists events that occur on state transitions of the hardware interface. In this case, the `on_load`
-transition is used to load a controller once the ardware interface is loaded.
+transition is used to load a controller once the hardware interface is loaded.
 
 The `controllers` field lists the controllers associated with the hardware interface. In this example, the only
 controller is the `aica_core_controllers/RobotStateBroadcaster`, which is a generic AICA controller that broadcasts the
