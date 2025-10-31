@@ -55,6 +55,8 @@ const config = {
 				id: "core",
 				path: "core",
 				routeBasePath: "core",
+				sidebarCollapsed: false,
+				editUrl: "https://github.com/aica-technology/api/tree/main/docs",
 				remarkPlugins: [remarkMath],
 				rehypePlugins: [rehypeKatex],
 				sidebarPath: "./src/layout/coreSidebars.ts",
