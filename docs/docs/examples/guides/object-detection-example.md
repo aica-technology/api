@@ -26,7 +26,7 @@ robotics.
 This page details how to run a `YoloExecutor` component, i.e., a component that can use various YOLO models for
 inference. It also demonstrates how it could be used as part of an AICA application. In the following paragraphs, we
 show how to create a custom component which makes use of a bounding box to adapt an arm's motion such that it maintains
-the object centered. The YOLO executor component that is covered in following sections can be found under
+the object centered. The `YoloExecutor` component that is covered in following sections can be found under
 `components/advanced-perception` with a valid AICA license.
 
 <div class="text--center">
@@ -62,8 +62,8 @@ cd yolo_model_converter
 ./build-run.sh
 ```
 
-By default, this will download and convert `yolo12n` for you. If you wish to specify one of the other models that
-Ultralytics is offering, simply specify it as follows:
+By default, this will download and convert `yolo12n` for you (see [here](https://github.com/sunsmarterjie/yolov12) for
+more). If you wish to specify one of the other models that Ultralytics is offering, simply specify it as follows:
 
 ```shell
 ./build-run.sh --model yoloZZZZ
@@ -144,7 +144,7 @@ When using the CUDA toolkit, do not forget to enable GPU capabilities under the 
 
 :::
 
-## Using the YOLO executor
+## Using the `YoloExecutor`
 
 Let us build a YOLO application from scratch.
 
@@ -153,11 +153,9 @@ Let us build a YOLO application from scratch.
 - Add the Camera Streamer component from the core vision package
     - Set the `Source` parameter to a video device or file accordingly
     - Enable **auto-configure** and **auto-activate**
-- Add the YOLO Executor component
+- Add the `YoloExecutor` component
     - Set the `Model path` parameter to the `.onnx` file, e.g., `/data/yolo12n.onnx`
     - Set the `Classes path` parameter to the yaml label file, e.g., `/data/coco.yaml`
-    - Set the `Rate` parameter to match your camera's FPS (actual publishing rate may vary depending on your system's
-computational power, especially if running on a CPU)
     - Enable **auto-configure** and **auto-activate**
 - Connect the output of the start node to each component to load them when the application is started
 - Connect the `Image` output of the Camera Streamer to the `Image` input of the `YoloExecutor`
