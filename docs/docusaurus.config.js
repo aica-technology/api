@@ -60,6 +60,7 @@ const config = {
 				remarkPlugins: [remarkMath],
 				rehypePlugins: [rehypeKatex],
 				sidebarPath: "./src/layout/coreSidebars.ts",
+				lastVersion: 'current',
 				versions: {
 					current: { label: "AICA Core v5", path: "", banner: "none" },
 					v4: {label: "AICA Core v4", path: "v4"},
