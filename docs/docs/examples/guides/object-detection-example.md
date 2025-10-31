@@ -24,9 +24,9 @@ robotics.
 ## A YOLO example using the AICA framework
 
 This page details how to run a `YoloExecutor` component, i.e., a component that can use various YOLO models for
-inference. It also demonstrates how it could be used as part of an AICA application. In following paragraphs, we show how to create a custom
-component which makes use of a bounding box to adapt an arm's motion such that it maintains the subject centered. The YOLO executor component that is covered in following sections
-can be found under `collections/advanced-perception` with a valid AICA license.
+inference. It also demonstrates how it could be used as part of an AICA application. In the following paragraphs, we show how to create a custom
+component which makes use of a bounding box to adapt an arm's motion such that it maintains the object centered. The YOLO executor component that is covered in following sections
+can be found under `components/advanced-perception` with a valid AICA license.
 
 <div class="text--center">
   <img src={exampleApp} alt="Moving the robot towards an object in RViz" />
@@ -34,18 +34,18 @@ can be found under `collections/advanced-perception` with a valid AICA license.
 
 ## Setup
 
-### [optional] Camera calibration
+### Camera calibration (optional)
 
 For the purposes of this example, a camera calibration is not strictly required, but may be needed if you are using a
 high-distortion or fish-eye lens camera and do not have access to your camera's intrinsic parameters.
 
 If this is your case, follow the [camera calibration example](./camera-calibration.md) to generate a camera intrinsics
-file that you can then use with `CameraStreamer`.
+file that you can then use with the `CameraStreamer`.
 
 ### Obtaining YOLO inference models
 
 The `YoloExecutor` component works with `.onnx` model files. However, many of the available YOLO models are widely
-available in Pytorch (`.pt`) formats instead. To convert between formats, you can use AICA's utilities to do so within
+available in Pytorch (`.pt`) format instead. To convert between formats, you can use AICA's utilities to do so within
 a Docker container and maintain your host system unpolluted.
 
 First, clone our docker image repository (if you followed the calibration section, you should already have it!):
@@ -106,7 +106,7 @@ In AICA Launcher, create a configuration with the following core version and pac
 
 - AICA Launcher v1.4.1 or higher
 - AICA Core v5.0.0 or higher
-- `advanced_perception` v1.0.0 for the `YoloExecutor` component
+- `advanced_perception` v1.0.0 or higher for the `YoloExecutor` component
 - `core-vision` v1.1.1 or higher for the `CameraStreamer` component
 - CPU or GPU toolkit at v1.0.0 (subject to change in newer versions of `core-vision` and/or `advanced-perception`)
 
