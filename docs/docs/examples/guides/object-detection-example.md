@@ -35,6 +35,12 @@ the object centered. The `YoloExecutor` component that is covered in following s
 
 ## Setup
 
+## Data folder
+
+Create a directory with a name of your choice, say `yolo-example-data`, folder anywhere in your filesystem. Here, you
+will be placing files that are required for runtime use. In following steps, you will configure AICA Launcher to mount
+this directory for further use.
+
 ### Camera calibration (optional)
 
 For the purposes of this example, a camera calibration is not strictly required, but may be needed if you are using a
@@ -63,11 +69,13 @@ cd yolo_model_converter
 ```
 
 By default, this will download and convert `yolo12n` for you (see [here](https://github.com/sunsmarterjie/yolov12) for
-more). If you wish to specify one of the other models that Ultralytics is offering, simply specify it as follows:
+more models). If you wish to specify one of the other models that Ultralytics is offering, simply specify it as follows:
 
 ```shell
 ./build-run.sh --model yoloZZZZ
 ```
+
+Once the script exits, copy the `.onnx` file that was generated in your `yolo-example-data` directory.
 
 :::note
 
@@ -99,7 +107,7 @@ inconsistencies if the names no longer match the model's intended classes.
 
 For the purposes of this example, download the standard `coco.yaml` class
 file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml) and move it to your
-`data` folder, where you also stored your YOLO model.
+`yolo-example-data` folder, where you also stored your YOLO model.
 
 ## AICA Launcher configuration
 
@@ -144,6 +152,28 @@ When using the CUDA toolkit, do not forget to enable GPU capabilities under the 
 
 :::
 
+Finally, you need to link your configuration to the `yolo-example-data` directory we created in earlier steps. While
+you are still at the **Advanced Settings** menu:
+
+- Click on **Add a volume mount +**.
+- Click on **Browse** and navigate to the location of the `yolo-example-data` folder.
+- On the right side, where a `/target` placeholder text is visible, type a name for the target directory inside your
+AICA container. For simplicity you can use `/yolo-example-data`.
+
+:::info
+
+Remember, AICA Launcher starts Docker containers with your selected configuration of packages, versions, advanced
+options, and volume mounts. Unless you explicitly specify volume mappings from your host system to the container, the
+container will not have access to the host filesystem.
+
+An exception to this is the `Data Folder` that is prefilled by default, is created for you automatically (host), and is
+mapped to `/data` internally. This folder contains the AICA database that preserves your applications and settings, but
+can also be used to persistently store data, same as custom volume mounts.
+
+:::
+
+Press **Launch AICA Studio.**
+
 ## Using the `YoloExecutor`
 
 Let us build a YOLO application from scratch.
@@ -154,8 +184,8 @@ Let us build a YOLO application from scratch.
     - Set the `Source` parameter to a video device or file accordingly
     - Enable **auto-configure** and **auto-activate**
 - Add the `YoloExecutor` component
-    - Set the `Model path` parameter to the `.onnx` file, e.g., `/data/yolo12n.onnx`
-    - Set the `Classes path` parameter to the yaml label file, e.g., `/data/coco.yaml`
+    - Set the `Model path` parameter to the `.onnx` file, e.g., `/yolo-example-data/yolo12n.onnx`
+    - Set the `Classes path` parameter to the yaml label file, e.g., `/yolo-example-data/coco.yaml`
     - Enable **auto-configure** and **auto-activate**
 - Connect the output of the start node to each component to load them when the application is started
 - Connect the `Image` output of the Camera Streamer to the `Image` input of the `YoloExecutor`
@@ -571,10 +601,10 @@ components:
         value: 30
         type: double
       model_file:
-        value: /data/yolo12n.onnx
+        value: /yolo-example-data/yolo12n.onnx
         type: string
       classes_file:
-        value: /data/coco.yaml
+        value: /yolo-example-data/coco.yaml
         type: string
       object_class:
         value:
