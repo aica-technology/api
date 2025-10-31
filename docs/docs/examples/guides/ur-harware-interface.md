@@ -446,7 +446,7 @@ the application in AICA Studio first, and the UR program second.
 
 ## Dashboard controller
 
-As shown in the example above, the `UR Dashboard Controller` allows interaction with UR's dashboard server to run AICA
+As shown in the example above, the `UR Dashboard Controller` allows interaction with the UR programs to run AICA
 applications as part of a bigger UR program. With the External Control program node, control can be handed over to an
 AICA application. Once the AICA application has finished its tasks, control can be handed back for the UR program to
 resume execution.
@@ -579,7 +579,7 @@ Find below another example that uses the controller to set the payload on the ro
 
 e-Series and UR series robots have a built-in end of arm force torque sensor that can be leveraged for force sensitive
 control. In UR terminology, this feature is called *force mode* and can be used to perform motions along a desired
-direction or path while being force compliant in a specific direction.
+direction or path while being force compliant in certain axes or directions.
 
 With the UR collection in the AICA System, we provide two controllers that very explicitly use and augment the internal
 force mode to behave like impedance and admittance controllers.
