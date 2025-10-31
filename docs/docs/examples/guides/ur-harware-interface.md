@@ -448,7 +448,7 @@ the application in AICA Studio first, and the UR program second.
 
 As shown in the example above, the `UR Dashboard Controller` allows interaction with UR's dashboard server to run AICA
 applications as part of a bigger UR program. With the External Control program node, control can be handed over to an
-AICA application. Once the AICA application has finished it's tasks, control can be handed back for the UR program to
+AICA application. Once the AICA application has finished its tasks, control can be handed back for the UR program to
 resume execution.
 
 While this particular functionality is limited to the combination of the External Control program node in Local control
@@ -458,12 +458,10 @@ with the `Headless mode` set to false, other features of the `UR Dashboard Contr
   <img src={urDashboardCtrl} alt="UR Dashboard Controller" style={{ width: '40%' }} />
 </div>
 
-### Interfaces
-
 The controller provides four services:
 
 - Hand back control: See [the example above](#run-an-aica-application-as-one-node-of-a-program).
-- Zero FT sensor: Triggering this service zeros the in-built force torque sensor.
+- Zero FT sensor: Triggering this service zeros the built-in force torque sensor.
 - Set payload: If the payload of the robot changes during the application, for example by picking up an object, this
   service can be used to update the payload setting on the robot. Given the mass and center of gravity, call the service
   with
@@ -472,7 +470,7 @@ The controller provides four services:
   ```
 - Resend robot program: In case the hardware interface was launched with `Headless Mode` set to true and the UR program
   has been stopped for some reason, this service can be triggered to restart the external control to be able to send
-  commands to the robot again. This service is rarely used.
+  commands to the robot again.
 
 Apart from the services, the controller has a very long list of predicates to observe changes in (Tool) Digital Inputs
 and Outputs as well as Configurable Inputs and Outputs. Additionally, it is worth mentioning the `Program running`
@@ -579,7 +577,7 @@ Find below another example that uses the controller to set the payload on the ro
 
 ## Force Mode
 
-e-Series and UR series robots have an in-built end of arm force torque sensor that can be leveraged for force sensitive
+e-Series and UR series robots have a built-in end of arm force torque sensor that can be leveraged for force sensitive
 control. In UR terminology, this feature is called *force mode* and can be used to perform motions along a desired
 direction or path while being force compliant in a specific direction.
 
@@ -589,18 +587,18 @@ force mode to behave like impedance and admittance controllers.
 ### Impedance controller
 
 In robotics, a true impedance controller requires direct joint torque control, a requirement not met in force mode. Yet,
-we can use the impedance law to translate desired displacement and velocities into a wrench command and let the robot
+we can use the impedance law to translate desired displacements and velocities into a wrench command and let the robot
 regulate that through force mode. This enables safe interaction with the environment, making this type of control highly
 adapted for assembly, surface finishing and teleoperation tasks.
 
 Using desired stiffness and damping parameters, the `UR Impedance Controller` calculates and applies a wrench in task
 space from its desired and current state. By default, the controller is compliant in all directions, with the
-possibility to disable certain axes individually. Find a valid configuration of the controller in the image below.
+possibility to disable certain axes individually. A valid configuration of the controller can be found in the image
+below.
 
 :::note
 
-For the controller to operate correctly, the sensor name, the sensor reference frame and the force limits need to be
-provided.
+For the controller to operate correctly, the sensor name, sensor reference frame and force limits need to be provided.
 
 :::
 
@@ -612,10 +610,10 @@ provided.
 
 Using the teach pendant with the freedrive button, operators can manually adjust the position of the robot. The
 freedrive mode makes the individual actuators backdriveable but due to the different friction and stiffness, pushing and
-pulling on the robot usually results in rather uncoordinated, clunky movement. To alleviate this and enable smooth
-trajectory recording and kinesthetic teaching for machine learning algorithms, the UR collection comes with the
-`UR Hand Guiding Controller`. This controller is a classic admittance controller that *admits* measured forces by
-transforming them into a motion.
+pulling on the robot usually results in rather uncoordinated motion. To alleviate this and enable smooth trajectory
+recording and kinesthetic teaching for machine learning algorithms, the UR collection comes with the
+`UR Hand Guiding Controller`. This is a classic admittance controller that *admits* measured forces by transforming them
+into a motion.
 
 The controller provides additional functionality to limit and maintain the end effector pose in space. For example, this
 can be used to keep the tool frame upright during teaching. As with the `UR Impedance Controller` the compliant axes can
@@ -623,8 +621,7 @@ by enabled and disabled individually.
 
 :::note
 
-For the controller to operate correctly, the sensor name, the sensor reference frame and the force limits need to be
-provided.
+For the controller to operate correctly, the sensor name, sensor reference frame and force limits need to be provided.
 
 :::
 
