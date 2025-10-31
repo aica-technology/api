@@ -625,32 +625,28 @@ For the controller to operate correctly, the sensor name, sensor reference frame
 
 :::
 
-<!-- Since the controller uses force mode, it needs the name, the reference frame of the force/torque (FT) sensor, as well
-as the maximum forces the robot is allowed to apply (force limits). In the settings of the controller set the name of 
-the sensor as **ur_tcp_fts_sensor** and the frame as **ur_tool0**. 
-
-:::note
-
-Attempts to guide the robot by pushing on individual links will fail, as the forces must act on the FT sensor on the end
-effector.
-
-:::
-
-After pressing **Play**, the manipulator can be hand guided to points in space, driven by the forces applied on its end
-effector. In other words, it reads forces in the FT sensor, and "admits" them, trying to set the measured force to zero.
 The controller can be further tuned and adjusted by using its parameters:
 
-- **Velocity/Force limits**: the velocities and forces that can be applied by the controller in force mode (X, Y, Z, RZ, RY,
-  RZ).
-- **Force/Torque threshold**: the thresholds above which the hand guiding behavior is activated.
-- **Compliant axes selection**: the axes along which the robot can be hand guided (1-enabled, 0-disabled).
-- **Hold delay**: forces below the thresholds above for this duration will disable hand guiding.
-- **X/Y/Z limits**: spatial boundaries for the end effector motion, vectors of two values for the lower and upper limit.
-- **Reference orientation**: quaternion representing a desired orientation in base frame
-- **Angular limit**: allowed deviation from the reference orientation
-- **Linear/Angular boundary strength**: gains to apply restitution forces/torques, in case linear or angular limits are
-  exceeded. -->
+- **Velocity / Force limits**: The maximal desired velocities and forces that should be applied by the controller.
+- **Compliant axes**: Selection vector for which axes should be compliant or not (1 for enabled, 0 for disabled).
+- **Force / Torque threshold**: The thresholds above which the hand guiding is activated. Values below are considered
+  noise.
+- **Hold delay**: If the forces stay below the thresholds for this amount of time, hand guiding is deactivated.
+- **X / Y / Z limits**: The spatial boundaries for the end effector motion with respect to the base frame, vectors of
+  two values for the lower and upper limit.
+- **Reference orientation**: A quaternion representing the desired orientation with respect to the base frame.
+- **Angular limit**: The allowed deviation from the reference orientation.
+- **Linear / Angular boundary strength**: If linear or angular limits are set, these values scale the response of the
+  controller to hold the robot within the limits.
+  
 
 <div class="text--center">
   <img src={urHWIHandGuidingParams} alt="Hand guiding controller parameters" style={{ width: '40%' }} />
 </div>
+
+:::note
+
+Attempts to guide the robot by pushing on individual links will fail, as the forces are measured at the sensor at the
+end effector.
+
+:::
