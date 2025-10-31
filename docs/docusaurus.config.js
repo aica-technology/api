@@ -63,7 +63,7 @@ const config = {
 				lastVersion: 'current',
 				versions: {
 					current: { label: "AICA Core v5", path: "", banner: "none" },
-					v4: {label: "AICA Core v4", path: "v4"},
+					v4: {label: "AICA Core v4", path: "v4", banner: "none" },
 				},
 			},
 		],
