@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Assignment Target",
+  "description": "Identifier for a variable or a component or controller parameter to assign a value to",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/variable"
+    },
+    {
+      "$ref": "#/$defs/target_parameter"
+    }
+  ],
+  "$defs": {
+    "variable": {
+      "title": "Variable Identifier",
+      "description": "A variable in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variable": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "variable"
+      ]
+    },
+    "parameter": {
+      "title": "Parameter Name",
+      "description": "The name of a parameter in the application",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
+    },
+    "target_parameter": {
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "$ref": "target_interface.schema.json#/$defs/component_identifier"
+            },
+            {
+              "$ref": "target_interface.schema.json#/$defs/controller_identifier"
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "parameter": {
+              "$ref": "#/$defs/parameter"
+            }
+          },
+          "required": [
+            "parameter"
+          ]
+        }
+      ]
+    }
+  }
+}

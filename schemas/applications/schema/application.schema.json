@@ -18,78 +18,7 @@
       "pattern": "^(draft/)?[0-9]+-[0-9]+-[0-9]+$"
     },
     "dependencies": {
-      "title": "Dependencies",
-      "description": "The application dependencies, including the version of AICA Core and any required packages",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "core": {
-          "title": "Core Version",
-          "description": "The version of the AICA Core image",
-          "examples": [
-            "v3.1.1",
-            "v4.0.0"
-          ],
-          "type": "string",
-          "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
-        },
-        "packages": {
-          "title": "Application Packages",
-          "description": "A list of packages required by the application",
-          "type": "array",
-          "uniqueItems": true,
-          "items": {
-            "title": "Package Details",
-            "description": "The specification of a package name and version with optional version constraints",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "package": {
-                "title": "Package Name",
-                "description": "The name of the package",
-                "examples": [
-                  "@aica/components/pose-detection",
-                  "@aica/collections/ur-collection"
-                ],
-                "type": "string"
-              },
-              "version": {
-                "title": "Package Version",
-                "description": "The specific version of the package used by the author of the application",
-                "examples": [
-                  "v1.2.3",
-                  "docker-image://ghcr.io/aica-technology/custom-package:v0.1.0"
-                ],
-                "type": "string",
-                "pattern": "^(v[0-9]+\\.[0-9]+\\.[0-9]+)|(docker-image://.*)$"
-              },
-              "constraints": {
-                "title": "Package Version Constraint",
-                "description": "A range of acceptable package versions that are supported by the application defined by constraints. For more details on syntax, see https://developer.hashicorp.com/terraform/language/expressions/version-constraints",
-                "examples": [
-                  "1.0.0",
-                  "= 1.0.1",
-                  "> 1.0.2",
-                  ">= 1.0.3",
-                  "~> 1.0.4",
-                  "~> 1.1",
-                  ">= 1.1.0, < 2.0.0",
-                  ">= 2.0.0, != 2.0.1, <= 2.0.2"
-                ],
-                "type": "string",
-                "pattern": "^(\\s*(=|!=|<|<=|>|>=|~>)?\\s*([0-9]+\\.[0-9]+(\\.[0-9]+)?)\\s*,?\\s*)+$"
-              }
-            },
-            "required": [
-              "package",
-              "version"
-            ]
-          }
-        }
-      },
-      "required": [
-        "core"
-      ]
+      "$ref": "dependencies.schema.json"
     },
     "metadata": {
       "title": "Application Metadata",
@@ -127,6 +56,9 @@
       "title": "User Data",
       "description": "This property accepts any data structure and will be ignored by the syntax parser. It can be used to store additional metadata or context about the application for user convenience."
     },
+    "variables": {
+      "$ref": "variables.schema.json"
+    },
     "on_start": {
       "$ref": "on_start.schema.json"
     },
@@ -157,6 +89,9 @@
     "dependencies"
   ],
   "$defs": {
+    "assignment_target": {
+      "$ref": "common/assignment_target.schema.json"
+    },
     "events": {
       "$ref": "events.schema.json"
     },
@@ -166,8 +101,14 @@
     "log_level": {
       "$ref": "common/log_level.schema.json"
     },
-    "parameters": {
-      "$ref": "common/parameters.schema.json"
+    "encoded_state_type": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/encoded_state_type"
+    },
+    "parameter_type": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_type"
+    },
+    "parameter_value": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_value"
     },
     "signals": {
       "$ref": "common/signals.schema.json"

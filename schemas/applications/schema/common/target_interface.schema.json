@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Load / Unload Target",
-  "description": "Identifier for a component, hardware interface or controller to load or unload",
+  "title": "Target Interface",
+  "description": "Identifier for a component, hardware interface or controller to target with an event",
   "oneOf": [
     {
       "$ref": "#/$defs/component_identifier"
