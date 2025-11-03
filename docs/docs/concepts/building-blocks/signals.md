@@ -93,7 +93,7 @@ between two connected components has the same name, the application will be vali
 :::tip
 
 The AICA component library
-[includes signal translator components](/core/examples/core-components/signal-interoperability.md) for commonly used ROS
+[includes signal translator components](/core/examples/core-components/signal-interoperability) for commonly used ROS
 messages (namely `sensor_msgs` and `geometry_msgs`) for AICA components to communicate with traditional ROS nodes in an
 external process.
 

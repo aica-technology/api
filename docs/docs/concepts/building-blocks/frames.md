@@ -50,7 +50,7 @@ rate. The component has two additional parameters to configure its behavior:
 
 :::tip
 
-See [this page](/core/examples/core-components/point-attractor.md) for an example that uses the Frame to Signal
+See [this page](/core/examples/core-components/point-attractor) for an example that uses the Frame to Signal
 component in AICA Studio.
 
 :::

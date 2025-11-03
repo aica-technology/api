@@ -101,7 +101,7 @@ convergence to a (potentially moving) desired goal.
 :::tip
 
 Find an example using a Point Attractor DS in AICA Studio on
-[this page](/core/examples/core-components/point-attractor.md).
+[this page](/core/examples/core-components/point-attractor).
 
 :::
 
