@@ -139,7 +139,7 @@ Defining configurations helps to ensure repeatable builds and deployments, even 
 packages are subsequently updated or changed.
 
 The simplest configuration just specifies the AICA Core Version, without any packages. Official packages can be added
-from a dropdown, with a version subselection for each package. [Custom packages](../../reference/intro.md) can be built
+from a dropdown, with a version subselection for each package. [Custom packages](../../reference/intro) can be built
 using the SDK and then added to the configuration using a Docker image URI.
 
 Advanced configuration options allow setting additional Docker parameters, including real-time permissions and volume
