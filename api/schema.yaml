@@ -1,0 +1,3761 @@
+## yaml-language-server: $schema=https://spec.openapis.org/oas/3.0/schema/2024-10-18
+openapi: 3.1.0
+info:
+  title: AICA Core API
+  description: |
+    API services to monitor or manage the state of applications and components in the AICA Core framework
+  contact:
+    name: AICA Support
+    url: https://link.aica.tech/docs
+    email: support@aica.tech
+  version: 5.1.0
+servers:
+  - url: http://localhost:8080/api
+    description: Local AICA Core server
+tags:
+  - name: API
+    description: API management (e.g. version)
+  - name: Auth
+    description: Authentication operations
+  - name: Applications
+    description: Resources for managing applications
+  - name: Engine
+    description: Resources to manage the currently running application
+  - name: Descriptions
+    description: Resources for retrieving component and controller descriptions
+  - name: Custom Components
+    description: Resources for managing custom components
+  - name: ROS 2
+    description: Resources for interacting with ROS 2 data
+  - name: Hardware
+    description: Resources for managing hardware
+  - name: Labels
+    description: Resources relating to metadata labels
+  - name: Cloud
+    description: Cloud resources
+  - name: Users
+    description: User-related operations
+  - name: Licensing
+    description: Licensing operations
+paths:
+  /:
+    get:
+      tags: [API]
+      summary: API Documentation
+      description: HTML-based documentation website
+      operationId: getDocumentationWebsite
+      security: []
+      responses:
+        "200":
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+  /schema.yaml:
+    get:
+      tags: [API]
+      summary: API Schema
+      description: Get the OpenAPI schema in YAML format
+      operationId: getAPISchemaYAML
+      security: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/yaml:
+              schema:
+                type: string
+  /protocol:
+    get:
+      tags: [API]
+      summary: API Protocol Version
+      description: Get the API protocol version
+      operationId: getAPIVersion
+      security: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIVersion"
+  /v3/version:
+    get:
+      tags: [Licensing]
+      summary: Get the version of AICA Core
+      operationId: getCoreVersion
+      responses:
+        "200":
+          description: Core version
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoreVersion"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "500":
+          description: |
+            AICA Core is starting up or not an officially signed version (as may be in the case of a pre-release or development build)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [status]
+  /v3/features:
+    get:
+      tags: [Licensing]
+      summary: Get the available features
+      operationId: getFeatures
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Features"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [status]
+  /v3/license:
+    get:
+      tags: [Licensing]
+      summary: Get the current licensing status
+      description:
+        Retrieve a dictionary of all signed packages and their versions
+        and a list of license entitlements.
+      operationId: getLicensingStatus
+      responses:
+        "200":
+          description: Licensing status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicensingStatus"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Licensing status not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [user]
+  /v3/engine/application:
+    get:
+      tags: [Engine, Applications]
+      summary: Get the current application
+      operationId: getCurrentApplication
+      responses:
+        "200":
+          description: Returns application YAML content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrentApplication"
+        "400":
+          description: The application is invalid or not set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: No application has been set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+    post:
+      tags: [Engine, Applications]
+      summary: Set the application
+      operationId: setCurrentApplication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetCurrentApplication"
+        required: true
+      responses:
+        "204":
+          description: The application was set successfully
+        "400":
+          description: The application could not be set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+    delete:
+      tags: [Engine, Applications]
+      summary: Unset the application
+      operationId: unsetCurrentApplication
+      responses:
+        "204":
+          description: The application was unset successfully
+        "400":
+          description: The application could not be unset
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/application/{id}:
+    post:
+      tags: [Engine, Applications]
+      summary: Set the application from the ID
+      operationId: setCurrentApplicationByID
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: The application was set successfully
+        "400":
+          description: The application could not be set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: The application could not be found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/descriptions/extensions:
+    get:
+      tags: [Descriptions]
+      summary: Get a collection of the available extensions
+      description:
+        Retrieve a dictionary of all registered component and controller extensions descriptions
+        on the system image.
+      operationId: getExtensionDescriptions
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExtensionDescriptions"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+  /v3/descriptions/components:
+    get:
+      tags: [Descriptions]
+      summary: Get a collection of component descriptions
+      description:
+        Retrieve a dictionary of all legacy component descriptions on the
+        system image. This endpoint is deprecated and will be removed in
+        future versions. Use the extensions description endpoint instead.
+      deprecated: true
+      operationId: getComponentDescriptions
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComponentDescriptions"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+  /v3/descriptions/controllers:
+    get:
+      tags: [Descriptions]
+      summary: Get a collection of controller descriptions
+      description:
+        Retrieve a dictionary of all legacy controller descriptions on the
+        system image. This endpoint is deprecated and will be removed in
+        future versions. Use the extensions description endpoint instead.
+      deprecated: true
+      operationId: getControllerDescriptions
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ControllerDescriptions"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+  /v3/engine/components/load:
+    post:
+      tags: [Engine]
+      summary: Load a component
+      operationId: loadComponent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComponentReference"
+      responses:
+        "204":
+          description: The load request is accepted
+          content: {}
+        "400":
+          description: The load request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/components/unload:
+    post:
+      tags: [Engine]
+      summary: Unload a component
+      operationId: unloadComponent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComponentReference"
+      responses:
+        "204":
+          description: The unload request is accepted
+          content: {}
+        "400":
+          description: The unload request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/components/transition:
+    post:
+      tags: [Engine]
+      summary: Trigger a lifecycle transition on a component
+      operationId: triggerComponentTransition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComponentLifecycleTransition"
+      responses:
+        "204":
+          description: The lifecycle transition request is accepted
+          content: {}
+        "400":
+          description: The lifecycle transition request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/components/parameter:
+    put:
+      tags: [Engine]
+      summary: Set a parameter on a component
+      operationId: setComponentParameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetComponentParameter"
+        required: true
+      responses:
+        "204":
+          description: The parameter change request is accepted
+          content: {}
+        "400":
+          description: The parameter change request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/components/service:
+    post:
+      tags: [Engine]
+      summary: Call a service on a component
+      operationId: callComponentService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CallComponentService"
+        required: true
+      responses:
+        "204":
+          description: The service request is accepted
+          content: {}
+        "400":
+          description: The service request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/hardware/load:
+    post:
+      tags: [Engine]
+      summary: Load a hardware interface
+      operationId: loadHardware
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HardwareReference"
+        required: true
+      responses:
+        "204":
+          description: The load request is accepted
+          content: {}
+        "400":
+          description: The load request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/hardware/unload:
+    post:
+      tags: [Engine]
+      summary: Unload a hardware interface
+      operationId: unloadHardware
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HardwareReference"
+        required: true
+      responses:
+        "204":
+          description: The unload request is accepted
+          content: {}
+        "400":
+          description: The unload request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/hardware/controller/load:
+    post:
+      tags: [Engine]
+      summary: Load a controller
+      operationId: loadController
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoadControllerRequest"
+        required: true
+      responses:
+        "204":
+          description: The load request is accepted
+          content: {}
+        "400":
+          description: The load request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/hardware/controller/unload:
+    post:
+      tags: [Engine]
+      summary: Unload a controller
+      operationId: unloadController
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoadControllerRequest"
+        required: true
+      responses:
+        "204":
+          description: The unload request is accepted
+          content: {}
+        "400":
+          description: The unload request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/hardware/controller/parameter:
+    put:
+      tags: [Engine]
+      summary: Set a parameter on a controller
+      operationId: setControllerParameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetControllerParameter"
+        required: true
+      responses:
+        "204":
+          description: The parameter change request is accepted
+          content: {}
+        "400":
+          description: The parameter change request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/hardware/controller/service:
+    post:
+      tags: [Engine]
+      summary: Call a service on a component
+      operationId: callControllerService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CallControllerService"
+        required: true
+      responses:
+        "204":
+          description: The service request is accepted
+          content: {}
+        "400":
+          description: The service request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/hardware/controllers/transitions:
+    post:
+      tags: [Engine]
+      summary: Switch one or several controllers
+      operationId: switchControllers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SwitchControllersRequest"
+      responses:
+        "204":
+          description: The switch controllers request is accepted
+          content: {}
+        "400":
+          description: The switch controllers request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/sequences/transition:
+    post:
+      tags: [Engine]
+      summary: Trigger a sequence transition
+      operationId: triggerSequenceTransition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SequenceLifecycleTransition"
+      responses:
+        "204":
+          description: The sequence management request was successful
+        "400":
+          description: The sequence management request could not be executed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/engine/state:
+    get:
+      tags: [Engine]
+      summary: Get the application state
+      operationId: getApplicationState
+      responses:
+        "200":
+          description: Returns the application state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationState"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+  /v3/engine/state/transition:
+    post:
+      tags: [Engine]
+      summary: Trigger an application state transition
+      operationId: triggerApplicationTransition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationLifecycleTransition"
+      responses:
+        "204":
+          description: The application state transition was successful
+        "400":
+          description: The application state transition could not be executed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/auth/login:
+    post:
+      tags: [Auth]
+      summary: "Login user, returning an opaque token"
+      operationId: login
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginToken"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+      security:
+        - apiKey: []
+        - userPassword: []
+  /v3/auth/logout:
+    delete:
+      tags: [Auth]
+      summary: "Logout user, invalidating the provided token"
+      operationId: logout
+      responses:
+        "204":
+          description: Token invalidated
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+      security:
+        - token: []
+  /v3/cloud/applications/sync:
+    post:
+      tags: [Cloud]
+      summary: Synchronize the Cloud applications with the local database
+      operationId: syncCloudApps
+      responses:
+        "204":
+          description: Apps synchronized
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/cloud/auth/complete:
+    post:
+      tags: [Cloud]
+      summary: Complete the Cloud authorization process, using data received from the auth service
+      operationId: completeCloudAuth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CloudAuthCompletePayload"
+      responses:
+        "204":
+          description: Authentication completed
+        "400":
+          description: Invalid version or authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [admin]
+  /v3/cloud/auth/start:
+    post:
+      tags: [Cloud]
+      summary: Generate a URL that can be used to start the Cloud authentication process
+      operationId: startCloudAuth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CloudAuthStartPayload"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CloudAuthStartURL"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [admin]
+  /v3/cloud/status:
+    get:
+      tags: [Cloud]
+      summary: Return the Cloud authorization status
+      operationId: getCloudStatus
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CloudStatus"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+  /v3/applications:
+    get:
+      tags: [Applications]
+      summary: List available applications from the database
+      operationId: getApplications
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationList"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+    post:
+      tags: [Applications]
+      summary: Add application to the database
+      operationId: createApplication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateApplicationRequest"
+        required: true
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "409":
+          description: Application with that name already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/applications/{id}:
+    get:
+      tags: [Applications]
+      summary: Get application info
+      operationId: getApplication
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+    delete:
+      tags: [Applications]
+      summary: Delete application from the database
+      operationId: deleteApplication
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - name: cloud_included
+          in: query
+          description: Should the linked Cloud Application (if applicable) also be deleted
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "204":
+          description: Application deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    put:
+      tags: [Applications]
+      summary: Update application info
+      operationId: updateApplication
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateApplicationRequest"
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+        "204":
+          description: Application not modified
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Application already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    post:
+      tags: [Applications]
+      summary: Create a new version of an application
+      operationId: createNewApplicationVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationCreateVersion"
+        required: true
+      responses:
+        "201":
+          description: New version created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationVersion"
+        "400":
+          description: Invalid application details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/applications/{id}/version/{versionID}:
+    get:
+      tags: [Applications]
+      summary: Get a specific version of an application
+      operationId: getApplicationVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationVersion"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    put:
+      tags: [Applications]
+      summary: Update a specific version of an application
+      operationId: updateApplicationVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationUpdateVersion"
+        required: true
+      responses:
+        "204":
+          description: Application version updated
+        "400":
+          description: Invalid application details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    delete:
+      tags: [Applications]
+      summary: Delete a specific version of an application
+      operationId: deleteApplicationVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      responses:
+        "204":
+          description: Application version deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/applications/cloud/{id}:
+    post:
+      tags: [Applications, Cloud]
+      summary: Download an application from the cloud, name and description can be edited during this operation to avoid name conflicts
+      operationId: downloadCloudApplication
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CloudApplicationDownloadOverride"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+        "400":
+          description: Application is already available locally
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    delete:
+      tags: [Applications, Cloud]
+      summary: Delete a cloud application from the cloud
+      operationId: deleteCloudApplication
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: Application deleted from cloud
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/applications/{id}/cloud:
+    post:
+      tags: [Applications, Cloud]
+      summary: Upload application to the cloud
+      operationId: uploadApplicationToCloud
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: Application uploaded to cloud
+        "400":
+          description: Application is already in the cloud
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    delete:
+      tags: [Applications, Cloud]
+      summary: Delete application from the cloud
+      operationId: deleteApplicationFromCloud
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: Application removed from cloud
+        "400":
+          description: Application is not in the cloud
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/hardware:
+    get:
+      tags: [Hardware]
+      summary: List available hardware from the database and the example
+      operationId: getHardwareList
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareList"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+    post:
+      tags: [Hardware]
+      summary: Add hardware to the database
+      operationId: createHardware
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateHardwareRequest"
+        required: true
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hardware"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "409":
+          description: Hardware with that name already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/hardware/by-name/{name}:
+    get:
+      tags: [Hardware]
+      summary: Get hardware info by name
+      description: |
+        We first check the database for a match then fallback to the examples.
+      operationId: getHardwareByName
+      parameters:
+        - name: name
+          in: path
+          description: The name of the hardware to look up
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hardware"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+  /v3/hardware/{id}:
+    get:
+      tags: [Hardware]
+      summary: Get hardware info from database or the example
+      operationId: getHardware
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hardware"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+    delete:
+      tags: [Hardware]
+      summary: Delete hardware from the database
+      operationId: deleteHardware
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: Hardware deleted
+          content: {}
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    put:
+      tags: [Hardware]
+      summary: Update hardware info
+      operationId: updateHardware
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateHardwareRequest"
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hardware"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    post:
+      tags: [Hardware]
+      summary: Create a new version of a hardware entry
+      operationId: createNewHardwareVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HardwareCreateVersion"
+        required: true
+      responses:
+        "201":
+          description: New version created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareVersion"
+        "400":
+          description: Invalid hardware details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/hardware/{id}/export:
+    get:
+      tags: [Hardware]
+      summary: Export hardware as a zip file of an AICA-compatible package
+      operationId: exportHardware
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+        - cookie: [control]
+  /v3/hardware/{id}/assets:
+    post:
+      tags: [Hardware]
+      summary: Upload an asset file to a hardware entry
+      operationId: uploadHardwareAsset
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - name: name
+          in: query
+          description: The name of the asset file (including extension)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareAsset"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/hardware/{id}/assets/{assetID}:
+    delete:
+      tags: [Hardware]
+      summary: Delete a hardware asset
+      operationId: deleteHardwareAsset
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/AssetID"
+      responses:
+        "204":
+          description: Hardware asset deleted
+          content: {}
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware or asset not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    put:
+      tags: [Hardware]
+      summary: Update a hardware asset
+      operationId: updateHardwareAsset
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/AssetID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HardwareAssetUpdate"
+        required: true
+      responses:
+        "204":
+          description: Hardware asset updated
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware or asset not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/hardware/{id}/version/{versionID}:
+    get:
+      tags: [Hardware]
+      summary: Get a specific version of a hardware entry
+      operationId: getHardwareVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareVersion"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    put:
+      tags: [Hardware]
+      summary: Update a specific version of a hardware entry
+      operationId: updateHardwareVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HardwareUpdateVersion"
+        required: true
+      responses:
+        "204":
+          description: Hardware version updated
+        "400":
+          description: Invalid hardware details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    delete:
+      tags: [Hardware]
+      summary: Delete a specific version of a hardware entry
+      operationId: deleteHardwareVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      responses:
+        "204":
+          description: Hardware version deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/ros/load-package-file:
+    get:
+      tags: [ROS 2]
+      summary: Load a file from a ROS package
+      operationId: loadPackageFile
+      parameters:
+        - name: package
+          in: query
+          description: |
+            The name of the package containing the file, which should correspond to the ROS package name of an external extension or the special package name `aica_hardware_assets` for internally managed assets
+          required: true
+          schema:
+            type: string
+        - name: file
+          in: query
+          description: |
+            The file path relative to the parent package, or `/{hardwareID}/{assetFileName}` for internally managed assets in the `aica_hardware_assets` package
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File found and content returned
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: File not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+        - cookie: [monitor]
+  /v3/ros/rtc-offer:
+    post:
+      tags: [ROS 2]
+      summary: Start the Offer/Answer exchange for WebRTC
+      operationId: sendRTCOffer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebRTCOffer"
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebRTCAnswer"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+  /v3/ros/transforms:
+    get:
+      tags: [ROS 2]
+      summary: Lookup all transform from the TF buffer
+      operationId: getAllTransforms
+      responses:
+        "200":
+          description: Transforms found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllTransforms"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Transforms not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+  /v3/ros/transforms/{frame}:
+    get:
+      tags: [ROS 2]
+      summary: Lookup a transform from the TF buffer
+      operationId: getTransform
+      parameters:
+        - name: frame
+          in: path
+          description: The name of the frame to look up
+          required: true
+          schema:
+            type: string
+        - name: reference_frame
+          in: query
+          description: The reference frame
+          schema:
+            type: string
+            default: world
+      responses:
+        "200":
+          description: Transform found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transform"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Transform not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+  /v3/users:
+    get:
+      tags: [Users]
+      summary: List available users
+      operationId: getUsers
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserList"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [admin]
+    post:
+      tags: [Users]
+      summary: Create new user
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPayload"
+        required: true
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewUser"
+        "400":
+          description: Invalid user details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [admin]
+  /v3/users/me:
+    get:
+      tags: [Users]
+      summary: Get current user
+      operationId: getMe
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: []
+  /v3/users/me/api-keys:
+    get:
+      tags: [Users]
+      summary: Get current user tokens
+      operationId: getMyAPIKeys
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIKeyList"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [user]
+    post:
+      tags: [Users]
+      summary: Create new token
+      operationId: createAPIKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/APIKeyPayload"
+        required: true
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewAPIKey"
+        "400":
+          description: Invalid token details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [user]
+  /v3/users/me/api-keys/{id}:
+    put:
+      tags: [Users]
+      summary: Update API key details
+      operationId: updateAPIKey
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/APIKeyUpdatePayload"
+        required: true
+      responses:
+        "204":
+          description: Token updated
+        "400":
+          description: Invalid token details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Token not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [user]
+    delete:
+      tags: [Users]
+      summary: Delete API key
+      operationId: deleteAPIKey
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: Token deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Token not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [user]
+  /v3/users/me/password:
+    post:
+      tags: [Users]
+      summary: Change user password
+      operationId: changePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPassword"
+        required: true
+      responses:
+        "204":
+          description: Password changed
+        "400":
+          description: Invalid password
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+      security:
+        - userPassword: []
+  /v3/users/{id}:
+    get:
+      tags: [Users]
+      summary: Get user by ID
+      operationId: getUser
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [admin]
+    put:
+      tags: [Users]
+      summary: Update user details
+      operationId: updateUser
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPayload"
+        required: true
+      responses:
+        "204":
+          description: User updated
+        "400":
+          description: Invalid changes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [admin]
+    delete:
+      tags: [Users]
+      summary: Delete user
+      operationId: deleteUser
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: User deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [admin]
+  /v3/users/{id}/password:
+    post:
+      tags: [Users]
+      summary: Reset user password
+      operationId: resetUserPassword
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPassword"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [admin]
+  /v3/custom-components:
+    get:
+      tags: [Custom Components]
+      summary: Get the list of custom components
+      operationId: getCustomComponents
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomComponentList"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+    post:
+      tags: [Custom Components]
+      summary: Create a new custom component
+      operationId: createCustomComponent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomComponentCreate"
+        required: true
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomComponentWorkingCopy"
+        "400":
+          description: Invalid custom component details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/custom-components/{id}:
+    post:
+      tags: [Custom Components]
+      summary: Create a new version of the custom component
+      operationId: createNewCustomComponentVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomComponentCreateVersion"
+        required: true
+      responses:
+        "201":
+          description: New version created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomComponentVersion"
+        "400":
+          description: Invalid custom component details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    get:
+      tags: [Custom Components]
+      summary: Get the working copy of a custom component
+      operationId: getCustomComponentWorkingCopy
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomComponentWorkingCopy"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    put:
+      tags: [Custom Components]
+      summary: Update the working copy of a custom component
+      operationId: updateCustomComponentWorkingCopy
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomComponentUpdate"
+        required: true
+      responses:
+        "204":
+          description: Custom component updated
+        "400":
+          description: Invalid custom component details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    delete:
+      tags: [Custom Components]
+      summary: Delete custom component and all its versions
+      operationId: deleteCustomComponent
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: Custom component deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/custom-components/{id}/export:
+    get:
+      tags: [Custom Components]
+      summary: Export a custom component as a zip file of an AICA-compatible package
+      operationId: exportCustomComponent
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/PackageName"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+        - cookie: [control]
+  /v3/custom-components/{id}/version/{versionID}:
+    get:
+      tags: [Custom Components]
+      summary: Get a specific version of a custom component
+      operationId: getCustomComponentVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomComponentVersion"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    put:
+      tags: [Custom Components]
+      summary: Update a specific version of a custom component
+      operationId: updateCustomComponentVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomComponentUpdateVersion"
+        required: true
+      responses:
+        "204":
+          description: Custom component version updated
+        "400":
+          description: Invalid custom component details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+    delete:
+      tags: [Custom Components]
+      summary: Delete a specific version of a custom component
+      operationId: deleteCustomComponentVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+      responses:
+        "204":
+          description: Custom component version deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component or version not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/custom-components/{id}/version/{versionID}/export:
+    get:
+      tags: [Custom Components]
+      summary: Export a custom component version as a zip file of an AICA-compatible package
+      operationId: exportCustomComponentVersion
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/VersionID"
+        - $ref: "#/components/parameters/PackageName"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Custom component not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+        - cookie: [control]
+  /v3/custom-components/convert-snippets:
+    put:
+      tags: [Custom Components]
+      summary: Convert custom component snippets to full source code
+      operationId: convertCustomComponentFromSnippetToSource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomComponentWithSnippets"
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SnippetsConvertResult"
+        "400":
+          description: Invalid custom component details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/labels:
+    get:
+      tags: [Labels]
+      summary: Get all labels
+      operationId: getLabels
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllLabels"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+    post:
+      tags: [Labels]
+      summary: Create a new label
+      operationId: createLabel
+      requestBody:
+        description: Label details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LabelCreate"
+      responses:
+        "201":
+          description: Label created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Label"
+        "400":
+          description: Invalid label details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/labels/{id}:
+    put:
+      tags: [Labels]
+      summary: Update a label
+      operationId: updateLabel
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        description: Label details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LabelUpdate"
+      responses:
+        "204":
+          description: Label updated
+        "400":
+          description: Invalid label details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          $ref: "#/components/responses/UnknownResourceError"
+      security:
+        - token: [control]
+    delete:
+      tags: [Labels]
+      summary: Delete a label
+      operationId: deleteLabel
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      responses:
+        "204":
+          description: Label deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          $ref: "#/components/responses/UnknownResourceError"
+      security:
+        - token: [control]
+components:
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+      x-go-type: uuid.UUID
+      x-go-type-import:
+        path: github.com/google/uuid
+        name: uuid
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/ErrorResponseContent"
+      required: [error]
+    ErrorResponseContent:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+      required: [code, message]
+    LicensingStatus:
+      type: object
+      properties:
+        online:
+          type: boolean
+        signed_packages:
+          type: object
+          additionalProperties:
+            type: string
+        entitlements:
+          type: array
+          items:
+            type: string
+      required:
+        - online
+        - signed_packages
+        - entitlements
+    ComponentDescriptions:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/ComponentDescription"
+    ComponentDescription:
+      type: object
+      x-go-type: componentschema.ComponentSchemaJson
+    ControllerDescriptions:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/ControllerDescription"
+    ControllerDescription:
+      type: object
+      x-go-type: controllerschema.ControllerSchemaJson
+    ExtensionDescriptions:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/ExtensionDescription"
+    ExtensionDescription:
+      type: object
+      x-go-type: extensionschema.ExtensionTypesSchemaJson
+    Features:
+      type: object
+      additionalProperties:
+        type: boolean
+    WebRTCOffer:
+      type: object
+      properties:
+        sdp:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+      required: [sdp]
+    WebRTCAnswer:
+      type: object
+      properties:
+        sdp:
+          type: string
+      required:
+        - sdp
+    ApplicationList:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApplicationMetadataWorkingVersion"
+      required: [applications]
+    ApplicationMetadataCommon:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        description:
+          type: string
+        creation_date:
+          type: string
+          format: date-time
+        last_modified_date:
+          type: string
+          format: date-time
+        labels:
+          $ref: "#/components/schemas/Labels"
+      required: [id, creation_date, last_modified_date, labels]
+    Labels:
+      type: array
+      x-omitempty: true
+      items:
+        $ref: "#/components/schemas/UUID"
+    ApplicationMetadataWorkingVersion:
+      allOf:
+        - $ref: "#/components/schemas/ApplicationMetadataCommon"
+        - type: object
+          properties:
+            name:
+              type: string
+            cloud:
+              $ref: "#/components/schemas/CloudApplication"
+            versions:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApplicationMetadataVersion"
+          required: [name, versions]
+    ApplicationMetadataVersion:
+      allOf:
+        - $ref: "#/components/schemas/ApplicationMetadataCommon"
+        - type: object
+          properties:
+            tag:
+              type: string
+          required: [tag]
+    ApplicationContent:
+      type: object
+      properties:
+        yaml:
+          type: string
+      required: [yaml]
+    Application:
+      allOf:
+        - $ref: "#/components/schemas/ApplicationMetadataWorkingVersion"
+        - $ref: "#/components/schemas/ApplicationContent"
+    ApplicationVersion:
+      allOf:
+        - $ref: "#/components/schemas/ApplicationMetadataVersion"
+        - $ref: "#/components/schemas/ApplicationContent"
+        - type: object
+          properties:
+            application:
+              $ref: "#/components/schemas/ApplicationMetadataWorkingVersion"
+          required: [application]
+    ApplicationCreateVersion:
+      type: object
+      properties:
+        tag:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        yaml:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        description:
+          type: string
+        labels:
+          $ref: "#/components/schemas/Labels"
+      required: [tag, yaml]
+    ApplicationUpdateVersion:
+      type: object
+      properties:
+        description:
+          type: string
+        labels:
+          $ref: "#/components/schemas/Labels"
+    CloudApplication:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        type:
+          type: string
+          enum: [plain]
+        status:
+          type: string
+          enum: ["syncd", "changed", "cloud-only"]
+      required: [id, type, status]
+    HardwareList:
+      type: object
+      properties:
+        hardware:
+          type: array
+          items:
+            $ref: "#/components/schemas/HardwareMetadataWorkingVersion"
+      required: [hardware]
+    HardwareMetadataCommon:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        description:
+          type: string
+        creation_date:
+          type: string
+          format: date-time
+        last_modified_date:
+          type: string
+          format: date-time
+        labels:
+          $ref: "#/components/schemas/Labels"
+      required: [id, creation_date, last_modified_date, labels]
+    HardwareMetadataWorkingVersion:
+      allOf:
+        - $ref: "#/components/schemas/HardwareMetadataCommon"
+        - type: object
+          properties:
+            name:
+              type: string
+            example:
+              type: boolean
+              description: Whether this hardware is an example or stored in database
+            versions:
+              type: array
+              items:
+                $ref: "#/components/schemas/HardwareMetadataVersion"
+          required: [name, example, versions]
+    HardwareMetadataVersion:
+      allOf:
+        - $ref: "#/components/schemas/HardwareMetadataCommon"
+        - type: object
+          properties:
+            tag:
+              type: string
+          required: [tag]
+    HardwareContent:
+      type: object
+      properties:
+        urdf:
+          type: string
+        assets:
+          type: array
+          items:
+            $ref: "#/components/schemas/HardwareAsset"
+      required: [urdf, assets]
+    Hardware:
+      allOf:
+        - $ref: "#/components/schemas/HardwareMetadataWorkingVersion"
+        - $ref: "#/components/schemas/HardwareContent"
+    HardwareVersion:
+      allOf:
+        - $ref: "#/components/schemas/HardwareMetadataVersion"
+        - $ref: "#/components/schemas/HardwareContent"
+        - type: object
+          properties:
+            hardware:
+              $ref: "#/components/schemas/HardwareMetadataWorkingVersion"
+          required: [hardware]
+    HardwareCreateVersion:
+      type: object
+      properties:
+        tag:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        urdf:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        description:
+          type: string
+        labels:
+          $ref: "#/components/schemas/Labels"
+        # FIXME: what about assets?
+      required: [tag, urdf]
+    HardwareUpdateVersion:
+      type: object
+      properties:
+        description:
+          type: string
+        labels:
+          $ref: "#/components/schemas/Labels"
+    HardwareAsset:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        name:
+          type: string
+        creation_date:
+          type: string
+          format: date-time
+        last_modified_date:
+          type: string
+          format: date-time
+      required: [id, name, creation_date, last_modified_date]
+    HardwareAssetUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+    ParameterValue:
+      title: Parameter Value
+      required:
+        - value
+      type: object
+      properties:
+        value:
+          oneOf:
+            - type: boolean
+            - type: integer
+            - type: number
+            - type: string
+            - type: array
+              items:
+                type: boolean
+            - type: array
+              items:
+                type: integer
+            - type: array
+              items:
+                type: number
+            - type: array
+              items:
+                type: string
+      description: The value assigned to the named parameter
+    CloudAuthStartPayload:
+      type: object
+      properties:
+        redirect_to:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+      required: [redirect_to]
+    CloudAuthStartURL:
+      type: object
+      properties:
+        auth_url:
+          type: string
+      required: [auth_url]
+    CloudAuthCompleteHeader:
+      type: object
+      properties:
+        version:
+          type: string
+          enum: ["1"]
+          description: The formatting version (expected to be 1 at the moment)
+          x-oapi-codegen-extra-tags:
+            validate: required
+        success:
+          type: boolean
+          description: Whether the authorization was successful
+          x-go-type: "*bool"
+          x-oapi-codegen-extra-tags:
+            validate: required
+      required: [version, success]
+    CloudAuthCompleteContent:
+      oneOf:
+        - $ref: "#/components/schemas/CloudAuthCompleteSuccess"
+        - $ref: "#/components/schemas/CloudAuthCompleteFailed"
+      # FIXME: discriminators have to be strings (anyway the codegen isn't helped by this in Go)
+      # discriminator:
+      #   propertyName: success
+      #   mapping:
+      #     true: "#/components/schemas/CloudAuthCompleteSuccess"
+      #     false: "#/components/schemas/CloudAuthCompleteFailed"
+    CloudAuthCompletePayload:
+      allOf:
+        - $ref: "#/components/schemas/CloudAuthCompleteHeader"
+        - $ref: "#/components/schemas/CloudAuthCompleteContent"
+    CloudAuthCompleteFailed:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: false
+          description: The authorization wasn't successful
+        error:
+          type: string
+          description: The error message (present on failure)
+      required: [success, error]
+    CloudAuthCompleteSuccess:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+          description: The authorization was successful
+        access_token:
+          type: string
+          description: The access token
+        refresh_token:
+          type: string
+          description: The refresh token
+        scopes:
+          type: string
+          description: The scopes granted
+      required: [success, access_token, refresh_token, scopes]
+    CloudStatus:
+      type: object
+      properties:
+        auth:
+          $ref: "#/components/schemas/AuthStatus"
+        online:
+          type: boolean
+      required: [auth, online]
+    AuthStatus:
+      type: object
+      properties:
+        connected:
+          type: boolean
+        has_encryption:
+          type: boolean
+      required: [connected, has_encryption]
+    LoginToken:
+      type: object
+      properties:
+        token:
+          type: string
+        expiry:
+          type: string
+          format: date-time
+      required: [token, expiry]
+    User:
+      required:
+        - email
+        - id
+        - scopes
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        email:
+          type: string
+          format: email
+        scopes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Scope"
+    APIKeyPayload:
+      required:
+        - name
+        - scopes
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        scopes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Scope"
+          x-oapi-codegen-extra-tags:
+            validate: required
+    NewAPIKey:
+      required:
+        - id
+        - secret
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        secret:
+          type: string
+    APIKeyList:
+      type: object
+      properties:
+        api-keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/APIKey"
+      required: [api-keys]
+    APIKey:
+      required:
+        - id
+        - name
+        - scopes
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        name:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Scope"
+    APIKeyUpdatePayload:
+      type: object
+      properties:
+        name:
+          type: string
+    UserPassword:
+      required:
+        - password
+      type: object
+      properties:
+        password:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+    UserPayload:
+      required:
+        - email
+        - scopes
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          x-oapi-codegen-extra-tags:
+            validate: required
+        scopes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Scope"
+          x-oapi-codegen-extra-tags:
+            validate: required
+    Scope:
+      type: string
+      example: status
+      x-oapi-codegen-extra-tags:
+        validate: required
+      enum:
+        - status
+        - control
+        - monitor
+        - admin
+    NewUser:
+      required:
+        - id
+        - password
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        password:
+          type: string
+    UserList:
+      required:
+        - users
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+    ComponentReference:
+      type: object
+      properties:
+        component:
+          type: string
+          description: The name of the component to reference
+      required: [component]
+    ComponentLifecycleTransition:
+      allOf:
+        - $ref: "#/components/schemas/ComponentReference"
+        - type: object
+          properties:
+            transition:
+              type: string
+              description: The lifecycle transition to trigger
+              enum:
+                - configure
+                - activate
+                - deactivate
+                - cleanup
+                - unconfigured_shutdown
+                - inactive_shutdown
+                - active_shutdown
+          required: [transition]
+    SequenceLifecycleTransition:
+      type: object
+      properties:
+        sequence:
+          type: string
+          description: The name of the sequence to transition
+        transition:
+          type: string
+          description: The transition to perform on the sequence
+          enum:
+            - start
+            - restart
+            - abort
+      required: [sequence, transition]
+    ApplicationLifecycleTransition:
+      type: object
+      properties:
+        transition:
+          type: string
+          enum: [start, pause, stop]
+      required: [transition]
+    HardwareReference:
+      type: object
+      properties:
+        hardware:
+          type: string
+          description: The name of the hardware to reference
+      required: [hardware]
+    ControllerName:
+      type: object
+      properties:
+        controller:
+          type: string
+          description: The name of the controller to reference
+      required: [controller]
+    SwitchControllersRequest:
+      allOf:
+        - $ref: "#/components/schemas/HardwareReference"
+        - type: object
+          properties:
+            activate:
+              type: array
+              items:
+                type: string
+              description: List of controllers to activate
+            deactivate:
+              type: array
+              items:
+                type: string
+              description: List of controllers to deactivate
+          required: [activate, deactivate]
+    ParameterName:
+      type: object
+      properties:
+        parameter:
+          type: string
+          description: The name of the parameter to set
+      required: [parameter]
+    ServiceName:
+      type: object
+      properties:
+        service:
+          type: string
+          description: The name of the service to call
+      required: [service]
+    ServicePayload:
+      type: object
+      properties:
+        payload:
+          type: string
+          description: The payload to send to the service
+    SetComponentParameter:
+      allOf:
+        - $ref: "#/components/schemas/ComponentReference"
+        - $ref: "#/components/schemas/ParameterName"
+        - $ref: "#/components/schemas/ParameterValue"
+    CallComponentService:
+      allOf:
+        - $ref: "#/components/schemas/ComponentReference"
+        - $ref: "#/components/schemas/ServiceName"
+        - $ref: "#/components/schemas/ServicePayload"
+    SetControllerParameter:
+      allOf:
+        - $ref: "#/components/schemas/HardwareReference"
+        - $ref: "#/components/schemas/ControllerName"
+        - $ref: "#/components/schemas/ParameterName"
+        - $ref: "#/components/schemas/ParameterValue"
+    CallControllerService:
+      allOf:
+        - $ref: "#/components/schemas/HardwareReference"
+        - $ref: "#/components/schemas/ControllerName"
+        - $ref: "#/components/schemas/ServiceName"
+        - $ref: "#/components/schemas/ServicePayload"
+    LoadControllerRequest:
+      allOf:
+        - $ref: "#/components/schemas/HardwareReference"
+        - $ref: "#/components/schemas/ControllerName"
+    APIVersion:
+      type: string
+    CoreVersion:
+      type: object
+      properties:
+        core:
+          type: string
+          description: The version of the core API
+      required: [core]
+    CurrentApplication:
+      type: object
+      properties:
+        yaml:
+          type: string
+          description: The current application YAML
+        id:
+          $ref: "#/components/schemas/UUID"
+      required: [yaml]
+    SetCurrentApplication:
+      type: object
+      properties:
+        yaml:
+          type: string
+          description: The application YAML to set as current
+          x-oapi-codegen-extra-tags:
+            validate: required
+        id:
+          $ref: "#/components/schemas/UUID"
+      required: [yaml]
+    ApplicationState:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/ApplicationStatus"
+      required: [status]
+    ApplicationStatus:
+      type: string
+      enum:
+        - running
+        - paused
+        - set
+        - unset
+    CreateApplicationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        yaml:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        description:
+          type: string
+        labels:
+          $ref: "#/components/schemas/Labels"
+      required: [name, yaml]
+    UpdateApplicationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        yaml:
+          type: string
+        description:
+          type: string
+        labels:
+          $ref: "#/components/schemas/Labels"
+    CloudApplicationDownloadOverride:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    CreateHardwareRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        urdf:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        description:
+          type: string
+        labels:
+          $ref: "#/components/schemas/Labels"
+      required: [name, urdf]
+    UpdateHardwareRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        urdf:
+          type: string
+        description:
+          type: string
+        labels:
+          $ref: "#/components/schemas/Labels"
+    AllTransforms:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/TransformFrame"
+    TransformFrame:
+      type: object
+      properties:
+        parent:
+          type: string
+        broadcaster:
+          type: string
+        rate:
+          type: number
+          format: double
+          description: The rate at which the transform is broadcasted, in Hz.
+        most_recent_transform:
+          $ref: "#/components/schemas/FractionalTimestamp"
+        oldest_transform:
+          $ref: "#/components/schemas/FractionalTimestamp"
+        transform_delay:
+          type: number
+          format: double
+          description: The delay of the transform, in seconds.
+        buffer_length:
+          type: number
+          format: double
+          description: The length of the transform buffer, in seconds.
+      required:
+        [
+          parent,
+          broadcaster,
+          rate,
+          most_recent_transform,
+          oldest_transform,
+          buffer_length,
+        ]
+    FractionalTimestamp:
+      type: number
+      format: double
+      description: A timestamp represented as a floating point number, where the integer part is seconds and the fractional part is a fractional second.
+    Transform:
+      type: object
+      properties:
+        position:
+          $ref: "#/components/schemas/Vector3"
+        orientation:
+          $ref: "#/components/schemas/Quaternion"
+      required: [position, orientation]
+    Vector3:
+      type: object
+      properties:
+        x:
+          type: number
+          format: double
+        y:
+          type: number
+          format: double
+        z:
+          type: number
+          format: double
+      required: [x, y, z]
+    Quaternion:
+      type: object
+      properties:
+        x:
+          type: number
+          format: double
+        y:
+          type: number
+          format: double
+        z:
+          type: number
+          format: double
+        w:
+          type: number
+          format: double
+      required: [x, y, z, w]
+    CustomComponentList:
+      type: object
+      properties:
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomComponentHeader"
+      required: [components]
+    CustomComponentDates:
+      type: object
+      properties:
+        creation_date:
+          type: string
+          format: date-time
+        last_modified_date:
+          type: string
+          format: date-time
+      required: [creation_date, last_modified_date]
+    CustomComponentID:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+      required: [id]
+    CustomComponentDescription:
+      type: object
+      properties:
+        description:
+          $ref: "#/components/schemas/CustomComponentDescriptionField"
+      required: [description]
+    CustomComponentDescriptionField:
+      type: object
+      properties:
+        brief:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        details:
+          type: string
+      required: [brief]
+    CustomComponentDescriptionOptional:
+      type: object
+      properties:
+        description:
+          $ref: "#/components/schemas/CustomComponentDescriptionFieldOptional"
+      required: [description]
+    CustomComponentDescriptionFieldOptional:
+      type: object
+      properties:
+        brief:
+          type: string
+        details:
+          type: string
+    CustomComponentLabels:
+      type: object
+      properties:
+        labels:
+          $ref: "#/components/schemas/Labels"
+    CustomComponentCommonHeader:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentID"
+        - $ref: "#/components/schemas/CustomComponentDescription"
+        - $ref: "#/components/schemas/CustomComponentDates"
+        - $ref: "#/components/schemas/CustomComponentLabels"
+    CustomComponentName:
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+      required: [name]
+    CustomComponentTag:
+      type: object
+      properties:
+        tag:
+          type: string
+          description: Name of the version
+          pattern: "^[a-zA-Z0-9._-]+$"
+          x-oapi-codegen-extra-tags:
+            validate: required
+      required: [tag]
+    CustomComponentHeader:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentCommonHeader"
+        - $ref: "#/components/schemas/CustomComponentName"
+        - type: object
+          properties:
+            versions:
+              type: array
+              items:
+                $ref: "#/components/schemas/CustomComponentVersionHeader"
+          required: [versions]
+    CustomComponentVersionHeader:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentCommonHeader"
+        - $ref: "#/components/schemas/CustomComponentTag"
+    CustomComponentWorkingCopy:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentHeader"
+        - $ref: "#/components/schemas/CustomComponentCommonContent"
+        - $ref: "#/components/schemas/CustomComponentName"
+    CustomComponentVersion:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentVersionHeader"
+        - $ref: "#/components/schemas/CustomComponentCommonContent"
+        - type: object
+          properties:
+            component:
+              $ref: "#/components/schemas/CustomComponentHeader"
+          required: [component]
+    CustomComponentMetadataCode:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/CustomComponentMetadata"
+        code:
+          $ref: "#/components/schemas/CustomComponentCode"
+      required: [metadata, code]
+    CustomComponentCommonContent:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentDescription"
+        - $ref: "#/components/schemas/CustomComponentMetadataCode"
+        - $ref: "#/components/schemas/CustomComponentLabels"
+    CustomComponentCreate:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentCommonContent"
+        - $ref: "#/components/schemas/CustomComponentName"
+    CustomComponentUpdate:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentName"
+        - $ref: "#/components/schemas/CustomComponentDescriptionOptional"
+        - $ref: "#/components/schemas/CustomComponentLabels"
+        - $ref: "#/components/schemas/CustomComponentMetadataCode"
+    CustomComponentCreateVersion:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentCommonContent"
+        - $ref: "#/components/schemas/CustomComponentTag"
+    CustomComponentUpdateVersion:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentDescriptionOptional"
+        - $ref: "#/components/schemas/CustomComponentLabels"
+    CustomComponentParameterType:
+      type: string
+      x-oapi-codegen-extra-tags:
+        validate: required
+      enum:
+        - int
+        - int_array
+        - double
+        - double_array
+        - bool
+        - bool_array
+        - string
+        - string_array
+        - state
+        - vector
+        - matrix
+    CustomComponentParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        description:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        type:
+          $ref: "#/components/schemas/CustomComponentParameterType"
+        default:
+          type: string
+      required: [name, description, type]
+    CustomComponentPredicate:
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+      required: [name]
+    CustomComponentService:
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        type:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+          enum: [empty, string]
+      required: [name, type]
+    CustomComponentInput:
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        type:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        attribute:
+          type: string
+      required: [name, type]
+    CustomComponentOutput:
+      type: object
+      properties:
+        name:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        type:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+        attribute:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+      required: [name, type, attribute]
+    CustomComponentMetadata:
+      type: object
+      properties:
+        inherits:
+          type: string
+          enum:
+            [
+              modulo_components::Component,
+              modulo_components::LifecycleComponent,
+            ]
+          x-oapi-codegen-extra-tags:
+            validate: required
+        parameters:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomComponentParameter"
+        predicates:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomComponentPredicate"
+        services:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomComponentService"
+        inputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomComponentInput"
+        outputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomComponentOutput"
+      required: [inherits]
+    CustomComponentCodeType:
+      type: string
+      enum: [snippets, source]
+      x-oapi-codegen-extra-tags:
+        validate: required
+    CustomComponentCode:
+      allOf:
+        - type: object
+          properties:
+            type:
+              $ref: "#/components/schemas/CustomComponentCodeType"
+          required: [type]
+        - oneOf:
+            - $ref: "#/components/schemas/CustomComponentCodeSnippets"
+            - $ref: "#/components/schemas/CustomComponentSourceCode"
+          discriminator:
+            propertyName: type
+            mapping:
+              snippets: "#/components/schemas/CustomComponentCodeSnippets"
+              source: "#/components/schemas/CustomComponentSourceCode"
+    CustomComponentCodeSnippets:
+      type: object
+      x-oapi-codegen-extra-tags:
+        validate: required
+      properties:
+        type:
+          type: string
+          const: snippets
+          x-oapi-codegen-extra-tags:
+            validate: required
+        globals:
+          type: string
+        initialize:
+          type: string
+        on_configure:
+          type: string
+        on_execute:
+          type: string
+        on_activate:
+          type: string
+        on_deactivate:
+          type: string
+        on_cleanup:
+          type: string
+        on_step:
+          type: string
+        on_validate_parameter:
+          type: string
+        on_input:
+          type: string
+        on_predicate:
+          type: string
+        on_service:
+          type: string
+        extra_methods:
+          type: string
+      required: [type]
+    CustomComponentSourceCode:
+      type: object
+      x-oapi-codegen-extra-tags:
+        validate: required
+      properties:
+        type:
+          type: string
+          const: source
+          x-oapi-codegen-extra-tags:
+            validate: required
+        code:
+          type: string
+          x-oapi-codegen-extra-tags:
+            validate: required
+      required: [type, code]
+    CustomComponentWithSnippets:
+      allOf:
+        - $ref: "#/components/schemas/CustomComponentName"
+        - type: object
+          properties:
+            metadata:
+              $ref: "#/components/schemas/CustomComponentMetadata"
+            code:
+              $ref: "#/components/schemas/CustomComponentCodeSnippets"
+          required: [metadata, code]
+    SnippetsConvertResult:
+      type: object
+      properties:
+        code:
+          type: string
+      required: [code]
+    AllLabels:
+      type: object
+      properties:
+        labels:
+          $ref: "#/components/schemas/LabelList"
+      required: [labels]
+    LabelList:
+      type: array
+      items:
+        $ref: "#/components/schemas/Label"
+    Label:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        name:
+          type: string
+        color:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required: [id, name, color, created_at, updated_at]
+    LabelCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+      required: [name, color]
+    LabelUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+  parameters:
+    ID:
+      name: id
+      in: path
+      description: The ID of the resource
+      required: true
+      schema:
+        $ref: "#/components/schemas/UUID"
+    VersionID:
+      name: versionID
+      in: path
+      description: The ID for the specific version of the resource
+      required: true
+      schema:
+        $ref: "#/components/schemas/UUID"
+    AssetID:
+      name: assetID
+      in: path
+      description: The ID of the asset
+      required: true
+      schema:
+        $ref: "#/components/schemas/UUID"
+    PackageName:
+      name: package_name
+      in: query
+      description: The name to use for the exported package
+      required: true
+      schema:
+        type: string
+  responses:
+    UnauthorizedError:
+      description: Missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    MissingScopeError:
+      description: "Missing one of the required scopes"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    UnknownResourceError:
+      description: "Resource could not be found"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  securitySchemes:
+    userPassword:
+      type: http
+      scheme: basic
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: |
+        Use Bearer formatting with an opaque API token, created through the UI
+    token:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: |
+        Use Bearer formatting with an opaque API token, returned by the login endpoint
+    cookie:
+      type: apiKey
+      in: cookie
+      name: auth_token
+      description: |
+        Use a cookie with an opaque API token, returned by the login endpoint
