@@ -560,9 +560,8 @@ Some objects are easier to recognize than others, so you may have to adapt the `
 for a larger YOLO model.
 
 :::tip
-If you are planning to use this demo with a physical robot, consider using a `Velocity Impedance Controller` to
-introduce some compliance/safety into your application. This would merely require replacing your `IK Velocity Controller`
-and parametrizing the `Velocity Impedance Controller` to your liking.
+If you are planning to use this demo with a physical robot, additional logic and safety considerations may have to be
+made.
 :::
 
 ### Application code
