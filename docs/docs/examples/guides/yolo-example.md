@@ -206,9 +206,8 @@ class file)
 - `IOU Threshold`: used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same
 object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box
 will be discarded.
-- `Device`: to determine which device should be used to run the inference, but is subject to the way you bundle your
-AICA configuration. That is, if you use a CPU toolkit image but set `Device` to GPU, then the component will ultimately
-gracefully fall back to using the CPU
+- `Prefer GPU`: sets GPU as the preferred inference device. However, if you use a CPU toolkit image with `Prefer GPU`
+toggled on, then the component will ultimately gracefully fall back to using the CPU
 - `Number of CPU threads`: to get the most out of your system's resources. Notice that this parameter has no effect when
 a GPU is used
 
