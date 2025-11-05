@@ -13,6 +13,7 @@ import winHyperV from './assets/win-hyper-v.png';
 import wslInstall from './assets/wsl-install.png';
 import dockerSettings from './assets/win-docker-settings.png';
 import dockerResources from './assets/win-docker-resources.png';
+import dockerNetwork from './assets/win-docker-network.png';
 
 # Manual installation and launch
 
@@ -121,15 +122,16 @@ reach out to the AICA team.
 :::
 
 1. Ensure that the Hyper-V feature is on. Open the Windows Features from the Control panel, locate Hyper-V and check the
-   box if necessary. Switching it on requires a restart of the system. Alternatively,
+   box if necessary. Alternatively,
    [use the terminal](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-3---enable-virtual-machine-feature)
    to enable it.
    <div style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
      <img src={winFeatures} alt="Windows Features" width="45%" />
      <img src={winHyperV} alt="Enable Hyper-V" width="45%" />
    </div>
-2. [Download the Linux kernel update package](https://learn.microsoft.com/en-us/windows/wsl/   install-manual#step-4---download-the-linux-kernel-update-package).
-3. Open PowerShell or Windows Command Prompt in **administrator** mode and run
+2. Restart your computer for the changes to take effect. 
+3. [Download and install the Linux kernel update package](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package).
+4. Open PowerShell or Windows Command Prompt in **administrator** mode and run
    ```shell
    wsl --install
    ```
@@ -141,20 +143,24 @@ reach out to the AICA team.
    If that's not the case, consult
    [this page](http://learn.microsoft.com/en-us/windows/wsl/install#change-the-default-linux-distribution-installed) to
    find out how to install a different Ubuntu distribution with WSL.
-4. Restart your machine for the changes to take effect.
-5. Install Docker Desktop and enable WSL 2 backend by following
+5. Restart your machine for the changes to take effect.
+6. Install Docker Desktop and enable WSL 2 backend by following
    [steps 1 to 6 of this guide](https://docs.docker.com/desktop/features/wsl/#turn-on-docker-desktop-wsl-2). After
    restarting Docker Desktop, navigate to the settings and verify that the WSL 2 based engine is enabled:
    <div class="text--center">
      <img src={dockerSettings} alt="Install WSL" />
    </div>
    If there are several WSL 2 distros installed on the system, it might be necessary to enable integration manually in
-   the Settings under Resources.
+   the Settings under Resources - WSL integration.
    <div class="text--center">
      <img src={dockerResources} alt="Enable integration per distro" />
    </div>
-6. Download and install [Visual Studio Code](https://code.visualstudio.com/).
-7. Launch Ubuntu either with the icon from the start menu or by entering `wsl` in a Windows terminal. Enter `code .` in
+   Finally, under Resources - Network, enable Host networking.
+   <div class="text--center">
+     <img src={dockerNetwork} alt="Enable host networking" />
+   </div>
+7. Download and install [Visual Studio Code](https://code.visualstudio.com/).
+8. Launch Ubuntu either with the icon from the start menu or by entering `wsl` in a Windows terminal. Enter `code .` in
    the WSL terminal. This will open Visual Studio Code in
    [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
    mode. In the top menu, navigate to Terminal and choose *New Terminal*. Verify the Docker installation by running
@@ -566,3 +572,30 @@ docker container exec -it -u ros2 -e DISPLAY="$DISPLAY" -e XAUTHORITY="$XAUTH" C
 ```
 
 You should then be able to run `rviz2` inside the container and see the window appear.
+
+<details>
+<summary>WSL</summary>
+
+With the right configuration, display sharing can also be achieved with [WSLg](https://github.com/microsoft/wslg). For
+that, modify the command to run AICA Core to include the following lines:
+
+```bash
+docker run -it --rm \
+  --privileged \
+  --net=host \
+  -v /path/to/aica-license.toml:/license:ro \
+  -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
+  #highlight-next-line
+  -e DISPLAY=$DISPLAY \
+  #highlight-next-line
+  -e WAYLAND_DISPLAY=$WAYLAND_DISPLAY \
+  #highlight-next-line
+  -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+  #highlight-next-line
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  #highlight-next-line
+  -e $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR \
+  aica-runtime
+```
+
+</details>
