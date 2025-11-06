@@ -67,8 +67,8 @@ jobs:
         uses: aica-technology/.github/.github/actions/docker-extract@v0.6.1
         with:
           image: ${{ steps.ensure-image.outputs.image_name }}:${{ steps.api-version.outputs.version }}
-          source: /index.html
-          destination: docs/build/api/index.html
+          source: /
+          destination: docs/build/api/
 
       # Deploy to GitHub Pages
       - name: Deploy
