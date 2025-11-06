@@ -55,7 +55,7 @@ whereas for video files you need to provide the absolute path to the video, e.g.
 - **Camera frame**: The reference frame that will be used when publishing image messages, which should correspond the
 camera's sensor position.
 - **Camera configuration**: A YAML-formatted camera configuration file containing the camera intrinsics (optional). If
-you don't have a calibration file for your camera, you can follow our [calibration guide](./camera-calibration.md).
+  you don't have a calibration file for your camera, you can follow our [calibration guide](./camera-calibration).
 - **Frame width**: The desired image width.
 - **Frame height**: The desired image height.
 - **Frame rate**: The desired frame rate for image streaming.

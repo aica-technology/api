@@ -26,8 +26,8 @@ pose reconstruction, depth reasoning, or robot alignment).
 ## Calibrate camera using AICA Studio and a checkerboard
 
 If you are using the `CameraStreamer` with a camera with an unknown calibration, we recommend to follow this guide with
-the code from the corresponding [`CameraStreamer` example](./camera-streamer.md). Cameras with first-party drivers (such
-as [RealSense](./realsense-component.md) and [Orbbec](./orbbec-component.md)) usually provide the intrinsic parameters
+the code from the corresponding [`CameraStreamer` example](./camera-streamer). Cameras with first-party drivers (such
+as [RealSense](./realsense-component) and [Orbbec](./orbbec-component)) usually provide the intrinsic parameters
 and distortion coefficients and don't need to be calibrated.
 
 :::note

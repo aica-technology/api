@@ -30,7 +30,7 @@ UR a popular choice building custom applications.
 
 :::note
 
-A guide on installing and running URSim can be found on [this page](./ur-sim-guide.md).
+A guide on installing and running URSim can be found on [this page](./ur-sim-guide).
 
 :::
 

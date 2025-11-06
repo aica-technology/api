@@ -107,4 +107,4 @@ explain some of these here:
 
 If needed, follow the same process to activate and configure other available filters. For more information and detailed
 description of the filters, check the
-[librealsense documentation](https://github.com/IntelRealSense/librealsense/blob/master/doc/post-processing-filters.md).
+[librealsense documentation](https://github.com/IntelRealSense/librealsense/blob/master/doc/post-processing-filters).

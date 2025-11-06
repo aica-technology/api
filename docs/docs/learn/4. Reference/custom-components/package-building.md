@@ -35,7 +35,7 @@ source = "./custom_component_package"
 your component. It is also able to build multiple components together, so you can include all your components in a
 single package.
 
-See [this page](./aica-package-toml.md) for a full reference of the `aica-package.toml` file and its capabilities.
+See [this page](./aica-package-toml) for a full reference of the `aica-package.toml` file and its capabilities.
 
 ## Building
 

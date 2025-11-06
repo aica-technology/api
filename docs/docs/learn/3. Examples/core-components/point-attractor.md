@@ -14,7 +14,7 @@ to guide a robot toward a specific target. By continuously generating motion com
 components enable reaching, positioning, and interaction tasks, making them useful for applications such as
 pick-and-place, assembly, and human-robot collaboration.
 
-As described [here](../../concepts/robotics-concepts/motion-generation.md), the motion
+As described [here](../../concepts/robotics-concepts/motion-generation), the motion
 of a Point Attractor DS is always directed toward a point in space, the attractor. The core components come with two
 implementations of a Point Attractor, the `Signal Point Attractor` which acts on signals in Cartesian space and the
 `Signal Joint Point Attractor` which has the same behavior in joint space.
