@@ -18,7 +18,6 @@
       "title": "Component Identifier",
       "description": "A component in the application",
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "component": {
           "$ref": "identifier.schema.json"
@@ -32,7 +31,6 @@
       "title": "Controller Identifier",
       "description": "A controller associated with a particular hardware interface",
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "hardware": {
           "$ref": "identifier.schema.json"
@@ -50,7 +48,6 @@
       "title": "Hardware Identifier",
       "description": "A hardware interface in the application",
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "hardware": {
           "$ref": "identifier.schema.json"

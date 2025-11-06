@@ -7,7 +7,10 @@
       "$ref": "#/$defs/variable"
     },
     {
-      "$ref": "#/$defs/target_parameter"
+      "$ref": "#/$defs/target_component"
+    },
+    {
+      "$ref": "#/$defs/target_controller"
     }
   ],
   "$defs": {
@@ -31,30 +34,39 @@
       "type": "string",
       "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
     },
-    "target_parameter": {
+    "target_component": {
       "allOf": [
         {
-          "oneOf": [
-            {
-              "$ref": "target_interface.schema.json#/$defs/component_identifier"
-            },
-            {
-              "$ref": "target_interface.schema.json#/$defs/controller_identifier"
-            }
-          ]
-        },
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "parameter": {
-              "$ref": "#/$defs/parameter"
-            }
-          },
-          "required": [
-            "parameter"
-          ]
+          "$ref": "target_interface.schema.json#/$defs/component_identifier"
         }
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "component": true,
+        "parameter": {
+          "$ref": "#/$defs/parameter"
+        }
+      },
+      "required": [
+        "parameter"
+      ]
+    },
+    "target_controller": {
+      "allOf": [
+        {
+          "$ref": "target_interface.schema.json#/$defs/controller_identifier"
+        }
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "controller": true,
+        "hardware": true,
+        "parameter": {
+          "$ref": "#/$defs/parameter"
+        }
+      },
+      "required": [
+        "parameter"
       ]
     }
   }

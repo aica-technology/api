@@ -29,9 +29,11 @@
       "title": "Load On Start",
       "oneOf": [
         {
+          "additionalProperties": false,
           "$ref": "common/target_interface.schema.json#/$defs/component_identifier"
         },
         {
+          "additionalProperties": false,
           "$ref": "common/target_interface.schema.json#/$defs/hardware_identifier"
         }
       ]
