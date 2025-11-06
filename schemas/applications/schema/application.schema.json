@@ -89,17 +89,95 @@
     "dependencies"
   ],
   "$defs": {
-    "assignment_target": {
-      "$ref": "common/assignment_target.schema.json"
+    "buttons": {
+      "$ref": "buttons.schema.json"
+    },
+    "components": {
+      "$ref": "components.schema.json"
+    },
+    "conditions": {
+      "$ref": "conditions.schema.json"
+    },
+    "dependencies": {
+      "$ref": "dependencies.schema.json"
     },
     "events": {
       "$ref": "events.schema.json"
     },
+    "frames": {
+      "$ref": "frames.schema.json"
+    },
+    "graph": {
+      "$ref": "graph.schema.json"
+    },
+    "hardware": {
+      "$ref": "hardware.schema.json"
+    },
+    "joint_positions": {
+      "$ref": "joint_positions.schema.json"
+    },
+    "on_start": {
+      "$ref": "on_start.schema.json"
+    },
+    "sequences": {
+      "$ref": "sequences.schema.json"
+    },
+    "variables": {
+      "$ref": "variables.schema.json"
+    },
+    "assignment_target": {
+      "$ref": "common/assignment_target.schema.json"
+    },
+    "assignments": {
+      "$ref": "common/assignments.schema.json"
+    },
+    "condition_object": {
+      "$ref": "common/condition_object.schema.json"
+    },
     "identifier": {
       "$ref": "common/identifier.schema.json"
     },
+    "load_unload_target": {
+      "$ref": "common/load_unload_target.schema.json"
+    },
     "log_level": {
       "$ref": "common/log_level.schema.json"
+    },
+    "parameters": {
+      "$ref": "common/parameters.schema.json"
+    },
+    "signals": {
+      "$ref": "common/signals.schema.json"
+    },
+    "target_interface": {
+      "$ref": "common/target_interface.schema.json"
+    },
+    "application_event": {
+      "$ref": "common/events/application.schema.json"
+    },
+    "call_service_event": {
+      "$ref": "common/events/call_service.schema.json"
+    },
+    "lifecycle_event": {
+      "$ref": "common/events/lifecycle.schema.json"
+    },
+    "load_event": {
+      "$ref": "common/events/load.schema.json"
+    },
+    "sequence_event": {
+      "$ref": "common/events/sequence.schema.json"
+    },
+    "set_event": {
+      "$ref": "common/events/set.schema.json"
+    },
+    "switch_controllers_event": {
+      "$ref": "common/events/switch_controllers.schema.json"
+    },
+    "transition_event": {
+      "$ref": "common/events/transition.schema.json"
+    },
+    "unload_event": {
+      "$ref": "common/events/unload.schema.json"
     },
     "encoded_state_type": {
       "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/encoded_state_type"
@@ -109,9 +187,6 @@
     },
     "parameter_value": {
       "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_value"
-    },
-    "signals": {
-      "$ref": "common/signals.schema.json"
     }
   }
 }
