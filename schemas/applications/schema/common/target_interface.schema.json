@@ -15,7 +15,6 @@
   ],
   "$defs": {
     "component_identifier": {
-      "title": "Component Identifier",
       "description": "A component in the application",
       "type": "object",
       "properties": {
@@ -28,7 +27,6 @@
       ]
     },
     "controller_identifier": {
-      "title": "Controller Identifier",
       "description": "A controller associated with a particular hardware interface",
       "type": "object",
       "properties": {
@@ -45,7 +43,6 @@
       ]
     },
     "hardware_identifier": {
-      "title": "Hardware Identifier",
       "description": "A hardware interface in the application",
       "type": "object",
       "properties": {

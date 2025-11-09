@@ -1,15 +1,17 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Assignment Target",
   "description": "Identifier for a variable or a component or controller parameter to assign a value to",
   "oneOf": [
     {
+      "additionalProperties": false,
       "$ref": "#/$defs/variable"
     },
     {
+      "additionalProperties": false,
       "$ref": "#/$defs/target_component"
     },
     {
+      "additionalProperties": false,
       "$ref": "#/$defs/target_controller"
     }
   ],
@@ -18,7 +20,6 @@
       "title": "Variable Identifier",
       "description": "A variable in the application",
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "variable": {
           "$ref": "identifier.schema.json"
@@ -35,37 +36,34 @@
       "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
     },
     "target_component": {
-      "allOf": [
-        {
-          "$ref": "target_interface.schema.json#/$defs/component_identifier"
-        }
-      ],
-      "additionalProperties": false,
       "properties": {
-        "component": true,
+        "component": {
+          "$ref": "identifier.schema.json"
+        },
         "parameter": {
           "$ref": "#/$defs/parameter"
         }
       },
       "required": [
+        "component",
         "parameter"
       ]
     },
     "target_controller": {
-      "allOf": [
-        {
-          "$ref": "target_interface.schema.json#/$defs/controller_identifier"
-        }
-      ],
-      "additionalProperties": false,
       "properties": {
-        "controller": true,
-        "hardware": true,
+        "controller": {
+          "$ref": "identifier.schema.json"
+        },
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        },
         "parameter": {
           "$ref": "#/$defs/parameter"
         }
       },
       "required": [
+        "controller",
+        "hardware",
         "parameter"
       ]
     }

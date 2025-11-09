@@ -15,29 +15,80 @@
     }
   ],
   "$defs": {
+    "target_variable": {
+      "additionalProperties": false,
+      "properties": {
+        "variable": {
+          "$ref": "../identifier.schema.json"
+        },
+        "value": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_value"
+        },
+        "type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_type"
+        },
+        "state_type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
+        }
+      }
+    },
+    "target_component": {
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "../identifier.schema.json"
+        },
+        "parameter": {
+          "$ref": "../assignment_target.schema.json#/$defs/parameter"
+        },
+        "value": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_value"
+        },
+        "type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_type"
+        },
+        "state_type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
+        }
+      }
+    },
+    "target_controller": {
+      "additionalProperties": false,
+      "properties": {
+        "controller": {
+          "$ref": "../identifier.schema.json"
+        },
+        "hardware": {
+          "$ref": "../identifier.schema.json"
+        },
+        "parameter": {
+          "$ref": "../assignment_target.schema.json#/$defs/parameter"
+        },
+        "value": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_value"
+        },
+        "type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_type"
+        },
+        "state_type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
+        }
+      }
+    },
     "target": {
-      "allOf": [
+      "title": "Set Value Object",
+      "oneOf": [
         {
-          "$ref": "../assignment_target.schema.json"
+          "additionalProperties": false,
+          "$ref": "#/$defs/target_variable"
         },
         {
-          "title": "Assignment Value",
-          "type": "object",
           "additionalProperties": false,
-          "properties": {
-            "value": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_value"
-            },
-            "type": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_type"
-            },
-            "state_type": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
-            }
-          },
-          "required": [
-            "value"
-          ]
+          "$ref": "#/$defs/target_component"
+        },
+        {
+          "additionalProperties": false,
+          "$ref": "#/$defs/target_controller"
         }
       ]
     }

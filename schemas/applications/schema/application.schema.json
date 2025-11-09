@@ -18,7 +18,7 @@
       "pattern": "^(draft/)?[0-9]+-[0-9]+-[0-9]+$"
     },
     "dependencies": {
-      "$ref": "dependencies.schema.json"
+      "$ref": "#/$defs/dependencies"
     },
     "metadata": {
       "title": "Application Metadata",
@@ -57,31 +57,31 @@
       "description": "This property accepts any data structure and will be ignored by the syntax parser. It can be used to store additional metadata or context about the application for user convenience."
     },
     "variables": {
-      "$ref": "variables.schema.json"
+      "$ref": "#/$defs/variables"
     },
     "on_start": {
-      "$ref": "on_start.schema.json"
+      "$ref": "#/$defs/on_start"
     },
     "hardware": {
-      "$ref": "hardware.schema.json"
+      "$ref": "#/$defs/hardware"
     },
     "components": {
-      "$ref": "components.schema.json"
+      "$ref": "#/$defs/components"
     },
     "conditions": {
-      "$ref": "conditions.schema.json"
+      "$ref": "#/$defs/conditions"
     },
     "sequences": {
-      "$ref": "sequences.schema.json"
+      "$ref": "#/$defs/sequences"
     },
     "frames": {
-      "$ref": "frames.schema.json"
+      "$ref": "#/$defs/frames"
     },
     "joint_positions": {
-      "$ref": "joint_positions.schema.json"
+      "$ref": "#/$defs/joint_positions"
     },
     "graph": {
-      "$ref": "graph.schema.json"
+      "$ref": "#/$defs/graph"
     }
   },
   "required": [
@@ -151,6 +151,15 @@
     },
     "target_interface": {
       "$ref": "common/target_interface.schema.json"
+    },
+    "component_identifier": {
+      "$ref": "common/target_interface.schema.json#/$defs/component_identifier"
+    },
+    "controller_identifier": {
+      "$ref": "common/target_interface.schema.json#/$defs/controller_identifier"
+    },
+    "hardware_identifier": {
+      "$ref": "common/target_interface.schema.json#/$defs/hardware_identifier"
     },
     "application_event": {
       "$ref": "common/events/application.schema.json"
