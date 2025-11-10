@@ -10,6 +10,79 @@ Contributions to the docs are welcome. Each page has an "Edit this page" link at
 corresponding source file in the GitHub repository. Make changes to the file on a branch or fork and open a Pull Request
 to the `main` branch.
 
+### Versioning
+
+This project uses [multi-instance docs](https://docusaurus.io/docs/docs-multi-instance) for versioning. The main
+unversioned docs instance lives in the [docs](./docs) directory, while a versioned instance is in the [core](./core)
+directory.
+
+The main docs should be considered evergreen and always up-to-date with the latest ecosystem concepts and overviews.
+Even users of older version of the software should benefit from this kind of information.
+
+The core docs are versioned with each major release of AICA Core, allowing specific guides and examples regarding the
+usage of AICA Studio, the API and backend to be scoped appropriately.
+
+Versioned pages show a banner and a version selection.
+
+#### Maintaining docs with versioning
+
+Older versions of core documentation are in the [core_versioned_docs](./core_versioned_docs) directory. Updating or
+backporting any changes to older documentation can be done simply be editing the relevant files there. It may also be
+necessary to update the appropriate [core_versioned_sidebars](./core_versioned_sidebars) in case of structural changes.
+
+#### Cutting a new version
+
+A new version of the core docs should be done only on major changes to AICA Core. To freeze the current state of the
+core docs to a version (e.g. `v5`), use the following command:
+
+```shell
+bun run docusaurus docs:version:core v5
+```
+
+Then, in [docusaurus.config.js](./docusaurus.config.js) update the `versions` field of the
+`@docusaurus/plugin-content-docs` plugin accordingly based on the following example:
+
+Before:
+
+```javascript
+const config = {
+    //...
+    plugins: [
+        [
+            "@docusaurus/plugin-content-docs",
+            {
+                //...
+                versions: {
+                    current: {label: "AICA Core v5", path: "", banner: "none"},
+                    v4: {label: "AICA Core v4", path: "v4", banner: "none"},
+                }
+            }
+        ]
+    ]
+}
+```
+
+After:
+
+```javascript
+const config = {
+    //...
+    plugins: [
+        [
+            "@docusaurus/plugin-content-docs",
+            {
+                //...
+                versions: {
+                    current: {label: "AICA Core v6", path: "", banner: "none"},
+                    v5: {label: "AICA Core v5", path: "v5", banner: "none"},
+                    v4: {label: "AICA Core v4", path: "v4", banner: "none"},
+                }
+            }
+        ]
+    ]
+}
+```
+
 ### SVG assets with Excalidraw
 
 Documentation diagrams should be made with [Excalidraw](https://excalidraw.com).
