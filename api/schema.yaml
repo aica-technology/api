@@ -8,7 +8,7 @@ info:
     name: AICA Support
     url: https://link.aica.tech/docs
     email: support@aica.tech
-  version: 5.1.0
+  version: 5.1.1
 servers:
   - url: http://localhost:8080/api
     description: Local AICA Core server
@@ -3534,8 +3534,8 @@ components:
           type: string
           enum:
             [
-              modulo_components::Component,
-              modulo_components::LifecycleComponent,
+              "modulo_components::Component",
+              "modulo_components::LifecycleComponent",
             ]
           x-oapi-codegen-extra-tags:
             validate: required
