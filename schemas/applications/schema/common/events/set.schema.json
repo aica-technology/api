@@ -30,7 +30,11 @@
         "state_type": {
           "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
         }
-      }
+      },
+      "required": [
+        "variable",
+        "value"
+      ]
     },
     "target_component": {
       "additionalProperties": false,
@@ -50,7 +54,12 @@
         "state_type": {
           "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
         }
-      }
+      },
+      "required": [
+        "component",
+        "parameter",
+        "value"
+      ]
     },
     "target_controller": {
       "additionalProperties": false,
@@ -73,7 +82,13 @@
         "state_type": {
           "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
         }
-      }
+      },
+      "required": [
+        "controller",
+        "hardware",
+        "parameter",
+        "value"
+      ]
     },
     "target": {
       "title": "Set Value Object",
