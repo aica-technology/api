@@ -6,7 +6,7 @@ const darkCodeTheme = require("prism-react-renderer").themes.vsDark;
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
-const url = "https://docs.aica.tech";
+const url = "https://docs.aica.tech/";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -36,8 +36,9 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
+                    routeBasePath: "/",
                     sidebarPath: require.resolve("./src/layout/sidebars.js"),
-                    sidebarCollapsed: false,
+                    sidebarCollapsed: true,
                     editUrl: "https://github.com/aica-technology/api/tree/main/docs",
                     remarkPlugins: [remarkMath],
                     rehypePlugins: [rehypeKatex],
@@ -61,11 +62,14 @@ const config = {
             // TODO: add a social media card
             // image: "img/docusaurus-social-card.jpg",
             navbar: {
-                title: "Documentation",
+                title: "AICA Documentation",
                 logo: {
                     alt: "AICA Logo",
-                    src: "img/logo.svg",
-                    srcDark: "img/logo_dark.svg",
+                    src: "img/aica-logo-black-square-small.svg",
+                    srcDark: "img/aica-logo-white-square-small.svg",
+                    width: 22,
+                    height: 22,
+                    href: "/learn/Getting-started/intro",
                 },
                 items: [
                     // TODO: add version dropdown when needed
@@ -74,86 +78,91 @@ const config = {
                     //   position: "left",
                     //   dropdownActiveClassDisabled: true,
                     // },
-                    {
-                        type: "docSidebar",
-                        sidebarId: "gettingStartedSidebar",
-                        position: "left",
-                        label: "Getting started",
-                    },
-                    {
-                        type: "docSidebar",
-                        sidebarId: "conceptsSidebar",
-                        position: "left",
-                        label: "Concepts",
-                    },
-                    {
-                        type: "docSidebar",
-                        sidebarId: "examplesSidebar",
-                        position: "left",
-                        label: "Examples",
-                    },
-                    {
-                        type: "docSidebar",
-                        sidebarId: "programmingReferenceSidebar",
-                        position: "left",
-                        label: "Programming reference",
-                    },
-                    // TODO: add FAQ section
-                    // {
-                    //     type: "docSidebar",
-                    //     sidebarId: "faqSidebar",
-                    //     position: "left",
-                    //     label: "FAQ",
-                    // },
-                    {
-                        href: `${url}/api`,
-                        label: "REST API",
-                        position: "left",
-                    },
-                    {
-                        href: "https://www.github.com/aica-technology",
-                        label: "GitHub",
-                        position: "right",
-                    },
-                    {
-                        href: "https://aica.thinkific.com",
-                        label: "AICAdemy",
-                        position: "right",
-                    },
-                    {
-                        href: "https://www.aica.tech",
-                        label: "Website",
-                        position: "right",
-                    },
                     // TODO: need to apply to DocSearch https://docusaurus.io/docs/search
                     {
                         type: "search",
-                        position: "right",
+                        position: "left",
+                    },
+                    {
+                        to: "/",
+                        type: "docSidebar",
+                        sidebarId: "learnSidebar",
+                        position: "left",
+                        label: "Learn",
                     },
                 ],
             },
             footer: {
                 style: "dark",
+                logo: {
+                    alt: "AICA Logo",
+                    src: "img/logo_dark.svg",
+                    srcDark: "img/logo_dark.svg",
+                    width: 42,
+                    height: 42,
+                },
                 links: [
+                        {
+                        title: "Learn",
+                        items: [
+                            {
+                                label: "Getting Started",
+                                href: "/learn/Getting-started/intro"
+                            },
+                            {
+                                label: "Concepts",
+                                href: "/category/ros-2-concepts",
+                            },
+                            {
+                                label: "Examples",
+                                href: "/category/guides",
+                            },
+                            {
+                                label: "Programming Reference",
+                                href: "/learn/Reference/intro",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Resources",
+                        items: [
+                            {
+                                label: "AICA API",
+                                href: "https://link.aica.tech/api"
+                            },
+                            {
+                                label: "AICAdemy",
+                                href: "https://link.aica.tech/aicademy"
+                            },
+                        ],
+                    },
                     {
                         title: "More",
                         items: [
                             {
-                                label: "Discussions, announcements, and new releases",
-                                href: "https://github.com/orgs/aica-technology/discussions",
-                            },
-                            {
-                                label: "Report an issue",
-                                href: "https://github.com/aica-technology/api/issues/new/choose",
+                                label: "AICA Community",
+                                href: "https://github.com/aica-technology/community"
                             },
                             {
                                 label: "Website",
                                 href: "https://www.aica.tech",
                             },
                             {
-                                label: "Contact",
+                                label: "contact@aica.tech",
                                 href: "mailto:contact@aica.tech",
                             },
+                            // {
+                            //     label: "Private Training & Support",
+                            //     href: "https://link.aica.tech/contact-support",
+                            // },
+                            // {
+                            //     label: "Discussions & New Releases",
+                            //     href: "https://link.aica.tech/gh-discussions",
+                            // },
+                            // {
+                            //     label: "Give Feedback",
+                            //     href: "https://link.aica.tech/report-issue",
+                            // },
                         ],
                     },
                 ],
