@@ -1,4 +1,4 @@
-SCHEMA_URL ?= http://localhost:8080/api/schema.yaml
+SCHEMA_URL ?= https://docs.aica.tech/api/schema.yaml
 
 all:
 .PHONY: all
