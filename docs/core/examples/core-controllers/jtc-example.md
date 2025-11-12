@@ -32,9 +32,9 @@ Copy the following YAML and generate the graph.
 <details>
 <summary>JTC example application</summary>
 ```yaml
-schema: 2-0-4
+schema: 2-0-6
 dependencies:
-  core: v4.4.2
+  core: v5.0.0
 frames:
   start:
     reference_frame: world
@@ -119,15 +119,15 @@ hardware:
 graph:
   positions:
     on_start:
-      x: 460
-      y: 0
+      x: 420
+      y: -20
     stop:
-      x: 460
-      y: 660
+      x: 420
+      y: 100
     buttons:
       button:
-        x: 40
-        y: 840
+        x: 100
+        y: 760
     hardware:
       hardware:
         x: 680
@@ -148,10 +148,10 @@ graph:
   edges:
     hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_on_stop_on_stop:
       path:
-        - x: 440
-          y: 780
-        - x: 440
-          y: 700
+        - x: 380
+          y: 740
+        - x: 380
+          y: 160
 ```
 </details>
 
@@ -165,9 +165,9 @@ below:
 ## The example explained
 
 The application starts by loading the `Robot State Broadcaster` and `Joint Trajectory Controller` for the generic
-six-axis robot. You may already play the application.
+six-axis robot. You may already start the application.
 
-After you press play, switch to the 3D view using the corresponding button on the top right of your AICA Studio. You
+After you press start, switch to the 3D view by clicking on the minimap on the bottom left. You
 should see your robot in its default joint configuration, along with 4 Cartesian frames named
 **start, waypoint_1, waypoint_2, and waypoint_3** that form a triangle. As you may have guessed, this application
 controls the robot such that it traverses the Cartesian frames in that order. 
@@ -176,7 +176,7 @@ controls the robot such that it traverses the Cartesian frames in that order.
   <img src={jtcExampleFrames} alt="Cartesian frames for JTC" />
 </div>
 
-For now, let us go back to the graph view. Once there, turn your attention to the trigger button that connects to the
+For now, let us go to the Graph view tab on the right panel. Once there, turn your attention to the trigger button that connects to the
 `Set trajectory` service of the Joint Trajectory controller. Click on the gear icon on the edge that connects the button
 to the controller. You will see the following service payload:
 
@@ -196,10 +196,16 @@ Ensure the `durations` vector is either of the same length as `frames` or has a 
 all waypoints. You can also validate your payload's frame names, by verifying they match with those shown in the 3D view
 or YAML application. This way, you can intuitively anticipate the trajectory execution.
 
+:::note
+
+The Graph view on the right panel does not allow graph modifications. To modify the payload, either switch back to Graph on the main view using the option on the bottom left, or modify the payload directly on the Code tab of the right panel. 
+
+:::
+
 ## Executing the trajectory
 
 Assuming you have already pressed play and you are currently in the graph view, go ahead and press the trigger button to
-start the execution of the trajectory. Switch to the 3D view to see the robot moving through the waypoints.
+start the execution of the trajectory. The 3D view should show the robot moving through the waypoints.
 
 <div class="text--center">
   <img src={jtcExampleRun} alt="JTC in action" />
