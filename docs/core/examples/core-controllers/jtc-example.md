@@ -155,8 +155,8 @@ graph:
 ```
 </details>
 
-The application graph should show a hardware interface with a `Joint Trajectory Controller` and an event trigger, as shown
-below:
+The application graph should show a hardware interface with a `Joint Trajectory Controller` and an event trigger, as
+shown below:
 
 <div class="text--center">
   <img src={jtcExampleOverview} alt="Simple JTC configuration" />
@@ -167,18 +167,18 @@ below:
 The application starts by loading the `Robot State Broadcaster` and `Joint Trajectory Controller` for the generic
 six-axis robot. You may already start the application.
 
-After you press start, switch to the 3D view by clicking on the minimap on the bottom left. You
-should see your robot in its default joint configuration, along with 4 Cartesian frames named
-**start, waypoint_1, waypoint_2, and waypoint_3** that form a triangle. As you may have guessed, this application
-controls the robot such that it traverses the Cartesian frames in that order. 
+After you press start, switch to the 3D view by clicking on the minimap on the bottom left. You should see your robot in
+its default joint configuration, along with 4 Cartesian frames named **start, waypoint_1, waypoint_2, and waypoint_3**
+that form a triangle. As you may have guessed, this application controls the robot such that it traverses the Cartesian
+frames in that order.
 
 <div class="text--center">
   <img src={jtcExampleFrames} alt="Cartesian frames for JTC" />
 </div>
 
-For now, let us go to the Graph view tab on the right panel. Once there, turn your attention to the trigger button that connects to the
-`Set trajectory` service of the Joint Trajectory controller. Click on the gear icon on the edge that connects the button
-to the controller. You will see the following service payload:
+For now, let us go to the Graph view tab on the right panel. Once there, turn your attention to the trigger button that
+connects to the `Set trajectory` service of the Joint Trajectory controller. Click on the gear icon on the edge that
+connects the button to the controller. You will see the following service payload:
 
 ```yaml
 {
@@ -191,14 +191,15 @@ This message defines 2 of the variables that JTC can use in order to execute a t
 
 1. `frames`: a list of the Cartesian frames that you would like to traverse, in the order that they should be visited.
 2. `durations`: a list of absolute durations (in seconds) that correspond to each waypoint.
- 
+
 Ensure the `durations` vector is either of the same length as `frames` or has a single element which will be used for
 all waypoints. You can also validate your payload's frame names, by verifying they match with those shown in the 3D view
 or YAML application. This way, you can intuitively anticipate the trajectory execution.
 
 :::note
 
-The Graph view on the right panel does not allow graph modifications. To modify the payload, either switch back to Graph on the main view using the option on the bottom left, or modify the payload directly on the Code tab of the right panel. 
+The Graph view on the right panel does not allow graph modifications. To modify the payload, either switch back to Graph
+on the main view using the option on the bottom left, or modify the payload directly on the Code tab of the right panel.
 
 :::
 
