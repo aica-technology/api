@@ -167,18 +167,18 @@ shown below:
 The application starts by loading the `Robot State Broadcaster` and `Joint Trajectory Controller` for the generic
 six-axis robot. You may already start the application.
 
-After you press start, switch to the 3D view tab of the right panel. You should see your robot in
-its default joint configuration, along with 4 Cartesian frames named **start, waypoint_1, waypoint_2, and waypoint_3**
-that form a triangle. As you may have guessed, this application controls the robot such that it traverses the Cartesian
-frames in that order.
+After you press start, switch to the 3D view tab of the right panel. You should see your robot in its default joint
+configuration, along with 4 Cartesian frames named **start, waypoint_1, waypoint_2, and waypoint_3** that form a
+triangle. As you may have guessed, this application controls the robot such that it traverses the Cartesian frames in
+that order.
 
 <div class="text--center">
   <img src={jtcExampleFrames} alt="Cartesian frames for JTC" />
 </div>
 
-On the main graph view, turn your attention to the trigger button that
-connects to the `Set trajectory` service of the Joint Trajectory controller. Click on the gear icon on the edge that
-connects the button to the controller. You will see the following service payload:
+On the main graph view, turn your attention to the trigger button that connects to the `Set trajectory` service of the
+Joint Trajectory controller. Click on the gear icon on the edge that connects the button to the controller. You will see
+the following service payload:
 
 ```yaml
 {
@@ -198,15 +198,16 @@ or YAML application. This way, you can intuitively anticipate the trajectory exe
 
 :::note
 
-The Graph view on the right panel does not allow payload modifications or access when the application is playing. To modify the payload, either switch back to Graph
-on the main view using the mini-view switcher on the bottom left, or modify the payload directly on the Code tab of the right panel.
+The Graph view on the right panel does not allow payload modifications or access when the application is playing. To
+modify the payload, either switch back to Graph on the main view using the mini-view switcher on the bottom left, or
+modify the payload directly on the Code tab of the right panel.
 
 :::
 
 ## Executing the trajectory
 
-Switch to the 3D view using the mini-view switcher and press the trigger button on the Graph View tab to
-start the execution of the trajectory. The main view should show the robot moving through the waypoints.
+Switch to the 3D view using the mini-view switcher and press the trigger button on the Graph View tab to start the
+execution of the trajectory. The main view should show the robot moving through the waypoints.
 
 <div class="text--center">
   <img src={jtcExampleRun} alt="JTC in action" />
