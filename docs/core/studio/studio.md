@@ -8,7 +8,11 @@ import DocCardList from '@theme/DocCardList';
 # AICA Studio
 
 This section will give a brief, high-level tour of AICA Studio to help situate new users. Underlying concepts and
-examples will be covered in more depth in later sections of this documentation.
+examples are covered in more depth in later sections of this documentation.
+
+In short, AICA Studio is the graphical user interface layer to the AICA System to create, monitor and extend advanced
+robotic applications. It features an interactive application editor with a dataflow graph builder, a 3D scene visualizer
+and live data visualization. It also allows managing hardware configuration, user profiles and more.
 
 ## Application manager and editor
 
@@ -27,7 +31,7 @@ elements of which are described in the following subsections.
 
 ## Hardware manager
 
-The next top-level page is the hardware manager, available under the "Hardware" tab in the top navbar.
+The other top-level page is the hardware manager, available under the "Hardware" tab in the top navbar.
 
 ![aica-studio-hardware-manager](./studio/assets/aica-studio-hardware-manager.png)
 
@@ -38,16 +42,17 @@ name.
 
 Any hardware listed in the hardware manager can be loaded and used in an application.
 
-## Docs
+## Help
 
-Under the "Docs" tab in the top navbar, reference documentation for installed components and controllers in the AICA
-System configuration can be accessed.
+The "Help" tab in the top right section of the navbar is used to access a help page with links to documentation and
+learning resources. It also includes reference documentation for the installed components and controllers in the AICA
+System configuration.
 
 ![aica-studio-docs-page](./studio/assets/aica-studio-docs-page.png)
 
-## Users
+## User
 
-The user icon in the top right of the page is used to access and manage the currently logged-in user profile.
+The "User" tab in the top right of the page is used to access and manage the currently logged-in user profile.
 
 ![aica-studio-user-page](./studio/assets/aica-studio-user-page.png)
 
@@ -55,14 +60,7 @@ Read more about user scopes and API keys in [Users and authentication](/docs/get
 
 ## Settings
 
-The settings page is accessed through the cogwheel icon on the top right of the page. It is only available to users with
-the `admin` scope and can be used to administer other users as well as connect to cloud storage and services.
+The settings page is accessed through the "Settings" tab on the top right of the page. It is only available to users
+with the `admin` scope and can be used to administer other users as well as connect to cloud storage and services.
 
 ![aica-studio-settings-view](./studio/assets/aica-studio-settings-view.png)
-
-## Logs
-
-Finally, the last button on the top right accesses the logs viewer. This page shows log entries from the running system
-and can be filtered and searched to find relevant entries.
-
-![aica-studio-logs-view](./studio/assets/aica-studio-logs-view.png)
