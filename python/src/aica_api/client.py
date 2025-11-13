@@ -71,7 +71,8 @@ from aica_api.sio_client import read_until
 CLIENT_VERSION = importlib.metadata.version('aica_api')
 
 T = TypeVar('T')
-ValueParamaterT: TypeAlias = Union[bool, int, float, bool, List[bool], List[int], List[float], List[str]] 
+ValueParamaterT: TypeAlias = Union[bool, int, float, bool, str,
+                                   List[bool], List[int], List[float], List[str]] 
 
 
 class AICA:
