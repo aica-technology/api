@@ -68,7 +68,7 @@ To set up this example, follow the steps below.
 
 1. Create a new application and record the tool frame of the robot of your choice as described
    [here](../guides/application-frames#record-frame-in-3d-scene-view).
-2. In the same application, add the `Frame to Signal` component. Click on auto-configure and auto-activate to enable
+2. In the same application, add the `Frame to Signal` component. Click on auto-configure and auto-activate buttons to enable
    them and in the component settings, set the required parameter `Frame` to the name of the recorded frame from step 1.
    :::tip
    Learn more about the `Frame to Signal` component [here](/docs/concepts/building-blocks/frames#frame-to-signal).
