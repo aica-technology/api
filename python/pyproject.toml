@@ -15,7 +15,7 @@ artifacts = [
 
 [project]
 name = "aica_api"
-version = "4.0.0"
+version = "4.0.1"
 authors = [{ name = "Enrico Eberhard", email = "enrico@aica.tech" }]
 description = "A client utility for the AICA API"
 readme = "README.md"

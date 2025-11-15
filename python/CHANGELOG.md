@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [4.0.1](#401)
 - [4.0.0](#400)
 - [3.1.1](#311)
 - [3.1.0](#310)
@@ -14,6 +15,10 @@ Release Versions:
 - [1.0.2](#102)
 - [1.0.1](#101)
 - [1.0.0](#100)
+
+## 4.0.1
+
+Version 4.0.1 is a patch release that fixes a type hint issue for set parameter methods.
 
 ## 4.0.0
 
