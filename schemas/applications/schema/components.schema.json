@@ -63,6 +63,9 @@
         "outputs": {
           "$ref": "common/signals.schema.json"
         },
+        "assignments": {
+          "$ref": "common/assignments.schema.json"
+        },
         "input_collections": {
           "title": "Input collections",
           "description": "Collections of input signals of the component",
