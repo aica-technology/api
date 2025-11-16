@@ -17,6 +17,7 @@
     "component_identifier": {
       "description": "A component in the application",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "component": {
           "$ref": "identifier.schema.json"
@@ -29,6 +30,7 @@
     "controller_identifier": {
       "description": "A controller associated with a particular hardware interface",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "hardware": {
           "$ref": "identifier.schema.json"
@@ -45,6 +47,7 @@
     "hardware_identifier": {
       "description": "A hardware interface in the application",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "hardware": {
           "$ref": "identifier.schema.json"

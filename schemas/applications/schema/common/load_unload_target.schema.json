@@ -4,15 +4,12 @@
   "description": "Identifier for a component, hardware interface or controller to load or unload",
   "oneOf": [
     {
-      "additionalProperties": false,
       "$ref": "target_interface.schema.json#/$defs/component_identifier"
     },
     {
-      "additionalProperties": false,
       "$ref": "target_interface.schema.json#/$defs/controller_identifier"
     },
     {
-      "additionalProperties": false,
       "$ref": "target_interface.schema.json#/$defs/hardware_identifier"
     }
   ]
