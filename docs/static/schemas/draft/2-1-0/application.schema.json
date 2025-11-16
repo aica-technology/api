@@ -1,5 +1,5 @@
 {
-  "$id": "/draft/2-1-0/application.schema.json",
+  "$id": "/2-0-6/application.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "YAML Application Description",
   "description": "An AICA application graph description using YAML syntax.",
@@ -965,11 +965,9 @@
           "title": "Load On Start",
           "oneOf": [
             {
-              "additionalProperties": false,
               "$ref": "#/$defs/target_interface/$defs/component_identifier"
             },
             {
-              "additionalProperties": false,
               "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
             }
           ]
@@ -1461,15 +1459,12 @@
       "description": "Identifier for a component, hardware interface or controller to load or unload",
       "oneOf": [
         {
-          "additionalProperties": false,
           "$ref": "#/$defs/target_interface/$defs/component_identifier"
         },
         {
-          "additionalProperties": false,
           "$ref": "#/$defs/target_interface/$defs/controller_identifier"
         },
         {
-          "additionalProperties": false,
           "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
         }
       ]
@@ -1581,7 +1576,7 @@
     "target_interface": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "Target Interface",
-      "description": "Identifier for a component, hardware interface, controller or subgraph to target with an event",
+      "description": "Identifier for a component, hardware interface or controller to target with an event",
       "oneOf": [
         {
           "$ref": "#/$defs/target_interface/$defs/component_identifier"
@@ -1591,15 +1586,13 @@
         },
         {
           "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
-        },
-        {
-          "$ref": "#/$defs/target_interface/$defs/subgraph_identifier"
         }
       ],
       "$defs": {
         "component_identifier": {
           "description": "A component in the application",
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "component": {
               "$ref": "#/$defs/identifier"
@@ -1612,6 +1605,7 @@
         "controller_identifier": {
           "description": "A controller associated with a particular hardware interface",
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "hardware": {
               "$ref": "#/$defs/identifier"
@@ -1628,6 +1622,7 @@
         "hardware_identifier": {
           "description": "A hardware interface in the application",
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "hardware": {
               "$ref": "#/$defs/identifier"
@@ -1635,19 +1630,6 @@
           },
           "required": [
             "hardware"
-          ]
-        },
-        "subgraph_identifier": {
-          "title": "Subgraph Identifier",
-          "description": "A subgraph in the application",
-          "type": "object",
-          "properties": {
-            "subgraph": {
-              "$ref": "#/$defs/identifier"
-            }
-          },
-          "required": [
-            "subgraph"
           ]
         }
       }
