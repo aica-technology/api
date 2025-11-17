@@ -1,86 +1,109 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Set Parameter",
-  "description": "Set a parameter on a component",
+  "title": "Set Value",
+  "description": "Set a value on a variable or a component or controller parameter",
   "oneOf": [
     {
       "type": "array",
       "minItems": 1,
       "items": {
-        "$ref": "#/$defs/set_parameter_object"
+        "$ref": "#/$defs/target"
       }
     },
     {
-      "$ref": "#/$defs/set_parameter_object"
+      "$ref": "#/$defs/target"
     }
   ],
   "$defs": {
-    "parameter": {
-      "title": "Parameter Name",
-      "description": "The name of a parameter to set",
-      "type": "string",
-      "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
+    "target_variable": {
+      "additionalProperties": false,
+      "properties": {
+        "variable": {
+          "$ref": "../identifier.schema.json"
+        },
+        "value": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_value"
+        },
+        "type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_type"
+        },
+        "state_type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
+        }
+      },
+      "required": [
+        "variable",
+        "value"
+      ]
     },
-    "set_parameter_object": {
-      "title": "Set Parameter Object",
+    "target_component": {
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "../identifier.schema.json"
+        },
+        "parameter": {
+          "$ref": "../assignment_target.schema.json#/$defs/parameter"
+        },
+        "value": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_value"
+        },
+        "type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_type"
+        },
+        "state_type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
+        }
+      },
+      "required": [
+        "component",
+        "parameter",
+        "value"
+      ]
+    },
+    "target_controller": {
+      "additionalProperties": false,
+      "properties": {
+        "controller": {
+          "$ref": "../identifier.schema.json"
+        },
+        "hardware": {
+          "$ref": "../identifier.schema.json"
+        },
+        "parameter": {
+          "$ref": "../assignment_target.schema.json#/$defs/parameter"
+        },
+        "value": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_value"
+        },
+        "type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_type"
+        },
+        "state_type": {
+          "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
+        }
+      },
+      "required": [
+        "controller",
+        "hardware",
+        "parameter",
+        "value"
+      ]
+    },
+    "target": {
+      "title": "Set Value Object",
       "oneOf": [
         {
-          "title": "Set Component Parameter Object",
-          "type": "object",
           "additionalProperties": false,
-          "properties": {
-            "component": {
-              "$ref": "../identifier.schema.json"
-            },
-            "parameter": {
-              "$ref": "#/$defs/parameter"
-            },
-            "value": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_value"
-            },
-            "type": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_type"
-            },
-            "state_type": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
-            }
-          },
-          "required": [
-            "component",
-            "parameter",
-            "value"
-          ]
+          "$ref": "#/$defs/target_variable"
         },
         {
-          "title": "Set Controller Parameter Object",
-          "type": "object",
           "additionalProperties": false,
-          "properties": {
-            "controller": {
-              "$ref": "../identifier.schema.json"
-            },
-            "hardware": {
-              "$ref": "../identifier.schema.json"
-            },
-            "parameter": {
-              "$ref": "#/$defs/parameter"
-            },
-            "value": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_value"
-            },
-            "type": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_type"
-            },
-            "state_type": {
-              "$ref": "../parameters.schema.json#/$defs/parameter_state_type"
-            }
-          },
-          "required": [
-            "controller",
-            "hardware",
-            "parameter",
-            "value"
-          ]
+          "$ref": "#/$defs/target_component"
+        },
+        {
+          "additionalProperties": false,
+          "$ref": "#/$defs/target_controller"
         }
       ]
     }

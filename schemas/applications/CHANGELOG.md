@@ -19,6 +19,10 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
+## Upcoming changes (draft/2-1-0)
+
+- feat: add support for variables and assignments (#386)
+
 ## 2-0-6
 
 This patch makes parameter values more type-safe by providing the option to explicitly specify the parameter type for

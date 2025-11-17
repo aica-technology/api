@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Variables",
+  "description": "A description of the variables available in the application",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+      "title": "Variable",
+      "description": "A named variable",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "description": "The human-readable variable name.",
+          "examples": [
+            "Distance",
+            "Gain",
+            "Frame name"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "description": "A brief description of the variable.",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_type"
+        },
+        "state_type": {
+          "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/encoded_state_type"
+        },
+        "value": {
+          "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_value"
+        },
+        "read_only": {
+          "description": "Specify if the value of the variable can be modified during application runtime",
+          "type": "boolean"
+        },
+        "events": {
+          "$ref": "events.schema.json"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ],
+      "if": {
+        "properties": {
+          "type": {
+            "const": "state"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "state_type"
+        ]
+      }
+    }
+  }
+}

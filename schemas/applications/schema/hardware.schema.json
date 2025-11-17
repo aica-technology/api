@@ -146,6 +146,9 @@
                 "outputs": {
                   "$ref": "common/signals.schema.json"
                 },
+                "assignments": {
+                  "$ref": "common/assignments.schema.json"
+                },
                 "events": {
                   "title": "Controller Events",
                   "description": "Controller event sources that can trigger events",

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Identifier for a variable or a component or controller parameter to assign a value to",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "$ref": "#/$defs/variable"
+    },
+    {
+      "additionalProperties": false,
+      "$ref": "#/$defs/target_component"
+    },
+    {
+      "additionalProperties": false,
+      "$ref": "#/$defs/target_controller"
+    }
+  ],
+  "$defs": {
+    "variable": {
+      "title": "Variable Identifier",
+      "description": "A variable in the application",
+      "type": "object",
+      "properties": {
+        "variable": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "variable"
+      ]
+    },
+    "parameter": {
+      "title": "Parameter Name",
+      "description": "The name of a parameter in the application",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
+    },
+    "target_component": {
+      "properties": {
+        "component": {
+          "$ref": "identifier.schema.json"
+        },
+        "parameter": {
+          "$ref": "#/$defs/parameter"
+        }
+      },
+      "required": [
+        "component",
+        "parameter"
+      ]
+    },
+    "target_controller": {
+      "properties": {
+        "controller": {
+          "$ref": "identifier.schema.json"
+        },
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        },
+        "parameter": {
+          "$ref": "#/$defs/parameter"
+        }
+      },
+      "required": [
+        "controller",
+        "hardware",
+        "parameter"
+      ]
+    }
+  }
+}
