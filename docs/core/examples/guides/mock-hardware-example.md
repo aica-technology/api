@@ -7,14 +7,14 @@ title: An application with hardware
 
 ## Launcher configuration requirements
 
-This example uses an additional Universal Robots collection package, which includes drivers for communicating with
-UR robots and the example URDF content used to visualize the robot arm.
+This example uses an additional Universal Robots collection package, which includes drivers for communicating with UR
+robots and the example URDF content used to visualize the robot arm.
 
 Use AICA Core v5.0.0 together with the `collections/ur-collection` package at version v4.2.0 to reproduce this example.
 
 ## URDF Hardware Manager
 
-After starting AICA Studio, open the Hardware Manager 
+After starting AICA Studio, open the Hardware Manager
 ([localhost:8080/studio/hardware](http://localhost:8080/studio/hardware)). This page shows a table of available URDF
 files in the container database with a name and a description.
 
@@ -45,8 +45,8 @@ The mock URDF will be used to demonstrate the hardware interface block in AICA a
 
 :::info
 
-Refer to the overview section [Controlling robots with ros2_control](../../../../docs/concepts/ros-concepts/controlling-robots) for
-more context.
+Refer to the overview section
+[Controlling robots with ros2_control](../../../../docs/concepts/ros-concepts/controlling-robots) for more context.
 
 :::
 
@@ -195,9 +195,9 @@ broadcaster controller. When the trigger button is pressed in the graph editor, 
 :::tip
 
 Controllers can also be "auto-activated", similar to the procedure in the
-[previous example](./editor-example#auto-lifecycle-events). Try to modify this example by removing the trigger
-button and toggling "auto-activate" flag under the controller name. Once the application is started
-again, the controller should now automatically be active.
+[previous example](./editor-example#auto-lifecycle-events). Try to modify this example by removing the trigger button
+and toggling "auto-activate" flag under the controller name. Once the application is started again, the controller
+should now automatically be active.
 
 :::
 
