@@ -15,14 +15,14 @@ import jtcGuideFinalApp from './assets/jtc-guide-final-app.gif'
 
 # A guide on joint trajectory workflows
 
-In our concepts page for the [Joint Trajectory Controller](/docs/concepts/building-blocks/controllers/jtc)
-(JTC) we already covered why trajectory controllers are often needed in robotics. In short, executing trajectories,
-in joint or Cartesian space, is often a fundamental piece of a robotics application workflow. Whether you need to
-address pick and place tasks, or simply move through predetermined locations, you are in need of a controller that is
-able to traverse space accurately and timely.
+In our concepts page for the [Joint Trajectory Controller](/docs/concepts/building-blocks/controllers/jtc) (JTC) we
+already covered why trajectory controllers are often needed in robotics. In short, executing trajectories, in joint or
+Cartesian space, is often a fundamental piece of a robotics application workflow. Whether you need to address pick and
+place tasks, or simply move through predetermined locations, you are in need of a controller that is able to traverse
+space accurately and timely.
 
-While we cover the basics of JTC in [a separate example](../core-controllers/jtc-example), here we will focus more
-on its integration with AICA Studio and suggest workflows and/or parametrizations that might aid you when building big
+While we cover the basics of JTC in [a separate example](../core-controllers/jtc-example), here we will focus more on
+its integration with AICA Studio and suggest workflows and/or parametrizations that might aid you when building big
 applications.
 
 :::tip
@@ -41,15 +41,15 @@ Let us start by creating a new application that we can use as a reference point 
 First, start AICA Launcher and create a configuration with **AICA Core v4.4.2** or higher. For the remainder of this
 guide, we will be using the generic six-axis robot that is part of our core hardware collection. However, if you have
 the appropriate entitlements and want to experiment with a different robot brand, feel free to add the corresponding
-collection to your configuration before launching it. 
+collection to your configuration before launching it.
 
 ## Configuring your hardware interface
 
-Create a new application and: 
+Create a new application and:
 
 1. Click on the hardware interface to open its settings menu and set the URDF to `Generic six-axis robot arm`.
-2. While in the same menu, click on `Add controllers`, select a `Joint Trajectory Controller` from the list of 
-  available controllers and enable the `auto-load` and `auto-activate` options.
+2. While in the same menu, click on `Add controllers`, select a `Joint Trajectory Controller` from the list of available
+   controllers and enable the `auto-load` and `auto-activate` options.
 3. Connect the start block to the hardware interface to load it on start.
 
 Your application should look like this:
@@ -60,8 +60,8 @@ Your application should look like this:
 
 ### Parametrizing JTC
 
-Click on the controller part of the hardware interface block we just added to scroll down in settings, view and edit the available
-parameters.
+Click on the controller part of the hardware interface block we just added to scroll down in settings, view and edit the
+available parameters.
 
 <div class="text--center">
   <img src={jtcGuideParameters} alt="Basic JTC parameters" />
@@ -70,26 +70,27 @@ parameters.
 Let us cover some of these parameters:
 
 - `Command interfaces`: that refers to the type of command that JTC will use to control your robot; one of position,
-velocity, acceleration, or effort.
+  velocity, acceleration, or effort.
 - `State interfaces`: the type of state interfaces JTC will claim. Some interfaces may be necessary depending on your
-choice of command interfaces. For example, if you want to control your robot in acceleration, you need to have a
-velocity state interface. 
+  choice of command interfaces. For example, if you want to control your robot in acceleration, you need to have a
+  velocity state interface.
 - `Open loop control`: refers to whether the controller will be correcting its desired commands according to the state
-it is receiving or not.
+  it is receiving or not.
 - `Allow nonzero velocity at trajectory end`: typically, you want the robot to halt when it reaches the end of your
-trajectory. However, there are cases, e.g., when you are controlling in velocities, where you want to allow non-zero
-values even if the trajectory waypoints have been successfully traversed.
+  trajectory. However, there are cases, e.g., when you are controlling in velocities, where you want to allow non-zero
+  values even if the trajectory waypoints have been successfully traversed.
 - `Proportional/Integral/Derivative gain(s)`: these gains are to be set and tuned when you are, for example, commanding
-in velocity but your trajectory has positions. Then, a PID control will be applied to generate desired velocities
-through the trajectory.
+  in velocity but your trajectory has positions. Then, a PID control will be applied to generate desired velocities
+  through the trajectory.
 
 You will also notice tolerance values for trajectory execution times and position offsets. These should be set on a
 per-application basis, as failing to satisfy the corresponding constraints would lead to the trajectory failing
 mid-execution.
 
-You may find advanced parameters in the `Help` page under the `AICA Core Controllers` and `Joint Trajectory Controller`. These parameters can be
-used to further tune JTC's performance and functionality, but may also require more advanced knowledge in order to tune
-them. Make sure to carefully read the descriptions next to each parameter before making changes.
+You may find advanced parameters in the `Help` page under the `AICA Core Controllers` and `Joint Trajectory Controller`.
+These parameters can be used to further tune JTC's performance and functionality, but may also require more advanced
+knowledge in order to tune them. Make sure to carefully read the descriptions next to each parameter before making
+changes.
 
 ## Setting a trajectory for execution
 
@@ -102,7 +103,7 @@ In both cases, receiving a new joint trajectory will first trigger cancellation 
 one. That is, **there is no trajectory buffering or appending taking place**. As with many things in the AICA Universe,
 behaviors are event-driven. If you wish to send multiple trajectories back-to-back, you will have to rely on the
 execution status of the active trajectory handled by JTC. There is a practical example of how do this in following
-sections (see [Putting an application together](#putting-an-application-together)). 
+sections (see [Putting an application together](#putting-an-application-together)).
 
 ### Trajectory execution status
 
@@ -110,9 +111,9 @@ The controller exposes 4 predicates to reflect the the execution status of a tra
 
 - `Has active trajectory`: A trajectory has been set and is being executed
 - `Has trajectory succeeded`: A trajectory was executed successfully (i.e., reached the final waypoint within all
-tolerances)
+  tolerances)
 - `Has trajectory failed`: A trajectory failed to execute because a tolerance was violated (i.e., desired waypoint was
-not reached and/or time duration was exceeded)
+  not reached and/or time duration was exceeded)
 - `Is trajectory cancelled`: A user-triggered request to cancel the trajectory was successfully processed
 
 ### Using JTC with signals
@@ -189,6 +190,7 @@ this->trajectory_->points[1].time_from_start = rclcpp::Duration::from_seconds(4.
 
 this->publish_output("trajectory");
 ```
+
 </TabItem>
 </Tabs>
 
@@ -205,24 +207,24 @@ read through your URDF.
 The service currently accepts 6 variables, namely:
 
 - `times_from_start`: a list of timestamps (in seconds) measured from the start, indicating when JTC should reach each
-frame.
+  frame.
 - `durations`: a list of absolute durations (in seconds) that correspond to each waypoint.
 - `frames`: names of the Cartesian frames to reach with the robot end effector.
 - `joint_positions`: names of joint positions that the robot should achieve.
 - `blending_factors`: factors in [0.0, 1.0] indicating the amount of curving allowed between 2 consecutive waypoints.
-The default blending factors are all set to 0.0. The last trajectory segment is not considered in blending, therefore,
-the vector's size needs to be equal to the number of frames or joint positions **minus** 1 or simply contain a single
-value to be applied to all waypoints that support blending.
+  The default blending factors are all set to 0.0. The last trajectory segment is not considered in blending, therefore,
+  the vector's size needs to be equal to the number of frames or joint positions **minus** 1 or simply contain a single
+  value to be applied to all waypoints that support blending.
 - `blending_samples`: the number of samples **(minimum 10; default 50)** to be used when generating the blended
-trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
+  trajectory. If you find that your blended trajectory is not smooth enough, consider increasing this number.
 
-The payload can only contain one of `frames` and `joint_positions` and either `times_from_start` or `durations`. 
-When `frames` are provided, an Inverse Kinematics (IK) solver will compute the joint positions that the robot should
-reach. In the case of `joint_positions`, the recorded joint configurations are directly used in the joint trajectory. 
+The payload can only contain one of `frames` and `joint_positions` and either `times_from_start` or `durations`. When
+`frames` are provided, an Inverse Kinematics (IK) solver will compute the joint positions that the robot should reach.
+In the case of `joint_positions`, the recorded joint configurations are directly used in the joint trajectory.
 
 When using `times_from_start`, the length of `frames` or `joint_positions` need to be equal to the times provided and
-each value corresponds to exactly one waypoint. Similarly, `durations` can have the same length as your waypoints vector,
-or be expressed as a single-element vector whose value will be applied to all waypoints.
+each value corresponds to exactly one waypoint. Similarly, `durations` can have the same length as your waypoints
+vector, or be expressed as a single-element vector whose value will be applied to all waypoints.
 
 For example, you could use:
 
@@ -271,10 +273,9 @@ In the following section, we will demonstrate how these frames or joint position
 Let us now go back to the application we created earlier in the guide, that consists of a hardware interface with the
 `Generic six-axis robot arm` and a `Joint Trajectory Controller`.
 
-
 ### Recording frames and joint positions
 
-:::info 
+:::info
 
 A dedicated example on recording application frames can be found [here](./application-frames).
 
@@ -282,13 +283,14 @@ A dedicated example on recording application frames can be found [here](./applic
 
 #### Create a frame from scratch
 
-1. Start the application and switch to the `3D view`. In the **Settings** section of the **Scene** tab you will see various visualization
-options.
+1. Start the application and switch to the `3D view`. In the **Settings** section of the **Scene** tab you will see
+   various visualization options.
 2. Under `Create frame`, provide the name `frame_1` before pressing `Create`.
 3. A frame will appear close to the origin of the map. You can click on the axes of the frame and drag it anywhere in
-the scene. Also, mind that this is a desired tool for your robot's end effector, therefore, you likely have to rotate it
-accordingly such that it's reachable both in terms of distance and orientation. You may also toggle on `Show frames` under 
-`View settings`, as this will provide a visual reference about the orientation of the end effector.
+   the scene. Also, mind that this is a desired tool for your robot's end effector, therefore, you likely have to rotate
+   it accordingly such that it's reachable both in terms of distance and orientation. You may also toggle on
+   `Show frames` under `View settings`, as this will provide a visual reference about the orientation of the end
+   effector.
 
 <div class="text--center">
   <img src={jtcGuideCreateFrame} alt="Creating a frame in AICA Studio" />
@@ -311,7 +313,7 @@ frames:
       z: 0.034142
 ```
 
-#### Record a frame: Create a frame from an existing one 
+#### Record a frame: Create a frame from an existing one
 
 Alternatively, you can record a frame directly on the robot's end effector and then proceed to move it (in which case
 the orientation is copied from the end effector), as shown below:
@@ -336,13 +338,12 @@ frames:
 ```
 
 You may also try the inverse, that is, copy one of the above code blocks, paste it at the top-level scope of your YAML
-application, and generate the graph. In the `3D view` you should see the same frame as depicted in the
-above image.
+application, and generate the graph. In the `3D view` you should see the same frame as depicted in the above image.
 
 #### Record joint positions
 
-Let us also record the initial position of the robot as a joint position. Press **Start** if you have not already, but this
-time record joint positions instead of creating a frame:
+Let us also record the initial position of the robot as a joint position. Press **Start** if you have not already, but
+this time record joint positions instead of creating a frame:
 
 <div class="text--center">
   <img src={jtcGuideRecordJoint} alt="Recording a joint in AICA Studio" />
@@ -373,7 +374,6 @@ joint_positions:
 
 You should now have at least 2 recordings, one in Cartesian and the other in joint space. We can use these to create a
 repetitive motion between them.
-
 
 #### Loop logic
 
@@ -406,26 +406,21 @@ You may re-play your program by using `blending_factors` this time. Your payload
 or
 
 ```yaml
-{
-  joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, stop], 
-  durations: [2.0],
-  blending_factors: [0.5]
-}
+{ joint_positions: [start, jconfig_1, jconfig_2, jconfig_3, stop], durations: [2.0], blending_factors: [0.5] }
 ```
 
-Experiment with these values to observe the difference in the resulting trajectory. Note that, you will need at least
-2 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. Note that if
-the first waypoint is identical to the robot's current configuration, this would also result in a straight-line motion
-to the final waypoint even though blending is in effect. If you need to, go to 3D view and record some additional frames.
-You can also try to apply different blending values for each waypoint to compare the difference in smoothness.
-:::
+Experiment with these values to observe the difference in the resulting trajectory. Note that, you will need at least 2
+waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. Note that if the
+first waypoint is identical to the robot's current configuration, this would also result in a straight-line motion to
+the final waypoint even though blending is in effect. If you need to, go to 3D view and record some additional frames.
+You can also try to apply different blending values for each waypoint to compare the difference in smoothness. :::
 
 #### Other considerations
 
 Since the sequence will loop indefinitely, you will initially be able to stop the robot from moving only by stopping the
 application.
 
-As an exercise, try to use a trigger button and the `Is trajectory cancelled` predicate to drive the application or 
+As an exercise, try to use a trigger button and the `Is trajectory cancelled` predicate to drive the application or
 sequence to stop.
 
 
