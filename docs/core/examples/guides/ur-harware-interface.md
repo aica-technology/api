@@ -116,9 +116,9 @@ to the robot.
   <summary>Example application, remote control</summary>
 
   ```yaml
-  schema: 2-0-4
+  schema: 2-0-6
   dependencies:
-    core: v4.4.2
+    core: v5.0.0
   frames:
     wp_1:
       reference_frame: world
@@ -205,7 +205,7 @@ to the robot.
       buttons:
         button:
           x: -460
-          y: 600
+          y: 580
       hardware:
         hardware:
           x: 620
@@ -228,20 +228,32 @@ to the robot.
             y: 1060
           - x: 620
             y: 900
+      on_start_on_start_hardware_hardware:
+        path:
+          - x: 360
+            y: 60
+          - x: 360
+            y: 40
+      button_on_click_sequence_sequence:
+        path:
+          - x: -20
+            y: 640
+          - x: -20
+            y: 620
       sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
         path:
           - x: 240
-            y: 860
+            y: 820
       hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_on_stop_on_stop:
         path:
           - x: 540
-            y: 780
+            y: 740
           - x: 540
             y: 480
           - x: -20
             y: 480
           - x: -20
-            y: 140
+            y: 160
 
   ```
 </details>
@@ -283,9 +295,9 @@ the application in AICA Studio first, and the UR program second.
   <summary>Example application, local control</summary>
 
   ```yaml
-  schema: 2-0-4
+  schema: 2-0-6
   dependencies:
-    core: v4.4.2
+    core: v5.0.0
   frames:
     wp_1:
       reference_frame: world
@@ -407,40 +419,35 @@ the application in AICA Studio first, and the UR program second.
             y: 1060
           - x: 620
             y: 900
-      on_start_on_start_hardware_hardware:
-        path:
-          - x: 440
-            y: 40
-          - x: 440
-            y: 60
-      hardware_hardware_joint_trajectory_controller_on_activate_sequence_sequence:
-        path:
-          - x: 20
-            y: 760
-          - x: 20
-            y: 440
       sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
         path:
           - x: 280
-            y: 920
-      hardware_hardware_ur_dashboard_controller_program_running_hardware_hardware_joint_trajectory_controller:
-        path:
-          - x: 460
-            y: 1300
-          - x: 460
-            y: 640
-      hardware_hardware_ur_dashboard_controller_hand_back_control_success_on_stop_on_stop:
-        path:
-          - x: -20
-            y: 1260
-          - x: -20
-            y: 140
+            y: 880
       hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_ur_dashboard_controller_hand_back_control:
         path:
           - x: 680
-            y: 840
+            y: 800
           - x: 680
-            y: 1380
+            y: 1340
+      hardware_hardware_joint_trajectory_controller_on_activate_sequence_sequence:
+        path:
+          - x: 20
+            y: 720
+          - x: 20
+            y: 440
+      hardware_hardware_ur_dashboard_controller_program_running_hardware_hardware_joint_trajectory_controller:
+        path:
+          - x: 460
+            y: 1260
+          - x: 460
+            y: 600
+      hardware_hardware_ur_dashboard_controller_hand_back_control_success_on_stop_on_stop:
+        path:
+          - x: -20
+            y: 1220
+          - x: -20
+            y: 160
+
   ```
 </details>
 
@@ -483,9 +490,9 @@ Find below another example that uses the controller to set the payload on the ro
   <summary>Example application, dashboard controller</summary>
 
   ```yaml
-  schema: 2-0-4
+  schema: 2-0-6
   dependencies:
-    core: v4.0.0
+    core: v5.0.0
   on_start:
     load:
       hardware: hardware
@@ -542,6 +549,9 @@ Find below another example that uses the controller to set the payload on the ro
                   start: sequence
   graph:
     positions:
+      on_start:
+        x: 0
+        y: -20
       stop:
         x: 320
         y: 120
@@ -557,17 +567,18 @@ Find below another example that uses the controller to set the payload on the ro
       sequence_sequence_event_trigger_1_hardware_hardware_ur_dashboard_controller_set_payload:
         path:
           - x: 320
-            y: 900
+            y: 860
       sequence_sequence_event_trigger_3_hardware_hardware_ur_dashboard_controller_hand_back_control:
         path:
           - x: 640
-            y: 860
+            y: 820
       hardware_hardware_ur_dashboard_controller_program_running_sequence_sequence:
         path:
           - x: 100
-            y: 780
+            y: 740
           - x: 100
             y: 280
+
   ```
 </details>
 
