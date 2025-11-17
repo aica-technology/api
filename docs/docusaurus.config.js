@@ -3,16 +3,15 @@
 const lightCodeTheme = require("prism-react-renderer").themes.github;
 const darkCodeTheme = require("prism-react-renderer").themes.vsDark;
 
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 
 const url = "https://docs.aica.tech";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: "AICA for Developers",
-    tagline:
-        "Documentation for the AICA System and robotics software framework",
+    tagline: "Documentation for the AICA System and robotics software framework",
     favicon: "img/favicon.ico",
 
     url: url,
@@ -36,7 +35,7 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
-                    sidebarPath: require.resolve("./src/layout/sidebars.js"),
+                    sidebarPath: require.resolve("./src/layout/sidebars.ts"),
                     sidebarCollapsed: false,
                     editUrl: "https://github.com/aica-technology/api/tree/main/docs",
                     remarkPlugins: [remarkMath],
@@ -47,6 +46,26 @@ const config = {
                     customCss: require.resolve("./src/css/custom.css"),
                 },
             }),
+        ],
+    ],
+    plugins: [
+        [
+            "@docusaurus/plugin-content-docs",
+            {
+                id: "core",
+                path: "core",
+                routeBasePath: "core",
+                sidebarCollapsed: false,
+                editUrl: "https://github.com/aica-technology/api/tree/main/docs",
+                remarkPlugins: [remarkMath],
+                rehypePlugins: [rehypeKatex],
+                sidebarPath: "./src/layout/coreSidebars.ts",
+                lastVersion: 'current',
+                versions: {
+                    current: {label: "AICA Core v5", path: "", banner: "none"},
+                    v4: {label: "AICA Core v4", path: "v4", banner: "none"},
+                },
+            },
         ],
     ],
 
@@ -68,17 +87,18 @@ const config = {
                     srcDark: "img/logo_dark.svg",
                 },
                 items: [
-                    // TODO: add version dropdown when needed
-                    // {
-                    //   type: "docsVersionDropdown",
-                    //   position: "left",
-                    //   dropdownActiveClassDisabled: true,
-                    // },
                     {
                         type: "docSidebar",
                         sidebarId: "gettingStartedSidebar",
                         position: "left",
                         label: "Getting started",
+                    },
+                    {
+                        type: "docSidebar",
+                        docsPluginId: "core",
+                        sidebarId: "studioSidebar",
+                        position: "left",
+                        label: "AICA Studio",
                     },
                     {
                         type: "docSidebar",
@@ -88,6 +108,7 @@ const config = {
                     },
                     {
                         type: "docSidebar",
+                        docsPluginId: "core",
                         sidebarId: "examplesSidebar",
                         position: "left",
                         label: "Examples",
@@ -109,6 +130,12 @@ const config = {
                         href: `${url}/api`,
                         label: "REST API",
                         position: "left",
+                    },
+                    {
+                        type: "docsVersionDropdown",
+                        docsPluginId: "core",
+                        position: "right",
+                        dropdownActiveClassDisabled: true,
                     },
                     {
                         href: "https://www.github.com/aica-technology",
@@ -168,11 +195,11 @@ const config = {
         }),
     stylesheets: [
         {
-            href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
-            type: 'text/css',
+            href: "https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css",
+            type: "text/css",
             integrity:
-                'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
-            crossorigin: 'anonymous',
+                "sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM",
+            crossorigin: "anonymous",
         },
     ],
 };

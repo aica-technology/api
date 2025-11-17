@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Target Interface",
+  "description": "Identifier for a component, hardware interface or controller to target with an event",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/component_identifier"
+    },
+    {
+      "$ref": "#/$defs/controller_identifier"
+    },
+    {
+      "$ref": "#/$defs/hardware_identifier"
+    }
+  ],
+  "$defs": {
+    "component_identifier": {
+      "description": "A component in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "component"
+      ]
+    },
+    "controller_identifier": {
+      "description": "A controller associated with a particular hardware interface",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        },
+        "controller": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "hardware",
+        "controller"
+      ]
+    },
+    "hardware_identifier": {
+      "description": "A hardware interface in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        }
+      },
+      "required": [
+        "hardware"
+      ]
+    }
+  }
+}

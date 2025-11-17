@@ -29,10 +29,10 @@
       "title": "Load On Start",
       "oneOf": [
         {
-          "$ref": "common/load_unload_target.json#/$defs/component_identifier"
+          "$ref": "common/target_interface.schema.json#/$defs/component_identifier"
         },
         {
-          "$ref": "common/load_unload_target.json#/$defs/hardware_identifier"
+          "$ref": "common/target_interface.schema.json#/$defs/hardware_identifier"
         }
       ]
     }
