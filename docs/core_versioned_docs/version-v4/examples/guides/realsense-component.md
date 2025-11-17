@@ -6,7 +6,6 @@ title: RealSense camera component
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import orbbecMountedVolume from './assets/orbbec-mounted-udev-volume.png'
 import realsenseNewApp from './assets/realsense-new-app.gif'
 import realsenseRvizColor from './assets/realsense-play-rviz.gif'
 import realsenseCameraParameters from './assets/realsense-camera-parameters.png'

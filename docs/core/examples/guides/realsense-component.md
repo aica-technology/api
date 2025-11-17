@@ -6,7 +6,6 @@ title: RealSense camera component
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import orbbecMountedVolume from './assets/orbbec-mounted-udev-volume.png'
 import realsenseNewApp from './assets/realsense-new-app.gif'
 import realsenseRvizColor from './assets/realsense-play-rviz.gif'
 import realsenseCameraParameters from './assets/realsense-camera-parameters.png'
@@ -49,14 +48,14 @@ Select **Launch AICA Studio** to proceed.
 Start by creating a new application.
 
 1. Remove the hardware interface that is included in new applications by default.
-2. Press the (+) button on the top right, and locate the **RealSense Camera** component. Click to add to the graph.
+2. In the **Add components** section of the **Scene** tab, locate the **RealSense Camera** component. Click to add to the graph.
 3. Next, connect the component to the start block.
 
 <div class="text--center">
   <img src={realsenseNewApp} alt="Creating a new RealSense Camera component" />
 </div>
 
-4. Press **Play** to start the application.
+4. Press **Start** to start the application.
 5. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
 6. In RViz, select _Add > By topic > /realsense_camera/color_image_raw > Image_. This adds a panel that shows the live
    color image. The depth image can also be found under _/realsense_camera/depth_image_rect_raw > Image_.
@@ -67,7 +66,7 @@ Start by creating a new application.
 
 ## Parametrizing the RealSense Camera component
 
-Click on the small gear icon on the `RealSense Camera` block to view and edit the available parameters.
+Click on the `RealSense Camera` component block to view and edit the available parameters.
 
 <div class="text--center">
   <img src={realsenseCameraParameters} alt="Basic RealSense camera parameters" />
