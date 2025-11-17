@@ -47,11 +47,9 @@ collection to your configuration before launching it.
 
 Create a new application and: 
 
-1. Open the settings menu of the hardware interface and set the URDF to `Generic six-axis robot arm`, then
-proceed to close this menu.
-2. Add a `Joint Trajectory Controller` to the hardware interface and set it to:
-   - auto-load
-   - auto-activate
+1. Click on the hardware interface to open its settings menu and set the URDF to `Generic six-axis robot arm`.
+2. While in the same menu, click on `Add controllers`, select a `Joint Trajectory Controller` from the list of 
+  available controllers and enable the `auto-load` and `auto-activate` options.
 3. Connect the start block to the hardware interface to load it on start.
 
 Your application should look like this:
@@ -62,7 +60,7 @@ Your application should look like this:
 
 ### Parametrizing JTC
 
-Click on the small gear icon on the `Joint Trajectory Controller` block we just added to view and edit the available
+Click on the controller part of the hardware interface block we just added to scroll down in settings, view and edit the available
 parameters.
 
 <div class="text--center">
@@ -89,7 +87,7 @@ You will also notice tolerance values for trajectory execution times and positio
 per-application basis, as failing to satisfy the corresponding constraints would lead to the trajectory failing
 mid-execution.
 
-You may find advanced parameters in the `Docs` tab under the `Joint Trajectory Controller` page. These parameters can be
+You may find advanced parameters in the `Help` page under the `AICA Core Controllers` and `Joint Trajectory Controller`. These parameters can be
 used to further tune JTC's performance and functionality, but may also require more advanced knowledge in order to tune
 them. Make sure to carefully read the descriptions next to each parameter before making changes.
 
@@ -139,7 +137,7 @@ self.add_output("trajectory", "_trajectory", JointTrajectory, publish_on_step=Fa
 
 # Typically in a conditional block that will write the output upon the success of some criteria
 self._trajectory.header.stamp = self.get_clock().now().to_msg()
-self._trajectory.joint_names = ['joint_0', 'joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5']
+self._trajectory.joint_names = ['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6']
 
 p1 = JointTrajectoryPoint()
 p1.positions = [0.6, 0.2, 0.0, 0.0, -0.2, 0.0]
@@ -178,7 +176,7 @@ this->add_output("trajectory", this->trajectory_, "", false, false);
 
 // Typically in a conditional block that will write the output upon the success of some criteria
 this->trajectory_->header.stamp = this->get_node()->get_clock()->now();
-this->trajectory_->joint_names = {"joint_0", "joint_1", "joint_2", "joint_3", "joint_4", "joint_5"};
+this->trajectory_->joint_names = {"joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "joint_6"};
 this->trajectory_->points.resize(2);
 
 this->trajectory_->points[0].positions = {0.6, 0.2, 0.0, 0.0, -0.2, 0.0};
@@ -266,7 +264,7 @@ or
 :::
 
 In the following section, we will demonstrate how these frames or joint positions can be easily recorded through the
-`3D Viz` and used with JTC in a matter of clicks.
+`3D view` and used with JTC in a matter of clicks.
 
 ## Putting an application together
 
@@ -284,14 +282,13 @@ A dedicated example on recording application frames can be found [here](./applic
 
 #### Create a frame from scratch
 
-1. Play the application and click on the `3D Viz` button. On the top-left corner you will see various visualization
+1. Start the application and switch to the `3D view`. In the **Settings** section of the **Scene** tab you will see various visualization
 options.
-2. Expand the `Create frame` option and give the name `frame_1` before pressing `Create`.
+2. Under `Create frame`, provide the name `frame_1` before pressing `Create`.
 3. A frame will appear close to the origin of the map. You can click on the axes of the frame and drag it anywhere in
 the scene. Also, mind that this is a desired tool for your robot's end effector, therefore, you likely have to rotate it
-accordingly such that it's reachable both in terms of distance and orientation. You may also expand the `View settings`
-and toggle on `Show frames`, as this will provide a visual reference about the orientation of the end effector. For
-example:
+accordingly such that it's reachable both in terms of distance and orientation. You may also toggle on `Show frames` under 
+`View settings`, as this will provide a visual reference about the orientation of the end effector.
 
 <div class="text--center">
   <img src={jtcGuideCreateFrame} alt="Creating a frame in AICA Studio" />
@@ -339,12 +336,12 @@ frames:
 ```
 
 You may also try the inverse, that is, copy one of the above code blocks, paste it at the top-level scope of your YAML
-application, and generate the graph. If you switch back to `3D Viz` you should see the same frame as depicted in the
+application, and generate the graph. In the `3D view` you should see the same frame as depicted in the
 above image.
 
 #### Record joint positions
 
-Let us also record the initial position of the robot as a joint position. Press play if you have not already, but this
+Let us also record the initial position of the robot as a joint position. Press **Start** if you have not already, but this
 time record joint positions instead of creating a frame:
 
 <div class="text--center">
@@ -364,12 +361,12 @@ joint_positions:
       - 0
       - 0
     joint_names:
-      - joint_0
       - joint_1
       - joint_2
       - joint_3
       - joint_4
       - joint_5
+      - joint_6
 ```
 
 ### Building an application around JTC
@@ -419,7 +416,7 @@ or
 Experiment with these values to observe the difference in the resulting trajectory. Note that, you will need at least
 2 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. Note that if
 the first waypoint is identical to the robot's current configuration, this would also result in a straight-line motion
-to the final waypoint even though blending is in effect. If you need to, go to 3D Viz and record some additional frames.
+to the final waypoint even though blending is in effect. If you need to, go to 3D view and record some additional frames.
 You can also try to apply different blending values for each waypoint to compare the difference in smoothness.
 :::
 
@@ -446,16 +443,16 @@ result. You may compare your final application to the one shown above using the 
 <details>
   <summary>Advanced JTC application example</summary>
 ```yaml
-schema: 2-0-4
+schema: 2-0-6
 dependencies:
-  core: v4.4.2
+  core: v5.0.0
 frames:
   frame_1:
     reference_frame: world
     position:
-      x: 0.493899
-      y: 0.140303
-      z: 0.429977
+      x: 0.679975
+      y: 0.140155
+      z: 0.429829
     orientation:
       w: -0.000563
       x: 0.707388
@@ -471,12 +468,12 @@ joint_positions:
       - 0
       - 0
     joint_names:
-      - joint_0
       - joint_1
       - joint_2
       - joint_3
       - joint_4
       - joint_5
+      - joint_6
 on_start:
   load:
     hardware: hardware
@@ -565,7 +562,7 @@ graph:
     buttons:
       button:
         x: -360
-        y: 1080
+        y: 1060
     hardware:
       hardware:
         x: 500
