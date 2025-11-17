@@ -17,8 +17,8 @@ This example uses AICA Core v5.0.0 in the Launcher configuration.
 
 ## Setting up the application
 
-Launch AICA Studio and create a new application by pressing "Create new".
-Copy the following application code into the text box under the Editor tab, replacing the default content.
+Launch AICA Studio and create a new application by pressing "Create new". Copy the following application code into the
+text box under the Editor tab, replacing the default content.
 
 ```yaml
 schema: 2-0-6
@@ -124,8 +124,8 @@ on_start:
 
 In this case, the first event that occurs in the application is to load the `timer` component.
 
-Application components are listed under the `components` field. Each component has a name and a registration.
-The display name field is used just for rendering the component on the graph.
+Application components are listed under the `components` field. Each component has a name and a registration. The
+display name field is used just for rendering the component on the graph.
 
 ```yaml
   timer:
@@ -147,8 +147,8 @@ The `events` field of a component associates component state transitions and pre
             transition: configure
 ```
 
-In this case, when the timer component is loaded, it triggers a lifecycle transition to configure itself.
-Similarly, the next event activates the timer when it is configured:
+In this case, when the timer component is loaded, it triggers a lifecycle transition to configure itself. Similarly, the
+next event activates the timer when it is configured:
 
 ```yaml
         on_configure:
@@ -158,15 +158,16 @@ Similarly, the next event activates the timer when it is configured:
 ```
 
 When a lifecycle component configures or activates itself automatically, this is known as "auto-configure" and
-"auto-activate", respectively. The graph allows enabling and disabling these automatic transitions through the respective buttons
-under the component name, which also act as flags, appearing highlighted or dimmed (enabled and disabled respectively). 
+"auto-activate", respectively. The graph allows enabling and disabling these automatic transitions through the
+respective buttons under the component name, which also act as flags, appearing highlighted or dimmed (enabled and
+disabled respectively).
 
 <div class="text--center">
   <img src={autoLifecycleEventsTimer} alt="Auto lifecycle events timer example" />
 </div>
 
-Thereafter, the timer component has a special predicate `is_timed_out`, which is internally associated with the `timeout`
-parameter.
+Thereafter, the timer component has a special predicate `is_timed_out`, which is internally associated with the
+`timeout` parameter.
 
 ```yaml
       predicates:
@@ -174,9 +175,8 @@ parameter.
           transition: timer_2
 ```
 
-In this case, after the timer component has been active for 2 seconds, it triggers a transition event to `timer_2`.
-The `transition` event from `timer` to `timer_2` is a shorthand for unloading the first component and loading the
-second.
+In this case, after the timer component has been active for 2 seconds, it triggers a transition event to `timer_2`. The
+`transition` event from `timer` to `timer_2` is a shorthand for unloading the first component and loading the second.
 
 Finally, the initial component parameters are defined.
 
@@ -194,13 +194,14 @@ All components have a `rate` parameter which defines the frequency of periodic e
 components is 10 Hertz, so 10 times per second. The component rate can be increased or decreased to make a component run
 faster or slower, respectively.
 
-The timer component has a special parameter called `timeout`, which is the duration in seconds that the timer should
-be active. At the end of the timeout period, it will be in the "timed out" state.
+The timer component has a special parameter called `timeout`, which is the duration in seconds that the timer should be
+active. At the end of the timeout period, it will be in the "timed out" state.
 
 :::info
 
-Parameter definition includes a value and a type, since original ROS parameters are type-sensitive. This syntax informs the Event Engine
-that the parameter should be parsed as a floating-point value instead of the "equivalent" integer value.
+Parameter definition includes a value and a type, since original ROS parameters are type-sensitive. This syntax informs
+the Event Engine that the parameter should be parsed as a floating-point value instead of the "equivalent" integer
+value.
 
 :::
 
@@ -211,22 +212,22 @@ the two timers are intended to have symmetrical behavior.
 
 Press the Start button to start the application.
 
-When the application is started, the `timer` component is loaded. It is initially unconfigured, which triggers it
-to be configured. Thereafter, it lands in the inactive lifecycle state, which triggers it to be activated.
-Once activated, the timer starts running. After 2 seconds (as specified by the `timeout` parameter), the `is_timed_out`
-predicate goes from false to true. As a result, the `transition` event causes `timer` to be unloaded and `timer_2` to be
-loaded instead. The second timer then goes through the same steps of configuring and activating before transitioning
-back to the first timer.
+When the application is started, the `timer` component is loaded. It is initially unconfigured, which triggers it to be
+configured. Thereafter, it lands in the inactive lifecycle state, which triggers it to be activated. Once activated, the
+timer starts running. After 2 seconds (as specified by the `timeout` parameter), the `is_timed_out` predicate goes from
+false to true. As a result, the `transition` event causes `timer` to be unloaded and `timer_2` to be loaded instead. The
+second timer then goes through the same steps of configuring and activating before transitioning back to the first
+timer.
 
 <div class="text--center">
   <img src={timerExample} alt="Timer example" />
 </div>
 
 In the AICA System, events are the key drivers of application logic. While the application is running, events can be
-triggered automatically from transitions or predicates, as seen in this example, but also by other event sources such
-as conditions, sequences, interactive trigger buttons in AICA Studio and even external API calls.
+triggered automatically from transitions or predicates, as seen in this example, but also by other event sources such as
+conditions, sequences, interactive trigger buttons in AICA Studio and even external API calls.
 
-Finally, use the Stop button to stop the application. This will deactivate and unload all components and controllers
-and fully reset the application.
+Finally, use the Stop button to stop the application. This will deactivate and unload all components and controllers and
+fully reset the application.
 
 Next, learn how to edit the application using the interactive graph editor.
