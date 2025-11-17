@@ -19,9 +19,9 @@ If you haven't done so already, review the corresponding [concepts page](/docs/c
 
 ## Create frame in 3D scene view
 
-Using the "Create a frame" dropdown in the 3D scene view in AICA Studio, users can create a new named frame which can
-then be dragged to the desired location in the scene. The position, orientation and reference frame of the frame appear
-under `frames` in the application YAML and are updated on drag.
+With the 3D scene on the main view of the AICA Studio editor, the "Create a frame" option in the Scene tab (under the Settings section), can be 
+used to create a new named frame which can then be dragged to the desired location in the scene. The position, orientation 
+and reference frame of the frame appear under `frames` in the application YAML and are updated on drag.
 
 <div class="text--center">
   <img src={createFrame} alt="Create a frame" />
@@ -29,13 +29,16 @@ under `frames` in the application YAML and are updated on drag.
 
 :::note
 
-Frames are created at the origin of the scene and have reference frame `world` by default.
+1. Frames are created at the origin of the scene and have reference frame `world` by default.
+
+2. Frames can also be created with the 3D view in the right panel. The option can be found under the `Settings` menu
+on the top left of the scene. 
 
 :::
 
 ## Record frame in 3D scene view
 
-Application frames can be created by recording an existing frame from TF. The "Record a frame" dropdown allows to save
+Application frames can be created by recording an existing frame from TF. The "Record a frame" option allows to save
 any available frame from TF under a new name in a running application. This can be useful to obtain the end-effector
 pose of a robot in various locations, which will then be used as waypoints for the robot movements in the application
 flow. In the example below, the end-effector frame `tool0` of the robot is recorded as `target`.
@@ -48,9 +51,9 @@ flow. In the example below, the end-effector frame `tool0` of the robot is recor
   <summary>Application YAML</summary>
 
     ```yaml
-    schema: 2-0-4
+    schema: 2-0-6
     dependencies:
-      core: v4.4.1
+      core: v5.0.0
     on_start:
       load:
         hardware: hardware
@@ -76,6 +79,9 @@ flow. In the example below, the end-effector frame `tool0` of the robot is recor
                     activate: robot_state_broadcaster
     graph:
       positions:
+        on_start:
+          x: 0
+          y: -20
         hardware:
           hardware:
             x: 500
