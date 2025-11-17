@@ -48,7 +48,8 @@ Select **Launch AICA Studio** to proceed.
 Start by creating a new application.
 
 1. Remove the hardware interface that is included in new applications by default.
-2. In the **Add components** section of the **Scene** tab, locate the **RealSense Camera** component. Click to add to the graph.
+2. In the **Add components** section of the **Scene** tab, locate the **RealSense Camera** component. Click to add to
+   the graph.
 3. Next, connect the component to the start block.
 
 <div class="text--center">
