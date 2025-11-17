@@ -13,7 +13,7 @@ application.
 
 ## Launcher configuration requirements
 
-This example uses AICA Core v4.2.0 in the Launcher configuration.
+This example uses AICA Core v5.0.0 in the Launcher configuration.
 
 ## Setting up the application
 
@@ -21,9 +21,9 @@ Launch AICA Studio and create a new application by pressing "Create new".
 Copy the following application code into the text box under the Editor tab, replacing the default content.
 
 ```yaml
-schema: 2-0-2
+schema: 2-0-6
 dependencies:
-  core: v4.2.0
+  core: v5.0.0
 on_start:
   load:
     component: timer
@@ -45,8 +45,12 @@ components:
         is_timed_out:
           transition: timer_2
     parameters:
-      rate: !!float 5.0
-      timeout: !!float 2.0
+      rate:
+        value: 5
+        type: double
+      timeout:
+        value: 2
+        type: double
   timer_2:
     component: aica_core_components::utility::Timer
     display_name: Timer 2
@@ -64,14 +68,20 @@ components:
         is_timed_out:
           transition: timer
     parameters:
-      rate: !!float 5.0
-      timeout: !!float 4.0
-hardware: {}
+      rate:
+        value: 5
+        type: double
+      timeout:
+        value: 4
+        type: double
 graph:
   positions:
+    on_start:
+      x: 0
+      y: -20
     stop:
       x: 0
-      y: 160
+      y: 140
     components:
       timer:
         x: 320
@@ -79,6 +89,23 @@ graph:
       timer_2:
         x: 840
         y: -20
+  edges:
+    timer_is_timed_out_timer_2_timer_2:
+      path:
+        - x: 780
+          y: 200
+        - x: 780
+          y: 40
+    timer_2_is_timed_out_timer_timer:
+      path:
+        - x: 1280
+          y: 200
+        - x: 1280
+          y: 280
+        - x: 300
+          y: 280
+        - x: 300
+          y: 40
 ```
 
 Then, press the Generate Graph button. The graph should show two components connected with event edges.
@@ -131,7 +158,8 @@ Similarly, the next event activates the timer when it is configured:
 ```
 
 When a lifecycle component configures or activates itself automatically, this is known as "auto-configure" and
-"auto-activate", respectively. The graph shows these events with the green icons next to the component name.
+"auto-activate", respectively. The graph allows enabling and disabling these automatic transitions through the respective buttons
+under the component name, which also act as flags, appearing highlighted or dimmed (enabled and disabled respectively). 
 
 <div class="text--center">
   <img src={autoLifecycleEventsTimer} alt="Auto lifecycle events timer example" />
@@ -154,8 +182,12 @@ Finally, the initial component parameters are defined.
 
 ```yaml
     parameters:
-      rate: !!float 5.0
-      timeout: !!float 2.0
+      rate:
+        value: 5
+        type: double
+      timeout:
+        value: 4
+        type: double
 ```
 
 All components have a `rate` parameter which defines the frequency of periodic execution steps. The default rate for
@@ -167,10 +199,8 @@ be active. At the end of the timeout period, it will be in the "timed out" state
 
 :::info
 
-The `!!float` tag is used to distinguish floating-point parameters from integer parameters in the YAML. Some YAML
-document parsers, formatters or emitters would round a value such as `5.0` to the "equivalent" integer value `5`.
-AICA Studio automatically adds the `!!float` tag to ensure that the Event Engine always parses the parameter as a
-floating-point value.
+Parameter definition includes a value and a type, since original ROS parameters are type-sensitive. This syntax informs the Event Engine
+that the parameter should be parsed as a floating-point value instead of the "equivalent" integer value.
 
 :::
 
@@ -179,7 +209,7 @@ the two timers are intended to have symmetrical behavior.
 
 ## Run the application
 
-Press the Play button to start the application.
+Press the Start button to start the application.
 
 When the application is started, the `timer` component is loaded. It is initially unconfigured, which triggers it
 to be configured. Thereafter, it lands in the inactive lifecycle state, which triggers it to be activated.
@@ -195,15 +225,6 @@ back to the first timer.
 In the AICA System, events are the key drivers of application logic. While the application is running, events can be
 triggered automatically from transitions or predicates, as seen in this example, but also by other event sources such
 as conditions, sequences, interactive trigger buttons in AICA Studio and even external API calls.
-
-It is possible to pause an application using the Pause control, which has the effect of blocking any and all events from
-being triggered. When an application is paused, all components will remain in their current state; any components and
-controllers that are loaded and active will keep running according to their current states. Only the triggering and
-automatic propagation of events is paused.
-
-Try pausing the application and see how the state of the timers can be prevented from changing. Notice how pausing the
-application while a timer is active does not prevent it from counting towards its timeout threshold, and that resuming
-the application after the elapsed time has passed will then immediately trigger the waiting transition.
 
 Finally, use the Stop button to stop the application. This will deactivate and unload all components and controllers
 and fully reset the application.
