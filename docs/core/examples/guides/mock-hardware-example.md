@@ -196,7 +196,7 @@ broadcaster controller. When the trigger button is pressed in the graph editor, 
 
 Controllers can also be "auto-activated", similar to the procedure in the
 [previous example](./editor-example#auto-lifecycle-events). Try to modify this example by removing the trigger button
-and toggling "auto-activate" flag under the controller name. Once the application is started again, the controller
+and toggling the "auto-activate" flag under the controller name. Once the application is started again, the controller
 should now automatically be active.
 
 :::
