@@ -25,8 +25,8 @@ software add-ons, so-called URCaps.
 
 The ecosystem around UR robots is highly developer-friendly, with open-source communication libraries, drivers,
 documentation, and integration support for frameworks such as ROS. Additionally, their simulation tool URSim allows
-developers to test and validate robot programs and interfaces without needing access to physical hardware and makes
-UR a popular choice building custom applications.
+developers to test and validate robot programs and interfaces without needing access to physical hardware and makes UR a
+popular choice building custom applications.
 
 :::note
 
@@ -72,8 +72,8 @@ Safety features remain active in Remote Control.
 
 Choosing one of the two modes depends on the specific task at hand. During a development phase, it might be preferable
 to create the programs in Local Mode, whereas in a production setting, PLCs would be responsible to load and start the
-desired programs while the robot is in Remote Control. With the AICA System, users have the chance to get the best
-of both modes:
+desired programs while the robot is in Remote Control. With the AICA System, users have the chance to get the best of
+both modes:
 
 1. Take full control of the robot from an AICA application (requires Remote Control)
 2. Run an AICA application as one node of a program (works in both Local and Remote Control)
@@ -91,9 +91,9 @@ motions are coordinated through AICA Studio. Apart from setting the correct robo
 requirements have to be met:
 
 - On the robot, Remote Control has to be activated. For that, first activate Remote Control in the system settings as
-  explained [here](./ur-sim-guide#accessing-and-configuring-the-simulated-robot), then switch from _Local_ to
-  _Remote_ mode on the top right corner of the teach pendant. The interface automatically switches to the _Run_ tab and
-  disables other tabs, indicating that control has been handed over to external sources.
+  explained [here](./ur-sim-guide#accessing-and-configuring-the-simulated-robot), then switch from _Local_ to _Remote_
+  mode on the top right corner of the teach pendant. The interface automatically switches to the _Run_ tab and disables
+  other tabs, indicating that control has been handed over to external sources.
   <div class="text--center">
     <img src={urHwiSwitchMode} alt="Switch mode from Local to Remote" />
   </div>
@@ -282,11 +282,9 @@ these steps:
 4. Still in AICA Studio, the `UR Dashboard Controller` should be added to the hardware interface. Its `program_running`
    predicate notifies that the UR program has arrived at the `Control by <IP>` node and is ready to receive control
    commands. After completion of the task in AICA Studio, control is handed back using a service call and the UR program
-   resumes execution. More details about this controller follow in the next section.
-   :::warning
-   Sending motion commands to the robot should exclusively happen while the `program_running` predicate is true.
-   Activate motion controllers using this predicate and deactivate them upon handing back control.
-   :::
+   resumes execution. More details about this controller follow in the next section. :::warning Sending motion commands
+   to the robot should exclusively happen while the `program_running` predicate is true. Activate motion controllers
+   using this predicate and deactivate them upon handing back control. :::
 
 The example with a joint trajectory controller from above is given here in its Local Control version. Be sure to start
 the application in AICA Studio first, and the UR program second.
@@ -589,7 +587,7 @@ Find below another example that uses the controller to set the payload on the ro
 ## Force Mode
 
 e-Series and UR series robots have a built-in end of arm force torque sensor that can be leveraged for force sensitive
-control. In UR terminology, this feature is called *force mode* and can be used to perform motions along a desired
+control. In UR terminology, this feature is called _force mode_ and can be used to perform motions along a desired
 direction or path while being force compliant in certain axes or directions.
 
 With the UR collection in the AICA System, we provide two controllers that very explicitly use and augment the internal
@@ -623,7 +621,7 @@ Using the teach pendant with the freedrive button, operators can manually adjust
 freedrive mode makes the individual actuators backdriveable but due to the different friction and stiffness, pushing and
 pulling on the robot usually results in rather uncoordinated motion. To alleviate this and enable smooth trajectory
 recording and kinesthetic teaching for machine learning algorithms, the UR collection comes with the
-`UR Hand Guiding Controller`. This is a classic admittance controller that *admits* measured forces by transforming them
+`UR Hand Guiding Controller`. This is a classic admittance controller that _admits_ measured forces by transforming them
 into a motion.
 
 The controller provides additional functionality to limit and maintain the end effector pose in space. For example, this
@@ -649,7 +647,6 @@ The controller can be further tuned and adjusted by using its parameters:
 - **Angular limit**: The allowed deviation from the reference orientation.
 - **Linear / Angular boundary strength**: If linear or angular limits are set, these values scale the response of the
   controller to hold the robot within the limits.
-  
 
 <div class="text--center">
   <img src={urHWIHandGuidingParams} alt="Hand guiding controller parameters" style={{ width: '40%' }} />
