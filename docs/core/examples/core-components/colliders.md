@@ -82,9 +82,9 @@ update when the target pose enters and exits the box.
   <summary>Application YAML</summary>
 
     ```yaml
-    schema: 2-0-4
+    schema: 2-0-6
     dependencies:
-      core: v4.4.1
+      core: v5.0.0
     on_start:
       load:
         - component: box_collider
@@ -185,8 +185,8 @@ update when the target pose enters and exits the box.
 
 ## Plane Collider example
 
-Switching from the Box Colldier to the Cyclinder or Sphere Collider components is straightforward. However, it is worth
-looking at the Plane Collder separately because it is not immediately obvious on which side of the plane the target _is_
+Switching from the Box Collider to the Cylinder or Sphere Collider components is straightforward. However, it is worth
+looking at the Plane Collider separately because it is not immediately obvious on which side of the plane the target _is_
 _in collision_ with the plane and on which side it _is not in collision_.
 
 As per the component description, a target pose is considered _in collision_ if it has a negative z coordinate with
@@ -213,9 +213,9 @@ and the application is stopped immediately.
   <summary>Application YAML</summary>
 
     ```yaml
-      schema: 2-0-4
+      schema: 2-0-6
       dependencies:
-        core: v4.4.1
+        core: v5.0.0
       on_start:
         load:
           - component: interactive_marker
