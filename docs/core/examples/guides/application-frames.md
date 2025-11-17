@@ -20,7 +20,7 @@ If you haven't done so already, review the corresponding [concepts page](/docs/c
 ## Create frame in 3D scene view
 
 With the 3D scene on the main view of the AICA Studio editor, the "Create a frame" option in the Settings section of the
-Scene tab on the right panel, can be used to create a new named frame which can then be dragged to the desired location
+Scene tab on the right panel can be used to create a new named frame, which can then be dragged to the desired location
 in the scene. The position, orientation and reference frame of the frame appear under `frames` in the application YAML
 and are updated on drag.
 
