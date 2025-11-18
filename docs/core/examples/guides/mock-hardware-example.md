@@ -14,9 +14,8 @@ Use AICA Core v5.0.0 together with the `collections/ur-collection` package at ve
 
 ## URDF Hardware Manager
 
-After starting AICA Studio, open the Hardware Manager
-([localhost:8080/studio/hardware](http://localhost:8080/studio/hardware)). This page shows a table of available URDF
-files in the container database with a name and a description.
+After starting AICA Studio, open the Hardware Manager in the respective tab of the top navigation bar. This page shows a
+table of available URDF files in the container database with a name and a description.
 
 AICA hardware collections include example URDFs, which are shown on the table with a pad-lock icon indicating that they
 are not editable. Users can make an editable copy of a selected URDF with the "Save As" button, or upload and edit
@@ -45,8 +44,8 @@ The mock URDF will be used to demonstrate the hardware interface block in AICA a
 
 :::info
 
-Refer to the overview section
-[Controlling robots with ros2_control](/docs/concepts/ros-concepts/controlling-robots) for more context.
+Refer to the overview section [Controlling robots with ros2_control](/docs/concepts/ros-concepts/controlling-robots) for
+more context.
 
 :::
 
