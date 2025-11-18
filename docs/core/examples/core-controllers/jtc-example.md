@@ -196,6 +196,11 @@ Ensure the `durations` vector is either of the same length as `frames` or has a 
 all waypoints. You can also validate your payload's frame names, by verifying they match with those shown in the 3D view
 or YAML application. This way, you can intuitively anticipate the trajectory execution.
 
+## Executing the trajectory
+
+Switch to the 3D view using the mini-view switcher and press the trigger button on the Graph View tab to start the
+execution of the trajectory. The main view should show the robot moving through the waypoints.
+
 :::note
 
 The Graph view on the right panel does not allow payload modifications or access when the application is playing. To
@@ -203,11 +208,6 @@ modify the payload, either switch back to Graph on the main view using the mini-
 modify the payload directly on the Code tab of the right panel.
 
 :::
-
-## Executing the trajectory
-
-Switch to the 3D view using the mini-view switcher and press the trigger button on the Graph View tab to start the
-execution of the trajectory. The main view should show the robot moving through the waypoints.
 
 <div class="text--center">
   <img src={jtcExampleRun} alt="JTC in action" />
