@@ -86,7 +86,7 @@ const faqList: FaqItem[] = [
 		question: "How do I get the latest version of AICA Launcher?",
 		answer: (
 			<>
-                Find the latest version of AICA Launcher on <Link to="https://github.com/aica-technology/api/releases">https://github.com/aica-technology/api/releases</Link>
+                Find the latest version of AICA Launcher on <Link to="https://github.com/aica-technology/api/releases">https://github.com/aica-technology/api/releases</Link>.
 			</>
 		),
 	},
