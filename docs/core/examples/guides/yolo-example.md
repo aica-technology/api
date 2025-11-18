@@ -377,6 +377,7 @@ class BoundingBoxTracker(LifecycleComponent):
 
     def on_deactivate_callback(self) -> bool:
         self._camera_frame = ""
+        self._reference_frame = ""
         return True
 
     def _on_receive_detections(self, msg: Detection2DArray):
