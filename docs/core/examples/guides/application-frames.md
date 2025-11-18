@@ -25,7 +25,7 @@ scene lies:
 - With the 3D scene in the right panel, under **3D view**, the options can be found under the **Settings** menu on the
   top left of the scene.
 
-## Create frame in 3D scene view
+## Create a frame 
 
 The "Create a frame" option can be used to create a new named frame, which can then be dragged to the desired location
 in the scene. The position, orientation and reference frame of the frame appear under `frames` in the application YAML
@@ -41,7 +41,7 @@ Frames are created at the origin of the scene and have reference frame `world` b
 
 :::
 
-## Record frame in 3D scene view
+## Record a frame 
 
 Application frames can be created by recording an existing frame from TF. The "Record a frame" option allows to save any
 available frame from TF under a new name in a running application. This can be useful to obtain the end-effector pose of
