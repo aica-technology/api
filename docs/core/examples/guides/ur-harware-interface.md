@@ -282,9 +282,14 @@ these steps:
 4. Still in AICA Studio, the `UR Dashboard Controller` should be added to the hardware interface. Its `program_running`
    predicate notifies that the UR program has arrived at the `Control by <IP>` node and is ready to receive control
    commands. After completion of the task in AICA Studio, control is handed back using a service call and the UR program
-   resumes execution. More details about this controller follow in the next section. :::warning Sending motion commands
-   to the robot should exclusively happen while the `program_running` predicate is true. Activate motion controllers
-   using this predicate and deactivate them upon handing back control. :::
+   resumes execution. More details about this controller follow in the next section. 
+   
+   :::warning 
+
+   Sending motion commands to the robot should exclusively happen while the `program_running` predicate is true. 
+   Activate motion controllers using this predicate and deactivate them upon handing back control. 
+   
+   :::
 
 The example with a joint trajectory controller from above is given here in its Local Control version. Be sure to start
 the application in AICA Studio first, and the UR program second.
