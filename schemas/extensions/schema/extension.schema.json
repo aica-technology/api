@@ -1,5 +1,5 @@
 {
-  "$id": "/1-0-0/extension.schema.json",
+  "$id": "/1-0-1/extension.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AICA Extension Description",
   "description": "A description of the properties and interfaces of a component or controller as a modular extension to the AICA application framework.",
