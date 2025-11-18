@@ -179,13 +179,13 @@
         "effort"
       ]
     },
-    "image": {
-      "title": "Package Image Details",
+    "package": {
+      "title": "Package Export Details",
       "description": "The name and version of the image produced by the AICA package-builder when exporting this extension.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "package": {
+        "name": {
           "title": "Package Name",
           "description": "The name of the package or collection created by package-builder",
           "examples": [
@@ -207,7 +207,7 @@
         }
       },
       "required": [
-        "package",
+        "name",
         "version"
       ]
     }
