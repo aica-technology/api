@@ -17,10 +17,17 @@ If you haven't done so already, review the corresponding [concepts page](/docs/c
 
 :::
 
+There are two ways to access the settings and functionality relative to frames in AICA Studio, depending on where the 3D
+scene lies:
+
+- With the 3D scene on the main view of the AICA Studio editor, the options to create and record frames can be found
+  under the **Scene** tab, in the **Settings** section.
+- With the 3D scene in the right panel, under **3D view**, the options can be found under the **Settings** menu on the
+  top left of the scene.
+
 ## Create frame in 3D scene view
 
-With the 3D scene on the main view of the AICA Studio editor, the "Create a frame" option in the Settings section of the
-Scene tab on the right panel can be used to create a new named frame, which can then be dragged to the desired location
+The "Create a frame" option can be used to create a new named frame, which can then be dragged to the desired location
 in the scene. The position, orientation and reference frame of the frame appear under `frames` in the application YAML
 and are updated on drag.
 
@@ -30,10 +37,7 @@ and are updated on drag.
 
 :::note
 
-1. Frames are created at the origin of the scene and have reference frame `world` by default.
-
-2. Frames can also be created with the 3D view in the right panel. The option can be found under the `Settings` menu on
-   the top left of the scene.
+Frames are created at the origin of the scene and have reference frame `world` by default.
 
 :::
 
