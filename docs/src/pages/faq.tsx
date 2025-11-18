@@ -1,26 +1,8 @@
-import Link from "@docusaurus/Link";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
-import Layout from "@theme/Layout";
-import clsx from "clsx";
-import React from "react";
 import styles from "./index.module.css";
-
-type LinkTextProps = {
-	link: string;
-	text: string;
-};
-
-function LinkText({ link, text }: LinkTextProps) {
-	return (
-		<Link
-			className=""
-			to={link}
-		>
-			{text}
-		</Link>
-	);
-}
+import Link from "@docusaurus/Link";
+import Layout from "@theme/Layout";
+import React from "react";
+import { useState } from "react";
 
 type FaqItem = {
 	question: string;
@@ -32,7 +14,7 @@ const faqList: FaqItem[] = [
 		question: "What Operating Systems and hardware does AICA officially support?",
 		answer: (
 			<>
-				AICA is constantly expanding its hardware and OS support. For the most current list, please consult the <LinkText link="../../docs/category/compatibility/" text="Compatibility page" /> of docs.<br />If your system or hardware is not currently listed, we recommend that you open an issue on our <LinkText link="https://github.com/aica-technology/community" text="AICA Community" /> page.<br />We are compatible with <LinkText link="../../docs/concepts/ros-concepts/controlling-robots/" text="ros2_control"/>, an open-source framework for creating custom hardware drivers.
+				AICA is constantly expanding its hardware and OS support. For the most current list, please consult the <Link to="../../docs/category/compatibility/">Compatibility page</Link> of docs.<br />If your system or hardware is not currently listed, we recommend that you open an issue on our <Link to="https://github.com/aica-technology/community">AICA Community</Link> page.<br />We are compatible with <Link to="../../docs/concepts/ros-concepts/controlling-robots/">ros2_control</Link>, an open-source framework for creating custom hardware drivers.
 			</>
 		),
 	},
@@ -63,7 +45,7 @@ const faqList: FaqItem[] = [
                     To mount a folder, open <b>AICA Launcher</b>, go to your <b>Configuration</b> page, click on <b>Advanced Settings</b>, and then select <b>Add a volume mount (+)</b>. Specify the folder you want to mount and the path where it should appear inside the Docker container.               
                 </p>
                 <p>
-                    Once the folder is mounted, you can access it within your AICA application by referencing its local path inside the container.
+                    Once the folder is mounted, you can access it within your AICA application by referencing its <b>local path</b> inside the container.
                 </p>
 			</>
 		),
@@ -80,7 +62,7 @@ const faqList: FaqItem[] = [
 		question: "How can I submit bug reports or feature requests to the AICA team?",
 		answer: (
 			<>
-                The best place to submit bug reports or feature requests is on our public feedback tracker on the <LinkText link="https://github.com/aica-technology/community" text="AICA Community" /> page. This allows our engineering team to track the issue, and other users can vote or add context. It is also visible when the work to address the feature request or bug is planned and implemented. 
+                The best place to submit bug reports or feature requests is on our public feedback tracker on the <Link to="https://github.com/aica-technology/community">AICA Community</Link> page. This allows our engineering team to track the issue, and other users can vote or add context. It is also visible when the work to address the feature request or bug is planned and implemented. 
 			</>
 		),
 	},
@@ -92,7 +74,7 @@ const faqList: FaqItem[] = [
                     For specific, private roadblocks, we offer personalized support from AICA engineers. This is typically included with AICA System Licenses via support credits.                 
                 </p>
                 <p>
-                    You can contact the support team directly at <LinkText link="mailto:support@aica.tech" text="support@aica.tech" />.               
+                    You can contact the support team directly at <Link to="mailto:support@aica.tech">support@aica.tech</Link>.               
                 </p>
                 <p>
                     To help us resolve your issue as quickly as possible, please include your application file, a description of the roadblock, and any relevant logs. If you have questions about your support credit balance, please contact your AICA sales representative.               
@@ -104,34 +86,38 @@ const faqList: FaqItem[] = [
 		question: "How do I get the latest version of AICA Launcher?",
 		answer: (
 			<>
-                Find the latest version of AICA Launcher on <LinkText link="https://github.com/aica-technology/api/releases" text="https://github.com/aica-technology/api/releases" />
+                Find the latest version of AICA Launcher on <Link to="https://github.com/aica-technology/api/releases">https://github.com/aica-technology/api/releases</Link>
 			</>
 		),
 	},
 ];
 
 function Faq({ question, answer }: FaqItem) {
-	return (
-		<div className="">
-			<div className="">
-				<h3>{question}</h3>
-				<p>{answer}</p>
-			</div>
-		</div>
-	);
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div
+      className={`${styles.faqCard} ${isOpen ? styles.open : ""}`}
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <h3 className={styles.faqHeader}>
+        {question}
+        <span className={`${styles.faqToggle} ${isOpen ? styles.open : ""}`}>+</span>
+      </h3>
+      {isOpen && <div style={{ marginTop: "0.5rem", opacity: 0.95 }}>{answer}</div>}
+    </div>
+  );
 }
 
 export default function FAQ(): JSX.Element {
 	return (
         <Layout>
-            <div className="container">
-                <h1>Frequently Asked Questions</h1>
-				<div className="">
-					{faqList.map((props, idx) => (
-						<Faq key={idx} {...props} />
-					))}
-				</div>
+            <div className="container margin-vert--lg">
+                <h1 className="padding-bottom--md">Frequently Asked Questions</h1>
+                {faqList.map((props, idx) => (
+                    <Faq key={idx} {...props} />
+                ))}
 			</div>
         </Layout>	
-        );
+    );
 }
