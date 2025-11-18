@@ -178,6 +178,38 @@
         "acceleration",
         "effort"
       ]
+    },
+    "image": {
+      "title": "Package Image Details",
+      "description": "The name and version of the image produced by the AICA package-builder when exporting this extension.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "package": {
+          "title": "Package Name",
+          "description": "The name of the package or collection created by package-builder",
+          "examples": [
+            "@aica/components/pose-detection",
+            "@aica/collections/ur-collection",
+            "my_custom_package"
+          ],
+          "type": "string"
+        },
+        "version": {
+          "title": "Package Version",
+          "description": "The version or image tag of the package or collection created by package-builder",
+          "examples": [
+            "v1.2.3",
+            "docker-image://ghcr.io/aica-technology/custom-package:v0.1.0"
+          ],
+          "type": "string",
+          "pattern": "^(v[0-9]+\\.[0-9]+\\.[0-9]+)|(docker-image://.*)$"
+        }
+      },
+      "required": [
+        "package",
+        "version"
+      ]
     }
   },
   "required": [
