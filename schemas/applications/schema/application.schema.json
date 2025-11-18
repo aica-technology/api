@@ -134,6 +134,9 @@
     "condition_object": {
       "$ref": "common/condition_object.schema.json"
     },
+    "database_entry": {
+      "$ref": "common/database_entry.schema.json"
+    },
     "identifier": {
       "$ref": "common/identifier.schema.json"
     },
