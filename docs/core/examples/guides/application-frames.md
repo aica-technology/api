@@ -17,12 +17,12 @@ If you haven't done so already, review the corresponding [concepts page](/docs/c
 
 :::
 
-There are two ways to access the settings and functionality relative to frames in AICA Studio, depending on where the 3D
+There are two ways to access settings and functionality for application frames in AICA Studio, depending on where the 3D
 scene lies:
 
 - With the 3D scene on the main view of the AICA Studio editor, the options to create and record frames can be found
   under the **Scene** tab, in the **Settings** section.
-- With the 3D scene in the right panel, under **3D view**, the options can be found under the **Settings** menu on the
+- With the 3D scene in the right panel, under **3D view**, the options can be found by clicking on the **Settings** button on the
   top left of the scene.
 
 ## Create a frame 
