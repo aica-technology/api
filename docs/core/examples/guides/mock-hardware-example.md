@@ -46,7 +46,7 @@ The mock URDF will be used to demonstrate the hardware interface block in AICA a
 :::info
 
 Refer to the overview section
-[Controlling robots with ros2_control](../../../../docs/concepts/ros-concepts/controlling-robots) for more context.
+[Controlling robots with ros2_control](/docs/concepts/ros-concepts/controlling-robots) for more context.
 
 :::
 
