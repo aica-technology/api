@@ -413,7 +413,8 @@ Experiment with these values to observe the difference in the resulting trajecto
 waypoints for blending to take effect, otherwise the robot will simply move in a straight-line motion. Note that if the
 first waypoint is identical to the robot's current configuration, this would also result in a straight-line motion to
 the final waypoint even though blending is in effect. If you need to, go to 3D view and record some additional frames.
-You can also try to apply different blending values for each waypoint to compare the difference in smoothness. :::
+You can also try to apply different blending values for each waypoint to compare the difference in smoothness.
+:::
 
 #### Other considerations
 
