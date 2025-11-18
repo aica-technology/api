@@ -3,9 +3,9 @@ sidebar_position: 4
 title: Application frames
 ---
 
-import createFrame from './assets/create-frame.gif'
-import recordFrame from './assets/record-frame.gif'
-import editFrame from './assets/edit-frame.gif'
+import createFrame from './assets/create-frame.webm'
+import recordFrame from './assets/record-frame.webm'
+import editFrame from './assets/edit-frame.webm'
 
 # Application Frames in AICA Studio
 
@@ -31,8 +31,11 @@ The "Create a frame" option can be used to create a new named frame, which can t
 in the scene. The position, orientation and reference frame of the frame appear under `frames` in the application YAML
 and are updated on drag.
 
-<div class="text--center">
-  <img src={createFrame} alt="Create a frame" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={createFrame} type="video/webm" />
+    Create a frame.
+  </video>
 </div>
 
 :::note
@@ -48,8 +51,11 @@ available frame from TF under a new name in a running application. This can be u
 a robot in various locations, which will then be used as waypoints for the robot movements in the application flow. In
 the example below, the end-effector frame `tool0` of the robot is recorded as `target`.
 
-<div class="text--center">
-  <img src={recordFrame} alt="Record a frame" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={recordFrame} type="video/webm" />
+    Record a frame.
+  </video>
 </div>
 
 <details>
@@ -106,8 +112,11 @@ frames might be supported.
 
 Users that are familiar with the application YAML can also add, remove, and edit frames in the application YAML.
 
-<div class="text--center">
-  <img src={editFrame} alt="Edit a frame" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={editFrame} type="video/webm" />
+    Edit a frame.
+  </video>
 </div>
 
 <!-- TODO: add examples here -->
