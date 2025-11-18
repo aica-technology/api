@@ -17,12 +17,6 @@ Visit our learning platform AICAdemy for an interactive training module with a r
 
 :::
 
-## Launcher configuration requirements
-
-This example makes use of the built-in Joint Trajectory Controller (JTC) and the generic six-axis robot.
-
-Use AICA Core v4.4.2 or higher.
-
 ## Setting up the application
 
 Launch AICA Studio and create a new application by pressing "Create new".
