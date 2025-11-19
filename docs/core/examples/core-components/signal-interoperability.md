@@ -59,15 +59,15 @@ component to translate the Cartesian state output to a `geometry_msgs::msg::Pose
   <img src={signalToRos} alt="Signal interoperability example 1" />
 </div>
 
-With the application loaded and playing, the two components will publish the converted message on their output signal
+With the application loaded and started, the two components will publish the converted message on their output signal
 each time a new message is received from the hardware interface. A jsonified version of those messages can be observed
-in the live topic view.
+in the **Live Data** tab on the right panel.
 
 <div class="text--center">
   <img src={signalRosPose} alt="ROS Topic for Cartesian signal to Pose Stamped Message" />
 </div>
 
-With content
+With content:
 
 ```json
 {
@@ -88,12 +88,12 @@ With content
   <img src={signalRosJoint} alt="ROS Topic for joint signal to Joint State Message" />
 </div>
 
-With content
+With content:
 
 ```json
 {
   "header": { "stamp": { "sec": 1749019239, "nanosec": 277825301 }, "frame_id": "" },
-  "name": ["joint_0", "joint_1", "joint_2", "joint_3", "joint_4", "joint_5"],
+  "name": ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "joint_6"],
   "position": [0, 0, 0, 0, 0, 0],
   "velocity": [0, 0, 0, 0, 0, 0],
   "effort": [0, 0, 0, 0, 0, 0]
@@ -104,9 +104,9 @@ With content
   <summary>Application YAML</summary>
 
     ```yaml
-    schema: 2-0-4
+    schema: 2-0-6
     dependencies:
-      core: v4.3.2
+      core: v5.0.0
     on_start:
       load:
         hardware: hardware
@@ -150,10 +150,13 @@ With content
                     - component: joint_signal_to_joint_state_message
     graph:
       positions:
+        on_start:
+          x: 0
+          y: -20
         components:
           joint_signal_to_joint_state_message:
             x: 200
-            y: 880
+            y: 920
           cartesian_signal_to_pose_stamped_message:
             x: 200
             y: 660
@@ -165,27 +168,27 @@ With content
         hardware_hardware_robot_state_broadcaster_on_activate_cartesian_signal_to_pose_stamped_message_cartesian_signal_to_pose_stamped_message:
           path:
             - x: 80
-              y: 400
+              y: 360
             - x: 80
               y: 720
-        hardware_hardware_robot_state_broadcaster_on_activate_joint_signal_to_joint_state_message_joint_signal_to_joint_state_message:
-          path:
-            - x: -20
-              y: 400
-            - x: -20
-              y: 940
-        hardware_hardware_robot_state_broadcaster_joint_state_joint_signal_to_joint_state_message_input:
-          path:
-            - x: 120
-              y: 520
-            - x: 120
-              y: 1060
         hardware_hardware_robot_state_broadcaster_cartesian_state_cartesian_signal_to_pose_stamped_message_input:
           path:
             - x: 140
-              y: 560
+              y: 520
             - x: 140
-              y: 840
+              y: 880
+        hardware_hardware_robot_state_broadcaster_on_activate_joint_signal_to_joint_state_message_joint_signal_to_joint_state_message:
+          path:
+            - x: -20
+              y: 360
+            - x: -20
+              y: 980
+        hardware_hardware_robot_state_broadcaster_joint_state_joint_signal_to_joint_state_message_input:
+          path:
+            - x: 120
+              y: 480
+            - x: 120
+              y: 1140
     ```
 
 </details>
@@ -209,11 +212,10 @@ might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
 
 <details>
   <summary>Application YAML</summary>
-
     ```yaml
-    schema: 2-0-4
+    schema: 2-0-6
     dependencies:
-      core: v4.3.2
+      core: v5.0.0
     on_start:
       load:
         hardware: hardware
@@ -236,7 +238,14 @@ might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
         display_name: Custom Motion Generator
         events:
           transitions:
+            on_configure:
+              lifecycle:
+                component: custom_motion_generator
+                transition: activate
             on_load:
+              lifecycle:
+                component: custom_motion_generator
+                transition: configure
               load:
                 component: wrench_stamped_message_to_cartesian_signal
         outputs:
@@ -270,66 +279,74 @@ might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
             plugin: aica_core_controllers/effort/ForceController
             parameters:
               force_limit:
-                - !!float 20.0
-                - !!float 20.0
-                - !!float 20.0
-                - !!float 2.0
-                - !!float 2.0
-                - !!float 2.0
+                value:
+                  - 20
+                  - 20
+                  - 20
+                  - 2
+                  - 2
+                  - 2
+                type: vector
             inputs:
               command: /wrench_stamped_message_to_cartesian_signal/output
     graph:
       positions:
+        on_start:
+          x: 0
+          y: -20
+        stop:
+          x: 0
+          y: 80
         components:
           wrench_stamped_message_to_cartesian_signal:
             x: 100
-            y: 780
+            y: 820
           custom_motion_generator:
             x: 100
-            y: 420
+            y: 400
         hardware:
           hardware:
             x: 680
             y: -20
       edges:
-        wrench_stamped_message_to_cartesian_signal_output_hardware_hardware_force_controller_command:
-          path:
-            - x: 660
-              y: 1040
-            - x: 660
-              y: 820
         wrench_stamped_message_to_cartesian_signal_on_load_hardware_hardware_force_controller:
           path:
-            - x: 580
-              y: 920
-            - x: 580
-              y: 660
-        hardware_hardware_robot_state_broadcaster_on_activate_custom_motion_generator_custom_motion_generator:
-          path:
-            - x: 40
-              y: 400
-            - x: 40
-              y: 480
+            - x: 560
+              y: 960
+            - x: 560
+              y: 620
         custom_motion_generator_on_load_wrench_stamped_message_to_cartesian_signal_wrench_stamped_message_to_cartesian_signal:
           path:
             - x: 540
-              y: 560
+              y: 580
             - x: 540
-              y: 740
-            - x: 40
-              y: 740
-            - x: 40
-              y: 840
-        custom_motion_generator_command_wrench_stamped_message_to_cartesian_signal_input:
+              y: 760
+            - x: 0
+              y: 760
+            - x: 0
+              y: 880
+        hardware_hardware_robot_state_broadcaster_on_activate_custom_motion_generator_custom_motion_generator:
+          path:
+            - x: 80
+              y: 360
+            - x: 80
+              y: 460
+        custom_motion_generator_target_pose_wrench_stamped_message_to_cartesian_signal_input:
           path:
             - x: 500
-              y: 680
+              y: 700
             - x: 500
-              y: 760
+              y: 800
             - x: 80
-              y: 760
+              y: 800
             - x: 80
-              y: 1040
+              y: 1080
+        wrench_stamped_message_to_cartesian_signal_output_hardware_hardware_force_controller_command:
+          path:
+            - x: 620
+              y: 1080
+            - x: 620
+              y: 780
     ```
 
 </details>
