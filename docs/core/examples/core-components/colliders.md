@@ -80,7 +80,7 @@ update when the target pose enters and exits the box.
     Box Collider example.
   </video>
 </div>
-<br />
+<br/>
 
 <details>
   <summary>Application YAML</summary>
@@ -215,7 +215,7 @@ and the application is stopped immediately.
     Plane Collider example.
   </video>
 </div>
-<br />
+<br/>
 
 <details>
   <summary>Application YAML</summary>
