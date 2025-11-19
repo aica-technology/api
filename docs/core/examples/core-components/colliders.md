@@ -162,27 +162,33 @@ update when the target pose enters and exits the box.
         on_start_on_start_box_collider_box_collider:
           path:
             - x: 360
-              y: 40
+              y: 60
             - x: 360
               y: 120
         on_start_on_start_interactive_marker_interactive_marker:
           path:
             - x: 140
-              y: 40
+              y: 60
             - x: 140
               y: 240
         on_start_on_start_interactive_marker_copy_interactive_marker_copy:
           path:
             - x: 140
-              y: 40
+              y: 60
             - x: 140
               y: 500
+        interactive_marker_pose_box_collider_target:
+          path:
+            - x: 580
+              y: 400
+            - x: 580
+              y: 320
         interactive_marker_copy_pose_box_collider_center:
           path:
-            - x: 600
+            - x: 620
               y: 660
-            - x: 600
-              y: 440
+            - x: 620
+              y: 360
     ```
 
 </details>
