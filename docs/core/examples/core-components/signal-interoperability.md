@@ -230,7 +230,7 @@ might occur when porting existing ROS nodes into AICA Studio using the AICA SDK.
                 hardware: hardware
                 activate: force_controller
         inputs:
-          input: /custom_motion_generator/target_pose
+          input: /custom_motion_generator/command
         outputs:
           output: /wrench_stamped_message_to_cartesian_signal/output
       custom_motion_generator:
