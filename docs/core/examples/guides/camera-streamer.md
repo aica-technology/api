@@ -23,15 +23,9 @@ of a camera device.
 
 :::
 
-## AICA Launcher configuration
-
-Start AICA Launcher and add the `core-vision` package to your configuration.
-
-Select **Launch AICA Studio** to proceed.
-
 ## Using the CameraStreamer
 
-Start by creating a new application.
+Launch AICA Studio with a configuration that contains the `core-vision` package and create a new application.
 
 1. Remove the hardware interface that is included in new applications by default.
 2. From the `Scene` menu, use the `Add Component` tab and look for the **Camera Streamer** component either by searching
