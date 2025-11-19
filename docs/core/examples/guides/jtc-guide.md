@@ -574,15 +574,15 @@ graph:
     buttons:
       button:
         x: -360
-        y: 1060
+        y: 1000
     hardware:
       hardware:
         x: 500
         y: -20
     sequences:
       sequence:
-        x: -560
-        y: 560
+        x: -540
+        y: 500
   buttons:
     button:
       display_name: Cancel trajectory and stop sequence
@@ -604,57 +604,63 @@ graph:
       path:
         - x: 60
           y: 820
-    hardware_hardware_joint_trajectory_controller_on_activate_sequence_sequence:
+    on_start_on_start_hardware_hardware:
       path:
-        - x: 160
-          y: 740
-        - x: 160
-          y: 560
-        - x: -580
-          y: 560
-        - x: -580
-          y: 620
-    hardware_joint_trajectory_controller_has_trajectory_succeeded_condition_sequence_sequence_condition_input_1:
-      path:
-        - x: -360
-          y: 820
-    hardware_joint_trajectory_controller_has_trajectory_succeeded_condition_sequence_sequence_condition_input_3:
-      path:
-        - x: -40
-          y: 820
-    hardware_hardware_joint_trajectory_controller_is_trajectory_cancelled_sequence_sequence:
-      path:
-        - x: 220
-          y: 900
-        - x: 220
-          y: 540
-        - x: -600
-          y: 540
-        - x: -600
-          y: 620
+        - x: 260
+          y: 60
+        - x: 260
+          y: 40
     hardware_hardware_joint_trajectory_controller_has_trajectory_failed_on_stop_on_stop:
       path:
         - x: 460
-          y: 860
+          y: 820
         - x: 460
           y: 240
         - x: -80
           y: 240
         - x: -80
-          y: 160
+          y: 180
     sequence_sequence_event_trigger_0_hardware_hardware_joint_trajectory_controller_set_trajectory:
       path:
-        - x: -520
-          y: 980
+        - x: -500
+          y: 940
+    hardware_joint_trajectory_controller_has_trajectory_succeeded_condition_sequence_sequence_condition_input_1:
+      path:
+        - x: -340
+          y: 780
     sequence_sequence_event_trigger_2_hardware_hardware_joint_trajectory_controller_set_trajectory:
       path:
-        - x: -200
-          y: 980
+        - x: -180
+          y: 940
+    hardware_joint_trajectory_controller_has_trajectory_succeeded_condition_sequence_sequence_condition_input_3:
+      path:
+        - x: -20
+          y: 780
+    hardware_hardware_joint_trajectory_controller_is_trajectory_cancelled_sequence_sequence:
+      path:
+        - x: 220
+          y: 860
+        - x: 220
+          y: 460
+        - x: -600
+          y: 460
+        - x: -600
+          y: 560
+    hardware_hardware_joint_trajectory_controller_on_activate_sequence_sequence:
+      path:
+        - x: 160
+          y: 700
+        - x: 160
+          y: 500
+        - x: -580
+          y: 500
+        - x: -580
+          y: 560
     button_on_click_hardware_hardware_joint_trajectory_controller_cancel_active_trajectory:
       path:
         - x: 220
-          y: 1100
+          y: 1060
         - x: 220
-          y: 1020
+          y: 980
 ```
 </details>
