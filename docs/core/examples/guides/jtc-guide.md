@@ -8,10 +8,10 @@ import TabItem from '@theme/TabItem';
 
 import jtcGuideHW from './assets/jtc-guide-hw.png'
 import jtcGuideParameters from './assets/jtc-guide-parameters.png'
-import jtcGuideRecordFrame from './assets/jtc-guide-record-frame.gif'
-import jtcGuideCreateFrame from './assets/jtc-guide-create-frame.gif'
-import jtcGuideRecordJoint from './assets/jtc-guide-record-joint.gif'
-import jtcGuideFinalApp from './assets/jtc-guide-final-app.gif'
+import jtcGuideRecordFrame from './assets/jtc-guide-record-frame.webm'
+import jtcGuideCreateFrame from './assets/jtc-guide-create-frame.webm'
+import jtcGuideRecordJoint from './assets/jtc-guide-record-joint.webm'
+import jtcGuideFinalApp from './assets/jtc-guide-final-app.webm'
 
 # A guide on joint trajectory workflows
 
@@ -292,9 +292,13 @@ A dedicated example on recording application frames can be found [here](./applic
    `Show frames` under `View settings`, as this will provide a visual reference about the orientation of the end
    effector.
 
-<div class="text--center">
-  <img src={jtcGuideCreateFrame} alt="Creating a frame in AICA Studio" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={jtcGuideCreateFrame} type="video/webm" />
+    Creating a frame in AICA Studio.
+  </video>
 </div>
+<br/>
 
 Open your YAML editor and notice that there is now a `frames` section with your recorded frame, for example:
 
@@ -318,9 +322,13 @@ frames:
 Alternatively, you can record a frame directly on the robot's end effector and then proceed to move it (in which case
 the orientation is copied from the end effector), as shown below:
 
-<div class="text--center">
-  <img src={jtcGuideRecordFrame} alt="Recording a frame in AICA Studio" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={jtcGuideRecordFrame} type="video/webm" />
+    Recording a frame in AICA Studio.
+  </video>
 </div>
+<br/>
 
 ```yaml
 frames:
@@ -345,9 +353,13 @@ application, and generate the graph. In the `3D view` you should see the same fr
 Let us also record the initial position of the robot as a joint position. Press **Start** if you have not already, but
 this time record joint positions instead of creating a frame:
 
-<div class="text--center">
-  <img src={jtcGuideRecordJoint} alt="Recording a joint in AICA Studio" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={jtcGuideRecordJoint} type="video/webm" />
+    Recording joint positions in AICA Studio.
+  </video>
 </div>
+<br/>
 
 Back in your YAML editor you will see yet another new block named `joint_positions` below your `frames`:
 
@@ -429,9 +441,13 @@ sequence to stop.
 
 Your final application may look something like the following:
 
-<div class="text--center">
-  <img src={jtcGuideFinalApp} alt="Final JTC application with looping logic" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={jtcGuideFinalApp} type="video/webm" />
+    Final JTC application with looping logic.
+  </video>
 </div>
+<br/>
 
 If your application appears different, there is no cause for concern. There are multiple valid ways to achieve the same
 result. You may compare your final application to the one shown above using the YAML application provided below.
