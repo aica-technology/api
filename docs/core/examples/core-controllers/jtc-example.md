@@ -197,8 +197,8 @@ tab to start the execution of the trajectory. The main view should show the robo
 :::note
 
 Payloads cannot be modified or accessed from the Graph view on the right panel or when the application is playing. To
-modify the payload, either switch back to Graph on the main view using the mini-view switcher on the bottom left, or
-modify the payload directly on the Code tab of the right panel.
+modify the payload, stop the application and either switch back to Graph on the main view using the mini-view switcher
+or modify the payload directly on the Code tab of the right panel. In this case, the graph needs to be re-generated. 
 
 :::
 
