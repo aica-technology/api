@@ -5,7 +5,7 @@ title: A joint trajectory execution example
 
 import jtcExampleOverview from './assets/jtc-example-overview.png'
 import jtcExampleFrames from './assets/jtc-example-frames.png'
-import jtcExampleRun from './assets/jtc-example-run.gif'
+import jtcExampleRun from './assets/jtc-example-run.webm'
 
 # A joint trajectory execution example
 
@@ -203,9 +203,13 @@ modify the payload directly on the Code tab of the right panel.
 
 :::
 
-<div class="text--center">
-  <img src={jtcExampleRun} alt="JTC in action" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={jtcExampleRun} type="video/webm" />
+    JTC in action.
+  </video>
 </div>
+<br/>
 
 That is all you need to move your robot along predefined poses! Once the trajectory is executed, a predicate is set and
 the application will automatically stop.
