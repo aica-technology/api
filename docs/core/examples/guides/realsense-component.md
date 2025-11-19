@@ -6,11 +6,11 @@ title: RealSense camera component
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-import realsenseNewApp from './assets/realsense-new-app.gif'
-import realsenseRvizColor from './assets/realsense-play-rviz.gif'
+import realsenseNewApp from './assets/realsense-new-app.webm'
+import realsenseRvizColor from './assets/realsense-play-rviz.webm'
 import realsenseCameraParameters from './assets/realsense-camera-parameters.png'
 import realsenseTemporalParameters from './assets/realsense-temporal-params.png'
-import realsensePackage from './assets/realsense-collection.gif'
+import realsensePackage from './assets/realsense-collection.webm'
 
 # RealSense camera component
 
@@ -37,9 +37,13 @@ sudo ./scripts/setup_udev_rules.sh
 
 Start the AICA Launcher and add the `intel-realsense-collection` package to your configuration.
 
-<div class="text--center">
-  <img src={realsensePackage} alt="Adding the RealSense package" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={realsensePackage} type="video/webm" />
+    Adding the RealSense package.
+  </video>
 </div>
+<br/>
 
 Select **Launch AICA Studio** to proceed.
 
@@ -52,18 +56,26 @@ Start by creating a new application.
    the graph.
 3. Next, connect the component to the start block.
 
-<div class="text--center">
-  <img src={realsenseNewApp} alt="Creating a new RealSense Camera component" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={realsenseNewApp} type="video/webm" />
+    Creating a new RealSense Camera component.
+  </video>
 </div>
+<br/>
 
 4. Press **Start** to start the application.
 5. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
 6. In RViz, select _Add > By topic > /realsense_camera/color_image_raw > Image_. This adds a panel that shows the live
    color image. The depth image can also be found under _/realsense_camera/depth_image_rect_raw > Image_.
 
-<div class="text--center">
-  <img src={realsenseRvizColor} alt="Starting and checking camera live stream" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={realsenseRvizColor} type="video/webm" />
+    Starting and checking camera live stream.
+  </video>
 </div>
+<br/>
 
 ## Parametrizing the RealSense Camera component
 
