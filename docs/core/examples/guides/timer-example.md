@@ -4,7 +4,7 @@ title: A basic application example
 ---
 
 import autoLifecycleEventsTimer from './assets/auto-lifecycle-events-timer.png'
-import timerExample from './assets/timer-example.gif'
+import timerExample from './assets/timer-example.webm'
 
 # A basic application example
 
@@ -219,9 +219,13 @@ false to true. As a result, the `transition` event causes `timer` to be unloaded
 second timer then goes through the same steps of configuring and activating before transitioning back to the first
 timer.
 
-<div class="text--center">
-  <img src={timerExample} alt="Timer example" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={timerExample} type="video/webm" />
+    Timer example.
+  </video>
 </div>
+<br/>
 
 In the AICA System, events are the key drivers of application logic. While the application is running, events can be
 triggered automatically from transitions or predicates, as seen in this example, but also by other event sources such as
