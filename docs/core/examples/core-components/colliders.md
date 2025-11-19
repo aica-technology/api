@@ -4,8 +4,8 @@ title: Colliders
 ---
 
 import boxCollider from './assets/box-collider.png'
-import boxColliderExample from './assets/box-collider-example.gif'
-import planeColliderExample from './assets/plane-collider-example.gif'
+import boxColliderExample from './assets/box-collider-example.webm'
+import planeColliderExample from './assets/plane-collider-example.webm'
 import colliderInterfaces from './assets/collider-interfaces.png'
 
 # Colliders
@@ -74,9 +74,13 @@ Start the application from AICA Studio, then go to RViz. Add the interactive mar
 marker as shown below. Observe how moving the interactive marker triggers the predicates of the collider component to
 update when the target pose enters and exits the box.
 
-<div class="text--center">
-  <img src={boxColliderExample} alt="Box Collider example" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={boxColliderExample} type="video/webm" />
+    Box Collider example.
+  </video>
 </div>
+<br />
 
 <details>
   <summary>Application YAML</summary>
@@ -205,9 +209,13 @@ demonstrates how soft safety mechanisms can be implemented in AICA Studio. As so
 end-effector in this case, has a negative z coordinate relative to the center pose, the _in collision_ predicate fires
 and the application is stopped immediately.
 
-<div class="text--center">
-  <img src={planeColliderExample} alt="Plane Collider example" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={planeColliderExample} type="video/webm" />
+    Plane Collider example.
+  </video>
 </div>
+<br />
 
 <details>
   <summary>Application YAML</summary>
