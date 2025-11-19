@@ -60,49 +60,6 @@ the example below, the end-effector frame `tool0` of the robot is recorded as `t
 </div>
 <br />
 
-<details>
-  <summary>Application YAML</summary>
-
-    ```yaml
-    schema: 2-0-6
-    dependencies:
-      core: v5.0.0
-    on_start:
-      load:
-        hardware: hardware
-    hardware:
-      hardware:
-        display_name: Hardware Interface
-        urdf: Generic six-axis robot arm
-        rate: 100
-        events:
-          transitions:
-            on_load:
-              load:
-                controller: robot_state_broadcaster
-                hardware: hardware
-        controllers:
-          robot_state_broadcaster:
-            plugin: aica_core_controllers/RobotStateBroadcaster
-            events:
-              transitions:
-                on_load:
-                  switch_controllers:
-                    hardware: hardware
-                    activate: robot_state_broadcaster
-    graph:
-      positions:
-        on_start:
-          x: 0
-          y: -20
-        hardware:
-          hardware:
-            x: 500
-            y: -20
-    ```
-
-</details>
-
 :::note
 
 Frames are recorded in reference frame `world` by default. In the future, recording frames in configurable reference
