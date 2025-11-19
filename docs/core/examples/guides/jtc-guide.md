@@ -45,12 +45,9 @@ collection to your configuration before launching it.
 
 ## Configuring your hardware interface
 
-Create a new application and:
-
-1. Click on the hardware interface to open its settings menu and set the URDF to `Generic six-axis robot arm`.
-2. While in the same menu, click on `Add controllers`, select a `Joint Trajectory Controller` from the list of available
-   controllers and enable the `auto-load` and `auto-activate` options.
-3. Connect the start block to the hardware interface to load it on start.
+Create a new application and click on the hardware interface to open its settings menu. Click on `Add controllers`, 
+select a `Joint Trajectory Controller` from the list of available choices and enable the `auto-load` and `auto-activate` 
+options.
 
 Your application should look like this:
 
