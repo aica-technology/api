@@ -21,9 +21,9 @@ There are two ways to access settings and functionality for application frames i
 scene lies:
 
 - With the 3D scene on the main view of the AICA Studio editor, the options to create and record frames can be found
-  under the **Scene** tab.
-- With the 3D scene in the right panel, under **3D view**, the options can be found by clicking on the **Settings** button on the
-  top left of the scene.
+  under the **Scene** tab in the right panel.
+- With the 3D scene in the right panel, under **3D view**, the options can be found by clicking on the **Settings**
+  button on the top left of the scene.
 
 ## Create a frame 
 
