@@ -100,5 +100,5 @@ Finally, move the YAML file into the `data` folder of your AICA configuration su
 Studio.
 
 <div class="text--center">
-  <img src={cameraCalibration} alt="Camera calibration process" />
+  <img src={cameraCalibration} alt="Camera calibration process" style={{ maxWidth: "100%", borderRadius: "8px" }}/>
 </div>
