@@ -4,11 +4,11 @@ title: Universal Robots
 ---
 
 import urHwiStudio from './assets/ur-hwi-studio.png'
-import urHwiSwitchMode from './assets/ur-hwi-switch-mode.gif'
+import urHwiSwitchMode from './assets/ur-hwi-switch-mode.webm'
 import urHwiHeadlessMode from './assets/ur-hwi-headless-mode.png'
-import urHwiRemoteExample from './assets/ur-hwi-remote-example.gif'
+import urHwiRemoteExample from './assets/ur-hwi-remote-example.webm'
 import urHWIExternalControl from './assets/ur-hwi-external-control.png'
-import urHWISequenceRunning from './assets/ur-hwi-sequence-running.gif'
+import urHWISequenceRunning from './assets/ur-hwi-sequence-running.webm'
 import urHWIHandGuidingParams from './assets/ur-hwi-hand-guiding-params.png'
 import urHWINetworkingSettings from './assets/ur-hwi-networking-settings.png'
 import urHWIURProgram from './assets/ur-hwi-ur-program.png'
@@ -94,9 +94,13 @@ requirements have to be met:
   explained [here](./ur-sim-guide#accessing-and-configuring-the-simulated-robot), then switch from _Local_ to _Remote_
   mode on the top right corner of the teach pendant. The interface automatically switches to the _Run_ tab and disables
   other tabs, indicating that control has been handed over to external sources.
-  <div class="text--center">
-    <img src={urHwiSwitchMode} alt="Switch mode from Local to Remote" />
+  <div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={urHwiSwitchMode} type="video/webm" />
+    Switch mode from Local to Remote.
+  </video>
   </div>
+  <br/>
 - In AICA Studio, make sure that the parameter `Headless Mode` that can be found under the hardware interface parameters
   is set to `True`. This will notify the hardware interface that it will be running headless, i.e. it is in charge of
   providing the full UR program to the robot controller.
@@ -108,10 +112,13 @@ Finally, implement an application of your choice in AICA Studio. An example with
 below. Observe how the robot program status goes from _Stopped_ to _Running_ as soon as the hardware interface connects
 to the robot.
 
-<div class="text--center">
-  <img src={urHwiRemoteExample} alt="Example with Remote Control" />
-</div>
-
+  <div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={urHwiRemoteExample} type="video/webm" />
+    Example with Remote Control.
+  </video>
+  </div>
+  <br/>
 <details>
   <summary>Example application, remote control</summary>
 
@@ -582,9 +589,13 @@ Find below another example that uses the controller to set the payload on the ro
   ```
 </details>
 
-<div class="text--center">
-  <img src={urHWISequenceRunning} alt="Sequence application graph" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+<video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+  <source src={urHWISequenceRunning} type="video/webm" />
+  Sequence application graph.
+</video>
 </div>
+<br/>
 
 ## Force Mode
 
