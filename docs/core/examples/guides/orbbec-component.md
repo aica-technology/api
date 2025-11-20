@@ -7,11 +7,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 import orbbecMountedVolume from './assets/orbbec-mounted-udev-volume.png'
-import orbbecNewApp from './assets/orbbec-new-app.gif'
-import orbbecRvizColor from './assets/orbbec-play-rviz.gif'
+import orbbecNewApp from './assets/orbbec-new-app.webm'
+import orbbecRvizColor from './assets/orbbec-play-rviz.webm'
 import orbbecCameraParameters from './assets/orbbec-camera-parameters.png'
 import orbbecThresholdParameters from './assets/orbbec-threshold-params.png'
-import orbbecPackage from './assets/orbbec-package.gif'
+import orbbecPackage from './assets/orbbec-package.webm'
 
 # Orbbec camera component
 
@@ -52,9 +52,13 @@ These commands will download and apply the udev rules. To ensure that the rules 
 
 Start the AICA Launcher and add the `orbbec` package to your configuration.
 
-<div class="text--center">
-  <img src={orbbecPackage} alt="Adding the Orbbec package" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={orbbecPackage} type="video/webm" />
+    Adding the Orbbec package.
+  </video>
 </div>
+<br/>
 
 Select **Launch AICA Studio** to proceed.
 
@@ -63,21 +67,25 @@ Select **Launch AICA Studio** to proceed.
 Start by creating a new application.
 
 1. Remove the hardware interface that is included in new applications by default.
-2. Press the (+) button on the top right, and locate the **Orbbec Camera** component. Click to add to the graph.
+2. In the **Add components** section of the **Scene** tab, locate the **Orbbec Camera** component. Click to add to the
+   graph.
 3. Next, connect the component to the start block.
-
-<div class="text--center">
-  <img src={orbbecNewApp} alt="Creating a new Orbbec Camera component" />
-</div>
-
-4. Press **Play** to start the application.
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+        <source src={orbbecNewApp} type="video/webm" />
+        Creating a new Orbbec Camera component.
+      </video>
+    </div>
+4. Press **Start** to start the application.
 5. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
 6. In RViz, select _Add > By topic > /orbbec_camera/color_image > Image_. This adds a panel that shows the live color
    image. The depth image can also be found under _/orbbec_camera/depth_image > Image_.
-
-<div class="text--center">
-  <img src={orbbecRvizColor} alt="Starting and checking camera live stream" />
-</div>
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+        <source src={orbbecRvizColor} type="video/webm" />
+        Starting and checking camera live stream.
+      </video>
+    </div>
 
 :::tip
 
@@ -93,7 +101,7 @@ still encounter problems getting the video stream, contact the AICA support team
 
 ## Parametrizing the Orbbec camera component
 
-Click on the small gear icon on the `Orbbec Camera` block to view and edit the available parameters.
+Click on the `Orbbec Camera` component block to view and edit the available parameters.
 
 <div class="text--center">
   <img src={orbbecCameraParameters} alt="Basic Orbbec camera parameters" />
