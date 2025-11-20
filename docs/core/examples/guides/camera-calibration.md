@@ -3,7 +3,7 @@ sidebar_position: 13
 title: Camera calibration
 ---
 
-import cameraCalibration from './assets/camera-calibration.gif'
+import cameraCalibration from './assets/camera-calibration.webm'
 
 # Camera calibration
 
@@ -65,7 +65,6 @@ cd camera_calibration
 Within that folder you will find a `build-run.sh` script that, as the name suggests, will build a Docker image and run a
 container with the camera calibration software as an entrypoint.
 
-
 Then, run the `build-run.sh` script specifying the necessary parameters similarly to:
 
 ```shell
@@ -76,8 +75,8 @@ where the calibration square sizes are in meters.
 
 :::warning
 
-If you are using AICA's `CameraStreamer` example to produce the image stream, the above command should already work.
-If you are using your own node to stream images, you will likely need to specify which topic the calibrator needs to
+If you are using AICA's `CameraStreamer` example to produce the image stream, the above command should already work. If
+you are using your own node to stream images, you will likely need to specify which topic the calibrator needs to
 subscribe to by adding the `--calibration-topic YOUR_ROS_TOPIC` argument to the command above.
 
 :::
@@ -88,7 +87,7 @@ not displaying the image stream, make sure you followed the above steps correctl
 When you can see a live feed of your camera:
 
 - Move the checkerboard in various positions and orientations until the `CALIBRATE` button is no longer grayed out (and
-most of the bars are green, indicating good sample size).
+  most of the bars are green, indicating good sample size).
 - Once `CALIBRATE` becomes available, press on it to start computing the camera matrices.
 - After it becomes available, click on the `SAVE` button to save a recording of the process.
 
@@ -99,6 +98,9 @@ along with a YAML file containing the camera calibration information.
 Finally, move the YAML file into the `data` folder of your AICA configuration such that it becomes available from AICA
 Studio.
 
-<div class="text--center">
-  <img src={cameraCalibration} alt="Camera calibration process" style={{ maxWidth: "100%", borderRadius: "8px" }}/>
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={cameraCalibration} type="video/webm" />
+    Camera calibration process.
+  </video>
 </div>
