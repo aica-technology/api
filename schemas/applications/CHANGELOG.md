@@ -22,7 +22,7 @@ Release Versions:
 ## Upcoming changes (draft/2-1-0)
 
 - feat: add support for variables and assignments (#386)
-- feat: define database entry for referencing hardware
+- feat: define database entry for referencing hardware (#405)
 
 ## 2-0-6
 

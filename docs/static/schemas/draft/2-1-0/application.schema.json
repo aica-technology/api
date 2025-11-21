@@ -701,7 +701,7 @@
             },
             "urdf": {
               "title": "URDF",
-              "description": "The path to the URDF file of the hardware",
+              "description": "The URDF describing the hardware",
               "type": "string"
             },
             "rate": {
