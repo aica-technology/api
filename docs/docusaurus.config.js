@@ -119,13 +119,11 @@ const config = {
                         position: "left",
                         label: "Programming reference",
                     },
-                    // TODO: add FAQ section
-                    // {
-                    //     type: "docSidebar",
-                    //     sidebarId: "faqSidebar",
-                    //     position: "left",
-                    //     label: "FAQ",
-                    // },
+                    {
+                        href: `/faq`,
+                        position: "left",
+                        label: "FAQ",
+                    },
                     {
                         href: `${url}/api`,
                         label: "REST API",

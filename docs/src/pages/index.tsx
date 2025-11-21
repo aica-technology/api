@@ -47,6 +47,10 @@ function HomepageHeader() {
 						link={"/docs/reference/intro"}
 						text={"Advanced programming"}
 					/>
+					<LinkButton
+						link={"/faq"}
+						text={"FAQ"}
+					/>
 				</div>
 			</div>
 		</header>
