@@ -11,9 +11,14 @@
       "type": "string"
     },
     "version": {
-      "title": "Version ID",
-      "description": "The ID of a tagged version of the entry in the database. If omitted, the latest version will be used.",
-      "type": "string"
+      "title": "Version Tag",
+      "description": "The name of a tagged version of the entry in the database. If omitted, the latest version will be used.",
+      "type": "string",
+      "examples": [
+        "v1",
+        "release-2025-01",
+        "stable"
+      ]
     }
   },
   "required": [
