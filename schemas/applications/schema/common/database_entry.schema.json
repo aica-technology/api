@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Database Entry",
+  "description": "The details of a database entry",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Database ID",
+      "description": "The ID of the entry in the database",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version Tag",
+      "description": "The name of a tagged version of the entry in the database. If omitted, the latest version will be used.",
+      "type": "string",
+      "examples": [
+        "v1",
+        "release-2025-01",
+        "stable"
+      ]
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

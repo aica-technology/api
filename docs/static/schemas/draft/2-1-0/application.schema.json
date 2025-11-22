@@ -696,9 +696,12 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
+            "database_entry": {
+              "$ref": "#/$defs/database_entry"
+            },
             "urdf": {
               "title": "URDF",
-              "description": "The path to the URDF file of the hardware",
+              "description": "The URDF describing the hardware",
               "type": "string"
             },
             "rate": {
@@ -884,8 +887,29 @@
             }
           },
           "required": [
-            "urdf",
             "rate"
+          ],
+          "oneOf": [
+            {
+              "required": [
+                "database_entry"
+              ],
+              "not": {
+                "required": [
+                  "urdf"
+                ]
+              }
+            },
+            {
+              "required": [
+                "urdf"
+              ],
+              "not": {
+                "required": [
+                  "database_entry"
+                ]
+              }
+            }
           ]
         }
       }
@@ -1440,6 +1464,33 @@
           "type": "boolean"
         }
       }
+    },
+    "database_entry": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Database Entry",
+      "description": "The details of a database entry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Database ID",
+          "description": "The ID of the entry in the database",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version Tag",
+          "description": "The name of a tagged version of the entry in the database. If omitted, the latest version will be used.",
+          "type": "string",
+          "examples": [
+            "v1",
+            "release-2025-01",
+            "stable"
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ]
     },
     "identifier": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",

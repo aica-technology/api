@@ -11,9 +11,12 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "database_entry": {
+          "$ref": "common/database_entry.schema.json"
+        },
         "urdf": {
           "title": "URDF",
-          "description": "The path to the URDF file of the hardware",
+          "description": "The URDF describing the hardware",
           "type": "string"
         },
         "rate": {
@@ -27,21 +30,21 @@
           ]
         },
         "tf_prefix": {
-            "description": "An optional TF prefix to apply to all of the links in the URDF to distinguish multiple instances of the same robot",
-            "type": "string",
-            "default": "",
-            "examples": [
-              "my_robot_",
-              "left_robot_",
-              "robot_1_"
-            ]
+          "description": "An optional TF prefix to apply to all of the links in the URDF to distinguish multiple instances of the same robot",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "my_robot_",
+            "left_robot_",
+            "robot_1_"
+          ]
         },
         "reference_frame": {
-            "description": "An optional reference frame to relocate the hardware in the 3D scene. If left empty, the root link in the URDF will be used as the reference frame of the hardware instead.",
-            "type": "string",
-            "examples": [
-              "world"
-            ]
+          "description": "An optional reference frame to relocate the hardware in the 3D scene. If left empty, the root link in the URDF will be used as the reference frame of the hardware instead.",
+          "type": "string",
+          "examples": [
+            "world"
+          ]
         },
         "strict": {
           "title": "Strict Hardware",
@@ -199,8 +202,29 @@
         }
       },
       "required": [
-        "urdf",
         "rate"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "database_entry"
+          ],
+          "not": {
+            "required": [
+              "urdf"
+            ]
+          }
+        },
+        {
+          "required": [
+            "urdf"
+          ],
+          "not": {
+            "required": [
+              "database_entry"
+            ]
+          }
+        }
       ]
     }
   }
