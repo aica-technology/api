@@ -109,7 +109,7 @@ requirements have to be met:
   </div>
 
 Finally, implement an application of your choice in AICA Studio. An example with a joint trajectory controller is given
-below. Observe how the robot program status goes from _Stopped_ to _Running_ as soon as the hardware interface connects
+below. Observe how the robot program status goes from _Normal_ to _Running_ as soon as the hardware interface connects
 to the robot.
 
   <div style={{ display: "flex", justifyContent: "center" }}>
