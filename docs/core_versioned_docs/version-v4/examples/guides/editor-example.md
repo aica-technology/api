@@ -91,7 +91,7 @@ also be deleted by selecting them with a click and pressing the Delete key on yo
 </Tabs>
 
 For this example, let's add a "Trigger Events Button" to the timer application by clicking on it in the sidebar. A new
-button should appear on the graph and in the code. This is an interactive elements that can be used to trigger events
+button should appear on the graph and in the code. This is an interactive element that can be used to trigger events
 through mouse clicks and interact with the flow of the application.
 
 The sidebar menu can be closed with the X icon or by clicking anywhere in the graph.
