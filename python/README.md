@@ -60,10 +60,10 @@ the port from the url.
 from aica_api.client import AICA
 
 # connect to a non-default port on the local network
-aica = AICA(port=55000)
+aica = AICA(url='http://localhost:55005/api')
 
 # or connect to a different host address entirely
-aica = AICA(url='192.168.0.1', port=55005)
+aica = AICA(url='http://192.168.0.1:55005/api')
 ```
 
 ## Authentication with an API key
@@ -88,12 +88,12 @@ AICA_API_KEY = os.getenv('AICA_API_KEY')
 aica = AICA(api_key=AICA_API_KEY)
 ```
 
-## Compatability table
+## Compatibility table
 
 The latest version of this AICA API client will generally support the latest AICA Core version.
 Major version changes to the API client or to AICA Core indicate breaking changes and are not always backwards
 compatible. To interact with older versions of AICA Core, it may be necessary to install older versions of the client.
-Use the following compatability table to determine which client version to use.
+Use the following compatibility table to determine which client version to use.
 
 | AICA Core version | API protocol version | Matching Python client version |
 |-------------------|----------------------|--------------------------------|
@@ -135,7 +135,7 @@ AICA Core versions `v5` and later change some endpoints paths, methods and paylo
 
 ### Checking compatibility
 
-Recent client versions include a `check()` method to assess the client version and API compatability.
+Recent client versions include a `check()` method to assess the client version and API compatibility.
 
 ```python3
 from aica_api.client import AICA
