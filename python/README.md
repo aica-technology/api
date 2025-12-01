@@ -87,10 +87,10 @@ from aica_api.client import AICA
 AICA_API_KEY = os.getenv('AICA_API_KEY')
 
 # connect to a non-default port on the local network
-aica = AICA(url='http://localhost:55005/api', api_key=AICA_API_KEY)
+aica = AICA(api_key=AICA_API_KEY, url='http://localhost:55005/api')
 
 # or connect to a different host address entirely
-aica = AICA(url='http://192.168.0.1:55005/api', api_key=AICA_API_KEY)
+aica = AICA(api_key=AICA_API_KEY, url='http://192.168.0.1:55005/api')
 ```
 
 ## Compatibility table
