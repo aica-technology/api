@@ -57,8 +57,7 @@ Your application should look like this:
 
 ### Parametrizing JTC
 
-Click on the controller part of the hardware interface block we just added to scroll down in settings, view and edit the
-available parameters.
+Open the hardware interface settings and scroll down to view and edit those of the joint trajectory controller.
 
 <div class="text--center">
   <img src={jtcGuideParameters} alt="Basic JTC parameters" />
