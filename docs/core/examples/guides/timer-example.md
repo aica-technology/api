@@ -199,7 +199,7 @@ active. At the end of the timeout period, it will be in the "timed out" state.
 
 :::info
 
-Parameter definition includes a value and a type, since original ROS parameters are type-sensitive. This syntax informs
+Parameter definition includes a value and a type akin to original ROS parameters that are type-sensitive. This syntax informs
 the Event Engine that the parameter should be parsed as a floating-point value instead of the "equivalent" integer
 value.
 
