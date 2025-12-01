@@ -8,12 +8,36 @@ The AICA API client module provides simple functions for interacting with the AI
 
 Refer to https://docs.aica.tech for more information about the AICA System.
 
+## Authentication with an API key
+
+For connecting to AICA Core v4.3.0 and later, an API key is required for authentication.
+
+API keys can be generated in AICA Studio with configurable access scopes. Note that available scopes are limited to
+those of the currently logged-in user. A generated API key is only shown once and should be kept secret. For example, it
+may be exported as an environment variable. The following example key is shown for demonstrative purposes only:
+
+```shell
+export AICA_API_KEY=64ce9e8f-aa46-4ba7-814f-f169c01c957e.RwoH6A1Ti5poNKSizoWrcBEYzh7AkB0kpMq1TR59t6os
+```
+
+The API key must then be provided to the constructor with the `api_key` keyword argument:
+
+```python
+import os
+from aica_api.client import AICA
+
+AICA_API_KEY = os.getenv('AICA_API_KEY')
+aica = AICA(api_key=AICA_API_KEY)
+```
+
 ## Basic usage
 
 ```python
+import os
 from aica_api.client import AICA
 
-aica = AICA()
+AICA_API_KEY = os.getenv('AICA_API_KEY')
+aica = AICA(api_key=AICA_API_KEY)
 
 if aica.check():
     print(f"Connected to AICA Core version {aica.core_version()}")
@@ -57,35 +81,16 @@ conflict with reserved ports. Use the "Open in browser" button from Launcher to 
 the port from the url.
 
 ```python
-from aica_api.client import AICA
-
-# connect to a non-default port on the local network
-aica = AICA(url='http://localhost:55005/api')
-
-# or connect to a different host address entirely
-aica = AICA(url='http://192.168.0.1:55005/api')
-```
-
-## Authentication with an API key
-
-For connecting to AICA Core v4.3.0 and later, an API key is required for authentication.
-
-API keys can be generated in AICA Studio with configurable access scopes. Note that available scopes are limited to
-those of the currently logged-in user. A generated API key is only shown once and should be kept secret. For example, it
-may be exported as an environment variable. The following example key is shown for demonstrative purposes only:
-
-```shell
-export AICA_API_KEY=64ce9e8f-aa46-4ba7-814f-f169c01c957e.RwoH6A1Ti5poNKSizoWrcBEYzh7AkB0kpMq1TR59t6os
-```
-
-The API key can then be provided to the constructor with the `api_key` keyword argument:
-
-```python
 import os
 from aica_api.client import AICA
 
 AICA_API_KEY = os.getenv('AICA_API_KEY')
-aica = AICA(api_key=AICA_API_KEY)
+
+# connect to a non-default port on the local network
+aica = AICA(url='http://localhost:55005/api', api_key=AICA_API_KEY)
+
+# or connect to a different host address entirely
+aica = AICA(url='http://192.168.0.1:55005/api', api_key=AICA_API_KEY)
 ```
 
 ## Compatibility table
@@ -138,9 +143,11 @@ AICA Core versions `v5` and later change some endpoints paths, methods and paylo
 Recent client versions include a `check()` method to assess the client version and API compatibility.
 
 ```python3
+import os
 from aica_api.client import AICA
 
-aica = AICA()
+AICA_API_KEY = os.getenv('AICA_API_KEY')
+aica = AICA(api_key=AICA_API_KEY)
 
 # check compatability between the client version and API version
 if aica.check():
@@ -152,9 +159,11 @@ else:
 The latest client versions also include the following functions to check the configuration details manually.
 
 ```python3
+import os
 from aica_api.client import AICA
 
-aica = AICA()
+AICA_API_KEY = os.getenv('AICA_API_KEY')
+aica = AICA(api_key=AICA_API_KEY)
 
 # get the current version of this client
 print(aica.client_version())
