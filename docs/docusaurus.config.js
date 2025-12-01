@@ -55,7 +55,7 @@ const config = {
                 id: "core",
                 path: "core",
                 routeBasePath: "core",
-                sidebarCollapsed: false,
+                sidebarCollapsed: true,
                 editUrl: "https://github.com/aica-technology/api/tree/main/docs",
                 remarkPlugins: [remarkMath],
                 rehypePlugins: [rehypeKatex],
@@ -80,105 +80,139 @@ const config = {
             // TODO: add a social media card
             // image: "img/docusaurus-social-card.jpg",
             navbar: {
-                title: "Documentation",
+                title: "AICA Documentation",
                 logo: {
                     alt: "AICA Logo",
-                    src: "img/logo.svg",
-                    srcDark: "img/logo_dark.svg",
+                    src: "img/aica-logo-black-square-small.svg",
+                    srcDark: "img/aica-logo-white-square-small.svg",
+                    width: 22,
+                    height: 22,
+                    href: "docs/product/getting-started/intro",
                 },
                 items: [
+                     // TODO: need to apply to DocSearch https://docusaurus.io/docs/search
                     {
-                        type: "docSidebar",
-                        sidebarId: "gettingStartedSidebar",
+                        type: "search",
                         position: "left",
-                        label: "Getting started",
                     },
                     {
+                        label: "Product Knowledge Base",
+                        type: "docSidebar",
+                        sidebarId: "learnSidebar",
+                        position: "left",
+                    },
+                    {
+                        label: "AICA Studio",
                         type: "docSidebar",
                         docsPluginId: "core",
                         sidebarId: "studioSidebar",
                         position: "left",
-                        label: "AICA Studio",
                     },
                     {
-                        type: "docSidebar",
-                        sidebarId: "conceptsSidebar",
-                        position: "left",
-                        label: "Concepts",
-                    },
-                    {
-                        type: "docSidebar",
-                        docsPluginId: "core",
-                        sidebarId: "examplesSidebar",
-                        position: "left",
-                        label: "Examples",
-                    },
-                    {
-                        type: "docSidebar",
-                        sidebarId: "programmingReferenceSidebar",
-                        position: "left",
-                        label: "Programming reference",
-                    },
-                    {
-                        href: `/faq`,
-                        position: "left",
                         label: "FAQ",
-                    },
-                    {
-                        href: `${url}/api`,
-                        label: "REST API",
+                        href: `/faq`,
                         position: "left",
                     },
                     {
                         type: "docsVersionDropdown",
                         docsPluginId: "core",
-                        position: "right",
                         dropdownActiveClassDisabled: true,
-                    },
-                    {
-                        href: "https://www.github.com/aica-technology",
-                        label: "GitHub",
-                        position: "right",
-                    },
-                    {
-                        href: "https://aica.thinkific.com",
-                        label: "AICAdemy",
-                        position: "right",
-                    },
-                    {
-                        href: "https://www.aica.tech",
-                        label: "Website",
-                        position: "right",
-                    },
-                    // TODO: need to apply to DocSearch https://docusaurus.io/docs/search
-                    {
-                        type: "search",
                         position: "right",
                     },
                 ],
             },
             footer: {
                 style: "dark",
+                logo: {
+                    alt: "AICA Logo",
+                    src: "img/logo_dark.svg",
+                    srcDark: "img/logo_dark.svg",
+                    width: 42,
+                    height: 42,
+                },
                 links: [
                     {
-                        title: "More",
+                        title: "Product Knowledge Base",
                         items: [
                             {
-                                label: "Discussions, announcements, and new releases",
-                                href: "https://github.com/orgs/aica-technology/discussions",
+                                label: "Getting Started",
+                                href: "/docs/product/getting-started/intro"
                             },
                             {
-                                label: "Report an issue",
-                                href: "https://github.com/aica-technology/api/issues/new/choose",
+                                label: "Concepts",
+                                href: "/docs/category/ros-2-concepts",
+                            },
+                            {
+                                label: "Programming Reference",
+                                href: "/docs/product/reference/intro",
+                            },
+                            {
+                                label: "More Resources",
+                                href: "/docs/product/Help/resources",
+                            },
+                            {
+                                label: "FAQ",
+                                href: "/faq",
+                            },
+                        ],
+                    },
+                    {
+                        title: "AICA Studio",
+                        items: [
+                            {
+                                label: "Tour of AICA Studio",
+                                href: "/core/studio/",
+                            },
+                            {
+                                label: "Examples",
+                                href: "/core/examples/",
+                            },
+                        ],
+                    },
+                    {
+                        title: "Resources",
+                        items: [
+                            {
+                                label: "AICA API",
+                                href: "https://link.aica.tech/api"
+                            },
+                            {
+                                label: "AICAdemy",
+                                href: "https://link.aica.tech/aicademy"
+                            },
+                            {
+                                label: "GitHub",
+                                href: "https://www.github.com/aica-technology",
+                            },
+                        ],
+                    },
+                    {
+                        title: "AICA",
+                        items: [
+                            {
+                                label: "AICA Community",
+                                href: "https://github.com/aica-technology/community"
                             },
                             {
                                 label: "Website",
                                 href: "https://www.aica.tech",
                             },
                             {
-                                label: "Contact",
+                                label: "contact@aica.tech",
                                 href: "mailto:contact@aica.tech",
                             },
+                            // {
+                            //     label: "Private Training & Support",
+                            //     href: "https://link.aica.tech/contact-support",
+                            // },
+                            // {
+                            //     label: "Discussions & New Releases",
+                            //     href: "https://link.aica.tech/gh-discussions",
+                            // },
+                            // {
+                            //     label: "Give Feedback",
+                            //     href: "https://link.aica.tech/report-issue",
+                            // },
                         ],
                     },
                 ],
