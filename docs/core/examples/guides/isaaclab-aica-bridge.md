@@ -3,7 +3,7 @@ sidebar_position: 11
 title: Using Isaac Lab as a simulator
 ---
 
-import application from './assets/isaaclab-aica-bridge-application.gif'
+import application from './assets/isaaclab-aica-bridge-application.webm'
 import scene from './assets/isaaclab-aica-bridge-sim-scene.png'
 
 # Using Isaac Lab as a simulator
@@ -531,9 +531,9 @@ duplicating an existing hardware and swap out the plugin in the URDF.
       <summary>Point Attractor Application</summary>
 
         ```yaml
-        schema: 2-0-4
+        schema: 2-0-6
         dependencies:
-          core: v4.4.2
+          core: v5.0.0
         frames:
           target:
             reference_frame: world
@@ -666,12 +666,16 @@ Launch the simulator inside the Isaac Lab development environment Docker contain
 python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene --command_interface velocities
 ```
 
-Then, play your AICA application from the previous step. Go to the 3D view and drag the `command` frame around to move
+Then, start your AICA application from the previous step. Switch to the 3D view and drag the `command` frame around to move
 the robot in space.
 
-<div class="text--center">
-  <img src={application} alt="Point Attractor Example" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={application} type="video/webm" />
+    Point Attractor Example.
+  </video>
 </div>
+<br />
 
 ### Beware
 
