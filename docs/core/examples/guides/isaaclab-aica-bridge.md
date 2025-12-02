@@ -670,12 +670,11 @@ Then, start your AICA application from the previous step. Switch to the 3D view 
 the robot in space.
 
 <div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px", border: "1px solid black"}}>
     <source src={application} type="video/webm" />
     Point Attractor Example.
   </video>
 </div>
-<br />
 
 ### Beware
 
