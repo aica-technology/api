@@ -3,7 +3,7 @@ sidebar_position: 11
 title: Using Isaac Lab as a simulator
 ---
 
-import application from './assets/isaaclab-aica-bridge-application.gif'
+import application from './assets/isaaclab-aica-bridge-application.webm'
 import scene from './assets/isaaclab-aica-bridge-sim-scene.png'
 
 # Using Isaac Lab as a simulator
@@ -531,9 +531,9 @@ duplicating an existing hardware and swap out the plugin in the URDF.
       <summary>Point Attractor Application</summary>
 
         ```yaml
-        schema: 2-0-4
+        schema: 2-0-6
         dependencies:
-          core: v4.4.2
+          core: v5.0.0
         frames:
           target:
             reference_frame: world
@@ -566,7 +566,9 @@ duplicating an existing hardware and swap out the plugin in the URDF.
                     component: frame_to_signal
                     transition: activate
             parameters:
-              frame: target
+              frame:
+                value: target
+                type: string
             outputs:
               pose: /frame_to_signal/pose
           signal_point_attractor:
@@ -626,33 +628,33 @@ duplicating an existing hardware and swap out the plugin in the URDF.
             components:
               frame_to_signal:
                 x: 200
-                y: 600
+                y: 580
               signal_point_attractor:
                 x: 660
-                y: 520
+                y: 500
             hardware:
               hardware:
                 x: 1120
-                y: -20
+                y: 0
           edges:
             on_start_on_start_signal_point_attractor_signal_point_attractor:
               path:
                 - x: 380
-                  y: 40
+                  y: 60
                 - x: 380
-                  y: 580
-            on_start_on_start_frame_to_signal_frame_to_signal:
-              path:
-                - x: 140
-                  y: 40
-                - x: 140
-                  y: 660
+                  y: 560
             hardware_hardware_robot_state_broadcaster_cartesian_state_signal_point_attractor_state:
               path:
                 - x: 620
-                  y: 520
+                  y: 500
                 - x: 620
-                  y: 780
+                  y: 760
+            on_start_on_start_frame_to_signal_frame_to_signal:
+              path:
+                - x: 140
+                  y: 60
+                - x: 140
+                  y: 640
         ```
     </details>
 
@@ -666,11 +668,14 @@ Launch the simulator inside the Isaac Lab development environment Docker contain
 python3 scripts/custom/aica_bridge/run_bridge.py --scene basic_scene --command_interface velocities
 ```
 
-Then, play your AICA application from the previous step. Go to the 3D view and drag the `command` frame around to move
+Then, start your AICA application from the previous step. Switch to the 3D view and drag the `command` frame around to move
 the robot in space.
 
-<div class="text--center">
-  <img src={application} alt="Point Attractor Example" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px", border: "1px solid black"}}>
+    <source src={application} type="video/webm" />
+    Point Attractor Example.
+  </video>
 </div>
 
 ### Beware
