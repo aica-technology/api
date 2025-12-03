@@ -119,6 +119,11 @@ const config = {
                         dropdownActiveClassDisabled: true,
                         position: "right",
                     },
+                      {
+                        label: "Help",
+                        href: `/help`,
+                        position: "right",
+                    },
                 ],
             },
             footer: {
