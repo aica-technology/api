@@ -696,13 +696,17 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "database_entry": {
-              "$ref": "#/$defs/database_entry"
-            },
             "urdf": {
-              "title": "URDF",
-              "description": "The URDF describing the hardware",
-              "type": "string"
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/database_entry"
+                },
+                {
+                  "title": "URDF",
+                  "description": "The URDF describing the hardware",
+                  "type": "string"
+                }
+              ]
             },
             "rate": {
               "description": "The rate in Hz at which to run the hardware interface",
@@ -887,29 +891,8 @@
             }
           },
           "required": [
+            "urdf",
             "rate"
-          ],
-          "oneOf": [
-            {
-              "required": [
-                "database_entry"
-              ],
-              "not": {
-                "required": [
-                  "urdf"
-                ]
-              }
-            },
-            {
-              "required": [
-                "urdf"
-              ],
-              "not": {
-                "required": [
-                  "database_entry"
-                ]
-              }
-            }
           ]
         }
       }
