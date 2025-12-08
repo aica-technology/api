@@ -155,8 +155,7 @@ next event activates the timer when it is configured:
 
 When a lifecycle component configures or activates itself automatically, this is known as "auto-configure" and
 "auto-activate", respectively. The graph allows enabling and disabling these automatic transitions through the
-respective buttons under the component name, which also act as flags, appearing highlighted or dimmed (enabled and
-disabled respectively).
+respective buttons under the component name.
 
 <div class="text--center">
   <img src={autoLifecycleEventsTimer} alt="Auto lifecycle events timer example" />
@@ -182,7 +181,7 @@ Finally, the initial component parameters are defined.
         value: 5
         type: double
       timeout:
-        value: 4
+        value: 2
         type: double
 ```
 
@@ -213,7 +212,7 @@ configured. Thereafter, it lands in the inactive lifecycle state, which triggers
 timer starts running. After 2 seconds (as specified by the `timeout` parameter), the `is_timed_out` predicate goes from
 false to true. As a result, the `transition` event causes `timer` to be unloaded and `timer_2` to be loaded instead. The
 second timer then goes through the same steps of configuring and activating before transitioning back to the first
-timer.
+timer after 4 seconds.
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
