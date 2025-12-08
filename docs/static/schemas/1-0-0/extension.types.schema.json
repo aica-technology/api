@@ -188,52 +188,6 @@
         "description",
         "parameter_type",
         "default_value"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "default_value": {
-                "const": null
-              }
-            },
-            "required": [
-              "default_value"
-            ]
-          },
-          "then": {
-            "required": [
-              "optional"
-            ]
-          },
-          "else": {
-            "properties": {
-              "optional": false
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "parameter_type": {
-                "const": "state"
-              }
-            },
-            "required": [
-              "parameter_type"
-            ]
-          },
-          "then": {
-            "required": [
-              "parameter_state_type"
-            ]
-          },
-          "else": {
-            "properties": {
-              "parameter_state_type": false
-            }
-          }
-        }
       ]
     },
     "parameter_type": {
@@ -473,55 +427,6 @@
         "display_name",
         "description",
         "service_type"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "service_type": {
-                "const": "empty"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "payload_description": false,
-              "payload_schema": false
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "service_type": {
-                "const": "string"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "payload_description"
-            ],
-            "properties": {
-              "payload_schema": false
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "service_type": {
-                "const": "object"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "payload_description",
-              "payload_schema"
-            ]
-          }
-        }
       ]
     },
     "signal": {
@@ -589,52 +494,6 @@
         "display_name",
         "description",
         "signal_type"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "signal_type": {
-                "const": "encoded_state"
-              }
-            },
-            "required": [
-              "signal_type"
-            ]
-          },
-          "then": {
-            "required": [
-              "signal_state_type"
-            ]
-          },
-          "else": {
-            "properties": {
-              "signal_state_type": false
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "signal_type": {
-                "const": "external"
-              }
-            },
-            "required": [
-              "signal_type"
-            ]
-          },
-          "then": {
-            "required": [
-              "external_signal_type"
-            ]
-          },
-          "else": {
-            "properties": {
-              "external_signal_type": false
-            }
-          }
-        }
       ]
     },
     "signals": {
