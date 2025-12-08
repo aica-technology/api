@@ -55,14 +55,18 @@ const config = {
             id: "core",
             path: "core",
             routeBasePath: "core",
-            sidebarCollapsed: true,
-            editUrl: "https://github.com/aica-technology/api/tree/main/docs",
+            sidebarPath: require.resolve("./src/layout/coreSidebars.ts"),
+            editUrl: "https://github.com/aica-technology/api/tree/main/core",
             remarkPlugins: [remarkMath],
             rehypePlugins: [rehypeKatex],
-            sidebarPath: require.resolve("./src/layout/coreSidebars.ts"),
+            lastVersion: "current",
+            versions: {
+              current: { label: "AICA Core v5", path: "", banner: "none" },
+              v4: { label: "AICA Core v4", path: "v4", banner: "none" },
+            },
           },
         ],
-      ],
+    ],
 
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -76,6 +80,7 @@ const config = {
             // image: "img/docusaurus-social-card.jpg",
             navbar: {
                 title: "AICA Documentation",
+                
                 logo: {
                     alt: "AICA Logo",
                     src: "img/aica-logo-black-square-small.svg",
@@ -102,7 +107,7 @@ const config = {
                         docsPluginId: "core",
                         sidebarId: "studioSidebar",
                         position: "left",
-                    },
+                    },                  
                     {
                         label: "FAQ",
                         href: `/faq`,
@@ -113,6 +118,12 @@ const config = {
                         href: `/help`,
                         position: "right",
                     },
+                    {
+                        type: "docsVersionDropdown",
+                        docsPluginId: "core",
+                        dropdownActiveClassDisabled: true,
+                        position: "right",
+                    },  
                 ],
             },
             footer: {
