@@ -4,7 +4,7 @@ title: Point Attractors
 ---
 
 import pointAttractor from './assets/point-attractor.png'
-import pointAttractorExample from './assets/point-attractor-example.webm'
+import pointAttractorExample from './assets/point-attractor-example.gif'
 
 # Point Attractors
 
@@ -68,8 +68,8 @@ To set up this example, follow the steps below.
 
 1. Create a new application and record the tool frame of the robot of your choice as described
    [here](../guides/application-frames#record-frame-in-3d-scene-view).
-2. In the same application, add the `Frame to Signal` component. Click on auto-configure and auto-activate buttons to enable
-   them and in the component settings, set the required parameter `Frame` to the name of the recorded frame from step 1.
+2. In the same application, add the `Frame to Signal` component. Open its parameter settings, turn on auto-configure and
+   auto-activate and set the required parameter `Frame` to the name of the recorded frame from step 1.
    :::tip
    Learn more about the `Frame to Signal` component [here](/docs/concepts/building-blocks/frames#frame-to-signal).
    :::
@@ -83,21 +83,17 @@ To set up this example, follow the steps below.
 Start the application from AICA Studio, then switch to the 3D view. Drag the frame around and observe how the robot is
 dynamically attracted towards the frame.
 
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-    <source src={pointAttractorExample} type="video/webm" />
-    Point Attractor Example.
-  </video>
+<div class="text--center">
+  <img src={pointAttractorExample} alt="Point Attractor Example" />
 </div>
-<br/>
 
 <details>
   <summary>Application YAML</summary>
 
     ```yaml
-    schema: 2-0-6
+    schema: 2-0-4
     dependencies:
-      core: v5.0.0
+      core: v4.4.2
     frames:
       target:
         reference_frame: world

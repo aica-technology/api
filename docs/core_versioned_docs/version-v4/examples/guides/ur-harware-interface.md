@@ -4,11 +4,11 @@ title: Universal Robots
 ---
 
 import urHwiStudio from './assets/ur-hwi-studio.png'
-import urHwiSwitchMode from './assets/ur-hwi-switch-mode.webm'
+import urHwiSwitchMode from './assets/ur-hwi-switch-mode.gif'
 import urHwiHeadlessMode from './assets/ur-hwi-headless-mode.png'
-import urHwiRemoteExample from './assets/ur-hwi-remote-example.webm'
+import urHwiRemoteExample from './assets/ur-hwi-remote-example.gif'
 import urHWIExternalControl from './assets/ur-hwi-external-control.png'
-import urHWISequenceRunning from './assets/ur-hwi-sequence-running.webm'
+import urHWISequenceRunning from './assets/ur-hwi-sequence-running.gif'
 import urHWIHandGuidingParams from './assets/ur-hwi-hand-guiding-params.png'
 import urHWINetworkingSettings from './assets/ur-hwi-networking-settings.png'
 import urHWIURProgram from './assets/ur-hwi-ur-program.png'
@@ -25,8 +25,8 @@ software add-ons, so-called URCaps.
 
 The ecosystem around UR robots is highly developer-friendly, with open-source communication libraries, drivers,
 documentation, and integration support for frameworks such as ROS. Additionally, their simulation tool URSim allows
-developers to test and validate robot programs and interfaces without needing access to physical hardware and makes UR a
-popular choice building custom applications.
+developers to test and validate robot programs and interfaces without needing access to physical hardware and makes
+UR a popular choice building custom applications.
 
 :::note
 
@@ -72,8 +72,8 @@ Safety features remain active in Remote Control.
 
 Choosing one of the two modes depends on the specific task at hand. During a development phase, it might be preferable
 to create the programs in Local Mode, whereas in a production setting, PLCs would be responsible to load and start the
-desired programs while the robot is in Remote Control. With the AICA System, users have the chance to get the best of
-both modes:
+desired programs while the robot is in Remote Control. With the AICA System, users have the chance to get the best
+of both modes:
 
 1. Take full control of the robot from an AICA application (requires Remote Control)
 2. Run an AICA application as one node of a program (works in both Local and Remote Control)
@@ -91,16 +91,12 @@ motions are coordinated through AICA Studio. Apart from setting the correct robo
 requirements have to be met:
 
 - On the robot, Remote Control has to be activated. For that, first activate Remote Control in the system settings as
-  explained [here](./ur-sim-guide#accessing-and-configuring-the-simulated-robot), then switch from _Local_ to _Remote_
-  mode on the top right corner of the teach pendant. The interface automatically switches to the _Run_ tab and disables
-  other tabs, indicating that control has been handed over to external sources.
-  <div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-    <source src={urHwiSwitchMode} type="video/webm" />
-    Switch mode from Local to Remote.
-  </video>
+  explained [here](./ur-sim-guide#accessing-and-configuring-the-simulated-robot), then switch from _Local_ to
+  _Remote_ mode on the top right corner of the teach pendant. The interface automatically switches to the _Run_ tab and
+  disables other tabs, indicating that control has been handed over to external sources.
+  <div class="text--center">
+    <img src={urHwiSwitchMode} alt="Switch mode from Local to Remote" />
   </div>
-  <br/>
 - In AICA Studio, make sure that the parameter `Headless Mode` that can be found under the hardware interface parameters
   is set to `True`. This will notify the hardware interface that it will be running headless, i.e. it is in charge of
   providing the full UR program to the robot controller.
@@ -112,20 +108,17 @@ Finally, implement an application of your choice in AICA Studio. An example with
 below. Observe how the robot program status goes from _Stopped_ to _Running_ as soon as the hardware interface connects
 to the robot.
 
-  <div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-    <source src={urHwiRemoteExample} type="video/webm" />
-    Example with Remote Control.
-  </video>
-  </div>
-  <br/>
+<div class="text--center">
+  <img src={urHwiRemoteExample} alt="Example with Remote Control" />
+</div>
+
 <details>
   <summary>Example application, remote control</summary>
 
   ```yaml
-  schema: 2-0-6
+  schema: 2-0-4
   dependencies:
-    core: v5.0.0
+    core: v4.4.2
   frames:
     wp_1:
       reference_frame: world
@@ -212,7 +205,7 @@ to the robot.
       buttons:
         button:
           x: -460
-          y: 580
+          y: 600
       hardware:
         hardware:
           x: 620
@@ -235,32 +228,20 @@ to the robot.
             y: 1060
           - x: 620
             y: 900
-      on_start_on_start_hardware_hardware:
-        path:
-          - x: 360
-            y: 60
-          - x: 360
-            y: 40
-      button_on_click_sequence_sequence:
-        path:
-          - x: -20
-            y: 640
-          - x: -20
-            y: 620
       sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
         path:
           - x: 240
-            y: 820
+            y: 860
       hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_on_stop_on_stop:
         path:
           - x: 540
-            y: 740
+            y: 780
           - x: 540
             y: 480
           - x: -20
             y: 480
           - x: -20
-            y: 160
+            y: 140
 
   ```
 </details>
@@ -275,7 +256,7 @@ smaller, single purpose AICA applications into bigger, existing cells. Once the 
 it hands back control to the robot which will continue the execution of the main UR program. To set this up, follow the
 these steps:
 
-1. The external control URCap needs to be configured to the right remote control address. Navigate to the _Installation_
+1. The external control URCap needs to be configured to the right remote control address. Navigate to the *Installation*
    tab and set the address to the one of the device that will be running the AICA application.
    <div class="text--center">
      <img src={urHWINetworkingSettings} alt="External control URCap networking settings" />
@@ -302,9 +283,9 @@ the application in AICA Studio first, and the UR program second.
   <summary>Example application, local control</summary>
 
   ```yaml
-  schema: 2-0-6
+  schema: 2-0-4
   dependencies:
-    core: v5.0.0
+    core: v4.4.2
   frames:
     wp_1:
       reference_frame: world
@@ -426,35 +407,40 @@ the application in AICA Studio first, and the UR program second.
             y: 1060
           - x: 620
             y: 900
-      sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
+      on_start_on_start_hardware_hardware:
         path:
-          - x: 280
-            y: 880
-      hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_ur_dashboard_controller_hand_back_control:
-        path:
-          - x: 680
-            y: 800
-          - x: 680
-            y: 1340
+          - x: 440
+            y: 40
+          - x: 440
+            y: 60
       hardware_hardware_joint_trajectory_controller_on_activate_sequence_sequence:
         path:
           - x: 20
-            y: 720
+            y: 760
           - x: 20
             y: 440
+      sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
+        path:
+          - x: 280
+            y: 920
       hardware_hardware_ur_dashboard_controller_program_running_hardware_hardware_joint_trajectory_controller:
         path:
           - x: 460
-            y: 1260
+            y: 1300
           - x: 460
-            y: 600
+            y: 640
       hardware_hardware_ur_dashboard_controller_hand_back_control_success_on_stop_on_stop:
         path:
           - x: -20
-            y: 1220
+            y: 1260
           - x: -20
-            y: 160
-
+            y: 140
+      hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_ur_dashboard_controller_hand_back_control:
+        path:
+          - x: 680
+            y: 840
+          - x: 680
+            y: 1380
   ```
 </details>
 
@@ -497,9 +483,9 @@ Find below another example that uses the controller to set the payload on the ro
   <summary>Example application, dashboard controller</summary>
 
   ```yaml
-  schema: 2-0-6
+  schema: 2-0-4
   dependencies:
-    core: v5.0.0
+    core: v4.0.0
   on_start:
     load:
       hardware: hardware
@@ -556,9 +542,6 @@ Find below another example that uses the controller to set the payload on the ro
                   start: sequence
   graph:
     positions:
-      on_start:
-        x: 0
-        y: -20
       stop:
         x: 320
         y: 120
@@ -574,33 +557,28 @@ Find below another example that uses the controller to set the payload on the ro
       sequence_sequence_event_trigger_1_hardware_hardware_ur_dashboard_controller_set_payload:
         path:
           - x: 320
-            y: 860
+            y: 900
       sequence_sequence_event_trigger_3_hardware_hardware_ur_dashboard_controller_hand_back_control:
         path:
           - x: 640
-            y: 820
+            y: 860
       hardware_hardware_ur_dashboard_controller_program_running_sequence_sequence:
         path:
           - x: 100
-            y: 740
+            y: 780
           - x: 100
             y: 280
-
   ```
 </details>
 
-<div style={{ display: "flex", justifyContent: "center" }}>
-<video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-  <source src={urHWISequenceRunning} type="video/webm" />
-  Sequence application graph.
-</video>
+<div class="text--center">
+  <img src={urHWISequenceRunning} alt="Sequence application graph" />
 </div>
-<br/>
 
 ## Force Mode
 
 e-Series and UR series robots have a built-in end of arm force torque sensor that can be leveraged for force sensitive
-control. In UR terminology, this feature is called _force mode_ and can be used to perform motions along a desired
+control. In UR terminology, this feature is called *force mode* and can be used to perform motions along a desired
 direction or path while being force compliant in certain axes or directions.
 
 With the UR collection in the AICA System, we provide two controllers that very explicitly use and augment the internal
@@ -634,7 +612,7 @@ Using the teach pendant with the freedrive button, operators can manually adjust
 freedrive mode makes the individual actuators backdriveable but due to the different friction and stiffness, pushing and
 pulling on the robot usually results in rather uncoordinated motion. To alleviate this and enable smooth trajectory
 recording and kinesthetic teaching for machine learning algorithms, the UR collection comes with the
-`UR Hand Guiding Controller`. This is a classic admittance controller that _admits_ measured forces by transforming them
+`UR Hand Guiding Controller`. This is a classic admittance controller that *admits* measured forces by transforming them
 into a motion.
 
 The controller provides additional functionality to limit and maintain the end effector pose in space. For example, this
@@ -660,6 +638,7 @@ The controller can be further tuned and adjusted by using its parameters:
 - **Angular limit**: The allowed deviation from the reference orientation.
 - **Linear / Angular boundary strength**: If linear or angular limits are set, these values scale the response of the
   controller to hold the robot within the limits.
+
 
 <div class="text--center">
   <img src={urHWIHandGuidingParams} alt="Hand guiding controller parameters" style={{ width: '40%' }} />

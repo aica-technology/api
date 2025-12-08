@@ -7,15 +7,16 @@ title: An application with hardware
 
 ## Launcher configuration requirements
 
-This example uses an additional Universal Robots collection package, which includes drivers for communicating with UR
-robots and the example URDF content used to visualize the robot arm.
+This example uses an additional Universal Robots collection package, which includes drivers for communicating with
+UR robots and the example URDF content used to visualize the robot arm.
 
-Use AICA Core v5.0.0 together with the `collections/ur-collection` package at version v4.2.0 to reproduce this example.
+Use AICA Core v4.2.0 together with the `collections/ur-collection` package at version v4.1.0 to reproduce this example.
 
 ## URDF Hardware Manager
 
-After starting AICA Studio, open the Hardware Manager in the respective tab of the top navigation bar. This page shows a
-table of available URDF files in the container database with a name and a description.
+After starting AICA Studio, open the Hardware Manager 
+([localhost:8080/studio/hardware](http://localhost:8080/studio/hardware)). This page shows a table of available URDF
+files in the container database with a name and a description.
 
 AICA hardware collections include example URDFs, which are shown on the table with a pad-lock icon indicating that they
 are not editable. Users can make an editable copy of a selected URDF with the "Save As" button, or upload and edit
@@ -44,7 +45,7 @@ The mock URDF will be used to demonstrate the hardware interface block in AICA a
 
 :::info
 
-Refer to the overview section [Controlling robots with ros2_control](/docs/concepts/ros-concepts/controlling-robots) for
+Refer to the overview section [Controlling robots with ros2_control](../../../../docs/concepts/ros-concepts/controlling-robots) for
 more context.
 
 :::
@@ -57,9 +58,9 @@ Go to the Editor page using the top navigation bar or at
 Enter the following YAML and generate the graph.
 
 ```yaml
-schema: 2-0-6
+schema: 2-0-2
 dependencies:
-  core: v5.0.0
+  core: v4.2.0
 on_start:
   load:
     hardware: mock_hardware
@@ -79,16 +80,10 @@ hardware:
         plugin: aica_core_controllers/RobotStateBroadcaster
 graph:
   positions:
-    on_start:
-      x: 0
-      y: -20
-    stop:
-      x: 0
-      y: 80
     buttons:
       button:
-        x: -100
-        y: 180
+        x: -120
+        y: 260
     hardware:
       mock_hardware:
         x: 500
@@ -159,16 +154,10 @@ top-level `graph` field.
 ```yaml
 graph:
   positions:
-    on_start:
-      x: 0
-      y: -20
-    stop:
-      x: 0
-      y: 80
     buttons:
       button:
-        x: -100
-        y: 180
+        x: -120
+        y: 260
     hardware:
       mock_hardware:
         x: 500
@@ -188,15 +177,15 @@ on the `mock_hardware` interface.
 
 ## Run the application
 
-Putting it all together, pressing Start on this application should load the mock hardware interface and load the
+Putting it all together, pressing Play on this application should load the mock hardware interface and load the
 broadcaster controller. When the trigger button is pressed in the graph editor, the broadcaster will be activated.
 
 :::tip
 
 Controllers can also be "auto-activated", similar to the procedure in the
-[previous example](./editor-example#auto-lifecycle-events). Try to modify this example by removing the trigger button
-and toggling the "auto-activate" flag under the controller name. Once the application is started again, the controller
-should now automatically transition to being active.
+[previous example](./editor-example#auto-lifecycle-events). Try to modify this example by removing the trigger
+button and navigating to the controller settings to toggle the "auto-activate" behavior. Once the application is started
+again, the controller should now automatically be active.
 
 :::
 

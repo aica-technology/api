@@ -4,8 +4,8 @@ title: Colliders
 ---
 
 import boxCollider from './assets/box-collider.png'
-import boxColliderExample from './assets/box-collider-example.webm'
-import planeColliderExample from './assets/plane-collider-example.webm'
+import boxColliderExample from './assets/box-collider-example.gif'
+import planeColliderExample from './assets/plane-collider-example.gif'
 import colliderInterfaces from './assets/collider-interfaces.png'
 
 # Colliders
@@ -74,21 +74,17 @@ Start the application from AICA Studio, then go to RViz. Add the interactive mar
 marker as shown below. Observe how moving the interactive marker triggers the predicates of the collider component to
 update when the target pose enters and exits the box.
 
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-    <source src={boxColliderExample} type="video/webm" />
-    Box Collider example.
-  </video>
+<div class="text--center">
+  <img src={boxColliderExample} alt="Box Collider example" />
 </div>
-<br/>
 
 <details>
   <summary>Application YAML</summary>
 
     ```yaml
-    schema: 2-0-6
+    schema: 2-0-4
     dependencies:
-      core: v5.0.0
+      core: v4.4.1
     on_start:
       load:
         - component: box_collider
@@ -162,33 +158,27 @@ update when the target pose enters and exits the box.
         on_start_on_start_box_collider_box_collider:
           path:
             - x: 360
-              y: 60
+              y: 40
             - x: 360
               y: 120
         on_start_on_start_interactive_marker_interactive_marker:
           path:
             - x: 140
-              y: 60
+              y: 40
             - x: 140
               y: 240
         on_start_on_start_interactive_marker_copy_interactive_marker_copy:
           path:
             - x: 140
-              y: 60
+              y: 40
             - x: 140
               y: 500
-        interactive_marker_pose_box_collider_target:
-          path:
-            - x: 580
-              y: 400
-            - x: 580
-              y: 320
         interactive_marker_copy_pose_box_collider_center:
           path:
-            - x: 620
+            - x: 600
               y: 660
-            - x: 620
-              y: 360
+            - x: 600
+              y: 440
     ```
 
 </details>
@@ -215,21 +205,17 @@ demonstrates how soft safety mechanisms can be implemented in AICA Studio. As so
 end-effector in this case, has a negative z coordinate relative to the center pose, the _in collision_ predicate fires
 and the application is stopped immediately.
 
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-    <source src={planeColliderExample} type="video/webm" />
-    Plane Collider example.
-  </video>
+<div class="text--center">
+  <img src={planeColliderExample} alt="Plane Collider example" />
 </div>
-<br/>
 
 <details>
   <summary>Application YAML</summary>
 
     ```yaml
-      schema: 2-0-6
+      schema: 2-0-4
       dependencies:
-        core: v5.0.0
+        core: v4.4.1
       on_start:
         load:
           - component: interactive_marker

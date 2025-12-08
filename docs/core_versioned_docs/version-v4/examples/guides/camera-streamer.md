@@ -23,17 +23,22 @@ of a camera device.
 
 :::
 
+## AICA Launcher configuration
+
+Start AICA Launcher, select AICA Core v4.4.2 or higher, and add the `core-vision` package to your configuration.
+
+Select **Launch AICA Studio** to proceed.
+
 ## Using the CameraStreamer
 
-Launch AICA Studio with a configuration that contains the `core-vision` package and create a new application.
+Start by creating a new application.
 
 1. Remove the hardware interface that is included in new applications by default.
-2. From the `Scene` menu, use the `Add Component` tab and look for the **Camera Streamer** component either by searching
+2. Click on the `+` icon on the top right, and look for the **Camera Streamer** component either by searching
 or by manually going under the `Core Vision Components` menu. Click to add it to the graph.
 3. Next, connect the component to the start block.
-4. Enable **auto-configure** and **auto-activate**.
-5. With your new component selected, make sure you are in the `Scene` menu, where you may find all the available
-component parameters.
+4. Open the component settings.
+5. Enable **auto-configure** and **auto-activate**.
 
 By this point, you should have something like the following:
 
@@ -41,7 +46,7 @@ By this point, you should have something like the following:
   <img src={cameraStreamerExample} alt="Default CameraStreamer configuration" />
 </div>
 
-Before pressing Start, let us go through the parameters first. You should see:
+Before pressing play, let us go through the parameters first. You should see:
 
 - **Rate**: This is the component's rate, but it has no effect on the operation of `CameraStreamer`.
 - **Source**: Path to the source device or video file. If using a camera, this is typically of the form `/dev/videoX`,
@@ -78,7 +83,7 @@ In newer versions of `CameraStreamer` you will also have access to:
 
 Once you have selected an appropriate **source**:
 
-1. Press **Start** to start the application.
+1. Press **Play** to start the application.
 2. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
 3. In RViz, select _Add > By topic > /camera_streamer/image > Image_. This adds a panel that shows the live image. The
 undistorted image (if available) can also be found under _/camera_streamer/undistorted_image > Image_.
@@ -95,9 +100,9 @@ You may use the following YAML snippet containing the full application:
 <details>
 <summary>Application YAML</summary>
 ```yaml
-schema: 2-0-6
+schema: 2-0-4
 dependencies:
-  core: v5.0.0
+  core: v4.4.2
 on_start:
   load:
     component: camera_streamer
