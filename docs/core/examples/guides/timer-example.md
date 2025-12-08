@@ -11,14 +11,10 @@ import timerExample from './assets/timer-example.webm'
 This example will show how components and predicate events can be used to create dynamic behavior in an AICA
 application.
 
-## Launcher configuration requirements
-
-This example uses AICA Core v5.0.0 in the Launcher configuration.
-
 ## Setting up the application
 
 Launch AICA Studio and create a new application by pressing "Create new". Copy the following application code into the
-text box under the Editor tab, replacing the default content.
+Code tab of the right panel, replacing the default content.
 
 ```yaml
 schema: 2-0-6
