@@ -50,24 +50,19 @@ const config = {
     ],
     plugins: [
         [
-            "@docusaurus/plugin-content-docs",
-            {
-                id: "core",
-                path: "core",
-                routeBasePath: "core",
-                sidebarCollapsed: true,
-                editUrl: "https://github.com/aica-technology/api/tree/main/docs",
-                remarkPlugins: [remarkMath],
-                rehypePlugins: [rehypeKatex],
-                sidebarPath: "./src/layout/coreSidebars.ts",
-                lastVersion: 'current',
-                versions: {
-                    current: {label: "AICA Core v5", path: "", banner: "none"},
-                    v4: {label: "AICA Core v4", path: "v4", banner: "none"},
-                },
-            },
+          "@docusaurus/plugin-content-docs",
+          {
+            id: "core",
+            path: "core",
+            routeBasePath: "core",
+            sidebarCollapsed: true,
+            editUrl: "https://github.com/aica-technology/api/tree/main/docs",
+            remarkPlugins: [remarkMath],
+            rehypePlugins: [rehypeKatex],
+            sidebarPath: require.resolve("./src/layout/coreSidebars.ts"),
+          },
         ],
-    ],
+      ],
 
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -114,12 +109,6 @@ const config = {
                         position: "left",
                     },
                     {
-                        type: "docsVersionDropdown",
-                        docsPluginId: "core",
-                        dropdownActiveClassDisabled: true,
-                        position: "right",
-                    },
-                      {
                         label: "Help",
                         href: `/help`,
                         position: "right",
