@@ -52,11 +52,12 @@ runs:
       shell: bash
       run: |
         node utils/bundleHelper.js ${{ inputs.schema-path }} ${{ inputs.schema }}
-        echo "Ensuring directory branch name: docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}"
-        mkdir -p docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}
-        echo "Moving schema to path docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}"
-        mv ${{ inputs.schema }}.schema.json docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}
-        mv ${{ inputs.schema }}.types.schema.json docs/static/schemas/${{ steps.versions.outputs.new_schema_id }}
+        EXPORT_DIR="docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}"
+        echo "Ensuring directory branch name: ${EXPORT_DIR}"
+        mkdir -p "${EXPORT_DIR}"
+        echo "Moving ${{ inputs.schema }}.schema.json to path ${EXPORT_DIR}"
+        mv ${{ inputs.schema }}.schema.json "${EXPORT_DIR}"
+        mv ${{ inputs.schema }}.types.schema.json "${EXPORT_DIR}"
         git config --global user.name github-actions[bot]
         git config --global user.email github-actions[bot]@users.noreply.github.com
         git fetch
