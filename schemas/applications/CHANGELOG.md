@@ -23,6 +23,7 @@ Release Versions:
 
 - feat: add support for variables and assignments (#386)
 - feat: define database entry for referencing hardware (#405)
+- fix: use 2-0-1 version of interfaces schema (#426)
 
 ## 2-0-6
 
