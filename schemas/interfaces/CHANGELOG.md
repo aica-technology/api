@@ -2,8 +2,13 @@
 
 Release Versions:
 
+- [2-0-1](#2-0-1)
 - [2-0-0](#2-0-0)
 - [1-0-0](#1-0-0)
+
+## 2-0-1
+
+Version 2-0-1 re-releases the 2-0-0 version that was previously overwritten by an incorrect CI workflow.
 
 ## 2-0-0
 
