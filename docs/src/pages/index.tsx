@@ -40,7 +40,7 @@ function HomepageHeader() {
 						text={"Learn basic concepts"}
 					/>
 					<LinkButton
-						link={"/docs/category/guides"}
+						link={"/core/category/guides"}
 						text={"Guides and examples"}
 					/>
 					<LinkButton
