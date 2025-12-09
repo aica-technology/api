@@ -111,16 +111,16 @@ const config = {
                         position: "left",
                     },                  
                     {
-                        label: "FAQ",
-                        href: `/faq`,
-                        position: "left",
-                    },
-                    {
                         type: "docsVersionDropdown",
                         docsPluginId: "core",
                         dropdownActiveClassDisabled: true,
                         position: "right",
                     },  
+                    {
+                        label: "FAQ",
+                        href: `/faq`,
+                        position: "right",
+                    },
                     {
                         label: "Help",
                         href: `/help`,
