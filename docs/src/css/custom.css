@@ -53,6 +53,7 @@
   font-weight: bold;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  border-radius: 0;
 }
 
 [data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
