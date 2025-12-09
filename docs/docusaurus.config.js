@@ -98,7 +98,7 @@ const config = {
                         position: "left",
                     },
                     {
-                        label: "Product Knowledge Base",
+                        label: "Knowledge Base",
                         type: "docSidebar",
                         sidebarId: "learnSidebar",
                         position: "left",
@@ -116,16 +116,16 @@ const config = {
                         position: "left",
                     },
                     {
-                        label: "Help",
-                        href: `/help`,
-                        position: "right",
-                    },
-                    {
                         type: "docsVersionDropdown",
                         docsPluginId: "core",
                         dropdownActiveClassDisabled: true,
                         position: "right",
                     },  
+                    {
+                        label: "Help",
+                        href: `/help`,
+                        position: "right",
+                    },
                 ],
             },
             footer: {
