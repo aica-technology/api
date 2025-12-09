@@ -51,30 +51,13 @@
   color: black;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   font-weight: bold;
-  margin: 0.5rem 0;
-  padding: 1rem 0.5rem 0 0.5rem;
-  border-radius: 0;
-  transition: all 0.25s ease;
-  background-color: transparent;
-  -webkit-transition: all 0.25s ease;
-  -moz-transition: all 0.25s ease;
-  -ms-transition: all 0.25s ease;
-  -o-transition: all 0.25s ease;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 [data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
   color: white;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link:hover {
-  color: var(--ifm-color-primary-light);
-  background-color: transparent;
-  transition: all 0.25s ease;
-  -webkit-transition: all 0.25s ease;
-  -moz-transition: all 0.25s ease;
-  -ms-transition: all 0.25s ease;
-  -o-transition: all 0.25s ease;
 }
 
 /* Remove top border on the first sidebar section */
