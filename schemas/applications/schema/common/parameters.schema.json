@@ -65,13 +65,13 @@
       }
     },
     "parameter_value": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_value"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-1/interfaces.schema.json#/$defs/parameter_value"
     },
     "parameter_type": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/parameter_type"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-1/interfaces.schema.json#/$defs/parameter_type"
     },
     "parameter_state_type": {
-      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-0/interfaces.schema.json#/$defs/encoded_state_type"
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-1/interfaces.schema.json#/$defs/encoded_state_type"
     }
   }
 }

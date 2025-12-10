@@ -2,8 +2,13 @@
 
 Release Versions:
 
+- [1-0-2](#1-0-2)
 - [1-0-1](#1-0-1)
 - [1-0-0](#1-0-0)
+
+## 1-0-2
+
+Version 1-0-2 uses the patched 2-0-1 version of the interfaces schema.
 
 ## 1-0-1
 
