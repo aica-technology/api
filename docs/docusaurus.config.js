@@ -36,7 +36,7 @@ const config = {
             ({
                 docs: {
                     sidebarPath: require.resolve("./src/layout/sidebars.ts"),
-                    sidebarCollapsed: true,
+                    sidebarCollapsed: false,
                     editUrl: "https://github.com/aica-technology/api/tree/main/docs",
                     remarkPlugins: [remarkMath],
                     rehypePlugins: [rehypeKatex],
@@ -55,7 +55,7 @@ const config = {
             id: "core",
             path: "core",
             routeBasePath: "core",
-            sidebarCollapsed: true,
+            sidebarCollapsed: false,
             sidebarPath: require.resolve("./src/layout/coreSidebars.ts"),
             editUrl: "https://github.com/aica-technology/api/tree/main/core",
             remarkPlugins: [remarkMath],
@@ -75,7 +75,7 @@ const config = {
             docs: {
                 sidebar: {
                     hideable: false,
-                    autoCollapseCategories: true,
+                    autoCollapseCategories: false,
                 },
             },
             // TODO: add a social media card
