@@ -43,13 +43,13 @@ This interface can be used in two main ways:
 ## Prerequisites
 
 Begin by installing Isaac Sim using the official
-[installation instructions](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/index.html).  
-AICA Core runs on **ROS 2 Jazzy**, so be sure to install a version of Isaac Sim that supports this distribution (**Isaac
+[installation instructions](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/index.html). AICA Core 
+runs on **ROS 2 Jazzy**, so be sure to install a version of Isaac Sim that supports this distribution (**Isaac
 Sim v5.0 or later**).
 
 Isaac Sim supports multiple installation options, including workstation installation, container-based deployment, and
-cloud deployment. Choose the method that best fits your workflow.  
-For this guide, we assume you have installed Isaac Sim locally using the
+cloud deployment. Choose the method that best fits your workflow. For this guide, we assume you have installed 
+Isaac Sim locally using the 
 **[workstation installation](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html)**
 method.
 
@@ -88,7 +88,7 @@ will use a basic scene with a ground plane and a AICA's `Generic` robot model.
    the directory where you saved the Generic Robot USD files. Drag and drop the `generic.usd` file into the scene to add
    the robot.
 
-Once down with these steps, your scene should look similar to the image below:
+Once down with these steps, your scene should look similar to the one below:
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
@@ -117,11 +117,11 @@ in a new tab in the bottom part of the screen.
 In the OmniGraph editor, you can create nodes and connect them. The following nodes are required to set up the
 communication between Isaac Sim and AICA Core: 
 
--1- **ROS 2 Context**: This node initializes the ROS 2 context and allows
+-1- **ROS2 Context**: This node initializes the ROS 2 context and allows
 and defines the ROS2 domain ID. In order to set the domain ID, double click on the node to open its properties and set
 the `Domain ID` field to `30`. This domain ID must match the one used by AICA Core to ensure proper communication.
 
--2- **ROS 2 Joint Subscriber**: This node subscribes to the joint state topic published by AICA Core. Set the
+-2- **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA Core. Set the
 `Topic Name` field to `/joint_command` to match the topic used by AICA Core for the Generic robot.
 
 -3- **Arcticulation Controller**: This node is responsible for controlling the robot's joints based on the received
@@ -131,13 +131,13 @@ joint states. Select the Generic robot in the scene as the `Articulation` for th
 
 Now that you have all the necessary nodes, you can connect them as follows:
 
-- Connect the `Context` signal on `ROS 2 Context` node's output to the `Context` signal on the `ROS 2 Joint Subscriber`
+- Connect the `Context` signal on `ROS 2 Context` node's output to the `Context` signal on the `ROS2 Subscribe Joint State`
   node's input.
-- Connect the `Joint Names` output of the `ROS 2 Joint Subscriber` node to the `Joint Names` input of the
+- Connect the `Joint Names` output of the `ROS2 Subscribe Joint State` node to the `Joint Names` input of the
   `Articulation Controller` node.
-- Connect the `Joint Positions` output of the `ROS 2 Joint Subscriber` node to the `Target Positions` input of the
+- Connect the `Joint Positions` output of the `ROS2 Subscribe Joint State` node to the `Position Command` input of the
   `Articulation Controller` node.
-- Connect the `Tick` output of the `On Playback Tick` node to the `Exec` input of the `ROS 2 Joint Subscriber` node and
+- Connect the `Tick` output of the `On Playback Tick` node to the `Exec` input of the `ROS2 Subscribe Joint State` node and
   the `Exec` input of the `Articulation Controller` node.
 
 Your OmniGraph should look similar to the image below:
