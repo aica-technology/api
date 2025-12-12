@@ -12,29 +12,16 @@
           "minItems": 1,
           "uniqueItems": true,
           "items": {
-            "$ref": "#/$defs/load_on_start"
+            "$ref": "common/load_on_start.schema.json"
           }
         },
         {
-          "$ref": "#/$defs/load_on_start"
+          "$ref": "common/load_on_start.schema.json"
         }
       ]
     },
     "sequence": {
-      "$ref": "common/events/sequence.schema.json#/$defs/start_a_sequence"
-    }
-  },
-  "$defs": {
-    "load_on_start": {
-      "title": "Load On Start",
-      "oneOf": [
-        {
-          "$ref": "common/target_interface.schema.json#/$defs/component_identifier"
-        },
-        {
-          "$ref": "common/target_interface.schema.json#/$defs/hardware_identifier"
-        }
-      ]
+      "$ref": "common/events/start_a_sequence.schema.json"
     }
   }
 }

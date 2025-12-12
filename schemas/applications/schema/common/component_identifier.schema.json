@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Component Identifier",
+  "description": "A component in the application",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "component": {
+      "$ref": "identifier.schema.json"
+    }
+  },
+  "required": [
+    "component"
+  ]
+}

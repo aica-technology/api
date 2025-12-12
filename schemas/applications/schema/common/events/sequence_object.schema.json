@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Manage Sequence Object",
+  "description": "Start, restart, or abort a sequence",
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "start_a_sequence.schema.json"
+    },
+    {
+      "title": "Restart A Sequence",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "restart": {
+          "description": "Name of the sequence to restart",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        }
+      },
+      "required": [
+        "restart"
+      ]
+    },
+    {
+      "title": "Abort A Sequence",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "abort": {
+          "description": "Name of the sequence to abort",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        }
+      },
+      "required": [
+        "abort"
+      ]
+    }
+  ]
+}
