@@ -28,7 +28,7 @@ and more between the simulator and AICA Core.
 flows, called _Action Graphs_, by connecting pre-built nodes. OmniGraph can include ROS 2 Bridge nodes, enabling
 communication between Isaac Sim and ROS 2 without writing code.
 
-This interface supports two primary workflows:
+This interface can be used in two main ways:
 
 1. **Control robots in Isaac Sim from AICA Core:** In this mode, AICA Core sends motion commands and control inputs to
    the simulated robot via ROS 2, and Isaac Sim returns robot state and sensor feedback. From AICA’s point of view, the
