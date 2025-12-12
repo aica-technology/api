@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hardware Identifier",
+  "description": "A hardware interface in the application",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hardware": {
+        "$ref": "identifier.schema.json"
+    }
+  },
+  "required": [
+    "hardware"
+  ]
+}
