@@ -3,8 +3,12 @@ sidebar_position: 11
 title: Interface with Isaac Sim using OmniGraph and ROS 2
 ---
 
-import selector from './assets/omnigraph-aica-bridge-selector.png'; import scene from
-'./assets/omnigraph-aica-bridge-scene.png';
+import selector from './assets/omnigraph-aica-bridge-selector.png'; 
+import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm'; 
+import graph from './assets/omnigraph-aica-bridge-graph.png'; 
+import addingGraph from './assets/omnigraph-aica-bridge-add-graph.webm';
+import runningAICA from './assets/omnigraph-aica-bridge-aica-app.webm';
+import integration from './assets/omnigraph-aica-bridge-integration.webm';
 
 # Interface with Isaac Sim using OmniGraph and ROS 2
 
@@ -77,10 +81,12 @@ will use a basic scene with a ground plane and a AICA's `Generic` robot model.
 
 Once down with these steps, your scene should look similar to the image below:
 
-<div class="text--center">
-  <img src={scene} alt="Scene with Generic robot on a ground plane" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={sceneCreate} type="video/webm" />
+  </video>
 </div>
-
+<br/>
 ## Setting up the OmniGraph AICA Bridge
 
 ### Isaac Sim as a visualization tool for AICA Core
@@ -91,9 +97,12 @@ the communication between Isaac Sim and AICA Core using ROS 2.
 In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGraph. This will open the OmniGraph editor
 in a new tab in the bottom part of the screen.
 
-<div class="text--center">
-  <img alt="Video show casing adding an action graph" />
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={addingGraph} type="video/webm" />
+  </video>
 </div>
+<br/>
 
 In the OmniGraph editor, you can create nodes and connect them. The following nodes are required to set up the
 communication between Isaac Sim and AICA Core: -1- **ROS 2 Context**: This node initializes the ROS 2 context and allows
@@ -101,7 +110,7 @@ and defines the ROS2 domain ID. In order to set the domain ID, double click on t
 the `Domain ID` field to `30`. This domain ID must match the one used by AICA Core to ensure proper communication.
 
 -2- **ROS 2 Joint Subscriber**: This node subscribes to the joint state topic published by AICA Core. Set the
-`Topic Name` field to `/joint_states` to match the topic used by AICA Core for the Generic robot.
+`Topic Name` field to `/joint_command` to match the topic used by AICA Core for the Generic robot.
 
 -3- **Arcticulation Controller**: This node is responsible for controlling the robot's joints based on the received
 joint states.
@@ -122,7 +131,7 @@ Now that you have all the necessary nodes, you can connect them as follows:
 Your OmniGraph should look similar to the image below:
 
 <div class="text--center">
-  <img alt="OmniGraph for AICA Bridge Visualization" />
+  <img src={graph} style={{ width: "70%", height: "auto" }} alt="OmniGraph for AICA Bridge Visualization" />
 </div>
 
 ### Isaac Sim as a robot controller from AICA Core
@@ -133,12 +142,194 @@ Using AICA Launcher, launch a configuration that uses the latest AICA Core versi
 to match the one set in Isaac Sim. No extra packages are required for this guide.
 
 A simple AICA application that moves a Generic arm using `Joint Trajectory Controller` can be created using the
-following YAML configuration:
+following:
 
 <details>
   <summary>Simple Joint Trajectory Control Application</summary>
 
     ```yaml
+    schema: 2-0-6
+    dependencies:
+      core: v5.0.1
+    frames:
+      wp1:
+        reference_frame: world
+        position:
+          x: 0.492159
+          y: -0.020903
+          z: 0.487698
+        orientation:
+          w: 0
+          x: -0.707107
+          y: 0.707107
+          z: 0.000563
+      wp2:
+        reference_frame: world
+        position:
+          x: 0.492038
+          y: 0.1335
+          z: 0.336067
+        orientation:
+          w: 0.007248
+          x: 0.70707
+          y: -0.707064
+          z: -0.007811
+      wp3:
+        reference_frame: world
+        position:
+          x: 0.491953
+          y: 0.359307
+          z: 0.229181
+        orientation:
+          w: 0
+          x: -0.707107
+          y: 0.707107
+          z: 0.000563
+    on_start:
+      load:
+        - component: joint_signal_to_joint_state_message
+        - hardware: hardware
+    components:
+      joint_signal_to_joint_state_message:
+        component: aica_core_components::ros::JointSignalToJointStateMsg
+        display_name: Joint Signal To Joint State Message
+        inputs:
+          input: /hardware/robot_state_broadcaster/joint_state
+        outputs:
+          output: /joint_command
+    hardware:
+      hardware:
+        display_name: Hardware Interface
+        urdf: Generic six-axis robot arm
+        rate: 100
+        events:
+          transitions:
+            on_load:
+              load:
+                - controller: robot_state_broadcaster
+                  hardware: hardware
+                - controller: joint_trajectory_controller
+                  hardware: hardware
+        controllers:
+          robot_state_broadcaster:
+            plugin: aica_core_controllers/RobotStateBroadcaster
+            outputs:
+              joint_state: /hardware/robot_state_broadcaster/joint_state
+            events:
+              transitions:
+                on_load:
+                  switch_controllers:
+                    hardware: hardware
+                    activate: robot_state_broadcaster
+            display_name: Robot State Broadcaster
+          joint_trajectory_controller:
+            plugin: aica_core_controllers/trajectory/JointTrajectoryController
+            events:
+              transitions:
+                on_load:
+                  switch_controllers:
+                    hardware: hardware
+                    activate: joint_trajectory_controller
+              predicates:
+                has_trajectory_succeeded:
+                  call_service:
+                    controller: joint_trajectory_controller
+                    hardware: hardware
+                    service: set_trajectory
+                    payload: '{"times_from_start": [1, 2, 5], "frames": ["wp1", "wp2", "wp3"]}'
+    graph:
+      positions:
+        buttons:
+          button:
+            x: 340
+            y: 800
+        components:
+          joint_signal_to_joint_state_message:
+            x: 460
+            y: 140
+        hardware:
+          hardware:
+            x: 1060
+            y: 20
+      buttons:
+        button:
+          display_name: Trigger Events Button
+          on_click:
+            call_service:
+              controller: joint_trajectory_controller
+              hardware: hardware
+              service: set_trajectory
+              payload: '{"times_from_start": [1, 2, 5], "frames": ["wp1", "wp2", "wp3"]}'
+      edges:
+        on_start_on_start_joint_signal_to_joint_state_message_joint_signal_to_joint_state_message:
+          path:
+            - x: 280
+              y: 60
+            - x: 280
+              y: 200
+        on_start_on_start_hardware_hardware:
+          path:
+            - x: 540
+              y: 60
+            - x: 540
+              y: 80
+        hardware_hardware_robot_state_broadcaster_joint_state_joint_signal_to_joint_state_message_input:
+          path:
+            - x: 440
+              y: 480
+            - x: 440
+              y: 360
+        hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_joint_trajectory_controller_set_trajectory:
+          path:
+            - x: 960
+              y: 780
+            - x: 960
+              y: 860
     ```
-
 </details>
+
+Copy the above YAML content into a `New Application` in AICA StudIo and save it. This application will use the Generic
+robot model and send joint commands to Isaac Sim via the `/joint_command` topic. 
+
+This component is key the bridge between AICA Core and Isaac Sim as it converts the joint signals from AICA into ROS 2 JointState messages that Isaac Sim can consume:
+
+```yaml
+components:
+  joint_signal_to_joint_state_message:
+    component: aica_core_components::ros::JointSignalToJointStateMsg
+    display_name: Joint Signal To Joint State Message
+    inputs:
+      input: /hardware/robot_state_broadcaster/joint_state
+    outputs:
+      output: /joint_command
+```
+
+
+Validate the application by pressing Play in AICA Studio. You will see the robot moving between 3 waypoints defined in the application
+`wp1`, `wp2`, and `wp3`.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={runningAICA} type="video/webm" />
+  </video>
+</div>
+<br/>
+
+## Interfacing Isaac Sim with AICA Core
+
+Now that both Isaac Sim and AICA Core are set up, you can run the simulation to see the communication in action.
+
+1. **Start AICA Application**: First, ensure that your AICA application is running. You can do this by pressing the `Play` button
+   in AICA Studio. This will start publishing joint commands to the `/joint_command` topic.
+
+2. **Start Isaac Sim**: If all the steps above have been followed correctly, you just need to press the `Play` button in Isaac Sim
+   to start the simulation. The OmniGraph will start executing, and the robot in the scene will begin receiving joint
+   commands from AICA Core.
+
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={integration} type="video/webm" />
+  </video>
+</div>
+<br/>
