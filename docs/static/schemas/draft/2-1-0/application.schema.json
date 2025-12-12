@@ -600,25 +600,25 @@
           "additionalProperties": false,
           "properties": {
             "on_start": {
-              "$ref": "#/$defs/graph/$defs/position"
+              "$ref": "#/$defs/graph_position"
             },
             "stop": {
-              "$ref": "#/$defs/graph/$defs/position"
+              "$ref": "#/$defs/graph_position"
             },
             "buttons": {
-              "$ref": "#/$defs/graph/$defs/position_group"
+              "$ref": "#/$defs/graph_position_group"
             },
             "components": {
-              "$ref": "#/$defs/graph/$defs/position_group"
+              "$ref": "#/$defs/graph_position_group"
             },
             "hardware": {
-              "$ref": "#/$defs/graph/$defs/position_group"
+              "$ref": "#/$defs/graph_position_group"
             },
             "conditions": {
-              "$ref": "#/$defs/graph/$defs/position_group"
+              "$ref": "#/$defs/graph_position_group"
             },
             "sequences": {
-              "$ref": "#/$defs/graph/$defs/position_group"
+              "$ref": "#/$defs/graph_position_group"
             }
           }
         },
@@ -639,47 +639,50 @@
                   "description": "Custom edge path coordinates as x, y pairs",
                   "type": "array",
                   "items": {
-                    "$ref": "#/$defs/graph/$defs/position"
+                    "$ref": "#/$defs/graph_position"
                   }
                 }
               }
             }
           }
         }
-      },
-      "$defs": {
-        "position": {
-          "title": "Position",
-          "description": "The position of the element on the graph",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "x": {
-              "title": "X Position",
-              "description": "The X position of the element on the graph",
-              "type": "number",
-              "multipleOf": 20
-            },
-            "y": {
-              "title": "Y Position",
-              "description": "The Y position of the element on the graph",
-              "type": "number",
-              "multipleOf": 20
-            }
-          },
-          "required": [
-            "x",
-            "y"
-          ]
+      }
+    },
+    "graph_position": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Position",
+      "description": "The position of the element on the graph",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "title": "X Position",
+          "description": "The X position of the element on the graph",
+          "type": "number",
+          "multipleOf": 20
         },
-        "position_group": {
-          "type": "object",
-          "additionalProperties": false,
-          "patternProperties": {
-            "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
-              "$ref": "#/$defs/graph/$defs/position"
-            }
-          }
+        "y": {
+          "title": "Y Position",
+          "description": "The Y position of the element on the graph",
+          "type": "number",
+          "multipleOf": 20
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "graph_position_group": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Positions",
+      "description": "A collection of positions of elements on the graph",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+          "title": "Position",
+          "$ref": "#/$defs/graph_position"
         }
       }
     },
@@ -955,29 +958,26 @@
               "minItems": 1,
               "uniqueItems": true,
               "items": {
-                "$ref": "#/$defs/on_start/$defs/load_on_start"
+                "$ref": "#/$defs/on_start/properties/load/oneOf/1"
               }
             },
             {
-              "$ref": "#/$defs/on_start/$defs/load_on_start"
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Load On Start",
+              "description": "Identifier for a component or hardware interface to load when the application starts",
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/component_identifier"
+                },
+                {
+                  "$ref": "#/$defs/hardware_identifier"
+                }
+              ]
             }
           ]
         },
         "sequence": {
-          "$ref": "#/$defs/sequence_event/$defs/start_a_sequence"
-        }
-      },
-      "$defs": {
-        "load_on_start": {
-          "title": "Load On Start",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/target_interface/$defs/component_identifier"
-            },
-            {
-              "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
-            }
-          ]
+          "$ref": "#/$defs/start_a_sequence"
         }
       }
     },
@@ -1104,6 +1104,64 @@
           ]
         }
       }
+    },
+    "start_a_sequence": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Start A Sequence",
+      "description": "Identifier of a sequence to start",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "description": "Name of the sequence to start",
+          "type": "string",
+          "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+        }
+      },
+      "required": [
+        "start"
+      ]
+    },
+    "sequence_object": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Manage Sequence Object",
+      "description": "Start, restart, or abort a sequence",
+      "type": "object",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/start_a_sequence"
+        },
+        {
+          "title": "Restart A Sequence",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "restart": {
+              "description": "Name of the sequence to restart",
+              "type": "string",
+              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+            }
+          },
+          "required": [
+            "restart"
+          ]
+        },
+        {
+          "title": "Abort A Sequence",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "abort": {
+              "description": "Name of the sequence to abort",
+              "type": "string",
+              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+            }
+          },
+          "required": [
+            "abort"
+          ]
+        }
+      ]
     },
     "variables": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -1493,13 +1551,13 @@
       "description": "Identifier for a component, hardware interface or controller to load or unload",
       "oneOf": [
         {
-          "$ref": "#/$defs/target_interface/$defs/component_identifier"
+          "$ref": "#/$defs/component_identifier"
         },
         {
-          "$ref": "#/$defs/target_interface/$defs/controller_identifier"
+          "$ref": "#/$defs/controller_identifier"
         },
         {
-          "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
+          "$ref": "#/$defs/hardware_identifier"
         }
       ]
     },
@@ -1613,69 +1671,64 @@
       "description": "Identifier for a component, hardware interface or controller to target with an event",
       "oneOf": [
         {
-          "$ref": "#/$defs/target_interface/$defs/component_identifier"
+          "$ref": "#/$defs/component_identifier"
         },
         {
-          "$ref": "#/$defs/target_interface/$defs/controller_identifier"
+          "$ref": "#/$defs/controller_identifier"
         },
         {
-          "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
+          "$ref": "#/$defs/hardware_identifier"
         }
-      ],
-      "$defs": {
-        "component_identifier": {
-          "description": "A component in the application",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "component": {
-              "$ref": "#/$defs/identifier"
-            }
-          },
-          "required": [
-            "component"
-          ]
-        },
-        "controller_identifier": {
-          "description": "A controller associated with a particular hardware interface",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "hardware": {
-              "$ref": "#/$defs/identifier"
-            },
-            "controller": {
-              "$ref": "#/$defs/identifier"
-            }
-          },
-          "required": [
-            "hardware",
-            "controller"
-          ]
-        },
-        "hardware_identifier": {
-          "description": "A hardware interface in the application",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "hardware": {
-              "$ref": "#/$defs/identifier"
-            }
-          },
-          "required": [
-            "hardware"
-          ]
-        }
-      }
+      ]
     },
     "component_identifier": {
-      "$ref": "#/$defs/target_interface/$defs/component_identifier"
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Component Identifier",
+      "description": "A component in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "required": [
+        "component"
+      ]
     },
     "controller_identifier": {
-      "$ref": "#/$defs/target_interface/$defs/controller_identifier"
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Controller Identifier",
+      "description": "A controller associated with a particular hardware interface",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "#/$defs/identifier"
+        },
+        "controller": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "required": [
+        "hardware",
+        "controller"
+      ]
     },
     "hardware_identifier": {
-      "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Hardware Identifier",
+      "description": "A hardware interface in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "required": [
+        "hardware"
+      ]
     },
     "application_event": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -1841,68 +1894,13 @@
           "type": "array",
           "minItems": 1,
           "items": {
-            "$ref": "#/$defs/sequence_event/$defs/sequence_object"
+            "$ref": "#/$defs/sequence_object"
           }
         },
         {
-          "$ref": "#/$defs/sequence_event/$defs/sequence_object"
+          "$ref": "#/$defs/sequence_object"
         }
-      ],
-      "$defs": {
-        "sequence_object": {
-          "title": "ManageSequenceObject",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/sequence_event/$defs/start_a_sequence"
-            },
-            {
-              "title": "Restart A Sequence",
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "restart": {
-                  "description": "Name of the sequence to restart",
-                  "type": "string",
-                  "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
-                }
-              },
-              "required": [
-                "restart"
-              ]
-            },
-            {
-              "title": "Abort A Sequence",
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "abort": {
-                  "description": "Name of the sequence to abort",
-                  "type": "string",
-                  "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
-                }
-              },
-              "required": [
-                "abort"
-              ]
-            }
-          ]
-        },
-        "start_a_sequence": {
-          "title": "Start A Sequence",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "start": {
-              "description": "Name of the sequence to start",
-              "type": "string",
-              "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
-            }
-          },
-          "required": [
-            "start"
-          ]
-        }
-      }
+      ]
     },
     "set_event": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",

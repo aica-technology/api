@@ -955,29 +955,26 @@
               "minItems": 1,
               "uniqueItems": true,
               "items": {
-                "$ref": "#/$defs/on_start/$defs/load_on_start"
+                "$ref": "#/$defs/on_start/properties/load/oneOf/1"
               }
             },
             {
-              "$ref": "#/$defs/on_start/$defs/load_on_start"
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Load On Start",
+              "description": "Identifier for a component or hardware interface to load when the application starts",
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/component_identifier"
+                },
+                {
+                  "$ref": "#/$defs/hardware_identifier"
+                }
+              ]
             }
           ]
         },
         "sequence": {
           "$ref": "#/$defs/sequence_event/$defs/start_a_sequence"
-        }
-      },
-      "$defs": {
-        "load_on_start": {
-          "title": "Load On Start",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/target_interface/$defs/component_identifier"
-            },
-            {
-              "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
-            }
-          ]
         }
       }
     },
@@ -1493,13 +1490,13 @@
       "description": "Identifier for a component, hardware interface or controller to load or unload",
       "oneOf": [
         {
-          "$ref": "#/$defs/target_interface/$defs/component_identifier"
+          "$ref": "#/$defs/component_identifier"
         },
         {
-          "$ref": "#/$defs/target_interface/$defs/controller_identifier"
+          "$ref": "#/$defs/controller_identifier"
         },
         {
-          "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
+          "$ref": "#/$defs/hardware_identifier"
         }
       ]
     },
@@ -1613,69 +1610,64 @@
       "description": "Identifier for a component, hardware interface or controller to target with an event",
       "oneOf": [
         {
-          "$ref": "#/$defs/target_interface/$defs/component_identifier"
+          "$ref": "#/$defs/component_identifier"
         },
         {
-          "$ref": "#/$defs/target_interface/$defs/controller_identifier"
+          "$ref": "#/$defs/controller_identifier"
         },
         {
-          "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
+          "$ref": "#/$defs/hardware_identifier"
         }
-      ],
-      "$defs": {
-        "component_identifier": {
-          "description": "A component in the application",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "component": {
-              "$ref": "#/$defs/identifier"
-            }
-          },
-          "required": [
-            "component"
-          ]
-        },
-        "controller_identifier": {
-          "description": "A controller associated with a particular hardware interface",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "hardware": {
-              "$ref": "#/$defs/identifier"
-            },
-            "controller": {
-              "$ref": "#/$defs/identifier"
-            }
-          },
-          "required": [
-            "hardware",
-            "controller"
-          ]
-        },
-        "hardware_identifier": {
-          "description": "A hardware interface in the application",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "hardware": {
-              "$ref": "#/$defs/identifier"
-            }
-          },
-          "required": [
-            "hardware"
-          ]
-        }
-      }
+      ]
     },
     "component_identifier": {
-      "$ref": "#/$defs/target_interface/$defs/component_identifier"
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Component Identifier",
+      "description": "A component in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "required": [
+        "component"
+      ]
     },
     "controller_identifier": {
-      "$ref": "#/$defs/target_interface/$defs/controller_identifier"
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Controller Identifier",
+      "description": "A controller associated with a particular hardware interface",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "#/$defs/identifier"
+        },
+        "controller": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "required": [
+        "hardware",
+        "controller"
+      ]
     },
     "hardware_identifier": {
-      "$ref": "#/$defs/target_interface/$defs/hardware_identifier"
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Hardware Identifier",
+      "description": "A hardware interface in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hardware": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "required": [
+        "hardware"
+      ]
     },
     "application_event": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",

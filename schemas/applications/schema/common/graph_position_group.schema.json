@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Positions",
+  "description": "A collection of positions of elements on the graph",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^[a-z]([a-z0-9_]?[a-z0-9])*$": {
+      "title": "Position",
+      "$ref": "graph_position.schema.json"
+    }
+  }
+}

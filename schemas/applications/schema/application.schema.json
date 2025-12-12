@@ -110,6 +110,12 @@
     "graph": {
       "$ref": "graph.schema.json"
     },
+    "graph_position": {
+      "$ref": "common/graph_position.schema.json"
+    },
+    "graph_position_group": {
+      "$ref": "common/graph_position_group.schema.json"
+    },
     "hardware": {
       "$ref": "hardware.schema.json"
     },
@@ -121,6 +127,12 @@
     },
     "sequences": {
       "$ref": "sequences.schema.json"
+    },
+    "start_a_sequence": {
+      "$ref": "common/events/start_a_sequence.schema.json"
+    },
+    "sequence_object": {
+      "$ref": "common/events/sequence_object.schema.json"
     },
     "variables": {
       "$ref": "variables.schema.json"
@@ -156,13 +168,13 @@
       "$ref": "common/target_interface.schema.json"
     },
     "component_identifier": {
-      "$ref": "common/target_interface.schema.json#/$defs/component_identifier"
+      "$ref": "common/component_identifier.schema.json"
     },
     "controller_identifier": {
-      "$ref": "common/target_interface.schema.json#/$defs/controller_identifier"
+      "$ref": "common/controller_identifier.schema.json"
     },
     "hardware_identifier": {
-      "$ref": "common/target_interface.schema.json#/$defs/hardware_identifier"
+      "$ref": "common/hardware_identifier.schema.json"
     },
     "application_event": {
       "$ref": "common/events/application.schema.json"

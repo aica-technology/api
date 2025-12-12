@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Start A Sequence",
+  "description": "Identifier of a sequence to start",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "start": {
+      "description": "Name of the sequence to start",
+      "type": "string",
+      "pattern": "^[a-z]([a-z0-9_]?[a-z0-9])*$"
+    }
+  },
+  "required": [
+    "start"
+  ]
+}
