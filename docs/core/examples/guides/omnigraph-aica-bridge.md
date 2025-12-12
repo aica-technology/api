@@ -38,7 +38,9 @@ later**).
 
 Isaac Sim can be installed in several ways depending on your workflow, including workstation installation,
 container-based deployment, or cloud deployment. Choose the installation method that best suits your environment. For
-this guide, we assume that you have installed Isaac Sim locally using the **workstation installation** method.
+this guide, we assume that you have installed Isaac Sim locally using the
+**[workstation installation](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html)**
+method.
 
 Once Isaac Sim is installed, launch it with the ROS 2 bridge enabled and specify **ROS 2 Jazzy** as the active ROS
 distribution. You can do this by running the following command in your terminal:
@@ -52,8 +54,8 @@ cd <path-to-isaac-sim>
   <img src={selector} alt="NVIDIA Isaac Sim App Selector" />
 </div>
 
-This will open the Isaac Sim launcher as shown in the image. In the launcher, select the option in
-`ROS Bridge Extension` to enable the ROS 2 bridge and choose `Jazzy` as `Use Internal ROS2 Libraries`, then click
+This will open the Isaac Sim launcher as shown in the image. In the launcher, select the `isaacsim.ros2.bridge` option
+in `ROS Bridge Extension` to enable the ROS 2 bridge and choose `jazzy` as `Use Internal ROS2 Libraries`, then click
 `Start`.
 
 ## Setting up a simple simulation environment
@@ -68,22 +70,75 @@ will use a basic scene with a ground plane and a AICA's `Generic` robot model.
    add a flat ground surface to the scene.
 
 3. **Add a robot**: To add AICA's `Generic` robot to the scene, first download the Generic Robot USD model from
-   [our repository](https://github.com/aica-technology/isaac-lab/tree/main/usd/robots/universal_robots/ur5e) into a
-   local directory. Then, in Isaac Sim, go to `Content` > `My Computer` in the bottom left part of the screen and
-   navigate to the directory where you saved the UR5e USD file. Drag and drop the `generic.usd` file into the
-   scene to add the robot.
+   [our repository](https://github.com/aica-technology/isaac-lab/tree/main/usd/robots/aica/generic) into a local
+   directory. Then, in Isaac Sim, go to `Content` > `My Computer` in the bottom left part of the screen and navigate to
+   the directory where you saved the Generic Robot USD files. Drag and drop the `generic.usd` file into the scene to add
+   the robot.
 
 Once down with these steps, your scene should look similar to the image below:
 
 <div class="text--center">
-  <img src={scene} alt="Scene with UR5e robot on a ground plane" />
+  <img src={scene} alt="Scene with Generic robot on a ground plane" />
 </div>
 
 ## Setting up the OmniGraph AICA Bridge
 
+### Isaac Sim as a visualization tool for AICA Core
+
 With the simulation environment set up, the next step is to add an action graph to your scene. This graph will handle
 the communication between Isaac Sim and AICA Core using ROS 2.
 
-In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGraph. This will open the OmniGraph editor in a
-new tab in the bottom part of the screen.
+In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGraph. This will open the OmniGraph editor
+in a new tab in the bottom part of the screen.
 
+<div class="text--center">
+  <img alt="Video show casing adding an action graph" />
+</div>
+
+In the OmniGraph editor, you can create nodes and connect them. The following nodes are required to set up the
+communication between Isaac Sim and AICA Core: -1- **ROS 2 Context**: This node initializes the ROS 2 context and allows
+and defines the ROS2 domain ID. In order to set the domain ID, double click on the node to open its properties and set
+the `Domain ID` field to `30`. This domain ID must match the one used by AICA Core to ensure proper communication.
+
+-2- **ROS 2 Joint Subscriber**: This node subscribes to the joint state topic published by AICA Core. Set the
+`Topic Name` field to `/joint_states` to match the topic used by AICA Core for the Generic robot.
+
+-3- **Arcticulation Controller**: This node is responsible for controlling the robot's joints based on the received
+joint states.
+
+-4- **On Playback Tick**: This node triggers the graph execution on each simulation tick.
+
+Now that you have all the necessary nodes, you can connect them as follows:
+
+- Connect the `Context` signal on `ROS 2 Context` node's output to the `Context` signal on the `ROS 2 Joint Subscriber`
+  node's input.
+- Connect the `Joint Names` output of the `ROS 2 Joint Subscriber` node to the `Joint Names` input of the
+  `Articulation Controller` node.
+- Connect the `Joint Positions` output of the `ROS 2 Joint Subscriber` node to the `Target Positions` input of the
+  `Articulation Controller` node.
+- Connect the `Tick` output of the `On Playback Tick` node to the `Exec` input of the `ROS 2 Joint Subscriber` node and
+  the `Exec` input of the `Articulation Controller` node.
+
+Your OmniGraph should look similar to the image below:
+
+<div class="text--center">
+  <img alt="OmniGraph for AICA Bridge Visualization" />
+</div>
+
+### Isaac Sim as a robot controller from AICA Core
+
+## Configuring the AICA Application
+
+Using AICA Launcher, launch a configuration that uses the latest AICA Core version and set the ROS 2 Domain ID to `30`
+to match the one set in Isaac Sim. No extra packages are required for this guide.
+
+A simple AICA application that moves a Generic arm using `Joint Trajectory Controller` can be created using the
+following YAML configuration:
+
+<details>
+  <summary>Simple Joint Trajectory Control Application</summary>
+
+    ```yaml
+    ```
+
+</details>
