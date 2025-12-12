@@ -325,6 +325,9 @@ Validate the application by pressing Play in AICA Studio. You will see the robot
 </div>
 <br/>
 
+Additionally as can be seen in the AICA Studio, the joint commands are retrieved from the current robot state and that's exactly 
+why this approach is for visualization purposes only. The state of the robot in Isaac Sim is not fed back to AICA Core.
+
 ## Interfacing Isaac Sim with AICA Core
 
 Now that both Isaac Sim and AICA Core are set up, you can run the simulation to see the communication in action.
