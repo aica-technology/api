@@ -6,48 +6,55 @@ title: Interface with Isaac Sim using OmniGraph and ROS 2
 import selector from './assets/omnigraph-aica-bridge-selector.png'; 
 import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm'; 
 import graph from './assets/omnigraph-aica-bridge-graph.png'; 
-import addingGraph from './assets/omnigraph-aica-bridge-add-graph.webm';
+import addingGraph from './assets/omnigraph-aica-bridge-add-graph.webm'; 
 import runningAICA from './assets/omnigraph-aica-bridge-aica-app.webm';
 import integration from './assets/omnigraph-aica-bridge-integration.webm';
 
 # Interface with Isaac Sim using OmniGraph and ROS 2
 
-This guide will walk you through the steps required to set up **NVIDIA Isaac Sim** to interface with **AICA Core** using
-**OmniGraph** and **ROS 2**. By the end of this guide, you will have a basic simulation environment in Isaac Sim that
-communicates with AICA Core via ROS 2.
+This guide walks you through the steps required to set up **NVIDIA Isaac Sim** so it can interface with **AICA Core**
+using **OmniGraph** and **ROS 2**. By the end of this tutorial, you’ll have a working simulation environment in Isaac
+Sim that communicates with AICA Core over ROS 2.
 
-Isaac Sim is a powerful robotics simulation platform built on NVIDIA Omniverse, providing high-fidelity physics
-simulation and photorealistic rendering. Isaac Sim can be extended using OmniGraph, a graph-based visual programming
-system that allows users to create custom simulation behaviors and interactions without writing code. That Omnigraph
-capability is leveraged in this guide to create a bridge between Isaac Sim and AICA Core using ROS 2.
+**NVIDIA Isaac Sim** is a high-fidelity robotics simulator built on NVIDIA Omniverse. It provides realistic physics,
+multi-sensor support, and RTX-based rendering, making it ideal for developing, testing, and validating robot software
+before deploying to real hardware.
 
-This interface can be used in two distinct ways:
+To connect Isaac Sim with AICA Core, we will use the **ROS 2 Bridge**, an extension that lets Isaac Sim publish and
+subscribe to ROS 2 topics and services. Through this bridge, we can exchange robot state, control commands, sensor data,
+and more between the simulator and your ROS 2-based stack.
 
--1- **Control robots in Isaac Sim from AICA Core**: You can send commands from AICA Core to control the robot in Isaac
-Sim and feedback the robot's state back from Isaac Sim to AICA Core. From AICA's perspective, the robot in Isaac Sim
-behaves like a real robot. This is useful for testing and validating robot control algorithms in a simulated environment
-before deploying them to real hardware.
+**OmniGraph** is a visual, node-based programming system integrated into Isaac Sim. It lets you assemble logic and data
+flows, called _Action Graphs_, by connecting pre-built nodes. OmniGraph can include ROS 2 Bridge nodes, enabling
+communication between Isaac Sim and ROS 2 without writing code.
 
--2- **Visualize Robots in Isaac Sim from AICA Core:** Isaac Sim can be used as a visualization tool for robots
-controlled by AICA Core. In this setup, the robot inside Isaac Sim mirrors the real robot’s state and behavior. This
-allows you to visualize production line operations or robot movements in a virtual environment, providing a real-time
-view of what the robots are doing on the factory floor.
+This interface supports two primary workflows:
+
+1. **Control robots in Isaac Sim from AICA Core:** In this mode, AICA Core sends motion commands and control inputs to
+   the simulated robot via ROS 2, and Isaac Sim returns robot state and sensor feedback. From AICA’s point of view, the
+   robot in Isaac Sim behaves just like real hardware, which is ideal for validating control algorithms before deploying
+   them to physical robots.
+
+2. **Visualize robots in Isaac Sim from AICA Core:** Here, the robot is controlled by AICA Core (e.g., in a production
+   environment), and Isaac Sim mirrors the robot’s real-world pose and joint states for visualization. This setup
+   provides a live, virtual view of what the robot is doing on the factory floor, helping with monitoring, debugging,
+   and demonstration.
 
 ## Prerequisites
 
-Begin by installing Isaac Sim following the official
-[installation instructions](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/index.html). AICA Core runs
-on **ROS 2 Jazzy**, so make sure you install a version of Isaac Sim that supports this distribution (Isaac Sim **v5.0 or
-later**).
+Begin by installing Isaac Sim using the official
+[installation instructions](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/index.html).  
+AICA Core runs on **ROS 2 Jazzy**, so be sure to install a version of Isaac Sim that supports this distribution (**Isaac
+Sim v5.0 or later**).
 
-Isaac Sim can be installed in several ways depending on your workflow, including workstation installation,
-container-based deployment, or cloud deployment. Choose the installation method that best suits your environment. For
-this guide, we assume that you have installed Isaac Sim locally using the
+Isaac Sim supports multiple installation options, including workstation installation, container-based deployment, and
+cloud deployment. Choose the method that best fits your workflow.  
+For this guide, we assume you have installed Isaac Sim locally using the
 **[workstation installation](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html)**
 method.
 
-Once Isaac Sim is installed, launch it with the ROS 2 bridge enabled and specify **ROS 2 Jazzy** as the active ROS
-distribution. You can do this by running the following command in your terminal:
+After installation, launch Isaac Sim with the ROS 2 bridge enabled and set **ROS 2 Jazzy** as the active ROS
+distribution. To do this, run the following command:
 
 ```bash
 cd <path-to-isaac-sim>
@@ -58,9 +65,11 @@ cd <path-to-isaac-sim>
   <img src={selector} alt="NVIDIA Isaac Sim App Selector" />
 </div>
 
-This will open the Isaac Sim launcher as shown in the image. In the launcher, select the `isaacsim.ros2.bridge` option
-in `ROS Bridge Extension` to enable the ROS 2 bridge and choose `jazzy` as `Use Internal ROS2 Libraries`, then click
-`Start`.
+This command opens the Isaac Sim launcher. In the launcher:
+
+- Set ROS Bridge Extension to `isaacsim.ros2.bridge`
+- Set Use Internal ROS2 Libraries to `jazzy`
+- Click Start
 
 ## Setting up a simple simulation environment
 
@@ -87,6 +96,7 @@ Once down with these steps, your scene should look similar to the image below:
   </video>
 </div>
 <br/>
+
 ## Setting up the OmniGraph AICA Bridge
 
 ### Isaac Sim as a visualization tool for AICA Core
