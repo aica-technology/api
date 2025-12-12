@@ -105,7 +105,9 @@ in a new tab in the bottom part of the screen.
 <br/>
 
 In the OmniGraph editor, you can create nodes and connect them. The following nodes are required to set up the
-communication between Isaac Sim and AICA Core: -1- **ROS 2 Context**: This node initializes the ROS 2 context and allows
+communication between Isaac Sim and AICA Core: 
+
+-1- **ROS 2 Context**: This node initializes the ROS 2 context and allows
 and defines the ROS2 domain ID. In order to set the domain ID, double click on the node to open its properties and set
 the `Domain ID` field to `30`. This domain ID must match the one used by AICA Core to ensure proper communication.
 
@@ -113,7 +115,7 @@ the `Domain ID` field to `30`. This domain ID must match the one used by AICA Co
 `Topic Name` field to `/joint_command` to match the topic used by AICA Core for the Generic robot.
 
 -3- **Arcticulation Controller**: This node is responsible for controlling the robot's joints based on the received
-joint states.
+joint states. Select the Generic robot in the scene as the `Articulation` for this node.
 
 -4- **On Playback Tick**: This node triggers the graph execution on each simulation tick.
 
@@ -133,8 +135,6 @@ Your OmniGraph should look similar to the image below:
 <div class="text--center">
   <img src={graph} style={{ width: "70%", height: "auto" }} alt="OmniGraph for AICA Bridge Visualization" />
 </div>
-
-### Isaac Sim as a robot controller from AICA Core
 
 ## Configuring the AICA Application
 
