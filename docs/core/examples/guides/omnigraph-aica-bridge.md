@@ -20,9 +20,9 @@ Sim that communicates with AICA Core over ROS 2.
 multi-sensor support, and RTX-based rendering, making it ideal for developing, testing, and validating robot software
 before deploying to real hardware.
 
-To connect Isaac Sim with AICA Core, we will use the **ROS 2 Bridge**, an extension that lets Isaac Sim publish and
+To connect Isaac Sim with AICA Core, we will use **ROS 2 Bridge**, an extension that lets Isaac Sim publish and
 subscribe to ROS 2 topics and services. Through this bridge, we can exchange robot state, control commands, sensor data,
-and more between the simulator and your ROS 2-based stack.
+and more between the simulator and AICA Core.
 
 **OmniGraph** is a visual, node-based programming system integrated into Isaac Sim. It lets you assemble logic and data
 flows, called _Action Graphs_, by connecting pre-built nodes. OmniGraph can include ROS 2 Bridge nodes, enabling
