@@ -48,7 +48,7 @@ Begin by installing Isaac Sim using the official
 [installation instructions](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/index.html). For AICA Core v5,
 ensure you have Isaac Sim v5 or later.
 
-Isaac Sim supports multiple installation options, including workstation installation, container-based deployment, and
+Isaac Sim supports multiple installation options, including workstation installation, container-based and
 cloud deployment. Choose the method that best fits your workflow. For this guide, we assume you have installed Isaac Sim
 locally using the
 [workstation installation](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html)
@@ -122,10 +122,10 @@ communication between Isaac Sim and AICA Studio:
 the domain ID, double click on the node to open its properties and set the `Domain ID` field to `30`. This domain ID
 must match the one used by AICA Studio to ensure proper communication.
 
--2- **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA STudio. Set the
+-2- **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA Studio. Set the
 `Topic Name` field to `/joint_command` to match the topic used by AICA Studio for the Generic robot.
 
--3- **Arcticulation Controller**: This node is responsible for controlling the robot's joints based on the received
+-3- **Articulation Controller**: This node is responsible for controlling the robot's joints based on the received
 joint states. Select the Generic robot in the scene as the `Articulation` for this node.
 
 -4- **On Playback Tick**: This node triggers the graph execution on each simulation tick.
@@ -300,7 +300,7 @@ following:
 </details>
 
 
-Copy the above YAML content into a `New Application` in AICA StudIo and save it. This application will use the Generic
+Copy the above YAML content into a `New Application` in AICA Studio and save it. This application will use the Generic
 robot model and send joint commands to Isaac Sim via the `/joint_command` topic.
 
 This component is key the bridge between AICA Studio and Isaac Sim as it converts the joint signals from AICA into ROS 2
@@ -336,7 +336,7 @@ AICA Studio.
 Now that both Isaac Sim and AICA Studio are set up, you can run the simulation to see the communication in action.
 
 1. **Start AICA Application**: First, ensure that your AICA application is running. You can do this by pressing the
-   `Play` button in AICA Studio. This will start publishing joint commands to the `/joint_command` topic.
+   `Start` button in AICA Studio. This will start publishing joint commands to the `/joint_command` topic.
 
 2. **Start Isaac Sim**: If all the steps above have been followed correctly, you just need to press the `Play` button in
    Isaac Sim to start the simulation. The OmniGraph will start executing, and the robot in the scene will begin
