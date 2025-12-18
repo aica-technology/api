@@ -30,15 +30,17 @@ communication between Isaac Sim and ROS 2 without writing code.
 
 This interface can be used in two main ways:
 
-1. **Control robots in Isaac Sim from AICA Core:** In this mode, AICA Core sends motion commands and control inputs to
-   the simulated robot via ROS 2, and Isaac Sim returns robot state and sensor feedback. From AICA’s point of view, the
-   robot in Isaac Sim behaves just like real hardware, which is ideal for validating control algorithms before deploying
-   them to physical robots.
+1. **Control a simulated robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio 
+  controls a virtual robot hosted in Isaac Sim. The AICA application sends control inputs via ROS 2, and Isaac Sim feeds back 
+  the robot state and sensor data (e.g., joint states, poses, perception). From the AICA application’s point of view, the
+  simulated robot behaves like real hardware, making this setup well suited for validating and debugging control algorithms 
+  before deploying them to a physical robot.
 
-2. **Visualize robots in Isaac Sim from AICA Core:** Here, the robot is controlled by AICA Core (e.g., in a production
-   environment), and Isaac Sim mirrors the robot’s real-world pose and joint states for visualization. This setup
-   provides a live, virtual view of what the robot is doing on the factory floor, helping with monitoring, debugging,
-   and demonstration.
+2. **Visualize a robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio controls
+  a robot that is not in Isaac Sim (e.g., in a production environment, AICA's mock interface, URSim, ...). The robot’s state 
+  (such as joint positions) is streamed to Isaac Sim, which mirrors the robot’s motion in a virtual scene. Isaac Sim 
+  is used purely for visualization and does not participate in the control loop. This provides a live digital view of 
+  the robot for monitoring, debugging, and demonstration purposes.
 
 ## Prerequisites
 
