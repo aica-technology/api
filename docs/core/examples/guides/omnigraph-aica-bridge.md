@@ -12,17 +12,17 @@ import integration from './assets/omnigraph-aica-bridge-integration.webm';
 
 # Interface with Isaac Sim using OmniGraph and ROS 2
 
-This guide walks you through the steps required to set up **NVIDIA Isaac Sim** so it can interface with **AICA Core**
+This guide walks you through the steps required to set up **NVIDIA Isaac Sim** so it can interface with **AICA Studio**
 using **OmniGraph** and **ROS 2**. By the end of this tutorial, you’ll have a working simulation environment in Isaac
-Sim that communicates with AICA Core over ROS 2.
+Sim that communicates with AICA Studio over ROS 2.
 
 **NVIDIA Isaac Sim** is a high-fidelity robotics simulator built on NVIDIA Omniverse. It provides realistic physics,
 multi-sensor support, and RTX-based rendering, making it ideal for developing, testing, and validating robot software
 before deploying to real hardware.
 
-To connect Isaac Sim with AICA Core, we will use **ROS 2 Bridge**, an extension that lets Isaac Sim publish and
+To connect Isaac Sim with AICA Studio, we will use **ROS 2 Bridge**, an extension that lets Isaac Sim publish and
 subscribe to ROS 2 topics and services. Through this bridge, we can exchange robot state, control commands, sensor data,
-and more between the simulator and AICA Core.
+and more between the simulator and AICA Studio.
 
 **OmniGraph** is a visual, node-based programming system integrated into Isaac Sim. It lets you assemble logic and data
 flows, called _Action Graphs_, by connecting pre-built nodes. OmniGraph can include ROS 2 Bridge nodes, enabling
@@ -45,14 +45,13 @@ This interface can be used in two main ways:
 ## Prerequisites
 
 Begin by installing Isaac Sim using the official
-[installation instructions](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/index.html). AICA Core runs
-on **ROS 2 Jazzy**, so be sure to install a version of Isaac Sim that supports this distribution (**Isaac Sim v5.0 or
-later**).
+[installation instructions](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/index.html). For AICA Core v5,
+ensure you have Isaac Sim v5 or later.
 
 Isaac Sim supports multiple installation options, including workstation installation, container-based deployment, and
 cloud deployment. Choose the method that best fits your workflow. For this guide, we assume you have installed Isaac Sim
 locally using the
-**[workstation installation](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html)**
+[workstation installation](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_workstation.html)
 method.
 
 After installation, launch Isaac Sim with the ROS 2 bridge enabled and set **ROS 2 Jazzy** as the active ROS
@@ -101,10 +100,10 @@ Once down with these steps, your scene should look similar to the one below:
 
 ## Setting up the OmniGraph AICA Bridge
 
-### Isaac Sim as a visualization tool for AICA Core
+### Isaac Sim as a visualization tool for AICA Studio
 
 With the simulation environment set up, the next step is to add an action graph to your scene. This graph will handle
-the communication between Isaac Sim and AICA Core using ROS 2.
+the communication between Isaac Sim and AICA Studio using ROS 2.
 
 In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGraph. This will open the OmniGraph editor
 in a new tab in the bottom part of the screen.
@@ -117,14 +116,14 @@ in a new tab in the bottom part of the screen.
 <br/>
 
 In the OmniGraph editor, you can create nodes and connect them. The following nodes are required to set up the
-communication between Isaac Sim and AICA Core:
+communication between Isaac Sim and AICA Studio:
 
 -1- **ROS2 Context**: This node initializes the ROS 2 context and allows and defines the ROS2 domain ID. In order to set
 the domain ID, double click on the node to open its properties and set the `Domain ID` field to `30`. This domain ID
-must match the one used by AICA Core to ensure proper communication.
+must match the one used by AICA Studio to ensure proper communication.
 
--2- **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA Core. Set the
-`Topic Name` field to `/joint_command` to match the topic used by AICA Core for the Generic robot.
+-2- **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA STudio. Set the
+`Topic Name` field to `/joint_command` to match the topic used by AICA Studio for the Generic robot.
 
 -3- **Arcticulation Controller**: This node is responsible for controlling the robot's joints based on the received
 joint states. Select the Generic robot in the scene as the `Articulation` for this node.
@@ -150,7 +149,7 @@ Your OmniGraph should look similar to the image below:
 
 ## Configuring the AICA Application
 
-Using AICA Launcher, launch a configuration that uses the latest AICA Core version and set the ROS 2 Domain ID to `30`
+Using AICA Launcher, launch a configuration that uses the latest AICA Studio version and set the ROS 2 Domain ID to `30`
 to match the one set in Isaac Sim. No extra packages are required for this guide.
 
 A simple AICA application that moves a Generic arm using `Joint Trajectory Controller` can be created using the
@@ -304,7 +303,7 @@ following:
 Copy the above YAML content into a `New Application` in AICA StudIo and save it. This application will use the Generic
 robot model and send joint commands to Isaac Sim via the `/joint_command` topic.
 
-This component is key the bridge between AICA Core and Isaac Sim as it converts the joint signals from AICA into ROS 2
+This component is key the bridge between AICA Studio and Isaac Sim as it converts the joint signals from AICA into ROS 2
 JointState messages that Isaac Sim can consume:
 
 ```yaml
@@ -330,18 +329,18 @@ the application `wp1`, `wp2`, and `wp3`.
 
 Additionally as can be seen in the AICA Studio, the joint commands are retrieved from the current robot state and that's
 exactly why this approach is for visualization purposes only. The state of the robot in Isaac Sim is not fed back to
-AICA Core.
+AICA Studio.
 
-## Interfacing Isaac Sim with AICA Core
+## Interfacing Isaac Sim with AICA Studio
 
-Now that both Isaac Sim and AICA Core are set up, you can run the simulation to see the communication in action.
+Now that both Isaac Sim and AICA Studio are set up, you can run the simulation to see the communication in action.
 
 1. **Start AICA Application**: First, ensure that your AICA application is running. You can do this by pressing the
    `Play` button in AICA Studio. This will start publishing joint commands to the `/joint_command` topic.
 
 2. **Start Isaac Sim**: If all the steps above have been followed correctly, you just need to press the `Play` button in
    Isaac Sim to start the simulation. The OmniGraph will start executing, and the robot in the scene will begin
-   receiving joint commands from AICA Core.
+   receiving joint commands from AICA Studio.
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
