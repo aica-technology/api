@@ -300,7 +300,7 @@ following:
 </details>
 
 
-Copy the above YAML content into a `New Application` in AICA Studio and save it. This application will use the Generic
+Copy the above YAML content into a **New Application** in AICA Studio and save it. This application will use the Generic
 robot model and send joint commands to Isaac Sim via the `/joint_command` topic.
 
 This component is key the bridge between AICA Studio and Isaac Sim as it converts the joint signals from AICA into ROS 2
