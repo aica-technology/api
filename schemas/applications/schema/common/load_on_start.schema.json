@@ -1,13 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Load / Unload Target",
-  "description": "Identifier for a component, hardware interface or controller to load or unload",
+  "title": "Load On Start",
+  "description": "Identifier for a component or hardware interface to load when the application starts",
   "oneOf": [
     {
       "$ref": "component_identifier.schema.json"
-    },
-    {
-      "$ref": "controller_identifier.schema.json"
     },
     {
       "$ref": "hardware_identifier.schema.json"
