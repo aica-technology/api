@@ -24,10 +24,6 @@
   --docusaurus-highlighted-code-line-bg: var(--ifm-text-accent-color);
 }
 
-.footer {
-  background-color: #0F0F14;
-}
-
 [data-theme='dark'] .footer {
   background-color: #0F0F14;
 }

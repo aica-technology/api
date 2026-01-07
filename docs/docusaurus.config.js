@@ -129,10 +129,9 @@ const config = {
         ],
       },
       footer: {
-        style: "dark",
         logo: {
           alt: "AICA Logo",
-          src: "img/logo_dark.svg",
+          src: "img/logo.svg",
           srcDark: "img/logo_dark.svg",
           width: 42,
           height: 42,
