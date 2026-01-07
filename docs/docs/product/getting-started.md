@@ -1,5 +1,5 @@
 ---
-title: Getting started
+title: Getting Started
 ---
 
 import SystemOverview from './getting-started/assets/system-overview-embedded.svg';

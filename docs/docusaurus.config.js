@@ -142,15 +142,15 @@ const config = {
             items: [
               {
                 label: "Getting Started",
-                href: "/docs/product/getting-started/intro",
+                href: "/docs/product/getting-started",
               },
               {
                 label: "Concepts",
-                href: "/docs/category/ros-2-concepts",
+                href: "/docs/product/concepts",
               },
               {
                 label: "Programming Reference",
-                href: "/docs/product/reference/intro",
+                href: "/docs/product/reference",
               },
               {
                 label: "More Resources",
