@@ -89,7 +89,7 @@ const config = {
           srcDark: "img/aica-logo-white-square-small.svg",
           width: 22,
           height: 22,
-          href: "docs/product/getting-started/intro",
+          href: "docs/product/getting-started",
         },
         items: [
           // TODO: need to apply to DocSearch https://docusaurus.io/docs/search
