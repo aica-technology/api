@@ -154,7 +154,7 @@ const config = {
               },
               {
                 label: "More Resources",
-                href: "/docs/product/Help/resources",
+                href: "/help",
               },
               {
                 label: "FAQ",
