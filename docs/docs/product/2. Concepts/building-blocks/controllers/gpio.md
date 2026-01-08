@@ -1,85 +1,98 @@
 ---
 sidebar_position: 1
-title: General Purpose Input/Output Controller
+title: General Purpose Input/Output Controllers
 ---
 
-# General Purpose Input/Output (GPIO) Controller
+# General Purpose Input/Output (GPIO) Controllers
 
-A **General Purpose Input/Output (GPIO) Controller** provides a standardized way to **read from and write to digital
-I/O signals** exposed by a robot or device. These signals are typically used to interact with external hardware such as
-grippers, sensors, indicators, safety devices, or auxiliary tooling.
+**General Purpose Input/Output (GPIO) Controllers** provide a standardized way to interact with **digital I/O signals**
+exposed by a robot or device. These signals are commonly used to control or monitor external hardware such as grippers,
+sensors, indicators, safety devices, or auxiliary tooling.
 
-Unlike motion controllers, a GPIO controller does not command joints or Cartesian motion. Instead, it operates on
-discrete input and output signals that represent **binary or small-range state** at the hardware level.
-
-:::info
-
-In the AICA framework, we assume GPIOs are used to set and broadcast binary information.
-
-:::
-
-In ROS 2-based robotic systems, GPIO interfaces are commonly described directly in the robot model and accessed through
-well-defined control interfaces.
+GPIO controllers operate on discrete input and output signals, providing dedicated handling of digital I/O. This
+specialization differentiates them from motion-oriented controllers and keeps GPIO interaction simple,
+deterministic, and easy to integrate into higher-level application logic.
 
 ---
 
 ## Overview
 
-A GPIO controller allows users to:
+GPIO controllers enable applications to:
 
-- **Set output values** (e.g., enable a tool, open or close a gripper, toggle a relay)
-- **Read input values** (e.g., detect sensor states, limit switches, or digital feedback)
-- **Interact with external devices** in a deterministic and low-latency manner
+- **Read GPIO state** (e.g., sensor feedback, limit switches)
+- **Command GPIO outputs** (e.g., enable a tool, toggle a relay)
+- **Interact with external devices** with low latency and predictable behavior
 
-The controller acts as a bridge between higher-level application logic and the robot's digital I/O capabilities,
-ensuring that GPIO access is consistent, discoverable, and integrated into the overall control architecture.
+Within the AICA framework, GPIO functionality can be handled by controllers that also perform motion control. In
+addition, AICA provides **generic GPIO-only controllers** for cases where digital I/O needs to be managed
+independently, such as external devices or sensors without associated motion.
 
----
+These generic controllers are specialized for a single responsibility:
 
-## GPIOs in Robot Models
-
-In ROS 2, GPIOs are typically declared in the robot's **URDF** using dedicated GPIO tags. These tags describe:
-
-- The name and direction of each GPIO (input or output)
-- Its association with the robot or a specific component
-- The interface through which it can be accessed
-
-By relying on the robot description, a GPIO controller can automatically discover available digital signals and expose
-them in a uniform way, without requiring hard-coded assumptions about the underlying hardware.
+- **Broadcasting controllers** expose GPIO state to the rest of the system
+- **Output controllers** command GPIO values on the hardware
 
 ---
 
-## Using it in AICA Core
+## GPIOs in robot models
 
-In a ROS 2 control setup, a GPIO controller typically operates on **GPIO interfaces defined in the URDF** and exposed by
-the underlying hardware interface. Applications can then read or set GPIO values through standard ROS 2 communication
-mechanisms, without direct access to low-level drivers.
+In ROS 2, GPIOs are declared in the robot's **URDF** using dedicated GPIO tags. These tags define:
 
-Two GPIO controllers are bundled in AICA Core by default: a GPIO Broadcaster and a GPIO Output.
+- The GPIO name and direction (input or output)
+- Its association with a robot or subcomponent
+- The command or state interface used to access it
 
-### GPIO Broadcaster controller
+By relying on the robot description, (GPIO) controllers can automatically discover available digital signals and expose
+them consistently, without hard-coded assumptions about the underlying hardware.
 
-The controller requires 2 parameters to be set, as per the definition of GPIOs in ROS 2-compatible URDFs:
+---
+
+## Using GPIO controllers in AICA Core
+
+In a ROS 2 control setup, and by extension in AICA Core, GPIO controllers operate on **GPIO interfaces defined in the
+URDF** and exposed by the underlying hardware interface.
+
+Two GPIO controllers are bundled by default, each aligned with a specific GPIO role:
+
+- **GPIO Broadcaster Controller** – reads and publishes GPIO state
+- **GPIO Output Controller** – commands GPIO output values
+
+Applications interact with these controllers through standard ROS 2 communication mechanisms, without direct access to
+low-level drivers.
+
+---
+
+## GPIO Broadcaster Controller
+
+The GPIO Broadcaster Controller is responsible for **observing GPIO state** and making it available to the rest of the
+system.
+
+It requires two parameters, as defined by ROS 2-compatible URDF GPIO declarations:
 
 - GPIO group name
 - State interface
 
-This information is then adequate for the controller to retrieve the interface's state and publish 2 predicates:
+Using this information, the controller retrieves the GPIO state and publishes the following predicates:
 
 - `is_high`
 - `is_low`
 
-that reflect what was retrieved.
+These predicates reflect the current value of the GPIO and can be consumed by higher-level logic or decision-making
+components.
 
-### GPIO Output controller
+---
 
-Similarly to the broadcaster, the controller requires the following 2 parameters to be set:
+## GPIO Output Controller
+
+The GPIO Output Controller is responsible for **commanding GPIO values** on the hardware.
+
+It requires the following parameters:
 
 - GPIO group name
 - Command interface
 
-An additional, 3rd, parameter is used to determine the value that will be written to the interface, namely:
+An additional parameter specifies the value written to the interface:
 
-- Command
+- `command`
 
-and can be dynamically set at runtime to trigger the desired behavior.
+This parameter can be dynamically updated at runtime to trigger the desired hardware behavior.
