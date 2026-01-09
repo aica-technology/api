@@ -29,7 +29,7 @@ independently, such as external devices or sensors without associated motion.
 
 These generic controllers are specialized for a single responsibility:
 
-- **Broadcasting controllers** expose a state to the rest of the system
+- **Broadcasting controllers** expose states to the rest of the system
 - **Output controllers** command values on the hardware
 
 ---
