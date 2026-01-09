@@ -29,8 +29,8 @@ independently, such as external devices or sensors without associated motion.
 
 These generic controllers are specialized for a single responsibility:
 
-- **Broadcasting controllers** expose GPIO state to the rest of the system
-- **Output controllers** command GPIO values on the hardware
+- **Broadcasting controllers** expose a state to the rest of the system
+- **Output controllers** command values on the hardware
 
 ---
 
@@ -54,8 +54,8 @@ URDF** and exposed by the underlying hardware interface.
 
 Two GPIO controllers are bundled by default, each aligned with a specific GPIO role:
 
-- **GPIO Broadcaster Controller** – reads and publishes GPIO state
-- **GPIO Output Controller** – commands GPIO output values
+- **GPIO Broadcaster Controller** – reads and publishes an output state
+- **GPIO Output Controller** – sets an input value
 
 Applications interact with these controllers through standard ROS 2 communication mechanisms, without direct access to
 low-level drivers.
