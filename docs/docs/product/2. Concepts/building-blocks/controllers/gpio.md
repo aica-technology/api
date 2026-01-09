@@ -9,7 +9,7 @@ title: General Purpose Input/Output Controllers
 exposed by a robot or device. These signals are commonly used to control or monitor external hardware such as grippers,
 sensors, indicators, safety devices, or auxiliary tooling.
 
-GPIO controllers operate on discrete input and output signals, providing dedicated handling of digital I/O. This
+GPIO controllers operate on discrete input and output signals, providing dedicated handling of digital I/Os. This
 specialization differentiates them from motion-oriented controllers and keeps GPIO interaction simple,
 deterministic, and easy to integrate into higher-level application logic.
 
@@ -24,7 +24,7 @@ GPIO controllers enable applications to:
 - **Interact with external devices** with low latency and predictable behavior
 
 Within the AICA framework, GPIO functionality can be handled by controllers that also perform motion control. In
-addition, AICA provides **generic GPIO-only controllers** for cases where digital I/O needs to be managed
+addition, AICA provides **generic GPIO-only controllers** for cases where a digital I/O needs to be managed
 independently, such as external devices or sensors without associated motion.
 
 These generic controllers are specialized for a single responsibility:
