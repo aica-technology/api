@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: General Purpose Input/Output Controllers
+title: GPIO Controllers
 ---
 
 # General Purpose Input/Output (GPIO) Controllers
@@ -42,8 +42,17 @@ In ROS 2, GPIOs are declared in the robot's **URDF** using dedicated GPIO tags. 
 - Its association with a robot or subcomponent
 - The command or state interface used to access it
 
-By relying on the robot description, (GPIO) controllers can automatically discover available digital signals and expose
+By relying on the robot description, GPIO controllers can automatically discover available digital signals and expose
 them consistently, without hard-coded assumptions about the underlying hardware.
+
+:::info
+
+Some specialized controllers (e.g., for Universal Robot arms) may do motion control and expose I/Os in a single
+controller. You may always refer to the **Help** tab in AICA Studio to determine whether a controller is already
+claiming a GPIO for input or output, or whether you will need a standalone GPIO controller as described in the
+following section.
+
+:::
 
 ---
 
