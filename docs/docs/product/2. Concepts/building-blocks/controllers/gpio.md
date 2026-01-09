@@ -64,8 +64,8 @@ low-level drivers.
 
 ## GPIO Broadcaster Controller
 
-The GPIO Broadcaster Controller is responsible for **observing GPIO state** and making it available to the rest of the
-system.
+The GPIO Broadcaster Controller is responsible for **observing a digital output state** and making it available to the
+rest of the system.
 
 It requires two parameters, as defined by ROS 2-compatible URDF GPIO declarations:
 
@@ -84,7 +84,7 @@ components.
 
 ## GPIO Output Controller
 
-The GPIO Output Controller is responsible for **commanding GPIO values** on the hardware.
+The GPIO Output Controller is responsible for **commanding a digital input value** on the hardware.
 
 It requires the following parameters:
 
