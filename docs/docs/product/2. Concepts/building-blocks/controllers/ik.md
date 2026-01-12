@@ -1,9 +1,9 @@
 ---
 sidebar_position: 1
-title: Inverse Kinematic Controllers
+title: Inverse Kinematics
 ---
 
-# Inverse Kinematic (IK) controllers
+# Inverse Kinematics (IK) controllers
 
 IK controllers operate in **task space**, allowing users to specify desired end-effector poses or motions, while the
 controller computes the corresponding joint commands internally. This enables intuitive Cartesian control and
@@ -11,8 +11,6 @@ coordinated multi-joint motion without requiring direct manipulation of individu
 
 Depending on how the desired motion is expressed, IK controllers can be broadly categorized into **position-based**
 and **velocity-based** controllers.
-
----
 
 ## Inverse kinematics position controller
 
@@ -30,16 +28,18 @@ through an iterative process. This makes IK position control suitable for goal-d
 
 Compared to joint-space position controllers, an IK position controller offers several advantages:
 
-- **Direct Cartesian goal specification**
+- **Direct Cartesian goal specification:**
   Targets are expressed as end-effector poses (e.g., "move the tool to this pose"), which is often more intuitive than
   specifying joint angles.
-
-- **Automatic joint coordination**
+- **Automatic joint coordination:**
   All joints are adjusted together to achieve the desired pose, ensuring consistent and coordinated motion.
-
-- **Reactive behavior**
+- **Reactive behavior:**
   The controller continuously recomputes joint commands, allowing it to respond to disturbances or changes in the
   target pose.
+
+In reactive or high-rate scenarios, IK position control can be harder to apply reliably, as valid solutions may not
+always exist due to singularities or constraints. See more information in
+[Position vs velocity IK control](/docs/product/Concepts/building-blocks/controllers/ik#position-vs-velocity-ik-control).
 
 ### Typical use cases
 
@@ -49,8 +49,6 @@ IK position control is well suited for:
 - Pick-and-place tasks
 - Pose-based alignment or docking
 - Interactive goal specification in Cartesian space
-
----
 
 ## Inverse kinematics velocity controller
 
@@ -69,18 +67,15 @@ interaction-driven tasks.
 
 Compared to joint-level velocity or position controllers, an IK velocity controller offers several key advantages:
 
-- **Task-space control**
+- **Task-space control:**
   Motion is specified directly in Cartesian space (e.g., "move the end effector forward at 5 cm/s"), which is often more
   intuitive and meaningful than joint commands.
-
-- **Continuous motion generation**
+- **Continuous motion generation:**
   Commands are generated at each control cycle, allowing smooth adaptation to changes in goals, sensor feedback, or
   external disturbances.
-
-- **High responsiveness**
+- **High responsiveness:**
   Since there is no fixed trajectory to follow, the controller can immediately react to new commands or constraints.
-
-- **Coordinated joint motion**
+- **Coordinated joint motion:**
   Joint velocities are computed jointly to satisfy the task-space objective, ensuring coherent motion across all joints
   in the kinematic chain.
 
@@ -92,8 +87,6 @@ IK velocity control is particularly well suited for:
 - Teleoperation and joystick-based control
 - Interaction and compliance tasks
 - Online motion correction or refinement
-
----
 
 ## Position vs velocity IK control
 
@@ -115,8 +108,6 @@ velocity controllers with motion generators that produce desired Cartesian twist
 [Motion generation](/docs/product/concepts/robotics-concepts/motion-generation) page). This allows pose-driven behavior
 to be expressed as smooth, continuous velocity commands, while retaining the robustness, responsiveness, and stability
 properties of velocity-based IK control.
-
----
 
 ## Using it in AICA Core
 
