@@ -16,18 +16,18 @@ A typical hardware interface provides the following capabilities:
 - Ensuring real-time safe data exchange
 
 All AICA hardware interfaces follow the
-[`ros2_control`](/docs/product/Concepts/ros-concepts/controlling-robots) standard, ensuring compatibility and
+[`ros2_control`](/docs/concepts/ros-concepts/controlling-robots) standard, ensuring compatibility and
 portability across different robots and deployments.
 
-You can refer to our [AICA Core](/docs/product/Getting-Started/intro#aica-core) introduction section for a visual
+You can refer to our [AICA Core](/docs/getting-started#aica-core) introduction section for a visual
 representation of where hardware interfaces come into play in the system, and to the
-[Supported Hardware](/docs/product/Getting-Started/compatibility/supported-hardware) page for an overview of readily
+[Supported Hardware](/docs/getting-started/compatibility/supported-hardware) page for an overview of readily
 available interfaces.
 
 ## Role in the control stack
 
 Within the AICA control architecture, hardware interfaces sit at the **lowest level of the control stack**
-(see [here](/docs/product/Getting-Started/intro#aica-core)):
+(see [here](/docs/getting-started#aica-core)):
 
 - **Above** them are controllers (e.g., joint trajectory, IK, impedance, GPIO controllers)
 - **Below** them is the actual robot hardware or simulator
@@ -37,7 +37,7 @@ drivers**, allowing controllers and higher-level algorithms to operate without k
 
 This clear separation enables control algorithms to remain **hardware-agnostic**, while hardware-specific logic stays
 isolated, reusable, and easy to replace. See more information about our controllers
-[here](/docs/product/Concepts/building-blocks/controllers/).
+[here](/docs/concepts/building-blocks/controllers/).
 
 ## Integration with `ros2_control`
 
@@ -57,7 +57,7 @@ AICA Core supports hardware interfaces for **most major robot manipulator brands
 compatible with **third-party hardware interfaces** that conform to the `ros2_control` standard.
 
 A detailed overview of readily supported platforms is available on the
-[Supported Hardware](/docs/product/Getting-Started/compatibility/supported-hardware) page.
+[Supported Hardware](/docs/getting-started/compatibility/supported-hardware) page.
 
 This allows you to:
 
@@ -69,7 +69,7 @@ This allows you to:
 
 The set of included hardware interfaces may vary depending on the license and distribution of AICA software.
 If the platform you are looking for is not listed on the
-[Supported Hardware](/docs/product/Getting-Started/compatibility/supported-hardware) page, please
+[Supported Hardware](/docs/getting-started/compatibility/supported-hardware) page, please
 [contact us](mailto:contact@aica.tech) to discuss availability or custom integrations.
 
 :::

@@ -7,7 +7,7 @@ title: Going further with AICA
 
 [Contact us](mailto:contact@aica.tech) to learn more about AICA and/or to request an AICA System License.
 
-If you already have an AICA System License, continue on to [application examples](/core/category/guides) for guides and
+If you already have an AICA System License, continue on to [application examples](/core/examples) for guides and
 practical references on how to set up your robotic applications.
 
 For advanced usage, including building custom components with our Component SDK, refer to
