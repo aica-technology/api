@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: GPIO Controllers
+title: GPIO
 ---
 
 # General Purpose Input/Output (GPIO) Controllers

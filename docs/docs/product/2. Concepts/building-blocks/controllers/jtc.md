@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Joint Trajectory Controller
+title: Joint Trajectory
 ---
 
 # Joint Trajectory Controller
