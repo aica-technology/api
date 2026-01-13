@@ -29,7 +29,7 @@ AICA provides **generic GPIO controllers** that are specialized for a single res
 
 In ROS 2, GPIOs are declared in the robot’s **URDF** using dedicated GPIO tags. These tags define:
 
-- The GPIO name and direction (input or output)
+- The GPIO name and direction (state or command)
 - Its association with a robot or device
 - The command or state interface used to access it
 
