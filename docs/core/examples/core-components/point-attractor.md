@@ -67,7 +67,7 @@ Changing the parameters of the component will tune the response and decide at wh
 To set up this example, follow the steps below.
 
 1. Create a new application and record the tool frame of the robot of your choice as described
-   [here](../guides/application-frames#record-frame-in-3d-scene-view).
+   [here](../guides/application-frames#record-a-frame).
 2. In the same application, add the `Frame to Signal` component. Click on auto-configure and auto-activate buttons to enable
    them and in the component settings, set the required parameter `Frame` to the name of the recorded frame from step 1.
    :::tip

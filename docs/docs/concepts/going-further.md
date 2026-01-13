@@ -11,4 +11,4 @@ If you already have an AICA System License, continue on to [application examples
 practical references on how to set up your robotic applications.
 
 For advanced usage, including building custom components with our Component SDK, refer to
-the [Programming reference](/docs/reference/intro).
+the [Programming reference](/docs/reference).
