@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: Application editor
 ---
 
@@ -22,7 +22,7 @@ unsaved changes. Running applications will be stopped when closing the applicati
 
 Next to the X button, the cloud storage button can be used to upload and synchronize applications to cloud storage or
 downloaded them locally. This option is disabled until a user with `admin` scope connects to cloud storage in the
-[Settings](./studio.md#settings) page.
+[Settings](../studio.md#settings) page.
 
 Applications can be deleted, saved, or saved as a copy under a new name.
 
