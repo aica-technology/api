@@ -89,7 +89,7 @@ const config = {
           srcDark: "img/aica-logo-white-square-small.svg",
           width: 22,
           height: 22,
-          href: "docs/product/getting-started/intro",
+          href: "docs/getting-started",
         },
         items: [
           // TODO: need to apply to DocSearch https://docusaurus.io/docs/search
@@ -142,15 +142,15 @@ const config = {
             items: [
               {
                 label: "Getting Started",
-                href: "/docs/product/getting-started/intro",
+                href: "/docs/getting-started",
               },
               {
                 label: "Concepts",
-                href: "/docs/category/ros-2-concepts",
+                href: "/docs/concepts",
               },
               {
                 label: "Programming Reference",
-                href: "/docs/product/reference/intro",
+                href: "/docs/reference",
               },
               {
                 label: "More Resources",
