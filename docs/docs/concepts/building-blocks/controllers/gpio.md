@@ -45,7 +45,7 @@ below is required.
 
 :::
 
-## Using GPIO controllers in AICA Core
+## Using GPIO controllers in the AICA framework
 
 In a ROS 2 control setup, and by extension in AICA Core, GPIO controllers operate on **GPIO interfaces defined in the
 URDF** and exposed by the underlying hardware interface.
