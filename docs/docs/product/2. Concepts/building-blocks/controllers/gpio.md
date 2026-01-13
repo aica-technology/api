@@ -9,7 +9,7 @@ title: GPIO
 exposed by a robot or device. These signals are commonly used to control or monitor external hardware such as grippers,
 sensors, indicators, safety devices, or auxiliary tooling.
 
-GPIO controllers operate on discrete input and output signals, providing dedicated handling of digital I/Os. This
+GPIO controllers operate on discrete input and output signals, providing dedicated handling of analog or digital I/Os. This
 specialization differentiates them from motion-oriented controllers and keeps GPIO interaction simple,
 deterministic, and easy to integrate into higher-level application logic.
 
