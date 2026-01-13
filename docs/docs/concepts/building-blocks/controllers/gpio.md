@@ -29,7 +29,7 @@ as external devices or sensors without associated motion.
 
 These generic controllers are specialized for a single responsibility:
 
-- **Broadcasting controllers** expose states to the rest of the system
+- **Broadcasting controllers** expose states to the AICA application
 - **Output controllers** command values on the hardware
 
 ---
@@ -38,7 +38,7 @@ These generic controllers are specialized for a single responsibility:
 
 In ROS 2, GPIOs are declared in the robot's **URDF** using dedicated GPIO tags. These tags define:
 
-- The GPIO name and direction (input or output)
+- The GPIO name and direction (state or command)
 - Its association with a robot or subcomponent
 - The command or state interface used to access it
 
@@ -71,7 +71,7 @@ low-level drivers.
 
 ---
 
-## GPIO Broadcaster Controller
+### GPIO Broadcaster Controller
 
 The GPIO Broadcaster Controller is responsible for **observing an output state** and making it available to the rest of
 the system.
@@ -91,7 +91,7 @@ and also exposes the state through a signal.
 
 ---
 
-## GPIO Output Controller
+### GPIO Output Controller
 
 The GPIO Output Controller is responsible for **commanding an input value** on the hardware.
 
