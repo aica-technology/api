@@ -5,17 +5,14 @@ title: GPIO
 
 # General Purpose Input/Output (GPIO) Controllers
 
-**General Purpose Input/Output (GPIO) Controllers** provide a standardized way to interact with **digital I/O signals**
+**General Purpose Input/Output (GPIO) Controllers** provide a standardized way to interact with **I/O signals**
 exposed by a robot or device. These signals are commonly used to control or monitor external hardware such as grippers,
 sensors, indicators, safety devices, or auxiliary tooling.
 
-GPIO controllers operate on discrete input and output signals, providing dedicated handling of analog or digital I/Os.
-This specialization differentiates them from motion-oriented controllers and keeps GPIO interaction simple,
-deterministic, and easy to integrate into higher-level application logic.
-
----
-
-## Overview
+GPIO controllers operate on input and output signals, providing dedicated handling of **digital (binary)** and
+**analog (non-binary)** I/O within the context of a controller. This specialization differentiates them from
+motion-oriented controllers and keeps GPIO interaction simple, deterministic, and easy to integrate into higher-level
+application logic.
 
 GPIO controllers enable applications to:
 
@@ -23,38 +20,30 @@ GPIO controllers enable applications to:
 - **Command GPIO outputs** (e.g., enable a tool, toggle a relay)
 - **Interact with external devices** with low latency and predictable behavior
 
-Within the AICA framework, GPIO functionality can be handled by controllers that also perform motion control. In
-addition, AICA provides **generic GPIO-only controllers** for cases where a I/O needs to be managed independently, such
-as external devices or sensors without associated motion.
+AICA provides **generic GPIO controllers** that are specialized for a single responsibility:
 
-These generic controllers are specialized for a single responsibility:
-
-- **Broadcasting controllers** expose states to the AICA application
-- **Output controllers** command values on the hardware
-
----
+- **Broadcasting controllers** expose GPIO state to the AICA application
+- **Output controllers** command GPIO values on the hardware
 
 ## GPIOs in robot models
 
-In ROS 2, GPIOs are declared in the robot's **URDF** using dedicated GPIO tags. These tags define:
+In ROS 2, GPIOs are declared in the robot’s **URDF** using dedicated GPIO tags. These tags define:
 
-- The GPIO name and direction (state or command)
-- Its association with a robot or subcomponent
+- The GPIO name and direction (input or output)
+- Its association with a robot or device
 - The command or state interface used to access it
 
-By relying on the robot description, GPIO controllers can automatically discover available analog or digital signals and
-expose them consistently, without hard-coded assumptions about the underlying hardware.
+By relying on the robot description, GPIO controllers can automatically discover available I/O signals and expose them
+consistently, without hard-coded assumptions about the underlying hardware.
 
 :::info
 
-Some specialized controllers (e.g., for Universal Robot arms) may do motion control and expose I/Os in a single
-controller. You may always refer to the **Help** tab in AICA Studio to determine whether a controller is already
-claiming a GPIO for commanding or receiving state, or whether you will need a standalone GPIO controller as described in
-the following section.
+Some specialized controllers (for example, controllers for specific robot arms) may combine motion control and I/O
+handling within a single controller. You can always refer to the **Help** tab in AICA Studio to determine whether a
+controller already claims a GPIO for commanding or state feedback, or whether a standalone GPIO controller as described
+below is required.
 
 :::
-
----
 
 ## Using GPIO controllers in AICA Core
 
@@ -63,37 +52,33 @@ URDF** and exposed by the underlying hardware interface.
 
 Two GPIO controllers are bundled by default, each aligned with a specific GPIO role:
 
-- **GPIO Broadcaster Controller:** reads and publishes a state through a general purpose state interface
-- **GPIO Output Controller:** sets a value through general purpose command interface
+- **GPIO Broadcaster Controller:** reads and publishes GPIO state through a general-purpose state interface
+- **GPIO Output Controller:** commands GPIO values through a general-purpose command interface
 
 Applications interact with these controllers through standard ROS 2 communication mechanisms, without direct access to
 low-level drivers.
 
----
-
 ### GPIO Broadcaster Controller
 
-The GPIO Broadcaster Controller is responsible for **observing an output state** and making it available to the rest of
-the system.
+The GPIO Broadcaster Controller is responsible for **observing GPIO state** and making it available to the rest of the
+system.
 
 It requires two parameters, as defined by ROS 2-compatible URDF GPIO declarations:
 
 - GPIO group name
 - State interface
 
-Using this information, the controller retrieves the GPIO state and publishes the following predicates for binary
-interfaces:
+Using this information, the controller retrieves the GPIO state and, for binary interfaces, publishes the following
+predicates:
 
 - `is_high`
 - `is_low`
 
-and also exposes the state through a signal.
-
----
+The raw state value is also exposed through a signal for direct consumption.
 
 ### GPIO Output Controller
 
-The GPIO Output Controller is responsible for **commanding an input value** on the hardware.
+The GPIO Output Controller is responsible for **commanding GPIO values** on the hardware.
 
 It requires the following parameters:
 
