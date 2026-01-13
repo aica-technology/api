@@ -61,7 +61,7 @@ low-level drivers.
 ### GPIO Broadcaster Controller
 
 The GPIO Broadcaster Controller is responsible for **observing GPIO state** and making it available to the rest of the
-system.
+AICA application.
 
 It requires two parameters, as defined by ROS 2-compatible URDF GPIO declarations:
 
