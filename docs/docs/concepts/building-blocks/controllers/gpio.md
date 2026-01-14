@@ -86,18 +86,13 @@ low-level drivers.
 The GPIO Broadcaster Controller is responsible for **observing GPIO state** and making it available to the rest of the
 AICA application.
 
-It requires two parameters, as defined by ROS 2-compatible URDF GPIO declarations:
+It requires two parameters:
 
-- GPIO group name
-- State interface
+- GPIO group name (for example `sample_gpio_group_1` in the URDF snippet above)
+- State interface (for example `output_register` in the URDF snippet above)
 
-Using this information, the controller retrieves the GPIO state and, for binary interfaces, publishes the following
-predicates:
-
-- `is_high`
-- `is_low`
-
-The raw state value is also exposed through a signal for direct consumption.
+Using this information, the controller retrieves the GPIO state and, for binary interfaces, publishes *Is high* and
+*Is low* predicates. The raw state value is also exposed through a signal for direct consumption.
 
 ### GPIO Output Controller
 
@@ -105,11 +100,9 @@ The GPIO Output Controller is responsible for **commanding GPIO values** on the 
 
 It requires the following parameters:
 
-- GPIO group name
-- Command interface
+- GPIO group name (for example `sample_gpio_group_2` in the URDF snippet above)
+- Command interface (for example `input_register` in the URDF snippet above)
 
-An additional parameter specifies the value written to the interface:
+The parameter *Command* specifies the value written to the interface and can be dynamically updated at runtime to
+trigger the desired hardware behavior.
 
-- `command`
-
-This parameter can be dynamically updated at runtime to trigger the desired hardware behavior.
