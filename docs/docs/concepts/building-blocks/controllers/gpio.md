@@ -39,11 +39,34 @@ consistently, without hard-coded assumptions about the underlying hardware.
 :::info
 
 Some specialized controllers (for example, controllers for specific robot arms) may combine motion control and I/O
-handling within a single controller. You can always refer to the **Help** tab in AICA Studio to determine whether a
-controller already claims a GPIO for commanding or state feedback, or whether a standalone GPIO controller as described
-below is required.
+handling within a single controller.
 
 :::
+
+For example, a typical URDF that contains a GPIO command interface will look something like the following:
+
+```xml
+<gpio name="sample_gpio_group_1">
+  <state_interface name="output_register" />
+</gpio>
+```
+
+and one that contains a GPIO state interface:
+
+```xml
+<gpio name="sample_gpio_group_2">
+  <command_interface name="input_register" />
+</gpio>
+```
+
+or you may see both command and state interfaces bundled under the same group, as follows:
+
+```xml
+<gpio name="sample_gpio_group">
+  <state_interface name="output_register" />
+  <command_interface name="input_register" />
+</gpio>
+```
 
 ## Using GPIO controllers in the AICA framework
 
