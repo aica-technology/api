@@ -14,8 +14,6 @@ and **velocity-based** controllers.
 
 ## Inverse kinematics position controller
 
-### Overview
-
 An **IK Position Controller** is designed to drive a robot toward a desired **Cartesian pose** (position and
 orientation) of a controlled frame. Instead of commanding joint positions directly, the user specifies a target pose in
 task space, and the controller computes the joint configuration that best realizes this pose.
