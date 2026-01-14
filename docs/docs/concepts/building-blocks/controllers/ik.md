@@ -52,8 +52,6 @@ IK position control is well suited for:
 
 ## Inverse kinematics velocity controller
 
-### Overview
-
 An **IK Velocity Controller** is designed to control a robot's motion by commanding
 **joint velocities** such that a desired **task-space velocity** is achieved. Instead of following a predefined
 time-parameterized trajectory, the controller continuously computes how fast each joint should move
