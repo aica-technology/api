@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lifecycle Transition Object",
+  "description": "A lifecycle identifier containing a transition label and target component",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "transition": {
+      "title": "Lifecycle Transition Label",
+      "description": "A lifecycle transition",
+      "type": "string",
+      "enum": [
+        "create",
+        "configure",
+        "cleanup",
+        "activate",
+        "deactivate",
+        "unconfigured_shutdown",
+        "inactive_shutdown",
+        "active_shutdown",
+        "destroy"
+      ]
+    },
+    "component": {
+      "$ref": "../identifier.schema.json"
+    }
+  },
+  "required": [
+    "component",
+    "transition"
+  ]
+}

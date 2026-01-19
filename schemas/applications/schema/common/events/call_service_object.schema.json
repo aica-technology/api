@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Call Service Object",
+  "oneOf": [
+    {
+      "title": "Call Component Service Object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "../identifier.schema.json"
+        },
+        "service": {
+          "$ref": "../identifier.schema.json"
+        },
+        "payload": {
+          "$ref": "call_service_payload.schema.json"
+        }
+      },
+      "required": [
+        "component",
+        "service"
+      ]
+    },
+    {
+      "title": "Call Controller Service Object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "controller": {
+          "$ref": "../identifier.schema.json"
+        },
+        "hardware": {
+          "$ref": "../identifier.schema.json"
+        },
+        "service": {
+          "$ref": "../identifier.schema.json"
+        },
+        "payload": {
+          "$ref": "call_service_payload.schema.json"
+        }
+      },
+      "required": [
+        "hardware",
+        "controller",
+        "service"
+      ]
+    }
+  ]
+}

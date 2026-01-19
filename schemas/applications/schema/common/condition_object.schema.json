@@ -4,32 +4,6 @@
   "description": "A specific condition source in the application",
   "oneOf": [
     {
-      "$ref": "#/$defs/component_predicate"
-    },
-    {
-      "$ref": "#/$defs/controller_predicate"
-    },
-    {
-      "$ref": "#/$defs/component_state"
-    },
-    {
-      "$ref": "#/$defs/controller_state"
-    },
-    {
-      "$ref": "#/$defs/hardware_state"
-    },
-    {
-      "$ref": "#/$defs/sequence_state"
-    },
-    {
-      "$ref": "#/$defs/condition"
-    },
-    {
-      "$ref": "#/$defs/boolean"
-    }
-  ],
-  "$defs": {
-    "component_predicate": {
       "title": "Component Predicate Condition",
       "description": "A condition depending on the runtime state of a component predicate",
       "type": "object",
@@ -47,7 +21,7 @@
         "predicate"
       ]
     },
-    "controller_predicate": {
+    {
       "title": "Controller Predicate Condition",
       "description": "A condition depending on the runtime state of a controller predicate",
       "type": "object",
@@ -69,7 +43,7 @@
         "predicate"
       ]
     },
-    "component_state": {
+    {
       "title": "Component State Condition",
       "description": "A condition depending on the runtime state of a component",
       "type": "object",
@@ -97,7 +71,7 @@
         "state"
       ]
     },
-    "controller_state": {
+    {
       "title": "Controller State Condition",
       "description": "A condition depending on the runtime state of a controller",
       "type": "object",
@@ -126,7 +100,7 @@
         "state"
       ]
     },
-    "hardware_state": {
+    {
       "title": "Hardware State Condition",
       "description": "A condition depending on the runtime state of a hardware interface",
       "type": "object",
@@ -150,7 +124,7 @@
         "state"
       ]
     },
-    "sequence_state": {
+    {
       "title": "Sequence State Condition",
       "description": "A condition depending on the runtime state of a sequence",
       "type": "object",
@@ -175,7 +149,7 @@
         "state"
       ]
     },
-    "condition": {
+    {
       "title": "Reference Condition",
       "description": "A condition depending on the runtime state of another condition",
       "type": "object",
@@ -189,9 +163,9 @@
         "condition"
       ]
     },
-    "boolean": {
+    {
       "description": "A hard-coded Boolean value which may be useful for testing and developing applications",
       "type": "boolean"
     }
-  }
+  ]
 }

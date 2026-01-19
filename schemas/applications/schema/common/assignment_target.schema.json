@@ -3,69 +3,59 @@
   "description": "Identifier for a variable or a component or controller parameter to assign a value to",
   "oneOf": [
     {
-      "additionalProperties": false,
-      "$ref": "#/$defs/variable"
+      "target_variable": {
+        "additionalProperties": false,
+        "properties": {
+          "component": {
+            "$ref": "identifier.schema.json"
+          },
+          "parameter": {
+            "$ref": "parameter_identifier.schema.json"
+          }
+        },
+        "required": [
+          "component",
+          "parameter"
+        ]
+      }
     },
     {
-      "additionalProperties": false,
-      "$ref": "#/$defs/target_component"
+      "target_component": {
+        "additionalProperties": false,
+        "properties": {
+          "component": {
+            "$ref": "identifier.schema.json"
+          },
+          "parameter": {
+            "$ref": "parameter_identifier.schema.json"
+          }
+        },
+        "required": [
+          "component",
+          "parameter"
+        ]
+      }
     },
     {
-      "additionalProperties": false,
-      "$ref": "#/$defs/target_controller"
+      "target_controller": {
+        "additionalProperties": false,
+        "properties": {
+          "controller": {
+            "$ref": "identifier.schema.json"
+          },
+          "hardware": {
+            "$ref": "identifier.schema.json"
+          },
+          "parameter": {
+            "$ref": "parameter_identifier.schema.json"
+          }
+        },
+        "required": [
+          "controller",
+          "hardware",
+          "parameter"
+        ]
+      }
     }
-  ],
-  "$defs": {
-    "variable": {
-      "title": "Variable Identifier",
-      "description": "A variable in the application",
-      "type": "object",
-      "properties": {
-        "variable": {
-          "$ref": "identifier.schema.json"
-        }
-      },
-      "required": [
-        "variable"
-      ]
-    },
-    "parameter": {
-      "title": "Parameter Name",
-      "description": "The name of a parameter in the application",
-      "type": "string",
-      "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
-    },
-    "target_component": {
-      "properties": {
-        "component": {
-          "$ref": "identifier.schema.json"
-        },
-        "parameter": {
-          "$ref": "#/$defs/parameter"
-        }
-      },
-      "required": [
-        "component",
-        "parameter"
-      ]
-    },
-    "target_controller": {
-      "properties": {
-        "controller": {
-          "$ref": "identifier.schema.json"
-        },
-        "hardware": {
-          "$ref": "identifier.schema.json"
-        },
-        "parameter": {
-          "$ref": "#/$defs/parameter"
-        }
-      },
-      "required": [
-        "controller",
-        "hardware",
-        "parameter"
-      ]
-    }
-  }
+  ]
 }

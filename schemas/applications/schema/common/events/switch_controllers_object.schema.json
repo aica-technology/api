@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Switch Controllers Object",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hardware": {
+      "$ref": "../identifier.schema.json"
+    },
+    "activate": {
+      "$ref": "switch_controllers_target.schema.json"
+    },
+    "deactivate": {
+      "$ref": "switch_controllers_target.schema.json"
+    }
+  },
+  "required": [
+    "hardware"
+  ]
+}

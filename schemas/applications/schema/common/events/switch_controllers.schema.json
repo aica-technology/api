@@ -8,49 +8,11 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "$ref": "#/$defs/switch_controllers_object"
+        "$ref": "switch_controllers_object.schema.json"
       }
     },
     {
-      "$ref": "#/$defs/switch_controllers_object"
+      "$ref": "switch_controllers_object.schema.json"
     }
-  ],
-  "$defs": {
-    "switch_controllers_object": {
-      "title": "Switch Controllers Object",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "hardware": {
-          "$ref": "../identifier.schema.json"
-        },
-        "activate": {
-          "$ref": "#/$defs/switch_controllers_target"
-        },
-        "deactivate": {
-          "$ref": "#/$defs/switch_controllers_target"
-        }
-      },
-      "required": [
-        "hardware"
-      ]
-    },
-    "switch_controllers_target": {
-      "title": "Target Controller",
-      "Description": "A controller or list of controllers",
-      "additionalProperties": false,
-      "oneOf": [
-        {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "$ref": "../identifier.schema.json"
-          }
-        },
-        {
-          "$ref": "../identifier.schema.json"
-        }
-      ]
-    }
-  }
+  ]
 }

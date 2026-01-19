@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Typed Parameter Value",
+  "description": "An object containing a parameter value and explicit type",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "value": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-1/interfaces.schema.json#/$defs/parameter_value"
+    },
+    "type": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-1/interfaces.schema.json#/$defs/parameter_type"
+    },
+    "state_type": {
+      "$ref": "https://raw.githubusercontent.com/aica-technology/api/main/docs/static/schemas/2-0-1/interfaces.schema.json#/$defs/encoded_state_type"
+    }
+  },
+  "required": [
+    "value",
+    "type"
+  ],
+  "if": {
+    "properties": {
+      "type": {
+        "const": "state"
+      }
+    }
+  },
+  "then": {
+    "required": [
+      "state_type"
+    ]
+  }
+}

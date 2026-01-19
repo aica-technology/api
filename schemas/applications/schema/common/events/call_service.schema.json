@@ -8,70 +8,11 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "$ref": "#/$defs/service_object"
+        "$ref": "call_service_object.schema.json"
       }
     },
     {
-      "$ref": "#/$defs/service_object"
+      "$ref": "call_service_object.schema.json"
     }
-  ],
-  "$defs": {
-    "payload": {
-      "title": "Service Payload",
-      "description": "The payload of the service call, formatted according to the service description",
-      "type": [
-        "string",
-        "object"
-      ]
-    },
-    "service_object": {
-      "title": "Call Service Object",
-      "oneOf": [
-        {
-          "title": "Call Component Service Object",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "component": {
-              "$ref": "../identifier.schema.json"
-            },
-            "service": {
-              "$ref": "../identifier.schema.json"
-            },
-            "payload": {
-              "$ref": "#/$defs/payload"
-            }
-          },
-          "required": [
-            "component",
-            "service"
-          ]
-        },
-        {
-          "title": "Call Controller Service Object",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "controller": {
-              "$ref": "../identifier.schema.json"
-            },
-            "hardware": {
-              "$ref": "../identifier.schema.json"
-            },
-            "service": {
-              "$ref": "../identifier.schema.json"
-            },
-            "payload": {
-              "$ref": "#/$defs/payload"
-            }
-          },
-          "required": [
-            "hardware",
-            "controller",
-            "service"
-          ]
-        }
-      ]
-    }
-  }
+  ]
 }

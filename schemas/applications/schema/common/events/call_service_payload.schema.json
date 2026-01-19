@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Service Payload",
+  "description": "The payload of the service call, formatted according to the service description",
+  "type": [
+    "string",
+    "object"
+  ]
+}
