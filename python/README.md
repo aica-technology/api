@@ -102,7 +102,8 @@ Use the following compatibility table to determine which client version to use.
 
 | AICA Core version | API protocol version | Matching Python client version |
 |-------------------|----------------------|--------------------------------|
-| `>= 5.0`          | `v3`                 | `>= 4.0.0`                     |
+| `>= 5.1`          | `v3`                 | `>= 4.0.2`                     |
+| `5.0.0`           | `v3`                 | `4.0.0`                        |
 | `>= 4.3, < 5.0`   | `v2`                 | `>= 3.1.0`                     |
 | `>= 4.0, < 4.3`   | `v2`                 | `>= 3.0.0`                     |
 | `3.x`             | `v2`                 | `>= 2.0.0`                     |
