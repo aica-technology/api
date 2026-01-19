@@ -40,7 +40,7 @@ Compared to joint-space position controllers, an IK position controller offers s
 In reactive or high-rate scenarios, IK position control can be difficult to apply. The command signal needs to be
 crafted carefully to ensure continuity and avoid big step changes. Position servoing is demanding for real hardware and 
 usually comes with strict constraints from the manufacturer. See more information in
-[Position vs velocity IK control](/docs/product/Concepts/building-blocks/controllers/ik#position-vs-velocity-ik-control).
+[Position vs velocity IK control](/docs/concepts/building-blocks/controllers/ik#position-vs-velocity-ik-control).
 
 :::
 
@@ -106,7 +106,7 @@ high-rate, online control.
 On the other hand, it is mathematically less demanding and more robust to compute the inverse kinematics solution for a
 desired velocity. For this reason, **IK velocity control is often preferred in reactive applications**. A common pattern
 is to combine IK velocity controllers with motion generators that produce desired Cartesian twists (see our
-[Motion generation](/docs/product/concepts/robotics-concepts/motion-generation) page). This allows pose-driven behavior
+[Motion generation](/docs/concepts/robotics-concepts/motion-generation) page). This allows pose-driven behavior
 to be expressed as smooth, continuous velocity commands, while retaining the robustness, responsiveness, and stability
 properties of velocity-based IK control.
 
