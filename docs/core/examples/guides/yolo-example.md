@@ -225,9 +225,9 @@ Your application should now look similar to the following picture:
 ### Running the application
 
 Open the application we built in the previous step, if you are not already there. Then:
-- open **RViz**: from the `Launcher Settings` **→** "Launch RViz"
-- in **RViz**: press Add **→** By topic **→** `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated
-output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
+- open **RViz**: select "Launch RViz" from the Launcher settings
+- in **RViz**: press Add &rarr; By topic &rarr; `/yolo_executor/annotated_image/Image` to view the YOLO model's
+annotated output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
 published on the `yolo_executor/detections` topic as `vision_msgs/msg/Detection2DArray`, a ROS perception message (e.g.,
 containing bounding box coordinates, class name, score, ...).
 
