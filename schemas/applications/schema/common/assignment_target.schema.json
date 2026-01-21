@@ -3,59 +3,62 @@
   "description": "Identifier for a variable or a component or controller parameter to assign a value to",
   "oneOf": [
     {
-      "target_variable": {
-        "additionalProperties": false,
-        "properties": {
-          "component": {
-            "$ref": "identifier.schema.json"
-          },
-          "parameter": {
-            "$ref": "parameter_identifier.schema.json"
-          }
+      "title": "Variable Identifier",
+      "description": "A variable in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "identifier.schema.json"
         },
-        "required": [
-          "component",
-          "parameter"
-        ]
-      }
+        "parameter": {
+          "$ref": "parameter_identifier.schema.json"
+        }
+      },
+      "required": [
+        "component",
+        "parameter"
+      ]
     },
     {
-      "target_component": {
-        "additionalProperties": false,
-        "properties": {
-          "component": {
-            "$ref": "identifier.schema.json"
-          },
-          "parameter": {
-            "$ref": "parameter_identifier.schema.json"
-          }
+      "title": "Component Parameter Identifier",
+      "description": "A parameter of a component in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "$ref": "identifier.schema.json"
         },
-        "required": [
-          "component",
-          "parameter"
-        ]
-      }
+        "parameter": {
+          "$ref": "parameter_identifier.schema.json"
+        }
+      },
+      "required": [
+        "component",
+        "parameter"
+      ]
     },
     {
-      "target_controller": {
-        "additionalProperties": false,
-        "properties": {
-          "controller": {
-            "$ref": "identifier.schema.json"
-          },
-          "hardware": {
-            "$ref": "identifier.schema.json"
-          },
-          "parameter": {
-            "$ref": "parameter_identifier.schema.json"
-          }
+      "title": "Controller Hardware Parameter Identifier",
+      "description": "A parameter of a controller in the application",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "controller": {
+          "$ref": "identifier.schema.json"
         },
-        "required": [
-          "controller",
-          "hardware",
-          "parameter"
-        ]
-      }
+        "hardware": {
+          "$ref": "identifier.schema.json"
+        },
+        "parameter": {
+          "$ref": "parameter_identifier.schema.json"
+        }
+      },
+      "required": [
+        "controller",
+        "hardware",
+        "parameter"
+      ]
     }
   ]
 }
