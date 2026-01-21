@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.7.0">
 <title data-rh="true">Using YOLO to track objects | AICA for Developers</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.aica.tech/core/examples/guides/yolo-example"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-core-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-core-current"><meta data-rh="true" property="og:title" content="Using YOLO to track objects | AICA for Developers"><meta data-rh="true" name="description" content="YOLO (You Only Look Once) is a real-time object detection algorithm that predicts bounding boxes and class probabilities"><meta data-rh="true" property="og:description" content="YOLO (You Only Look Once) is a real-time object detection algorithm that predicts bounding boxes and class probabilities"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.aica.tech/core/examples/guides/yolo-example"><link data-rh="true" rel="alternate" href="https://docs.aica.tech/core/examples/guides/yolo-example" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.aica.tech/core/examples/guides/yolo-example" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.cfb7d181.css">
-<script src="/assets/js/runtime~main.a0734387.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.c56e588b.js" defer="defer"></script>
 <script src="/assets/js/main.3dc235ae.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -128,7 +128,7 @@ a GPU is used</li>
 </ul>
 <p>To complement the parameters and enable event-driven logic when using the component, two predicates exist, namely:</p>
 <ul>
-<li><code>Is any selected object detected</code>: True if one of the objects in the <code>Object class</code> list is detected</li>
+<li><code>Is any selected class detected</code>: True if one of the classes in the <code>Object class</code> list is detected</li>
 <li><code>Is any object detected</code>: True if there is any known object (i.e., as per the class file provided) in the image stream
 (including but not limited to <code>Object class</code>)</li>
 </ul>
@@ -137,9 +137,9 @@ a GPU is used</li>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="running-the-application">Running the application<a href="#running-the-application" class="hash-link" aria-label="Direct link to Running the application" title="Direct link to Running the application">​</a></h3>
 <p>Open the application we built in the previous step, if you are not already there. Then:</p>
 <ul>
-<li>open <strong>RViz</strong>: from the bottom-right gear icon <strong>→</strong> &quot;Launch RViz&quot;</li>
-<li>in <strong>RViz</strong>: press Add <strong>→</strong> By topic <strong>→</strong> <code>/yolo_executor/annotated_image/Image</code> to view the YOLO model&#x27;s annotated
-output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
+<li>open <strong>RViz</strong>: select &quot;Launch RViz&quot; from the Launcher settings</li>
+<li>in <strong>RViz</strong>: press Add → By topic → <code>/yolo_executor/annotated_image/Image</code> to view the YOLO model&#x27;s
+annotated output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
 published on the <code>yolo_executor/detections</code> topic as <code>vision_msgs/msg/Detection2DArray</code>, a ROS perception message (e.g.,
 containing bounding box coordinates, class name, score, ...).</li>
 </ul>
@@ -168,18 +168,23 @@ velocity.</li>
 </li>
 <li>
 <p>Clone the repository, enter the directory, and run:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">./initialize_package.sh</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
-<p>Name it <code>object_detection_utils</code> and include a Python Lifecycle component</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">./initialize_templates.sh</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>This will launch a wizard to set up your package. Choose the following options:</p>
+<ul>
+<li>Package type: <code>Components</code></li>
+<li>Package name: <code>object_detection_utils</code></li>
+<li>Components to include: <code>Python Lifecycle</code></li>
+</ul>
 </li>
 <li>
-<p>Rename <code>py_lifecycle_component.py</code> to <code>bounding_box_tracker.py</code> in <code>source/component_utils/object_detection_utils/</code></p>
+<p>Rename <code>py_lifecycle_component.py</code> to <code>bounding_box_tracker.py</code> in <code>source/object_detection_utils/object_detection_utils/</code></p>
 </li>
 <li>
-<p>Rename <code>py_lifecycle_component.json</code> to <code>object_detection_utils_bounding_box_tracker.json</code> in
-<code>source/component_utils/component_descriptions/</code></p>
+<p>Rename <code>object_detection_utils_py_lifecycle_component.json</code> to <code>object_detection_utils_bounding_box_tracker.json</code> in
+<code>source/object_detection_utils/component_descriptions/</code></p>
 </li>
 <li>
-<p>Register the component in <code>source/component_utils/setup.cfg</code> like this:</p>
+<p>Register the component in <code>source/object_detection_utils/setup.cfg</code> like this:</p>
 </li>
 </ul>
 <div class="language-cfg codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-cfg codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">[options.entry_points]</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">python_components =</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    object_detection_utils::BoundingBoxTracker = object_detection_utils.bounding_box_tracker:BoundingBoxTracker</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
