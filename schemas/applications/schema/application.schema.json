@@ -125,9 +125,6 @@
     "variables": {
       "$ref": "variables.schema.json"
     },
-    "assignment_target": {
-      "$ref": "common/assignment_target.schema.json"
-    },
     "assignments": {
       "$ref": "common/assignments.schema.json"
     },
@@ -156,10 +153,7 @@
       "$ref": "common/identifier.schema.json"
     },
     "load_on_start": {
-      "$ref": "common/load_unload_target.schema.json"
-    },
-    "load_unload_target": {
-      "$ref": "common/load_unload_target.schema.json"
+      "$ref": "common/load_on_start.schema.json"
     },
     "log_level": {
       "$ref": "common/log_level.schema.json"
@@ -196,6 +190,9 @@
     },
     "lifecycle_event": {
       "$ref": "common/events/lifecycle.schema.json"
+    },
+    "load_unload_event_target": {
+      "$ref": "common/events/load_unload_target.schema.json"
     },
     "load_event": {
       "$ref": "common/events/load.schema.json"

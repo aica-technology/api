@@ -4,13 +4,13 @@
   "description": "Identifier for a component, hardware interface or controller to load or unload",
   "oneOf": [
     {
-      "$ref": "component_identifier.schema.json"
+      "$ref": "../component_identifier.schema.json"
     },
     {
-      "$ref": "controller_identifier.schema.json"
+      "$ref": "../controller_identifier.schema.json"
     },
     {
-      "$ref": "hardware_identifier.schema.json"
+      "$ref": "../hardware_identifier.schema.json"
     }
   ]
 }

@@ -8,11 +8,11 @@
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "$ref": "../load_unload_target.schema.json"
+        "$ref": "load_unload_target.schema.json"
       }
     },
     {
-      "$ref": "../load_unload_target.schema.json"
+      "$ref": "load_unload_target.schema.json"
     }
   ]
 }

@@ -6,8 +6,66 @@
   "additionalProperties": false,
   "patternProperties": {
     "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
-      "title": "Assignment",
-      "$ref": "assignment_target.schema.json"
+      "oneOf": [
+        {
+          "title": "Variable Identifier",
+          "description": "A variable in the application",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "component": {
+              "$ref": "identifier.schema.json"
+            },
+            "parameter": {
+              "$ref": "parameter_identifier.schema.json"
+            }
+          },
+          "required": [
+            "component",
+            "parameter"
+          ]
+        },
+        {
+          "title": "Component Parameter Identifier",
+          "description": "A parameter of a component in the application",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "component": {
+              "$ref": "identifier.schema.json"
+            },
+            "parameter": {
+              "$ref": "parameter_identifier.schema.json"
+            }
+          },
+          "required": [
+            "component",
+            "parameter"
+          ]
+        },
+        {
+          "title": "Controller Hardware Parameter Identifier",
+          "description": "A parameter of a controller in the application",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "controller": {
+              "$ref": "identifier.schema.json"
+            },
+            "hardware": {
+              "$ref": "identifier.schema.json"
+            },
+            "parameter": {
+              "$ref": "parameter_identifier.schema.json"
+            }
+          },
+          "required": [
+            "controller",
+            "hardware",
+            "parameter"
+          ]
+        }
+      ]
     }
   }
 }
