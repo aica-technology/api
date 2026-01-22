@@ -22,7 +22,7 @@ Release Versions:
 
 ## 2-1-0
 
-This update add variables and assignments to the application schema, which allow parameter values to be set and reused
+This update adds variables and assignments to the application schema, which allow parameter values to be set and reused
 from multiple sources. The definition of the hardware interface now supports an explicit reference to database entries.
 
 From this version onwards, referring to hardware interfaces by name in the `urdf` property should be considered
