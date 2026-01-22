@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2-1-0](#2-1-0)
 - [2-0-6](#2-0-6)
 - [2-0-5](#2-0-5)
 - [2-0-4](#2-0-4)
@@ -19,7 +20,13 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
-## Upcoming changes (draft/2-1-0)
+## 2-1-0
+
+This update add variables and assignments to the application schema, which allow parameter values to be set and reused
+from multiple sources. The definition of the hardware interface now supports an explicit reference to database entries.
+
+From this version onwards, referring to hardware interfaces by name in the `urdf` property should be considered
+deprecated; a local database ID or full XML content should be used instead.
 
 - feat: add support for variables and assignments (#386)
 - feat: define database entry for referencing hardware (#405)
