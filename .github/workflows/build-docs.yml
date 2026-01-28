@@ -11,36 +11,40 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Build Docusaurus
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
         with:
-          node-version: "18"
-          cache: "npm"
-          cache-dependency-path: "docs/package-lock.json"
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('docs/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
 
       - name: Cache docusaurus
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
-            ${{ github.workspace }}/docs/.docusaurus
+            docs/.docusaurus
           key: |
             ${{ runner.os }}-docusaurus
           restore-keys: |
             ${{ runner.os }}-docusaurus
 
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3"
+
       - name: Install dependencies
         run: |
-          npm ci --prefix docs
+          bun ci --cwd docs
 
       - name: Lint / Formatting
         run: |
-          npm run typecheck --prefix docs
+          bun run --cwd docs typecheck
           # TODO: should add more in the future if needed
 
       - name: Build
         run: |
-          npm run build --prefix docs
+          bun run --cwd docs build
 
       # Fetch API documentation
       - uses: aica-technology/.github/.github/actions/login-to-ghcr@v0.6.1
