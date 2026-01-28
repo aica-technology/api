@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Build Docusaurus
       - name: Cache Bun dependencies
         uses: actions/cache@v4
         with:
