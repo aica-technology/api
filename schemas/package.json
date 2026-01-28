@@ -1,0 +1,11 @@
+{
+  "name": "schemas",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "bundle": "bun run bundleHelper.js"
+  },
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^11.1.0"
+  }
+}

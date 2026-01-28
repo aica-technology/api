@@ -35,23 +35,24 @@ runs:
         echo "prev_schema_id=${PREV_SCHEMA_ID}" >> $GITHUB_OUTPUT
       shell: bash
     - uses: actions/checkout@v3
-    # Bundle JSON schema
-    - uses: actions/setup-node@v3
+    - uses: actions/cache@v4
       with:
-        node-version: "18"
-        cache: "npm"
-        cache-dependency-path: "utils/package-lock.json"
+        path: ~/.bun/install/cache
+        key: ${{ runner.os }}-bun-${{ hashFiles('schemas/bun.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-bun-
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: "1.3"
     - name: Install dependencies
       shell: bash
       run: |
-        cd utils
-        npm ci
-        pip3 install javascript
+        bun ci --cwd schemas
     - name: Bundle & Push schemas
       if: ${{ steps.versions.outputs.new_schema_id != steps.versions.outputs.prev_schema_id }}
       shell: bash
       run: |
-        node utils/bundleHelper.js ${{ inputs.schema-path }} ${{ inputs.schema }}
+        bun run --cwd schemas bundle ${{ inputs.schema-path }} ${{ inputs.schema }}
         EXPORT_DIR="docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}"
         echo "Ensuring directory branch name: ${EXPORT_DIR}"
         mkdir -p "${EXPORT_DIR}"
