@@ -20,6 +20,10 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
+## Upcoming changes
+
+- feat: add hardware plugin (#454)
+
 ## 2-1-0
 
 This update adds variables and assignments to the application schema, which allow parameter values to be set and reused
