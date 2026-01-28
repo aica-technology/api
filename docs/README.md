@@ -111,13 +111,13 @@ import Example from './assets/exalidraw-example-embedded.svg';
 ### Installation
 
 ```
-$ npm install
+$ bun install
 ```
 
 ### Development
 
 ```
-$ npm start
+$ bun run start
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without
@@ -126,7 +126,7 @@ having to restart the server.
 ### Build
 
 ```
-$ npm run build
+$ bun run build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting
@@ -140,7 +140,7 @@ You can build and see the documentation through Docker for ease of setup. Simply
 docker compose up --build
 ```
 
-You can then access the docs at [http://localhost:3333](http://localhost:3333).
+You can then access the docs at [http://localhost:3000](http://localhost:3000).
 
 ## Deployment
 

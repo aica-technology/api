@@ -3,6 +3,6 @@ services:
     image: aica-docs
     build: .
     ports:
-      - "3333:3000"
+      - "3000:3000"
     volumes:
       - .:/docs
