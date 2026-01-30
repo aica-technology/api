@@ -23,7 +23,7 @@
             }
           ]
         },
-        "hardware_plugin_override": {
+        "plugin": {
           "description": "An optional override for the hardware plugin used in the URDF. If left empty, the hardware plugin in the URDF will be used.",
           "type": "string",
           "examples": [
