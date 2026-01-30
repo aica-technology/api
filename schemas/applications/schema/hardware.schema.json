@@ -23,6 +23,14 @@
             }
           ]
         },
+        "plugin": {
+          "description": "An optional override for the hardware plugin used in the URDF. If left empty, the hardware plugin in the URDF will be used.",
+          "type": "string",
+          "examples": [
+            "aica_core_interfaces/MockInterface",
+            "topic_based_ros2_control/TopicBasedSystem"
+          ]
+        },
         "rate": {
           "description": "The rate in Hz at which to run the hardware interface",
           "type": "number",
