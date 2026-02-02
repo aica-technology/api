@@ -147,7 +147,7 @@ Now that you have all the necessary nodes, you can connect them as follows:
 Your OmniGraph should look similar to the image below:
 
 <div class="text--center">
-  <img src={graph} style={{ width: "70%", height: "auto" }} alt="OmniGraph for AICA Bridge Visualization" />
+  <img src={graph} style={{ height: "auto" }} alt="OmniGraph for AICA Bridge Visualization" />
 </div>
 
 ## Configuring the AICA Application
