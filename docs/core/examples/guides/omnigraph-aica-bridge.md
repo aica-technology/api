@@ -70,7 +70,7 @@ cd <path-to-isaac-sim>
   <img src={selector} alt="NVIDIA Isaac Sim App Selector" />
 </div>
 
-This command opens the Isaac Sim launcher. In the launcher:
+This command opens the Isaac Sim App Selector. In the Selector:
 
 - Set ROS Bridge Extension to `isaacsim.ros2.bridge`
 - Set Use Internal ROS2 Libraries to `jazzy`
@@ -102,7 +102,7 @@ Once down with these steps, your scene should look similar to the one below:
 </div>
 <br/>
 
-## Setting up the OmniGraph AICA Bridge
+## Setting up the OmniGraph
 
 
 With the simulation environment set up, the next step is to add an action graph to your scene. This graph will handle
@@ -159,7 +159,7 @@ A simple AICA application that moves a Generic arm using `Joint Trajectory Contr
 following:
 
 <details>
-  <summary>Simple Joint Trajectory Control Application</summary>
+  <summary>Joint Trajectory Control with Joint State publisher</summary>
 
     ```yaml
     schema: 2-0-6
