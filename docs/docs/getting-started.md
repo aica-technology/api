@@ -1,12 +1,11 @@
 ---
-sidebar_position: 1
-title: Introduction
+title: Getting Started
 ---
 
-import SystemOverview from './assets/system-overview-embedded.svg';
-import ComponentsControllersHardware from './assets/components-controllers-hardware-embedded.svg';
+import SystemOverview from './getting-started/assets/system-overview-embedded.svg';
+import ComponentsControllersHardware from './getting-started/assets/components-controllers-hardware-embedded.svg';
 
-# Introduction
+# Welcome to AICA Documentation
 
 AICA is committed to making robotics more accessible by providing smart software solutions for advanced robot control.
 

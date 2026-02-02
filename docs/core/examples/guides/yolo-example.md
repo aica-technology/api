@@ -212,7 +212,7 @@ toggled on, then the component will ultimately gracefully fall back to using the
 a GPU is used
 
 To complement the parameters and enable event-driven logic when using the component, two predicates exist, namely:
-- `Is any selected object detected`: True if one of the objects in the `Object class` list is detected
+- `Is any selected class detected`: True if one of the classes in the `Object class` list is detected
 - `Is any object detected`: True if there is any known object (i.e., as per the class file provided) in the image stream
 (including but not limited to `Object class`)
 
@@ -225,9 +225,9 @@ Your application should now look similar to the following picture:
 ### Running the application
 
 Open the application we built in the previous step, if you are not already there. Then:
-- open **RViz**: from the bottom-right gear icon **→** "Launch RViz"
-- in **RViz**: press Add **→** By topic **→** `/yolo_executor/annotated_image/Image` to view the YOLO model's annotated
-output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
+- open **RViz**: select "Launch RViz" from the Launcher settings
+- in **RViz**: press Add &rarr; By topic &rarr; `/yolo_executor/annotated_image/Image` to view the YOLO model's
+annotated output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
 published on the `yolo_executor/detections` topic as `vision_msgs/msg/Detection2DArray`, a ROS perception message (e.g.,
 containing bounding box coordinates, class name, score, ...).
 
@@ -263,14 +263,17 @@ velocity.
 - Clone the repository, enter the directory, and run:
 
   ```bash
-  ./initialize_package.sh
+  ./initialize_templates.sh
   ```
-  Name it `object_detection_utils` and include a Python Lifecycle component
+  This will launch a wizard to set up your package. Choose the following options:
+  - Package type: `Components`
+  - Package name: `object_detection_utils`
+  - Components to include: `Python Lifecycle`
 
-- Rename `py_lifecycle_component.py` to `bounding_box_tracker.py` in `source/component_utils/object_detection_utils/`
-- Rename `py_lifecycle_component.json` to `object_detection_utils_bounding_box_tracker.json` in
-`source/component_utils/component_descriptions/`
-- Register the component in `source/component_utils/setup.cfg` like this:
+- Rename `py_lifecycle_component.py` to `bounding_box_tracker.py` in `source/object_detection_utils/object_detection_utils/`
+- Rename `object_detection_utils_py_lifecycle_component.json` to `object_detection_utils_bounding_box_tracker.json` in
+`source/object_detection_utils/component_descriptions/`
+- Register the component in `source/object_detection_utils/setup.cfg` like this:
 
 ```cfg
 [options.entry_points]

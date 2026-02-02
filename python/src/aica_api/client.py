@@ -292,7 +292,15 @@ class AICA:
         version_info = semver.parse_version_info(self._core_version)
 
         if version_info.major == 5:
-            return True
+            if version_info.minor >= 1:
+                return True
+            else:
+                self._logger.error(
+                    f'The detected AICA Core version v{self._core_version} is older than the minimum AICA '
+                    f'Core version supported by this client (v{self.client_version()}). Please upgrade the '
+                    f'AICA Core instance to a newer version.'
+                )
+                return False
         elif version_info.major > 5:
             self._logger.error(
                 f'The detected AICA Core version v{self._core_version} is newer than the maximum AICA '
