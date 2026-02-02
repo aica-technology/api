@@ -1,6 +1,6 @@
 ---
 sidebar_position: 11
-title: Interface with Isaac Sim using OmniGraph and ROS 2
+title: Using Isaac Sim as a visualizer
 ---
 
 import selector from './assets/omnigraph-aica-bridge-selector.png'; 
@@ -10,7 +10,7 @@ import addingGraph from './assets/omnigraph-aica-bridge-add-graph.webm';
 import runningAICA from './assets/omnigraph-aica-bridge-aica-app.webm';
 import integration from './assets/omnigraph-aica-bridge-integration.webm';
 
-# Interface with Isaac Sim using OmniGraph and ROS 2
+# Using Isaac Sim as a visualizer
 
 This guide walks you through the steps required to set up **NVIDIA Isaac Sim** so it can interface with **AICA Studio**
 using **OmniGraph** and **ROS 2**. By the end of this tutorial, you’ll have a working simulation environment in Isaac
@@ -41,6 +41,10 @@ This interface can be used in two main ways:
   (such as joint positions) is streamed to Isaac Sim, which mirrors the robot’s motion in a virtual scene. Isaac Sim 
   is used purely for visualization and does not participate in the control loop. This provides a live digital view of 
   the robot for monitoring, debugging, and demonstration purposes.
+
+In this guide, we will focus on the second use case: **using Isaac Sim as a visualization tool for AICA Studio**. We will
+set up a simple simulation environment in Isaac Sim with a robot model and create an OmniGraph that subscribes to joint
+commands from an AICA application via ROS 2. 
 
 ## Prerequisites
 
@@ -100,7 +104,6 @@ Once down with these steps, your scene should look similar to the one below:
 
 ## Setting up the OmniGraph AICA Bridge
 
-### Isaac Sim as a visualization tool for AICA Studio
 
 With the simulation environment set up, the next step is to add an action graph to your scene. This graph will handle
 the communication between Isaac Sim and AICA Studio using ROS 2.
