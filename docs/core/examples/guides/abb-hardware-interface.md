@@ -115,7 +115,7 @@ Setting up a virtual workstation and controller can be achieved by following the
 8. Finally, the PC running AICA Core has to be whitelisted to communicate with RobotStudio. As explained
    [here](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller), 
    create a file called `vcconf.xml` under `C:/Users/<user>/AppData/Roaming/ABB Industrial IT/Robotics IT/RobVC` with
-   the content below. Replace `<user>` in the path above with your Windows user and the IP address in snippet below with
+   the content below. Replace `<user>` in the path above with your Windows user and the IP address in the snippet below with
    the IP of the PC running AICA Core (in this example 192.168.137.100).
    ```xml title="vcconf.xml"
    <?xml version="1.0" encoding="UTF-8"?>
