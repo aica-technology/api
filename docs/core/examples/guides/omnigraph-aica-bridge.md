@@ -87,10 +87,10 @@ will use a basic scene with a ground plane and a AICA's `Generic` robot model.
 2. **Add a ground plane**: To add a ground plane to the scene, go to `Create` > `Physics` > `Ground Plane`. This will
    add a flat ground surface to the scene.
 
-3. **Add a robot**: To add AICA's `Generic` robot to the scene, first download the Generic Robot USD model from
+3. **Add a robot**: To add AICA's `Generic` robot to the scene, first download the `Generic` robot USD model from
    [our repository](https://github.com/aica-technology/isaac-lab/tree/main/usd/robots/aica/generic) into a local
    directory. Then, in Isaac Sim, go to `Content` > `My Computer` in the bottom left part of the screen and navigate to
-   the directory where you saved the Generic Robot USD files. Drag and drop the `generic.usd` file into the scene to add
+   the directory where you saved the `Generic` robot USD files. Drag and drop the `generic.usd` file into the scene to add
    the robot.
 
 Once down with these steps, your scene should look similar to the one below:
@@ -121,17 +121,17 @@ in a new tab in the bottom part of the screen.
 In the OmniGraph editor, you can create nodes and connect them. The following nodes are required to set up the
 communication between Isaac Sim and AICA Studio:
 
--1- **ROS2 Context**: This node initializes the ROS 2 context and allows and defines the ROS2 domain ID. In order to set
+1. **ROS2 Context**: This node initializes the ROS 2 context and allows and defines the ROS2 domain ID. In order to set
 the domain ID, double click on the node to open its properties and set the `Domain ID` field to `30`. This domain ID
 must match the one used by AICA Studio to ensure proper communication.
 
--2- **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA Studio. Set the
-`Topic Name` field to `/joint_command` to match the topic used by AICA Studio for the Generic robot.
+2. **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA Studio. Set the
+`Topic Name` field to `/joint_state` to match the topic used by AICA Studio for the `Generic` robot.
 
--3- **Articulation Controller**: This node is responsible for controlling the robot's joints based on the received
-joint states. Select the Generic robot in the scene as the `Articulation` for this node.
+3. **Articulation Controller**: This node is responsible for controlling the robot's joints based on the received
+joint states. Select the `Generic` robot in the scene as the `Articulation` for this node.
 
--4- **On Playback Tick**: This node triggers the graph execution on each simulation tick.
+4. **On Playback Tick**: This node triggers the graph execution on each simulation tick.
 
 Now that you have all the necessary nodes, you can connect them as follows:
 
@@ -155,7 +155,7 @@ Your OmniGraph should look similar to the image below:
 Using AICA Launcher, launch a configuration that uses the latest AICA Studio version and set the ROS 2 Domain ID to `30`
 to match the one set in Isaac Sim. No extra packages are required for this guide.
 
-A simple AICA application that moves a Generic arm using `Joint Trajectory Controller` can be created using the
+A simple AICA application that moves a `Generic` robot using `Joint Trajectory Controller` can be created using the
 following:
 
 <details>
@@ -210,7 +210,7 @@ following:
         inputs:
           input: /hardware/robot_state_broadcaster/joint_state
         outputs:
-          output: /joint_command
+          output: /joint_state
     hardware:
       hardware:
         display_name: Hardware Interface
@@ -303,8 +303,8 @@ following:
 </details>
 
 
-Copy the above YAML content into a **New Application** in AICA Studio and save it. This application will use the Generic
-robot model and send joint commands to Isaac Sim via the `/joint_command` topic.
+Copy the above YAML content into a **New Application** in AICA Studio and save it. This application will use the `Generic`
+robot model and send joint commands to Isaac Sim via the `/joint_state` topic.
 
 This component is key the bridge between AICA Studio and Isaac Sim as it converts the joint signals from AICA into ROS 2
 JointState messages that Isaac Sim can consume:
@@ -317,7 +317,7 @@ components:
     inputs:
       input: /hardware/robot_state_broadcaster/joint_state
     outputs:
-      output: /joint_command
+      output: /joint_state
 ```
 
 Validate the application by pressing Play in AICA Studio. You will see the robot moving between 3 waypoints defined in
@@ -339,7 +339,7 @@ AICA Studio.
 Now that both Isaac Sim and AICA Studio are set up, you can run the simulation to see the communication in action.
 
 1. **Start AICA Application**: First, ensure that your AICA application is running. You can do this by pressing the
-   `Start` button in AICA Studio. This will start publishing joint commands to the `/joint_command` topic.
+   `Start` button in AICA Studio. This will start publishing joint commands to the `/joint_state` topic.
 
 2. **Start Isaac Sim**: If all the steps above have been followed correctly, you just need to press the `Play` button in
    Isaac Sim to start the simulation. The OmniGraph will start executing, and the robot in the scene will begin
