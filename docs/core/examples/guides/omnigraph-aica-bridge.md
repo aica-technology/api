@@ -72,8 +72,8 @@ cd <path-to-isaac-sim>
 
 This command opens the Isaac Sim App Selector. In the Selector:
 
-- Set ROS Bridge Extension to `isaacsim.ros2.bridge`
-- Set Use Internal ROS2 Libraries to `jazzy`
+- Set `ROS Bridge Extension` to `isaacsim.ros2.bridge`
+- Set `Use Internal ROS2 Libraries` to `jazzy`
 - Click Start
 
 ## Setting up a simple simulation environment
@@ -121,7 +121,7 @@ in a new tab in the bottom part of the screen.
 In the OmniGraph editor, you can create nodes and connect them. The following nodes are required to set up the
 communication between Isaac Sim and AICA Studio:
 
-1. **ROS2 Context**: This node initializes the ROS 2 context and allows and defines the ROS2 domain ID. In order to set
+1. **ROS2 Context**: This node initializes the ROS 2 context and allows and defines the ROS 2 domain ID. In order to set
 the domain ID, double click on the node to open its properties and set the `Domain ID` field to `30`. This domain ID
 must match the one used by AICA Studio to ensure proper communication.
 
