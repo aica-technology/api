@@ -11,6 +11,7 @@ import abbNewProject from './assets/abb-new-project.png'
 import abbInstallAddins from './assets/abb-install-addins.png'
 import abbConnectController from './assets/abb-connect-controller.png'
 import abbFirewallManager from './assets/abb-firewall-manager.png'
+import abbAnalogSignal from './assets/abb-analog-signal.png'
 import abbHIParameters from './assets/abb-hi-parameters.png'
 
 # ABB manipulators
@@ -20,7 +21,7 @@ payloads of a few kilograms to heavy-duty models capable of lifting up to 800 kg
 using ABB robots within the AICA System, focusing on connecting and configuring both simulated environments using
 RobotStudio and real hardware setups.
 
-To use the ABB collection, add the latest version of `collections/abb` to your configuration in AICA Launcher, currently
+To use the ABB collection, add `collections/abb` **v1.0.0 or higher** to your configuration in AICA Launcher, currently
 supporting the following robot models out of the box:
 
 - IRB 1010
@@ -57,8 +58,8 @@ EGM is an optional add-in and has to be purchased separately.
 The second ABB feature that AICA System utilizes to connect to the robot is Robot Web Services (RWS). RWS is a platform
 that enables developers to create applications that interact with the robot controller, using RESTful APIs that leverage
 the HTTPS protocol. The hardware interface uses RWS for auxiliary functionality, such as starting/stopping the program
-and the motors, and setting IOs. Setting up RWS on the simulator and on the actual robot requires slightly different steps,
-which will be explained in the following sections. More information can be found on the
+and the motors, and setting IOs. Setting up RWS on the simulator and on the actual robot requires slightly different
+steps, which will be explained in the following sections. More information can be found on the
 [product reference page](https://developercenter.robotstudio.com/api/RWS).
 
 ### RAPID
@@ -82,7 +83,7 @@ several aspects of the real controller.
 :::note
 
 The RobotStudio software suite is available only for Windows, so you may need to set it up on a secondary device or a
-virtual machine .
+virtual machine.
 
 :::
 
@@ -104,19 +105,22 @@ Setting up a virtual workstation and controller can be achieved by following the
 6. In the window that pops up, in the **Options** tab, look for **EGM** and **RobotStudio Connect** and add them in the
    controller. Then select **Apply and Reset** to finalize.
    :::note
-   The **3119-1 RobotStudio Connect** add-in is required to connect a controller to RobotStudio over a public network. For more
-   information, see the RobotStudio instruction manual. 
+   The **3119-1 RobotStudio Connect** add-in is required to connect a controller to RobotStudio over a public network.
+   For more information, see the RobotStudio instruction manual. 
    :::
    <div class="text--center">
      <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
    </div>
-
-:::tip
-
-Another way of ensuring applications are set up correctly is to use the provided mock interfaces. The mock interface 
-does not include a physics engine, or dynamics calculations, and merely sets the commands as state.
-
-::: 
+7. Disable the Windows firewall on the network where the PC running AICA Core is connected to.
+8. Finally, the PC running AICA Core has to be whitelisted to communicate with RobotStudio. As explained
+   [here](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller), 
+   create a file called `vcconf.xml` under `C:/Users/<user>/AppData/Roaming/ABB Industrial IT/Robotics IT/RobVC` with
+   the content below. Replace `<user>` in the path above with your Windows user and the IP address in snippet below with
+   the IP of the PC running AICA Core (in this example 192.168.137.100).
+   ```xml title="vcconf.xml"
+   <?xml version="1.0" encoding="UTF-8"?>
+   <VCConfiguration><RemoteVCConfiguration PublicationEnabled="true"/><hosts><host ip="192.168.137.100"/></hosts></VCConfiguration>
+   ```
 
 ### Real robot controller
 
@@ -142,107 +146,223 @@ and then restart.
 After connecting to the robot, the controller should be configured to accept commands from an external device.
 
 1. Navigate to the Controller tab > Configuration > Communication > UDP Unicast Device, and add a new UDPUC device (or
-   modify the existing one), configured as shown below. This is the device that will be running the AICA application,
-   the external control device, so the address should be set accordingly.
+   modify the existing one), configured as shown below. This is the PC running AICA Core, the external control device,
+   so the address should be set accordingly.
    <div class="text--center">
      <img src={abbControllerConfiguration} alt="Controller configuration settings." />
    </div>
    <div class="text--center">
-     <img src={abbNewUDPUCDevice} alt="Add a new UDPUS device." />
+     <img src={abbNewUDPUCDevice} alt="Add a new UDPUC device." />
    </div>
-2. The next step is enabling RWS connection. For the RobotStudio simulation, this requires either using a proxy or
-   whitelisting the IP address of the device trying to access RWS, which is the device running AICA Core.
-   The first approach is preferable and described analytically in a
-   [RobotStudio forum post](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller)
-   (read until the end and the last comment for a critical fix).
-   :::note
-   OmniCore controllers and RobotWare 7.x versions by default listen on HTTPS and port 80 for RobotStudio and 443 for
-   the real robot. If necessary, the port numbers can be modified by following the instructions in this
-   [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
-   :::
-   <!-- TODO: write down actual commands -->
-3. (Only for connection with the RobotStudio simulation) To communicate with the RWS running in the Windows device,
-   the firewall in the respective network (usually Public) needs to be deactivated.
-4. In the firewall settings of RobotStudio, make sure that UDPUC and RobotWebServices are enabled in the network that is
-   being used (see picture below). Finally, for the changes to take effect, restart the controller.
+2. Navigate to the Controller tab > Configuration > Communication > Firewall Manager, and make sure that UDPUC and
+   RobotWebServices are enabled in the network that is being used.
    <div class="text--center">
      <img src={abbFirewallManager} alt="Firewall manager options." />
    </div>
+3. Navigate to the Controller tab > Configuration > I/O System > Signal, and add a new signal as shown below.
+   <div class="text--center">
+     <img src={abbAnalogSignal} alt="Add analog signal." style={{ width: '536px' }} />
+     <!-- same width as UDPUC picture -->
+   </div>
+4. Finally, for the changes to take effect, restart the controller.
 
 ## RAPID module
 
-The ABB hardware interface needs a suitable RAPID module that uses EGM to allow external control to be running on the
-robot. An example of such a module is shown below. It's important to make sure that the UCDevice name used in the RAPID
-module corresponds to the UDPUC device configured during step 1 above. The module can be placed in the controller's home
- directory and uploaded to the current task.
+The ABB hardware interface provided by AICA needs a matching RAPID module running on the robot to allow external control
+through EGM. Place the module below in the controller's home directory and upload it to the current task.
+
+:::warning
+
+The setup steps above are required for the module to run properly, follow them closely.
+
+:::
 
 <details>
-  <summary>Example RAPID module</summary>
+  <summary>AICA_EGM.modx</summary>
 
-```bash
-MODULE AICAMain
-  !***********************************************************
-  ! Program data
-  !***********************************************************
-  ! Home position.
-  LOCAL VAR jointtarget current;
-
-  ! Identifier for the EGM correction.
-  LOCAL VAR egmident egm_id;
-
-  ! Limits for convergance.
-  LOCAL VAR egm_minmax egm_condition := [-0.1, 0.1];
-
-  !***********************************************************
-  !
-  ! Procedure main
-  !
-  !   This RAPID code exemplifies how to run EGM with velocity control
-  !
-  !   Note: Update the UCDevice "AICA_PC" with correct
-  !         values for the remote address and port
-  !         (i.e. to the EGM server).
-  !
-  !         Update via RobotStudio:
-  !         Controller tab -> Configuration ->
-  !         Communication -> UDP Unicast Device
-  !
-  !***********************************************************
-  PROC main()
-      current := CJointT();
-      MoveAbsJ current, v200, fine, tool0;
-
-      ! Register an EGM id.
-      EGMGetId egm_id;
-
-      ! Setup the EGM communication.
-      EGMSetupUC ROB_1, egm_id, "default", "AICA_PC", \Joint;
-
-      ! Prepare for an EGM communication session.
-      EGMActJoint egm_id
-                  \J1:=egm_condition
-                  \J2:=egm_condition
-                  \J3:=egm_condition
-                  \J4:=egm_condition
-                  \J5:=egm_condition
-                  \J6:=egm_condition
-                  \MaxSpeedDeviation:=120.0;
-
-      WHILE TRUE DO
-          ! Start the EGM communication session.
-          EGMRunJoint egm_id, EGM_STOP_HOLD, \J1 \J2 \J3 \J4 \J5 \J6 \CondTime:=5 \RampOutTime:=5 \PosCorrGain:=0;
-          EGMStop egm_id, EGM_STOP_HOLD \RampOutTime:=5;
-      ENDWHILE
-      ! Release the EGM id.
-      EGMReset egm_id;
-
-
-  ERROR
-      IF ERRNO = ERR_UDPUC_COMM THEN
-          TPWrite "Communication timed out";
-          TRYNEXT;
-      ENDIF
-  ENDPROC
+```
+MODULE AICA_EGM
+    LOCAL RECORD EGMSettings
+        ! UdpUc device name
+        string uc_device;
+        ! Time-out for communication with the external UdpUC device in seconds
+        num comm_timeout;
+        ! The convergence criteria datais used to decide if the robot has reached the ordered joint positions
+        num cond_min_max;
+        ! Maximum admitted joint speed change in degrees/second
+        num max_speed_deviation;
+        ! The time in seconds that the convergence criteria defined in EGMActJoint has to
+        !   be fulfilled before the target point is considered to be reached
+        num cond_time;
+        ! Defines in seconds how fast the movement is started
+        num ramp_in_time;
+        ! Position correction gain. A value between 0 and 1
+        num pos_corr_gain;
+    ENDRECORD
+    LOCAL CONST string CONTEXT_MAIN:="[Main]: ";
+    LOCAL CONST string CONTEXT_EGM:="[EGM]: ";
+    LOCAL CONST num STATE_IDLE:=0;
+    LOCAL CONST num STATE_INITIALIZE:=1;
+    LOCAL CONST num STATE_RUN_EGM:=2;
+    LOCAL VAR num current_state;
+    LOCAL VAR errnum CHANGE_STATE:=-1;
+    LOCAL VAR num idle_counter:=0;
+    LOCAL VAR intnum intnum_start_egm;
+    LOCAL VAR intnum intnum_stop_egm;
+    LOCAL VAR intnum intnum_restart_egm;
+    ! EGM settings
+    LOCAL CONST string DEFAULT_UC_DEVICE:="UC_DEVICE";
+    LOCAL VAR egmident egm_id;
+    LOCAL VAR EGMSettings settings;
+    LOCAL VAR egm_minmax minmax_condition;
+    LOCAL VAR bool egm_setup;
+    LOCAL VAR jointtarget current_j;
+    PROC main()
+        TPErase;
+        initialize;
+        printInfoMessage 0, CONTEXT_MAIN, "Starting StateMachine loop";
+        WHILE TRUE DO
+            TEST current_state
+                CASE STATE_RUN_EGM:
+                    runEGM;
+                DEFAULT:
+                    runIdle;
+            ENDTEST
+            WaitTime 0.01;
+        ENDWHILE
+    ERROR(CHANGE_STATE)
+        idle_counter:=0;
+        TRYNEXT;
+    ENDPROC
+    LOCAL PROC initialize()
+        IDisable;
+        BookErrNo CHANGE_STATE;
+        IDelete intnum_stop_egm;
+        CONNECT intnum_stop_egm WITH handleStopEGM;
+        ISignalAI AICA_EGM_STATE, AIO_BELOW_LOW, 1.5, 0.5, 0, intnum_stop_egm;
+        IDelete intnum_start_egm;
+        CONNECT intnum_start_egm WITH handleStartEGM;
+        ISignalAI AICA_EGM_STATE, AIO_BETWEEN, 1.5, 0.5, 0, intnum_start_egm;
+        IDelete intnum_restart_egm;
+        CONNECT intnum_restart_egm WITH handleRestartEGM;
+        ISignalAI AICA_EGM_STATE, AIO_BETWEEN, 2.5, 1.5, 0, intnum_restart_egm;
+        current_state:=STATE_IDLE;
+        EGMReset egm_id;
+        EGMGetId egm_id;
+        egm_setup:=FALSE;
+        settings.uc_device:=DEFAULT_UC_DEVICE;
+        settings.comm_timeout:=1;
+        settings.cond_min_max:=0.1;
+        settings.max_speed_deviation:=120; ! lowest axis speed on GoFa 12kg
+        settings.cond_time:=5;
+        settings.ramp_in_time:=1;
+        settings.pos_corr_gain:=1;
+        IEnable;
+    ENDPROC
+    LOCAL PROC runEGM()
+        IF NOT egm_setup THEN
+            printInfoMessage 2, CONTEXT_EGM, "Wait until zero speed";
+            WaitRob\ZeroSpeed;
+            minmax_condition.min:=-Abs(settings.cond_min_max);
+            minmax_condition.max:=Abs(settings.cond_min_max);
+            EGMSetupUC ROB_ID, egm_id, "default", settings.uc_device \Joint \CommTimeout:=settings.comm_timeout;
+            EGMActJoint egm_id
+                        \J1:=minmax_condition
+                        \J2:=minmax_condition
+                        \J3:=minmax_condition
+                        \J4:=minmax_condition
+                        \J5:=minmax_condition
+                        \J6:=minmax_condition
+                        \MaxSpeedDeviation:=settings.max_speed_deviation;
+            printInfoMessage 2, CONTEXT_EGM, "EGM set up";
+            egm_setup:=TRUE;
+        ENDIF
+        IF egm_setup AND EGMGetState(egm_id)=EGM_STATE_CONNECTED THEN
+            printInfoMessage 2, CONTEXT_EGM, "Starting EGM";
+            saturateValue settings.pos_corr_gain, 0, 1;
+            EGMRunJoint egm_id,
+                        EGM_STOP_HOLD
+                        \J1\J2\J3\J4\J5\J6
+                        \CondTime:=settings.cond_time
+                        \RampInTime:=settings.ramp_in_time
+                        \PosCorrGain:=settings.pos_corr_gain;
+            printInfoMessage 2, CONTEXT_EGM, "EGMRunJoint terminated";
+        ENDIF
+    ERROR
+        IF ERRNO=ERR_UDPUC_COMM THEN
+            printInfoMessage 2, CONTEXT_EGM, "Communication timeout";
+            egm_setup:=FALSE;
+            TRYNEXT;
+        ENDIF
+    ENDPROC
+    LOCAL PROC runIdle()
+        IF idle_counter MOD 1000 = 0 THEN
+            printInfoMessage 0, CONTEXT_MAIN, "Idling...";
+            idle_counter:=0;
+        ENDIF
+        Incr idle_counter;
+    ERROR
+        RAISE;
+    ENDPROC
+    LOCAL TRAP handleStopEGM
+        printInfoMessage 0, CONTEXT_MAIN, "Handling EGM stop";
+        IF current_state=STATE_RUN_EGM AND EGMGetState(egm_id)=EGM_STATE_RUNNING THEN
+            EGMStop egm_id,EGM_STOP_HOLD;
+            current_state:=STATE_IDLE;
+            RAISE CHANGE_STATE;
+        ENDIF
+        printInfoMessage 0, CONTEXT_MAIN, "EGM stop is not possible";
+    ERROR (CHANGE_STATE)
+        RAISE CHANGE_STATE;
+    ENDTRAP
+    LOCAL TRAP handleStartEGM
+        printInfoMessage 0, CONTEXT_MAIN, "Handling EGM start";
+        IF current_state=STATE_IDLE THEN
+            current_state:=STATE_RUN_EGM;
+            RAISE CHANGE_STATE;
+        ENDIF
+        printInfoMessage 0, CONTEXT_MAIN, "EGM start is not possible";
+    ERROR (CHANGE_STATE)
+        RAISE CHANGE_STATE;
+    ENDTRAP
+    LOCAL TRAP handleRestartEGM
+        printInfoMessage 0, CONTEXT_MAIN, "Handling EGM restart";
+        IF current_state=STATE_RUN_EGM AND EGMGetState(egm_id)=EGM_STATE_RUNNING THEN
+            EGMStop egm_id,EGM_STOP_HOLD;
+            RAISE CHANGE_STATE;
+        ENDIF
+        printInfoMessage 0, CONTEXT_MAIN, "EGM restart is not possible";
+    ERROR (CHANGE_STATE)
+        RAISE CHANGE_STATE;
+    ENDTRAP
+    PROC saturateValue(VAR num value, num minimum, num maximum)
+        IF value < minimum THEN
+            value := minimum;
+        ELSEIF value > maximum THEN
+            value := maximum;
+        ENDIF
+    ENDPROC
+    LOCAL PROC printInfoMessage(num indention_level, string context, string message)
+        VAR string temp_indention:="";
+        IF(indention_level > 0) THEN
+            FOR i FROM 0 TO indention_level-1 DO
+                temp_indention:=temp_indention + " ";
+            ENDFOR
+        ENDIF
+        TPWrite temp_indention + context + message;
+    ENDPROC
+    LOCAL PROC printEGMState()
+        TEST EGMGetState(egm_id)
+        CASE EGM_STATE_DISCONNECTED:
+            printInfoMessage 2, CONTEXT_EGM, "DISCONNECTED";
+        CASE EGM_STATE_CONNECTED:
+            printInfoMessage 2, CONTEXT_EGM, "CONNECTED";
+        CASE EGM_STATE_RUNNING:
+            printInfoMessage 2, CONTEXT_EGM, "RUNNING";
+        DEFAULT:
+            printInfoMessage 2, CONTEXT_EGM, "UNKNOWN";
+        ENDTEST
+    ENDPROC
 ENDMODULE
 ```
 
@@ -265,14 +385,17 @@ robot. The majority of the hardware interface parameters enable connection to EG
 </div>
 
 - RWS IP & port: the address and port of the RWS server, e.g. the address of the real robot or the RobotStudio device
+  :::note
+  OmniCore controllers and RobotWare 7.x versions by default listen on HTTPS and port 80 for RobotStudio and 443 for the
+  real robot. If necessary, the port numbers can be modified by following the instructions in this
+  [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
+  :::
 - EGM port: the port of the EGM server, e.g. the *Remote Port Number* of the UDPUC device defined in RobotStudio above
 - Connection timeout: the amount of time the hardware interface tries to connect to the RWS and EGM servers before
   reporting an error
-- Settling time constant: the time within which the robot will reach a certain percentage of the target position (only 
-  used for position commands). Lower values make the motion faster and the robot more responsive.
-<!-- - Rapid File Path: the path for the module to be loaded in the controller home directory. -->
-<!--- Headless Mode: if true, the hardware interface handles the whole initialization procedure of starting and stopping the
-  RAPID program and the motors without requiring any user interaction. -->
+- Controller Task and Main Module name: Depends on the controller configuration and usually defaults to `T_ROB1` and
+  `AICA_EGM`, respectively.
+- Uc Device: The name of the UDPUC device configured above.
 
 Before starting an application with an ABB hardware interface in AICA Studio, the motors and RAPID program on the robot
 must be started manually through the teach pendant or RobotStudio. After that, running the application will connect to
