@@ -162,146 +162,143 @@ Trajectory controller to move the `Generic` robot.
   <summary>Joint Trajectory Control with Joint State publisher</summary>
 
     ```yaml
-schema: 2-0-6
-dependencies:
-  core: v5.1.0
-frames:
-  wp1:
-    reference_frame: world
-    position:
-      x: 0.492159
-      y: -0.020903
-      z: 0.487698
-    orientation:
-      w: 0
-      x: -0.707107
-      y: 0.707107
-      z: 0.000563
-  wp2:
-    reference_frame: world
-    position:
-      x: 0.492038
-      y: 0.1335
-      z: 0.336067
-    orientation:
-      w: 0.007248
-      x: 0.70707
-      y: -0.707064
-      z: -0.007811
-  wp3:
-    reference_frame: world
-    position:
-      x: 0.491953
-      y: 0.359307
-      z: 0.229181
-    orientation:
-      w: 0
-      x: -0.707107
-      y: 0.707107
-      z: 0.000563
-on_start:
-  load:
-    - component: joint_signal_to_joint_state_message
-    - hardware: hardware
-components:
-  joint_signal_to_joint_state_message:
-    component: aica_core_components::ros::JointSignalToJointStateMsg
-    display_name: Joint Signal To Joint State Message
-    inputs:
-      input: /hardware/robot_state_broadcaster/joint_state
-    outputs:
-      output: /joint_state
-hardware:
-  hardware:
-    display_name: Hardware Interface
-    urdf: Generic six-axis robot arm
-    rate: 100
-    events:
-      transitions:
-        on_load:
-          load:
-            - controller: robot_state_broadcaster
-              hardware: hardware
-            - controller: joint_trajectory_controller
-              hardware: hardware
-    controllers:
-      robot_state_broadcaster:
-        plugin: aica_core_controllers/RobotStateBroadcaster
-        outputs:
-          joint_state: /hardware/robot_state_broadcaster/joint_state
-        events:
-          transitions:
-            on_load:
-              switch_controllers:
-                hardware: hardware
-                activate: robot_state_broadcaster
-        display_name: Robot State Broadcaster
-      joint_trajectory_controller:
-        plugin: aica_core_controllers/trajectory/JointTrajectoryController
-        events:
-          transitions:
-            on_load:
-              switch_controllers:
-                hardware: hardware
-                activate: joint_trajectory_controller
-          predicates:
-            has_trajectory_succeeded:
-              call_service:
-                controller: joint_trajectory_controller
-                hardware: hardware
-                service: set_trajectory
-                payload: '{"times_from_start": [5, 7, 8], "frames": ["wp1", "wp2", "wp3"]}'
-graph:
-  positions:
-    buttons:
-      button:
-        x: 360
-        y: 780
+    schema: 2-0-6
+    dependencies:
+      core: v5.1.0
+    frames:
+      wp1:
+        reference_frame: world
+        position:
+          x: 0.492159
+          y: -0.020903
+          z: 0.487698
+        orientation:
+          w: 0
+          x: -0.707107
+          y: 0.707107
+          z: 0.000563
+      wp2:
+        reference_frame: world
+        position:
+          x: 0.492038
+          y: 0.1335
+          z: 0.336067
+        orientation:
+          w: 0.007248
+          x: 0.70707
+          y: -0.707064
+          z: -0.007811
+      wp3:
+        reference_frame: world
+        position:
+          x: 0.491953
+          y: 0.359307
+          z: 0.229181
+        orientation:
+          w: 0
+          x: -0.707107
+          y: 0.707107
+          z: 0.000563
+    on_start:
+      load:
+        - component: joint_signal_to_joint_state_message
+        - hardware: hardware
     components:
       joint_signal_to_joint_state_message:
-        x: 460
-        y: 140
+        component: aica_core_components::ros::JointSignalToJointStateMsg
+        display_name: Joint Signal To Joint State Message
+        inputs:
+          input: /hardware/robot_state_broadcaster/joint_state
+        outputs:
+          output: /joint_state
     hardware:
       hardware:
-        x: 1060
-        y: 0
-  buttons:
-    button:
-      display_name: Trigger Events Button
-      on_click:
-        call_service:
-          controller: joint_trajectory_controller
-          hardware: hardware
-          service: set_trajectory
-          payload: '{"times_from_start": [5, 7, 8], "frames": ["wp1", "wp2", "wp3"]}'
-  edges:
-    on_start_on_start_joint_signal_to_joint_state_message_joint_signal_to_joint_state_message:
-      path:
-        - x: 280
-          y: 60
-        - x: 280
-          y: 200
-    hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_joint_trajectory_controller_set_trajectory:
-      path:
-        - x: 960
-          y: 760
-        - x: 960
-          y: 840
-    hardware_hardware_robot_state_broadcaster_joint_state_joint_signal_to_joint_state_message_input:
-      path:
-        - x: 440
-          y: 460
-        - x: 440
-          y: 360
+        display_name: Hardware Interface
+        urdf: Generic six-axis robot arm
+        rate: 100
+        events:
+          transitions:
+            on_load:
+              load:
+                - controller: robot_state_broadcaster
+                  hardware: hardware
+                - controller: joint_trajectory_controller
+                  hardware: hardware
+        controllers:
+          robot_state_broadcaster:
+            plugin: aica_core_controllers/RobotStateBroadcaster
+            outputs:
+              joint_state: /hardware/robot_state_broadcaster/joint_state
+            events:
+              transitions:
+                on_load:
+                  switch_controllers:
+                    hardware: hardware
+                    activate: robot_state_broadcaster
+            display_name: Robot State Broadcaster
+          joint_trajectory_controller:
+            plugin: aica_core_controllers/trajectory/JointTrajectoryController
+            events:
+              transitions:
+                on_load:
+                  switch_controllers:
+                    hardware: hardware
+                    activate: joint_trajectory_controller
+              predicates:
+                has_trajectory_succeeded:
+                  call_service:
+                    controller: joint_trajectory_controller
+                    hardware: hardware
+                    service: set_trajectory
+                    payload: '{"times_from_start": [5, 7, 8], "frames": ["wp1", "wp2", "wp3"]}'
+    graph:
+      positions:
+        buttons:
+          button:
+            x: 360
+            y: 780
+        components:
+          joint_signal_to_joint_state_message:
+            x: 460
+            y: 140
+        hardware:
+          hardware:
+            x: 1060
+            y: 0
+      buttons:
+        button:
+          display_name: Trigger Events Button
+          on_click:
+            call_service:
+              controller: joint_trajectory_controller
+              hardware: hardware
+              service: set_trajectory
+              payload: '{"times_from_start": [5, 7, 8], "frames": ["wp1", "wp2", "wp3"]}'
+      edges:
+        on_start_on_start_joint_signal_to_joint_state_message_joint_signal_to_joint_state_message:
+          path:
+            - x: 280
+              y: 60
+            - x: 280
+              y: 200
+        hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_joint_trajectory_controller_set_trajectory:
+          path:
+            - x: 960
+              y: 760
+            - x: 960
+              y: 840
+        hardware_hardware_robot_state_broadcaster_joint_state_joint_signal_to_joint_state_message_input:
+          path:
+            - x: 440
+              y: 460
+            - x: 440
+              y: 360
     ```
 </details>
 
 
 Additionally, the application has a `Joint Signal To Joint State Message` component that converts the robot joint state
 to the message type expected by the Isaac Sim ROS bridge and broadcasts it to the `/joint_state` topic.
-
-This component is key the bridge between AICA Studio and Isaac Sim as it converts the joint signals from AICA into ROS 2
-JointState messages that Isaac Sim can consume:
 
 ```yaml
 components:
