@@ -349,11 +349,11 @@ AICA Studio.
 Now that both Isaac Sim and AICA Studio are set up, you can run the simulation to see the communication in action.
 
 1. **Start AICA Application**: First, ensure that your AICA application is running. You can do this by pressing the
-   `Start` button in AICA Studio. This will start publishing joint commands to the `/joint_state` topic.
+   `Start` button in AICA Studio. This will start broadcasting the robot's state to the `/joint_state` topic.
 
 2. **Start Isaac Sim**: If all the steps above have been followed correctly, you just need to press the `Play` button in
-   Isaac Sim to start the simulation. The OmniGraph will start executing, and the robot in the scene will begin
-   receiving joint commands from AICA Studio.
+   Isaac Sim to start the simulation. The OmniGraph will start executing, and the robot in the scene will mirror the one
+   from AICA Studio.
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
