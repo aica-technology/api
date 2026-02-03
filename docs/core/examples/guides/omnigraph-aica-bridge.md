@@ -334,10 +334,6 @@ the application `wp1`, `wp2`, and `wp3`.
 </div>
 <br/>
 
-Additionally as can be seen in the AICA Studio, the joint commands are retrieved from the current robot state and that's
-exactly why this approach is for visualization purposes only. The state of the robot in Isaac Sim is not fed back to
-AICA Studio.
-
 ## Interfacing Isaac Sim with AICA Studio
 
 Now that both Isaac Sim and AICA Studio are set up, you can run the simulation to see the communication in action.
