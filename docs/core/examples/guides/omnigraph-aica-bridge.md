@@ -155,8 +155,8 @@ Your OmniGraph should look similar to the image below:
 Using AICA Launcher, launch a configuration that uses the latest AICA Studio version and set the ROS 2 Domain ID to `30`
 to match the one set in Isaac Sim. No extra packages are required for this guide.
 
-A simple AICA application that moves a `Generic` robot using `Joint Trajectory Controller` can be created using the
-following:
+Copy the YAML content below into a new application in AICA Studio and save it. This application uses the Joint
+Trajectory controller to move the `Generic` robot.
 
 <details>
   <summary>Joint Trajectory Control with Joint State publisher</summary>
@@ -303,8 +303,8 @@ following:
 </details>
 
 
-Copy the above YAML content into a **New Application** in AICA Studio and save it. This application will use the `Generic`
-robot model and send joint commands to Isaac Sim via the `/joint_state` topic.
+Additionally, the application has a `Joint Signal To Joint State Message` component that converts the robot joint state
+to the message type expected by the Isaac Sim ROS bridge and broadcasts it to the `/joint_state` topic.
 
 This component is key the bridge between AICA Studio and Isaac Sim as it converts the joint signals from AICA into ROS 2
 JointState messages that Isaac Sim can consume:
@@ -316,9 +316,19 @@ components:
     display_name: Joint Signal To Joint State Message
     inputs:
       input: /hardware/robot_state_broadcaster/joint_state
+    #highlight-next-line
     outputs:
+      #highlight-next-line
       output: /joint_state
 ```
+
+:::info
+
+Since Isaac Sim doesn't appear as a component in AICA Studio, the output topic of the translator component has to be
+edited manually in the code editor. Simply add the two highlighted lines above to configure the output to the matching
+topic name.
+
+:::
 
 Validate the application by pressing Play in AICA Studio. You will see the robot moving between 3 waypoints defined in
 the application `wp1`, `wp2`, and `wp3`.
