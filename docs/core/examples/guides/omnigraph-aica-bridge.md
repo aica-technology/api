@@ -250,7 +250,7 @@ Trajectory controller to move the `Generic` robot.
                     controller: joint_trajectory_controller
                     hardware: hardware
                     service: set_trajectory
-                    payload: '{"times_from_start": [5, 7, 8], "frames": ["wp1", "wp2", "wp3"]}'
+                    payload: '{"times_from_start": [5, 7, 8], "frames": [wp1, wp2, wp3]}'
     graph:
       positions:
         buttons:
@@ -273,7 +273,7 @@ Trajectory controller to move the `Generic` robot.
               controller: joint_trajectory_controller
               hardware: hardware
               service: set_trajectory
-              payload: '{"times_from_start": [5, 7, 8], "frames": ["wp1", "wp2", "wp3"]}'
+              payload: '{"times_from_start": [5, 7, 8], "frames": [wp1, wp2, wp3]}'
       edges:
         on_start_on_start_joint_signal_to_joint_state_message_joint_signal_to_joint_state_message:
           path:
