@@ -123,10 +123,12 @@ explain some of these here:
   Generates a depth image with the same size as the color, with depth expressed in the color camera coordinate system.
 - `Enable Threshold Filter`: flag that activates a threshold filter in the depth image. If activated, corresponding
   filter parameters can be directly defined in the YAML editor to configure the filter behavior. To see what parameters
-  can be defined, read the description by hovering over the exclamation mark. <div class="text--center">
-  <img src={orbbecThresholdParameters} alt="Threshold filter tooltip parameters" /> </div> If the additional parameters
-  are not provided, default values will be used. For instance, activating and configuring the threshold filter would
-  look like this in the YAML editor:
+  can be defined, read the description by hovering over the exclamation mark.
+  <div class="text--center">
+    <img src={orbbecThresholdParameters} alt="Threshold filter tooltip parameters" />
+  </div>
+  If the additional parameters are not provided, default values will be used. For instance, activating and configuring
+  the threshold filter would look like this in the YAML editor:
 
       ```yaml
       components:
