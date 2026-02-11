@@ -40,7 +40,7 @@ jobs:
             schema-path: ./component-descriptions/schema
           - schema: controller
             schema-path: ./controller-descriptions/schema
-          - schema: extension
+          - schema: extensions
             schema-path: ./extensions/schema
           - schema: interfaces
             schema-path: ./interfaces/schema
