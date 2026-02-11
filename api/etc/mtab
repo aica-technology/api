@@ -11,7 +11,7 @@ cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory
 pstore /sys/fs/pstore pstore rw,nosuid,nodev,noexec,relatime 0 0
 efivarfs /sys/firmware/efi/efivars efivarfs rw,nosuid,nodev,noexec,relatime 0 0
 bpf /sys/fs/bpf bpf rw,nosuid,nodev,noexec,relatime,mode=700 0 0
-systemd-1 /proc/sys/fs/binfmt_misc autofs rw,relatime,fd=32,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=2674 0 0
+systemd-1 /proc/sys/fs/binfmt_misc autofs rw,relatime,fd=32,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=310 0 0
 hugetlbfs /dev/hugepages hugetlbfs rw,nosuid,nodev,relatime,pagesize=2M 0 0
 mqueue /dev/mqueue mqueue rw,nosuid,nodev,noexec,relatime 0 0
 debugfs /sys/kernel/debug debugfs rw,nosuid,nodev,noexec,relatime 0 0
@@ -21,4 +21,5 @@ configfs /sys/kernel/config configfs rw,nosuid,nodev,noexec,relatime 0 0
 /dev/sda16 /boot ext4 rw,relatime,discard 0 0
 /dev/sda15 /boot/efi vfat rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
 binfmt_misc /proc/sys/fs/binfmt_misc binfmt_misc rw,nosuid,nodev,noexec,relatime 0 0
+/dev/sdb1 /mnt ext4 rw,relatime 0 0
 tmpfs /run/user/1001 tmpfs rw,nosuid,nodev,relatime,size=1637876k,nr_inodes=409469,mode=700,uid=1001,gid=1001,inode64 0 0
