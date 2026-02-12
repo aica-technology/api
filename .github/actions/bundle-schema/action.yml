@@ -52,7 +52,7 @@ runs:
       if: ${{ steps.versions.outputs.new_schema_id != steps.versions.outputs.prev_schema_id }}
       shell: bash
       run: |
-        bun run --cwd schemas bundle ${{ inputs.schema-path }} ${{ inputs.schema }}
+        bun schemas/bundleHelper.js bundle ${{ inputs.schema-path }} ${{ inputs.schema }}
         EXPORT_DIR="docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}"
         echo "Ensuring directory branch name: ${EXPORT_DIR}"
         mkdir -p "${EXPORT_DIR}"

@@ -35,15 +35,15 @@ jobs:
       matrix:
         include:
           - schema: application
-            schema-path: ./applications/schema
+            schema-path: ./schemas/applications/schema
           - schema: component
-            schema-path: ./component-descriptions/schema
+            schema-path: ./schemas/component-descriptions/schema
           - schema: controller
-            schema-path: ./controller-descriptions/schema
-          - schema: extensions
-            schema-path: ./extensions/schema
+            schema-path: ./schemas/controller-descriptions/schema
+          - schema: extension
+            schema-path: ./schemas/extensions/schema
           - schema: interfaces
-            schema-path: ./interfaces/schema
+            schema-path: ./schemas/interfaces/schema
     name: Bundle the ${{ matrix.schema }} schema
     steps:
       - name: Check out repository code
