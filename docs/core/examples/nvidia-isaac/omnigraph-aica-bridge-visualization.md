@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 1
 title: Using Isaac Sim as a visualizer
 ---
 
