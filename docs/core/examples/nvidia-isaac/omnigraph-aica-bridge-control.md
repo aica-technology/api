@@ -3,9 +3,10 @@ sidebar_position: 2
 title: Using Isaac Sim as a simulator
 ---
 
-import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm'; import graph from
-'./assets/omnigraph-aica-bridge-graph-control.png'; import launcherConfig from
-'./assets/omnigraph-aica-bridge-launcher.png';
+import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm'; 
+import graph from './assets/omnigraph-aica-bridge-graph-control.png'; 
+import launcherConfig from'./assets/omnigraph-aica-bridge-launcher.png';
+import application from './assets/omnigraph-aica-bridge-control-application.png';
 
 # Using Isaac Sim as a simulator
 
@@ -548,6 +549,11 @@ Trajectory Controller to move the `Generic` robot between three waypoints.
 Notice that, unlike the visualizer guide's application, this one does **not** include a `JointSignalToJointStateMsg`
 component. There is no need to manually convert and publish joint states, the topic-based hardware interface handles all
 communication with Isaac Sim directly through the configured ROS 2 topics.
+
+Your application should look similar to the image below:
+<div class="text--center">
+  <img src={application} style={{ height: "auto" }} alt="AICA Application for AICA Bridge Control" />
+</div>
 
 ## Interfacing Isaac Sim with AICA Studio
 
