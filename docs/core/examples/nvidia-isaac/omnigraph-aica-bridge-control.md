@@ -556,7 +556,7 @@ Trajectory Controller to move the `Generic` robot between three waypoints.
 </details>
 
 Notice that, unlike the visualizer guide's application, this one does **not** include a `JointSignalToJointStateMsg`
-component. There is no need to manually convert and publish joint states, the topic-based hardware interface handles all
+component. There is no need to convert and publish joint states, the topic-based hardware interface handles all
 communication with Isaac Sim directly through the configured ROS 2 topics.
 
 Your application should look similar to the image below:
