@@ -3,28 +3,34 @@ sidebar_position: 2
 title: Using Isaac Sim as a simulator
 ---
 
-import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm';
-import graph from './assets/omnigraph-aica-bridge-graph-control.png';
-import launcherConfig from './assets/omnigraph-aica-bridge-launcher.png';
+import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm'; import graph from
+'./assets/omnigraph-aica-bridge-graph-control.png'; import launcherConfig from
+'./assets/omnigraph-aica-bridge-launcher.png';
 
 # Using Isaac Sim as a simulator
 
-This guide walks you through the process of setting up **NVIDIA Isaac Sim** as a physics-based robotics simulator that 
-can be controlled from **AICA Studio** using **OmniGraph** and **ROS 2**. By the end of the tutorial, you will have a 
-fully functional simulation in Isaac Sim that receives joint commands from AICA Studio, simulates the robot’s motion with 
-realistic physics, and streams the resulting joint states back in real time, enabling a complete closed-loop control 
-workflow within a high-fidelity virtual environment.
+This guide walks you through the process of setting up **NVIDIA Isaac Sim** as a physics-based robotics simulator that
+can be controlled from **AICA Studio** using **OmniGraph** and **ROS 2**. By the end of the tutorial, you will have a
+fully functional simulation in Isaac Sim that receives joint commands from AICA Studio, simulates the robot’s motion
+with realistic physics, and streams the resulting joint states back in real time, enabling a complete closed-loop
+control workflow within a high-fidelity virtual environment.
 
-In the companion guide [Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization), we
-set up a one-way connection where AICA Studio controls a robot (via a mock hardware interface or real hardware) and
-Isaac Sim simply mirrors its motion. In that setup, Isaac Sim does not participate in the control loop, it only
-visualizes the robot's state.
+**NVIDIA Isaac Sim** is a high-fidelity robotics simulator built on NVIDIA Omniverse, providing realistic physics and
+RTX-based rendering. The **ROS 2 Bridge** extension allows Isaac Sim to publish and subscribe to ROS 2 topics, enabling
+communication with external systems like AICA Studio. **OmniGraph** is a visual, node-based programming system in Isaac
+Sim that lets you assemble data flows (called _Action Graphs_) by connecting pre-built nodes, including ROS 2 Bridge
+nodes, without writing code. For a more detailed introduction to these concepts, see the companion guide
+[Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization).
+
+In that companion guide, we set up a one-way connection where AICA Studio controls a robot (via a mock hardware
+interface or real hardware) and Isaac Sim simply mirrors its motion. In that setup, Isaac Sim does not participate in
+the control loop, it only visualizes the robot's state.
 
 This guide covers a different direction: **using Isaac Sim as the simulated hardware**. Here, Isaac Sim hosts the robot
 with full physics simulation, and AICA Studio treats it as if it were real hardware. The data flow is bidirectional:
 
-- **AICA Studio - Isaac Sim**: AICA Studio sends joint commands (positions, velocities, or efforts) to Isaac
-  Sim via ROS 2.
+- **AICA Studio - Isaac Sim**: AICA Studio sends joint commands (positions, velocities, or efforts) to Isaac Sim via
+  ROS 2.
 - **Isaac Sim - AICA Studio**: Isaac Sim simulates the robot's physical response and publishes the resulting joint
   states back to AICA Studio via ROS 2.
 
@@ -49,8 +55,8 @@ This guide builds on the same Isaac Sim and ROS 2 setup described in the
 - Isaac Sim launched with the **ROS 2 bridge enabled** and **ROS 2 Jazzy** selected as the ROS 2 distribution
 
 If you have not done so already, follow the
-[Prerequisites](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#prerequisites) section of the visualizer guide
-to install and launch Isaac Sim with the correct settings.
+[Prerequisites](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#prerequisites) section of the visualizer
+guide to install and launch Isaac Sim with the correct settings.
 
 ## Setting up a simple simulation environment
 
@@ -84,7 +90,7 @@ current state and **subscribes** to incoming commands.
 
 In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGraph.
 
-In the OmniGraph editor, add the following six nodes:
+In the OmniGraph editor, add the following five nodes:
 
 1. **ROS2 Context**: Initializes the ROS 2 context. Double-click the node to open its properties and set the `domain_id`
    to `30`. This must match the domain ID used by AICA Studio.
@@ -97,20 +103,19 @@ In the OmniGraph editor, add the following six nodes:
 4. **ROS2 Subscribe Joint State**: Subscribes to joint commands sent by AICA Studio. Set the `topicName` to
    `/joint_commands`.
 
-5. **Articulation Controller**: Applies the received joint commands to the robot. Select the `/world/Generic` robot in the
-   scene  as the `targetPrim`.
+5. **Articulation Controller**: Applies the received joint commands to the robot. Select the `/world/Generic` robot in
+   the scene as the `targetPrim`.
 
 Now that you have all the necessary nodes, you can connect them as follows:
 
-- Connect the `Context` output of the `ROS2 Context` node to the `Context` input on both the
-  `ROS2 Publish Joint State` and `ROS2 Subscribe Joint State` nodes.
+- Connect the `Context` output of the `ROS2 Context` node to the `Context` input on both the `ROS2 Publish Joint State`
+  and `ROS2 Subscribe Joint State` nodes.
 - Connect the `Joint Names` output of the `ROS2 Subscribe Joint State` node to the `Joint Names` input of the
   `Articulation Controller` node.
-- Connect the `Position Command` output of the `ROS2 Subscribe Joint State` node to the `Position Command` input of
-  the `Articulation Controller` node.
-- Connect the `Tick` output of the `On Playback Tick` node to the `Exec In` input of the
-  `ROS2 Publish Joint State` node, the `ROS2 Subscribe Joint State` node, and the `Articulation Controller` node.
-
+- Connect the `Position Command` output of the `ROS2 Subscribe Joint State` node to the `Position Command` input of the
+  `Articulation Controller` node.
+- Connect the `Tick` output of the `On Playback Tick` node to the `Exec In` input of the `ROS2 Publish Joint State`
+  node, the `ROS2 Subscribe Joint State` node, and the `Articulation Controller` node.
 
 Your OmniGraph should look similar to the image below:
 
@@ -121,8 +126,8 @@ Your OmniGraph should look similar to the image below:
 :::info
 
 Compared to the
-[visualizer guide's OmniGraph](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#setting-up-the-omnigraph), this
-graph has one additional node: `ROS2 Publish Joint State` (to send state back to AICA).
+[visualizer guide's OmniGraph](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#setting-up-the-omnigraph),
+this graph has one additional node: `ROS2 Publish Joint State` (to send state back to AICA).
 
 :::
 
@@ -136,7 +141,7 @@ communicates directly with Isaac Sim over ROS 2 topics. This interface:
 - **Publishes** to the `/joint_commands` topic to send commands to Isaac Sim
 
 Use AICA Launcher to create a configuration that uses the latest AICA Studio version. Set the ROS 2 `Domain ID` to `30`
-to match the one configured in Isaac Sim, and include the custom community package that provides the 
+to match the one configured in Isaac Sim, and include the custom community package that provides the
 `topic_based_ros2_control/TopicBasedSystem` hardware interface plugin
 
 ```
@@ -144,24 +149,26 @@ ghcr.io/aica-technology/topic-based-ros2-control:v0.1.0
 ```
 
 Your launcher configuration should look similar to the image below:
+
 <div class="text--center">
   <img src={launcherConfig} style={{ height: "auto" }} alt="AICA Launcher Configuration" />
 </div>
 
 ### Creating a New Hardware with a Topic-Based ROS 2 Interface
 
-First, create a new hardware in AICA Studio to communicate with Isaac Sim. This involves duplicating an
-existing hardware and swapping out the plugin in the URDF.
+First, create a new hardware in AICA Studio to communicate with Isaac Sim. This involves duplicating an existing
+hardware and swapping out the plugin in the URDF.
 
 1. In AICA Studio, go to the **Hardware** tab.
-2. Click on the `Generic six-axis robot arm` to open it and use **Save As** to create a copy with a new name. For
-   example, name it `Generic six-axis robot arm (Topic-Based Interface)`.
+2. Click on the `Generic six-axis robot arm` to open it and use **Save As** to create a copy with a new name. Name it
+   `Generic six-axis robot arm (Topic-Based Interface)`.
 3. In the URDF editor, replace the content of the URDF with the following and click **Save**.
 
 <details>
   <summary>Generic six-axis robot arm (Topic-Based Interface) URDF</summary>
 
     ```xml
+
   <?xml version="1.0" ?>
   <robot name="generic">
     <link name="world"/>
@@ -398,10 +405,12 @@ existing hardware and swapping out the plugin in the URDF.
   </robot>
 
     ```
+
 </details>
 
-In this URDF, we define a `ros2_control` hardware interface that uses the `topic_based_ros2_control/TopicBasedSystem` plugin.
-This plugin is parameterized with the names of the ROS 2 topics to subscribe to for joint states and publish to for joint commands.
+In this URDF, we define a `ros2_control` hardware interface that uses the `topic_based_ros2_control/TopicBasedSystem`
+plugin. This plugin is parameterized with the names of the ROS 2 topics to subscribe to for joint states and publish to
+for joint commands as shown in the highlighted lines below:
 
 ```xml
   <ros2_control name="TopicBasedSystem" type="system">
@@ -414,7 +423,7 @@ This plugin is parameterized with the names of the ROS 2 topics to subscribe to 
     </hardware>
     ...
   </ros2_control>
-``` 
+```
 
 :::warning
 
@@ -537,15 +546,15 @@ Trajectory Controller to move the `Generic` robot between three waypoints.
 </details>
 
 Notice that, unlike the visualizer guide's application, this one does **not** include a `JointSignalToJointStateMsg`
-component. There is no need to manually convert and publish joint states, the topic-based hardware interface handles
-all communication with Isaac Sim directly through the configured ROS 2 topics.
+component. There is no need to manually convert and publish joint states, the topic-based hardware interface handles all
+communication with Isaac Sim directly through the configured ROS 2 topics.
 
 ## Interfacing Isaac Sim with AICA Studio
 
 With both Isaac Sim and AICA Studio configured, you can run the full simulation loop:
 
 1. **Start the AICA application**: Press the `Start` button in AICA Studio. The application will begin sending joint
-   commands to the `/joint_command` topic and reading joint states from the `/joint_states` topic.
+   commands to the `/joint_commands` topic and reading joint states from the `/joint_states` topic.
 
 2. **Start Isaac Sim**: Press the `Play` button in Isaac Sim. The OmniGraph will begin executing: it subscribes to
    commands from AICA, applies them to the simulated robot, and publishes the resulting joint states back.
@@ -555,13 +564,12 @@ the visualizer setup, the robot's motion is driven by actual physics simulation;
 directly to the simulated robot, and Isaac Sim is computing the physical response in real time rather than simply
 mirroring state from a mock interface.
 
-
 :::tip
 
 If the robot does not move or behaves unexpectedly, verify the following:
 
 - The ROS 2 Domain ID is set to `30` in both Isaac Sim (ROS2 Context node) and AICA Studio (Launcher configuration).
-- The topic names match: `/joint_states` for state and `/joint_command` for commands.
+- The topic names match: `/joint_states` for state and `/joint_commands` for commands.
 - The `Generic` robot is selected as the target in both the `ROS2 Publish Joint State` and `Articulation Controller`
   nodes.
 - The hardware rate in AICA Studio matches the simulation tick rate in Isaac Sim.

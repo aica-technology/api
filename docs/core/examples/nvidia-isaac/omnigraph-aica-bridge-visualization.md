@@ -122,14 +122,14 @@ In the OmniGraph editor, you can create nodes and connect them. The following no
 communication between Isaac Sim and AICA Studio:
 
 1. **ROS2 Context**: This node initializes the ROS 2 context and allows and defines the ROS 2 domain ID. In order to set
-the domain ID, double click on the node to open its properties and set the `Domain ID` field to `30`. This domain ID
+the domain ID, double click on the node to open its properties and set the `domain_id` field to `30`. This domain ID
 must match the one used by AICA Studio to ensure proper communication.
 
 2. **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA Studio. Set the
-`Topic Name` field to `/joint_state` to match the topic used by AICA Studio for the `Generic` robot.
+`topicName` field to `/joint_state` to match the topic used by AICA Studio for the `Generic` robot.
 
 3. **Articulation Controller**: This node is responsible for controlling the robot's joints based on the received
-joint states. Select the `Generic` robot in the scene as the `Articulation` for this node.
+joint states. Select the `/world/Generic` robot in the scene as the `Articulation` for this node.
 
 4. **On Playback Tick**: This node triggers the graph execution on each simulation tick.
 
