@@ -3,19 +3,24 @@ sidebar_position: 2
 title: Using Isaac Sim as a simulator
 ---
 
+import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm';
+import graph from './assets/omnigraph-aica-bridge-graph-control.png';
+import launcherConfig from './assets/omnigraph-aica-bridge-launcher.png';
+
 # Using Isaac Sim as a simulator
 
-This guide walks you through the steps required to set up **NVIDIA Isaac Sim** as a physics-based simulator that can be
-controlled from **AICA Studio** using **OmniGraph** and **ROS 2**. By the end of this tutorial, you'll have a working
-simulation in Isaac Sim that receives joint commands from AICA Studio, simulates the robot's response with full physics,
-and streams the resulting joint states back.
+This guide walks you through the process of setting up **NVIDIA Isaac Sim** as a physics-based robotics simulator that 
+can be controlled from **AICA Studio** using **OmniGraph** and **ROS 2**. By the end of the tutorial, you will have a 
+fully functional simulation in Isaac Sim that receives joint commands from AICA Studio, simulates the robot’s motion with 
+realistic physics, and streams the resulting joint states back in real time, enabling a complete closed-loop control 
+workflow within a high-fidelity virtual environment.
 
 In the companion guide [Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization), we
 set up a one-way connection where AICA Studio controls a robot (via a mock hardware interface or real hardware) and
 Isaac Sim simply mirrors its motion. In that setup, Isaac Sim does not participate in the control loop, it only
 visualizes the robot's state.
 
-This guide covers the opposite direction: **using Isaac Sim as the simulated hardware**. Here, Isaac Sim hosts the robot
+This guide covers a different direction: **using Isaac Sim as the simulated hardware**. Here, Isaac Sim hosts the robot
 with full physics simulation, and AICA Studio treats it as if it were real hardware. The data flow is bidirectional:
 
 - **AICA Studio - Isaac Sim**: AICA Studio sends joint commands (positions, velocities, or efforts) to Isaac
@@ -62,6 +67,15 @@ Create a scene with a ground plane and the `Generic` robot model:
    directory. Then, in Isaac Sim, go to `Content` > `My Computer` in the bottom left part of the screen and navigate to
    the directory where you saved the `Generic` robot USD files. Drag and drop the `generic.usd` file into the scene.
 
+Once done with these steps, your scene should look similar to the one below:
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={sceneCreate} type="video/webm" />
+  </video>
+</div>
+<br/>
+
 ## Setting up the OmniGraph
 
 With the scene ready, create an action graph that handles **bidirectional** communication between Isaac Sim and AICA
@@ -72,32 +86,37 @@ In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGra
 
 In the OmniGraph editor, add the following six nodes:
 
-1. **ROS2 Context**: Initializes the ROS 2 context. Double-click the node to open its properties and set the `Domain ID`
+1. **ROS2 Context**: Initializes the ROS 2 context. Double-click the node to open its properties and set the `domain_id`
    to `30`. This must match the domain ID used by AICA Studio.
 
 2. **On Playback Tick**: Triggers the graph execution on each simulation tick.
 
 3. **ROS2 Publish Joint State**: Publishes the simulated robot's current joint state to a ROS 2 topic. Set the
-   `Topic Name` to `/joint_states`. Select the `Generic` robot in the scene as the `targetPrim`.
+   `topicName` to `/joint_states`. Select the `/world/Generic/root_joint` robot in the scene as the `targetPrim`.
 
-4. **ROS2 Subscribe Joint State**: Subscribes to joint commands sent by AICA Studio. Set the `Topic Name` to
-   `/joint_command`.
+4. **ROS2 Subscribe Joint State**: Subscribes to joint commands sent by AICA Studio. Set the `topicName` to
+   `/joint_commands`.
 
-5. **Articulation Controller**: Applies the received joint commands to the robot. Select the `Generic` robot in the
-   scene as the target articulation.
+5. **Articulation Controller**: Applies the received joint commands to the robot. Select the `/world/Generic` robot in the
+   scene  as the `targetPrim`.
 
 Now that you have all the necessary nodes, you can connect them as follows:
 
 - Connect the `Context` output of the `ROS2 Context` node to the `Context` input on both the
   `ROS2 Publish Joint State` and `ROS2 Subscribe Joint State` nodes.
-- Connect the `Simulation Time` output of the `Isaac Read Simulation Time` node to the `Timestamp` input of the
-  `ROS2 Publish Joint State` node.
 - Connect the `Joint Names` output of the `ROS2 Subscribe Joint State` node to the `Joint Names` input of the
   `Articulation Controller` node.
 - Connect the `Position Command` output of the `ROS2 Subscribe Joint State` node to the `Position Command` input of
   the `Articulation Controller` node.
 - Connect the `Tick` output of the `On Playback Tick` node to the `Exec In` input of the
   `ROS2 Publish Joint State` node, the `ROS2 Subscribe Joint State` node, and the `Articulation Controller` node.
+
+
+Your OmniGraph should look similar to the image below:
+
+<div class="text--center">
+  <img src={graph} style={{ height: "auto" }} alt="OmniGraph for AICA Bridge Control" />
+</div>
 
 :::info
 
@@ -114,40 +133,293 @@ interface and a separate component to publish joint states, we use a **topic-bas
 communicates directly with Isaac Sim over ROS 2 topics. This interface:
 
 - **Subscribes** to the `/joint_states` topic to read the simulated robot's state from Isaac Sim
-- **Publishes** to the `/joint_command` topic to send commands to Isaac Sim
+- **Publishes** to the `/joint_commands` topic to send commands to Isaac Sim
 
-Using AICA Launcher, launch a configuration that uses the latest AICA Studio version and set the ROS 2 Domain ID to `30`
-to match the one set in Isaac Sim. Make sure that your configuration includes the following custom community package, which
-provides the `topic_based_ros2_control/TopicBasedSystem` hardware interface plugin:
+Use AICA Launcher to create a configuration that uses the latest AICA Studio version. Set the ROS 2 `Domain ID` to `30`
+to match the one configured in Isaac Sim, and include the custom community package that provides the 
+`topic_based_ros2_control/TopicBasedSystem` hardware interface plugin
 
 ```
 ghcr.io/aica-technology/topic-based-ros2-control:v0.1.0
 ```
 
-### Creating a topic-based hardware interface
+Your launcher configuration should look similar to the image below:
+<div class="text--center">
+  <img src={launcherConfig} style={{ height: "auto" }} alt="AICA Launcher Configuration" />
+</div>
 
-First, configure the hardware interface in AICA Studio to communicate with Isaac Sim. This involves duplicating an
+### Creating a New Hardware with a Topic-Based ROS 2 Interface
+
+First, create a new hardware in AICA Studio to communicate with Isaac Sim. This involves duplicating an
 existing hardware and swapping out the plugin in the URDF.
 
 1. In AICA Studio, go to the **Hardware** tab.
 2. Click on the `Generic six-axis robot arm` to open it and use **Save As** to create a copy with a new name. For
    example, name it `Generic six-axis robot arm (Topic-Based Interface)`.
-3. In the URDF editor, locate the `<ros2_control>` section and replace the `<hardware>` tag with the following:
+3. In the URDF editor, replace the content of the URDF with the following and click **Save**.
+
+<details>
+  <summary>Generic six-axis robot arm (Topic-Based Interface) URDF</summary>
+
+    ```xml
+  <?xml version="1.0" ?>
+  <robot name="generic">
+    <link name="world"/>
+    <joint name="to_world" type="fixed">
+      <parent link="world"/>
+      <child link="base_link"/>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+    </joint>
+    <link name="base_link">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://aica_generic_description/meshes/generic/visual/base_link.dae"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="joint_1" type="revolute">
+      <origin rpy="0 0 0" xyz="0 0 0.154"/>
+      <parent link="base_link"/>
+      <child link="link_1"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="87.0" lower="-6.28" upper="6.28" velocity="3.14"/>
+    </joint>
+    <link name="link_1">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://aica_generic_description/meshes/generic/visual/link_1.dae"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="joint_2" type="revolute">
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <parent link="link_1"/>
+      <child link="link_2"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="87.0" lower="-6.28" upper="6.28" velocity="3.14"/>
+    </joint>
+    <link name="link_2">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://aica_generic_description/meshes/generic/visual/link_2.dae"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="joint_3" type="revolute">
+      <origin rpy="0 0 0" xyz="0 0 0.436"/>
+      <parent link="link_2"/>
+      <child link="link_3"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="87.0" lower="-6.28" upper="6.28" velocity="3.14"/>
+    </joint>
+    <link name="link_3">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://aica_generic_description/meshes/generic/visual/link_3.dae"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="joint_4" type="revolute">
+      <origin rpy="0 0 0" xyz="0.113 -0.406 0"/>
+      <parent link="link_3"/>
+      <child link="link_4"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="12.0" lower="-6.28" upper="6.28" velocity="3.14"/>
+    </joint>
+    <link name="link_4">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://aica_generic_description/meshes/generic/visual/link_4.dae"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="joint_5" type="revolute">
+      <origin rpy="0 0 0" xyz="0 -0.099 0"/>
+      <parent link="link_4"/>
+      <child link="link_5"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="12.0" lower="-6.28" upper="6.28" velocity="3.14"/>
+    </joint>
+    <link name="link_5">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://aica_generic_description/meshes/generic/visual/link_5.dae"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="joint_6" type="revolute">
+      <origin rpy="0 0 0" xyz="0 0 -0.105"/>
+      <parent link="link_5"/>
+      <child link="link_6"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="12.0" lower="-6.28" upper="6.28" velocity="3.14"/>
+    </joint>
+    <link name="link_6">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://aica_generic_description/meshes/generic/visual/link_6.dae"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="link_6-tool0" type="fixed">
+      <parent link="link_6"/>
+      <child link="tool0"/>
+      <origin rpy="3.1416 0 -1.5708" xyz="0 0 0"/>
+    </joint>
+    <link name="tool0"/>
+    <ros2_control name="TopicBasedSystem" type="system">
+      <hardware>
+        <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+        <param name="joint_states_topic">/joint_states</param>
+        <param name="joint_commands_topic">/joint_commands</param>
+      </hardware>
+      <joint name="joint_1">
+        <command_interface name="position">
+          <param name="min">-6.28</param>
+          <param name="max">6.28</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.14</param>
+          <param name="max">3.14</param>
+        </command_interface>
+        <command_interface name="effort">
+          <param name="min">-87</param>
+          <param name="max">87</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="joint_2">
+        <command_interface name="position">
+          <param name="min">-6.28</param>
+          <param name="max">6.28</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.14</param>
+          <param name="max">3.14</param>
+        </command_interface>
+        <command_interface name="effort">
+          <param name="min">-87</param>
+          <param name="max">87</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="joint_3">
+        <command_interface name="position">
+          <param name="min">-6.28</param>
+          <param name="max">6.28</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.14</param>
+          <param name="max">3.14</param>
+        </command_interface>
+        <command_interface name="effort">
+          <param name="min">-87</param>
+          <param name="max">87</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="joint_4">
+        <command_interface name="position">
+          <param name="min">-6.28</param>
+          <param name="max">6.28</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.14</param>
+          <param name="max">3.14</param>
+        </command_interface>
+        <command_interface name="effort">
+          <param name="min">-12</param>
+          <param name="max">12</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="joint_5">
+        <command_interface name="position">
+          <param name="min">-6.28</param>
+          <param name="max">6.28</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.14</param>
+          <param name="max">3.14</param>
+        </command_interface>
+        <command_interface name="effort">
+          <param name="min">-12</param>
+          <param name="max">12</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="joint_6">
+        <command_interface name="position">
+          <param name="min">-6.28</param>
+          <param name="max">6.28</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.14</param>
+          <param name="max">3.14</param>
+        </command_interface>
+        <command_interface name="effort">
+          <param name="min">-12</param>
+          <param name="max">12</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+    </ros2_control>
+  </robot>
+
+    ```
+</details>
+
+In this URDF, we define a `ros2_control` hardware interface that uses the `topic_based_ros2_control/TopicBasedSystem` plugin.
+This plugin is parameterized with the names of the ROS 2 topics to subscribe to for joint states and publish to for joint commands.
 
 ```xml
-<hardware>
-  <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
-  <param name="joint_states_topic">/joint_states</param>
-  <param name="joint_commands_topic">/joint_command</param>
-</hardware>
-```
-
-4. Save your changes.
+  <ros2_control name="TopicBasedSystem" type="system">
+    <hardware>
+      <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+      #highlight-next-line
+      <param name="joint_states_topic">/joint_states</param>
+      #highlight-next-line
+      <param name="joint_commands_topic">/joint_commands</param>
+    </hardware>
+    ...
+  </ros2_control>
+``` 
 
 :::warning
 
 The topic names configured in the URDF must match those set in the OmniGraph nodes in Isaac Sim. The hardware interface
-subscribes to `/joint_states` (published by the `ROS2 Publish Joint State` node) and publishes to `/joint_command`
+subscribes to `/joint_states` (published by the `ROS2 Publish Joint State` node) and publishes to `/joint_commands`
 (consumed by the `ROS2 Subscribe Joint State` node).
 
 :::

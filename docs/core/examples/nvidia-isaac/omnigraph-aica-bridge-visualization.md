@@ -93,7 +93,7 @@ will use a basic scene with a ground plane and a AICA's `Generic` robot model.
    the directory where you saved the `Generic` robot USD files. Drag and drop the `generic.usd` file into the scene to add
    the robot.
 
-Once down with these steps, your scene should look similar to the one below:
+Once done with these steps, your scene should look similar to the one below:
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
