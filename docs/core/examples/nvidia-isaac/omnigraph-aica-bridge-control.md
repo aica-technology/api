@@ -6,7 +6,9 @@ title: Using Isaac Sim as a simulator
 import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm'; 
 import graph from './assets/omnigraph-aica-bridge-graph-control.png'; 
 import launcherConfig from'./assets/omnigraph-aica-bridge-launcher.png';
+import addingGraph from './assets/omnigraph-aica-bridge-add-graph.webm'; 
 import application from './assets/omnigraph-aica-bridge-control-application.png';
+import integration from './assets/omnigraph-aica-bridge-control-integration.webm';
 
 # Using Isaac Sim as a simulator
 
@@ -90,6 +92,13 @@ Studio. Unlike the visualizer setup (which only subscribes to joint states), thi
 current state and **subscribes** to incoming commands.
 
 In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGraph.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={addingGraph} type="video/webm" />
+  </video>
+</div>
+<br/>
 
 In the OmniGraph editor, add the following five nodes:
 
@@ -570,6 +579,14 @@ the visualizer setup, the robot's motion is driven by actual physics simulation;
 directly to the simulated robot, and Isaac Sim is computing the physical response in real time rather than simply
 mirroring state from a mock interface.
 
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={integration} type="video/webm" />
+  </video>
+</div>
+
+<br/>
+
 :::tip
 
 If the robot does not move or behaves unexpectedly, verify the following:
@@ -581,3 +598,4 @@ If the robot does not move or behaves unexpectedly, verify the following:
 - The hardware rate in AICA Studio matches the simulation tick rate in Isaac Sim.
 
 :::
+<br/>
