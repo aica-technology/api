@@ -156,10 +156,7 @@
                   "$ref": "common/parameters.schema.json"
                 },
                 "parameters_file": {
-                  "title": "Controller Parameters File",
-                  "description": "An address pointing to a YAML or JSON file containing controller parameters",
-                  "type": "string",
-                  "pattern": "^(file:\/\/\/|(data|package):\/\/)[a-zA-Z0-9_]+(\/?[a-zA-Z0-9_-]+)*(.yaml|.json)$"
+                  "$ref": "common/parameters_file.schema.json"
                 },
                 "inputs": {
                   "$ref": "common/signals.schema.json"

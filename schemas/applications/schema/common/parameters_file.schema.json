@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Parameters File",
+  "description": "A path to a YAML or JSON parameters file that is used to set parameter values on load. This is evaluated before any values in the `parameters` property are applied.",
+  "type": "string",
+  "pattern": "^(file:\/\/\/|(data|package):\/\/)[a-zA-Z0-9_]+(\/?[a-zA-Z0-9_-]+)*(.yaml|.json)$"
+}
