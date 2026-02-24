@@ -157,7 +157,7 @@
                 },
                 "parameters_file": {
                   "title": "Controller Parameters File",
-                  "description": "An address pointing to a YAML or TXT file containing controller parameters",
+                  "description": "An address pointing to a YAML or JSON file containing controller parameters",
                   "type": "string",
                   "pattern": "^(file:\/\/\/|(data|package):\/\/(\/)?)[a-zA-Z0-9_]+(\/?[a-zA-Z0-9_-]+)*(.yaml|.json)$"
                 },
