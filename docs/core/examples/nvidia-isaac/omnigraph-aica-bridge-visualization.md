@@ -30,19 +30,19 @@ communication between Isaac Sim and ROS 2 without writing code.
 
 This interface can be used in two main ways:
 
-1. **Control a simulated robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio 
-  controls a virtual robot hosted in Isaac Sim. The AICA application sends control inputs via ROS 2, and Isaac Sim feeds back 
-  the robot state and sensor data (e.g., joint states, poses, perception). From the AICA application’s point of view, the
-  simulated robot behaves like real hardware, making this setup well suited for validating and debugging control algorithms 
-  before deploying them to a physical robot.
-
-2. **Visualize a robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio controls
+1. **Visualize a robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio controls
   a robot that is not in Isaac Sim (e.g., in a production environment, AICA's mock interface, URSim, ...). The robot’s state 
   (such as joint positions) is streamed to Isaac Sim, which mirrors the robot’s motion in a virtual scene. Isaac Sim 
   is used purely for visualization and does not participate in the control loop. This provides a live digital view of 
   the robot for monitoring, debugging, and demonstration purposes.
 
-In this guide, we will focus on the second use case: **using Isaac Sim as a visualization tool for AICA Studio**. We will
+2. **Control a simulated robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio 
+  controls a virtual robot hosted in Isaac Sim. The AICA application sends control inputs via ROS 2, and Isaac Sim feeds back 
+  the robot state and sensor data (e.g., joint states, poses, perception). From the AICA application’s point of view, the
+  simulated robot behaves like real hardware, making this setup well suited for validating and debugging control algorithms 
+  before deploying them to a physical robot.
+
+In this guide, we focus on the first use case: **using Isaac Sim as a visualization tool for AICA Studio**. We will
 set up a simple simulation environment in Isaac Sim with a robot model and create an OmniGraph that subscribes to joint
 commands from an AICA application via ROS 2. 
 

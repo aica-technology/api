@@ -12,35 +12,22 @@ import integration from './assets/omnigraph-aica-bridge-control-integration.webm
 
 # Using Isaac Sim as a simulator
 
-This guide walks you through the process of setting up **NVIDIA Isaac Sim** as a physics-based robotics simulator that
-can be controlled from **AICA Studio** using **OmniGraph** and **ROS 2**. By the end of the tutorial, you will have a
-fully functional simulation in Isaac Sim that receives joint commands from AICA Studio, simulates the robot’s motion
-with realistic physics, and streams the resulting joint states back in real time, enabling a complete closed-loop
-control workflow within a high-fidelity virtual environment.
+This guide builds directly on
+[Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization), where we configured
+the first use case: using Isaac Sim to mirror robot motion for visualization.
 
-**NVIDIA Isaac Sim** is a high-fidelity robotics simulator built on NVIDIA Omniverse, providing realistic physics and
-RTX-based rendering. The **ROS 2 Bridge** extension allows Isaac Sim to publish and subscribe to ROS 2 topics, enabling
-communication with external systems like AICA Studio. **OmniGraph** is a visual, node-based programming system in Isaac
-Sim that lets you assemble data flows (called _Action Graphs_) by connecting pre-built nodes, including ROS 2 Bridge
-nodes, without writing code. For a more detailed introduction to these concepts, see the companion guide
-[Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization).
-
-In that companion guide, we set up a one-way connection where AICA Studio controls a robot (via a mock hardware
-interface or real hardware) and Isaac Sim simply mirrors its motion. In that setup, Isaac Sim does not participate in
-the control loop, it only visualizes the robot's state.
-
-This guide covers a different direction: **Control a simulated robot in Isaac Sim from an AICA application.**. Here,
-Isaac Sim hosts the robot with full physics simulation, and AICA Studio treats it as if it were real hardware. The data
-flow is bidirectional:
+Here, we focus on the second use case: **controlling a simulated robot in Isaac Sim from an AICA application**. Isaac
+Sim hosts the robot with full physics simulation, and AICA Studio interacts with it as if it were real hardware. The
+data flow is bidirectional:
 
 - **AICA Studio -> Isaac Sim**: AICA Studio sends joint commands (positions, velocities, or efforts) to Isaac Sim via
   ROS 2.
 - **Isaac Sim -> AICA Studio**: Isaac Sim simulates the robot's physical response and publishes the resulting joint
   states back to AICA Studio via ROS 2.
 
-From AICA Studio's perspective, the simulated robot in Isaac Sim behaves like real hardware. This makes the setup well
-suited for validating and debugging control algorithms in a physics-based environment before deploying them to a
-physical robot.
+From AICA Studio's perspective, the simulated robot in Isaac Sim behaves like real hardware. This setup is well suited
+for validating and debugging control algorithms in a physics-based environment before deploying them to a physical
+robot.
 
 :::tip
 
@@ -51,31 +38,15 @@ refer to [Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph
 
 ## Prerequisites
 
-This guide builds on the same Isaac Sim and ROS 2 setup described in the
-[visualizer guide](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#prerequisites). Make sure you have:
-
-- **Isaac Sim v5 or later** installed (see the
-  [official installation instructions](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/index.html))
-- Isaac Sim launched with the **ROS 2 bridge enabled** and **ROS 2 Jazzy** selected as the ROS 2 distribution
-
-If you have not done so already, follow the
-[Prerequisites](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#prerequisites) section of the visualizer
-guide to install and launch Isaac Sim with the correct settings.
+Complete the full
+[Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization) guide first,
+including prerequisites, scene setup, and the baseline OmniGraph. This guide assumes that baseline is already working.
 
 ## Setting up a simple simulation environment
 
-The scene setup is the same as in the
-[visualizer guide](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#setting-up-a-simple-simulation-environment).
-Create a scene with a ground plane and the `Generic` robot model:
-
-1. **Create a new scene**: In Isaac Sim, go to `File` > `New` to create a new scene with default lighting.
-
-2. **Add a ground plane**: Go to `Create` > `Physics` > `Ground Plane` to add a flat ground surface.
-
-3. **Add a robot**: Download the `Generic` robot USD model from
-   [our repository](https://github.com/aica-technology/isaac-lab/tree/main/usd/robots/aica/generic) into a local
-   directory. Then, in Isaac Sim, go to `Content` > `My Computer` in the bottom left part of the screen and navigate to
-   the directory where you saved the `Generic` robot USD files. Drag and drop the `generic.usd` file into the scene.
+Reuse the exact same scene from the
+[visualizer guide](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#setting-up-a-simple-simulation-environment):
+ground plane + `Generic` robot model. No scene changes are required for this control setup.
 
 Once done with these steps, your scene should look similar to the one below:
 
@@ -88,9 +59,9 @@ Once done with these steps, your scene should look similar to the one below:
 
 ## Setting up the OmniGraph
 
-With the scene ready, create an action graph that handles **bidirectional** communication between Isaac Sim and AICA
-Studio. Unlike the visualizer setup (which only subscribes to joint states), this graph both **publishes** the robot's
-current state and **subscribes** to incoming commands.
+With the scene ready, update the visualizer action graph for **bidirectional** communication between Isaac Sim and AICA
+Studio. Structurally, this is the same graph plus one additional node (`ROS2 Publish Joint State`) so Isaac Sim can
+publish simulated state back to AICA.
 
 In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGraph.
 
@@ -101,7 +72,7 @@ In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGra
 </div>
 <br/>
 
-In the OmniGraph editor, add the following five nodes:
+In the OmniGraph editor, ensure the following five nodes are present:
 
 1. **ROS2 Context**: Initializes the ROS 2 context. Double-click the node to open its properties and set the `domain_id`
    to `30`. This must match the domain ID used by AICA Studio.
