@@ -3,6 +3,6 @@
 	"position": 4,
 	"link": {
 		"type": "generated-index",
-		"description": "This section covers integrating the AICA System with NVIDIA Isaac for robotics simulation and visualization. These guides show how to connect AICA Studio to Isaac Sim and Isaac Lab, enabling you to control simulated robots with full physics, visualize robot state in real time, and validate applications before deploying to real hardware."
+		"description": "This section covers integrating the AICA System with NVIDIA Isaac for robotics simulation and visualization."
 	}
 }
