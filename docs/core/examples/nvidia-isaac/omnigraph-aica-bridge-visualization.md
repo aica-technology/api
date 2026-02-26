@@ -1,5 +1,5 @@
 ---
-sidebar_position: 11
+sidebar_position: 1
 title: Using Isaac Sim as a visualizer
 ---
 
@@ -30,19 +30,19 @@ communication between Isaac Sim and ROS 2 without writing code.
 
 This interface can be used in two main ways:
 
-1. **Control a simulated robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio 
-  controls a virtual robot hosted in Isaac Sim. The AICA application sends control inputs via ROS 2, and Isaac Sim feeds back 
-  the robot state and sensor data (e.g., joint states, poses, perception). From the AICA application’s point of view, the
-  simulated robot behaves like real hardware, making this setup well suited for validating and debugging control algorithms 
-  before deploying them to a physical robot.
-
-2. **Visualize a robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio controls
+1. **Visualize a robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio controls
   a robot that is not in Isaac Sim (e.g., in a production environment, AICA's mock interface, URSim, ...). The robot’s state 
   (such as joint positions) is streamed to Isaac Sim, which mirrors the robot’s motion in a virtual scene. Isaac Sim 
   is used purely for visualization and does not participate in the control loop. This provides a live digital view of 
   the robot for monitoring, debugging, and demonstration purposes.
 
-In this guide, we will focus on the second use case: **using Isaac Sim as a visualization tool for AICA Studio**. We will
+2. **Control a simulated robot in Isaac Sim from an AICA application:** In this mode, an application running in AICA Studio 
+  controls a virtual robot hosted in Isaac Sim. The AICA application sends control inputs via ROS 2, and Isaac Sim feeds back 
+  the robot state and sensor data (e.g., joint states, poses, perception). From the AICA application’s point of view, the
+  simulated robot behaves like real hardware, making this setup well suited for validating and debugging control algorithms 
+  before deploying them to a physical robot.
+
+In this guide, we focus on the first use case: **using Isaac Sim as a visualization tool for AICA Studio**. We will
 set up a simple simulation environment in Isaac Sim with a robot model and create an OmniGraph that subscribes to joint
 commands from an AICA application via ROS 2. 
 
@@ -93,7 +93,7 @@ will use a basic scene with a ground plane and a AICA's `Generic` robot model.
    the directory where you saved the `Generic` robot USD files. Drag and drop the `generic.usd` file into the scene to add
    the robot.
 
-Once down with these steps, your scene should look similar to the one below:
+Once done with these steps, your scene should look similar to the one below:
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
@@ -122,14 +122,14 @@ In the OmniGraph editor, you can create nodes and connect them. The following no
 communication between Isaac Sim and AICA Studio:
 
 1. **ROS2 Context**: This node initializes the ROS 2 context and allows and defines the ROS 2 domain ID. In order to set
-the domain ID, double click on the node to open its properties and set the `Domain ID` field to `30`. This domain ID
+the domain ID, double click on the node to open its properties and set the `domain_id` field to `30`. This domain ID
 must match the one used by AICA Studio to ensure proper communication.
 
 2. **ROS2 Subscribe Joint State**: This node subscribes to the joint state topic published by AICA Studio. Set the
-`Topic Name` field to `/joint_state` to match the topic used by AICA Studio for the `Generic` robot.
+`topicName` field to `/joint_state` to match the topic used by AICA Studio for the `Generic` robot.
 
 3. **Articulation Controller**: This node is responsible for controlling the robot's joints based on the received
-joint states. Select the `Generic` robot in the scene as the `Articulation` for this node.
+joint states. Select the `/world/Generic` robot in the scene as the `Articulation` for this node.
 
 4. **On Playback Tick**: This node triggers the graph execution on each simulation tick.
 
