@@ -101,7 +101,7 @@ Your launcher configuration should look similar to the image below:
   <img src={launcherConfig} style={{ height: "70%", width: "70%" }} alt="AICA Launcher Configuration" />
 </div>
 
-### Creating a New Hardware with a Topic-Based ROS 2 Interface
+### Creating a new Hardware with a Topic-Based ROS 2 Interface
 
 First, create a new URDF in AICA Studio to communicate with Isaac Sim. This involves duplicating an existing hardware
 and swapping out the plugin in the URDF.
