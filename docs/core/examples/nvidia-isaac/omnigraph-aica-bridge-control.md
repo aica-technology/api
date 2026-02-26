@@ -6,7 +6,7 @@ title: Using Isaac Sim as a simulator
 import sceneCreate from './assets/omnigraph-aica-bridge-scene-create.webm'; 
 import graph from './assets/omnigraph-aica-bridge-graph-control.png'; 
 import launcherConfig from'./assets/omnigraph-aica-bridge-launcher.png'; 
-import addingGraph from './assets/omnigraph-aica-bridge-add-graph.webm'; 
+import addingGraph from './assets/omnigraph-aica-bridge-control-add-graph.webm'; 
 import application from './assets/omnigraph-aica-bridge-control-application.png'; 
 import integration from './assets/omnigraph-aica-bridge-control-integration.webm';
 
@@ -42,28 +42,13 @@ Complete the full
 [Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization) guide first,
 including prerequisites, scene setup, and the baseline OmniGraph. This guide assumes that baseline is already working.
 
-## Setting up a simple simulation environment
-
-Reuse the exact same scene from the
-[visualizer guide](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#setting-up-a-simple-simulation-environment):
-ground plane + `Generic` robot model. No scene changes are required for this control setup.
-
-Once done with these steps, your scene should look similar to the one below:
-
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-    <source src={sceneCreate} type="video/webm" />
-  </video>
-</div>
-<br/>
-
 ## Setting up the OmniGraph
 
-With the scene ready, update the visualizer action graph for **bidirectional** communication between Isaac Sim and AICA
-Studio. Structurally, this is the same graph plus one additional node (`ROS2 Publish Joint State`) so Isaac Sim can
-publish simulated state back to AICA.
+Start from the OmniGraph you built in the
+[visualizer guide](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#setting-up-the-omnigraph). To
+support control, keep that graph as-is and only apply the changes below.
 
-In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGraph.
+In Isaac Sim, open that existing Action Graph and add a `ROS2 Publish Joint State` node.
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
@@ -72,46 +57,26 @@ In Isaac Sim, go to `Create` > `Graphs` > `Action Graph` to create a new OmniGra
 </div>
 <br/>
 
-In the OmniGraph editor, ensure the following five nodes are present:
+Configure only the added/updated parts:
 
-1. **ROS2 Context**: Initializes the ROS 2 context. Double-click the node to open its properties and set the `domain_id`
-   to `30`. This must match the domain ID used by AICA Studio.
+1. **ROS2 Publish Joint State**:
+   - Set `topicName` to `/joint_states`
+   - Set `targetPrim` to `/world/Generic/root_joint`
 
-2. **On Playback Tick**: Triggers the graph execution on each simulation tick.
+2. **ROS2 Subscribe Joint State**:
+   - Update `topicName` to `/joint_commands`
 
-3. **ROS2 Publish Joint State**: Publishes the simulated robot's current joint state to a ROS 2 topic. Set the
-   `topicName` to `/joint_states`. Select the `/world/Generic/root_joint` robot in the scene as the `targetPrim`.
+3. **Additional connections**:
+   - Connect `ROS2 Context.Context` -> `ROS2 Publish Joint State.Context`
+   - Connect `On Playback Tick.Tick` -> `ROS2 Publish Joint State.Exec In`
 
-4. **ROS2 Subscribe Joint State**: Subscribes to joint commands sent by AICA Studio. Set the `topicName` to
-   `/joint_commands`.
-
-5. **Articulation Controller**: Applies the received joint commands to the robot. Select the `/world/Generic` robot in
-   the scene as the `targetPrim`.
-
-Now that you have all the necessary nodes, you can connect them as follows:
-
-- Connect the `Context` output of the `ROS2 Context` node to the `Context` input on both the `ROS2 Publish Joint State`
-  and `ROS2 Subscribe Joint State` nodes.
-- Connect the `Joint Names` output of the `ROS2 Subscribe Joint State` node to the `Joint Names` input of the
-  `Articulation Controller` node.
-- Connect the `Position Command` output of the `ROS2 Subscribe Joint State` node to the `Position Command` input of the
-  `Articulation Controller` node.
-- Connect the `Tick` output of the `On Playback Tick` node to the `Exec In` input of the `ROS2 Publish Joint State`
-  node, the `ROS2 Subscribe Joint State` node, and the `Articulation Controller` node.
+All other nodes, settings, and connections remain the same as in the visualizer guide.
 
 Your OmniGraph should look similar to the image below:
 
 <div class="text--center">
   <img src={graph} style={{ height: "auto" }} alt="OmniGraph for AICA Bridge Control" />
 </div>
-
-:::info
-
-Compared to the
-[visualizer guide's OmniGraph](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization#setting-up-the-omnigraph),
-this graph has one additional node: `ROS2 Publish Joint State` (to send state back to AICA).
-
-:::
 
 ## Configuring the AICA Application
 
