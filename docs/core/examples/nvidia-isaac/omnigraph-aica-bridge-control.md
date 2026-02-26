@@ -38,9 +38,9 @@ refer to [Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph
 
 ## Prerequisites
 
-Complete the full
-[Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization) guide first,
-including prerequisites, scene setup, and the baseline OmniGraph. This guide assumes that baseline is already working.
+Complete the [Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization) guide
+first, in particular the sections for prerequisites, scene setup, and the OmniGraph. This guide builds directly on top
+of those steps, and it is expected that your setup from the previous guide is working correctly before proceeding.
 
 ## Setting up the OmniGraph
 
