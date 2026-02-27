@@ -155,6 +155,9 @@
                 "parameters": {
                   "$ref": "common/parameters.schema.json"
                 },
+                "parameters_file": {
+                  "$ref": "common/parameters_file.schema.json"
+                },
                 "inputs": {
                   "$ref": "common/signals.schema.json"
                 },
