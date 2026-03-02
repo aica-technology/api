@@ -3,8 +3,6 @@ sidebar_position: 11
 title: FANUC manipulators
 ---
 
-import fanucLocal from './assets/fanuc-local-detail.png'
-import fanucRemote from './assets/fanuc-remote.png'
 import fanucHI from './assets/fanuc-HI.png'
 
 # FANUC manipulators
@@ -56,11 +54,11 @@ program on the robot controller.
 
 For optimal performance, the rate of the hardware interface rate should be set according to the communication interval
 of Stream Motion. For example, if the system variable `$STMO.$COM_INT` is set to 8 [ms], configure 125 Hertz in AICA
-Studio. Depending the robot controller being used, this value might be higher.
+Studio. Depending on the robot controller being used, this value might be higher.
 
 :::
 
-Return to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
+Returning to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
 robot:
 
 <div class="text--center">
