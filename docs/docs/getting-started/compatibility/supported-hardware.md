@@ -26,7 +26,7 @@ drivers. This allows you to expand the supported hardware list by using open sou
 |--------------|-----------------------------|---------|------------------|
 | [ABB](/core/examples/guides/abb-hardware-interface) | OmniCore | Robot Web Services, Externally Guided Motion | RobotWare 7.X |
 | [FANUC](/core/examples/guides/fanuc-hardware-interface) | R-30iB Plus, R-30iB Mate Plus, R-30iB Mini Plus, R-50iA  | J516 Stream Motion, R912 Remote Motion | |
-| KUKA | KR C5 | RobotSensorInterface | |
+| KUKA | KR C5, KR C4, KR C3 | RobotSensorInterface | |
 | Mecademic | n/a | n/a | TCP/IP & EtherCAT drivers for Meca500 |
 | Stäubli | CS9, CS8C | alter, advCtrlFunctions  | TX2 series |
 | [Universal Robots](/core/examples/guides/ur-harware-interface) | Polyscope > 5.X | n/a | |

@@ -25,7 +25,10 @@ To use the ABB collection, add `collections/abb` **v1.0.0 or higher** to your co
 supporting the following robot models out of the box:
 
 - IRB 1010
-- GoFa CRB 15000, 12 Kg
+- IRB 6730-210/3.1
+- GoFa CRB 15000-12/1.27
+
+Other robot models can be added on request. Reach out to the AICA support team for further information.
 
 ## General
 
