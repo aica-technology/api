@@ -30,6 +30,8 @@ Additionally, one of the following software options are required:
 - J519 Stream Motion and R912 Remote Motion
 - S636 External Control Package, which includes the previous
 
+As stated in the documentation, J568 and J570 are no longer required.
+
 :::
 
 To use the FANUC collection, add `collections/fanuc` **v1.0.0** to your configuration in AICA Launcher, currently
