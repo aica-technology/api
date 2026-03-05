@@ -1,5 +1,5 @@
 name: Bundle & Push JSON schema
-description: 'Bundle & Push JSON schema'
+description: "Bundle & Push JSON schema"
 author: aica-technology
 inputs:
   schema-path:
@@ -52,7 +52,7 @@ runs:
       if: ${{ steps.versions.outputs.new_schema_id != steps.versions.outputs.prev_schema_id }}
       shell: bash
       run: |
-        bun schemas/bundleHelper.js bundle ${{ inputs.schema-path }} ${{ inputs.schema }}
+        bun run schemas/bundleHelper.js ${{ inputs.schema-path }} ${{ inputs.schema }}
         EXPORT_DIR="docs/static/schemas/${{ steps.versions.outputs.new_schema_version }}"
         echo "Ensuring directory branch name: ${EXPORT_DIR}"
         mkdir -p "${EXPORT_DIR}"

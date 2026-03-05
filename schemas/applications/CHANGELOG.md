@@ -20,7 +20,7 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
-## Upcoming changes
+## Upcoming changes in draft/2-1-1
 
 - feat: add hardware plugin (#454)
 - feat: add support for parameter files in components and controllers (#463)
