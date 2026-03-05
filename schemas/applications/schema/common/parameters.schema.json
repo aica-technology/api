@@ -31,6 +31,12 @@
     }
   },
   "$defs": {
+    "parameter": {
+      "title": "Parameter Name",
+      "description": "The name of a parameter in the application",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
+    },
     "typed_parameter_value": {
       "title": "Typed Parameter Value",
       "description": "An object containing a parameter value and explicit type",

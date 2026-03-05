@@ -27,12 +27,6 @@
         "variable"
       ]
     },
-    "parameter": {
-      "title": "Parameter Name",
-      "description": "The name of a parameter in the application",
-      "type": "string",
-      "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
-    },
     "target_component": {
       "title": "Assignment Target Component",
       "additionalProperties": false,
@@ -41,7 +35,7 @@
           "$ref": "identifier.schema.json"
         },
         "parameter": {
-          "$ref": "#/$defs/parameter"
+          "$ref": "parameters.schema.json#/$defs/parameter"
         }
       },
       "required": [
@@ -60,7 +54,7 @@
           "$ref": "identifier.schema.json"
         },
         "parameter": {
-          "$ref": "#/$defs/parameter"
+          "$ref": "parameters.schema.json#/$defs/parameter"
         }
       },
       "required": [
