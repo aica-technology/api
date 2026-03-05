@@ -81,7 +81,7 @@
           "title": "Hardware Parameters",
           "type": "object",
           "patternProperties": {
-            "^[a-z][a-z0-9_]*[a-z0-9]$": {
+            "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$": {
               "title": "Hardware Parameter",
               "description": "A hardware parameter in the URDF to be overridden with a new value",
               "type": "string"
