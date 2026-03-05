@@ -1,5 +1,5 @@
-import * as fs from "fs";
 import $RefParser from "@apidevtools/json-schema-ref-parser";
+import * as fs from "fs";
 
 const filePath = process.argv[2];
 const outputName = process.argv[3];
@@ -46,10 +46,18 @@ $RefParser.bundle(filePath).then(async (schema) => {
     jsonSchema = jsonSchema.replaceAll("%24", "$");
     saveFile(`${outputName}.schema.json`, jsonSchema);
 
-    // also generate a minimal version for type generation by removing any allOf statements
+    // generate a minimal version with less validation to simplify type generation, particularly for Go types
     // -> by re-parsing from JSON we can also guarantee no circular references
     const schemaObject = JSON.parse(jsonSchema);
+
+    // remove any allOf statements that can cause ambiguity in Go type generation
     dropKeys(schemaObject, "allOf");
+
+    // for the extension schema, patch the payload schema to be more permissive
+    if (filePath.endsWith("extension.schema.json")) {
+        delete schemaObject.$defs?.service?.properties?.payload_schema?.properties;
+        delete schemaObject.$defs?.service?.properties?.payload_schema?.required;
+    }
 
     jsonSchema = JSON.stringify(schemaObject, null, 2);
     saveFile(`${outputName}.types.schema.json`, jsonSchema);
