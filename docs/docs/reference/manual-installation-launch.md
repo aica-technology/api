@@ -222,7 +222,7 @@ which is used for building packages using `package-builder`.
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
-image = "v4.2.0"
+image = "v5.1.0"
 ```
 
 ### Configuring a runtime image with add-on packages
@@ -244,7 +244,7 @@ use older versions of certain libraries and packages with newer versions of `app
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
-"image" = "v4.2.0"
+"image" = "v5.1.0"
 
 [packages]
 # add components
@@ -267,7 +267,7 @@ registries such as DockerHub or GitHub Container Registry and can be included wi
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
-"image" = "v4.2.0"
+"image" = "v5.1.0"
 
 [packages]
 # add a custom package from a local docker image path
@@ -361,16 +361,15 @@ When the container starts up, it will generate some initial output in the termin
 like the example below:
 
 ```console
-[2024-11-18 13:43:12 +0000] [87] [INFO] Starting gunicorn 21.2.0
-[2024-11-18 13:43:12 +0000] [87] [INFO] Listening at: http://0.0.0.0:5000 (87)
-[2024-11-18 13:43:12 +0000] [87] [INFO] Using worker: eventlet
-[2024-11-18 13:43:12 +0000] [100] [INFO] Booting worker with pid: 100
-[INFO] [rosapi_node-1]: process started with pid [151]
-[INFO] [1731937392.265880595] [EventEngine.ServiceHandler]: Initializing event engine services
-[INFO] [1731937392.270243234] [event_engine]: No initial application provided. Use the event engine service interface to set, initialize and start an application.
-[2024-11-18 13:43:13 +0000] [100] [INFO] Starting sync of cloud applications
-[INFO] [1731937393.151675196] [EventEngineInterface]: Successfully connected to Event Engine services
-[2024-11-18 13:43:13 +0000] [100] [INFO] Synced cloud applications: 0 added, 0 updated, 0 deleted, 1 total
+[2026-03-03 10:00:25] INFO: starting daemon "nginx" as user "nginx"
+[2026-03-03 10:00:26] INFO: starting service "api_server" as user "ros2"
+[2026-03-03 10:00:26] INFO: starting service "event_engine" as user "ros2"
+[2026-03-03 10:00:26] INFO: started all services
+ERRO[2026-03-03T10:00:26.711194796Z]cloud/credentials.go:39 newStorageCredentials failed to read credentials from db            error="failed to get refresh token: record not found"
+ERRO[2026-03-03T10:00:26.958746589Z]server/serve.go:117 (*serveCmd).Run.func3 Failed to sync cloud apps (post startup)      error="no refresh token available"
+[INFO] [1772532027.694988604] [EventEngine.ServiceHandler]: Initializing event engine services
+[INFO] [1772532027.700529953] [event_engine]: No initial application provided. Use the event engine service interface to set, initialize and start an application.
+
 ```
 
 :::info
@@ -472,6 +471,7 @@ docker run -it --rm \
   --privileged \
   --net=host \
   -v /path/to/aica-license.toml:/license:ro \
+  -v /path/to/data:/data:rw \
   #highlight-next-line
   -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
   aica-runtime
@@ -485,6 +485,7 @@ docker run -it --rm \
   --privileged \
   -p 8080:8080 -p 18000-18100:18000-18100/udp \
   -v /path/to/aica-license.toml:/license:ro \
+  -v /path/to/data:/data:rw \
   #highlight-next-line
   -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
   aica-runtime
@@ -498,6 +499,7 @@ docker run -it --rm \
   --privileged \
   -p 8080:8080 \
   -v /path/to/aica-license.toml:/license:ro \
+  -v /path/to/data:/data:rw \
   #highlight-next-line
   -e AICA_SUPER_ADMIN_PASSWORD="${AICA_SUPER_ADMIN_PASSWORD}" \
   aica-runtime

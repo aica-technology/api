@@ -1,0 +1,8 @@
+{
+	"label": "NVIDIA Isaac",
+	"position": 4,
+	"link": {
+		"type": "generated-index",
+		"description": "This section covers integrating the AICA System with NVIDIA Isaac for robotics simulation and visualization."
+	}
+}

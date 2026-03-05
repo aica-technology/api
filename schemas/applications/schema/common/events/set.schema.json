@@ -43,7 +43,7 @@
           "$ref": "../identifier.schema.json"
         },
         "parameter": {
-          "$ref": "../assignment_target.schema.json#/$defs/parameter"
+          "$ref": "../parameters.schema.json#/$defs/parameter"
         },
         "value": {
           "$ref": "../parameters.schema.json#/$defs/parameter_value"
@@ -71,7 +71,7 @@
           "$ref": "../identifier.schema.json"
         },
         "parameter": {
-          "$ref": "../assignment_target.schema.json#/$defs/parameter"
+          "$ref": "../parameters.schema.json#/$defs/parameter"
         },
         "value": {
           "$ref": "../parameters.schema.json#/$defs/parameter_value"
@@ -94,15 +94,12 @@
       "title": "Set Value Object",
       "oneOf": [
         {
-          "additionalProperties": false,
           "$ref": "#/$defs/target_variable"
         },
         {
-          "additionalProperties": false,
           "$ref": "#/$defs/target_component"
         },
         {
-          "additionalProperties": false,
           "$ref": "#/$defs/target_controller"
         }
       ]
