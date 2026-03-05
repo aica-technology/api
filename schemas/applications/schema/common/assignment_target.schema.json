@@ -3,15 +3,12 @@
   "description": "Identifier for a variable or a component or controller parameter to assign a value to",
   "oneOf": [
     {
-      "additionalProperties": false,
       "$ref": "#/$defs/variable"
     },
     {
-      "additionalProperties": false,
       "$ref": "#/$defs/target_component"
     },
     {
-      "additionalProperties": false,
       "$ref": "#/$defs/target_controller"
     }
   ],
@@ -20,6 +17,7 @@
       "title": "Variable Identifier",
       "description": "A variable in the application",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "variable": {
           "$ref": "identifier.schema.json"
@@ -29,19 +27,15 @@
         "variable"
       ]
     },
-    "parameter": {
-      "title": "Parameter Name",
-      "description": "The name of a parameter in the application",
-      "type": "string",
-      "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
-    },
     "target_component": {
+      "title": "Assignment Target Component",
+      "additionalProperties": false,
       "properties": {
         "component": {
           "$ref": "identifier.schema.json"
         },
         "parameter": {
-          "$ref": "#/$defs/parameter"
+          "$ref": "parameters.schema.json#/$defs/parameter"
         }
       },
       "required": [
@@ -50,6 +44,8 @@
       ]
     },
     "target_controller": {
+      "title": "Assignment Target Controller",
+      "additionalProperties": false,
       "properties": {
         "controller": {
           "$ref": "identifier.schema.json"
@@ -58,7 +54,7 @@
           "$ref": "identifier.schema.json"
         },
         "parameter": {
-          "$ref": "#/$defs/parameter"
+          "$ref": "parameters.schema.json#/$defs/parameter"
         }
       },
       "required": [

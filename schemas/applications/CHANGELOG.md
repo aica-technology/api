@@ -25,6 +25,7 @@ Release Versions:
 - feat: add hardware plugin (#454)
 - feat: add support for parameter files in components and controllers (#463)
 - feat(schemas): more permissive hardware parameter names (#393)
+- fix: additional properties in assignment and set parameter targets (#470)
 
 ## 2-1-0
 
