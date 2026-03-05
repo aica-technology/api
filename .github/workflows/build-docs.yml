@@ -48,11 +48,11 @@ jobs:
           bun run --cwd docs build
 
       # Fetch API documentation
-      - uses: aica-technology/.github/.github/actions/login-to-ghcr@v1.0.4
+      - uses: aica-technology/.github/.github/actions/login-to-ghcr@v1.1.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: aica-technology/.github/.github/actions/ghcr-ensure-prefix@v1.0.4
+      - uses: aica-technology/.github/.github/actions/ghcr-ensure-prefix@v1.1.0
         id: ensure-image
         with:
           image_name: aica-technology/api-server-docs
@@ -69,7 +69,7 @@ jobs:
           mkdir -p docs/build/api
 
       - name: Extract Swagger from the built image
-        uses: aica-technology/.github/.github/actions/docker-extract@v1.0.4
+        uses: aica-technology/.github/.github/actions/docker-extract@v1.1.0
         with:
           image: ${{ steps.ensure-image.outputs.image_name }}:${{ steps.api-version.outputs.version }}
           source: /

@@ -27,7 +27,7 @@ jobs:
           PREV_VERSION=$(grep -m 1 version ./python/pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3)
           echo "prev_version=${PREV_VERSION}" >> $GITHUB_OUTPUT
         shell: bash
-      - uses: aica-technology/.github/.github/actions/compare-versions@v1.0.4
+      - uses: aica-technology/.github/.github/actions/compare-versions@v1.1.0
         id: check
         with:
           previous_version: ${{ steps.versions.outputs.prev_version }}
