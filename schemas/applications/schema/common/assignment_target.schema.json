@@ -34,6 +34,7 @@
       "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
     },
     "target_component": {
+      "title": "Assignment Target Component",
       "additionalProperties": false,
       "properties": {
         "component": {
@@ -49,6 +50,7 @@
       ]
     },
     "target_controller": {
+      "title": "Assignment Target Controller",
       "additionalProperties": false,
       "properties": {
         "controller": {
