@@ -3,15 +3,12 @@
   "description": "Identifier for a variable or a component or controller parameter to assign a value to",
   "oneOf": [
     {
-      "additionalProperties": false,
       "$ref": "#/$defs/variable"
     },
     {
-      "additionalProperties": false,
       "$ref": "#/$defs/target_component"
     },
     {
-      "additionalProperties": false,
       "$ref": "#/$defs/target_controller"
     }
   ],
@@ -20,6 +17,7 @@
       "title": "Variable Identifier",
       "description": "A variable in the application",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "variable": {
           "$ref": "identifier.schema.json"
@@ -36,6 +34,7 @@
       "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]?[a-zA-Z0-9])*$"
     },
     "target_component": {
+      "additionalProperties": false,
       "properties": {
         "component": {
           "$ref": "identifier.schema.json"
@@ -50,6 +49,7 @@
       ]
     },
     "target_controller": {
+      "additionalProperties": false,
       "properties": {
         "controller": {
           "$ref": "identifier.schema.json"
