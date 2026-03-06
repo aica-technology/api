@@ -16,7 +16,7 @@ and live data visualization. It also allows managing hardware configuration, use
 ## Application manager and editor
 
 The default landing page when opening AICA Studio is the application manager and editor. It can also be accessed by
-clicking the "Editor" tab in the top navbar.
+clicking the "Editor" link in the top navbar.
 
 It shows a list of saved applications and presents options to create a new application or upload applications from file.
 For a new installation with no saved applications, the list will be empty.
@@ -30,7 +30,7 @@ elements of which are described in the following subsections.
 
 ## Hardware manager
 
-The other top-level page is the hardware manager, available under the "Hardware" tab in the top navbar.
+The other top-level page is the hardware manager, available under the "Hardware" link in the top navbar.
 
 ![aica-studio-hardware-manager](./studio/assets/aica-studio-hardware-manager.png)
 
@@ -43,23 +43,26 @@ Any hardware listed in the hardware manager can be loaded and used in an applica
 
 ## Help
 
-The "Help" tab in the top right section of the navbar is used to access a help page with links to documentation and
-learning resources. It also includes reference documentation for the installed components and controllers in the AICA
-System configuration.
+The "Help" link in the top right section of the navbar is used to access a help page with links to documentation and
+learning resources.
+
+![aica-studio-help-page](./studio/assets/aica-studio-help-page.png)
+
+It also includes reference documentation for the installed components and controllers in the AICA System configuration.
 
 ![aica-studio-docs-page](./studio/assets/aica-studio-docs-page.png)
 
-## User
+## Profile
 
-The "User" tab in the top right of the page is used to access and manage the currently logged-in user profile.
+The "Profile" link in the top right of the page is used to access and manage the currently logged-in user profile.
 
-![aica-studio-user-page](./studio/assets/aica-studio-user-page.png)
+![aica-studio-profile-page](./studio/assets/aica-studio-profile-page.png)
 
-Read more about user scopes and API keys in [Users and authentication](/docs/getting-started/users-and-authentication).
+Read more about user scopes and API keys in [Users and authentication](./studio/users-and-authentication).
 
-## Settings
+## AICA Studio with Launcher
 
-The settings page is accessed through the "Settings" tab on the top right of the page. It is only available to users
-with the `admin` scope and can be used to administer other users as well as connect to cloud storage and services.
+When using AICA Launcher v1.5.0 or newer with AICA Core v5.1.0 or newer, settings and controls related to AICA Launcher
+are available from the top right "Launcher" link in the navbar. This can be used to access 
 
-![aica-studio-settings-view](./studio/assets/aica-studio-settings-view.png)
+![aica-studio-launcher-settings](./studio/assets/aica-studio-launcher-settings.png)
