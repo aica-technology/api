@@ -58,7 +58,7 @@ The "Profile" link in the top right of the page is used to access and manage the
 
 ![aica-studio-profile-page](./studio/assets/aica-studio-profile-page.png)
 
-Read more about user scopes and API keys in [Users and authentication](./studio/users-and-authentication).
+Read more about user scopes and API keys in [Profiles and scopes](./studio/profiles-and-scopes.md).
 
 ## AICA Studio with Launcher
 
