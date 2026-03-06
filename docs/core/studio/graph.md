@@ -39,20 +39,38 @@ the [concepts](/docs/category/application-building-blocks) section.
 
 ## Interacting with the graph
 
-Click and drag on the background of the graph or on the mini-map on the bottom left to pan the view and zoom in and out
-by scrolling. The graph control buttons next to the mini-map can also be used to zoom and fit the view.
+Click and drag on the background of the graph to pan the view and zoom in and out by scrolling.
 
-### Adding and deleting nodes
+### Adding elements to the graph
 
-Nodes can be added to the graph using the sidebar menu; press the (+) button in the top right corner of the graph to
-open the sidebar and see a list of available application elements. At the top of the list are the "Hardware Interface",
-"Trigger Events Button", "Sequence" and "Condition" nodes. These are followed by a list of all available components from
-AICA Core and any additionally installed packages, grouped by package. Clicking on any element in the sidebar will
-automatically add it to the graph.
+Application elements can be added to the graph using the right panel under the Scene tab and Add Component subtab:
 
-Nodes can be moved by clicking and dragging them. Depending on the type of node, clicking on various parts of the node
-will provide additional interaction options such as changing the display name, configuring parameters or expanding /
-collapsing certain fields.
+![aica-studio-add-component](./assets/aica-studio-add-component.png)
+
+At the top of the list are the "Hardware Interface", "Trigger Events Button", "Sequence" and "Condition" nodes. These
+are followed by a list of all available components from AICA Core and any additionally installed packages, grouped by
+package. Clicking on any element in the sidebar will automatically add it to the graph.
+
+The search field can be used to filter the available elements by name or description.
+
+### Managing graph elements
+
+Nodes can be moved by clicking and dragging them. When a node is selected, a small menu provides options to rename,
+duplicate or delete the node. Additionally, settings for the selected node will appear in the right panel under the
+Scene tab and Settings subtab. This is mainly used to configure automatic state transitions such as "auto-configure" or
+"auto-activate" and to set parameter values. The means of editing a parameter value depend on the parameter type, with
+simple toggles for boolean parameters, input fields for numeric and string parameters, and an input menu accessed
+through the pencil edit icon for array parameters.
+
+![aica-studio-component-settings](./assets/aica-studio-component-settings.png)
+
+Depending on the application element, clicking on various parts of the node will provide additional interaction options.
+In particular, components and hardware interfaces have toggleable badges to configure automatic state transitions
+without needing to open the Settings tab, while sequences have a toggle to enable looping behavior. Sections such as
+Transitions, Predicates and Services will have a Show All button that can be used to expand or collapse the respective
+interfaces.
+
+### Deleting graph elements
 
 To delete a node from the graph, press the small menu icon in its top right corner, then click Remove.
 
@@ -131,5 +149,3 @@ indicates which signals are actively transporting data with line animations and 
 highlighting colors.
 
 ![aica-studio-application-graph-running](./assets/aica-studio-application-graph-running.png)
-
-Next, take a look at some of the other available application views.
