@@ -63,6 +63,8 @@ Read more about user scopes and API keys in [Profiles and scopes](./studio/profi
 ## AICA Studio with Launcher
 
 When using AICA Launcher v1.5.0 or newer with AICA Core v5.1.0 or newer, settings and controls related to AICA Launcher
-are available from the top right "Launcher" link in the navbar. This can be used to access 
+are available from the top right "Launcher" link in the navbar. This can be used to open Studio in a separate browser
+window, view API reference, logs or other container details, or to stop and return to the AICA Launcher configuration
+selection.
 
 ![aica-studio-launcher-settings](./studio/assets/aica-studio-launcher-settings.png)

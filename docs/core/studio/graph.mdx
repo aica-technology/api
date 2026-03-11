@@ -7,6 +7,9 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import EventHandle from './assets/event-handle.svg';
 import SignalHandle from './assets/signal-handle.svg';
+import AddComponentMenu from './assets/aica-studio-add-component.png';
+import EditingGraphEdges from './assets/aica-studio-editing-graph-edges.gif';
+import EventEdge from './assets/aica-studio-event-edge.png';
 
 # Application graph
 
@@ -45,11 +48,13 @@ Click and drag on the background of the graph to pan the view and zoom in and ou
 
 Application elements can be added to the graph using the right panel under the Scene tab and Add Component subtab:
 
-![aica-studio-add-component](./assets/aica-studio-add-component.png)
+<div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '1rem' }}>
+  <img src={AddComponentMenu} alt="aica-studio-add-component" width="600"/>
+</div>
 
 At the top of the list are the "Hardware Interface", "Trigger Events Button", "Sequence" and "Condition" nodes. These
 are followed by a list of all available components from AICA Core and any additionally installed packages, grouped by
-package. Clicking on any element in the sidebar will automatically add it to the graph.
+package. Clicking on any element in the right panel will automatically add it to the graph.
 
 The search field can be used to filter the available elements by name or description.
 
@@ -110,7 +115,9 @@ Event edges show the type of event they trigger as a label on the edge. To chang
 triggered, click on the event label on the edge to open a selection menu showing other available event types (for
 example, Load, Unload, Configure...) and click on the desired event.
 
-![event-edge](./assets/aica-studio-event-edge.png)
+<div style={{ display: 'flex', justifyContent: 'center'}}>
+    <img src={EventEdge} alt="aica-studio-event-edge.png" width={600}/>
+</div>
 
 #### Customizing edge paths
 
@@ -120,7 +127,9 @@ Edge paths can be manually edited for better graph layouts in any of the followi
 - Click once on an edge to create a breakpoint, then drag the edge segment on either side of the breakpoint
 - Click on two parts of the edge to create two breakpoints, then drag the intermediate edge segment
 
-![aica-studio-editing-graph-edges](./assets/aica-studio-editing-graph-edges.gif)
+<div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '1rem' }}>
+    <img src={EditingGraphEdges} alt="aica-studio-editing-graph-edges" width={600}/>
+</div>
 
 Note that dragging the first and last edge segments (i.e., those that connect directly to the edge handle) is not
 possible without first creating a breakpoint.

@@ -28,7 +28,8 @@ be clicked again to switch the main view back to the application graph.
 The left panel is used for managing application metadata with controls to rename, describe, and save the working
 version. Exit back to the application manager screen using the "Close" button in the left panel. When the left panel is
 minimized, the "X" button on the top left has the same function. Closing an application will prompt to save or discard
-unsaved changes. Running applications must be stopped before closing the application.
+unsaved changes. Running applications must be stopped before closing or switching applications to avoid safety issues
+for any connected hardware.
 
 ## Right panel
 
@@ -37,5 +38,5 @@ in various tabs. The width of the right panel can be adjusted with drag interact
 or to take up more space for a split-screen effect with the main view. The right panel tabs contain the main tools for
 configuring and monitoring the application.
 
-Read on to learn more about the [application graph editor](./graph.md), the [3D scene](./3d.md) and the
-[right panel tabs](./tab-views.md).
+Read on to learn more about the [application graph editor](./graph), the [3D scene](./3d) and the
+[right panel tabs](./right-tab-tabs).
