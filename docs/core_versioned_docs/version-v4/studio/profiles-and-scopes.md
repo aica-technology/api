@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Users and authentication
 ---
 
@@ -48,12 +48,13 @@ identifier and can be granted a combination of [scopes](#scopes).
 :::note
 
 The email address used to create a new user is only used as an identifier and is unrelated to the email address used for
-[licensing](./installation/licensing). Users are defined locally to a specific AICA System Configuration, and access
-scopes or passwords are not inferred or shared between different configurations, even if the same email address is used.
+[licensing](/docs/getting-started/installation/licensing). Users are defined locally to a specific AICA System
+Configuration, and access scopes or passwords are not inferred or shared between different configurations, even if the
+same email address is used.
 
 :::
 
-To create a new user, click on the **New User** button in the Settings page, provide an email address and the desired 
+To create a new user, click on the **New User** button in the Settings page, provide an email address and the desired
 scopes.
 
 ![aica-studio-create-user](assets/aica-studio-create-user.png)
@@ -98,7 +99,7 @@ with the necessary scopes before creating an API key as that user.
 ![aica-studio-new-key](assets/aica-studio-new-api-key.png)
 
 As was the case with the new user password, the newly created key should be copied and saved in a secure place, as it
-cannot be accessed later. It can then be used it to authenticate and access AICA Core through the API.
+cannot be accessed later. It can then be used to authenticate and access AICA Core through the API.
 
 If an API key is lost or compromised, delete it from the Users page and generate a new one.
 
