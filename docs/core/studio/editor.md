@@ -39,4 +39,4 @@ or to take up more space for a split-screen effect with the main view. The right
 configuring and monitoring the application.
 
 Read on to learn more about the [application graph editor](./graph), the [3D scene](./3d) and the
-[right panel tabs](./right-tab-tabs).
+[right panel tabs](./right-panel-tabs).
