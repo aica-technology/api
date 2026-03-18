@@ -103,7 +103,7 @@ sections (see [Putting an application together](#putting-an-application-together
 
 ### Trajectory execution status
 
-The controller exposes 4 predicates to reflect the the execution status of a trajectory, namely:
+The controller exposes 4 predicates to reflect the execution status of a trajectory, namely:
 
 - `Has active trajectory`: A trajectory has been set and is being executed
 - `Has trajectory succeeded`: A trajectory was executed successfully (i.e., reached the final waypoint within all
