@@ -63,8 +63,6 @@ Studio. Depending on the robot controller being used, this value might be higher
 Returning to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
 robot:
 
-TODO: need updated screenshot
-
 <div class="text--center">
   <img src={fanucHI} alt="FANUC hardware interface." style={{ borderRadius: "8px" }} />
 </div>
