@@ -37,6 +37,8 @@ tags:
     description: User-related operations
   - name: Licensing
     description: Licensing operations
+  - name: AI
+    description: AI resources
 paths:
   /:
     get:
@@ -80,6 +82,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIVersion"
+  /v3/mcp:
+    get:
+      tags: [AI]
+      summary: MCP Server GET endpoint
+      operationId: mcpServerGET
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MCPMessage"
+      security:
+        - token: [control]
+        - token: [monitor]
+        - token: [status]
+    post:
+      tags: [AI]
+      summary: MCP Server POST endpoint
+      operationId: mcpServerPOST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MCPMessage"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MCPMessage"
+      security:
+        - token: [control]
+        - token: [monitor]
+        - token: [status]
   /v3/version:
     get:
       tags: [Licensing]
@@ -664,6 +703,33 @@ paths:
           $ref: "#/components/responses/MissingScopeError"
       security:
         - token: [control]
+  /v3/engine/variables:
+    put:
+      tags: [ Engine ]
+      summary: Set a variable
+      operationId: setVariable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetVariable"
+        required: true
+      responses:
+        "204":
+          description: The variable change request is accepted
+          content: { }
+        "400":
+          description: The variable change request is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [ control ]
   /v3/engine/state:
     get:
       tags: [Engine]
@@ -3089,6 +3155,24 @@ components:
           type: string
           description: The name of the parameter to set
       required: [parameter]
+    ParameterType:
+      type: object
+      properties:
+        type:
+          description: The type of a parameter
+          type: string
+          enum:
+            - bool
+            - bool_array
+            - int
+            - int_array
+            - double
+            - double_array
+            - string
+            - string_array
+            - vector
+            - matrix
+            - state
     ServiceName:
       type: object
       properties:
@@ -3107,6 +3191,7 @@ components:
         - $ref: "#/components/schemas/ComponentReference"
         - $ref: "#/components/schemas/ParameterName"
         - $ref: "#/components/schemas/ParameterValue"
+        - $ref: "#/components/schemas/ParameterType"
     CallComponentService:
       allOf:
         - $ref: "#/components/schemas/ComponentReference"
@@ -3118,6 +3203,7 @@ components:
         - $ref: "#/components/schemas/ControllerName"
         - $ref: "#/components/schemas/ParameterName"
         - $ref: "#/components/schemas/ParameterValue"
+        - $ref: "#/components/schemas/ParameterType"
     CallControllerService:
       allOf:
         - $ref: "#/components/schemas/HardwareReference"
@@ -3128,6 +3214,16 @@ components:
       allOf:
         - $ref: "#/components/schemas/HardwareReference"
         - $ref: "#/components/schemas/ControllerName"
+    SetVariable:
+      allOf:
+        - $ref: "#/components/schemas/ParameterValue"
+        - $ref: "#/components/schemas/ParameterType"
+        - type: object
+          properties:
+            variable:
+              type: string
+              description: The name of the variable to set
+          required: [variable]
     APIVersion:
       type: string
     CoreVersion:
@@ -3702,6 +3798,9 @@ components:
           type: string
         color:
           type: string
+    MCPMessage:
+      type: object
+      description: See official documentation
   parameters:
     ID:
       name: id
@@ -3765,7 +3864,7 @@ components:
       in: header
       name: Authorization
       description: |
-        Use Bearer formatting with an opaque API token, returned by the login endpoint
+        Use Bearer formatting with an opaque API token, either returned by the login endpoint or created through the UI
     cookie:
       type: apiKey
       in: cookie
