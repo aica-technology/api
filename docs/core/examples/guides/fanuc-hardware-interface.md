@@ -34,7 +34,7 @@ As stated in the documentation, J568 and J570 are no longer required.
 
 :::
 
-To use the FANUC collection, add `collections/fanuc` **v1.0.0 or higher** to your configuration in AICA Launcher,
+To use the FANUC collection, add the latest version of `collections/fanuc` to your configuration in AICA Launcher,
 currently supporting the CRX-10iA and the M-10𝑖D/12. Other robot models can be added on request. Simply reach out to the
 AICA support team for further information.
 
@@ -143,9 +143,9 @@ command interfaces to the `ros2_control` section of the URDF as follows:
 
 ### Force torque sensor configuration
 
-Starting with robot controller software V9.40/P85, it is possible to read force torque sensor values directly from the
-robot. The type of force sensor can be configured through the `force_sensor_type` hardware parameter. Available types
-are:
+Starting with driver version `collections/fanuc:v1.1.0` and robot controller software V9.40/P85, it is possible to read 
+force torque sensor values directly from the robot. The type of force sensor can be configured through the `force_sensor_type`
+hardware parameter. Available types are:
 
 - 0: Unselected
 - 1: Embedded: for all CRX models with inbuilt sensor
@@ -153,12 +153,12 @@ are:
 
 :::note
 
-Users without software V9.40/P85 keep the type at 0 to be able to start the hardware interface.
+Users without software V9.40/P85 should keep the type at 0 to be able to start the hardware interface.
 
 :::
 
-To successfully start the hardware interface with a force torque sensor, verify that the URDF contains the following
-interfaces in the `ros2_control` section:
+When the `force_sensor_type` is set to 1 or 2, the URDF must include the following `sensor` interfaces within the `ros2_control` 
+element.
 
 ```xml
   <ros2_control>
@@ -173,3 +173,9 @@ interfaces in the `ros2_control` section:
     </sensor>
   </ros2_control>
 ```
+
+:::note
+
+Skip adding this section if using `collections/fanuc:v1.0.0` or if the `force_sensor_type` is set to 0.
+
+:::
