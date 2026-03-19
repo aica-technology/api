@@ -87,13 +87,13 @@ the driver starts. For detailed description, refer to the relevant sections in t
 
 :::note
 
-Compared to the behavior stated as
+The official documentation states the behavior as follows:
 
 > When outputs or numeric registers are added to the command section of the GPIO configuration YAML file, once the ROS 2
   driver is launched those output and numeric register values in the controller will be set to false or zero.
 
-in the official documentation, the version of the driver provided by AICA does **not** overwrite the value of the GPIOs on
-startup, but keeps the current value set on the robot controller.
+However, the version of the driver provided by AICA takes additional care **not** to overwrite the value of the GPIOs on startup,
+and instead persists the initial value set on the robot controller.
 
 :::
 
