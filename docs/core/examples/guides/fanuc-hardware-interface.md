@@ -174,8 +174,8 @@ element.
   </ros2_control>
 ```
 
-:::note
+:::warning
 
-Skip adding this section if using `collections/fanuc:v1.0.0` or if the `force_sensor_type` is set to 0.
+The URDF must not include these interfaces if using `collections/fanuc:v1.0.0` or if the `force_sensor_type` is set to 0.
 
 :::
