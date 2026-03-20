@@ -4,7 +4,7 @@ title: Right panel tabs
 ---
 
 
-
+import {CenteredImage} from '@site/src/components/CenteredImage';
 import AddComponentMenu from './assets/aica-studio-add-component.png';
 import CodeView from './assets/aica-studio-code-view.png';
 import LogsView from './assets/aica-studio-logs-view.png';
@@ -30,9 +30,7 @@ properties and information and provides controls to change parameters and behavi
 
 The Add Component sub-tab is used to add elements to the application.
 
-<div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1rem'}}>
-    <img src={AddComponentMenu} alt="aica-studio-add-component" width="600" style={{ borderRadius: "8px" }}/>
-</div>
+<CenteredImage src={AddComponentMenu} alt="aica-studio-add-component" />
 
 ### Scene List
 
@@ -48,9 +46,7 @@ whenever any edits are made to the application graph or to elements in the 3D sc
 directly using the built-in editor. However, changes will not take effect until the "Generate Graph" button is pressed.
 In case of syntax errors, graph generation will fail and the relevant error messages will be displayed in the Code view.
 
-<div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1rem'}}>
-    <img src={CodeView} alt="aica-studio-code-view" width="600" style={{ borderRadius: "8px" }}/>
-</div>
+<CenteredImage src={CodeView} alt="aica-studio-code-view" />
 
 ## 3D view / Graph view
 
@@ -82,15 +78,11 @@ The logs view shows log entries from the running system color-coded by severity 
 automatically scrolls the view to the bottom whenever new log entries are added. Scrolling up in the log view allows
 accessing previous log entries and temporarily disables auto-scroll.
 
-<div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1rem'}}>
-    <img src={LogsView} alt="aica-studio-logs-view" width="600" style={{ borderRadius: "8px" }}/>
-</div>
+<CenteredImage src={LogsView} alt="aica-studio-logs-view" />
 
 ## Live Table
 
 When the application is running, the live state table gives a compact overview of which components and controllers are
 loaded, what state they are in, and which predicates and conditions are true or false.
 
-<div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1rem'}}>
-    <img src={StateTableView} alt="aica-studio-state-table-view" width="600" style={{ borderRadius: "8px" }}/>
-</div>
+<CenteredImage src={StateTableView} alt="aica-studio-state-table-view" />

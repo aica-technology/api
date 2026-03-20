@@ -5,6 +5,7 @@ title: Application graph
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import {CenteredImage} from '@site/src/components/CenteredImage';
 import EventHandle from './assets/event-handle.svg';
 import SignalHandle from './assets/signal-handle.svg';
 import AddComponentMenu from './assets/aica-studio-add-component.png';
@@ -48,9 +49,7 @@ Click and drag on the background of the graph to pan the view and zoom in and ou
 
 Application elements can be added to the graph using the right panel under the Scene tab and Add Component subtab:
 
-<div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '1rem' }}>
-  <img src={AddComponentMenu} alt="aica-studio-add-component" width="600" style={{ borderRadius: "8px" }}/>
-</div>
+<CenteredImage src={AddComponentMenu} alt={"aica-studio-add-component"} />
 
 At the top of the list are the "Hardware Interface", "Trigger Events Button", "Sequence" and "Condition" nodes. These
 are followed by a list of all available components from AICA Core and any additionally installed packages, grouped by
@@ -115,9 +114,7 @@ Event edges show the type of event they trigger as a label on the edge. To chang
 triggered, click on the event label on the edge to open a selection menu showing other available event types (for
 example, Load, Unload, Configure...) and click on the desired event.
 
-<div style={{ display: 'flex', justifyContent: 'center'}}>
-    <img src={EventEdge} alt="aica-studio-event-edge.png" width={600} style={{ borderRadius: "8px" }}/>
-</div>
+<CenteredImage src={EventEdge} alt={"aica-studio-event-edge.png"} />
 
 #### Customizing edge paths
 
@@ -127,9 +124,7 @@ Edge paths can be manually edited for better graph layouts in any of the followi
 - Click once on an edge to create a breakpoint, then drag the edge segment on either side of the breakpoint
 - Click on two parts of the edge to create two breakpoints, then drag the intermediate edge segment
 
-<div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '1rem' }}>
-    <img src={EditingGraphEdges} alt="aica-studio-editing-graph-edges" width={600} style={{ borderRadius: "8px" }}/>
-</div>
+<CenteredImage src={EditingGraphEdges} alt={"aica-studio-editing-graph-edges"} />
 
 Note that dragging the first and last edge segments (i.e., those that connect directly to the edge handle) is not
 possible without first creating a breakpoint.
