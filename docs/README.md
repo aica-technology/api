@@ -83,6 +83,21 @@ const config = {
 }
 ```
 
+### MDX and custom React components
+
+The [src/components](src/components) directory contains custom React components that can be imported in MDX from the
+`@site/src/components/...` path. For example, the `CenteredImage` component can be used in MDX files like this:
+
+```mdx
+import {CenteredImage} from '@site/src/components/CenteredImage';
+
+## Code view example
+
+Below is a centered image of the AICA Studio code view:
+
+<CenteredImage src={CodeView} alt="AICA Studio code view" />
+```
+
 ### SVG assets with Excalidraw
 
 Documentation diagrams should be made with [Excalidraw](https://excalidraw.com).
