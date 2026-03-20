@@ -62,8 +62,10 @@ Administration access to authorize and manage cloud service integrations.
 
 ## Profiles
 
-When using AICA Launcher as the system administrator, AICA Studio will show a "Super Admin" landing page to select or
-manage the profile. Brand-new configurations will have no existing profiles.
+When using AICA Launcher or otherwise launching AICA
+Core [as the system administrator](/docs/reference/manual-installation-launch#setting-a-super-admin-password), AICA
+Studio will show a "Super Admin" landing page to select or manage the profile. Brand-new configurations will have no
+existing profiles.
 
 ![aica-studio-super-admin-blank](assets/aica-studio-super-admin-blank.png)
 
