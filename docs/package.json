@@ -22,6 +22,7 @@
 		"baseline-browser-mapping": "^2.9.18",
 		"caniuse-lite": "^1.0.30001766",
 		"clsx": "^1.2.1",
+		"docusaurus-theme-github-codeblock": "^2.0.2",
 		"prism-react-renderer": "^2.1.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

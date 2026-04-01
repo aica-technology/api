@@ -68,6 +68,9 @@ const config = {
       },
     ],
   ],
+  themes: [
+      'docusaurus-theme-github-codeblock'
+  ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */

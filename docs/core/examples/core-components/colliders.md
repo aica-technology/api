@@ -82,6 +82,18 @@ update when the target pose enters and exits the box.
 </div>
 <br/>
 
+```yaml reference title="Box Collider Example"
+https://github.com/aica-technology/api/blob/docs/examples-test/docs/core/examples/core-components/assets/box-collider.yaml
+```
+
+<details>
+  <summary>Application YAML</summary>
+
+  ```yaml reference title=""
+  https://github.com/aica-technology/api/blob/docs/examples-test/docs/core/examples/core-components/assets/box-collider.yaml
+  ```
+</details>
+
 <details>
   <summary>Application YAML</summary>
 
