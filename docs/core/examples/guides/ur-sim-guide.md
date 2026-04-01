@@ -45,7 +45,7 @@ Executing the following commands runs URSim in a Docker container:
 
 ```bash
 git clone https://github.com/aica-technology/simulators.git
-cd simulators
+cd simulators/ursim
 ./run.sh
 ```
 
@@ -94,7 +94,7 @@ Follow the terminal link in a browser to access the simulated robot.
 
 1. In the window that appears, select **Connect**.
 2. After the teaching pendant interface loads up, navigate to the settings page by clicking the burger icon in the top
-   left corner of the screen.
+   right corner of the screen.
 3. Click on the **System** tab, then select the **Remote Control** tab.
 4. Click **Enable** and then **Exit** at the bottom left of the screen.
 5. Turn on the robot by pressing the red button located in the bottom left corner of the screen. Click **ON** followed
