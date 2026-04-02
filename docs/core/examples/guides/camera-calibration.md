@@ -37,7 +37,7 @@ Instead of using `CameraStreamer`, advanced users can follow this process with a
 
 :::
 
-Once you have a established an image stream, make sure to generate a **checkerboard** pattern (e.g., from
+Once you have established the image stream, make sure to generate a **checkerboard** pattern (e.g., from
 [here](https://calib.io/pages/camera-calibration-pattern-generator)). The calibrator will use this pattern to determine
 how the picture is distorted and ultimately generate the necessary matrices that can be used to undistort images from
 your camera. Take note of the checkerboard width, height, and box size as you will need it later. Print the checkerboard

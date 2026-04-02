@@ -46,7 +46,7 @@ Before pressing Start, let us go through the parameters first. You should see:
 - **Rate**: This is the component's rate, but it has no effect on the operation of `CameraStreamer`.
 - **Source**: Path to the source device or video file. If using a camera, this is typically of the form `/dev/videoX`,
 whereas for video files you need to provide the absolute path to the video, e.g., `/path/to/video`.
-- **Camera frame**: The reference frame that will be used when publishing image messages, which should correspond the
+- **Camera frame**: The reference frame that will be used when publishing image messages, which should correspond to the
 camera's sensor position.
 - **Camera configuration**: A YAML-formatted camera configuration file containing the camera intrinsics (optional). If
 you don't have a calibration file for your camera, you can follow our [calibration guide](./camera-calibration.md).
@@ -79,7 +79,7 @@ In newer versions of `CameraStreamer` you will also have access to:
 Once you have selected an appropriate **source**:
 
 1. Press **Start** to start the application.
-2. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
+2. To see the live camera feed, click on the Launcher tab on the upper right corner and select **Launch RViz**.
 3. In RViz, select _Add > By topic > /camera_streamer/image > Image_. This adds a panel that shows the live image. The
 undistorted image (if available) can also be found under _/camera_streamer/undistorted_image > Image_.
 
