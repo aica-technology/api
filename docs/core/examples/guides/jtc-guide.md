@@ -98,12 +98,12 @@ There are 2 ways of setting a trajectory in JTC:
 In both cases, receiving a new joint trajectory will first trigger cancellation of an active trajectory, if there is
 one. That is, **there is no trajectory buffering or appending taking place**. As with many things in the AICA Universe,
 behaviors are event-driven. If you wish to send multiple trajectories back-to-back, you will have to rely on the
-execution status of the active trajectory handled by JTC. There is a practical example of how do this in following
+execution status of the active trajectory handled by JTC. There is a practical example of how to do this in following
 sections (see [Putting an application together](#putting-an-application-together)).
 
 ### Trajectory execution status
 
-The controller exposes 4 predicates to reflect the the execution status of a trajectory, namely:
+The controller exposes 4 predicates to reflect the execution status of a trajectory, namely:
 
 - `Has active trajectory`: A trajectory has been set and is being executed
 - `Has trajectory succeeded`: A trajectory was executed successfully (i.e., reached the final waypoint within all
