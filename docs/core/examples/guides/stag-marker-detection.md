@@ -5,6 +5,7 @@ title: STag marker detection
 
 
 import stagDetectorExample from './assets/stag-detector-example.png'
+import stagMarkerDetection from './assets/stag-marker-detection.webm'
 
 
 # STag marker detection
@@ -46,7 +47,7 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
 
 Let's go through the parameters of the STag Detector component:
 
-- **Rate**: 
+- **Rate**: The frequency of the callbacks. 
 - **Bundle file**: 
 - **Marker selection**: The name(s) of the marker(s) that we intend to be recognized. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate lights up. This name should always be written with the `stage_` prefix.
 - **Marker size**: 
@@ -57,7 +58,7 @@ Let's go through the parameters of the STag Detector component:
 
 :::TIP
 
-If a decision needs to be made based on the existance of a specific STag marker in the camera frame, it’s name should be indicated in the `Marker Selection` variable. 
+If a decision needs to be made based on the existance of a specific STag marker in the camera frame, it’s name should be indicated in the `Marker Selection` variable.
 
 :::
 
@@ -72,4 +73,12 @@ After setting up the proper parameters for Camera Streamer and STag Detector:
 
 1. Press **Start** to start the application.
 2. To see the live camera feed, select **Launch RViz** from the Launcher settings
-3. In RViz, select _Add > By topic > /stag_detector > /annotated_image > Image_. This adds a panel that shows the live image. The marker should be detected in the camera.
+3. In RViz, select _Add > By topic > /stag_detector/annotated_image > Image_. This adds a panel that shows the live image. The marker should be detected in the camera.
+
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={stagMarkerDetection} type="video/webm" />
+    STag marker detection video.
+  </video>
+</div>
