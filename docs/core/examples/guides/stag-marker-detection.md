@@ -82,3 +82,10 @@ After setting up the proper parameters for Camera Streamer and STag Detector:
     STag marker detection video.
   </video>
 </div>
+
+
+:::info
+
+The process for using Aruco markers follows a similar process.
+
+:::
