@@ -1,6 +1,6 @@
 ---
 sidebar_position: 13
-title: STag marker detection
+title: Marker detection
 ---
 
 
@@ -8,14 +8,16 @@ import stagDetectorExample from './assets/stag-detector-example.png'
 import stagMarkerDetection from './assets/stag-marker-detection.webm'
 
 
-# STag marker detection
+# Marker detection
 
-As a step in the Hand-Eye calibration, we need to be able to detect markers with our camera. The AICA's `core-vision` package gives you the choice between using the STag or Aruco markers. 
+Different types of markers are used in robotics to provide precise 3D pose estimation and identification for cameras, enabling or improving robotic calibration and object manipulation.
+
+The AICA's `core-vision` package gives you the choice between using two of the most famous markers, the STag marker and the Aruco markers. 
 
 
-:::TIP
+:::tip
 
-It's important to notice that this should be done after the intrinsic calibration of the camera which is explained in the [calibration guide](./camera-calibration.md).
+It's important to notice that the marker detection should be done after the intrinsic calibration of the camera which is explained in the [calibration guide](./camera-calibration.md).
 
 :::
 
