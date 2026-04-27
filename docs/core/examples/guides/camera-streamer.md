@@ -41,7 +41,7 @@ By this point, you should have something like the following:
   <img src={cameraStreamerExample} alt="Default CameraStreamer configuration" />
 </div>
 
-Before pressing Start, let's go through the parameters first. You should see:
+Before pressing Start, let us go through the parameters first. You should see:
 
 - **Rate**: This is the component's rate, but it has no effect on the operation of `CameraStreamer`.
 - **Source**: Path to the source device or video file. If using a camera, this is typically of the form `/dev/videoX`,
