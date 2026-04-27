@@ -21,6 +21,10 @@ It's important to notice that the marker detection should be done after the intr
 
 :::
 
+
+The following provides an example of STag marker detection. Using the Aruco marker follows a very similar process.
+
+
 ## Using the STag detector
 
 Launch AICA Studio with a configuration that contains the `core-vision` package and create a new application.
@@ -30,7 +34,7 @@ Launch AICA Studio with a configuration that contains the `core-vision` package 
 or by manually going under the `Core Vision Components` menu. Add both of them to the graph.
 3. Next, connect both components to the start block. Morover, connect the outputs of the Camera Streamer to the relevant inputs of the STag Detector.
 4. Enable **auto-configure** and **auto-activate** on both components.
-5. By chosing any of the components, you can find all the available component parameters.
+5. By selecting any of the components, you can find all the available component parameters in the right panel under Settings.
 
 By this point, you should have something like the following:
 
@@ -42,32 +46,32 @@ By this point, you should have something like the following:
 
 :::info
 
-The Camera Streamer parameters are explained in the [CameraStreamer component guid](./camera-streamer.md).
+The Camera Streamer parameters are explained in the [CameraStreamer component guide](./camera-streamer.md).
 
 :::
 
 
 Let's go through the parameters of the STag Detector component:
 
-- **Rate**: The frequency of the callbacks. 
+- **Rate**: This is the component's rate, but it has no effect on the operation of `STag Detector`.
 - **Bundle file**: 
-- **Marker selection**: The name(s) of the marker(s) that we intend to be recognized. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate lights up. This name should always be written with the `stage_` prefix.
+- **Marker selection**: The name(s) of the marker(s) that we intend to be recognized. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. This name should always be prepended with `stage_`.
 - **Marker size**: 
 - **Library**: This is the ID number of the HD library utilized by STag markers. The allowed numbers are  `[11, 13, 15, 17, 19, 21, 23]`.
 - **Error correction**: 
 - **Prefix**: This prefix is used for marker names.
 
 
-:::TIP
+:::tip
 
-If a decision needs to be made based on the existance of a specific STag marker in the camera frame, it’s name should be indicated in the `Marker Selection` variable.
+If a decision needs to be made based on the existance of a specific STag marker in the camera frame, its name should be indicated in the `Marker Selection` variable.
 
 :::
 
 
 :::info
 
-If any marker is detected in the camera frame at all, the `is_any_marker_detected` predicate will light up. 
+If any marker is detected in the camera frame at all, the `is_any_marker_detected` predicate is set to **True**. 
 
 :::
 
