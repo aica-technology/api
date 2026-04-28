@@ -40,7 +40,7 @@ By this point, you should have something like the following:
 
 
 <div class="text--center">
-  <img src={stagDetectorExample} alt="CameraStreamer configuration with STagDetector component" />
+  <img src={stagDetectorExample} alt="CameraStreamer configuration alongside STagDetector component" />
 </div>
 
 
