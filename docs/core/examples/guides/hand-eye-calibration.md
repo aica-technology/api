@@ -44,7 +44,7 @@ Ensure sufficient variation in position and orientation to improve calibration a
 
 ::: info
 
-Robot TCP can be moved in different ways. Using teach pendant (jogging or Freedrive mode), or using AICA Studio's Hand Guiding Controller as described in [`Hand Guiding controller`](./ur-harware-interface.md)
+The robot TCP can be moved in different ways. Using teach pendant (jogging or Freedrive mode), or using AICA Studio's Hand Guiding Controller as described in [`Hand Guiding controller`](./ur-harware-interface.md)
 
 :::
 
@@ -54,5 +54,10 @@ Robot TCP can be moved in different ways. Using teach pendant (jogging or Freedr
 The Camera and the marker detector components might differ based on the type of hardwares being used.
 
 :::
+
+There are several ways to use the transformation information obtained in the calibration file:
+1. Adding the camera link to the URDF.
+2. Publish the transformation with a FrameBroadcaster manually.
+3. Using the calibration file path directly as a `Frame Broadcaster` component parameter to publish the transformations.
 
 
