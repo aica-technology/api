@@ -17,7 +17,7 @@ The AICA's `core-vision` package provides a structured workflow for performing h
 Accurate hand–eye calibration is critical in tasks such as visual servoing, object manipulation, inspection, and assembly. This tool is designed to minimize discrepancies and provide reliable calibration outputs suitable for industrial environments.
 
 
-## Robot Calibration Using AICA Studio and a Marker
+## Robot Calibration using AICA Studio and a marker
 
 After completing the camera calibration as described in the [`Camera Calibration` example](./camera-calibration.md), and verifying marker detection as outlined in the [`Marker detection`](./marker-detection.md) section, you can proceed with the hand–eye calibration process.
 
