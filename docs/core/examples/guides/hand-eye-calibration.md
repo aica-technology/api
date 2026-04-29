@@ -26,7 +26,7 @@ This example demonstrates the eye-in-hand configuration (camera mounted on the r
 
 
 - Ensure that the camera is properly configured and operational.
-- Connect all required components and controllers in AICA Launcher application. Refer to the system setup illustration below for guidance.
+- Connect all required components and controllers in the AICA application. Refer to the system setup illustration below for guidance.
 - Place the marker within the robot workspace, ensuring it is fully visible to the camera. To monitor the live camera feed, enable **Launch RViz** from the Launcher settings, as described in the [`marker detection`](./marker-detection.md) guide.
 - Run the program and move the robot TCP (Tool Center Point) to capture images of the marker from multiple perspectives. The application starts capturing images automatically.
 Ensure sufficient variation in position and orientation to improve calibration accuracy.
