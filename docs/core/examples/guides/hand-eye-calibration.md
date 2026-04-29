@@ -38,7 +38,7 @@ Ensure sufficient variation in position and orientation to improve calibration a
 
 
 <div class="text--center">
-  <img src={RobotCalibrationConfiguration} alt="The configuration required for hand-eye calibration" />
+  <img src={RobotCalibrationConfiguration} alt="The configuration required for hand-eye calibration" style={{ borderRadius: "8px" }}/>
 </div>
 
 
