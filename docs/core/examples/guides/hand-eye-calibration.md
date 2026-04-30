@@ -1,5 +1,5 @@
 ---
-sidebar_position: 14
+sidebar_position: 15
 title: Hand-Eye calibration
 ---
 // Should the name of the document change to "robot calibration" ?
