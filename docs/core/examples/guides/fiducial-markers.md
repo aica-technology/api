@@ -54,7 +54,8 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
 
 Let's go through the parameters of the STag Detector component:
 
-- **Rate**: This is the component's rate, but it has no effect on the operation of `STag Detector`.
+- **Rate**: The rate parameter doesn't affect the behavior of the component as the detection process
+    occurs on reception of a new image.
 - **Bundle file**: 
 - **Marker selection**: The name(s) of the marker(s) that we intend to be recognized. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. This name should always be prepended with `stage_`.
 - **Marker size**: 
