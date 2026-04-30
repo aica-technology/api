@@ -1,6 +1,6 @@
 ---
 sidebar_position: 14
-title: Marker detection
+title: Fiducial Markers
 ---
 
 
@@ -8,7 +8,7 @@ import stagDetectorExample from './assets/stag-detector-example.png'
 import stagMarkerDetection from './assets/stag-marker-detection.webm'
 
 
-# Marker detection
+# Fiducial Markers
 
 Different types of fiducial markers are used in robotics to provide precise 3D pose estimation and identification for cameras, enabling or improving robotic calibration and object manipulation.
 
