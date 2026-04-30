@@ -10,7 +10,7 @@ import stagMarkerDetection from './assets/stag-marker-detection.webm'
 
 # Marker detection
 
-Different types of markers are used in robotics to provide precise 3D pose estimation and identification for cameras, enabling or improving robotic calibration and object manipulation.
+Different types of fiducial markers are used in robotics to provide precise 3D pose estimation and identification for cameras, enabling or improving robotic calibration and object manipulation.
 
 AICA's `core-vision` package gives you the choice between using two commonly used markers, the STag and Aruco. 
 
