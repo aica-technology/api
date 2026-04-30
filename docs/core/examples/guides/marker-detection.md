@@ -12,7 +12,7 @@ import stagMarkerDetection from './assets/stag-marker-detection.webm'
 
 Different types of markers are used in robotics to provide precise 3D pose estimation and identification for cameras, enabling or improving robotic calibration and object manipulation.
 
-The AICA's `core-vision` package gives you the choice between using two of the most famous markers, the STag marker and the Aruco markers. 
+AICA's `core-vision` package gives you the choice between using two commonly used markers, the STag and Aruco. 
 
 
 :::tip
