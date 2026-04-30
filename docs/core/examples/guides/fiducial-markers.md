@@ -35,6 +35,7 @@ or by manually going under the `Core Vision Components` menu. Add both of them t
 3. Next, connect both components to the start block. Moreover, connect the outputs of the Camera Streamer to the relevant inputs of the STag Detector.
 4. Enable **auto-configure** and **auto-activate** on both components.
 5. By selecting any of the components, you can find all the available component parameters in the right panel under Settings.
+6. If an intrinsic camera calibration is performed prior to this, add the file path of the camera configuration file as a parameter to the **Camera Streamer** component. 
 
 By this point, you should have something like the following:
 
