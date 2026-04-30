@@ -32,7 +32,7 @@ Launch AICA Studio with a configuration that contains the `core-vision` package 
 1. Remove the hardware interface that is included in new applications by default.
 2. From the `Scene` menu, use the `Add Component` tab and look for the **Camera Streamer** and **STag Detector** components, either by searching
 or by manually going under the `Core Vision Components` menu. Add both of them to the graph.
-3. Next, connect both components to the start block. Morover, connect the outputs of the Camera Streamer to the relevant inputs of the STag Detector.
+3. Next, connect both components to the start block. Moreover, connect the outputs of the Camera Streamer to the relevant inputs of the STag Detector.
 4. Enable **auto-configure** and **auto-activate** on both components.
 5. By selecting any of the components, you can find all the available component parameters in the right panel under Settings.
 
