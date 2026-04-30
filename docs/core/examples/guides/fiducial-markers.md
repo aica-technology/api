@@ -22,7 +22,7 @@ Performing the [intrinsic calibration](./camera-calibration.md) of the camera im
 :::
 
 
-The following provides an example of STag marker detection. Using the Aruco marker follows a very similar process.
+This guide provides an example of STag marker detection. Using the Aruco marker follows a very similar process.
 
 
 ## Using the STag detector
