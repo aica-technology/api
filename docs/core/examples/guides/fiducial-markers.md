@@ -17,7 +17,7 @@ AICA's `core-vision` package gives you the choice between using two commonly use
 
 :::tip
 
-It's important to notice that the marker detection should be done after the intrinsic calibration of the camera which is explained in the [calibration guide](./camera-calibration.md).
+Performing the [intrinsic calibration](./camera-calibration.md) of the camera improves the precision for fiducial marker detection and tracking.
 
 :::
 
