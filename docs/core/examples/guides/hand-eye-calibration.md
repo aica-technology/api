@@ -40,6 +40,10 @@ The parameters of the `Robot Camera Calibration` component are defined as follow
 - **Calibration file**: The name of the output file generated after calibration, containing the computed calibration data.
 - **Points dataset file**: A file containing previously recorded transformations of the robot end-effector or marker, which can be reused if available.
 
+```info
+Set the `Is camera attached` check to true, if a camera is attached to the robot end-effector frame.
+```
+
 ## Robot Calibration using AICA Studio and a marker
 
 After completing the camera calibration as described in the [`Camera Calibration` example](./camera-calibration.md), and verifying marker detection as outlined in the [`Marker detection`](./marker-detection.md) section, you can proceed with the hand–eye calibration process.
