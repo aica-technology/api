@@ -26,19 +26,19 @@ click on the `Robot Camera Calibration` component block to view and edit the ava
   <img src={RobotCameraCalibration} alt="Robot Camera Calibration parameters" style={{ borderRadius: "8px" }}/>
 </div>
 
-the parameters of the Robot Camera Calibration component are consisted of:
+The parameters of the `Robot Camera Calibration` component are defined as follows:
 
-- **Rate**: Rate determines the speed of transformation acquisition. This parameter has no effect on the behaviour of the component.
-- **Camera frame**: The name of the camera frame being used in the application. It can be looked up from RViz list of frames.
-- **Marker frame**: The name of the marker being detected by the camera. It is indicated in the STag or Aruco marker deterctor component used in the application.
-- **Robot base frame**: The name of your robots base frame, whichc can be looked up in RViz.
-- **Robot end-effector frame**: The name of the robots end-effector frame. It can be found in the RViz list of frames.
-- **Number of recorded points**: Number of `camera` to `robot end-effector` transformations calculated based on various sets of `robot end-effector` to `robot base` and `camera to marker` transformations.
-- **Distance between points**: This is the minimum difference in terms of distance between two consequetive transformations to be recorded.
+- **Rate**: Determines the frequency at which transformations are acquired. This parameter does not affect the component’s behavior.
+- **Camera frame**: The name of the camera frame used in the application. This can be retrieved from the list of frames in RViz.
+- **Marker frame**: The name of the marker detected by the camera. It is indicated in the STag or Aruco marker deterctor component used in the application.
+- **Robot base frame**: The name of the robot's base frame, whichc can be found in RViz.
+- **Robot end-effector frame**: The name of the robot’s end-effector frame. This is also available in the RViz frame list.
+- **Number of recorded points**: The number of transformations from `camera` to `robot end-effector` camera to robot end-effector that are recorded.These are computed from multiple pairs of `robot end-effector` -> `robot base` and `camera` -> `marker` transformations.
+- **Distance between points**: The minimum spatial difference required between two consecutive transformations for them to be recorded.
 - **Epsilon time**:
-- **Calibration folder path**: This is the directory in which the final calibration file will be stored.
-- **Calibration file**: This is the name of the file produced after the calibration, containing the calibration information.
-- **Points dataset file**: The file containing transformations of robot end-effector or marker, which might exist from the past.
+- **Calibration folder path**: The directory where the final calibration file will be stored.
+- **Calibration file**: The name of the output file generated after calibration, containing the computed calibration data.
+- **Points dataset file**: A file containing previously recorded transformations of the robot end-effector or marker, which can be reused if available.
 
 ## Robot Calibration using AICA Studio and a marker
 
