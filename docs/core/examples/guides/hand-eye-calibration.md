@@ -51,7 +51,7 @@ This example demonstrates the eye-in-hand configuration (camera mounted on the r
 - Place the marker within the robot workspace, ensuring it is fully visible to the camera. To monitor the live camera feed, enable **Launch RViz** from the Launcher settings, as described in the [`marker detection`](./marker-detection.md) guide.
 - Run the program and move the robot TCP (Tool Center Point) to capture images of the marker from multiple perspectives. The application starts capturing images automatically.
   Ensure sufficient variation in position and orientation to improve calibration accuracy.
-- Once 100 unique images have been captured, the system automatically generates a calibration file in YAML format in the following directory:
+- Once the number of captured images reaches the `Number of recorded points` indicated in the `Robot Camera Calibration component` parameters, the system automatically generates a calibration file in YAML format in the following directory:
 
 ```bash
 /tmp/calibration/camera_calibration.yaml
@@ -60,6 +60,169 @@ This example demonstrates the eye-in-hand configuration (camera mounted on the r
 <div class="text--center">
   <img src={RobotCalibrationConfiguration} alt="The configuration required for hand-eye calibration" style={{ borderRadius: "8px" }}/>
 </div>
+
+<details>
+  <summary>Example application, local control</summary>
+
+```yaml
+schema: 2-0-6
+dependencies:
+  core: v5.1.0
+on_start:
+  load:
+    - component: orbbec_camera
+    - component: robot_camera_calibration
+    - component: stag_detector
+    - hardware: hardware
+components:
+  orbbec_camera:
+    component: orbbec_camera::OBCameraNodeDriver
+    display_name: Orbbec Camera
+    outputs:
+      color_image: /orbbec_camera/color_image
+      color_camera_info: /orbbec_camera/color_camera_info
+  robot_camera_calibration:
+    component: core_vision_components::calibration::RobotCameraCalibration
+    display_name: Robot Camera Calibration
+    events:
+      transitions:
+        on_load:
+          lifecycle:
+            component: robot_camera_calibration
+            transition: configure
+        on_configure:
+          lifecycle:
+            component: robot_camera_calibration
+            transition: activate
+    parameters:
+      camera_frame:
+        value: orbbec_camera_link
+        type: string
+      marker_frame:
+        value: stag_0
+        type: string
+      robot_base_frame:
+        value: world
+        type: string
+      robot_ee_frame:
+        value: ur_tool0
+        type: string
+      is_camera_attached:
+        value: true
+        type: bool
+  stag_detector:
+    component: core_vision_components::pose_detection::STagDetector
+    display_name: STag Detector
+    events:
+      transitions:
+        on_load:
+          lifecycle:
+            component: stag_detector
+            transition: configure
+        on_configure:
+          lifecycle:
+            component: stag_detector
+            transition: activate
+    parameters:
+      marker_selection:
+        value:
+          - stag_0
+        type: string_array
+    inputs:
+      image: /orbbec_camera/color_image
+      camera_info: /orbbec_camera/color_camera_info
+hardware:
+  hardware:
+    display_name: Hardware Interface
+    urdf: Universal Robots 5e
+    rate: 500
+    events:
+      transitions:
+        on_load:
+          load:
+            - controller: robot_state_broadcaster
+              hardware: hardware
+            - controller: ur_hand_guiding_controller
+              hardware: hardware
+    parameters:
+      robot_ip: 192.168.42.20
+    controllers:
+      robot_state_broadcaster:
+        plugin: aica_core_controllers/RobotStateBroadcaster
+        events:
+          transitions:
+            on_load:
+              switch_controllers:
+                hardware: hardware
+                activate: robot_state_broadcaster
+      ur_hand_guiding_controller:
+        plugin: aica_ur_controllers/URHandGuidingController
+        parameters:
+          ft_sensor_name:
+            value: ur_tcp_fts_sensor
+            type: string
+          ft_sensor_reference_frame:
+            value: ur_tool0
+            type: string
+          force_limit:
+            value:
+              - 20
+              - 20
+              - 20
+              - 2
+              - 2
+              - 2
+            type: vector
+        events:
+          transitions:
+            on_load:
+              switch_controllers:
+                hardware: hardware
+                activate: ur_hand_guiding_controller
+graph:
+  positions:
+    on_start:
+      x: 120
+      y: 0
+    stop:
+      x: 120
+      y: 100
+    components:
+      orbbec_camera:
+        x: 340
+        y: 0
+      robot_camera_calibration:
+        x: 340
+        y: 320
+      stag_detector:
+        x: 800
+        y: -80
+    hardware:
+      hardware:
+        x: 1260
+        y: -120
+  edges:
+    on_start_on_start_robot_camera_calibration_robot_camera_calibration:
+      path:
+        - x: 260
+          y: 60
+        - x: 260
+          y: 380
+    on_start_on_start_stag_detector_stag_detector:
+      path:
+        - x: 260
+          y: 60
+        - x: 260
+          y: -20
+    on_start_on_start_hardware_hardware:
+      path:
+        - x: 260
+          y: 60
+        - x: 260
+          y: -60
+```
+
+</details>
 
 ::: info
 
