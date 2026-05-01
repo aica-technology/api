@@ -15,6 +15,24 @@ The AICA's `core-vision` package provides a structured workflow for performing h
 
 Accurate hand–eye calibration is critical in tasks such as visual servoing, object manipulation, inspection, and assembly. This tool is designed to minimize discrepancies and provide reliable calibration outputs suitable for industrial environments.
 
+## Robot Camera Calibration component
+
+The Robot Camera Calibration component is the component that does the main job of calculating the transformation between the camera and the robot end-effector.
+
+the parameters of the Robot Camera Calibration component:
+
+- **Rate**: Rate determines the speed of transformation acquisition. This parameter has no effect on the behaviour of the component.
+- **Camera frame**: The name of the camera frame being used in the application. It can be looked up from RViz list of frames.
+- **Marker frame**: The name of the marker being detected by the camera. It is indicated in the STag or Aruco marker deterctor component used in the application.
+- **Robot base frame**: The name of your robots base frame, whichc can be looked up in RViz.
+- **Robot end-effector frame**: The name of the robots end-effector frame. It can be found in the RViz list of frames.
+- **Number of recorded points**: Number of camera to robot end-effector transformations calculated based on various sets of robot end-effector to robot base and camera to marker transformations.
+- **Distance between points**: This is the minimum difference in terms of distance between two consequetive transformations to be recorded.
+- **Epsilon time**:
+- **Calibration folder path**: This is the directory in which the final calibration file will be stored.
+- **Calibration file**: This is the name of the file produced after the calibration, containing the calibration information.
+- **Points dataset file**: The file containing transformations of robot end-effector or marker, which might exist from the past.
+
 ## Robot Calibration using AICA Studio and a marker
 
 After completing the camera calibration as described in the [`Camera Calibration` example](./camera-calibration.md), and verifying marker detection as outlined in the [`Marker detection`](./marker-detection.md) section, you can proceed with the hand–eye calibration process.
