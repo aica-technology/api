@@ -66,7 +66,7 @@ Let's go through the parameters of the STag Detector component:
 
 - **Rate**: The rate parameter doesn't affect the behavior of the component as the detection process
   occurs on reception of a new image.
-- **Bundle file**:
+- **Bundle file**: The filepath to a predefined marker bundle configuration. This additional feature is described in a separate guide (coming soon).
 - **Marker selection**: The name(s) of the marker(s) that we intend to be recognized. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. This name should always be prepended with the value of `Prefix`.
 - **Marker size**: Determins the side length of a square that specifies the marker in meters.
 - **Library**: This is the ID number of the HD library utilized by STag markers. The allowed numbers are `[11, 13, 15, 17, 19, 21, 23]`.
