@@ -29,6 +29,7 @@ click on the `Robot Camera Calibration` component block to view and edit the ava
 The parameters of the `Robot Camera Calibration` component are defined as follows:
 
 - **Rate**: Determines the frequency at which transformations are acquired. This parameter does not affect the component’s behavior.
+- **Bundle file:** The filepath to a predefined marker bundle configuration. This additional feature is described in a separate guide (coming soon).
 - **Camera frame**: The name of the camera frame used in the application. This can be retrieved from the list of frames in RViz.
 - **Marker frame**: The name of the marker detected by the camera. It is indicated in the STag or Aruco marker deterctor component used in the application.
 - **Robot base frame**: The name of the robot's base frame, whichc can be found in RViz.
@@ -61,12 +62,14 @@ This example demonstrates the eye-in-hand configuration (camera mounted on the r
 /tmp/calibration/camera_calibration.yaml
 ```
 
+The following YAML snippet containing the full application:
+
 <div class="text--center">
   <img src={RobotCalibrationConfiguration} alt="The configuration required for hand-eye calibration" style={{ borderRadius: "8px" }}/>
 </div>
 
 <details>
-  <summary>Example application, local control</summary>
+  <summary>Example application, Hand-Eye calibration</summary>
 
 ```yaml
 schema: 2-0-6
@@ -228,9 +231,13 @@ graph:
 
 </details>
 
+:::tip
+Don't forget to modify the `robot_ip` acording to the ip of the robot that you are using.
+:::
+
 ::: info
 
-The robot TCP can be moved in different ways. Using teach pendant (jogging or Freedrive mode), or using AICA Studio's Hand Guiding Controller as described in [`Hand Guiding controller`](./ur-harware-interface.md)
+The robot TCP can be moved by jogging or Freedrive mode using the robot's teach pendant. In the case of using a Universal Robot, AICA Studio offers the option of `Hand Guiding Controller` which facilitates and accelerates the process. This controller is described in the [`Hand Guiding Controller`](./ur-harware-interface.md) page.
 
 :::
 
