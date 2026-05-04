@@ -10,7 +10,7 @@ import stagMarkerDetection from './assets/stag-marker-detection.webm'
 
 Different types of fiducial markers are used in robotics to provide precise 3D pose estimation and identification for cameras, enabling or improving robotic calibration and object manipulation.
 
-AICA's `core-vision` package gives you the choice between using two commonly used markers, the STag and Aruco.
+AICA's `core-vision` package gives you the choice between using two commonly used markers, the STag and ArUco.
 
 :::tip
 
@@ -18,7 +18,25 @@ Performing the [intrinsic calibration](./camera-calibration.md) of the camera im
 
 :::
 
-This guide provides an example of STag marker detection. Using the Aruco marker follows a very similar process.
+## Preparing fiducial markers
+
+A fiducial marker is an object placed in the field of view of an image for use as a point of reference or a measure. STag and ArUco markers are two of the common types of fiducial marker systems used for real-time 6D pose estimation. This section explains how to obtain, download and print these markers.
+
+### Obtaining markers
+
+- **ArUco marker:** ArUco markers can be generate online (e.g., from [here](https://calib.io/pages/camera-calibration-pattern-generator)), which permits choosing the dictionary, marker ID, and marker size. It can be then exported as PDF or SVG for printing.
+
+- **STag marker:** STag marker set should be obtained from the [STag project repository](https://github.com/usrl-uofsc/stag_ros) or the generator/reference files linked by the project. The [STag project repository for ROS](https://github.com/usrl-uofsc/stag_ros) is the other place to look for marker-generation assets. In practice, you’ll want to obtain the marker PDF/SVG or generate the markers from the project’s reference generator, then print them at true size.
+
+### Printing markres
+
+After choosing the marker family, selecting the library/dictionary, and the marker ID, download it as PDF or SVG. Use the Actual size of the marker (100% scale) for printing, so the black border and marker geometry are not resized. Also it is recommended to print with high contrast and avoid compression artifacts.
+
+If possible, print on a rigid and flat sheet of paper to reduce warping, since fiducial detection is sensitive to distortion. As another solution, you can fix the printed marker on a rigid surface, such as a piece of wood or carboard.
+
+After printing, measure the marker’s outer dimensions and compare them with the intended size from the generator. This matters because calibration will be wrong if the marker size in the software does not match the physical print.
+
+This guide provides an example of STag marker detection. Using the ArUco marker follows a very similar process.
 
 ## Using the STag detector
 
@@ -82,6 +100,6 @@ After setting up the proper parameters for Camera Streamer and STag Detector:
 
 :::info
 
-The process for using Aruco markers follows a similar process.
+The process for using ArUco markers follows a similar process.
 
 :::
