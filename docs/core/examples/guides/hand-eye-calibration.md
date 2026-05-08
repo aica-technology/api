@@ -31,10 +31,10 @@ The parameters of the `Robot Camera Calibration` component are defined as follow
 - **Rate**: Determines the frequency at which transformations are acquired. This parameter does not affect the component’s behavior.
 - **Bundle file:** The filepath to a predefined marker bundle configuration. This additional feature is described in a separate guide (coming soon).
 - **Camera frame**: The name of the camera frame used in the application. This can be retrieved from the list of frames in RViz.
-- **Marker frame**: The name of the marker detected by the camera. It is indicated in the STag or Aruco marker deterctor component used in the application.
-- **Robot base frame**: The name of the robot's base frame, whichc can be found in RViz.
+- **Marker frame**: The name of the marker detected by the camera. It is indicated in the STag or Aruco marker detector component used in the application.
+- **Robot base frame**: The name of the robot's base frame, which can be found in RViz.
 - **Robot end-effector frame**: The name of the robot’s end-effector frame. This is also available in the RViz frame list.
-- **Number of recorded points**: The number of transformations from `camera` to `robot end-effector` camera to robot end-effector that are recorded.These are computed from multiple pairs of `robot end-effector` -> `robot base` and `camera` -> `marker` transformations.
+- **Number of recorded points**: The number of transformations from `camera` to `robot end-effector` camera to robot end-effector that are recorded. These are computed from multiple pairs of `robot end-effector` -> `robot base` and `camera` -> `marker` transformations.
 - **Distance between points**: The minimum spatial difference required between two consecutive transformations for them to be recorded.
 - **Epsilon time**:
 - **Calibration folder path**: The directory where the final calibration file will be stored.
@@ -232,7 +232,7 @@ graph:
 </details>
 
 :::tip
-Don't forget to modify the `robot_ip` acording to the ip of the robot that you are using.
+Don't forget to modify the `robot_ip` according to the ip of the robot that you are using.
 :::
 
 ::: info
@@ -243,7 +243,7 @@ The robot TCP can be moved by jogging or Freedrive mode using the robot's teach 
 
 ::: tip
 
-The Camera and the marker detector components might differ based on the type of hardwares being used.
+The Camera and the marker detector components might differ based on the type of hardware being used.
 
 :::
 
