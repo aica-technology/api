@@ -13,10 +13,10 @@ Different types of fiducial markers are used in robotics to provide precise 3D p
 AICA's `core-vision` package gives you the choice between using two commonly used markers, the STag and ArUco.
 
 :::tip
-
 Performing the [intrinsic calibration](./camera-calibration.md) of the camera improves the precision for fiducial marker detection and tracking.
-
 :::
+
+This guide provides an example of STag marker detection. Using the ArUco marker follows a very similar process.
 
 ## Preparing fiducial markers
 
@@ -24,19 +24,17 @@ A fiducial marker is an object placed in the field of view of an image for use a
 
 ### Obtaining markers
 
-- **ArUco marker:** ArUco markers can be generate online (e.g., from [here](https://calib.io/pages/camera-calibration-pattern-generator)), which permits choosing the dictionary, marker ID, and marker size. It can be then exported as PDF or SVG for printing.
+- **ArUco marker**: ArUco markers can be generate online (e.g., from [here](https://chev.me/arucogen/)), which permits choosing the dictionary, marker ID, and marker size. It can be then exported as PDF or SVG for printing.
 
-- **STag marker:** STag marker set should be obtained from the [STag project repository](https://github.com/usrl-uofsc/stag_ros) or the generator/reference files linked by the project. The [STag project repository for ROS](https://github.com/usrl-uofsc/stag_ros) is the other place to look for marker-generation assets. In practice, you’ll want to obtain the marker PDF/SVG or generate the markers from the project’s reference generator, then print them at true size.
+- **STag marker**: STag marker set can be either downloaded from [google public drive](https://drive.google.com/drive/folders/0ByNTNYCAhWbIV1RqdU9vRnd2Vnc?resourcekey=0-9ipvecbezW8EWUva5GBQTQ) or obtained from the [STag project repository](https://github.com/usrl-uofsc/stag_ros) or the generator/reference files linked by the project. The [STag project repository for ROS](https://github.com/usrl-uofsc/stag_ros) is the other place to look for marker-generation assets. In practice, you’ll want to obtain the marker PDF/SVG or generate the markers from the project’s reference generator, then print them at true size.
 
-### Printing markres
+### Printing markers
 
 After choosing the marker family, selecting the library/dictionary, and the marker ID, download it as PDF or SVG. Use the Actual size of the marker (100% scale) for printing, so the black border and marker geometry are not resized. Also it is recommended to print with high contrast and avoid compression artifacts.
 
-If possible, print on a rigid and flat sheet of paper to reduce warping, since fiducial detection is sensitive to distortion. As another solution, you can fix the printed marker on a rigid surface, such as a piece of wood or carboard.
+If possible, print on a rigid and flat sheet of paper to reduce warping, since fiducial detection is sensitive to distortion. As another solution, you can fix the printed marker on a rigid surface, such as a piece of wood or cardboard.
 
 After printing, measure the marker’s outer dimensions and compare them with the intended size from the generator. This matters because calibration will be wrong if the marker size in the software does not match the physical print.
-
-This guide provides an example of STag marker detection. Using the ArUco marker follows a very similar process.
 
 ## Using the STag detector
 
@@ -57,25 +55,29 @@ By this point, you should have something like the following:
 </div>
 
 :::info
-
 The Camera Streamer parameters are explained in the [CameraStreamer component guide](./camera-streamer.md).
-
 :::
 
-Let's go through the parameters of the STag Detector component:
+STag Detector component has three predicates that are as follow:
+
+- **Is any marker detected**: This predicate will be set to `True` if any marker is detected in the camera frame.
+- **Is any selected marker detected**: If one or more marker names are indicated in the `Marker selection` parameter, this predicate with be set to `True`. If the names of none of the markers present in the camera frame is indicated as a parameter, this predicate will remain `False`.
+- **Is a marker bundle detected**: If a registered group of markers is detected by the camera, this parameter will be set to `True`.
+
+Now let us go through the parameters of the STag Detector component:
 
 - **Rate**: The rate parameter doesn't affect the behavior of the component as the detection process
   occurs on reception of a new image.
 - **Bundle file**: The filepath to a predefined marker bundle configuration. This additional feature is described in a separate guide (coming soon).
 - **Marker selection**: The name(s) of the marker(s) that we intend to be recognized. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. This name should always be prepended with the value of `Prefix`.
-- **Marker size**: Determins the side length of a square that specifies the marker in meters.
+- **Marker size**: Determines the side length of a square that specifies the marker in meters.
 - **Library**: This is the ID number of the HD library utilized by STag markers. The allowed numbers are `[11, 13, 15, 17, 19, 21, 23]`.
 - **Error correction**:
 - **Prefix**: This prefix is used for marker names.
 
 :::tip
 
-If a decision needs to be made based on the existance of a specific STag marker in the camera frame, its name should be indicated in the `Marker Selection` variable.
+If a decision needs to be made based on the existence of a specific STag marker in the camera frame, its name should be indicated in the `Marker Selection` parameter.
 
 :::
 
