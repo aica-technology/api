@@ -67,7 +67,7 @@ An example of the calibration file:
   <img src={URCalibrationFile} alt="An example showing a final calibration file" style={{ borderRadius: "8px" }}/>
 </div>
 
-In the screenshot below you can see an example of the components configuration for the Hand-Eye calibration, that resultet to the output above.
+In the screenshot below you can see an example of the components configuration for the Hand-Eye calibration, that resulted to the output above. Notice that the Camera and the marker detector components might differ based on the type of hardware being used.
 
 <div class="text--center">
   <img src={RobotCalibrationConfiguration} alt="The configuration required for hand-eye calibration" style={{ borderRadius: "8px" }}/>
