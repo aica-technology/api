@@ -70,12 +70,12 @@ Start by creating a new application.
 2. In the **Add components** section of the **Scene** tab, locate the **Orbbec Camera** component. Click to add to the
    graph.
 3. Next, connect the component to the start block.
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-        <source src={orbbecNewApp} type="video/webm" />
-        Creating a new Orbbec Camera component.
-      </video>
-    </div>
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={orbbecNewApp} type="video/webm" />
+    Creating a new Orbbec Camera component.
+  </video>
+</div>
 4. Press **Start** to start the application.
 5. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
 6. In RViz, select _Add > By topic > /orbbec_camera/color_image > Image_. This adds a panel that shows the live color
@@ -110,7 +110,7 @@ Click on the `Orbbec Camera` component block to view and edit the available para
 Hovering over the exclamation marks next to the names shows a detailed description of the corresponding parameter. Let's
 explain some of these here:
 
-- `Color/Depth Width/Height/FPS`: these refer to the resolution and frame rate of the color and depth images. Keep in
+- **Color/Depth Width/Height/FPS**: these refer to the resolution and frame rate of the color and depth images. Keep in
   mind that only specific pairs of integer values apply here. For more information check the camera's documentation.
 
   :::tip
@@ -119,9 +119,9 @@ explain some of these here:
 
   :::
 
-- `Enable Alignment`: flag that activates the spatial alignment of the depth image to the corresponding color image.
+- **Enable Alignment**: flag that activates the spatial alignment of the depth image to the corresponding color image.
   Generates a depth image with the same size as the color, with depth expressed in the color camera coordinate system.
-- `Enable Threshold Filter`: flag that activates a threshold filter in the depth image. If activated, corresponding
+- **Enable Threshold Filter**: flag that activates a threshold filter in the depth image. If activated, corresponding
   filter parameters can be directly defined in the YAML editor to configure the filter behavior. To see what parameters
   can be defined, read the description by hovering over the exclamation mark.
   <div class="text--center">

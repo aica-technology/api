@@ -48,11 +48,11 @@ ABB permits remote control of its manipulator range using the Externally Guided 
 provides external devices with the ability to send commands and control ABB robotic arms, using Google's Protocol
 Buffers (Protobuf) serialization library to transport information through UDP sockets. For more information, check out
 the
-[official product documentation](https://library.e.abb.com/public/344f15f0f43341eb944fe35279d9fa2e/3HAC073319+AM+Externally+Guided+Motion+RW6-en.pdf?x-sign=WlxgV7Vao27KV3d3hlsfaoykgctYqoA0F98ch89S%2FPEaGwQg47ou%2FioylQtzvLaV). 
+[official product documentation](https://library.e.abb.com/public/344f15f0f43341eb944fe35279d9fa2e/3HAC073319+AM+Externally+Guided+Motion+RW6-en.pdf?x-sign=WlxgV7Vao27KV3d3hlsfaoykgctYqoA0F98ch89S%2FPEaGwQg47ou%2FioylQtzvLaV).
 
 :::warning
 
-EGM is an optional add-in and has to be purchased separately. 
+EGM is an optional add-in and has to be purchased separately.
 
 :::
 
@@ -68,8 +68,8 @@ steps, which will be explained in the following sections. More information can b
 ### RAPID
 
 RAPID is the programming language of ABB robots. Users can utilize RAPID to set up and execute their workflows and
-processes. This is enabled by user-defined libraries called *Modules*, that contain variables and functions or
-processes (*PROCs*). Modules can then be loaded in controller *Tasks*, and called as required.
+processes. This is enabled by user-defined libraries called _Modules_, that contain variables and functions or
+processes (_PROCs_). Modules can then be loaded in controller _Tasks_, and called as required.
 
 ## Connecting to a robot
 
@@ -93,7 +93,7 @@ virtual machine.
 Setting up a virtual workstation and controller can be achieved by following the next steps:
 
 1. In RobotStudio, navigate to the **Add-Ins** tab and go to **Gallery**. There is a list of all available robot models
-   and RobotWare versions, the internal controller software. To ensure consistency between simulation and reality, make 
+   and RobotWare versions, the internal controller software. To ensure consistency between simulation and reality, make
    sure to install the versions matching the real robot controller, if one is available.
    <div class="text--center">
      <img src={abbInstallAddins} alt="Install necessary addins in RobotStudio." />
@@ -109,14 +109,14 @@ Setting up a virtual workstation and controller can be achieved by following the
    controller. Then select **Apply and Reset** to finalize.
    :::note
    The **3119-1 RobotStudio Connect** add-in is required to connect a controller to RobotStudio over a public network.
-   For more information, see the RobotStudio instruction manual. 
+   For more information, see the RobotStudio instruction manual.
    :::
    <div class="text--center">
      <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
    </div>
 7. Disable the Windows firewall on the network where the PC running AICA Core is connected to.
 8. Finally, the PC running AICA Core has to be whitelisted to communicate with RobotStudio. As explained
-   [here](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller), 
+   [here](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller),
    create a file called `vcconf.xml` under `C:/Users/<user>/AppData/Roaming/ABB Industrial IT/Robotics IT/RobVC` with
    the content below. Replace `<user>` in the path above with your Windows user and the IP address in the snippet below with
    the IP of the PC running AICA Core (in this example 192.168.137.100).
@@ -387,24 +387,24 @@ robot. The majority of the hardware interface parameters enable connection to EG
   <img src={abbHIParameters} alt="ABB Hardware interface parameters" />
 </div>
 
-- RWS IP & port: the address and port of the RWS server, e.g. the address of the real robot or the RobotStudio device
+- **RWS IP & port**: the address and port of the RWS server, e.g. the address of the real robot or the RobotStudio device
   :::note
   OmniCore controllers and RobotWare 7.x versions by default listen on HTTPS and port 80 for RobotStudio and 443 for the
   real robot. If necessary, the port numbers can be modified by following the instructions in this
   [forum post](https://forums.robotstudio.com/discussion/12177/how-to-change-the-listening-port-of-the-virtual-controller-robotware-6-x-and-7-x).
   :::
-- EGM port: the port of the EGM server, e.g. the *Remote Port Number* of the UDPUC device defined in RobotStudio above
-- Connection timeout: the amount of time the hardware interface tries to connect to the RWS and EGM servers before
+- **EGM port**: the port of the EGM server, e.g. the _Remote Port Number_ of the UDPUC device defined in RobotStudio above
+- **Connection timeout**: the amount of time the hardware interface tries to connect to the RWS and EGM servers before
   reporting an error
-- Controller Task and Main Module name: Depends on the controller configuration and usually defaults to `T_ROB1` and
+- **Controller Task and Main Module name**: Depends on the controller configuration and usually defaults to `T_ROB1` and
   `AICA_EGM`, respectively.
-- Uc Device: The name of the UDPUC device configured above.
+- **Uc Device**: The name of the UDPUC device configured above.
 
 Before starting an application with an ABB hardware interface in AICA Studio, the motors and RAPID program on the robot
 must be started manually through the teach pendant or RobotStudio. After that, running the application will connect to
 the robot and get information about the mechanical setup of the robot being used.
 
-<!-- TODO: link example --> 
+<!-- TODO: link example -->
 
 <!-- <div class="text--center">
   <img src={abbRSSuccessfulConnection} alt="Connected to RobotStudio successfully." />

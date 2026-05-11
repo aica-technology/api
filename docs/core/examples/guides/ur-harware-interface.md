@@ -474,15 +474,15 @@ with the `Headless mode` set to false, other features of the `UR Dashboard Contr
 
 The controller provides four services:
 
-- Hand back control: See [the example above](#run-an-aica-application-as-one-node-of-a-program).
-- Zero FT sensor: Triggering this service zeros the built-in force torque sensor.
-- Set payload: If the payload of the robot changes during the application, for example by picking up an object, this
+- **Hand back control**: See [the example above](#run-an-aica-application-as-one-node-of-a-program).
+- **Zero FT sensor**: Triggering this service zeros the built-in force torque sensor.
+- **Set payload**: If the payload of the robot changes during the application, for example by picking up an object, this
   service can be used to update the payload setting on the robot. Given the mass and center of gravity, call the service
   with
   ```json
   {mass: 1.2, cog: [0.15, 0.1, 0.05]}
   ```
-- Resend robot program: In case the hardware interface was launched with `Headless Mode` set to true and the UR program
+- **Resend robot program**: In case the hardware interface was launched with `Headless Mode` set to true and the UR program
   has been stopped for some reason, this service can be triggered to restart the external control to be able to send
   commands to the robot again.
 

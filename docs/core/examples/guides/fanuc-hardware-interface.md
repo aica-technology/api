@@ -11,7 +11,7 @@ FANUC is one of the largest and most established industrial robotic manipulator 
 technology and robust performance for a wide range of automation tasks.
 
 FANUC is one of the first major robot brands that enables accelerating Physical AI implementation through an official
-first-party ROS driver in the `ros2_control` framework 
+first-party ROS driver in the `ros2_control` framework
 ([article from Dec 2025](https://www.fanuc.co.jp/en/product/new_product/2025/202512_robot_physicalai.html)). This allows
 advanced programming platforms like the AICA System to control the robots in real-time and deploy complex behaviors
 without custom implementations.
@@ -27,6 +27,7 @@ hardware compatibility. The minimum robot controller software versions are:
 - R-50iA series: V10.10P/26
 
 Additionally, one of the following software options are required:
+
 - J519 Stream Motion and R912 Remote Motion
 - S636 External Control Package, which includes the previous
 
@@ -67,16 +68,16 @@ robot:
   <img src={fanucHI} alt="FANUC hardware interface." style={{ borderRadius: "8px" }} />
 </div>
 
-- Robot IP: the IP address of the robot 
-- RMI port: the port of the Remote Motion Interface (keep default unless otherwise configured on the robot controller)
-- Stream Motion Port: the port of Stream Motion (keep default unless otherwise configured on the robot controller)
-- GPIO configuration (v1.1.0 and above): an absolute path to a YAML file containing the GPIOs that should be configured
+- **Robot IP**: the IP address of the robot
+- **RMI port**: the port of the Remote Motion Interface (keep default unless otherwise configured on the robot controller)
+- **Stream Motion Port**: the port of Stream Motion (keep default unless otherwise configured on the robot controller)
+- **GPIO configuration (v1.1.0 and above)**: an absolute path to a YAML file containing the GPIOs that should be configured
   (see more information below)
-- Payload Schedule: the number of the payload to be set on the robot
-- Out Cmd Interp Buff Target: Output command interpolation buffer target size for stream motion control
-- Force Sensor Type (v1.1.0 and above): The type of force torque sensor to configure (see more information below)
+- **Payload Schedule**: the number of the payload to be set on the robot
+- **Out Cmd Interp Buff Target**: Output command interpolation buffer target size for stream motion control
+- **Force Sensor Type (v1.1.0 and above)**: The type of force torque sensor to configure (see more information below)
 
-Click **Start** to start the application and connect to the robot. 
+Click **Start** to start the application and connect to the robot.
 
 ### GPIO configuration
 
@@ -90,14 +91,14 @@ the driver starts. For detailed description, refer to the relevant sections in t
 The official documentation states the behavior as follows:
 
 > When outputs or numeric registers are added to the command section of the GPIO configuration YAML file, once the ROS 2
-  driver is launched those output and numeric register values in the controller will be set to false or zero.
+> driver is launched those output and numeric register values in the controller will be set to false or zero.
 
 However, the version of the driver provided by AICA takes additional care **not** to overwrite the value of the GPIOs on startup,
 and instead persists the initial value set on the robot controller.
 
 :::
 
-A example configuration of a GPIO configuration file could look as follows:
+An example configuration of a GPIO configuration file could look as follows:
 
 ```yaml
 gpio_topic_config:
@@ -115,10 +116,12 @@ gpio_topic_config:
 ```
 
 This configuration claims reads interfaces
+
 - DI[101], DI[102], and DI[103] (`start` is 101 and `length` is 3)
 - DO[101] (`start` is 101 and `length` is 1)
 
 and writes to interfaces
+
 - DO[101] and DO[102] (`start` is 101 and `length` is 2)
 
 In order for this configuration to be accepted by the hardware interface, it is necessary to add matching state and
@@ -143,13 +146,12 @@ command interfaces to the `ros2_control` section of the URDF as follows:
 
 ### Force torque sensor configuration
 
-Starting with driver version `collections/fanuc:v1.1.0` and robot controller software V9.40/P85, it is possible to read 
-force torque sensor values directly from the robot. The type of force sensor can be configured through the `force_sensor_type`
+Starting with driver version `collections/fanuc:v1.1.0` and robot controller software V9.40/P85, it is possible to read force torque sensor values directly from the robot. The type of force sensor can be configured through the `force_sensor_type`
 hardware parameter. Available types are:
 
-- 0: Unselected
-- 1: Embedded: for all CRX models with inbuilt sensor
-- 2: External: for robots with an external FANUC force torque sensor mounted at the flange
+- **0**: Unselected
+- **1**: Embedded: for all CRX models with inbuilt sensor
+- **2**: External: for robots with an external FANUC force torque sensor mounted at the flange
 
 :::note
 
@@ -157,7 +159,7 @@ Users without software V9.40/P85 should keep the type at 0 to be able to start t
 
 :::
 
-When the `force_sensor_type` is set to 1 or 2, the URDF must include the following `sensor` interfaces within the `ros2_control` 
+When the `force_sensor_type` is set to 1 or 2, the URDF must include the following `sensor` interfaces within the `ros2_control`
 element.
 
 ```xml

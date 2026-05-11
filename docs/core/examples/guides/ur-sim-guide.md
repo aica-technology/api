@@ -71,7 +71,7 @@ For a detailed description of the available arguments, use:
 ./run.sh -h
 ```
 
-Successfull execution of the command will produce an output such as the following:
+Successful execution of the command will produce an output such as the following:
 
 ```bash
 ROBOT_MODEL: ur5e

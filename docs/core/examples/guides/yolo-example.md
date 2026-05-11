@@ -122,10 +122,11 @@ In AICA Launcher, create a configuration with the following core version and pac
 :::info
 AICA toolkits are the curated way of bundling Machine Learning (ML) and GPU (specifically CUDA) acceleration libraries.
 In short:
+
 - ML toolkits contain a broad range of libraries that are often required to conduct ML inference and/or training
-(e.g., pytorch, scipy, etc)
+  (e.g., pytorch, scipy, etc)
 - CUDA toolkits contain libraries pertinent to interface CUDA-compatible code and libraries
-with a NVIDIA GPU.
+  with a NVIDIA GPU.
 
 If you do not own a GPU or want CPU accleration only, bundling our CUDA toolkits is not necessary. For instance, your
 AICA Launcher configuration could look as follows:
@@ -158,7 +159,7 @@ you are still at the **Advanced Settings** menu:
 - Click on **Add a volume mount +**.
 - Click on **Browse** and navigate to the location of the `yolo-example-data` folder.
 - On the right side, where a `/target` placeholder text is visible, type a name for the target directory inside your
-AICA container. For simplicity you can use `/yolo-example-data`.
+  AICA container. For simplicity you can use `/yolo-example-data`.
 
 :::info
 
@@ -181,12 +182,12 @@ Let us build a YOLO application from scratch.
 - Create a new application
 - Remove the default Hardware Interface node for now
 - Add the Camera Streamer component from the core vision package
-    - Set the `Source` parameter to a video device or file accordingly
-    - Enable **auto-configure** and **auto-activate**
+  - Set the `Source` parameter to a video device or file accordingly
+  - Enable **auto-configure** and **auto-activate**
 - Add the `YoloExecutor` component
-    - Set the `Model path` parameter to the `.onnx` file, e.g., `/yolo-example-data/yolo12n.onnx`
-    - Set the `Classes path` parameter to the yaml label file, e.g., `/yolo-example-data/coco.yaml`
-    - Enable **auto-configure** and **auto-activate**
+  - Set the `Model path` parameter to the `.onnx` file, e.g., `/yolo-example-data/yolo12n.onnx`
+  - Set the `Classes path` parameter to the yaml label file, e.g., `/yolo-example-data/coco.yaml`
+  - Enable **auto-configure** and **auto-activate**
 - Connect the output of the start node to each component to load them when the application is started
 - Connect the `Image` output of the Camera Streamer to the `Image` input of the `YoloExecutor`
 
@@ -198,23 +199,25 @@ sense). The following picture shows the available parameters:
 </div>
 
 More specifically, you can adapt:
-- `Model path`: filepath to your YOLO model
-- `Classes path`: filepath to your classes file, making the mapping between predicted object IDs and object names
-- `Object class`: will narrow the `Detections` output to the selected classes alone (one or more classes included in the
-class file)
-- `Confidence threshold`: the minimum score a predicted bounding box must have to be considered a valid detection
-- `IOU Threshold`: used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same
-object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box
-will be discarded.
-- `Prefer GPU`: sets GPU as the preferred inference device. However, if you use a CPU toolkit image with `Prefer GPU`
-toggled on, then the component will ultimately gracefully fall back to using the CPU
-- `Number of CPU threads`: to get the most out of your system's resources. Notice that this parameter has no effect when
-a GPU is used
+
+- **Model path**: filepath to your YOLO model
+- **Classes path**: filepath to your classes file, making the mapping between predicted object IDs and object names
+- **Object class**: will narrow the `Detections` output to the selected classes alone (one or more classes included in the
+  class file)
+- **Confidence threshold**: the minimum score a predicted bounding box must have to be considered a valid detection
+- **IOU Threshold**: used during Non-Maximum Suppression (NMS) to decide whether two bounding boxes represent the same
+  object. For example, if `IOU threshold` is set to 0.5, any box that overlaps more than 50% with a higher-scoring box
+  will be discarded.
+- **Prefer GPU**: sets GPU as the preferred inference device. However, if you use a CPU toolkit image with `Prefer GPU`
+  toggled on, then the component will ultimately gracefully fall back to using the CPU
+- **Number of CPU threads**: to get the most out of your system's resources. Notice that this parameter has no effect when
+  a GPU is used
 
 To complement the parameters and enable event-driven logic when using the component, two predicates exist, namely:
-- `Is any selected class detected`: True if one of the classes in the `Object class` list is detected
-- `Is any object detected`: True if there is any known object (i.e., as per the class file provided) in the image stream
-(including but not limited to `Object class`)
+
+- **Is any selected class detected**: True if one of the classes in the `Object class` list is detected
+- **Is any object detected**: True if there is any known object (i.e., as per the class file provided) in the image stream
+  (including but not limited to `Object class`)
 
 Your application should now look similar to the following picture:
 
@@ -225,11 +228,12 @@ Your application should now look similar to the following picture:
 ### Running the application
 
 Open the application we built in the previous step, if you are not already there. Then:
+
 - open **RViz**: select "Launch RViz" from the Launcher settings
 - in **RViz**: press Add &rarr; By topic &rarr; `/yolo_executor/annotated_image/Image` to view the YOLO model's
-annotated output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
-published on the `yolo_executor/detections` topic as `vision_msgs/msg/Detection2DArray`, a ROS perception message (e.g.,
-containing bounding box coordinates, class name, score, ...).
+  annotated output. It should show the camera images with bounding boxes drawn around key objects. The bounding boxes are
+  published on the `yolo_executor/detections` topic as `vision_msgs/msg/Detection2DArray`, a ROS perception message (e.g.,
+  containing bounding box coordinates, class name, score, ...).
 
 :::note
 
@@ -254,8 +258,8 @@ off-the-self webcams and the standard YOLO models in mind, meaning:
 
 1. The object orientation is not taken into account when generating a twist. That is, no angular velocity is generated.
 2. No depth information is available and/or considered. The component operates in pixel space and is invariant to an
-object's movement along the depth axis. That is, only 2D motion will be observed, and the depth axis will have zero
-velocity.
+   object's movement along the depth axis. That is, only 2D motion will be observed, and the depth axis will have zero
+   velocity.
 
 #### Set up the repository
 
@@ -265,6 +269,7 @@ velocity.
   ```bash
   ./initialize_templates.sh
   ```
+
   This will launch a wizard to set up your package. Choose the following options:
   - Package type: `Components`
   - Package name: `object_detection_utils`
@@ -272,7 +277,7 @@ velocity.
 
 - Rename `py_lifecycle_component.py` to `bounding_box_tracker.py` in `source/object_detection_utils/object_detection_utils/`
 - Rename `object_detection_utils_py_lifecycle_component.json` to `object_detection_utils_bounding_box_tracker.json` in
-`source/object_detection_utils/component_descriptions/`
+  `source/object_detection_utils/component_descriptions/`
 - Register the component in `source/object_detection_utils/setup.cfg` like this:
 
 ```cfg
@@ -517,12 +522,12 @@ component under that menu.
 ### Application setup
 
 - Add the `BoundingBoxTracker` component to the previously configured application
-    - Turn on **auto-configure** and **auto-activate**
-    - Set the `Rate` to roughly match your camera's FPS, e.g., to 30
-    - Set the `Control gains` to values that are sensible for your robot and your desired responsiveness
-    - Set `Deadband` (i.e., a banded region of acceptable error within which no twist is generated) to your liking
-    - Set the `Decay rate` (i.e., the rate at which a twist will decay if no object is detected) per your application's
-  needs
+  - Turn on **auto-configure** and **auto-activate**
+  - Set the `Rate` to roughly match your camera's FPS, e.g., to 30
+  - Set the `Control gains` to values that are sensible for your robot and your desired responsiveness
+  - Set `Deadband` (i.e., a banded region of acceptable error within which no twist is generated) to your liking
+  - Set the `Decay rate` (i.e., the rate at which a twist will decay if no object is detected) per your application's
+    needs
 - Connect the `Detections` output of `YoloExecutor` to the `Detections` input of `BoundingBoxTracker`
 
 #### Commanding the robot with the generated twist
