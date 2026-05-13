@@ -26,7 +26,7 @@ A fiducial marker is an object placed in the field of view of an image for use a
 
 - **ArUco marker**: ArUco markers can be generate online (e.g., from [here](https://chev.me/arucogen/)), which permits choosing the dictionary, marker ID, and marker size. It can be then exported as PDF or SVG for printing.
 
-- **STag marker**: STag marker set can be either downloaded from [google public drive](https://drive.google.com/drive/folders/0ByNTNYCAhWbIV1RqdU9vRnd2Vnc?resourcekey=0-9ipvecbezW8EWUva5GBQTQ) or obtained from the [STag project repository](https://github.com/usrl-uofsc/stag_ros) or the generator/reference files linked by the project. The [STag project repository for ROS](https://github.com/usrl-uofsc/stag_ros) is the other place to look for marker-generation assets. In practice, you’ll want to obtain the marker PDF/SVG or generate the markers from the project’s reference generator, then print them at true size.
+- **STag marker**: STag marker set can be either downloaded from [google public drive](https://drive.google.com/drive/folders/0ByNTNYCAhWbIV1RqdU9vRnd2Vnc?resourcekey=0-9ipvecbezW8EWUva5GBQTQ) or obtained from the [ROS2 STag project repository](https://github.com/usrl-uofsc/stag_ros/tree/ros2-devel) or the generator/reference files linked by the project. In practice, you’ll want to obtain the marker PDF/SVG or generate the markers from the project’s reference generator, then print them at true size.
 
 ### Printing markers
 
