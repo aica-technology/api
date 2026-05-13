@@ -5,6 +5,8 @@ title: Fiducial Markers
 
 import stagDetectorExample from './assets/stag-detector-example.png'
 import stagMarkerDetection from './assets/stag-marker-detection.webm'
+import stagMarkerNumOne from './assets/stagDetector-predicates_1.png'
+import stagMarkerNumZero from './assets/stagDetector-predicates_0.png'
 
 # Fiducial Markers
 
@@ -51,20 +53,32 @@ Launch AICA Studio with a configuration that contains the `core-vision` package 
 By this point, you should have something like the following:
 
 <div class="text--center">
-  <img src={stagDetectorExample} alt="CameraStreamer configuration alongside STagDetector component" />
+  <img src={stagDetectorExample} alt="CameraStreamer configuration alongside STagDetector component" style={{ borderRadius: "8px" }}/>
 </div>
 
 :::info
 The Camera Streamer parameters are explained in the [CameraStreamer component guide](./camera-streamer.md).
 :::
 
-STag Detector component has three predicates that are as follow:
+## STag Detector predicates
 
-- **Is any marker detected**: This predicate will be set to `True` if any marker is detected in the camera frame.
-- **Is any selected marker detected**: If one or more marker names are indicated in the `Marker selection` parameter, this predicate with be set to `True`. If the names of none of the markers present in the camera frame is indicated as a parameter, this predicate will remain `False`.
-- **Is a marker bundle detected**: If a registered group of markers is detected by the camera, this parameter will be set to `True`.
+- **Is any marker detected**: This predicate will be set to **True** if any marker is detected in the camera frame, even though it is not the selected marker.
+  As in the screenshot below, that the marker name specified in the `Marker selection` parameter is different from the marker recognized in the camera frame, which is stag_0.
 
-Now let us go through the parameters of the STag Detector component:
+<div class="text--center">
+  <img src={stagMarkerNumOne} alt="Is any marker detected at all" style={{ borderRadius: "8px" }}/>
+</div>
+
+- **Is any selected marker detected**: If one or more marker names are indicated in the `Marker selection` parameter, and if any of them appears in the camera frame, this predicate with be set to **True**. If the names of none of the markers present in the camera frame is indicated as a parameter, this predicate will remain **False**.
+  In the screenshot below the name of the marker appearing in the camera frame matches the name indicated in the `Marker selection` parameter.
+
+<div class="text--center">
+  <img src={stagMarkerNumZero} alt="Is any of the selected markers detected" style={{ borderRadius: "8px" }}/>
+</div>
+
+- **Is a marker bundle detected**: If a registered group of markers is detected by the camera, this parameter will be set to **True**. Otherwise it will remain **False**.
+
+## STag Detector parameters
 
 - **Rate**: The rate parameter doesn't affect the behavior of the component as the detection process
   occurs on reception of a new image.
