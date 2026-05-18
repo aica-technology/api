@@ -60,10 +60,21 @@ By this point, you should have something like the following:
 The Camera Streamer parameters are explained in the [CameraStreamer component guide](./camera-streamer.md).
 :::
 
+## STag Detector parameters
+
+- **Rate**: The rate parameter doesn't affect the behavior of the component as the detection process
+  occurs on reception of a new image.
+- **Bundle file**: The filepath to a predefined marker bundle configuration. This additional feature is described in a separate guide (coming soon).
+- **Marker selection**: The name(s) of the marker(s) that we want to recognize. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. Also if a decision needs to be made based on the existence of a specific STag marker in the camera frame, its name should be indicated in this parameter. The markers name should always be prepended with the value of `Prefix`.
+- **Marker size**: Determines the side length of a square that specifies the marker in meters.
+- **Library**: This is the ID number of the HD library utilized by STag markers. The allowed numbers are `[11, 13, 15, 17, 19, 21, 23]`.
+- **Error correction**:
+- **Prefix**: This prefix is used for marker names.
+
 ## STag Detector predicates
 
-- **Is any marker detected**: This predicate will be set to **True** if any marker is detected in the camera frame, even though it is not the selected marker.
-  As in the screenshot below, that the marker name specified in the `Marker selection` parameter is different from the marker recognized in the camera frame, which is stag_0.
+- **Is any marker detected**: This predicate will be set to **True** if any marker is detected in the camera frame, even though its name is not indicated in the 'Marker Selection' parameter.
+  As you can see in the screenshot below, the marker name specified in the `Marker selection` parameter is stag_1, but the marker recognized in the camera frame is stag_0, yet `Is any marker detected` predicate is set to **True**.
 
 <div class="text--center">
   <img src={stagMarkerNumOne} alt="Is any marker detected at all" style={{ borderRadius: "8px" }}/>
@@ -77,29 +88,6 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
 </div>
 
 - **Is a marker bundle detected**: If a registered group of markers is detected by the camera, this parameter will be set to **True**. Otherwise it will remain **False**.
-
-## STag Detector parameters
-
-- **Rate**: The rate parameter doesn't affect the behavior of the component as the detection process
-  occurs on reception of a new image.
-- **Bundle file**: The filepath to a predefined marker bundle configuration. This additional feature is described in a separate guide (coming soon).
-- **Marker selection**: The name(s) of the marker(s) that we intend to be recognized. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. This name should always be prepended with the value of `Prefix`.
-- **Marker size**: Determines the side length of a square that specifies the marker in meters.
-- **Library**: This is the ID number of the HD library utilized by STag markers. The allowed numbers are `[11, 13, 15, 17, 19, 21, 23]`.
-- **Error correction**:
-- **Prefix**: This prefix is used for marker names.
-
-:::tip
-
-If a decision needs to be made based on the existence of a specific STag marker in the camera frame, its name should be indicated in the `Marker Selection` parameter.
-
-:::
-
-:::info
-
-If any marker is detected in the camera frame at all, the `is_any_marker_detected` predicate is set to **True**.
-
-:::
 
 After setting up the proper parameters for Camera Streamer and STag Detector:
 
