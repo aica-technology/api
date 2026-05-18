@@ -28,11 +28,11 @@ A fiducial marker is an object placed in the field of view of an image for use a
 
 - **ArUco marker**: ArUco markers can be generate online (e.g., from [here](https://chev.me/arucogen/)), which permits choosing the dictionary, marker ID, and marker size. It can be then exported as PDF or SVG for printing.
 
-- **STag marker**: STag marker set can be either downloaded from [google public drive](https://drive.google.com/drive/folders/0ByNTNYCAhWbIV1RqdU9vRnd2Vnc?resourcekey=0-9ipvecbezW8EWUva5GBQTQ) or obtained from the [ROS2 STag project repository](https://github.com/usrl-uofsc/stag_ros/tree/ros2-devel) or the generator/reference files linked by the project. In practice, you’ll want to obtain the marker PDF/SVG or generate the markers from the project’s reference generator, then print them at true size.
+- **STag marker**: STag marker set can be either downloaded from [public Google Drive](https://drive.google.com/drive/folders/0ByNTNYCAhWbIV1RqdU9vRnd2Vnc?resourcekey=0-9ipvecbezW8EWUva5GBQTQ) or obtained from the [ROS2 STag project repository](https://github.com/usrl-uofsc/stag_ros/tree/ros2-devel) or the generator/reference files linked by the project. In practice, you’ll want to obtain the marker PDF/SVG or generate the markers from the project’s reference generator, then print them at true size.
 
 ### Printing markers
 
-After choosing the marker family, selecting the library/dictionary, and the marker ID, download it as PDF or SVG. Use the Actual size of the marker (100% scale) for printing, so the black border and marker geometry are not resized. Also it is recommended to print with high contrast and avoid compression artifacts.
+After choosing the marker family, selecting the library/dictionary, and the marker ID, download it as PDF or SVG. Use the actual size of the marker (100% scale) for printing, so the black border and marker geometry are not resized. Also it is recommended to print with high contrast and avoid compression artifacts.
 
 If possible, print on a rigid and flat sheet of paper to reduce warping, since fiducial detection is sensitive to distortion. As another solution, you can fix the printed marker on a rigid surface, such as a piece of wood or cardboard.
 
