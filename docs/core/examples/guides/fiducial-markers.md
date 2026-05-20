@@ -68,8 +68,8 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
 - **Marker selection**: The name(s) of the marker(s) that we want to recognize. If any of these markers enters the camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. Also if a decision needs to be made based on the existence of a specific STag marker in the camera frame, its name should be indicated in this parameter. The markers name should always be prepended with the value of `Prefix`.
 - **Marker size**: Determines the side length of a square that specifies the marker in meters.
 - **Library**: This is the ID number of the HD library utilized by STag markers. The allowed numbers are `[11, 13, 15, 17, 19, 21, 23]`.
-- **Error correction**:
-- **Prefix**: This prefix is used for marker names.
+- **Error correction**: This parameter sets how permissive the detector is. Meaning it controls how many bit errors the STag detector is allowed to tolerate when decoding a marker ID. Lower values mean stricter matching, but detection would be less robust to blur, noise, bad lighting, or partial image degradation. Higher values mean more tolerant matching. The detector can still recognize a marker even if some bits are read incorrectly, so detection is more robust, but the risk of wrong matches increases. The lower and upper limits for this parameter are 0 and 11 respectively (inclusive).
+- **Prefix**: This is the prefix used for marker names.
 
 ## STag Detector predicates
 
@@ -89,6 +89,8 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
 
 - **Is a marker bundle detected**: If a registered group of markers is detected by the camera, this parameter will be set to **True**. Otherwise it will remain **False**.
 
+## Running the application
+
 After setting up the proper parameters for Camera Streamer and STag Detector:
 
 1. Press **Start** to start the application.
@@ -102,8 +104,102 @@ After setting up the proper parameters for Camera Streamer and STag Detector:
   </video>
 </div>
 
+The following YAML snippet contains the full application of the STag Detector above:
+
+<details>
+  <summary>Example application, STag Detector</summary>
+
+```yaml
+schema: 2-0-6
+dependencies:
+  core: v5.1.0
+on_start:
+  load:
+    - component: stag_detector
+    - component: camera_streamer
+components:
+  stag_detector:
+    component: core_vision_components::pose_detection::STagDetector
+    display_name: STag Detector
+    events:
+      transitions:
+        on_configure:
+          lifecycle:
+            component: stag_detector
+            transition: activate
+        on_load:
+          lifecycle:
+            component: stag_detector
+            transition: configure
+    parameters:
+      marker_selection:
+        value:
+          - stag_0
+        type: string_array
+    inputs:
+      image: /camera_streamer/image
+      camera_info: /camera_streamer/camera_info
+  camera_streamer:
+    component: core_vision_components::image_streaming::CameraStreamer
+    display_name: Camera Streamer
+    events:
+      transitions:
+        on_configure:
+          lifecycle:
+            component: camera_streamer
+            transition: activate
+        on_load:
+          lifecycle:
+            component: camera_streamer
+            transition: configure
+    parameters:
+      camera_info_path:
+        value: /data/ost.yaml
+        type: string
+      undistorted_image_cropping:
+        value: false
+        type: bool
+    outputs:
+      image: /camera_streamer/image
+      camera_info: /camera_streamer/camera_info
+graph:
+  positions:
+    on_start:
+      x: -60
+      y: 0
+    stop:
+      x: -60
+      y: 100
+    components:
+      stag_detector:
+        x: 820
+        y: 0
+      camera_streamer:
+        x: 200
+        y: 60
+  edges:
+    on_start_on_start_camera_streamer_camera_streamer:
+      path:
+        - x: 100
+          y: 60
+        - x: 100
+          y: 120
+    camera_streamer_image_stag_detector_image:
+      path:
+        - x: 700
+          y: 280
+        - x: 700
+          y: 260
+    camera_streamer_camera_info_stag_detector_camera_info:
+      path:
+        - x: 660
+          y: 360
+        - x: 660
+          y: 300
+```
+
+</details>
+
 :::info
-
 The process for using ArUco markers follows a similar process.
-
 :::
