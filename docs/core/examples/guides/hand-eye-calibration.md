@@ -6,6 +6,9 @@ title: Hand-Eye calibration
 import RobotCalibrationConfiguration from './assets/robot-calibration-configuration.png'
 import RobotCameraCalibration from './assets/robot-camera-calibration-component.png'
 import URCalibrationFile from './assets/UR-calibration-file.png'
+import FrameBroadcasterExpectedFileFormat from './assets/frame-broadcaster-expected-file-format.png'
+import FrameBroadcasterPublishManually from './assets/frame-broadcaster-publish-manually.png'
+import FrameBroadcasterDirectFilepath from './assets/frame-broadcaster-direct-filepath.png'
 
 # Hand-Eye calibration
 
@@ -41,7 +44,7 @@ The parameters of the Robot Camera Calibration component are defined as follows:
 - **Points dataset file**: A file containing previously recorded transformations of the robot end-effector or marker, which can be reused if available.
 - **Reset calibration**: Setting this component to `True` resets the calibration. Meaning it starts the calibration process again, even if the calibration matrices are already set.
 - **Reset dataset**: If set to `True`, the recording process will re-start, even if the dataset of points already exists.
-- **Is camera attached**: This parameter should be set to `True` if a physical camera is attached to the to the robot end-effector.
+- **Is camera attached**: This parameter should be set to `True` if the camera is attached to the robot end-effector.
 
 ## Robot Calibration using AICA Studio and a marker
 
@@ -66,6 +69,10 @@ An example of the calibration file:
 <div class="text--center">
   <img src={URCalibrationFile} alt="An example showing a final calibration file" style={{ borderRadius: "8px" }}/>
 </div>
+
+:::info
+The order of the data in the calibration file is `w, x, y, z` for the Orientation and `x, y, z` for the Position.
+:::
 
 In the screenshot below you can see an example of the components configuration for the Hand-Eye calibration, that resulted to the output above. Notice that the Camera and the marker detector components might differ based on the type of hardware being used.
 
@@ -248,3 +255,41 @@ There are several ways to use the transformation information obtained in the cal
 1. Adding the camera link to the URDF.
 2. Publish the transformation with a `FrameBroadcaster` manually.
 3. Using the calibration file path directly as a Frame Broadcaster component parameter to publish the transformations.
+
+:::tip
+In order to use the calibration file path as a `Frame Broadcaster` component parameter, the format of the calibration file needs to be slightly modified. In the next part the expected format is explained in more detail.
+:::
+
+## Frame Broadcaster component
+
+The **Frame Broadcaster** is a component that parses a frame from the parameters and/or frames from the provided file and broadcasts all available frames to TF.
+
+The parameters of the Robot Camera Calibration component are defined as follows:
+
+- **Rate**: Determines the frequency of all periodic callbacks. This parameter does not affect the component’s behavior.
+- **Filepath**: This shows the path to the file containing a frame in YAML format. An example of the expected file format is shown in the screenshot below.
+
+<div class="text--center">
+  <img src={FrameBroadcasterExpectedFileFormat} alt="The expected file format for the Frame Broadcaster" style={{ borderRadius: "8px" }}/>
+</div>
+
+- **Frame**: Name of the frame that we wish to broadcast.
+- **reference frame**: The name of the reference frame that the frame is defined according to it.
+- **Pose values**: The values of Position (meters) and Orientation (quaternions) concatenated as a vector, as in x, y, z, qw, qx, qy, qz.
+- **Broadcast periodically**: If this parameter is set to True, the frames are broadcasted periodically. Otherwise it publishes once immediately.
+
+:::info
+You either need to fill in the Filepath, or provide the `Frame Broadcaster` component with Frame, Reference frame, and the Pose values parameters.
+:::
+
+In the first screenshot below, you see an example of the `Frame broadcaster` component, and a transformation which is being published manually.
+
+<div class="text--center">
+  <img src={FrameBroadcasterPublishManually} alt="Inserting the transformation into the frame Broadcaster manually." style={{ borderRadius: "8px" }}/>
+</div>
+
+In this second example, you see how the calibration filepath is given as a parameter to publish the transformations.
+
+<div class="text--center">
+  <img src={FrameBroadcasterDirectFilepath} alt="Using the calibration file path directly as a Frame Broadcaster component parameter to publish the transformations." style={{ borderRadius: "8px" }}/>
+</div>
