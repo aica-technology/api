@@ -17,7 +17,7 @@ import urHWIImpedanceController from './assets/ur-hwi-impedance-controller.png'
 
 # Universal Robots
 
-Universal Robots (UR) offer a range of collaborative robotic arms in different sizes and with different payloads that
+Universal Robots (UR) offers a range of collaborative robotic arms in different sizes and with different payloads that
 are widely adopted across industries and research for their accessibility and flexibility. A graphical interface on the
 teach pendant allows to easily and intuitively program and integrate UR robots. At the same time, advanced users can get
 access to the full capabilities of the manipulators through scripting in URScript language or even by developing
@@ -122,147 +122,147 @@ to the robot.
 <details>
   <summary>Example application, remote control</summary>
 
-```yaml
-schema: 2-0-6
-dependencies:
-  core: v5.0.0
-frames:
-  wp_1:
-    reference_frame: world
-    position:
-      x: -0.027943
-      y: 0.600701
-      z: 0.202217
-    orientation:
-      w: 0.171776
-      x: 0.985056
-      y: 0.002386
-      z: -0.012313
-  wp_2:
-    reference_frame: world
-    position:
-      x: 0.260809
-      y: 0.604927
-      z: 0.194871
-    orientation:
-      w: 0.132343
-      x: 0.95897
-      y: -0.030587
-      z: -0.248852
-  wp_3:
-    reference_frame: world
-    position:
-      x: 0.147083
-      y: 0.552997
-      z: 0.328354
-    orientation:
-      w: 0.012478
-      x: 0.999843
-      y: 0.000392
-      z: -0.012536
-on_start:
-  load:
-    hardware: hardware
-sequences:
-  sequence:
-    display_name: Sequence
-    steps:
-      - delay: 2
-      - call_service:
-          controller: joint_trajectory_controller
-          hardware: hardware
-          service: set_trajectory
-          payload: "{frames: [wp_1, wp_2, wp_3], durations: [1.0, 1.0, 1.0],
-            blending_factors: [1.0]}"
-hardware:
+  ```yaml
+  schema: 2-0-6
+  dependencies:
+    core: v5.0.0
+  frames:
+    wp_1:
+      reference_frame: world
+      position:
+        x: -0.027943
+        y: 0.600701
+        z: 0.202217
+      orientation:
+        w: 0.171776
+        x: 0.985056
+        y: 0.002386
+        z: -0.012313
+    wp_2:
+      reference_frame: world
+      position:
+        x: 0.260809
+        y: 0.604927
+        z: 0.194871
+      orientation:
+        w: 0.132343
+        x: 0.95897
+        y: -0.030587
+        z: -0.248852
+    wp_3:
+      reference_frame: world
+      position:
+        x: 0.147083
+        y: 0.552997
+        z: 0.328354
+      orientation:
+        w: 0.012478
+        x: 0.999843
+        y: 0.000392
+        z: -0.012536
+  on_start:
+    load:
+      hardware: hardware
+  sequences:
+    sequence:
+      display_name: Sequence
+      steps:
+        - delay: 2
+        - call_service:
+            controller: joint_trajectory_controller
+            hardware: hardware
+            service: set_trajectory
+            payload: "{frames: [wp_1, wp_2, wp_3], durations: [1.0, 1.0, 1.0],
+              blending_factors: [1.0]}"
   hardware:
-    display_name: Hardware Interface
-    urdf: Universal Robots 5e
-    rate: 500
-    events:
-      transitions:
-        on_load:
-          load:
-            - controller: robot_state_broadcaster
-              hardware: hardware
-            - controller: joint_trajectory_controller
-              hardware: hardware
-    controllers:
-      robot_state_broadcaster:
-        plugin: aica_core_controllers/RobotStateBroadcaster
-        events:
-          transitions:
-            on_load:
-              switch_controllers:
+    hardware:
+      display_name: Hardware Interface
+      urdf: Universal Robots 5e
+      rate: 500
+      events:
+        transitions:
+          on_load:
+            load:
+              - controller: robot_state_broadcaster
                 hardware: hardware
-                activate: robot_state_broadcaster
-      joint_trajectory_controller:
-        plugin: aica_core_controllers/trajectory/JointTrajectoryController
-        events:
-          predicates:
-            has_trajectory_succeeded:
-              application: stop
-          transitions:
-            on_load:
-              switch_controllers:
+              - controller: joint_trajectory_controller
                 hardware: hardware
-                activate: joint_trajectory_controller
-graph:
-  positions:
+      controllers:
+        robot_state_broadcaster:
+          plugin: aica_core_controllers/RobotStateBroadcaster
+          events:
+            transitions:
+              on_load:
+                switch_controllers:
+                  hardware: hardware
+                  activate: robot_state_broadcaster
+        joint_trajectory_controller:
+          plugin: aica_core_controllers/trajectory/JointTrajectoryController
+          events:
+            predicates:
+              has_trajectory_succeeded:
+                application: stop
+            transitions:
+              on_load:
+                switch_controllers:
+                  hardware: hardware
+                  activate: joint_trajectory_controller
+  graph:
+    positions:
+      buttons:
+        button:
+          x: -460
+          y: 580
+      hardware:
+        hardware:
+          x: 620
+          y: -20
+      sequences:
+        sequence:
+          x: 40
+          y: 560
     buttons:
       button:
-        x: -460
-        y: 580
-    hardware:
-      hardware:
-        x: 620
-        y: -20
-    sequences:
-      sequence:
-        x: 40
-        y: 560
-  buttons:
-    button:
-      on_click:
-        sequence:
-          start: sequence
-  edges:
-    sequence_sequence_event_trigger_2_hardware_hardware_joint_trajectory_controller_set_trajectory:
-      path:
-        - x: 420
-          y: 1060
-        - x: 620
-          y: 1060
-        - x: 620
-          y: 900
-    on_start_on_start_hardware_hardware:
-      path:
-        - x: 360
-          y: 60
-        - x: 360
-          y: 40
-    button_on_click_sequence_sequence:
-      path:
-        - x: -20
-          y: 640
-        - x: -20
-          y: 620
-    sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
-      path:
-        - x: 240
-          y: 820
-    hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_on_stop_on_stop:
-      path:
-        - x: 540
-          y: 740
-        - x: 540
-          y: 480
-        - x: -20
-          y: 480
-        - x: -20
-          y: 160
-```
+        on_click:
+          sequence:
+            start: sequence
+    edges:
+      sequence_sequence_event_trigger_2_hardware_hardware_joint_trajectory_controller_set_trajectory:
+        path:
+          - x: 420
+            y: 1060
+          - x: 620
+            y: 1060
+          - x: 620
+            y: 900
+      on_start_on_start_hardware_hardware:
+        path:
+          - x: 360
+            y: 60
+          - x: 360
+            y: 40
+      button_on_click_sequence_sequence:
+        path:
+          - x: -20
+            y: 640
+          - x: -20
+            y: 620
+      sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
+        path:
+          - x: 240
+            y: 820
+      hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_on_stop_on_stop:
+        path:
+          - x: 540
+            y: 740
+          - x: 540
+            y: 480
+          - x: -20
+            y: 480
+          - x: -20
+            y: 160
 
+  ```
 </details>
 
 ### Run an AICA application as one node of a program
@@ -301,161 +301,161 @@ the application in AICA Studio first, and the UR program second.
 <details>
   <summary>Example application, local control</summary>
 
-```yaml
-schema: 2-0-6
-dependencies:
-  core: v5.0.0
-frames:
-  wp_1:
-    reference_frame: world
-    position:
-      x: -0.027943
-      y: 0.600701
-      z: 0.202217
-    orientation:
-      w: 0.171776
-      x: 0.985056
-      y: 0.002386
-      z: -0.012313
-  wp_2:
-    reference_frame: world
-    position:
-      x: 0.260809
-      y: 0.604927
-      z: 0.194871
-    orientation:
-      w: 0.132343
-      x: 0.95897
-      y: -0.030587
-      z: -0.248852
-  wp_3:
-    reference_frame: world
-    position:
-      x: 0.147083
-      y: 0.552997
-      z: 0.328354
-    orientation:
-      w: 0.012478
-      x: 0.999843
-      y: 0.000392
-      z: -0.012536
-on_start:
-  load:
-    hardware: hardware
-sequences:
-  sequence:
-    display_name: Sequence
-    steps:
-      - delay: 2
-      - call_service:
-          controller: joint_trajectory_controller
-          hardware: hardware
-          service: set_trajectory
-          payload: "{frames: [wp_1, wp_2, wp_3], durations: [1.0, 1.0, 1.0],
-            blending_factors: [1.0]}"
-hardware:
+  ```yaml
+  schema: 2-0-6
+  dependencies:
+    core: v5.0.0
+  frames:
+    wp_1:
+      reference_frame: world
+      position:
+        x: -0.027943
+        y: 0.600701
+        z: 0.202217
+      orientation:
+        w: 0.171776
+        x: 0.985056
+        y: 0.002386
+        z: -0.012313
+    wp_2:
+      reference_frame: world
+      position:
+        x: 0.260809
+        y: 0.604927
+        z: 0.194871
+      orientation:
+        w: 0.132343
+        x: 0.95897
+        y: -0.030587
+        z: -0.248852
+    wp_3:
+      reference_frame: world
+      position:
+        x: 0.147083
+        y: 0.552997
+        z: 0.328354
+      orientation:
+        w: 0.012478
+        x: 0.999843
+        y: 0.000392
+        z: -0.012536
+  on_start:
+    load:
+      hardware: hardware
+  sequences:
+    sequence:
+      display_name: Sequence
+      steps:
+        - delay: 2
+        - call_service:
+            controller: joint_trajectory_controller
+            hardware: hardware
+            service: set_trajectory
+            payload: "{frames: [wp_1, wp_2, wp_3], durations: [1.0, 1.0, 1.0],
+              blending_factors: [1.0]}"
   hardware:
-    display_name: Hardware Interface
-    urdf: Universal Robots 5e
-    rate: 500
-    events:
-      transitions:
-        on_load:
-          load:
-            - controller: robot_state_broadcaster
-              hardware: hardware
-            - controller: joint_trajectory_controller
-              hardware: hardware
-            - controller: ur_dashboard_controller
-              hardware: hardware
-    parameters:
-      headless_mode: "false"
-    controllers:
-      robot_state_broadcaster:
-        plugin: aica_core_controllers/RobotStateBroadcaster
-        events:
-          transitions:
-            on_load:
-              switch_controllers:
-                hardware: hardware
-                activate: robot_state_broadcaster
-      joint_trajectory_controller:
-        plugin: aica_core_controllers/trajectory/JointTrajectoryController
-        events:
-          predicates:
-            has_trajectory_succeeded:
-              call_service:
-                controller: ur_dashboard_controller
-                hardware: hardware
-                service: hand_back_control
-          transitions:
-            on_activate:
-              sequence:
-                start: sequence
-      ur_dashboard_controller:
-        plugin: aica_ur_controllers/URDashboardController
-        events:
-          predicates:
-            program_running:
-              switch_controllers:
-                hardware: hardware
-                activate: joint_trajectory_controller
-            hand_back_control_success:
-              application: stop
-          transitions:
-            on_load:
-              switch_controllers:
-                hardware: hardware
-                activate: ur_dashboard_controller
-graph:
-  positions:
     hardware:
+      display_name: Hardware Interface
+      urdf: Universal Robots 5e
+      rate: 500
+      events:
+        transitions:
+          on_load:
+            load:
+              - controller: robot_state_broadcaster
+                hardware: hardware
+              - controller: joint_trajectory_controller
+                hardware: hardware
+              - controller: ur_dashboard_controller
+                hardware: hardware
+      parameters:
+        headless_mode: "false"
+      controllers:
+        robot_state_broadcaster:
+          plugin: aica_core_controllers/RobotStateBroadcaster
+          events:
+            transitions:
+              on_load:
+                switch_controllers:
+                  hardware: hardware
+                  activate: robot_state_broadcaster
+        joint_trajectory_controller:
+          plugin: aica_core_controllers/trajectory/JointTrajectoryController
+          events:
+            predicates:
+              has_trajectory_succeeded:
+                call_service:
+                  controller: ur_dashboard_controller
+                  hardware: hardware
+                  service: hand_back_control
+            transitions:
+              on_activate:
+                sequence:
+                  start: sequence
+        ur_dashboard_controller:
+          plugin: aica_ur_controllers/URDashboardController
+          events:
+            predicates:
+              program_running:
+                switch_controllers:
+                  hardware: hardware
+                  activate: joint_trajectory_controller
+              hand_back_control_success:
+                application: stop
+            transitions:
+              on_load:
+                switch_controllers:
+                  hardware: hardware
+                  activate: ur_dashboard_controller
+  graph:
+    positions:
       hardware:
-        x: 780
-        y: 0
-    sequences:
-      sequence:
-        x: 80
-        y: 380
-  edges:
-    sequence_sequence_event_trigger_2_hardware_hardware_joint_trajectory_controller_set_trajectory:
-      path:
-        - x: 420
-          y: 1060
-        - x: 620
-          y: 1060
-        - x: 620
-          y: 900
-    sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
-      path:
-        - x: 280
-          y: 880
-    hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_ur_dashboard_controller_hand_back_control:
-      path:
-        - x: 680
-          y: 800
-        - x: 680
-          y: 1340
-    hardware_hardware_joint_trajectory_controller_on_activate_sequence_sequence:
-      path:
-        - x: 20
-          y: 720
-        - x: 20
-          y: 440
-    hardware_hardware_ur_dashboard_controller_program_running_hardware_hardware_joint_trajectory_controller:
-      path:
-        - x: 460
-          y: 1260
-        - x: 460
-          y: 600
-    hardware_hardware_ur_dashboard_controller_hand_back_control_success_on_stop_on_stop:
-      path:
-        - x: -20
-          y: 1220
-        - x: -20
-          y: 160
-```
+        hardware:
+          x: 780
+          y: 0
+      sequences:
+        sequence:
+          x: 80
+          y: 380
+    edges:
+      sequence_sequence_event_trigger_2_hardware_hardware_joint_trajectory_controller_set_trajectory:
+        path:
+          - x: 420
+            y: 1060
+          - x: 620
+            y: 1060
+          - x: 620
+            y: 900
+      sequence_sequence_event_trigger_1_hardware_hardware_joint_trajectory_controller_set_trajectory:
+        path:
+          - x: 280
+            y: 880
+      hardware_hardware_joint_trajectory_controller_has_trajectory_succeeded_hardware_hardware_ur_dashboard_controller_hand_back_control:
+        path:
+          - x: 680
+            y: 800
+          - x: 680
+            y: 1340
+      hardware_hardware_joint_trajectory_controller_on_activate_sequence_sequence:
+        path:
+          - x: 20
+            y: 720
+          - x: 20
+            y: 440
+      hardware_hardware_ur_dashboard_controller_program_running_hardware_hardware_joint_trajectory_controller:
+        path:
+          - x: 460
+            y: 1260
+          - x: 460
+            y: 600
+      hardware_hardware_ur_dashboard_controller_hand_back_control_success_on_stop_on_stop:
+        path:
+          - x: -20
+            y: 1220
+          - x: -20
+            y: 160
 
+  ```
 </details>
 
 ## Dashboard controller
@@ -480,7 +480,7 @@ The controller provides four services:
   service can be used to update the payload setting on the robot. Given the mass and center of gravity, call the service
   with
   ```json
-  { "mass": 1.2, "cog": [0.15, 0.1, 0.05] }
+  {mass: 1.2, cog: [0.15, 0.1, 0.05]}
   ```
 - Resend robot program: In case the hardware interface was launched with `Headless Mode` set to true and the UR program
   has been stopped for some reason, this service can be triggered to restart the external control to be able to send
@@ -496,97 +496,97 @@ Find below another example that uses the controller to set the payload on the ro
 <details>
   <summary>Example application, dashboard controller</summary>
 
-```yaml
-schema: 2-0-6
-dependencies:
-  core: v5.0.0
-on_start:
-  load:
-    hardware: hardware
-sequences:
-  sequence:
-    display_name: Sequence
-    steps:
-      - delay: 2
-      - call_service:
-          controller: ur_dashboard_controller
-          hardware: hardware
-          service: set_payload
-          payload: "{mass : 1.2, cog : [0.2, 0.2, 0.2]}"
-      - delay: 2
-      - call_service:
-          controller: ur_dashboard_controller
-          hardware: hardware
-          service: hand_back_control
-hardware:
+  ```yaml
+  schema: 2-0-6
+  dependencies:
+    core: v5.0.0
+  on_start:
+    load:
+      hardware: hardware
+  sequences:
+    sequence:
+      display_name: Sequence
+      steps:
+        - delay: 2
+        - call_service:
+            controller: ur_dashboard_controller
+            hardware: hardware
+            service: set_payload
+            payload: "{mass : 1.2, cog : [0.2, 0.2, 0.2]}"
+        - delay: 2
+        - call_service:
+            controller: ur_dashboard_controller
+            hardware: hardware
+            service: hand_back_control
   hardware:
-    display_name: Hardware Interface
-    urdf: Universal Robots 5e
-    rate: 100
-    events:
-      transitions:
-        on_load:
-          load:
-            - controller: robot_state_broadcaster
-              hardware: hardware
-            - controller: ur_dashboard_controller
-              hardware: hardware
-    parameters:
-      headless_mode: "False"
-    controllers:
-      robot_state_broadcaster:
-        plugin: aica_core_controllers/RobotStateBroadcaster
-        events:
-          transitions:
-            on_load:
-              switch_controllers:
-                hardware: hardware
-                activate: robot_state_broadcaster
-      ur_dashboard_controller:
-        plugin: aica_ur_controllers/URDashboardController
-        events:
-          transitions:
-            on_load:
-              switch_controllers:
-                hardware: hardware
-                activate: ur_dashboard_controller
-          predicates:
-            program_running:
-              sequence:
-                start: sequence
-graph:
-  positions:
-    on_start:
-      x: 0
-      y: -20
-    stop:
-      x: 320
-      y: 120
     hardware:
-      hardware:
-        x: 940
+      display_name: Hardware Interface
+      urdf: Universal Robots 5e
+      rate: 100
+      events:
+        transitions:
+          on_load:
+            load:
+              - controller: robot_state_broadcaster
+                hardware: hardware
+              - controller: ur_dashboard_controller
+                hardware: hardware
+      parameters:
+        headless_mode: "False"
+      controllers:
+        robot_state_broadcaster:
+          plugin: aica_core_controllers/RobotStateBroadcaster
+          events:
+            transitions:
+              on_load:
+                switch_controllers:
+                  hardware: hardware
+                  activate: robot_state_broadcaster
+        ur_dashboard_controller:
+          plugin: aica_ur_controllers/URDashboardController
+          events:
+            transitions:
+              on_load:
+                switch_controllers:
+                  hardware: hardware
+                  activate: ur_dashboard_controller
+            predicates:
+              program_running:
+                sequence:
+                  start: sequence
+  graph:
+    positions:
+      on_start:
+        x: 0
         y: -20
-    sequences:
-      sequence:
-        x: 120
-        y: 220
-  edges:
-    sequence_sequence_event_trigger_1_hardware_hardware_ur_dashboard_controller_set_payload:
-      path:
-        - x: 320
-          y: 860
-    sequence_sequence_event_trigger_3_hardware_hardware_ur_dashboard_controller_hand_back_control:
-      path:
-        - x: 640
-          y: 820
-    hardware_hardware_ur_dashboard_controller_program_running_sequence_sequence:
-      path:
-        - x: 100
-          y: 740
-        - x: 100
-          y: 280
-```
+      stop:
+        x: 320
+        y: 120
+      hardware:
+        hardware:
+          x: 940
+          y: -20
+      sequences:
+        sequence:
+          x: 120
+          y: 220
+    edges:
+      sequence_sequence_event_trigger_1_hardware_hardware_ur_dashboard_controller_set_payload:
+        path:
+          - x: 320
+            y: 860
+      sequence_sequence_event_trigger_3_hardware_hardware_ur_dashboard_controller_hand_back_control:
+        path:
+          - x: 640
+            y: 820
+      hardware_hardware_ur_dashboard_controller_program_running_sequence_sequence:
+        path:
+          - x: 100
+            y: 740
+          - x: 100
+            y: 280
 
+  ```
 </details>
 
 <div style={{ display: "flex", justifyContent: "center" }}>
