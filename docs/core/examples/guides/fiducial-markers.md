@@ -3,9 +3,10 @@ sidebar_position: 14
 title: Fiducial Markers
 ---
 
-import stagDetectorExample from './assets/stag-detector-example.png' import stagMarkerDetection from
-'./assets/stag-marker-detection.webm' import stagMarkerNumOne from './assets/stagDetector-predicates_1.png' import
-stagMarkerNumZero from './assets/stagDetector-predicates_0.png'
+import stagDetectorExample from './assets/stag-detector-example.png'
+import stagMarkerDetection from './assets/stag-marker-detection.webm'
+import stagMarkerNumOne from './assets/stagDetector-predicates_1.png'
+import stagMarkerNumZero from './assets/stagDetector-predicates_0.png'
 
 # Fiducial Markers
 
@@ -15,7 +16,8 @@ cameras, enabling or improving robotic calibration and object manipulation.
 AICA's `core-vision` package gives you the choice between using two commonly used markers, the STag and ArUco.
 
 :::tip Performing the [intrinsic calibration](./camera-calibration.md) of the camera improves the precision for fiducial
-marker detection and tracking. :::
+marker detection and tracking.
+:::
 
 This guide provides an example of STag marker detection. Using the ArUco marker follows a very similar process.
 
@@ -71,7 +73,9 @@ By this point, you should have something like the following:
   <img src={stagDetectorExample} alt="CameraStreamer configuration alongside STagDetector component" style={{ borderRadius: "8px" }}/>
 </div>
 
-:::info The Camera Streamer parameters are explained in the [CameraStreamer component guide](./camera-streamer.md). :::
+:::info
+The Camera Streamer parameters are explained in the [CameraStreamer component guide](./camera-streamer.md).
+:::
 
 ## STag Detector parameters
 
