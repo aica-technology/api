@@ -15,7 +15,8 @@ cameras, enabling or improving robotic calibration and object manipulation.
 
 AICA's `core-vision` package gives you the choice between using two commonly used markers, the STag and ArUco.
 
-:::tip Performing the [intrinsic calibration](./camera-calibration.md) of the camera improves the precision for fiducial
+:::tip
+Performing the [intrinsic calibration](./camera-calibration.md) of the camera improves the precision for fiducial
 marker detection and tracking.
 :::
 
@@ -84,18 +85,11 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
 - **Bundle file**: The filepath to a predefined marker bundle configuration. This additional feature is described in a
   separate guide (coming soon).
 - **Marker selection**: The name(s) of the marker(s) that we want to recognize. If any of these markers enters the
-  camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. Also if a decision needs to be made
-  based on the existence of a specific STag marker in the camera frame, its name should be indicated in this parameter.
-  The markers name should always be prepended with the value of `Prefix`.
-- **Marker size**: Determines the side length of a square that specifies the marker in meters.
-- **Library**: This is the ID number of the HD library utilized by STag markers. The allowed numbers are
-  `[11, 13, 15, 17, 19, 21, 23]`.
-- **Error correction**: This parameter sets how permissive the detector is. Meaning it controls how many bit errors the
-  STag detector is allowed to tolerate when decoding a marker ID. Lower values mean stricter matching, but detection
-  would be less robust to blur, noise, bad lighting, or partial image degradation. Higher values mean more tolerant
-  matching. The detector can still recognize a marker even if some bits are read incorrectly, so detection is more
-  robust, but the risk of wrong matches increases. The lower and upper limits for this parameter are 0 and 11
-  respectively (inclusive).
+  camera frame, the `is_any_selected_marker_detected` predicate will switch to **True** (see more in the section below).
+  The marker names should always be prepended with the value of `Prefix`.
+- **Marker size**: The measured side length of the marker in meters.
+- **Library**: This is the ID number of the HD library utilized by STag markers. Allowed options are `[11, 13, 15, 17, 19, 21, 23]`.
+- **Error correction**: This parameter sets how permissive the detector is. It controls how many bit errors the STag detector is allowed to tolerate when decoding a marker ID. Lower values mean stricter matching, but detection would be less robust to blur, noise, bad lighting, or partial image degradation. Higher values mean more tolerant matching. The detector can still recognize a marker even if some bits are read incorrectly, so detection is more robust, but the risk of wrong matches increases. The lower and upper limits for this parameter are 0 and 11 respectively.
 - **Prefix**: This is the prefix used for marker names.
 
 ## STag Detector predicates
@@ -234,4 +228,6 @@ graph:
 
 </details>
 
-:::info The process for using ArUco markers follows a similar process. :::
+:::info
+The process for using ArUco markers follows a similar process.
+:::
