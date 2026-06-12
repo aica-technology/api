@@ -52,13 +52,13 @@ These commands will download and apply the udev rules. To ensure that the rules 
 
 Start the AICA Launcher and add the `orbbec` package to your configuration.
 
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-    <source src={orbbecPackage} type="video/webm" />
-    Adding the Orbbec package.
-  </video>
-</div>
-<br/>
+  <div style={{ display: "flex", justifyContent: "center" }}>
+    <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+      <source src={orbbecPackage} type="video/webm" />
+      Adding the Orbbec package.
+    </video>
+  </div>
+  <br/>
 
 Select **Launch AICA Studio** to proceed.
 
@@ -70,22 +70,22 @@ Start by creating a new application.
 2. In the **Add components** section of the **Scene** tab, locate the **Orbbec Camera** component. Click to add to the
    graph.
 3. Next, connect the component to the start block.
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-    <source src={orbbecNewApp} type="video/webm" />
-    Creating a new Orbbec Camera component.
-  </video>
-</div>
+  <div style={{ display: "flex", justifyContent: "center" }}>
+    <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+      <source src={orbbecNewApp} type="video/webm" />
+      Creating a new Orbbec Camera component.
+    </video>
+  </div>
 4. Press **Start** to start the application.
 5. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
 6. In RViz, select _Add > By topic > /orbbec_camera/color_image > Image_. This adds a panel that shows the live color
    image. The depth image can also be found under _/orbbec_camera/depth_image > Image_.
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-        <source src={orbbecRvizColor} type="video/webm" />
-        Starting and checking camera live stream.
-      </video>
-    </div>
+  <div style={{ display: "flex", justifyContent: "center" }}>
+    <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+      <source src={orbbecRvizColor} type="video/webm" />
+      Starting and checking camera live stream.
+    </video>
+  </div>
 
 :::tip
 
@@ -103,9 +103,9 @@ still encounter problems getting the video stream, contact the AICA support team
 
 Click on the `Orbbec Camera` component block to view and edit the available parameters.
 
-<div class="text--center">
-  <img src={orbbecCameraParameters} alt="Basic Orbbec camera parameters" />
-</div>
+  <div class="text--center">
+    <img src={orbbecCameraParameters} alt="Basic Orbbec camera parameters" />
+  </div>
 
 Hovering over the exclamation marks next to the names shows a detailed description of the corresponding parameter. Let's
 explain some of these here:
