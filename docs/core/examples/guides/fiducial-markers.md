@@ -88,8 +88,13 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
   camera frame, the `is_any_selected_marker_detected` predicate will switch to **True** (see more in the section below).
   The marker names should always be prepended with the value of `Prefix`.
 - **Marker size**: The measured side length of the marker in meters.
-- **Library**: This is the ID number of the HD library utilized by STag markers. Allowed options are `[11, 13, 15, 17, 19, 21, 23]`.
-- **Error correction**: This parameter sets how permissive the detector is. It controls how many bit errors the STag detector is allowed to tolerate when decoding a marker ID. Lower values mean stricter matching, but detection would be less robust to blur, noise, bad lighting, or partial image degradation. Higher values mean more tolerant matching. The detector can still recognize a marker even if some bits are read incorrectly, so detection is more robust, but the risk of wrong matches increases. The lower and upper limits for this parameter are 0 and 11 respectively.
+- **Library**: This is the ID number of the HD library utilized by STag markers. Allowed options are
+  `[11, 13, 15, 17, 19, 21, 23]`.
+- **Error correction**: This parameter sets how permissive the detector is. It controls how many bit errors the STag
+  detector is allowed to tolerate when decoding a marker ID. Lower values mean stricter matching, but detection would be
+  less robust to blur, noise, bad lighting, or partial image degradation. Higher values mean more tolerant matching. The
+  detector can still recognize a marker even if some bits are read incorrectly, so detection is more robust, but the
+  risk of wrong matches increases. The lower and upper limits for this parameter are 0 and 11 respectively.
 - **Prefix**: This is the prefix used for marker names.
 
 ## STag Detector predicates
