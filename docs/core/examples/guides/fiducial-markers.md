@@ -104,9 +104,9 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
   marker name specified in the `Marker selection` parameter is stag_1, but the marker recognized in the camera frame is
   stag_0, yet `Is any marker detected` predicate is set to **True**.
 
-<div class="text--center">
-  <img src={stagMarkerNumOne} alt="Is any marker detected at all" style={{ borderRadius: "8px" }}/>
-</div>
+  <div class="text--center">
+    <img src={stagMarkerNumOne} alt="Is any marker detected at all" style={{ borderRadius: "8px" }}/>
+  </div>
 
 - **Is any selected marker detected**: If one or more marker names are indicated in the `Marker selection` parameter,
   and if any of them appears in the camera frame, this predicate with be set to **True**. If the names of none of the
@@ -114,9 +114,9 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
   screenshot below the name of the marker appearing in the camera frame matches the name indicated in the
   `Marker selection` parameter.
 
-<div class="text--center">
-  <img src={stagMarkerNumZero} alt="Is any of the selected markers detected" style={{ borderRadius: "8px" }}/>
-</div>
+  <div class="text--center">
+    <img src={stagMarkerNumZero} alt="Is any of the selected markers detected" style={{ borderRadius: "8px" }}/>
+  </div>
 
 - **Is a marker bundle detected**: If a registered group of markers is detected by the camera, this parameter will be
   set to **True**. Otherwise it will remain **False**.
@@ -136,6 +136,8 @@ After setting up the proper parameters for Camera Streamer and STag Detector:
     STag marker detection video.
   </video>
 </div>
+
+<br></br>
 
 The following YAML snippet contains the full application of the STag Detector above:
 
