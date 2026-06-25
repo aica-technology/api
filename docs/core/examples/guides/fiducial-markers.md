@@ -3,9 +3,10 @@ sidebar_position: 14
 title: Fiducial Markers
 ---
 
-import stagDetectorExample from './assets/stag-detector-example.png' import stagMarkerDetection from
-'./assets/stag-marker-detection.webm' import stagMarkerNumOne from './assets/stagDetector-predicates_1.png' import
-stagMarkerNumZero from './assets/stagDetector-predicates_0.png'
+import stagDetectorExample from './assets/stag-detector-example.png'
+import stagMarkerDetection from './assets/stag-marker-detection.webm'
+import stagMarkerNumOne from './assets/stagDetector-predicates_1.png'
+import stagMarkerNumZero from './assets/stagDetector-predicates_0.png'
 
 # Fiducial Markers
 
