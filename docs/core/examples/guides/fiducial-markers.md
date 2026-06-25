@@ -33,7 +33,7 @@ This section explains how to obtain, download and print these markers.
 - **ArUco marker**: ArUco markers can be generate online (e.g., from [here](https://chev.me/arucogen/)), which permits
   choosing the dictionary, marker ID, and marker size. It can be then exported as PDF or SVG for printing.
 
-- **STag marker**: STag marker set can be either downloaded from
+- **STag marker**: STag marker sets can be either downloaded from
   [public Google Drive](https://drive.google.com/drive/folders/0ByNTNYCAhWbIV1RqdU9vRnd2Vnc?resourcekey=0-9ipvecbezW8EWUva5GBQTQ)
   or obtained from the [ROS2 STag project repository](https://github.com/usrl-uofsc/stag_ros/tree/ros2-devel) or the
   generator/reference files linked by the project. In practice, you’ll want to obtain the marker PDF/SVG or generate the
@@ -41,7 +41,7 @@ This section explains how to obtain, download and print these markers.
 
 ### Printing markers
 
-After choosing the marker family, selecting the library/dictionary, and the marker ID, download it as PDF or SVG. Use
+After choosing the marker family, selecting the library/dictionary and the marker ID, download it as PDF or SVG. Use
 the actual size of the marker (100% scale) for printing, so the black border and marker geometry are not resized. Also
 it is recommended to print with high contrast and avoid compression artifacts.
 
@@ -85,16 +85,18 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
 - **Bundle file**: The filepath to a predefined marker bundle configuration. This additional feature is described in a
   separate guide (coming soon).
 - **Marker selection**: The name(s) of the marker(s) that we want to recognize. If any of these markers enters the
-  camera frame, the `is_any_selected_marker_detected` predicate will switch to **True** (see more in the section below).
-  The marker names should always be prepended with the value of `Prefix`.
-- **Marker size**: The measured side length of the marker in meters.
-- **Library**: This is the ID number of the HD library utilized by STag markers. Allowed options are
-  `[11, 13, 15, 17, 19, 21, 23]`.
-- **Error correction**: This parameter sets how permissive the detector is. It controls how many bit errors the STag
-  detector is allowed to tolerate when decoding a marker ID. Lower values mean stricter matching, but detection would be
-  less robust to blur, noise, bad lighting, or partial image degradation. Higher values mean more tolerant matching. The
-  detector can still recognize a marker even if some bits are read incorrectly, so detection is more robust, but the
-  risk of wrong matches increases. The lower and upper limits for this parameter are 0 and 11 respectively.
+  camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. Also if a decision needs to be made
+  based on the existence of a specific STag marker in the camera frame, its name should be indicated in this parameter.
+  The markers name should always be prepended with the value of `Prefix`.
+- **Marker size**: Determines the side length of a square that specifies the marker in meters.
+- **Library**: This is the ID number of the HD library utilized by STag markers. The allowed numbers are
+  [11, 13, 15, 17, 19, 21, 23].
+- **Error correction**: This parameter sets how permissive the detector is. Meaning it controls how many bit errors the
+  STag detector is allowed to tolerate when decoding a marker ID. Lower values mean stricter matching, but detection
+  would be less robust to blur, noise, bad lighting, or partial image degradation. Higher values mean more tolerant
+  matching. The detector can still recognize a marker even if some bits are read incorrectly, so detection is more
+  robust, but the risk of wrong matches increases. The lower and upper limits for this parameter are 0 and 11
+  respectively (inclusive).
 - **Prefix**: This is the prefix used for marker names.
 
 ## STag Detector predicates
@@ -235,6 +237,5 @@ graph:
 
 </details>
 
-:::info
-The process for using ArUco markers follows a similar process.
-:::
+
+>>>>>>> be81941 (some small final formatting changes)
