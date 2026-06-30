@@ -57,7 +57,7 @@ The parameters of the Robot Camera Calibration component are defined as follows:
 - **Calibration file**: The name of the output file generated after calibration, containing the computed calibration
   data.
 - **Points dataset file**: A file containing previously recorded transformations of the robot end-effector or marker,
-  which can be reused if available.
+  which can be reused if available. 
 - **Reset calibration**: Setting this component to `True` resets the calibration. Meaning it starts the calibration
   process again, even if the calibration matrices are already set.
 - **Reset dataset**: If set to `True`, the recording process will re-start, even if the dataset of points already
@@ -98,8 +98,10 @@ An example of the calibration file:
   <img src={URCalibrationFile} alt="An example showing a final calibration file" style={{ borderRadius: "8px" }}/>
 </div>
 
-:::info The order of the data in the calibration file is `w, x, y, z` for the Orientation and `x, y, z` for the
-Position. :::
+:::info
+ The order of the data in the calibration file is `w, x, y, z` for the Orientation and `x, y, z` for the
+Position. 
+:::
 
 In the screenshot below you can see an example of the components configuration for the Hand-Eye calibration, that
 resulted to the output above. Notice that the Camera and the marker detector components might differ based on the type
@@ -274,8 +276,8 @@ graph:
 
 </details>
 
-:::tip Don't forget to modify the `robot_ip` according to the ip of the robot that you are using.
-
+:::tip 
+Don't forget to modify the `robot_ip` according to the ip of the robot that you are using.
 :::
 
 There are several ways to use the transformation information obtained in the calibration file:
@@ -284,8 +286,10 @@ There are several ways to use the transformation information obtained in the cal
 2. Publish the transformation with a `FrameBroadcaster` manually.
 3. Using the calibration file path directly as a Frame Broadcaster component parameter to publish the transformations.
 
-:::tip In order to use the calibration file path as a `Frame Broadcaster` component parameter, the format of the
-calibration file needs to be slightly modified. In the next part the expected format is explained in more detail. :::
+:::tip
+In order to use the calibration file path as a `Frame Broadcaster` component parameter, the format of the
+calibration file needs to be slightly modified. In the next part the expected format is explained in more detail.
+:::
 
 ## Frame Broadcaster component
 
@@ -309,8 +313,10 @@ The parameters of the Robot Camera Calibration component are defined as follows:
 - **Broadcast periodically**: If this parameter is set to True, the frames are broadcasted periodically. Otherwise it
   publishes once immediately.
 
-:::info You either need to fill in the Filepath, or provide the `Frame Broadcaster` component with Frame, Reference
-frame, and the Pose values parameters. :::
+:::info
+You either need to fill in the Filepath, or provide the `Frame Broadcaster` component with Frame, Reference
+frame, and the Pose values parameters.
+:::
 
 In the first screenshot below, you see an example of the `Frame broadcaster` component, and a transformation which is
 being published manually.
