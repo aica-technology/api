@@ -82,8 +82,7 @@ The Camera Streamer parameters are explained in the [CameraStreamer component gu
 
 - **Rate**: The rate parameter doesn't affect the behavior of the component as the detection process occurs on reception
   of a new image.
-- **Bundle file**: The filepath to a predefined marker bundle configuration. This additional feature is described in a
-  separate guide (coming soon).
+- **Bundle file**: The filepath to a predefined marker bundle configuration.
 - **Marker selection**: The name(s) of the marker(s) that we want to recognize. If any of these markers enters the
   camera frame, the `is_any_selected_marker_detected` predicate is set to **True**. Also if a decision needs to be made
   based on the existence of a specific STag marker in the camera frame, its name should be indicated in this parameter.

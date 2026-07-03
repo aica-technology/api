@@ -2,6 +2,7 @@
 
 Release Versions:
 
+- [2-1-1](#2-1-1)
 - [2-1-0](#2-1-0)
 - [2-0-6](#2-0-6)
 - [2-0-5](#2-0-5)
@@ -20,7 +21,11 @@ Release Versions:
 - [1-1-0](#1-1-0)
 - [1-0-0](#1-0-0)
 
-## Upcoming changes in draft/2-1-1
+## 2-1-1
+
+This addition to the schema includes new optional properties for overriding the hardware plugin of a urdf and for overriding
+initial component and controller parameters from a parameter file. It makes parameter names more permissive and revises
+the structure of certain subschemas to be more compatible with different types of schema parsers.
 
 - feat: add hardware plugin (#454)
 - feat: add support for parameter files in components and controllers (#463)

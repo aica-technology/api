@@ -2,11 +2,12 @@
 
 Release Versions:
 
+- [1-0-3](#1-0-3)
 - [1-0-2](#1-0-2)
 - [1-0-1](#1-0-1)
 - [1-0-0](#1-0-0)
 
-## Upcoming changes in draft 1-0-3
+## 1-0-3
 
 The bundled extension.types.schema.json patches the `payload_schema` object to have no required properties to
 resolve an issue with API model marshalling.
