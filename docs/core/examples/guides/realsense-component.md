@@ -55,12 +55,12 @@ Start by creating a new application.
 2. In the **Add components** section of the **Scene** tab, locate the **RealSense Camera** component. Click to add to
    the graph.
 3. Next, connect the component to the start block.
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
-        <source src={realsenseNewApp} type="video/webm" />
-        Creating a new RealSense Camera component.
-      </video>
-    </div>
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
+    <source src={realsenseNewApp} type="video/webm" />
+    Creating a new RealSense Camera component.
+  </video>
+</div>
 4. Press **Start** to start the application.
 5. To see the live camera feed, click on the gear icon on the bottom right and select **Launch RViz**.
 6. In RViz, select _Add > By topic > /realsense_camera/color_image_raw > Image_. This adds a panel that shows the live
@@ -83,11 +83,11 @@ Click on the `RealSense Camera` component block to view and edit the available p
 Hovering over the exclamation marks next to the names shows a detailed description of the corresponding parameter. Let's
 explain some of these here:
 
-- `Color/Depth profile`: these refer to the resolution and frame rate of the color and depth images. Keep in mind that
+- **Color/Depth profile**: these refer to the resolution and frame rate of the color and depth images. Keep in mind that
   only specific pairs of values apply here. For more information check the camera's documentation.
-- `Enable alignment`: flag that activates the alignment of the depth image to the corresponding color image. Enables the
-  **Aligned depth image** output, containing a depth image with the same size as the color.
-- `Enable temporal filter`: flag that activates a temporal filter which improves depth data persistency by manipulating
+- **Enable alignment**: flag that activates the alignment of the depth image to the corresponding color image. Enables the
+  `Aligned depth image` output, containing a depth image with the same size as the color.
+- **Enable temporal filter**: flag that activates a temporal filter which improves depth data persistency by manipulating
   per-pixel values based on previous frames. If activated, corresponding filter parameters can be directly defined in
   the YAML editor to configure the filter behavior. To see what parameters can be defined, read the description by
   hovering over the exclamation mark.
