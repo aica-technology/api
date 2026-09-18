@@ -14,9 +14,9 @@ connected to components in the application, and expose predicates and transition
 Controllers are evaluated at fixed control intervals, defined by the rate of
 the [hardware interface](../hardware-interfaces).
 
-AICA Core includes a number of controller implementations for joint-space and task-space control in position,
+Core includes a number of controller implementations for joint-space and task-space control in position,
 velocity or force, including force-sensitive impedance and admittance controllers. Additionally, sequenced motions can
 be executed through a [joint trajectory controller](./jtc).
 
-AICA Core can also work with third-party controllers following the `ros2_control` standard, but may have
+Core can also work with third-party controllers following the `ros2_control` standard, but may have
 reduced compatibility with built-in component signal types and dynamically reconfigured parameters.

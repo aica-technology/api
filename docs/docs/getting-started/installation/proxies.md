@@ -10,7 +10,7 @@ AICA programs sometimes need Internet connectivity to function. This section det
 
 The following services must be allowlisted on your proxy for AICA programs to function:
 
-AICA Core (Online License):
+Core (Online License):
 
 - `licensing.aica.tech` / `api.licensing.aica.tech` (HTTPS, 443): used to check the license & authenticate Cloud Storage
 - `ingress-api.analytics.aica.tech` (HTTPS, 443): used to send analytics data
@@ -44,9 +44,9 @@ AICA Launcher supports the following environment variables for proxy configurati
 - HTTP: `HTTP_PROXY` or `http_proxy`
 - HTTPS: `HTTPS_PROXY` or `https_proxy`
 - Bypass: `NO_PROXY` or `no_proxy`
-- CA Certificate (used to launch AICA Core): `SSL_CERT_FILE` or `ssl_cert_file`
+- CA Certificate (used to launch Core): `SSL_CERT_FILE` or `ssl_cert_file`
 
-Starting with Launcher v2.1, those settings will be properly forwarded to AICA Core instances started through the app.
+Starting with Launcher v2.1, those settings will be properly forwarded to Core instances started through the app.
 
 <details>
 <summary>MacOS</summary>
@@ -62,21 +62,21 @@ This is not required if you open AICA Launcher from the command line using `open
 
 </details>
 
-### AICA Core
+### Core
 
 :::tip
 
-Starting with Launcher v2.1, proxy settings are setup automatically for AICA Core.
+Starting with Launcher v2.1, proxy settings are setup automatically for Core.
 
 :::
 
-Starting with v5.0, AICA Core supports the following environment variables for proxy configuration:
+Starting with v5.0, Core supports the following environment variables for proxy configuration:
 
 - HTTP: `HTTP_PROXY` or `http_proxy`
 - HTTPS: `HTTPS_PROXY` or `https_proxy`
 - Bypass: `NO_PROXY` or `no_proxy`
 
-You must provide the environment variables to AICA Core when starting the container. If you choose to intercept HTTPS traffic, you will also need to mount your certificate inside `/etc/ssl/certs`.
+You must provide the environment variables to Core when starting the container. If you choose to intercept HTTPS traffic, you will also need to mount your certificate inside `/etc/ssl/certs`.
 
 Example:
 

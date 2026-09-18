@@ -70,7 +70,7 @@ or you may see both command and state interfaces bundled under the same group, a
 
 ## Using GPIO controllers in the AICA framework
 
-In a ROS 2 control setup, and by extension in AICA Core, GPIO controllers operate on **GPIO interfaces defined in the
+In a ROS 2 control setup, and by extension in Core, GPIO controllers operate on **GPIO interfaces defined in the
 URDF** and exposed by the underlying hardware interface.
 
 Two GPIO controllers are bundled by default, each aligned with a specific GPIO role:

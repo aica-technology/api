@@ -25,7 +25,7 @@ publish that information as a continuous signal.
 
 For instance, a vision component might publish the pose of a detected object to TF, while a motion generator component
 requires the target pose to be received as a signal. Ideally, the vision component would output the pose as a signal,
-but this is not always the case. For these situations, the AICA Core provides components that can extract the pose of a
+but this is not always the case. For these situations, the Core provides components that can extract the pose of a
 desired frame from TF and publish it as a signal, or conversely, receive a pose from a signal and send it to TF.
 
 ### Frame to Signal

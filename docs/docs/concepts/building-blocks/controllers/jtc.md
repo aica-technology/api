@@ -28,9 +28,9 @@ setpoint controllers cannot achieve easily (without further logic embedded in th
 In contrast to purely linear or direct controllers, JTC is ideal for applications requiring continuous, planned motion,
 such as robotic arms or any system where joint coordination and motion quality are critical.
 
-## Using it in AICA Core
+## Using it in Core
 
-A JTC is included in AICA Core by default and can be used via:
+A JTC is included in Core by default and can be used via:
 
 <!-- todo: no 1 to be updated once we start using our new Trajectory types -->
 1. a **signal** (in this case, a single message) containing the joint trajectory; *i.e.*, one of joint positions,

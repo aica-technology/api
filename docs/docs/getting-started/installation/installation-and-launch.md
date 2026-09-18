@@ -131,14 +131,14 @@ or contact AICA support.
 
 ### Configuring the AICA System image
 
-AICA Launcher provides direct access to AICA Core and Studio, and additionally simplifies installing add-on packages
+AICA Launcher provides direct access to Core and Studio, and additionally simplifies installing add-on packages
 from the registry or from custom SDK contributions.
 
-A "configuration" refers to a specific version of AICA Core and the extra packages and versions that should be included.
-Defining configurations helps to ensure repeatable builds and deployments, even if AICA Core or any of the referenced
+A "configuration" refers to a specific version of Core and the extra packages and versions that should be included.
+Defining configurations helps to ensure repeatable builds and deployments, even if Core or any of the referenced
 packages are subsequently updated or changed.
 
-The simplest configuration just specifies the AICA Core Version, without any packages. Official packages can be added
+The simplest configuration just specifies the Core Version, without any packages. Official packages can be added
 from a dropdown, with a version subselection for each package.
 [Custom packages](/docs/category/custom-components) can be built using the SDK and then added to the
 configuration using a Docker image URI.
@@ -151,7 +151,7 @@ mounting for persistent storage or file-system interactions.
 ### Launching a configuration
 
 Press the Launch button for any given configuration to start up the AICA System and enter AICA Studio. For the
-first time launching a configuration, the AICA Core software image and any additional packages first need to be pulled
+first time launching a configuration, the Core software image and any additional packages first need to be pulled
 from the registry and bundled into the specific runtime image. Depending on network speeds, this may take a while. After
 the image has been built, launching the configuration a second time will be much faster as the results are cached.
 

@@ -40,7 +40,7 @@ combination of both approaches is used:
 - or the task is divided into motions that simply move the robot from one point to another using fast and optimized
   trajectories and complex behaviors where the desired robot state is recomputed and adapted online.
 
-AICA Core comes with several online motion generator components that use the current state of the robot to calculate the
+Core comes with several online motion generator components that use the current state of the robot to calculate the
 next command using a mathematical concept called _Dynamical Systems_.
 
 ## Dynamical Systems

@@ -7,7 +7,7 @@ title: Operating System
 
 The AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
 
-AICA Core runs in a Docker container based on Ubuntu 24.04. Thanks to containerization, the majority of the
+Core runs in a Docker container based on Ubuntu 24.04. Thanks to containerization, the majority of the
 installation and usage steps in this guide will be the same for macOS or Ubuntu host platforms unless otherwise
 indicated.
 
@@ -43,9 +43,9 @@ Ubuntu, but not possible on macOS.
 
 ### Summary of OS support
 
-| OS                        | AICA Launcher support | Notes                                                                            |
-|---------------------------|:---------------------:|----------------------------------------------------------------------------------|
-| Ubuntu/Debian             | Yes                   | Real-time kernel patch highly recommended                                        |
-| Other Linux distributions | No                    | Requires launching AICA Core manually. Real-time kernel patch highly recommended |
-| macOS                     | Yes                   | Limited graphics forwarding due to dropped OpenGL support                        |
-| Windows                   | No                    | Requires WSL and running AICA Core manually                                      |
+| OS                        | AICA Launcher support | Notes                                                                       |
+|---------------------------|:---------------------:|-----------------------------------------------------------------------------|
+| Ubuntu/Debian             |          Yes          | Real-time kernel patch highly recommended                                   |
+| Other Linux distributions |          No           | Requires launching Core manually. Real-time kernel patch highly recommended |
+| macOS                     |          Yes          | Limited graphics forwarding due to dropped OpenGL support                   |
+| Windows                   |          No           | Requires WSL and running  Core manually                                     |

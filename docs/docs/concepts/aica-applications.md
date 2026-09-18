@@ -30,7 +30,7 @@ to be modular or re-usable for other applications. If, instead, the application 
 executable program, usually according to some state machine paradigm, this in turn generally undermines the modern
 concepts of abstraction and dynamic reconfiguration that ROS 2 tools provide.
 
-To address this challenge, AICA Core includes a generalized execution process known as the Event Engine which
+To address this challenge, Core includes a generalized execution process known as the Event Engine which
 dynamically manages component and controller states according to a declarative and easily reconfigurable application
 description.
 

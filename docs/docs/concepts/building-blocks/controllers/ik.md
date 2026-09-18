@@ -110,8 +110,8 @@ is to combine IK velocity controllers with motion generators that produce desire
 to be expressed as smooth, continuous velocity commands, while retaining the robustness, responsiveness, and stability
 properties of velocity-based IK control.
 
-## Using it in AICA Core
+## Using it in Core
 
-Both an IK position and velocity controller are included in AICA Core by default. They can be used via a
+Both an IK position and velocity controller are included in Core by default. They can be used via a
 **Cartesian pose** and **Cartesian twist** signal, respectively, that indicates the desired state. Additional parameters
 can be modified to limit the Cartesian position or velocity.

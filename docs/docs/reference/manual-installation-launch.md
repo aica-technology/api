@@ -17,7 +17,7 @@ import dockerNetwork from './assets/win-docker-network.png';
 
 # Manual installation and launch
 
-The following sections explain how to install and launch AICA Core and any additional packages manually from the command
+The following sections explain how to install and launch Core and any additional packages manually from the command
 line without the use of AICA Launcher. The pre-requisites are still a valid license and a host with Docker installed.
 For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
 on the host machine.
@@ -200,15 +200,15 @@ cat aica-license.toml | docker login registry.licensing.aica.tech -u USERNAME --
 
 ## Configuring AICA packages with a manifest file
 
-A runtime application image is configured using a simple **manifest file** defining the version of AICA Core to use and
+A runtime application image is configured using a simple **manifest file** defining the version of Core to use and
 optionally defining additional add-on packages. The manifest file contains a custom docker syntax header pointing to
 AICA's app-builder tool, and the `docker build` command is used to bundle all listed packages into a final runtime
 image.
 
-### Configuring a minimal runtime image with a version of AICA Core
+### Configuring a minimal runtime image with a version of Core
 
 The manifest file must contain a syntax header and a list of packages. The minimal version of the manifest includes
-only AICA Core as the `core` package. The version can be changed according to the available releases.
+only Core as the `core` package. The version can be changed according to the available releases.
 
 :::info
 
@@ -459,7 +459,7 @@ docker run -it --rm \
 
 ### Setting a super-admin password
 
-AICA Core v4.3.0 and later require authentication for AICA Studio and the API. If no users exist in the mounted user
+Core v4.3.0 and later require authentication for AICA Studio and the API. If no users exist in the mounted user
 database, as is the case for a new configuration or when no data folder is mounted, a system administration password can
 be set through an environment variable which grants full administration rights.
 
@@ -580,7 +580,7 @@ You should then be able to run `rviz2` inside the container and see the window a
 <summary>WSL</summary>
 
 With the right configuration, display sharing can also be achieved with [WSLg](https://github.com/microsoft/wslg). For
-that, modify the command to run AICA Core to include the following lines:
+that, modify the command to run Core to include the following lines:
 
 ```bash
 docker run -it --rm \
