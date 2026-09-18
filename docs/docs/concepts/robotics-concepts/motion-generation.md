@@ -20,7 +20,7 @@ One can differentiate between two approaches to motion generation; offline and o
 **Offline motion generation** plans trajectories in advance using models of the robot and environment. This method
 enables optimized, collision-free paths and is ideal for predictable, structured settings. Generated trajectories are
 rolled out in **open loop**, meaning that there is no feedback mechanism that would inform the system about
-disturbances. In other words, it lacks adaptability to real-time changes or sensor feedback. In the AICA System, the
+disturbances. In other words, it lacks adaptability to real-time changes or sensor feedback. In the System, the
 [Joint Trajectory Controller](../building-blocks/controllers/jtc) often acts as simple offline motion generator, 
 creating and rolling out a trajectory through a certain number of waypoints in a given amount of time without taking
 into account the environment.
@@ -100,7 +100,7 @@ convergence to a (potentially moving) desired goal.
 
 :::tip
 
-Find an example using a Point Attractor DS in AICA Studio on
+Find an example using a Point Attractor DS in Studio on
 [this page](/core/examples/core-components/point-attractor).
 
 :::

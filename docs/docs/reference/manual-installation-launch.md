@@ -31,8 +31,8 @@ on the host machine.
 
 If you are using Linux with Docker Engine only, you may skip this section entirely.
 
-For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that
-AICA System software is used at its full potential.
+For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that the
+System software is used at its full potential.
 
 The main issue originates from Docker Desktop for Linux creating a custom Docker context (`desktop-linux`) and endpoint
 to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, without
@@ -76,7 +76,7 @@ You may need to repeat these steps upon a restart of your system.
 If you installed Docker Desktop, all the requirements should already be present on your system. Note that to access
 the `docker` command through the terminal, Docker Desktop must be running.
 
-The default settings of Docker Desktop are usually sufficient for everything AICA Studio needs. However, in some cases
+The default settings of Docker Desktop are usually sufficient for everything Studio needs. However, in some cases
 (e.g., settings carried over from older Docker Desktop installations) you may need to verify the following:
 
 - Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to
@@ -101,20 +101,20 @@ your application's needs.
 
 ## Configuring and using WSL and Docker on Windows
 
-The AICA System can be installed and run on Windows by leveraging **WSL**, short for
+The System can be installed and run on Windows by leveraging **WSL**, short for
 [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/about). WSL is a feature of Windows that
 allows running a Linux environment on a Windows machine without the need for a separate virtual machine or dual booting.
 While most Linux distributions can be run with either WSL 1 or WSL 2 architecture, WSL 2 has superior performance over
 WSL 1 and will be assumed throughout these instructions.
 
-On a high level, there are two main requirements for running the AICA System on Windows:
+On a high level, there are two main requirements for running the System on Windows:
 
 - Ubuntu 22.04 or 24.04 installed through WSL 2
 - Docker Desktop that uses the WSL 2 based engine
 
 :::note
 
-The following instructions for running the AICA System have been tested and validated on a fresh installation of Windows
+The following instructions for running the System have been tested and validated on a fresh installation of Windows
 11 Professional with full administrator access. Depending on the machine at hand, some steps might be slightly different
 or extended access might be required. For questions, consult the
 [official documentation](https://learn.microsoft.com/en-us/windows/wsl/install-manual), contact your IT support, or
@@ -171,11 +171,11 @@ reach out to the AICA team.
 
 ## Setting up the AICA license file
 
-To use your AICA System License or Deployment Key for manual installation and launch, it should be saved into a
+To use your System License or Deployment Key for manual installation and launch, it should be saved into a
 TOML-formatted file. In this guide, we use `aica-license.toml` to refer to the license file, though this filename is
 a convention only and not enforced.
 
-For an AICA System License, the contents of the file should be formatted as:
+For a System License, the contents of the file should be formatted as:
 
 ```toml title="aica-license.toml"
 License = "5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3"
@@ -403,7 +403,7 @@ with `docker container ps` and then run `docker container stop <container_name>`
 
 ### Persistent user data
 
-AICA applications, URDF hardware and user configurations managed through the API or AICA Studio are stored in a
+AICA applications, URDF hardware and user configurations managed through the API or Studio are stored in a
 database. Because the docker container is isolated from the host filesystem, the local database will be lost when the
 container exits. To persist local data between sessions, create a dedicated directory somewhere on the host. For
 example, use `mkdir ~/.aica-data` to keep the data folder hidden in the home folder. Then execute the normal run command
@@ -459,7 +459,7 @@ docker run -it --rm \
 
 ### Setting a super-admin password
 
-Core v4.3.0 and later require authentication for AICA Studio and the API. If no users exist in the mounted user
+Core v4.3.0 and later require authentication for Studio and the API. If no users exist in the mounted user
 database, as is the case for a new configuration or when no data folder is mounted, a system administration password can
 be set through an environment variable which grants full administration rights.
 
@@ -508,9 +508,9 @@ docker run -it --rm \
 </TabItem>
 </Tabs>
 
-## Access the AICA Studio
+## Access Studio
 
-Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view AICA Studio. If the
+Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view Studio. If the
 `AICA_SUPER_ADMIN_PASSWORD` environment variable was set, use the `super-admin` username and the provided password to
 log in as the system administrator.
 

@@ -56,7 +56,7 @@ For example, some component A might be loaded when the application starts. Then,
 loaded after component A is finalized. Finally, controller X should be started when component B is active, and
 stopped if component C has an error.
 
-In AICA System, applications are formally described in a YAML file. An application description can also be
+In the System, applications are formally described in a YAML file. An application description can also be
 represented as a graph of building blocks (components, controllers, hardware interfaces) connected by signals and
 events.
 

@@ -5,7 +5,7 @@ title: Supported hardware
 
 # Supported hardware
 
-The AICA System supports many different types of hardware. The following tables present robotic manipulators and
+The System supports many different types of hardware. The following tables present robotic manipulators and
 peripherals for which drivers exist, along with necessary prerequisites and additional software that these might
 require.
 
@@ -15,7 +15,7 @@ This list is work in progress and regularly updated. If your hardware is not lis
 [AICA Community Feedback board](https://github.com/aica-technology/community) or reach out to the AICA team for
 assistance or further details.
 
-As described in [this section](/docs/concepts/ros-concepts/built-on-ros), the AICA System can integrate existing ROS
+As described in [this section](/docs/concepts/ros-concepts/built-on-ros), the System can integrate existing ROS
 drivers. This allows you to expand the supported hardware list by using open source or custom-developed ROS packages.
 
 :::

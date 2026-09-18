@@ -5,7 +5,7 @@ title: Operating System
 
 # Operating System (OS)
 
-The AICA System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
+The System is officially supported on Ubuntu and macOS for both amd64 and arm64 architectures.
 
 Core runs in a Docker container based on Ubuntu 24.04. Thanks to containerization, the majority of the
 installation and usage steps in this guide will be the same for macOS or Ubuntu host platforms unless otherwise
@@ -29,7 +29,7 @@ without explicit display forwarding. Further, support for OpenGL rendering is li
 3D programs and simulators commonly used in robotics. For example, opening an RViz window in the container on a Mac host
 will fail, while it will work natively on an Ubuntu host.
 
-AICA Studio is continually being extended to include more live data visualization including interactive 2D and 3D data
+Studio is continually being extended to include more live data visualization including interactive 2D and 3D data
 views directly in the browser. As a result, the reliance on display sharing and the associated operating system
 limitations will be reduced.
 

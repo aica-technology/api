@@ -7,7 +7,7 @@ title: Installation and launch
 
 ## Pre-requisites
 
-AICA System software is distributed with Docker images and executed with Docker containers. That is, it can practically
+The System software is distributed with Docker images and executed with Docker containers. That is, it can practically
 be installed on any system that supports recent Docker versions. However, due to performance advantages (e.g., real-time
 task execution), AICA suggests using Linux-based platforms that can be easily configured for such considerations.
 
@@ -36,8 +36,8 @@ to create the `docker` group and add your user.
 For Ubuntu users that need **Docker Desktop for Linux**, note that its installation does **not** include all the
 necessary dependencies. Follow the instructions from the provided link to ensure that all requirements are met.
 
-When installed, Docker Desktop for Linux can **not** be used to manage images and containers created by the AICA System.
-Additionally, you may experience some issues when using AICA System software due to Docker Desktop's custom
+When installed, Docker Desktop for Linux can **not** be used to manage images and containers created by the System.
+Additionally, you may experience some issues when using the System software due to Docker Desktop's custom
 configuration (see
 [manual installation](/docs/reference/manual-installation-launch#configuring-docker-manually-on-linux-macos-or-windows)
 for more details).
@@ -57,7 +57,7 @@ configuration steps are taken. Note that some limitations may apply regarding co
 
 :::note
 
-The majority of AICA Studio and Launcher features are available on macOS. However:
+The majority of Studio and Launcher features are available on macOS. However:
 
 - Forwarding graphics is currently impossible due to MacOS' incompatibility with OpenGL 2.1+. As a result, tools like
 RViz will not be made available through AICA Launcher.
@@ -72,7 +72,7 @@ RViz will not be made available through AICA Launcher.
 
 **No native support is provided for Windows machines.** However, with the correct Windows Subsystem for Linux (WSL)
 configuration, it is possible to
-[manually install and run the AICA System on Windows](/docs/reference/manual-installation-launch#configuring-docker-manually-on-linux-macos-or-windows).
+[manually install and run the System on Windows](/docs/reference/manual-installation-launch#configuring-docker-manually-on-linux-macos-or-windows).
 
 :::note
 
@@ -88,8 +88,8 @@ following limitations may apply:
 
 ## AICA Launcher
 
-AICA Launcher is the easiest way to get up and running with the AICA System. It manages licensing, package distribution
-and the Docker toolchain so that no command-line access is necessary. It also embeds AICA Studio: Edge directly inside
+AICA Launcher is the easiest way to get up and running with the System. It manages licensing, package distribution
+and the Docker toolchain so that no command-line access is necessary. It also embeds Studio: Edge directly inside
 the launcher.
 
 ### Installation
@@ -117,10 +117,10 @@ To bypass this, right-click on the app and choose Open, and then click Open on t
 
 :::
 
-### Entering an AICA System License
+### Entering a System License
 
 When the AICA Launcher is started for the first time (or after explicitly logging out), you will be prompted to enter
-your AICA System License. As an example, the online license key to enter might look similar to
+your System License. As an example, the online license key to enter might look similar to
 `5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3`.
 
 ![aica-launcher-login](../assets/aica-launcher-login.png)
@@ -129,7 +129,7 @@ Once the license is copied into the text field, it will automatically check the 
 successful. If the license is not recognized, check your internet connection
 or contact AICA support.
 
-### Configuring the AICA System image
+### Configuring the System image
 
 AICA Launcher provides direct access to Core and Studio, and additionally simplifies installing add-on packages
 from the registry or from custom SDK contributions.
@@ -150,7 +150,7 @@ mounting for persistent storage or file-system interactions.
 
 ### Launching a configuration
 
-Press the Launch button for any given configuration to start up the AICA System and enter AICA Studio. For the
+Press the Launch button for any given configuration to start up the System and enter Studio. For the
 first time launching a configuration, the Core software image and any additional packages first need to be pulled
 from the registry and bundled into the specific runtime image. Depending on network speeds, this may take a while. After
 the image has been built, launching the configuration a second time will be much faster as the results are cached.

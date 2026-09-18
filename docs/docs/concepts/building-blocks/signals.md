@@ -5,7 +5,7 @@ title: Signals
 
 # Signals
 
-In the AICA System, signals are designed to exchange continuous data between components and controllers in a running
+In the System, signals are designed to exchange continuous data between components and controllers in a running
 application. They are an abstraction of ROS 2 topics that are assumed to exchange data at a regular, periodic frequency.
 This makes them well-suited for use with signal processing components and controllers.
 

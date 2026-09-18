@@ -50,5 +50,5 @@ docker build -f aica-package.toml -t custom-component .
 In AICA Launcher, include the docker image path from the build step as a custom package in the system configuration.
 
 Refer to the
-[installation and launch](/docs/getting-started/installation/installation-and-launch#configuring-the-aica-system-image)
+[installation and launch](/docs/getting-started/installation/installation-and-launch#configuring-the-system-image)
 section for more details.

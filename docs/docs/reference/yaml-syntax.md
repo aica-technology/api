@@ -35,7 +35,7 @@ The fields [`components`](#components) and [`hardware`](#hardware) define the ma
 The fields [`conditions`](#conditions) and [`sequences`](#sequences) define fine-grained application logic to
 trigger [application state events](#events). The [`on_start`](#on-start)field defines a list of events to be triggered
 when the application is started, while the [`buttons`](#buttons) field defines interactive buttons to manually trigger
-events through AICA Studio.
+events through Studio.
 
 ## Events
 
@@ -503,7 +503,7 @@ robot_d:
 
 :::info
 
-Use the Hardware tab in AICA Studio to manage available URDFs.
+Use the Hardware tab in Studio to manage available URDFs.
 
 Alternatively, use the API endpoints at `/v1/data/hardware` and `/v1/examples/hardware` to manage custom hardware and
 view the available built-in example URDFs, respectively.
@@ -928,7 +928,7 @@ on_start:
 
 ## Buttons
 
-Buttons are interactive elements in AICA Studio. They are used to manually
+Buttons are interactive elements in Studio. They are used to manually
 trigger [state events](#events) when an application is running by clicking the trigger button in the application graph.
 Buttons have no effect on the application if the UI is not used.
 

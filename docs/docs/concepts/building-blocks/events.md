@@ -20,7 +20,7 @@ The following events can be used to dynamically update the state of a running ap
 
 ## Triggering events
 
-Events can be triggered externally by a user through interactions with AICA Studio or via the REST API.
+Events can be triggered externally by a user through interactions with Studio or via the REST API.
 They can also be triggered internally by the Event Engine according to the application description as a result
 of **predicates**, **transitions**, **sequences** or **conditions**.
 
