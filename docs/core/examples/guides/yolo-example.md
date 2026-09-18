@@ -21,13 +21,13 @@ directly from an image in a single pass through a neural network. Unlike older m
 YOLO processes the entire image at once, making it extremely fast and well-suited for many applications, including
 robotics.
 
-## A YOLO example using the AICA framework
+## A YOLO example
 
 This page details how to run a `YoloExecutor` component, i.e., a component that can use various YOLO models for
-inference. It also demonstrates how it could be used as part of an AICA application. In the following paragraphs, we
+inference. It also demonstrates how it could be used as part of a System application. In the following paragraphs, we
 show how to create a custom component which makes use of a bounding box to adapt an arm's motion such that it maintains
 the object centered. The `YoloExecutor` component that is covered in following sections can be found under
-`components/advanced-perception` with a valid AICA license.
+`components/advanced-perception` with a valid System license.
 
 <div class="text--center">
   <img src={exampleApp} alt="Moving the robot towards an object in RViz" />
@@ -38,7 +38,7 @@ the object centered. The `YoloExecutor` component that is covered in following s
 ### Data folder
 
 Create a directory with a name of your choice, say `yolo-example-data`, folder anywhere in your filesystem. Here, you
-will be placing files that are required for runtime use. In following steps, you will configure AICA Launcher to mount
+will be placing files that are required for runtime use. In following steps, you will configure Launcher to mount
 this directory for further use.
 
 ### Camera calibration (optional)
@@ -52,7 +52,7 @@ file that you can then use with the `CameraStreamer`.
 ### Obtaining YOLO inference models
 
 The `YoloExecutor` component works with `.onnx` model files. However, many of the available YOLO models are widely
-available in Pytorch (`.pt`) format instead. To convert between formats, you can use AICA's utilities to do so within
+available in Pytorch (`.pt`) format instead. To convert between formats, you can use our utilities to do so within
 a Docker container and maintain your host system unpolluted.
 
 First, clone our docker image repository (if you followed the calibration section, you should already have it!):
@@ -109,18 +109,18 @@ For the purposes of this example, download the standard `coco.yaml` class
 file [here](https://github.com/ultralytics/ultralytics/blob/main/ultralytics/cfg/datasets/coco.yaml) and move it to your
 `yolo-example-data` folder, where you also stored your YOLO model.
 
-## AICA Launcher configuration
+## Launcher configuration
 
-In AICA Launcher, create a configuration with the following core version and packages:
+In Launcher, create a configuration with the following core version and packages:
 
-- AICA Launcher v1.4.1 or higher
-- AICA Core v5.0.0 or higher
+- Launcher v1.4.1 or higher
+- Core v5.0.0 or higher
 - `advanced_perception` v1.0.0 or higher for the `YoloExecutor` component
 - `core-vision` v1.1.1 or higher for the `CameraStreamer` component
 - CPU or GPU toolkit at v1.0.0 (subject to change in newer versions of `core-vision` and/or `advanced-perception`)
 
 :::info
-AICA toolkits are the curated way of bundling Machine Learning (ML) and GPU (specifically CUDA) acceleration libraries.
+Toolkits are the curated way of bundling Machine Learning (ML) and GPU (specifically CUDA) acceleration libraries.
 In short:
 - ML toolkits contain a broad range of libraries that are often required to conduct ML inference and/or training
 (e.g., pytorch, scipy, etc)
@@ -128,23 +128,23 @@ In short:
 with a NVIDIA GPU.
 
 If you do not own a GPU or want CPU accleration only, bundling our CUDA toolkits is not necessary. For instance, your
-AICA Launcher configuration could look as follows:
+Launcher configuration could look as follows:
 
 <Tabs groupId="toolkits">
 <TabItem value="cpu" label="CPU">
 <div class="text--center">
-  <img src={launcherToolkitsCPU} alt="AICA Launcher configuration for CPU-only runtime" />
+  <img src={launcherToolkitsCPU} alt="Launcher configuration for CPU-only runtime" />
 </div>
 </TabItem>
 <TabItem value="gpu" label="GPU">
 <div class="text--center">
-  <img src={launcherToolkitsGPU} alt="AICA Launcher configuration for CPU and GPU runtime" />
+  <img src={launcherToolkitsGPU} alt="Launcher configuration for CPU and GPU runtime" />
 </div>
 
 When using the CUDA toolkit, do not forget to enable GPU capabilities under the **Advanced Settings** menu:
 
 <div class="text--center">
-  <img src={launcherEnableGPU} alt="AICA Launcher configuration with GPU capabilities" />
+  <img src={launcherEnableGPU} alt="Launcher configuration with GPU capabilities" />
 </div>
 
 </TabItem>
@@ -158,21 +158,21 @@ you are still at the **Advanced Settings** menu:
 - Click on **Add a volume mount +**.
 - Click on **Browse** and navigate to the location of the `yolo-example-data` folder.
 - On the right side, where a `/target` placeholder text is visible, type a name for the target directory inside your
-AICA container. For simplicity you can use `/yolo-example-data`.
+System container. For simplicity you can use `/yolo-example-data`.
 
 :::info
 
-Remember, AICA Launcher starts Docker containers with your selected configuration of packages, versions, advanced
+Remember, Launcher starts Docker containers with your selected configuration of packages, versions, advanced
 options, and volume mounts. Unless you explicitly specify volume mappings from your host system to the container, the
 container will not have access to the host filesystem.
 
 An exception to this is the `Data Folder` that is prefilled by default, is created for you automatically (host), and is
-mapped to `/data` internally. This folder contains the AICA database that preserves your applications and settings, but
+mapped to `/data` internally. This folder contains the database that preserves your applications and settings, but
 can also be used to persistently store data, same as custom volume mounts.
 
 :::
 
-Press **Launch AICA Studio.**
+Press **Launch Studio.**
 
 ## Using the `YoloExecutor`
 
@@ -233,7 +233,7 @@ containing bounding box coordinates, class name, score, ...).
 
 :::note
 
-Only users with a Linux host can visualize the image stream with RViz. On macOS, AICA Launcher will not show the RViz
+Only users with a Linux host can visualize the image stream with RViz. On macOS, Launcher will not show the RViz
 option.
 
 :::
@@ -510,7 +510,7 @@ Enter the component folder in terminal and run
 docker build -f aica-package.toml -t object-detection-utils .
 ```
 
-Next, edit the AICA Launcher configuration and enter `object-detection-utils` under `Custom Packages`. After launching,
+Next, edit the Launcher configuration and enter `object-detection-utils` under `Custom Packages`. After launching,
 you should see the `Object detection utils` package listed in the `Add Component` menu, as well as a `BoundingBoxTracker`
 component under that menu.
 
@@ -540,7 +540,7 @@ Back at your `BoundingBoxTracker` component, connect the `Twist` output of this 
 
 :::tip
 
-If you are using one of the other robot models that AICA offers, make sure to change the `Camera frame` parameter to
+If you are using one of the other robot models that the registry offers, make sure to change the `Camera frame` parameter to
 your robot's end-effector frame, or to record a frame in world coordinates from the `3D Viz` menu.
 
 :::

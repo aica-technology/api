@@ -77,7 +77,7 @@ has a different duration before triggering the "Is timed out" predicate.
 
 Elements can be added to the graph using the right panel; switch to the **Add component** section of the Scene tab  
 to see a list of available application elements. At the top of the list are the "Hardware Interface", "Trigger Events
-Button", "Sequence" and "Condition" nodes. These are followed by a list of all available components from AICA Core and
+Button", "Sequence" and "Condition" nodes. These are followed by a list of all available components from Core and
 any additionally installed packages, grouped by package. Clicking on any element in the sidebar will automatically add
 it to the graph.
 

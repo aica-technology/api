@@ -14,8 +14,8 @@ import realsensePackage from './assets/realsense-collection.webm'
 
 # RealSense camera component
 
-AICA's `intel-realsense-collection` package includes support for L515 and D4XX camera series from RealSense. This guide
-describes all necessary steps to install, configure and run the component using AICA Studio.
+The `intel-realsense-collection` package includes support for L515 and D4XX camera series from RealSense. This guide
+describes all necessary steps to install, configure and run the component using Studio.
 
 ## Installation
 
@@ -35,7 +35,7 @@ cd librealsense
 sudo ./scripts/setup_udev_rules.sh
 ```
 
-Start the AICA Launcher and add the `intel-realsense-collection` package to your configuration.
+Start Launcher and add the `intel-realsense-collection` package to your configuration.
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
@@ -45,7 +45,7 @@ Start the AICA Launcher and add the `intel-realsense-collection` package to your
 </div>
 <br/>
 
-Select **Launch AICA Studio** to proceed.
+Select **Launch Studio** to proceed.
 
 ## Creating and running the example
 

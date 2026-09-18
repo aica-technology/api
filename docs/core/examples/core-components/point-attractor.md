@@ -9,7 +9,7 @@ import pointAttractorExample from './assets/point-attractor-example.webm'
 # Point Attractors
 
 This page shows how Dynamical Systems (DS), and in particular Point Attractor components, can be used to generate
-dynamic motions in AICA Studio. Point Attractor DS are valuable in robotics because they provide a simple and robust way
+dynamic motions in Studio. Point Attractor DS are valuable in robotics because they provide a simple and robust way
 to guide a robot toward a specific target. By continuously generating motion commands that drive to the attractor, these
 components enable reaching, positioning, and interaction tasks, making them useful for applications such as
 pick-and-place, assembly, and human-robot collaboration.
@@ -80,7 +80,7 @@ To set up this example, follow the steps below.
    of the `Point Attractor` with the `Command` input of the controller.
 5. Finally, make sure to load all components on start by creating the necessary event edges.
 
-Start the application from AICA Studio, then switch to the 3D view. Drag the frame around and observe how the robot is
+Start the application from Studio, then switch to the 3D view. Drag the frame around and observe how the robot is
 dynamically attracted towards the frame.
 
 <div style={{ display: "flex", justifyContent: "center" }}>

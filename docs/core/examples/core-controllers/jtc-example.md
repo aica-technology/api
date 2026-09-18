@@ -19,7 +19,7 @@ Visit our learning platform AICAdemy for an interactive training module with a r
 
 ## Setting up the application
 
-Launch AICA Studio and create a new application by pressing "Create new".
+Launch Studio and create a new application by pressing "Create new".
 
 Copy the following YAML and generate the graph.
 

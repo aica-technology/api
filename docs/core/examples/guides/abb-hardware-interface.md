@@ -18,17 +18,17 @@ import abbHIParameters from './assets/abb-hi-parameters.png'
 
 ABB offers a wide range of industrial articulated manipulators, from compact 6-axis robots for small-part handling and
 payloads of a few kilograms to heavy-duty models capable of lifting up to 800 kg. This guide provides instructions for
-using ABB robots within the AICA System, focusing on connecting and configuring both simulated environments using
+using ABB robots within the System, focusing on connecting and configuring both simulated environments using
 RobotStudio and real hardware setups.
 
-To use the ABB collection, add `collections/abb` **v1.0.0 or higher** to your configuration in AICA Launcher, currently
+To use the ABB collection, add `collections/abb` **v1.0.0 or higher** to your configuration in Launcher, currently
 supporting the following robot models out of the box:
 
 - IRB 1010
 - IRB 6730-210/3.1
 - GoFa CRB 15000-12/1.27
 
-Other robot models can be added on request. Reach out to the AICA support team for further information.
+Other robot models can be added on request. Reach out to the support team for further information.
 
 ## General
 
@@ -38,7 +38,7 @@ and features described below.
 
 :::warning
 
-This collection supports RobotWare versions 7.X and above. For older versions, contact the AICA support team.
+This collection supports RobotWare versions 7.X and above. For older versions, contact the support team.
 
 :::
 
@@ -58,7 +58,7 @@ EGM is an optional add-in and has to be purchased separately.
 
 ### Robot Web Services
 
-The second ABB feature that AICA System utilizes to connect to the robot is Robot Web Services (RWS). RWS is a platform
+The second ABB feature that the System utilizes to connect to the robot is Robot Web Services (RWS). RWS is a platform
 that enables developers to create applications that interact with the robot controller, using RESTful APIs that leverage
 the HTTPS protocol. The hardware interface uses RWS for auxiliary functionality, such as starting/stopping the program
 and the motors, and setting IOs. Setting up RWS on the simulator and on the actual robot requires slightly different
@@ -114,12 +114,12 @@ Setting up a virtual workstation and controller can be achieved by following the
    <div class="text--center">
      <img src={abbAdditionalOptions} alt="Additional options in the RobotStudio project." />
    </div>
-7. Disable the Windows firewall on the network where the PC running AICA Core is connected to.
-8. Finally, the PC running AICA Core has to be whitelisted to communicate with RobotStudio. As explained
+7. Disable the Windows firewall on the network to which the PC running Core is connected.
+8. Finally, the PC running Core has to be whitelisted to communicate with RobotStudio. As explained
    [here](https://forums.robotstudio.com/discussion/12082/using-robotwebservices-to-access-a-remote-virtual-controller), 
    create a file called `vcconf.xml` under `C:/Users/<user>/AppData/Roaming/ABB Industrial IT/Robotics IT/RobVC` with
    the content below. Replace `<user>` in the path above with your Windows user and the IP address in the snippet below with
-   the IP of the PC running AICA Core (in this example 192.168.137.100).
+   the IP of the PC running Core (in this example 192.168.137.100).
    ```xml title="vcconf.xml"
    <?xml version="1.0" encoding="UTF-8"?>
    <VCConfiguration><RemoteVCConfiguration PublicationEnabled="true"/><hosts><host ip="192.168.137.100"/></hosts></VCConfiguration>
@@ -149,7 +149,7 @@ and then restart.
 After connecting to the robot, the controller should be configured to accept commands from an external device.
 
 1. Navigate to the Controller tab > Configuration > Communication > UDP Unicast Device, and add a new UDPUC device (or
-   modify the existing one), configured as shown below. This is the PC running AICA Core, the external control device,
+   modify the existing one), configured as shown below. This is the PC running Core, the external control device,
    so the address should be set accordingly.
    <div class="text--center">
      <img src={abbControllerConfiguration} alt="Controller configuration settings." />
@@ -171,7 +171,7 @@ After connecting to the robot, the controller should be configured to accept com
 
 ## RAPID module
 
-The ABB hardware interface provided by AICA needs a matching RAPID module running on the robot to allow external control
+The ABB hardware interface needs a matching RAPID module running on the robot to allow external control
 through EGM. Place the module below in the controller's home directory and upload it to the current task.
 
 :::warning
@@ -380,7 +380,7 @@ UDP data exchange.
 
 :::
 
-Returning to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
+Returning to Studio and the hardware interface, it is now possible to define the parameters and connect to the
 robot. The majority of the hardware interface parameters enable connection to EGM and RWS:
 
 <div class="text--center">
@@ -400,7 +400,7 @@ robot. The majority of the hardware interface parameters enable connection to EG
   `AICA_EGM`, respectively.
 - Uc Device: The name of the UDPUC device configured above.
 
-Before starting an application with an ABB hardware interface in AICA Studio, the motors and RAPID program on the robot
+Before starting an application with an ABB hardware interface in Studio, the motors and RAPID program on the robot
 must be started manually through the teach pendant or RobotStudio. After that, running the application will connect to
 the robot and get information about the mechanical setup of the robot being used.
 

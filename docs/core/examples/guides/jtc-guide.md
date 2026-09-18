@@ -22,7 +22,7 @@ place tasks, or simply move through predetermined locations, you are in need of 
 space accurately and timely.
 
 While we cover the basics of JTC in [a separate example](../core-controllers/jtc-example), here we will focus more on
-its integration with AICA Studio and suggest workflows and/or parametrizations that might aid you when building big
+its integration with Studio and suggest workflows and/or parametrizations that might aid you when building big
 applications.
 
 :::tip
@@ -38,7 +38,7 @@ Visit our learning platform AICAdemy for an interactive training module with a r
 JTC has a plethora of parameters that can be set to alter its performance according to an application's requirements.
 Let us start by creating a new application that we can use as a reference point for this guide.
 
-First, start AICA Launcher and create a configuration with **AICA Core v4.4.2** or higher. For the remainder of this
+First, start Launcher and create a configuration with **Core v4.4.2** or higher. For the remainder of this
 guide, we will be using the generic six-axis robot that is part of our core hardware collection. However, if you have
 the appropriate entitlements and want to experiment with a different robot brand, feel free to add the corresponding
 collection to your configuration before launching it.
@@ -83,7 +83,7 @@ You will also notice tolerance values for trajectory execution times and positio
 per-application basis, as failing to satisfy the corresponding constraints would lead to the trajectory failing
 mid-execution.
 
-You may find advanced parameters in the `Help` page under the `AICA Core Controllers` and `Joint Trajectory Controller`.
+You may find advanced parameters in the `Help` page under the `Core Controllers` and `Joint Trajectory Controller`.
 These parameters can be used to further tune JTC's performance and functionality, but may also require more advanced
 knowledge in order to tune them. Make sure to carefully read the descriptions next to each parameter before making
 changes.
@@ -96,7 +96,7 @@ There are 2 ways of setting a trajectory in JTC:
 2. by calling the `set_trajectory` service
 
 In both cases, receiving a new joint trajectory will first trigger cancellation of an active trajectory, if there is
-one. That is, **there is no trajectory buffering or appending taking place**. As with many things in the AICA Universe,
+one. That is, **there is no trajectory buffering or appending taking place**. As with many things in the System,
 behaviors are event-driven. If you wish to send multiple trajectories back-to-back, you will have to rely on the
 execution status of the active trajectory handled by JTC. There is a practical example of how to do this in following
 sections (see [Putting an application together](#putting-an-application-together)).
@@ -115,7 +115,7 @@ The controller exposes 4 predicates to reflect the execution status of a traject
 ### Using JTC with signals
 
 In practice, this requires publishing a single
-[`JointTrajectory`](https://docs.ros.org/en/noetic/api/trajectory_msgs/html/msg/JointTrajectory.html) message. In AICA
+[`JointTrajectory`](https://docs.ros.org/en/noetic/api/trajectory_msgs/html/msg/JointTrajectory.html) message. In
 Studio terms, that means connecting an edge from a custom component directly to the input of JTC. If you already have a
 component that has the corresponding signal output, feel free to skip the next segment.
 
@@ -194,7 +194,7 @@ this->publish_output("trajectory");
 The joint names need to correspond to the joint names from your URDF. If you are **not**
 using the `Generic six-axis robot arm`, you will need to adjust these names.
 
-The easiest way to do so if you do not already know them is to head to the `Hardware` menu of your AICA Launcher and
+The easiest way to do so if you do not already know them is to head to the `Hardware` menu of your Launcher and
 read through your URDF.
 :::
 
@@ -291,7 +291,7 @@ A dedicated example on recording application frames can be found [here](./applic
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
     <source src={jtcGuideCreateFrame} type="video/webm" />
-    Creating a frame in AICA Studio.
+    Creating a frame in Studio.
   </video>
 </div>
 <br/>
@@ -321,7 +321,7 @@ the orientation is copied from the end effector), as shown below:
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
     <source src={jtcGuideRecordFrame} type="video/webm" />
-    Recording a frame in AICA Studio.
+    Recording a frame in Studio.
   </video>
 </div>
 <br/>
@@ -352,7 +352,7 @@ this time record joint positions instead of creating a frame:
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
     <source src={jtcGuideRecordJoint} type="video/webm" />
-    Recording joint positions in AICA Studio.
+    Recording joint positions in Studio.
   </video>
 </div>
 <br/>

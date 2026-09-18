@@ -10,7 +10,7 @@ import cameraStreamerExample from './assets/camera-streamer-example.png'
 
 # CameraStreamer component
 
-AICA's `core-vision` package includes, among others, the `CameraStreamer` component that can read image streams from
+The `core-vision` package includes, among others, the `CameraStreamer` component that can read image streams from
 USB devices, network streams, or video files. Most of the standard consumer-grade webcams and video formats are
 supported out-of-the-box.
 
@@ -25,7 +25,7 @@ of a camera device.
 
 ## Using the CameraStreamer
 
-Launch AICA Studio with a configuration that contains the `core-vision` package and create a new application.
+Launch Studio with a configuration that contains the `core-vision` package and create a new application.
 
 1. Remove the hardware interface that is included in new applications by default.
 2. From the `Scene` menu, use the `Add Component` tab and look for the **Camera Streamer** component either by searching

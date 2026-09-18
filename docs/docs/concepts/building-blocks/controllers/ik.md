@@ -38,7 +38,7 @@ Compared to joint-space position controllers, an IK position controller offers s
 :::caution
 
 In reactive or high-rate scenarios, IK position control can be difficult to apply. The command signal needs to be
-crafted carefully to ensure continuity and avoid big step changes. Position servoing is demanding for real hardware and 
+crafted carefully to ensure continuity and avoid big step changes. Position servoing is demanding for real hardware and
 usually comes with strict constraints from the manufacturer. See more information in
 [Position vs velocity IK control](/docs/concepts/building-blocks/controllers/ik#position-vs-velocity-ik-control).
 
@@ -110,8 +110,8 @@ is to combine IK velocity controllers with motion generators that produce desire
 to be expressed as smooth, continuous velocity commands, while retaining the robustness, responsiveness, and stability
 properties of velocity-based IK control.
 
-## Using it in AICA Core
+## Using it in Core
 
-Both an IK position and velocity controller are included in AICA Core by default. They can be used via a
+Both an IK position and velocity controller are included in Core by default. They can be used via a
 **Cartesian pose** and **Cartesian twist** signal, respectively, that indicates the desired state. Additional parameters
 can be modified to limit the Cartesian position or velocity.

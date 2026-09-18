@@ -8,12 +8,12 @@ import timerExample from './assets/timer-example.webm'
 
 # A basic application example
 
-This example will show how components and predicate events can be used to create dynamic behavior in an AICA
+This example will show how components and predicate events can be used to create dynamic behavior in a System
 application.
 
 ## Setting up the application
 
-Launch AICA Studio and create a new application by pressing "Create new". Copy the following application code into the
+Launch Studio and create a new application by pressing "Create new". Copy the following application code into the
 Code tab of the right panel, replacing the default content.
 
 ```yaml
@@ -129,7 +129,7 @@ display name field is used just for rendering the component on the graph.
     display_name: Timer
 ```
 
-In this case, `aica_core_components::utility::Timer` is the registration of a built-in AICA component. It is a lifecycle
+In this case, `aica_core_components::utility::Timer` is the registration of a built-in component. It is a lifecycle
 component that starts a timer when the component is activated.
 
 The `events` field of a component associates component state transitions and predicates with events.
@@ -222,9 +222,9 @@ timer after 4 seconds.
 </div>
 <br/>
 
-In the AICA System, events are the key drivers of application logic. While the application is running, events can be
+In the System, events are the key drivers of application logic. While the application is running, events can be
 triggered automatically from transitions or predicates, as seen in this example, but also by other event sources such as
-conditions, sequences, interactive trigger buttons in AICA Studio and even external API calls.
+conditions, sequences, interactive trigger buttons in Studio and even external API calls.
 
 Finally, use the Stop button to stop the application. This will deactivate and unload all components and controllers and
 fully reset the application.

@@ -40,7 +40,7 @@ for customized behavior. These functions are `on_step_callback()` and the collec
 :::
 
 Registration is the term for defining and exporting a unique class name for the component so that it can be dynamically
-loaded by the AICA state engine.
+loaded by the Event Engine.
 
 <Tabs groupId="programming-language">
 <TabItem value="python" label="Python">
@@ -312,7 +312,7 @@ means that the associated input data object is automatically updated every time 
 this means that internal changes to the output data object will automatically be updated in the publisher.
 
 The binding logic is supported for a number of common message data types. To interface with non-standard messages
-(for example, to communicate with ROS 2 nodes using custom message types outside the AICA System), it is possible to
+(for example, to communicate with ROS 2 nodes using custom message types outside the System), it is possible to
 define raw publishers and subscribers following standard ROS 2 conventions.
 
 ### Signal name
@@ -339,7 +339,7 @@ The supported message types are defined in the `std_msgs` library and include:
 - floating point array
 - string
 
-For robotic applications, AICA components make it particularly easy to receive, manipulate and send joint and Cartesian
+For robotic applications, components make it particularly easy to receive, manipulate and send joint and Cartesian
 states using the `state_representation` and `clproto` message encoding libraries.
 
 State objects can be bound to inputs or outputs and are sent in a special `EncodedState` message type.

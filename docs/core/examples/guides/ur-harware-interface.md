@@ -34,14 +34,14 @@ A guide on installing and running URSim can be found on [this page](./ur-sim-gui
 
 :::
 
-Due to the reasons mentioned above, UR manipulators are often used for prototyping at AICA and have seen extensive
-internal development for robot-specific feature integration. The UR hardware collection provided by AICA comes with
+Due to the reasons mentioned above, UR manipulators are often used for prototyping and have seen extensive
+internal development for robot-specific feature integration. The UR hardware collection provided comes with
 special tools and functionalities that are unique to UR robots. This guide intends to explain these concepts and how
-they can be leveraged in AICA Studio.
+they can be leveraged in Studio.
 
-To use the UR collection, add the latest version of `collections/ur-collection` to your configuration in AICA Launcher.
-Doing this will add multiple new hardware examples as well as a few controllers to AICA Studio. All UR robots share the
-same hardware interface in AICA Studio. The hardware interface has quite a large number of parameters, most of which are
+To use the UR collection, add the latest version of `collections/ur-collection` to your configuration in Launcher.
+Doing this will add multiple new hardware examples as well as a few controllers to Studio. All UR robots share the
+same hardware interface in Studio. The hardware interface has quite a large number of parameters, most of which are
 not important for regular use cases.
 
 :::tip
@@ -52,7 +52,7 @@ control rate of the real hardware.
 :::
 
 <div class="text--center">
-  <img src={urHwiStudio} alt="UR Hardware Interface in AICA Studio" />
+  <img src={urHwiStudio} alt="UR Hardware Interface in Studio" />
 </div>
 
 ## Local and Remote Control
@@ -72,11 +72,11 @@ Safety features remain active in Remote Control.
 
 Choosing one of the two modes depends on the specific task at hand. During a development phase, it might be preferable
 to create the programs in Local Mode, whereas in a production setting, PLCs would be responsible to load and start the
-desired programs while the robot is in Remote Control. With the AICA System, users have the chance to get the best of
+desired programs while the robot is in Remote Control. With the System, users have the chance to get the best of
 both modes:
 
-1. Take full control of the robot from an AICA application (requires Remote Control)
-2. Run an AICA application as one node of a program (works in both Local and Remote Control)
+1. Take full control of the robot from a System application (requires Remote Control)
+2. Run a System application as one node of a program (works in both Local and Remote Control)
 
 :::tip
 
@@ -84,10 +84,10 @@ The two examples below work out of the box with the [URSim](./ur-sim-guide#insta
 
 :::
 
-### Full control of the robot from an AICA application
+### Full control of the robot from a System application
 
 For this first case, no additional installation steps are required. The robot becomes the secondary device and all
-motions are coordinated through AICA Studio. Apart from setting the correct robot IP in the hardware interface, two
+motions are coordinated through Studio. Apart from setting the correct robot IP in the hardware interface, two
 requirements have to be met:
 
 - On the robot, Remote Control has to be activated. For that, first activate Remote Control in the system settings as
@@ -101,14 +101,14 @@ requirements have to be met:
   </video>
   </div>
   <br/>
-- In AICA Studio, make sure that the parameter `Headless Mode` that can be found under the hardware interface parameters
+- In Studio, make sure that the parameter `Headless Mode` that can be found under the hardware interface parameters
   is set to `True`. This will notify the hardware interface that it will be running headless, i.e. it is in charge of
   providing the full UR program to the robot controller.
   <div class="text--center">
     <img src={urHwiHeadlessMode} alt="Headless Mode" />
   </div>
 
-Finally, implement an application of your choice in AICA Studio. An example with a joint trajectory controller is given
+Finally, implement an application of your choice in Studio. An example with a joint trajectory controller is given
 below. Observe how the robot program status goes from _Stopped_ to _Running_ as soon as the hardware interface connects
 to the robot.
 
@@ -265,18 +265,18 @@ to the robot.
   ```
 </details>
 
-### Run an AICA application as one node of a program
+### Run a System application as one node of a program
 
 The second case requires the
 [External Control URCap](https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver/tree/jazzy/ur_robot_driver/resources)
 to be installed. While the robot stays the primary device, the URCap comes with a program node that allows to hand over
 control to secondary devices during the execution of that program node. This is especially useful for integrating
-smaller, single purpose AICA applications into bigger, existing cells. Once the AICA application has finished its task,
+smaller, single purpose System applications into bigger, existing cells. Once the System application has finished its task,
 it hands back control to the robot which will continue the execution of the main UR program. To set this up, follow the
 these steps:
 
 1. The external control URCap needs to be configured to the right remote control address. Navigate to the _Installation_
-   tab and set the address to the one of the device that will be running the AICA application.
+   tab and set the address to the one of the device that will be running the System application.
    <div class="text--center">
      <img src={urHWINetworkingSettings} alt="External control URCap networking settings" />
    </div>
@@ -285,10 +285,10 @@ these steps:
    <div class="text--center">
      <img src={urHWIURProgram} alt="UR Program with external control URCap" style={{ width: '40%' }} />
    </div>
-3. In AICA Studio, set the `Headless Mode` in the hardware interface `false`.
-4. Still in AICA Studio, the `UR Dashboard Controller` should be added to the hardware interface. Its `program_running`
+3. In Studio, set the `Headless Mode` in the hardware interface `false`.
+4. Still in Studio, the `UR Dashboard Controller` should be added to the hardware interface. Its `program_running`
    predicate notifies that the UR program has arrived at the `Control by <IP>` node and is ready to receive control
-   commands. After completion of the task in AICA Studio, control is handed back using a service call and the UR program
+   commands. After completion of the task in Studio, control is handed back using a service call and the UR program
    resumes execution. More details about this controller follow in the next section.
    :::warning
    Sending motion commands to the robot should exclusively happen while the `program_running` predicate is true.
@@ -296,7 +296,7 @@ these steps:
    :::
 
 The example with a joint trajectory controller from above is given here in its Local Control version. Be sure to start
-the application in AICA Studio first, and the UR program second.
+the application in Studio first, and the UR program second.
 
 <details>
   <summary>Example application, local control</summary>
@@ -460,9 +460,9 @@ the application in AICA Studio first, and the UR program second.
 
 ## Dashboard controller
 
-As shown in the example above, the `UR Dashboard Controller` allows interaction with the UR programs to run AICA
+As shown in the example above, the `UR Dashboard Controller` allows interaction with the UR programs to run System
 applications as part of a bigger UR program. With the External Control program node, control can be handed over to an
-AICA application. Once the AICA application has finished its tasks, control can be handed back for the UR program to
+System application. Once the System application has finished its tasks, control can be handed back for the UR program to
 resume execution.
 
 While this particular functionality is limited to the combination of the External Control program node in Local control
@@ -474,7 +474,7 @@ with the `Headless mode` set to false, other features of the `UR Dashboard Contr
 
 The controller provides four services:
 
-- Hand back control: See [the example above](#run-an-aica-application-as-one-node-of-a-program).
+- Hand back control: See [the example above](#run-a-system-application-as-one-node-of-a-program).
 - Zero FT sensor: Triggering this service zeros the built-in force torque sensor.
 - Set payload: If the payload of the robot changes during the application, for example by picking up an object, this
   service can be used to update the payload setting on the robot. Given the mass and center of gravity, call the service
@@ -603,7 +603,7 @@ e-Series and UR series robots have a built-in end of arm force torque sensor tha
 control. In UR terminology, this feature is called _force mode_ and can be used to perform motions along a desired
 direction or path while being force compliant in certain axes or directions.
 
-With the UR collection in the AICA System, we provide two controllers that very explicitly use and augment the internal
+With the UR collection in the System, we provide two controllers that very explicitly use and augment the internal
 force mode to behave like impedance and admittance controllers.
 
 ### Impedance controller

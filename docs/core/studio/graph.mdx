@@ -14,7 +14,7 @@ import EventEdge from './assets/aica-studio-event-edge.png';
 
 # Application graph
 
-The AICA application graph is a unique way of expressing complex and reactive logic for robotic control. It combines
+The System application graph is a unique way of expressing complex and reactive logic for robotic control. It combines
 data-flow programming of continuous signals with event-driven logic and state management.
 
 ![aica-studio-application-graph](./assets/aica-studio-application-graph.png)
@@ -25,7 +25,7 @@ concepts and examples later in this documentation.
 
 ## Nodes and edges
 
-In graph terminology, a node is a block in the graph and an edge is a connecting line. The nodes in the AICA application
+In graph terminology, a node is a block in the graph and an edge is a connecting line. The nodes in the System application
 graph represent **components** (generic computational blocks that process input data and produce output data) and
 **hardware interfaces** (drivers to externally connected devices that follow control commands from components),
 alongside built-in elements such as sequence or condition blocks or the start/stop nodes.
@@ -52,7 +52,7 @@ Application elements can be added to the graph using the right panel under the S
 <CenteredImage src={AddComponentMenu} alt={"aica-studio-add-component"} />
 
 At the top of the list are the "Hardware Interface", "Trigger Events Button", "Sequence" and "Condition" nodes. These
-are followed by a list of all available components from AICA Core and any additionally installed packages, grouped by
+are followed by a list of all available components from Core and any additionally installed packages, grouped by
 package. Clicking on any element in the right panel will automatically add it to the graph.
 
 The search field can be used to filter the available elements by name or description.

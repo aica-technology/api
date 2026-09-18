@@ -20,8 +20,8 @@ One can differentiate between two approaches to motion generation; offline and o
 **Offline motion generation** plans trajectories in advance using models of the robot and environment. This method
 enables optimized, collision-free paths and is ideal for predictable, structured settings. Generated trajectories are
 rolled out in **open loop**, meaning that there is no feedback mechanism that would inform the system about
-disturbances. In other words, it lacks adaptability to real-time changes or sensor feedback. In the AICA System, the
-[Joint Trajectory Controller](../building-blocks/controllers/jtc) often acts as simple offline motion generator, 
+disturbances. In other words, it lacks adaptability to real-time changes or sensor feedback. In the System, the
+[Joint Trajectory Controller](../building-blocks/controllers/jtc) often acts as simple offline motion generator,
 creating and rolling out a trajectory through a certain number of waypoints in a given amount of time without taking
 into account the environment.
 
@@ -40,7 +40,7 @@ combination of both approaches is used:
 - or the task is divided into motions that simply move the robot from one point to another using fast and optimized
   trajectories and complex behaviors where the desired robot state is recomputed and adapted online.
 
-AICA Core comes with several online motion generator components that use the current state of the robot to calculate the
+Core comes with several online motion generator components that use the current state of the robot to calculate the
 next command using a mathematical concept called _Dynamical Systems_.
 
 ## Dynamical Systems
@@ -63,7 +63,7 @@ system detects a deviation from the desired path. On the other hand, a DS is abl
 any point in space, it still knows where to go next in order to reach the target.
 
 The function $f(x)$ that defines the behavior of a DS can be implemented analytically from mathematical rules or
-optimized from a set of non-linear functions. The AICA component library includes examples of both kinds of behaviors.
+optimized from a set of non-linear functions. The component library includes examples of both kinds of behaviors.
 
 :::tip
 
@@ -100,7 +100,7 @@ convergence to a (potentially moving) desired goal.
 
 :::tip
 
-Find an example using a Point Attractor DS in AICA Studio on
+Find an example using a Point Attractor DS in Studio on
 [this page](/core/examples/core-components/point-attractor).
 
 :::
@@ -113,7 +113,7 @@ patterns, each represented by a Gaussian distribution. By using a mixture of Gau
 behaviors and make is possible to learn smooth and reliable movements from real world data. This makes it a powerful
 tool for tasks like manipulation and human-robot interaction, where both adaptability and safety are important. The
 figure below shows an example of a SEDS that was learned based on seven demonstrations of a *G* shape and then
-integrated from three different starting points along the vector field. 
+integrated from three different starting points along the vector field.
 
 <div class="text--center">
   <img src={seds2d} alt="2D SEDS" style={{ maxWidth: '45%', height: 'auto' }}/>

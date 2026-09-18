@@ -17,10 +17,10 @@ import dockerNetwork from './assets/win-docker-network.png';
 
 # Manual installation and launch
 
-The following sections explain how to install and launch AICA Core and any additional packages manually from the command
-line without the use of AICA Launcher. The pre-requisites are still a valid license and a host with Docker installed.
-For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
-on the host machine.
+The following sections explain how to install and launch Core and any additional packages manually from the command
+line as a **System container** without the use of Launcher. The pre-requisites are still a valid license and a host
+with Docker installed. For the rest of this guide, it will be assumed that a valid license has been saved to a file
+called `aica-license.toml` on the host machine.
 
 ## Configuring Docker manually on Linux, macOS or Windows
 
@@ -31,19 +31,19 @@ on the host machine.
 
 If you are using Linux with Docker Engine only, you may skip this section entirely.
 
-For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that
-AICA System software is used at its full potential.
+For Linux users that have Docker Desktop for Linux installed, some additional steps may be required to ensure that the
+System software is used at its full potential.
 
 The main issue originates from Docker Desktop for Linux creating a custom Docker context (`desktop-linux`) and endpoint
 to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, without
 contaminating other parts of your system. However, creating a custom context with an endpoint in your `/home` directory
 means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that
-some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal).
+some Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal).
 
 #### Configuring the Docker context
 
 `desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations,
-make sure to change the context before building or executing AICA applications, or running AICA Launcher.
+make sure to change the context before building or executing System applications, or running Launcher.
 
 See the available contexts on your system:
 
@@ -76,18 +76,19 @@ You may need to repeat these steps upon a restart of your system.
 If you installed Docker Desktop, all the requirements should already be present on your system. Note that to access
 the `docker` command through the terminal, Docker Desktop must be running.
 
-The default settings of Docker Desktop are usually sufficient for everything AICA Studio needs. However, in some cases
+The default settings of Docker Desktop are usually sufficient for everything Studio needs. However, in some cases
 (e.g., settings carried over from older Docker Desktop installations) you may need to verify the following:
 
 - Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to
-`Allow the default Docker socket to be used (requires password)` and `Allow privileged port mapping (requires password)`.
+  `Allow the default Docker socket to be used (requires password)` and
+  `Allow privileged port mapping (requires password)`.
 
 <div class="text--center">
   <img src={MacosDockerAdvanced} alt="Required advanced options" />
 </div>
 
 - If you notice any performance issues, go to Resources in the Settings menu and increase the CPU and memory limits to
-your application's needs.
+  your application's needs.
 
 <div class="text--center">
   <img src={MacosDockerResources} alt="Optional resource allocation" />
@@ -101,24 +102,24 @@ your application's needs.
 
 ## Configuring and using WSL and Docker on Windows
 
-The AICA System can be installed and run on Windows by leveraging **WSL**, short for
+The System can be installed and run on Windows by leveraging **WSL**, short for
 [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/about). WSL is a feature of Windows that
 allows running a Linux environment on a Windows machine without the need for a separate virtual machine or dual booting.
 While most Linux distributions can be run with either WSL 1 or WSL 2 architecture, WSL 2 has superior performance over
 WSL 1 and will be assumed throughout these instructions.
 
-On a high level, there are two main requirements for running the AICA System on Windows:
+On a high level, there are two main requirements for running the System on Windows:
 
 - Ubuntu 22.04 or 24.04 installed through WSL 2
 - Docker Desktop that uses the WSL 2 based engine
 
 :::note
 
-The following instructions for running the AICA System have been tested and validated on a fresh installation of Windows
+The following instructions for running the System have been tested and validated on a fresh installation of Windows
 11 Professional with full administrator access. Depending on the machine at hand, some steps might be slightly different
 or extended access might be required. For questions, consult the
 [official documentation](https://learn.microsoft.com/en-us/windows/wsl/install-manual), contact your IT support, or
-reach out to the AICA team.
+reach out to the support team.
 
 :::
 
@@ -130,7 +131,7 @@ reach out to the AICA team.
      <img src={winFeatures} alt="Windows Features" width="45%" />
      <img src={winHyperV} alt="Enable Hyper-V" width="45%" />
    </div>
-2. Restart your computer for the changes to take effect. 
+2. Restart your computer for the changes to take effect.
 3. [Download and install the Linux kernel update package](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package).
 4. Open PowerShell or Windows Command Prompt in **administrator** mode and run
    ```shell
@@ -169,19 +170,19 @@ reach out to the AICA team.
 
 </details>
 
-## Setting up the AICA license file
+## Setting up the System license file
 
-To use your AICA System License or Deployment Key for manual installation and launch, it should be saved into a
+To use your System License or Deployment Key for manual installation and launch, it should be saved into a
 TOML-formatted file. In this guide, we use `aica-license.toml` to refer to the license file, though this filename is
 a convention only and not enforced.
 
-For an AICA System License, the contents of the file should be formatted as:
+For a System License, the contents of the file should be formatted as:
 
 ```toml title="aica-license.toml"
 License = "5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3"
 ```
 
-Similarly, for an AICA Deployment Key, it should be formatted as:
+Similarly, for a Deployment Key, it should be formatted as:
 
 ```toml title="aica-license.toml"
 License = "key/eyJ9df2jfap7IVdIHnlnNpb24[...]alSBR_tBSIjavblcziV5nBQ=="
@@ -189,7 +190,7 @@ License = "key/eyJ9df2jfap7IVdIHnlnNpb24[...]alSBR_tBSIjavblcziV5nBQ=="
 
 Of course, replace the license key in the example with your actual license key.
 
-## Logging in to the AICA package registry
+## Logging in to the package registry
 
 To authenticate docker to login and pull images from the registry, run the following command (no replacement of
 `USERNAME` required):
@@ -198,27 +199,27 @@ To authenticate docker to login and pull images from the registry, run the follo
 cat aica-license.toml | docker login registry.licensing.aica.tech -u USERNAME --password-stdin
 ```
 
-## Configuring AICA packages with a manifest file
+## Configuring packages with a manifest file
 
-A runtime application image is configured using a simple **manifest file** defining the version of AICA Core to use and
+A runtime application image is configured using a simple **manifest file** defining the version of Core to use and
 optionally defining additional add-on packages. The manifest file contains a custom docker syntax header pointing to
-AICA's app-builder tool, and the `docker build` command is used to bundle all listed packages into a final runtime
+our app-builder tool, and the `docker build` command is used to bundle all listed packages into a final runtime
 image.
 
-### Configuring a minimal runtime image with a version of AICA Core
+### Configuring a minimal runtime image with a version of Core
 
 The manifest file must contain a syntax header and a list of packages. The minimal version of the manifest includes
-only AICA Core as the `core` package. The version can be changed according to the available releases.
+only Core as the `core` package. The version can be changed according to the available releases.
 
 :::info
 
 In the past, you might have seen applications using the `aica-package.toml` filename. While you can use any filename as
-we do not enforce any, we recommend using `aica-application.toml` to avoid confusion with the `aica-package.toml` file
+we do not enforce any, we recommend using `aica-system.toml` to avoid confusion with the `aica-package.toml` file
 which is used for building packages using `package-builder`.
 
 :::
 
-```toml title="aica-application.toml"
+```toml title="aica-system.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
@@ -228,7 +229,7 @@ image = "v5.1.0"
 ### Configuring a runtime image with add-on packages
 
 A manifest can include additional components and hardware collections as add-on packages. For any available package
-listed in the AICA registry, specify the package and version with the `@aica/` prefix. The following example manifest
+listed in the package registry, specify the package and version with the `@aica/` prefix. The following example manifest
 file includes two add-on packages: version 2.0.0 of the `components/rl_policy_components` component package and version
 4.1.0 of the `collections/ur-collection` hardware collection package.
 
@@ -240,7 +241,7 @@ use older versions of certain libraries and packages with newer versions of `app
 
 :::
 
-```toml title="aica-application.toml"
+```toml title="aica-system.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
@@ -256,14 +257,14 @@ use older versions of certain libraries and packages with newer versions of `app
 
 ### Including custom packages
 
-The AICA framework allows developers to build their own
+The System allows developers to build their own
 [custom components](../reference/custom-components/component-package). These packages can be included under a
 custom name using the `docker-image://` prefix to specify the docker image name or path. For example, a custom component
 package that was locally built using `docker build [...] --tag my-custom-component-package` could be included as
 `docker-image://my-custom-component-package`. Community and third-party packages may also be available on other docker
 registries such as DockerHub or GitHub Container Registry and can be included with the associated docker path.
 
-```toml title="aica-application.toml"
+```toml title="aica-system.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
@@ -277,32 +278,33 @@ registries such as DockerHub or GitHub Container Registry and can be included wi
 "my-ghcr-package" = "docker-image://ghcr.io/user/package:tag"
 ```
 
-## Building an AICA runtime application image
+## Building a runtime System image
 
 :::note
 
 [Log in to the package registry](#logging-in-to-the-aica-package-registry) before building the image to authorize docker
-to access AICA packages.
+to access packages.
 
 :::
 
 Once the desired packages have been configured in a manifest file, a `docker build` command can be used to build the
-runtime application image. In this example, a manifest file saved as `aica-application.toml` is used to build an image
+runtime application image. In this example, a manifest file saved as `aica-system.toml` is used to build an image
 with the name `aica-runtime`.
 
 ```shell
-docker build -f aica-application.toml -t aica-runtime .
+docker build -f aica-system.toml -t aica-runtime .
 ```
 
 The command `docker image ls | grep aica-runtime` should then list the `aica-runtime` image.
 
-## Starting the application container
+## Starting the System container
 
-You can start the AICA application container with the following command.
+You can start the System container with the following command.
 
 :::note
 
-Change `/path/to/aica-license.toml` in the command below to the location of the `aica-license.toml` file from above. For example,
+Change `/path/to/aica-license.toml` in the command below to the location of the `aica-license.toml` file from above. For
+example,
 use `~/.aica-license.toml` to keep the license file hidden in the home folder.
 
 :::
@@ -381,7 +383,7 @@ error would be shown from a correctly mounted but invalid license file:
 [ERROR] [1731937393.377201011] [licensing]: Error: license is invalid (ERR - license is invalid), please check that it is correct
 ```
 
-Contact AICA support if the container does not start correctly despite a valid license file.
+Contact support if the container does not start correctly despite a valid license file.
 
 There can also be harmless warnings that appear if Cloud Storage is not set up or if the license verification takes
 longer that a few seconds:
@@ -395,15 +397,15 @@ longer that a few seconds:
 
 :::
 
-## Stopping the application container
+## Stopping the System container
 
-To shut down the AICA application container at any time, press CTRL+C in the original terminal window. Alternatively,
-to stop the application container from a different terminal window, look up the container name
+To shut down the System container at any time, press CTRL+C in the original terminal window. Alternatively,
+to stop the System container from a different terminal window, look up the container name
 with `docker container ps` and then run `docker container stop <container_name>`.
 
 ### Persistent user data
 
-AICA applications, URDF hardware and user configurations managed through the API or AICA Studio are stored in a
+System applications, URDF hardware and user configurations managed through the API or Studio are stored in a
 database. Because the docker container is isolated from the host filesystem, the local database will be lost when the
 container exits. To persist local data between sessions, create a dedicated directory somewhere on the host. For
 example, use `mkdir ~/.aica-data` to keep the data folder hidden in the home folder. Then execute the normal run command
@@ -459,7 +461,7 @@ docker run -it --rm \
 
 ### Setting a super-admin password
 
-AICA Core v4.3.0 and later require authentication for AICA Studio and the API. If no users exist in the mounted user
+Core v4.3.0 and later require authentication for Studio and the API. If no users exist in the mounted user
 database, as is the case for a new configuration or when no data folder is mounted, a system administration password can
 be set through an environment variable which grants full administration rights.
 
@@ -508,9 +510,9 @@ docker run -it --rm \
 </TabItem>
 </Tabs>
 
-## Access the AICA Studio
+## Access Studio
 
-Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view AICA Studio. If the
+Visit [localhost:8080](http://localhost:8080) in the browser while the container is running to view Studio. If the
 `AICA_SUPER_ADMIN_PASSWORD` environment variable was set, use the `super-admin` username and the provided password to
 log in as the system administrator.
 
@@ -520,7 +522,7 @@ Visit [localhost:8080/api](http://localhost:8080/api) to see the Swagger UI and 
 
 ## Connect a terminal session to the container
 
-It is sometimes useful to connect to the application container while it is running to inspect files or run commands.
+It is sometimes useful to connect to the System container while it is running to inspect files or run commands.
 This can be accomplished with the `docker container exec` command using the container name.
 
 :::note
@@ -580,7 +582,7 @@ You should then be able to run `rviz2` inside the container and see the window a
 <summary>WSL</summary>
 
 With the right configuration, display sharing can also be achieved with [WSLg](https://github.com/microsoft/wslg). For
-that, modify the command to run AICA Core to include the following lines:
+that, modify the command to run Core to include the following lines:
 
 ```bash
 docker run -it --rm \

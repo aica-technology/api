@@ -13,7 +13,7 @@ import stagMarkerNumZero from './assets/stagDetector-predicates_0.png'
 Different types of fiducial markers are used in robotics to provide precise 3D pose estimation and identification for
 cameras, enabling or improving robotic calibration and object manipulation.
 
-AICA's `core-vision` package gives you the choice between using two commonly used markers, the STag and ArUco.
+The `core-vision` package gives you the choice between using two commonly used markers, the STag and ArUco.
 
 :::tip
 Performing the [intrinsic calibration](./camera-calibration.md) of the camera improves the precision for fiducial
@@ -54,7 +54,7 @@ matters because calibration will be wrong if the marker size in the software doe
 
 ## Using the STag detector
 
-Launch AICA Studio with a configuration that contains the `core-vision` package and create a new application.
+Launch Studio with a configuration that contains the `core-vision` package and create a new application.
 
 1. Remove the hardware interface that is included in new applications by default.
 2. From the `Scene` menu, use the `Add Component` tab and look for the **Camera Streamer** and **STag Detector**

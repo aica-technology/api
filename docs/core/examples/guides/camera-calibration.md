@@ -23,7 +23,7 @@ A calibration procedure allows you to determine your camera's intrinsic (focal l
 undistort images in real time, improving the spatial accuracy of detections and any downstream estimation tasks (e.g.,
 pose reconstruction, depth reasoning, or robot alignment).
 
-## Calibrate camera using AICA Studio and a checkerboard
+## Calibrate camera using Studio and a checkerboard
 
 If you are using the `CameraStreamer` with a camera with an unknown calibration, we recommend to follow this guide with
 the code from the corresponding [`CameraStreamer` example](./camera-streamer.md). Cameras with first-party drivers (such
@@ -75,7 +75,7 @@ where the calibration square sizes are in meters.
 
 :::warning
 
-If you are using AICA's `CameraStreamer` example to produce the image stream, the above command should already work. If
+If you are using the `CameraStreamer` example to produce the image stream, the above command should already work. If
 you are using your own node to stream images, you will likely need to specify which topic the calibrator needs to
 subscribe to by adding the `--calibration-topic YOUR_ROS_TOPIC` argument to the command above.
 
@@ -95,8 +95,7 @@ Back at your host computer's filesystem, you will notice a `calibration` directo
 `docker-image/camera_calibration` that contains a compressed file. The file itself contains the images that were sampled
 along with a YAML file containing the camera calibration information.
 
-Finally, move the YAML file into the `data` folder of your AICA configuration such that it becomes available from AICA
-Studio.
+Finally, move the YAML file into the `data` folder of your System configuration such that it becomes available from Studio.
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
