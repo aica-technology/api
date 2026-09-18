@@ -80,14 +80,15 @@ The default settings of Docker Desktop are usually sufficient for everything Stu
 (e.g., settings carried over from older Docker Desktop installations) you may need to verify the following:
 
 - Go to the Settings menu (usually located at the top right as a gear icon), then click on Advanced and make sure to
-`Allow the default Docker socket to be used (requires password)` and `Allow privileged port mapping (requires password)`.
+  `Allow the default Docker socket to be used (requires password)` and
+  `Allow privileged port mapping (requires password)`.
 
 <div class="text--center">
   <img src={MacosDockerAdvanced} alt="Required advanced options" />
 </div>
 
 - If you notice any performance issues, go to Resources in the Settings menu and increase the CPU and memory limits to
-your application's needs.
+  your application's needs.
 
 <div class="text--center">
   <img src={MacosDockerResources} alt="Optional resource allocation" />
@@ -130,7 +131,7 @@ reach out to the AICA team.
      <img src={winFeatures} alt="Windows Features" width="45%" />
      <img src={winHyperV} alt="Enable Hyper-V" width="45%" />
    </div>
-2. Restart your computer for the changes to take effect. 
+2. Restart your computer for the changes to take effect.
 3. [Download and install the Linux kernel update package](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package).
 4. Open PowerShell or Windows Command Prompt in **administrator** mode and run
    ```shell
@@ -302,7 +303,8 @@ You can start the AICA application container with the following command.
 
 :::note
 
-Change `/path/to/aica-license.toml` in the command below to the location of the `aica-license.toml` file from above. For example,
+Change `/path/to/aica-license.toml` in the command below to the location of the `aica-license.toml` file from above. For
+example,
 use `~/.aica-license.toml` to keep the license file hidden in the home folder.
 
 :::

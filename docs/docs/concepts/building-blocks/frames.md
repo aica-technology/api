@@ -6,7 +6,8 @@ title: Frames
 # Frames
 
 The page on [TF in ROS](../ros-concepts/tf) discusses the importance of spatial transforms for robotic applications.
-TF can be thought of as a live database that keeps track of coordinate frames and their relationships over time. The AICA
+TF can be thought of as a live database that keeps track of coordinate frames and their relationships over time. The
+AICA
 System leverages this framework internally and facilitates interaction with TF. In particular, user-defined
 frames are directly included in an AICA application and are available to all components at runtime. These so-called
 **application frames** can be created and modified in the 3D scene view, and their poses will be updated in real time.

@@ -22,28 +22,28 @@ drivers. This allows you to expand the supported hardware list by using open sou
 
 ## Robotic manipulators
 
-| Brand        | Robot Controller            | Add-ons | Additional Notes |
-|--------------|-----------------------------|---------|------------------|
-| [ABB](/core/examples/guides/abb-hardware-interface) | OmniCore | Robot Web Services, Externally Guided Motion | RobotWare 7.X |
-| [FANUC](/core/examples/guides/fanuc-hardware-interface) | R-30iB Plus, R-30iB Mate Plus, R-30iB Mini Plus, R-50iA  | J516 Stream Motion, R912 Remote Motion | |
-| KUKA | KR C5, KR C4, KR C3 | RobotSensorInterface | |
-| Mecademic | n/a | n/a | TCP/IP & EtherCAT drivers for Meca500 |
-| Stäubli | CS9, CS8C | alter, advCtrlFunctions  | TX2 series |
-| [Universal Robots](/core/examples/guides/ur-harware-interface) | Polyscope > 5.X | n/a | |
-| Franka Emika | n/a | Fast Research Interface | beta version available |
-| Kassow | n/a | KORD CBun | beta version available |
-| Kinova | Gen3 | n/a | beta version available |
-| UFACTORY | n/a | n/a | beta version available |
+| Brand                                                          | Robot Controller                                        | Add-ons                                      | Additional Notes                      |
+|----------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------|---------------------------------------|
+| [ABB](/core/examples/guides/abb-hardware-interface)            | OmniCore                                                | Robot Web Services, Externally Guided Motion | RobotWare 7.X                         |
+| [FANUC](/core/examples/guides/fanuc-hardware-interface)        | R-30iB Plus, R-30iB Mate Plus, R-30iB Mini Plus, R-50iA | J516 Stream Motion, R912 Remote Motion       |                                       |
+| KUKA                                                           | KR C5, KR C4, KR C3                                     | RobotSensorInterface                         |                                       |
+| Mecademic                                                      | n/a                                                     | n/a                                          | TCP/IP & EtherCAT drivers for Meca500 |
+| Stäubli                                                        | CS9, CS8C                                               | alter, advCtrlFunctions                      | TX2 series                            |
+| [Universal Robots](/core/examples/guides/ur-harware-interface) | Polyscope > 5.X                                         | n/a                                          |                                       |
+| Franka Emika                                                   | n/a                                                     | Fast Research Interface                      | beta version available                |
+| Kassow                                                         | n/a                                                     | KORD CBun                                    | beta version available                |
+| Kinova                                                         | Gen3                                                    | n/a                                          | beta version available                |
+| UFACTORY                                                       | n/a                                                     | n/a                                          | beta version available                |
 
 ## Peripherals
 
-| Brand        | Supported Devices            | Requirements | Additional Notes |
-|--------------|-----------------------------|------------------------------|------------------|
-| SCHUNK | EGU, EGK, EZU mechatronic grippers | Modbus RTU or Ethernet-based (PROFINET, Ethernet/IP, and EtherCAT) interface | |
-| ATI | Force / Torque Sensors | Net F/T interface | |
-| Bota Systems | Force / Torque Sensors | Serial or EtherCAT interface | |
-| [Orbbec](/core/examples/guides/orbbec-component) | Gemini 33X/435Le/2/2L, Femto Bolt/Mega, Astra 2  | n/a | |
-| [Intel RealSense](/core/examples/guides/realsense-component) |  L515, D4XX | n/a | |
+| Brand                                                        | Supported Devices                               | Requirements                                                                 | Additional Notes |
+|--------------------------------------------------------------|-------------------------------------------------|------------------------------------------------------------------------------|------------------|
+| SCHUNK                                                       | EGU, EGK, EZU mechatronic grippers              | Modbus RTU or Ethernet-based (PROFINET, Ethernet/IP, and EtherCAT) interface |                  |
+| ATI                                                          | Force / Torque Sensors                          | Net F/T interface                                                            |                  |
+| Bota Systems                                                 | Force / Torque Sensors                          | Serial or EtherCAT interface                                                 |                  |
+| [Orbbec](/core/examples/guides/orbbec-component)             | Gemini 33X/435Le/2/2L, Femto Bolt/Mega, Astra 2 | n/a                                                                          |                  |
+| [Intel RealSense](/core/examples/guides/realsense-component) | L515, D4XX                                      | n/a                                                                          |                  |
 
 :::tip
 
@@ -57,13 +57,13 @@ provided your host machine can natively mount them as USB devices.
 Along with consumer-grade computers that can be configured to work with the AICA framework, we have extensively used and
 validated the operation of the framework with the following IPCs:
 
-| Manufacturer | Model            | Available GPU  | GPU Support   | Notes                                                                             |
-|--------------|------------------|:--------------:|:-------------:|-----------------------------------------------------------------------------------|
-| Siemens      | SIMATIC BX-39A   | No             | No            | Industrial OS; various hardware configurations supported                          |
-| Siemens      | SIMATIC IPC 547J | No             | No            | Ubuntu real-time OS; various hardware configurations supported                    |
-| Beckhoff     | C6043            | Yes            | Yes           | Ubuntu real-time OS; various hardware configurations supported, incl. GPU support |
-| Bosch        | ctrlX X3         | No             | No            | ctrlX OS (development purposes only; limited computational resources              |
-| Bosch        | ctrlX X7         | Yes (optional) | No            | ctrlX OS                                                                          |
+| Manufacturer | Model            | Available GPU  | GPU Support | Notes                                                                             |
+|--------------|------------------|:--------------:|:-----------:|-----------------------------------------------------------------------------------|
+| Siemens      | SIMATIC BX-39A   |       No       |     No      | Industrial OS; various hardware configurations supported                          |
+| Siemens      | SIMATIC IPC 547J |       No       |     No      | Ubuntu real-time OS; various hardware configurations supported                    |
+| Beckhoff     | C6043            |      Yes       |     Yes     | Ubuntu real-time OS; various hardware configurations supported, incl. GPU support |
+| Bosch        | ctrlX X3         |       No       |     No      | ctrlX OS (development purposes only; limited computational resources              |
+| Bosch        | ctrlX X7         | Yes (optional) |     No      | ctrlX OS                                                                          |
 
 In many occasions, setting up these machines/OSs may require some more nuanced configuration steps. For additional
 or specialized support on getting these machines up and running you may always [contact us](mailto:contact@aica.tech).

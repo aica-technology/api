@@ -75,7 +75,8 @@ The following state variables can be exchanged as signals:
 <!-- TODO: copy and link the markdown documentation of the state representation library directly in the programming reference -->
 
 AICA state signals are built on the
-open-source [`state_representation`](https://aica-technology.github.io/control-libraries/versions/v7.1.0/md__github_workspace_source_state_representation__r_e_a_d_m_e.html)
+open-source [
+`state_representation`](https://aica-technology.github.io/control-libraries/versions/v7.1.0/md__github_workspace_source_state_representation__r_e_a_d_m_e.html)
 library for Cartesian and joint state classes in C++ and Python.
 
 :::

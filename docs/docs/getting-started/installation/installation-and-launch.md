@@ -60,7 +60,7 @@ configuration steps are taken. Note that some limitations may apply regarding co
 The majority of Studio and Launcher features are available on macOS. However:
 
 - Forwarding graphics is currently impossible due to MacOS' incompatibility with OpenGL 2.1+. As a result, tools like
-RViz will not be made available through AICA Launcher.
+  RViz will not be made available through AICA Launcher.
 - Realtime applications may be subject to performance limitations due to MacOS' resource management.
 
 :::
@@ -78,6 +78,7 @@ configuration, it is possible to
 
 AICA Launcher is not available on Windows, nor does the Ubuntu version of Launcher work with WSL. In addition, the
 following limitations may apply:
+
 - Networking, port and graphics forwarding may require additional configuration.
 - Realtime applications may be subject to performance limitations due to Windows hypervisor resource management, which
   might be particularly problematic when working with robots, sensors, and other peripherals.

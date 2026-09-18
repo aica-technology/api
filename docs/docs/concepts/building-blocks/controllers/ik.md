@@ -38,7 +38,7 @@ Compared to joint-space position controllers, an IK position controller offers s
 :::caution
 
 In reactive or high-rate scenarios, IK position control can be difficult to apply. The command signal needs to be
-crafted carefully to ensure continuity and avoid big step changes. Position servoing is demanding for real hardware and 
+crafted carefully to ensure continuity and avoid big step changes. Position servoing is demanding for real hardware and
 usually comes with strict constraints from the manufacturer. See more information in
 [Position vs velocity IK control](/docs/concepts/building-blocks/controllers/ik#position-vs-velocity-ik-control).
 

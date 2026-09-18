@@ -4,7 +4,8 @@ title: Proxies
 
 import DockerDesktopProxies from './assets/docker-desktop-proxies.png'
 
-AICA programs sometimes need Internet connectivity to function. This section details the services that must be allowlisted on your proxy for each and how to configure your computer to use it.
+AICA programs sometimes need Internet connectivity to function. This section details the services that must be
+allowlisted on your proxy for each and how to configure your computer to use it.
 
 ## Services
 
@@ -29,7 +30,8 @@ AICA Launcher:
 
 As our products rely on Docker, you will need to configure your Docker daemon to use your proxy.
 
-Check [this guide](https://docs.docker.com/engine/cli/proxy/) for instructions on how to configure your Docker daemon to use your proxy.
+Check [this guide](https://docs.docker.com/engine/cli/proxy/) for instructions on how to configure your Docker daemon to
+use your proxy.
 
 This can also be done through the UI if using Docker Desktop.
 
@@ -76,7 +78,8 @@ Starting with v5.0, Core supports the following environment variables for proxy 
 - HTTPS: `HTTPS_PROXY` or `https_proxy`
 - Bypass: `NO_PROXY` or `no_proxy`
 
-You must provide the environment variables to Core when starting the container. If you choose to intercept HTTPS traffic, you will also need to mount your certificate inside `/etc/ssl/certs`.
+You must provide the environment variables to Core when starting the container. If you choose to intercept HTTPS
+traffic, you will also need to mount your certificate inside `/etc/ssl/certs`.
 
 Example:
 
@@ -87,7 +90,8 @@ docker run %ANY_OTHER_DOCKER_OPTIONS% -e HTTP_PROXY -e HTTPS_PROXY -e NO_PROXY -
 <details>
 <summary>MacOS</summary>
 
-If you use a local proxy on macOS, you will need to change the host from `localhost` or `127.0.0.1` to `host.docker.internal`.
+If you use a local proxy on macOS, you will need to change the host from `localhost` or `127.0.0.1` to
+`host.docker.internal`.
 
 Example: `-e HTTP_PROXY=http://localhost:8000` becomes `-e HTTP_PROXY=http://host.docker.internal:8000`
 

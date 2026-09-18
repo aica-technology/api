@@ -21,7 +21,7 @@ One can differentiate between two approaches to motion generation; offline and o
 enables optimized, collision-free paths and is ideal for predictable, structured settings. Generated trajectories are
 rolled out in **open loop**, meaning that there is no feedback mechanism that would inform the system about
 disturbances. In other words, it lacks adaptability to real-time changes or sensor feedback. In the System, the
-[Joint Trajectory Controller](../building-blocks/controllers/jtc) often acts as simple offline motion generator, 
+[Joint Trajectory Controller](../building-blocks/controllers/jtc) often acts as simple offline motion generator,
 creating and rolling out a trajectory through a certain number of waypoints in a given amount of time without taking
 into account the environment.
 
@@ -113,7 +113,7 @@ patterns, each represented by a Gaussian distribution. By using a mixture of Gau
 behaviors and make is possible to learn smooth and reliable movements from real world data. This makes it a powerful
 tool for tasks like manipulation and human-robot interaction, where both adaptability and safety are important. The
 figure below shows an example of a SEDS that was learned based on seven demonstrations of a *G* shape and then
-integrated from three different starting points along the vector field. 
+integrated from three different starting points along the vector field.
 
 <div class="text--center">
   <img src={seds2d} alt="2D SEDS" style={{ maxWidth: '45%', height: 'auto' }}/>
