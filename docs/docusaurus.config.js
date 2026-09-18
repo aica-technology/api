@@ -81,7 +81,7 @@ const config = {
       announcementBar: {
         id: 'rebranding-announcement',
         content:
-            '<b>We are currently updating our brand name and logo! Product terminology and references to AICA are strictly historic. <i><a target="_blank" rel="noopener noreferrer" href="https://ai-can-change.tech">Learn more here</a></i></b>',
+            '<b>We are currently updating our brand name and logo! Any references to "AICA" are strictly historic. <i><a target="_blank" rel="noopener noreferrer" href="https://ai-can-change.tech">Learn more here</a></i></b>',
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: true,

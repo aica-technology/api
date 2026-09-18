@@ -5,13 +5,13 @@ title: Getting Started
 import SystemOverview from './getting-started/assets/system-overview-embedded.svg';
 import ComponentsControllersHardware from './getting-started/assets/components-controllers-hardware-embedded.svg';
 
-# Adaptive & Intelligent Control Applications
-
 :::important
 This organization and its content are not affiliated, associated, authorized, endorsed by, or in any way officially
 connected with aicas GmbH, Karlsruhe, Germany (www.aicas.com and https://github.com/aicas). Any references to “AICA” are
 strictly historic.
 :::
+
+# Adaptive & Intelligent Control Applications
 
 We are committed to making robotics more accessible by providing smart software solutions for advanced robot control.
 
