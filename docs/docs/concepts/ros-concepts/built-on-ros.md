@@ -17,7 +17,8 @@ ROS comes from the abstractions provided by community packages and extensions th
 can be combined to solve complex problems.
 
 The System is built on ROS 2, but it is not intended to supersede existing ROS 2 distributions, packages or
-tools. System applications and building blocks are **fully compatible with existing ROS packages** and community tools and
+tools. System applications and building blocks are **fully compatible with existing ROS packages** and community tools
+and
 can be used and deployed alongside them.
 
 <!-- TODO: make an example showing that with Launcher (in a different place) -->
