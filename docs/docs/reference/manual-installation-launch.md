@@ -18,9 +18,9 @@ import dockerNetwork from './assets/win-docker-network.png';
 # Manual installation and launch
 
 The following sections explain how to install and launch Core and any additional packages manually from the command
-line without the use of AICA Launcher. The pre-requisites are still a valid license and a host with Docker installed.
-For the rest of this guide, it will be assumed that a valid license has been saved to a file called `aica-license.toml`
-on the host machine.
+line as a **System container** without the use of AICA Launcher. The pre-requisites are still a valid license and a host
+with Docker installed. For the rest of this guide, it will be assumed that a valid license has been saved to a file
+called `aica-license.toml` on the host machine.
 
 ## Configuring Docker manually on Linux, macOS or Windows
 
@@ -43,7 +43,7 @@ some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching
 #### Configuring the Docker context
 
 `desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations,
-make sure to change the context before building or executing AICA applications, or running AICA Launcher.
+make sure to change the context before building or executing System applications, or running AICA Launcher.
 
 See the available contexts on your system:
 
@@ -214,12 +214,12 @@ only Core as the `core` package. The version can be changed according to the ava
 :::info
 
 In the past, you might have seen applications using the `aica-package.toml` filename. While you can use any filename as
-we do not enforce any, we recommend using `aica-application.toml` to avoid confusion with the `aica-package.toml` file
+we do not enforce any, we recommend using `aica-system.toml` to avoid confusion with the `aica-package.toml` file
 which is used for building packages using `package-builder`.
 
 :::
 
-```toml title="aica-application.toml"
+```toml title="aica-system.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
@@ -241,7 +241,7 @@ use older versions of certain libraries and packages with newer versions of `app
 
 :::
 
-```toml title="aica-application.toml"
+```toml title="aica-system.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
@@ -264,7 +264,7 @@ package that was locally built using `docker build [...] --tag my-custom-compone
 `docker-image://my-custom-component-package`. Community and third-party packages may also be available on other docker
 registries such as DockerHub or GitHub Container Registry and can be included with the associated docker path.
 
-```toml title="aica-application.toml"
+```toml title="aica-system.toml"
 #syntax=ghcr.io/aica-technology/app-builder:v2
 
 [core]
@@ -288,18 +288,18 @@ to access AICA packages.
 :::
 
 Once the desired packages have been configured in a manifest file, a `docker build` command can be used to build the
-runtime application image. In this example, a manifest file saved as `aica-application.toml` is used to build an image
+runtime application image. In this example, a manifest file saved as `aica-system.toml` is used to build an image
 with the name `aica-runtime`.
 
 ```shell
-docker build -f aica-application.toml -t aica-runtime .
+docker build -f aica-system.toml -t aica-runtime .
 ```
 
 The command `docker image ls | grep aica-runtime` should then list the `aica-runtime` image.
 
-## Starting the application container
+## Starting the System container
 
-You can start the AICA application container with the following command.
+You can start the System container with the following command.
 
 :::note
 
@@ -397,15 +397,15 @@ longer that a few seconds:
 
 :::
 
-## Stopping the application container
+## Stopping the System container
 
-To shut down the AICA application container at any time, press CTRL+C in the original terminal window. Alternatively,
-to stop the application container from a different terminal window, look up the container name
+To shut down the System container at any time, press CTRL+C in the original terminal window. Alternatively,
+to stop the System container from a different terminal window, look up the container name
 with `docker container ps` and then run `docker container stop <container_name>`.
 
 ### Persistent user data
 
-AICA applications, URDF hardware and user configurations managed through the API or Studio are stored in a
+System applications, URDF hardware and user configurations managed through the API or Studio are stored in a
 database. Because the docker container is isolated from the host filesystem, the local database will be lost when the
 container exits. To persist local data between sessions, create a dedicated directory somewhere on the host. For
 example, use `mkdir ~/.aica-data` to keep the data folder hidden in the home folder. Then execute the normal run command
@@ -522,7 +522,7 @@ Visit [localhost:8080/api](http://localhost:8080/api) to see the Swagger UI and 
 
 ## Connect a terminal session to the container
 
-It is sometimes useful to connect to the application container while it is running to inspect files or run commands.
+It is sometimes useful to connect to the System container while it is running to inspect files or run commands.
 This can be accomplished with the `docker container exec` command using the container name.
 
 :::note

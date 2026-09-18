@@ -5,7 +5,7 @@ title: Events
 
 # Events
 
-Events are discrete actions that change the dynamic state of an AICA application. They are handled and executed by the
+Events are discrete actions that change the dynamic state of a System application. They are handled and executed by the
 Event Engine. For this reason, they are sometimes referred to as "state events".
 
 ## Event types
@@ -56,7 +56,7 @@ the case of setting up an application, where a controller might need to be loade
 interface is loaded. It often also applies to the case of handling errors, such that when a component is unloaded or
 enters into an error state, a controller or other component should be deactivated accordingly.
 
-Every valid state transition on any component, controller or hardware interface in an AICA application can be easily
+Every valid state transition on any component, controller or hardware interface in a System application can be easily
 associated with one or more events to be triggered when that state transition occurs.
 
 ### Sequences

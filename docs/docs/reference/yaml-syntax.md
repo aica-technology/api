@@ -5,7 +5,7 @@ title: YAML application syntax
 
 # YAML application syntax
 
-The following sections define the YAML syntax used to describe an AICA application.
+The following sections define the YAML syntax used to describe a System application.
 
 ## Overview
 
@@ -960,7 +960,7 @@ my_button:
 ## Validating a YAML application
 
 The [YAML application schema](https://docs.aica.tech/schemas/1-4-1/application.schema.json) defines the structural rules
-of an AICA application and effectively distinguishes between valid and invalid syntax.
+of a System application and effectively distinguishes between valid and invalid syntax.
 
 Many modern IDEs and code editors can be configured to support custom schemas and provide in-line validation and
 completion of the YAML content.

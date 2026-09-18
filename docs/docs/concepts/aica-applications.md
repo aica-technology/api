@@ -1,9 +1,9 @@
 ---
 sidebar_position: 3
-title: AICA applications
+title: Applications
 ---
 
-# AICA applications
+# Applications
 
 The ROS 2 concepts of managed lifecycle nodes and dynamic composition (and by extension, lifecycle components) enable
 more stateful and modular building blocks for complex applications. A lifecycle component can be flexibly instantiated
@@ -36,9 +36,9 @@ description.
 
 ## The Event Engine
 
-The Event Engine (EE) is responsible for managing the states of all the elements of an AICA application.
+The Event Engine (EE) is responsible for managing the states of all the elements of a System application.
 
-An AICA application is an interconnected graph of **components**, **controllers** and **hardware interfaces**.
+a System application is an interconnected graph of **components**, **controllers** and **hardware interfaces**.
 Components process data in a periodic step function and transfer data as **signals** to other components and
 controllers. Hardware interfaces are drivers that connect controllers to robots.
 
@@ -60,4 +60,4 @@ In the System, applications are formally described in a YAML file. An applicatio
 represented as a graph of building blocks (components, controllers, hardware interfaces) connected by signals and
 events.
 
-The next sections describe the key elements of an AICA application in more detail.
+The next sections describe the key elements of a System application in more detail.

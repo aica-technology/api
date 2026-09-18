@@ -22,7 +22,7 @@ GPIO controllers enable applications to:
 
 AICA provides **generic GPIO controllers** that are specialized for a single responsibility:
 
-- **Broadcasting controllers** expose GPIO state to the AICA application
+- **Broadcasting controllers** expose GPIO state to the System application
 - **Output controllers** command GPIO values on the hardware
 
 ## GPIOs in robot models
@@ -84,7 +84,7 @@ low-level drivers.
 ### GPIO Broadcaster Controller
 
 The GPIO Broadcaster Controller is responsible for **observing GPIO state** and making it available to the rest of the
-AICA application.
+System application.
 
 It requires two parameters:
 

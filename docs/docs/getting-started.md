@@ -20,6 +20,18 @@ between different parts of our software stack.
 
 <SystemOverview className="themedSVG" style={{width: "100%"}}/>
 
+## System
+
+The **System** is a software ecosystem comprising:
+
+- **Core**: a powerful robotics workspace and runtime engine (Core)
+- **Studio**: a graphical user interface for editing, running and monitoring **System applications**
+- **Extensions**: collections of components, controllers, or hardware interfaces hosted on our registry that extend the
+  capabilities of Core and Studio
+- **Launcher**: a desktop app that can install and run Studio with Core and add-on packages in just a few clicks
+- **Component SDK**: tooling to extend the base library with custom extensions that will work seamlessly alongside
+  native components
+
 ## Core
 
 **Core** is a virtual robotics workspace pre-configured with a growing collection of software modules
@@ -31,8 +43,9 @@ The workspace is the foundation and the software modules are the building blocks
 
 ## Applications
 
-An **application** is a particular configuration of components, controllers and hardware interfaces from the Core,
-generally designed to perform a particular task.
+A **System application** is a configuration of components, controllers, and hardware interfaces that are parameterized
+and connected in a specific way, generally designed to perform a particular task. One of the main functions of Core is
+to load and run System applications.
 
 :::tip
 We develop bespoke applications to solve specific automation challenges for clients, and offer more general smart
@@ -45,21 +58,12 @@ our service offerings.
 
 ## Studio
 
-**Studio** is the graphical user interface layer to Core that empowers developers to build and
-extend their own advanced robotic applications. The interactive application editor can be used to dynamically edit, run
-and monitor robot behaviors. Monitor robot and sensor state data directly in the browser, and manage application states
-and events precisely through predicates, transitions, conditions, sequences, or interactive buttons.
+**Studio** is the graphical user interface layer to Core that empowers developers to build and extend their own advanced
+robotic applications. The interactive System application editor can be used to dynamically edit, run, and monitor robot
+behaviors. Monitor robot and sensor state data directly in the browser, and manage application states and events
+precisely through predicates, transitions, conditions, sequences, or interactive buttons.
 
-## System
+## Launcher
 
-The **System** is the software ecosystem that extends Core and Studio. While Core comes bundled with
-the basics, we are continually developing additional collections of components, controllers, or hardware interfaces
-that suit particular use-cases or types of robots. These first-party add-on packages are available to download from
-the registry.
-
-In addition to Core, Studio, and our package registry, the System additionally includes the following
-products and resources:
-
-- **Launcher** is a desktop app that can install and run Studio with Core and add-on packages in just a few clicks
-- The **Component SDK** allows developers to extend the base library with custom functionality that will work seamlessly
-  alongside native components
+**Launcher** is a desktop application to easily package and run a System image from a desired version of Core and any
+number of official extensions from our registry or custom extensions built from the SDK.

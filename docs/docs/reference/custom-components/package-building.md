@@ -5,7 +5,7 @@ title: Building a component package
 
 # Building a component package
 
-To use custom components in AICA applications, the component package must be built and then included in the AICA image
+To use custom components in System applications, the component package must be built and then included in the AICA image
 workspace. The easiest way to do this is to use a `aica-package.toml` file.
 
 ## Creating a `aica-package.toml` file
