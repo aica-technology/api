@@ -13,7 +13,7 @@ technology and robust performance for a wide range of automation tasks.
 FANUC is one of the first major robot brands that enables accelerating Physical AI implementation through an official
 first-party ROS driver in the `ros2_control` framework 
 ([article from Dec 2025](https://www.fanuc.co.jp/en/product/new_product/2025/202512_robot_physicalai.html)). This allows
-advanced programming platforms like the AICA System to control the robots in real-time and deploy complex behaviors
+advanced programming platforms like the System to control the robots in real-time and deploy complex behaviors
 without custom implementations.
 
 :::info
@@ -34,17 +34,17 @@ As stated in the documentation, J568 and J570 are no longer required.
 
 :::
 
-To use the FANUC collection, add the latest version of `collections/fanuc` to your configuration in AICA Launcher,
+To use the FANUC collection, add the latest version of `collections/fanuc` to your configuration in Launcher,
 currently supporting the CRX-10iA and the M-10𝑖D/12. Other robot models can be added on request. Simply reach out to the
-AICA support team for further information.
+support team for further information.
 
 ## Connecting to a robot
 
 The robot controllers usually provide multiple Ethernet ports. The choice of physical port is up to the user, but it has
 to correspond to the port defined in the `$STMO.$PHYS_PORT` system variable. If you don't know how to apply the
-necessary changes, contact your FANUC representative or the AICA support team.
+necessary changes, contact your FANUC representative or the support team.
 
-Connect the robot with the machine that is running the AICA System and set the IP addresses such that the two devices
+Connect the robot with the machine that is running the System and set the IP addresses such that the two devices
 are on the same network.
 
 Finally, on the teach pendant, switch from TP to Auto Mode. The driver will automatically set and start the right
@@ -55,12 +55,12 @@ program on the robot controller.
 :::tip
 
 For optimal performance, the rate of the hardware interface rate should be set according to the communication interval
-of Stream Motion. For example, if the system variable `$STMO.$COM_INT` is set to 8 [ms], configure 125 Hertz in AICA
+of Stream Motion. For example, if the system variable `$STMO.$COM_INT` is set to 8 [ms], configure 125 Hertz in
 Studio. Depending on the robot controller being used, this value might be higher.
 
 :::
 
-Returning to AICA Studio and the hardware interface, it is now possible to define the parameters and connect to the
+Returning to Studio and the hardware interface, it is now possible to define the parameters and connect to the
 robot:
 
 <div class="text--center">
@@ -92,7 +92,7 @@ The official documentation states the behavior as follows:
 > When outputs or numeric registers are added to the command section of the GPIO configuration YAML file, once the ROS 2
   driver is launched those output and numeric register values in the controller will be set to false or zero.
 
-However, the version of the driver provided by AICA takes additional care **not** to overwrite the value of the GPIOs on startup,
+However, our version of the driver takes additional care **not** to overwrite the value of the GPIOs on startup,
 and instead persists the initial value set on the robot controller.
 
 :::

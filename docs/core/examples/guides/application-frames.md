@@ -7,9 +7,9 @@ import createFrame from './assets/create-frame.webm'
 import recordFrame from './assets/record-frame.webm'
 import editFrame from './assets/edit-frame.webm'
 
-# Application Frames in AICA Studio
+# Application Frames in Studio
 
-This guide explains the various methods to create and modify application frames in AICA Studio.
+This guide explains the various methods to create and modify application frames in Studio.
 
 :::tip
 
@@ -17,10 +17,10 @@ If you haven't done so already, review the corresponding [concepts page](/docs/c
 
 :::
 
-There are two ways to access settings and functionality for application frames in AICA Studio, depending on where the 3D
+There are two ways to access settings and functionality for application frames in Studio, depending on where the 3D
 scene lies:
 
-- With the 3D scene on the main view of the AICA Studio editor, the options to create and record frames can be found
+- With the 3D scene on the main view of the Studio editor, the options to create and record frames can be found
   under the **Scene** tab in the right panel.
 - With the 3D scene in the right panel, under **3D view**, the options can be found by clicking on the **Settings**
   button on the top left of the scene.

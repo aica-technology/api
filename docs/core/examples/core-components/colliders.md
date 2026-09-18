@@ -10,7 +10,7 @@ import colliderInterfaces from './assets/collider-interfaces.png'
 
 # Colliders
 
-The core components in AICA Studio contain several so-called _Collider_ components that detect whether a specific target
+The core components in Studio contain several so-called _Collider_ components that detect whether a specific target
 pose is inside or outside a virtual geometric object defined around a center pose. This functionality is crucial for
 many robotic applications because it provides the ability to:
 
@@ -53,8 +53,8 @@ default, this is when the z position of the target pose is negative in the coord
 
 :::note
 
-Until collider visualizations are natively integrated in AICA Studio, these examples use RViz to visualize and move the
-collision targets in space. RViz can be started directly from AICA Launcher.
+Until collider visualizations are natively integrated in Studio, these examples use RViz to visualize and move the
+collision targets in space. RViz can be started directly from Launcher.
 
 <!-- TODO: Link to launcher page -->
 
@@ -70,7 +70,7 @@ is parametrized to define a box of dimensions 10 by 20 by 5 centimeters around t
   <img src={boxCollider} alt="Box Collider" />
 </div>
 
-Start the application from AICA Studio, then go to RViz. Add the interactive marker frame and the geometric object
+Start the application from Studio, then go to RViz. Add the interactive marker frame and the geometric object
 marker as shown below. Observe how moving the interactive marker triggers the predicates of the collider component to
 update when the target pose enters and exits the box.
 
@@ -211,7 +211,7 @@ This behavior can be inverted with the "Flip normal" parameter. The direction of
 :::
 
 The example below shows an application that is stopped entirely if the robot end-effector collides with the plane. This
-demonstrates how soft safety mechanisms can be implemented in AICA Studio. As soon as the target pose, which is the
+demonstrates how soft safety mechanisms can be implemented in Studio. As soon as the target pose, which is the
 end-effector in this case, has a negative z coordinate relative to the center pose, the _in collision_ predicate fires
 and the application is stopped immediately.
 

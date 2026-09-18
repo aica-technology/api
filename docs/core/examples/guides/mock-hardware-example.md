@@ -10,14 +10,14 @@ title: An application with hardware
 This example uses an additional Universal Robots collection package, which includes drivers for communicating with UR
 robots and the example URDF content used to visualize the robot arm.
 
-Use AICA Core v5.0.0 together with the `collections/ur-collection` package at version v4.2.0 to reproduce this example.
+Use Core v5.0.0 together with the `collections/ur-collection` package at version v4.2.0 to reproduce this example.
 
 ## URDF Hardware Manager
 
-After starting AICA Studio, open the Hardware Manager in the respective tab of the top navigation bar. This page shows a
+After starting Studio, open the Hardware Manager in the respective tab of the top navigation bar. This page shows a
 table of available URDF files in the container database with a name and a description.
 
-AICA hardware collections include example URDFs, which are shown on the table with a pad-lock icon indicating that they
+Hardware collections include example URDFs, which are shown on the table with a pad-lock icon indicating that they
 are not editable. Users can make an editable copy of a selected URDF with the "Save As" button, or upload and edit
 custom URDFs.
 
@@ -37,10 +37,10 @@ appear on the right side of the page.
 </robot>
 ```
 
-The selected URDF specifies the hardware plugin `aica_core_interfaces/MockInterface`. This is a generic AICA plugin that
+The selected URDF specifies the hardware plugin `aica_core_interfaces/MockInterface`. This is a generic plugin that
 mocks real robot hardware by perfectly following all commands and reflecting back the robot state.
 
-The mock URDF will be used to demonstrate the hardware interface block in AICA applications.
+The mock URDF will be used to demonstrate the hardware interface block in System applications.
 
 :::info
 
@@ -143,7 +143,7 @@ The `events` field lists events that occur on state transitions of the hardware 
 transition is used to load a controller once the hardware interface is loaded.
 
 The `controllers` field lists the controllers associated with the hardware interface. In this example, the only
-controller is the `aica_core_controllers/RobotStateBroadcaster`, which is a generic AICA controller that broadcasts the
+controller is the `aica_core_controllers/RobotStateBroadcaster`, which is a generic controller that broadcasts the
 robot joint states and transforms.
 
 :::tip
@@ -204,15 +204,15 @@ should now automatically transition to being active.
 
 :::info
 
-Only users with a Linux host can visualize the robot with RViz. On macOS, AICA Launcher will not show the RViz option.
+Only users with a Linux host can visualize the robot with RViz. On macOS, Launcher will not show the RViz option.
 
 :::
 
-Open RViz using the gear menu icon in the bottom right of AICA Launcher and choosing the "Launch RViz" option.
+Open RViz using the gear menu icon in the bottom right of Launcher and choosing the "Launch RViz" option.
 
 :::note
 
-A native 3D viewer will be available in AICA Studio for all platforms in an upcoming version.
+A native 3D viewer will be available in Studio for all platforms in an upcoming version.
 
 :::
 

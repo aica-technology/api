@@ -24,13 +24,13 @@ Other functionality that is not present includes:
 For more information, please refer to UR's
 [download page](https://www.universal-robots.com/download/software-ur-series/simulator-linux/offline-simulator-ur-series-e-series-ur-sim-for-linux-5220/).
 
-This guide aims to support users with running URSim and connecting it to AICA Studio. This is a great way to validate
+This guide aims to support users with running URSim and connecting it to Studio. This is a great way to validate
 application operation and safe execution before moving to the actual hardware.
 
 ## Installation
 
 Executing the following instructions runs URSim in a Docker container. This guide assumes that users have already
-installed and configured Docker, as it is also required for AICA Studio. For more information you can check the section
+installed and configured Docker, as it is also required for Studio. For more information you can check the section
 about Docker from our
 [installation and launch instructions](/docs/getting-started/installation/installation-and-launch).
 
@@ -100,10 +100,10 @@ Follow the terminal link in a browser to access the simulated robot.
 5. Turn on the robot by pressing the red button located in the bottom left corner of the screen. Click **ON** followed
    by **START** to activate, then click **Exit**.
 
-The simulator is now ready to interface with an AICA application.
+The simulator is now ready to interface with a System application.
 
 <!-- The next section gives some background information on
-why AICA suggests to enable Remote Control. -->
+why we suggest enabling Remote Control. -->
 
 <div class="text--center">
   <img src={ursimActivate} alt="Activating the simulator" />
@@ -126,11 +126,11 @@ Safety features remain active in Remote Control.
 
 Choosing one of the two modes depends on the specific situation at hand. During a development phase, it might be
 preferable to create the programs in Local Mode, whereas in a production setting, PLCs would responsible to load and
-start the desired programs while the robot is in Remote Control. With the AICA System, users have the possiblity to get
+start the desired programs while the robot is in Remote Control. With the System, users have the possiblity to get
 the best of both modes:
 
-- Take full control of the robot from an AICA application (requires Remote Control)
-- Run an AICA application as one node of a program (works in both Local and Remote Control)
+- Take full control of the robot from a System application (requires Remote Control)
+- Run a System application as one node of a program (works in both Local and Remote Control)
 
 For the first case, no additional installation steps are required. TODO example here
 The second case requires th External Control URCap to be installed. TODO link here to urcap then link to example. -->

@@ -15,7 +15,7 @@ import orbbecPackage from './assets/orbbec-package.webm'
 
 # Orbbec camera component
 
-AICA's `orbbec` package includes support for a range of Orbbec camera models, including:
+The `orbbec` package includes support for a range of Orbbec camera models, including:
 
 - Gemini 33X
 - Gemini 435Le
@@ -23,7 +23,7 @@ AICA's `orbbec` package includes support for a range of Orbbec camera models, in
 - Femto Bolt/Mega
 - Astra 2
 
-This guide describes all necessary steps to install, configure and run the component using AICA Studio.
+This guide describes all necessary steps to install, configure and run the component using Studio.
 
 ## Installation
 
@@ -50,7 +50,7 @@ These commands will download and apply the udev rules. To ensure that the rules 
 
 :::
 
-Start the AICA Launcher and add the `orbbec` package to your configuration.
+Start Launcher and add the `orbbec` package to your configuration.
 
 <div style={{ display: "flex", justifyContent: "center" }}>
   <video autoPlay loop muted playsInline style={{ maxWidth: "100%", borderRadius: "8px" }}>
@@ -60,7 +60,7 @@ Start the AICA Launcher and add the `orbbec` package to your configuration.
 </div>
 <br/>
 
-Select **Launch AICA Studio** to proceed.
+Select **Launch Studio** to proceed.
 
 ## Creating and running the example
 
@@ -89,9 +89,9 @@ Start by creating a new application.
 
 :::tip
 
-In case the component does not produce a video stream, try mounting the `/run/udev/` volume. In AICA Launcher, expand
+In case the component does not produce a video stream, try mounting the `/run/udev/` volume. In Launcher, expand
 the **Advanced Settings** at the bottom, select **Add a volume mount** and define the volume as shown below. If you
-still encounter problems getting the video stream, contact the AICA support team.
+still encounter problems getting the video stream, contact the support team.
 
 <div class="text--center">
   <img src={orbbecMountedVolume} alt="Mounted udev volume" />

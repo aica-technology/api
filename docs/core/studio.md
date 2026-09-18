@@ -1,28 +1,34 @@
 ---
-title: Tour of AICA Studio
+title: Tour of Studio
 ---
 
 import DocCardList from '@theme/DocCardList';
 
-# AICA Studio
+:::important
+This organization and its content are not affiliated, associated, authorized, endorsed by, or in any way officially
+connected with aicas GmbH, Karlsruhe, Germany (www.aicas.com and https://github.com/aicas). Any references to “AICA” are
+strictly historic.
+:::
 
-This section will give a brief, high-level tour of AICA Studio to help situate new users. Underlying concepts and
+# Studio
+
+This section will give a brief, high-level tour of Studio to help situate new users. Underlying concepts and
 examples are covered in more depth in later sections of this documentation.
 
-In short, AICA Studio is the graphical user interface layer to the AICA System to create, monitor and extend advanced
+In short, Studio is the graphical user interface layer to the System to create, monitor and extend advanced
 robotic applications. It features an interactive application editor with a dataflow graph builder, a 3D scene visualizer
 and live data visualization. It also allows managing hardware configuration, user profiles and more.
 
-## Logging in to AICA Studio
+## Logging in to Studio
 
-When accessing AICA Studio through Launcher or the browser, you may be prompted to log in or create a new profile.
+When accessing Studio through Launcher or the browser, you may be prompted to log in or create a new profile.
 This is explained in more detail in the [Profiles and scopes](./studio/profiles-and-scopes) section.
 
 ![aica-studio-login](./studio/assets/aica-studio-login.png)
 
 ## Application manager and editor
 
-After logging in, AICA Studio starts with the Editor page open by default, which is a combined application manager and
+After logging in, Studio starts with the Editor page open by default, which is a combined application manager and
 editor. This page can also be accessed by clicking the **Editor** link in the top navbar.
 
 In the application manager view, it shows a list of saved applications and presents options to create a new application
@@ -43,7 +49,7 @@ The other top-level page is the hardware manager, available under the **Hardware
 ![aica-studio-hardware-manager](./studio/assets/aica-studio-hardware-manager.png)
 
 This page lists available hardware descriptions in the URDF format. Some built-in examples will be included in the
-installation depending on which specific hardware collection packages were installed in the AICA System configuration.
+installation depending on which specific hardware collection packages were installed in the System configuration.
 New hardware definitions can be added by uploading a URDF file or copying and editing existing hardware under a new
 name.
 
@@ -56,7 +62,7 @@ learning resources.
 
 ![aica-studio-help-page](./studio/assets/aica-studio-help-page.png)
 
-It also includes reference documentation for the installed components and controllers in the AICA System configuration.
+It also includes reference documentation for the installed components and controllers in the System configuration.
 
 ![aica-studio-docs-page](./studio/assets/aica-studio-docs-page.png)
 
@@ -68,11 +74,11 @@ The **Profile** link in the top right of the page is used to access and manage t
 
 Read more about user scopes and API keys in [Profiles and scopes](./studio/profiles-and-scopes.md).
 
-## AICA Studio with Launcher
+## Studio with Launcher
 
-When using AICA Launcher v1.5.0 or newer with AICA Core v5.1.0 or newer, settings and controls related to AICA Launcher
+When using Launcher v1.5.0 or newer with Core v5.1.0 or newer, settings and controls related to Launcher
 are available from the top right **Launcher** link in the navbar. This can be used to open Studio in a separate browser
-window, view API reference, logs or other container details, or to stop and return to the AICA Launcher configuration
+window, view API reference, logs or other container details, or to stop and return to the Launcher configuration
 selection.
 
 ![aica-studio-launcher-settings](./studio/assets/aica-studio-launcher-settings.png)
