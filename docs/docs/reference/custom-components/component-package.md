@@ -15,7 +15,7 @@ A lot of the information in this page is also available in the README of the tem
 
 :::
 
-Custom components can be defined in ROS 2 packages and used alongside the standard library of AICA components in Core.
+Custom components can be defined in ROS 2 packages and used alongside the standard library of components in Core.
 Components can be implemented in C++ or Python. A component package can contain multiple
 components in either language.
 

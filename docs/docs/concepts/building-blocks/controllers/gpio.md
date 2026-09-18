@@ -20,7 +20,7 @@ GPIO controllers enable applications to:
 - **Command GPIO outputs** (e.g., enable a tool, toggle a relay)
 - **Interact with external devices** with low latency and predictable behavior
 
-AICA provides **generic GPIO controllers** that are specialized for a single responsibility:
+Core provides **generic GPIO controllers** that are specialized for a single responsibility:
 
 - **Broadcasting controllers** expose GPIO state to the System application
 - **Output controllers** command GPIO values on the hardware
@@ -68,7 +68,7 @@ or you may see both command and state interfaces bundled under the same group, a
 </gpio>
 ```
 
-## Using GPIO controllers in the AICA framework
+## Using GPIO controllers
 
 In a ROS 2 control setup, and by extension in Core, GPIO controllers operate on **GPIO interfaces defined in the
 URDF** and exposed by the underlying hardware interface.

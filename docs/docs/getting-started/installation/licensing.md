@@ -10,17 +10,17 @@ also request a Deployment Key for unrestricted offline usage rights of specific 
 
 ## System License
 
-A license regulates both the access rights to download AICA software packages and the usage rights to run AICA
-applications. To request a System License, contact the AICA sales team at contact@aica.tech. Each new user will
-receive access instructions to a personal account for the [AICA license manager](https://licensing.aica.tech/list) which
+A license regulates both the access rights to download software packages and the usage rights to run System
+applications. To request a System License, contact the sales team at contact@ai-can-change.tech. Each new user will
+receive access instructions to a personal account for the [license manager](https://licensing.aica.tech/list) which
 lists all licenses associated with that user. Every license has a name, an expiration date, the actual license key and a
-list of entitlements. On the [AICA package registry](https://registry.licensing.aica.tech/) the user can see all
+list of entitlements. On the [package registry](https://registry.licensing.aica.tech/) the user can see all
 available packages for one specific license.
 
 :::tip
 
 A System License includes specific entitlements that determine which add-on packages and versions can be accessed
-and used. To discover and access additional components and hardware collections, contact your AICA representative to
+and used. To discover and access additional components and hardware collections, contact your representative to
 upgrade your license.
 
 :::
@@ -28,10 +28,10 @@ upgrade your license.
 :::caution
 
 Your license key should be kept secret. Do not share your license key with unauthorized users or enter it on websites
-other than the official AICA domain. License abuse may prevent your application from running or lead to your license
+other than the official domain. License abuse may prevent your application from running or lead to your license
 being revoked.
 
-If an unauthorized user has gained access to your license key, contact AICA support to reset your license.
+If an unauthorized user has gained access to your license key, contact support to reset your license.
 
 :::
 
@@ -58,17 +58,17 @@ of the System.
 A Deployment Key will appear as a very long string of characters in the following format, though the specific key will
 be unique for each machine.
 
-```console title="Example AICA Deployment Key"
+```console title="Example Deployment Key"
 key/eyJ9df2jfap7IVdIHnlnNpb2482Hh2193L9io8[...]ExMWM3jAuMCJ9.YhsDjwEz8eYnwE21alSBR_tBSIjavblcziV5nBQ==
 ```
 
 ### Requesting a Deployment Key
 
-To request a Deployment Key, reach out to the AICA team.
+To request a Deployment Key, reach out to the sales team.
 
-<!-- Deployment Keys can be requested by System License holders by using AICA Launcher v1.3.2 or newer on the target
+<!-- Deployment Keys can be requested by System License holders by using Launcher v1.3.2 or newer on the target
 machine. Press the green stamp icon under a selected configuration to generate a unique machine fingerprint and follow
-the instructions to send the activation code to the AICA support team.
+the instructions to send the activation code to the support team.
 
 ![aica-launcher-request-deployment-key](../assets/aica-launcher-request-deployment-key.png)
 
@@ -76,5 +76,4 @@ They will then generate and send the unique Deployment Key which contains the en
 
 ---
 
-Continue to the next section to learn how to use the AICA Launcher with the System License to access and install
-Studio. -->
+Continue to the next section to learn how to use Launcher with a System License to access and install Studio. -->

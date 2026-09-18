@@ -27,10 +27,10 @@ of **predicates**, **transitions**, **sequences** or **conditions**.
 ### Predicates
 
 Predicates are logical statements that evaluate to true or false and are used to indicate key states for either a
-component or controller. AICA components and controllers broadcast any changes to their predicates to a global channel
+component or controller. Components and controllers broadcast any changes to their predicates to a global channel
 in a message containing the source name, the predicate name, and the current value (true or false) of the predicate.
 
-While the term "predicate" has several formal definitions in grammar, logic and mathematics, at AICA the [grammatical
+While the term "predicate" has several formal definitions in grammar, logic and mathematics, here the [grammatical
 definition](https://en.wikipedia.org/wiki/Predicate_(grammar)) is used when naming predicates.
 
 Components define predicates depending on their function. A component that calculates if a given input state is within
@@ -76,7 +76,7 @@ can be manipulated with logical operators in conditional statements to create mo
 
 > When component A _is active_ **and** component B _is **not** in bounds_, do ...
 
-AICA conditions support the "not", "all", "any", and "one of" operators (also known as the NOT, AND, OR and XOR
+Conditions support the "not", "all", "any", and "one of" operators (also known as the NOT, AND, OR and XOR
 operators, respectively). If a condition does not trigger an event directly, it can still be used as the input to
 another condition or to a conditional sequence step.
 

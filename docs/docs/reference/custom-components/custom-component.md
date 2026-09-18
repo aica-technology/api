@@ -40,7 +40,7 @@ for customized behavior. These functions are `on_step_callback()` and the collec
 :::
 
 Registration is the term for defining and exporting a unique class name for the component so that it can be dynamically
-loaded by the AICA state engine.
+loaded by the Event Engine.
 
 <Tabs groupId="programming-language">
 <TabItem value="python" label="Python">
@@ -339,7 +339,7 @@ The supported message types are defined in the `std_msgs` library and include:
 - floating point array
 - string
 
-For robotic applications, AICA components make it particularly easy to receive, manipulate and send joint and Cartesian
+For robotic applications, components make it particularly easy to receive, manipulate and send joint and Cartesian
 states using the `state_representation` and `clproto` message encoding libraries.
 
 State objects can be bound to inputs or outputs and are sent in a special `EncodedState` message type.

@@ -5,7 +5,7 @@ title: Building a component package
 
 # Building a component package
 
-To use custom components in System applications, the component package must be built and then included in the AICA image
+To use custom components in System applications, the component package must be built and then included in the System image
 workspace. The easiest way to do this is to use a `aica-package.toml` file.
 
 ## Creating a `aica-package.toml` file
@@ -47,7 +47,7 @@ docker build -f aica-package.toml -t custom-component .
 
 ## Launching your custom component
 
-In AICA Launcher, include the docker image path from the build step as a custom package in the system configuration.
+In Launcher, include the docker image path from the build step as a custom package in the system configuration.
 
 Refer to the
 [installation and launch](/docs/getting-started/installation/installation-and-launch#configuring-the-system-image)

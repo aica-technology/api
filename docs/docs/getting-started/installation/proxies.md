@@ -4,12 +4,12 @@ title: Proxies
 
 import DockerDesktopProxies from './assets/docker-desktop-proxies.png'
 
-AICA programs sometimes need Internet connectivity to function. This section details the services that must be
+The System sometimes needs Internet connectivity to function. This section details the services that must be
 allowlisted on your proxy for each and how to configure your computer to use it.
 
 ## Services
 
-The following services must be allowlisted on your proxy for AICA programs to function:
+The following services must be allowlisted on your proxy for the System to function:
 
 Core (Online License):
 
@@ -17,7 +17,7 @@ Core (Online License):
 - `ingress-api.analytics.aica.tech` (HTTPS, 443): used to send analytics data
 - `api.storage.aica.tech` (HTTPS, 443): used to access your Cloud Storage
 
-AICA Launcher:
+Launcher:
 
 - `raw.githubusercontent.com` (HTTPS, 443): used to fetch Terms of Use and the OSS packages manifest
 - `ghcr.io` (HTTPS, 443): used to download OSS packages
@@ -39,9 +39,9 @@ This can also be done through the UI if using Docker Desktop.
   <img src={DockerDesktopProxies} alt="Docker Desktop settings showing the proxies configuration under Resources > Proxies" />
 </div>
 
-### AICA Launcher
+### Launcher
 
-AICA Launcher supports the following environment variables for proxy configuration:
+Launcher supports the following environment variables for proxy configuration:
 
 - HTTP: `HTTP_PROXY` or `http_proxy`
 - HTTPS: `HTTPS_PROXY` or `https_proxy`
@@ -60,7 +60,7 @@ launchctl setenv HTTP_PROXY "$HTTP_PROXY"
 launchctl setenv HTTPS_PROXY "$HTTPS_PROXY"
 ```
 
-This is not required if you open AICA Launcher from the command line using `open`.
+This is not required if you open Launcher from the command line using `open`.
 
 </details>
 

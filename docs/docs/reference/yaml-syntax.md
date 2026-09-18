@@ -305,7 +305,7 @@ my_component:
 
 The optional `display_name` field can be used to give the component a more human-readable name (one that does not have
 to conform to the `lower_snake_case` naming convention of the YAML syntax). It is only used when rendering the component
-as a node in the AICA interactive graph editor. If omitted, the name is taken directly from the YAML field (from the
+as a node in the interactive graph editor. If omitted, the name is taken directly from the YAML field (from the
 previous example, it would default to `my_component`).
 
 ### Position
@@ -469,8 +469,8 @@ hardware interface driver needed to communicate with the robot.
 
 A hardware interface can be linked to URDF file in one of the following ways:
 
-- By name of the custom URDF uploaded to the AICA database
-- By name of an example URDF included in the AICA image (available examples depend on license and distribution versions)
+- By name of the custom URDF uploaded to the database
+- By name of an example URDF included in the image (available examples depend on license and distribution versions)
 - By the path of a URDF file mounted in the container filesystem
 - By URDF string content inserted directly in the YAML (not recommended for large files)
 
@@ -562,12 +562,12 @@ If the parameter does not exist in the URDF, it will not be added.
 ### Display name
 
 This optional field is identical to the [component display name](#display-name) and is used to assign a nicer,
-human-readable display name to the hardware interface when rendered as a node in the AICA interactive graph editor.
+human-readable display name to the hardware interface when rendered as a node in the interactive graph editor.
 
 ### Position
 
 This optional field is identical to the [component position](#position) and is used to provide an X, Y position for the
-hardware interface when rendered as a node in the AICA interactive graph editor.
+hardware interface when rendered as a node in the interactive graph editor.
 
 This field only affects visualization of the application graph and has no other run-time effect.
 If a position is not specified, the node will be rendered at a procedurally chosen location.
@@ -592,7 +592,7 @@ Predicates can be used to trigger [events](#events) by adding the named predicat
 under the `events` field of a controller definition. See also [Predicate Events](#predicate-events).
 
 Optionally, the `position` field can be used to specify an X, Y location for rendering the hardware interface
-as a node in the AICA interactive graph editor. See also [Component Position](#position).
+as a node in the interactive graph editor. See also [Component Position](#position).
 
 For example:
 
@@ -943,7 +943,7 @@ buttons:
 ### Position
 
 This optional field is identical to the [component position](#position) and is used to provide an X, Y position for the
-component when rendered as a node in the AICA interactive graph editor.
+component when rendered as a node in the interactive graph editor.
 
 ### On Click
 

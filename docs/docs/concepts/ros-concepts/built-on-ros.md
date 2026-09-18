@@ -6,7 +6,7 @@ title: Built on ROS 2
 # Built on ROS 2
 
 The [Robot Operating System (ROS)](https://www.ros.org) is a collection of open-source software libraries and tools
-built by roboticists, for roboticists. AICA embraces the ROS philosophies of modularity, distributed processing and
+built by roboticists, for roboticists. We embrace the ROS philosophies of modularity, distributed processing and
 extensible open standards to support increasingly advanced robot applications.
 
 At its heart, ROS 2 is a middleware publisher/subscriber mechanism that enables different processes to communicate via
@@ -22,7 +22,7 @@ can be used and deployed alongside them.
 
 <!-- TODO: make an example showing that with Launcher (in a different place) -->
 
-**For new developers, AICA provides an easy springboard into the wider world of ROS. Advanced users can take the
+**For new developers, we provide an easy springboard into the wider world of ROS. Advanced users can take the
 modularity and dynamic nature of the System to new frontiers.**
 
 At a glance, the System extends ROS 2 with the following features:

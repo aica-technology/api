@@ -63,7 +63,7 @@ system detects a deviation from the desired path. On the other hand, a DS is abl
 any point in space, it still knows where to go next in order to reach the target.
 
 The function $f(x)$ that defines the behavior of a DS can be implemented analytically from mathematical rules or
-optimized from a set of non-linear functions. The AICA component library includes examples of both kinds of behaviors.
+optimized from a set of non-linear functions. The component library includes examples of both kinds of behaviors.
 
 :::tip
 

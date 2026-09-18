@@ -12,8 +12,8 @@ require.
 :::note
 
 This list is work in progress and regularly updated. If your hardware is not listed, please submit a ticket to the
-[AICA Community Feedback board](https://github.com/aica-technology/community) or reach out to the AICA team for
-assistance or further details.
+[Community Feedback board](https://github.com/aica-technology/community) or contact us for assistance or further
+details.
 
 As described in [this section](/docs/concepts/ros-concepts/built-on-ros), the System can integrate existing ROS
 drivers. This allows you to expand the supported hardware list by using open source or custom-developed ROS packages.
@@ -54,7 +54,7 @@ provided your host machine can natively mount them as USB devices.
 
 ## Industrial PC (IPC) support
 
-Along with consumer-grade computers that can be configured to work with the AICA framework, we have extensively used and
+Along with consumer-grade computers that can be configured to work with the System, we have extensively used and
 validated the operation of the framework with the following IPCs:
 
 | Manufacturer | Model            | Available GPU  | GPU Support | Notes                                                                             |

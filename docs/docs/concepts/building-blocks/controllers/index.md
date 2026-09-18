@@ -5,9 +5,9 @@ title: Controllers
 
 # Controllers
 
-AICA controllers are implemented according to the [ros2_control](../../ros-concepts/controlling-robots) standard.
+Controllers are implemented according to the [ros2_control](../../ros-concepts/controlling-robots) standard.
 
-The main extension that AICA controllers make is the definition of standard interfaces to communicate
+The main extension that our System controllers make is the definition of standard interfaces to communicate
 with components and the Event Engine in a modular way. Controllers have parameters, inputs and outputs that can be
 connected to components in the application, and expose predicates and transitions to drive application events.
 

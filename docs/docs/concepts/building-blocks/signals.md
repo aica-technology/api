@@ -25,7 +25,7 @@ between components and controllers is also simplified.
 Additionally, ROS 2 messages are data packets, not data objects. Parsing data from a message, manipulating it and
 writing it back into a message can involve a fair amount of boilerplate code.
 
-When developing an AICA component, signals are automatically converted to and from the corresponding data object.
+When developing a component, signals are automatically converted to and from the corresponding data object.
 
 ## Basic signal types
 
@@ -45,7 +45,7 @@ In robotics and control, one of the most useful data types is the state of an ob
 The joint angles of a robot arm, the 3D position and velocity of a flying drone, or the measurement of an accelerometer
 or force-torque sensor are all examples of instantaneous state variables.
 
-AICA signals make it easy for components and controllers to exchange Cartesian and joint state variables in an
+Signals make it easy for components and controllers to exchange Cartesian and joint state variables in an
 internally consistent way. For component developers, state signals are automatically converted into smart data classes
 that provide useful functions for conversions, transformations and other manipulations.
 
@@ -74,7 +74,7 @@ The following state variables can be exchanged as signals:
 
 <!-- TODO: copy and link the markdown documentation of the state representation library directly in the programming reference -->
 
-AICA state signals are built on the
+State signals are built on the
 open-source [
 `state_representation`](https://aica-technology.github.io/control-libraries/versions/v7.1.0/md__github_workspace_source_state_representation__r_e_a_d_m_e.html)
 library for Cartesian and joint state classes in C++ and Python.
@@ -93,9 +93,9 @@ between two connected components has the same name, the application will be vali
 
 :::tip
 
-The AICA component library
+The Core component library
 [includes signal translator components](/core/examples/core-components/signal-interoperability) for commonly used ROS
-messages (namely `sensor_msgs` and `geometry_msgs`) for AICA components to communicate with traditional ROS nodes in an
+messages (namely `sensor_msgs` and `geometry_msgs`) for components to communicate with traditional ROS nodes in an
 external process.
 
 :::

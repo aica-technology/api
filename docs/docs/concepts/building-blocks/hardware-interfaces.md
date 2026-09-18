@@ -15,7 +15,7 @@ A typical hardware interface provides the following capabilities:
 - Managing initialization, activation, and shutdown
 - Ensuring real-time safe data exchange
 
-All AICA hardware interfaces follow the
+All hardware interfaces in the System follow the
 [`ros2_control`](/docs/concepts/ros-concepts/controlling-robots) standard, ensuring compatibility and
 portability across different robots and deployments.
 
@@ -26,7 +26,7 @@ available interfaces.
 
 ## Role in the control stack
 
-Within the AICA control architecture, hardware interfaces sit at the **lowest level of the control stack**
+Within the System control architecture, hardware interfaces sit at the **lowest level of the control stack**
 (see [here](/docs/getting-started#core)):
 
 - **Above** them are controllers (e.g., joint trajectory, IK, impedance, GPIO controllers)
@@ -41,7 +41,7 @@ isolated, reusable, and easy to replace. See more information about our controll
 
 ## Integration with `ros2_control`
 
-By following the `ros2_control` framework, AICA hardware interfaces:
+By following the `ros2_control` framework, our hardware interfaces:
 
 - Expose standardized **state and command interfaces**
 - Support real-time safe update loops
@@ -67,7 +67,7 @@ This allows you to:
 
 :::note
 
-The set of included hardware interfaces may vary depending on the license and distribution of AICA software.
+The set of included hardware interfaces may vary depending on the license and distribution of System software.
 If the platform you are looking for is not listed on the
 [Supported Hardware](/docs/getting-started/compatibility/supported-hardware) page, please
 [contact us](mailto:contact@aica.tech) to discuss availability or custom integrations.

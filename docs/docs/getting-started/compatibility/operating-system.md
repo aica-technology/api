@@ -35,7 +35,7 @@ limitations will be reduced.
 
 ### Real-time capabilities
 
-To fully leverage the real-time capabilities of AICA controllers, the host machine needs a configured real-time kernel.
+To fully leverage the real-time capabilities of controllers, the host machine needs a configured real-time kernel.
 This is currently possible with the Ubuntu Pro 24.04 real-time kernel or the `PREEMPT_RT` kernel patch on standard
 Ubuntu, but not possible on macOS.
 
@@ -43,9 +43,9 @@ Ubuntu, but not possible on macOS.
 
 ### Summary of OS support
 
-| OS                        | AICA Launcher support | Notes                                                                       |
-|---------------------------|:---------------------:|-----------------------------------------------------------------------------|
-| Ubuntu/Debian             |          Yes          | Real-time kernel patch highly recommended                                   |
-| Other Linux distributions |          No           | Requires launching Core manually. Real-time kernel patch highly recommended |
-| macOS                     |          Yes          | Limited graphics forwarding due to dropped OpenGL support                   |
-| Windows                   |          No           | Requires WSL and running  Core manually                                     |
+| OS                        |   Launcher support   | Notes                                                                       |
+|---------------------------|:--------------------:|-----------------------------------------------------------------------------|
+| Ubuntu/Debian             |         Yes          | Real-time kernel patch highly recommended                                   |
+| Other Linux distributions |          No          | Requires launching Core manually. Real-time kernel patch highly recommended |
+| macOS                     |         Yes          | Limited graphics forwarding due to dropped OpenGL support                   |
+| Windows                   |          No          | Requires WSL and running  Core manually                                     |

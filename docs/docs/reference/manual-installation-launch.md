@@ -18,7 +18,7 @@ import dockerNetwork from './assets/win-docker-network.png';
 # Manual installation and launch
 
 The following sections explain how to install and launch Core and any additional packages manually from the command
-line as a **System container** without the use of AICA Launcher. The pre-requisites are still a valid license and a host
+line as a **System container** without the use of Launcher. The pre-requisites are still a valid license and a host
 with Docker installed. For the rest of this guide, it will be assumed that a valid license has been saved to a file
 called `aica-license.toml` on the host machine.
 
@@ -38,12 +38,12 @@ The main issue originates from Docker Desktop for Linux creating a custom Docker
 to manage its images. This is rightfully done to encapsulate those images within uses of the Docker Desktop GUI, without
 contaminating other parts of your system. However, creating a custom context with an endpoint in your `/home` directory
 means you now can not use Docker with elevated privileges (e.g., external devices, forwarding graphics, ...) and that
-some AICA Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal).
+some Launcher functionalities will not work out-of-the-box (e.g., attaching to a terminal).
 
 #### Configuring the Docker context
 
 `desktop-linux` will typically be the default context when starting up your system. To avoid the above limitations,
-make sure to change the context before building or executing System applications, or running AICA Launcher.
+make sure to change the context before building or executing System applications, or running Launcher.
 
 See the available contexts on your system:
 
@@ -119,7 +119,7 @@ The following instructions for running the System have been tested and validated
 11 Professional with full administrator access. Depending on the machine at hand, some steps might be slightly different
 or extended access might be required. For questions, consult the
 [official documentation](https://learn.microsoft.com/en-us/windows/wsl/install-manual), contact your IT support, or
-reach out to the AICA team.
+reach out to the support team.
 
 :::
 
@@ -170,7 +170,7 @@ reach out to the AICA team.
 
 </details>
 
-## Setting up the AICA license file
+## Setting up the System license file
 
 To use your System License or Deployment Key for manual installation and launch, it should be saved into a
 TOML-formatted file. In this guide, we use `aica-license.toml` to refer to the license file, though this filename is
@@ -182,7 +182,7 @@ For a System License, the contents of the file should be formatted as:
 License = "5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3"
 ```
 
-Similarly, for an AICA Deployment Key, it should be formatted as:
+Similarly, for a Deployment Key, it should be formatted as:
 
 ```toml title="aica-license.toml"
 License = "key/eyJ9df2jfap7IVdIHnlnNpb24[...]alSBR_tBSIjavblcziV5nBQ=="
@@ -190,7 +190,7 @@ License = "key/eyJ9df2jfap7IVdIHnlnNpb24[...]alSBR_tBSIjavblcziV5nBQ=="
 
 Of course, replace the license key in the example with your actual license key.
 
-## Logging in to the AICA package registry
+## Logging in to the package registry
 
 To authenticate docker to login and pull images from the registry, run the following command (no replacement of
 `USERNAME` required):
@@ -199,11 +199,11 @@ To authenticate docker to login and pull images from the registry, run the follo
 cat aica-license.toml | docker login registry.licensing.aica.tech -u USERNAME --password-stdin
 ```
 
-## Configuring AICA packages with a manifest file
+## Configuring packages with a manifest file
 
 A runtime application image is configured using a simple **manifest file** defining the version of Core to use and
 optionally defining additional add-on packages. The manifest file contains a custom docker syntax header pointing to
-AICA's app-builder tool, and the `docker build` command is used to bundle all listed packages into a final runtime
+our app-builder tool, and the `docker build` command is used to bundle all listed packages into a final runtime
 image.
 
 ### Configuring a minimal runtime image with a version of Core
@@ -229,7 +229,7 @@ image = "v5.1.0"
 ### Configuring a runtime image with add-on packages
 
 A manifest can include additional components and hardware collections as add-on packages. For any available package
-listed in the AICA registry, specify the package and version with the `@aica/` prefix. The following example manifest
+listed in the package registry, specify the package and version with the `@aica/` prefix. The following example manifest
 file includes two add-on packages: version 2.0.0 of the `components/rl_policy_components` component package and version
 4.1.0 of the `collections/ur-collection` hardware collection package.
 
@@ -257,7 +257,7 @@ use older versions of certain libraries and packages with newer versions of `app
 
 ### Including custom packages
 
-The AICA framework allows developers to build their own
+The System allows developers to build their own
 [custom components](../reference/custom-components/component-package). These packages can be included under a
 custom name using the `docker-image://` prefix to specify the docker image name or path. For example, a custom component
 package that was locally built using `docker build [...] --tag my-custom-component-package` could be included as
@@ -278,12 +278,12 @@ registries such as DockerHub or GitHub Container Registry and can be included wi
 "my-ghcr-package" = "docker-image://ghcr.io/user/package:tag"
 ```
 
-## Building an AICA runtime application image
+## Building a runtime System image
 
 :::note
 
 [Log in to the package registry](#logging-in-to-the-aica-package-registry) before building the image to authorize docker
-to access AICA packages.
+to access packages.
 
 :::
 
@@ -383,7 +383,7 @@ error would be shown from a correctly mounted but invalid license file:
 [ERROR] [1731937393.377201011] [licensing]: Error: license is invalid (ERR - license is invalid), please check that it is correct
 ```
 
-Contact AICA support if the container does not start correctly despite a valid license file.
+Contact support if the container does not start correctly despite a valid license file.
 
 There can also be harmless warnings that appear if Cloud Storage is not set up or if the license verification takes
 longer that a few seconds:

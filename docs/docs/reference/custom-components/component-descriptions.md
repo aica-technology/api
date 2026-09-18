@@ -26,8 +26,8 @@ the [Component Description JSON schema](../../../static/schemas/1-1-1/component.
 
 :::info
 
-JSON schemas for public AICA structures and syntax can be found in the `schemas` directory of
-the [API repository](https://github.com/aica-technology/api) on AICA GitHub.
+JSON schemas for public structures and syntax can be found in the `schemas` directory of
+the [API repository](https://github.com/aica-technology/api) on GitHub.
 
 :::
 

@@ -7,7 +7,7 @@ title: Components
 
 Within a System application, components are the building blocks of advanced robot behaviors.
 
-AICA components are wrappers for [ROS 2 nodes](../ros-concepts/nodes)
+Components are wrappers for [ROS 2 nodes](../ros-concepts/nodes)
 and [lifecycle nodes](../ros-concepts/lifecycle-nodes)
 using [dynamic composition](../ros-concepts/dynamic-composition) with additional abstractions for enhanced modularity
 and developer convenience.
@@ -18,13 +18,13 @@ specific services.
 
 ## Periodic behavior
 
-A key design concept for AICA components is the idea of periodic behavior.
+A key design concept for components is the idea of periodic behavior.
 
 In ROS, nodes are generally driven through callbacks, triggered either by a subscription, parameter change event,
 or service request. Nodes that wish to publish data continuously normally configure an internal timer to trigger a
 callback function at regular intervals.
 
-This periodic execution is built in to AICA components by default. Components have an execution rate defined by
+This periodic execution is built in to components by default. Components have an execution rate defined by
 a `rate` parameter (the frequency in Hertz for the number of execution steps per second), and automatically publish data
 attributes and predicates periodically.
 

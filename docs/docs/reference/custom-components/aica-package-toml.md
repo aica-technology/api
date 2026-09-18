@@ -74,7 +74,7 @@ ssh = false
 
 #### `[build.image]`
 
-Required. `[build.image]` is the tag of the AICA `ghcr.io/aica-technology/ros2-ws` image that will be used to build the
+Required. `[build.image]` is the tag of the `ghcr.io/aica-technology/ros2-ws` image that will be used to build the
 components. Those images are tagged after the versions of the ROS 2 distributions and are
 available [here](https://github.com/aica-technology/docker-images/pkgs/container/ros2-ws).
 
@@ -133,7 +133,7 @@ librealsense = { type = "deb", uri = "https://librealsense.intel.com/Debian/apt-
 
 #### `[build.dependencies]`
 
-Optional. `[build.dependencies]` is used to specify the AICA libraries and ROS 2 packages that will be installed in the
+Optional. `[build.dependencies]` is used to specify the libraries and ROS 2 packages that will be installed in the
 image.
 
 :::note
@@ -155,7 +155,7 @@ Components usually also require the `modulo` package. You can find the available
 versions [here](https://github.com/aica-technology/modulo/pkgs/container/modulo).
 
 :::note
-Libraries are built in a specific way to be compatible with the AICA packaging system. Custom libraries are not
+Libraries are built in a specific way to be compatible with the packaging system. Custom libraries are not
 available yet.
 :::
 

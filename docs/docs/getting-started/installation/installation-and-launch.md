@@ -9,7 +9,7 @@ title: Installation and launch
 
 The System software is distributed with Docker images and executed with Docker containers. That is, it can practically
 be installed on any system that supports recent Docker versions. However, due to performance advantages (e.g., real-time
-task execution), AICA suggests using Linux-based platforms that can be easily configured for such considerations.
+task execution), we suggest using Linux-based platforms that can be easily configured for such considerations.
 
 Before proceeding, you will need to install Docker Engine on the host machine. Depending on your platform, the
 installation process may vary or require additional steps. Below, you will find instructions per operating system:
@@ -17,9 +17,9 @@ installation process may vary or require additional steps. Below, you will find 
 <details>
 <summary>Linux</summary>
 
-While AICA currently distributes AICA Launcher for Debian-based systems, other distributions where Docker can be
+While we currently distribute Launcher for Debian-based systems, other distributions where Docker can be
 installed work equally as well through any browser. You may find distribution-specific instructions to install Docker
-Engine [here](https://docs.docker.com/engine/install/) and follow the manual installation steps to build and run AICA
+Engine [here](https://docs.docker.com/engine/install/) and follow the manual installation steps to build and run
 Core [here](/docs/reference/manual-installation-launch). It is **recommended** that you skip the installation of
 Docker Desktop for Linux (see below).
 
@@ -60,7 +60,7 @@ configuration steps are taken. Note that some limitations may apply regarding co
 The majority of Studio and Launcher features are available on macOS. However:
 
 - Forwarding graphics is currently impossible due to MacOS' incompatibility with OpenGL 2.1+. As a result, tools like
-  RViz will not be made available through AICA Launcher.
+  RViz will not be made available through Launcher.
 - Realtime applications may be subject to performance limitations due to MacOS' resource management.
 
 :::
@@ -76,7 +76,7 @@ configuration, it is possible to
 
 :::note
 
-AICA Launcher is not available on Windows, nor does the Ubuntu version of Launcher work with WSL. In addition, the
+Launcher is not available on Windows, nor does the Ubuntu version of Launcher work with WSL. In addition, the
 following limitations may apply:
 
 - Networking, port and graphics forwarding may require additional configuration.
@@ -87,31 +87,31 @@ following limitations may apply:
 
 </details>
 
-## AICA Launcher
+## Launcher
 
-AICA Launcher is the easiest way to get up and running with the System. It manages licensing, package distribution
+Launcher is the easiest way to get up and running with the System. It manages licensing, package distribution
 and the Docker toolchain so that no command-line access is necessary. It also embeds Studio: Edge directly inside
 the launcher.
 
 ### Installation
 
-Find the latest release on the AICA GitHub organization under https://github.com/aica-technology/api/releases, and
-search for AICA Launcher (for
-example, [AICA Launcher v1.2.0](https://github.com/aica-technology/api/releases/tag/launcher%2Fv1.2.0)).
+Find the latest release on the GitHub organization under https://github.com/aica-technology/api/releases, and
+search for Launcher (for
+example, [Launcher v2.0.1](https://github.com/aica-technology/api/releases/tag/launcher%2Fv2.0.1)).
 
 Download the prebuilt launcher app based on your operating system and architecture. For example,
 `aica-launcher-linux-amd64.zip` for Linux machines with an AMD processor or `aica-launcher-darwin-arm64.zip` for macOS
 on Apple Silicon.
 
-Unzip the file and extract the AICA Launcher executable to your machine, then launch it by double-clicking or
+Unzip the file and extract the Launcher executable to your machine, then launch it by double-clicking or
 right-clicking to start the program.
 
 :::tip
 
-On macOS, you may be unable to open the AICA Launcher app because of default security settings.
+On macOS, you may be unable to open the Launcher app because of default security settings.
 
 ```
-“AICA Launcher” can’t be opened because Apple cannot check it for malicious software.
+“Launcher” can’t be opened because Apple cannot check it for malicious software.
 ```
 
 To bypass this, right-click on the app and choose Open, and then click Open on the dialog that appears.
@@ -120,7 +120,7 @@ To bypass this, right-click on the app and choose Open, and then click Open on t
 
 ### Entering a System License
 
-When the AICA Launcher is started for the first time (or after explicitly logging out), you will be prompted to enter
+When Launcher is started for the first time (or after explicitly logging out), you will be prompted to enter
 your System License. As an example, the online license key to enter might look similar to
 `5614D1-3E7A6C-932DEB-8C4189-F6B0F2-V3`.
 
@@ -128,11 +128,11 @@ your System License. As an example, the online license key to enter might look s
 
 Once the license is copied into the text field, it will automatically check the validity of the license and log in if
 successful. If the license is not recognized, check your internet connection
-or contact AICA support.
+or contact support.
 
 ### Configuring the System image
 
-AICA Launcher provides direct access to Core and Studio, and additionally simplifies installing add-on packages
+Launcher provides direct access to Core and Studio, and additionally simplifies installing add-on packages
 from the registry or from custom SDK contributions.
 
 A "configuration" refers to a specific version of Core and the extra packages and versions that should be included.
@@ -161,5 +161,4 @@ the image has been built, launching the configuration a second time will be much
 ## Manual installation and launch
 
 For advanced users or users that deal with headless machines, the login, build and launch steps described here can also
-be performed [manually from the command line](/docs/reference/manual-installation-launch) instead of using AICA
-Launcher.
+be performed [manually from the command line](/docs/reference/manual-installation-launch) instead of using Launcher.

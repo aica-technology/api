@@ -4,9 +4,10 @@ title: Concepts
 
 # Concepts
 
-AICA Universe is built on open and extensible standards. This section introduces the core concepts behind the AICA
-System, including its ROS integration, robotics foundations, and application building blocks. Explore the topics below
-for detailed explanations to help you design and develop your own System applications and components.
+Our adaptive and intelligent control system is built on open and extensible standards. This section introduces the core
+concepts behind the System, including its ROS integration, robotics foundations, and application building blocks.
+Explore the topics below for detailed explanations to help you design and develop your own System applications and
+components.
 
 - [ROS 2 concepts](/docs/category/ros-2-concepts): Understand how the System leverages ROS, including nodes,
   lifecycle management, URDF, TF, and dynamic composition.
