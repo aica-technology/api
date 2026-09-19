@@ -39,6 +39,7 @@ If an unauthorized user has gained access to your license key, contact AICA supp
 
 - AICA System Licenses are online-only and require an active internet connection while AICA Studio is being used.
 - An AICA System License can be used on any machine, but only one instance can be running at any one time.
+- AICA System Licenses are limited to a maximum consecutive runtime of 8 hours per session.
 
 :::
 
