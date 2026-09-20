@@ -20,7 +20,7 @@ interoperability, Core includes several components that translate signals to com
 These components can be especially valuable when porting existing ROS nodes into Studio using the Component SDK or
 when communicating with ROS nodes outside the System.
 
-## signals to common ROS messages
+## Signals to common ROS messages
 
 State signals carrying Cartesian or joint space information can be converted into common ROS message types using
 the following components:
