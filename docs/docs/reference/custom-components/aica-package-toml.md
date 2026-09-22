@@ -45,7 +45,8 @@ the Docker syntax and version used to build the package.
 You can find the available
 versions [here](https://github.com/orgs/aica-technology/packages/container/package/package-builder).
 
-The upcoming sections describe the syntax for the `package-builder` version `1.0.0` and later. If you are migrating from an older version, please refer to the corresponding guide:
+The upcoming sections describe the syntax for the `package-builder` version `1.0.0` and later. If you are migrating from
+an older version, please refer to the corresponding guide:
 
 - [Migrating from `0.0.X`](./aica-package-migrations#migrating-from-00x)
 
@@ -62,7 +63,9 @@ type = "ros"
 
 #### `[build.ssh]`
 
-Optional. Default is `false`. If set to `true`, any call to `CMake`, `pip` or custom stage will have access to the SSH credentials given to Docker with `--ssh default`. This is useful if you need to clone a private repository in CMakeLists.txt or install a private Python package from git.
+Optional. Default is `false`. If set to `true`, any call to `CMake`, `pip` or custom stage will have access to the SSH
+credentials given to Docker with `--ssh default`. This is useful if you need to clone a private repository in
+CMakeLists.txt or install a private Python package from git.
 
 ```toml title="aica-package.toml"
 [build]
@@ -71,7 +74,9 @@ ssh = false
 
 #### `[build.image]`
 
-Required. `[build.image]` is the tag of the AICA `ghcr.io/aica-technology/ros2-ws` image that will be used to build the components. Those images are tagged after the versions of the ROS 2 distributions and are available [here](https://github.com/aica-technology/docker-images/pkgs/container/ros2-ws).
+Required. `[build.image]` is the tag of the `ghcr.io/aica-technology/ros2-ws` image that will be used to build the
+components. Those images are tagged after the versions of the ROS 2 distributions and are
+available [here](https://github.com/aica-technology/docker-images/pkgs/container/ros2-ws).
 
 ```toml title="aica-package.toml"
 [build]
@@ -91,7 +96,8 @@ USE_FEATURE_X = "ON"
 
 #### `[build.apt-repos]`
 
-Optional. This category allows you to add extra APT repositories to the image. This is useful if you need to install some packages that are not available in the default repositories, which is common for third-party packages.
+Optional. This category allows you to add extra APT repositories to the image. This is useful if you need to install
+some packages that are not available in the default repositories, which is common for third-party packages.
 
 Multiple syntaxes are supported:
 
@@ -102,7 +108,9 @@ Multiple syntaxes are supported:
 cuda = { deb-uri = 'https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/{{ if eq .Arch "amd64" }}x86_64{{else}}sbsa{{end}}/cuda-keyring_1.0-1_all.deb' }
 ```
 
-Note that `{{ if eq .Arch "amd64" }}x86_64{{else}}sbsa{{end}}` is a template that will be replaced by `x86_64` if the architecture is `amd64` and `sbsa` otherwise. See [here](https://pkg.go.dev/text/template) for more information on the templating syntax.
+Note that `{{ if eq .Arch "amd64" }}x86_64{{else}}sbsa{{end}}` is a template that will be replaced by `x86_64` if the
+architecture is `amd64` and `sbsa` otherwise. See [here](https://pkg.go.dev/text/template) for more information on the
+templating syntax.
 
 ##### Using a repository (with an optional keyring)
 
@@ -115,7 +123,8 @@ components = ["main"]
 keyring = "https://librealsense.intel.com/Debian/librealsense.pgp" # optional
 ```
 
-Note that in this case we use a subcategory to specify the property of this repository, but it can also be expressed using the `{}` syntax like the previous example:
+Note that in this case we use a subcategory to specify the property of this repository, but it can also be expressed
+using the `{}` syntax like the previous example:
 
 ```toml title="aica-package.toml"
 [build.apt-repos]
@@ -124,31 +133,36 @@ librealsense = { type = "deb", uri = "https://librealsense.intel.com/Debian/apt-
 
 #### `[build.dependencies]`
 
-Optional. `[build.dependencies]` is used to specify the AICA libraries and ROS 2 packages that will be installed in the
+Optional. `[build.dependencies]` is used to specify the libraries and ROS 2 packages that will be installed in the
 image.
 
 :::note
-Those libraries and packages will not be available at runtime, only while building. If you need them for building _and_ running, add them to the `[build.packages.XYZ.dependencies]` section below instead.
-Libraries that are only required at runtime, and not at build time, can be declared with `[build.run-dependencies]` instead.
+Those libraries and packages will not be available at runtime, only while building. If you need them for building _and_
+running, add them to the `[build.packages.XYZ.dependencies]` section below instead.
+Libraries that are only required at runtime, and not at build time, can be declared with `[build.run-dependencies]`
+instead.
 :::
 
 :::note
-Those libraries and packages are built for specific versions of ROS 2, so make sure that the version you are using is compatible with your `[build.image]`.
+Those libraries and packages are built for specific versions of ROS 2, so make sure that the version you are using is
+compatible with your `[build.image]`.
 :::
 
 Components usually require the `control-libraries` library. You can find the available
-versions [here](https://github.com/aica-technology/control-libraries/pkgs/container/control-libraries). 
+versions [here](https://github.com/aica-technology/control-libraries/pkgs/container/control-libraries).
 
 Components usually also require the `modulo` package. You can find the available
 versions [here](https://github.com/aica-technology/modulo/pkgs/container/modulo).
 
 :::note
-Libraries are built in a specific way to be compatible with the AICA packaging system. Custom libraries are not
+Libraries are built in a specific way to be compatible with the packaging system. Custom libraries are not
 available yet.
 :::
 
 :::note
-Starting with version `1.0.0` of the `package-builder`, all libraries and packages need to have special metadata associated in their image. This is done automatically when building with newer versions of `package-builder`. This means you won't be able to use older versions of certain libraries and packages with newer versions of `package-builder`.
+Starting with version `1.0.0` of the `package-builder`, all libraries and packages need to have special metadata
+associated in their image. This is done automatically when building with newer versions of `package-builder`. This means
+you won't be able to use older versions of certain libraries and packages with newer versions of `package-builder`.
 :::
 
 ```toml title="aica-package.toml"
@@ -160,7 +174,9 @@ Starting with version `1.0.0` of the `package-builder`, all libraries and packag
 
 ##### Adding version constraints
 
-Because `package-builder` will use your dependencies in the metadata of the component, the version of the dependencies will be expected when the component is used. You can tweak _which_ exact version is expected by using version constraints.
+Because `package-builder` will use your dependencies in the metadata of the component, the version of the dependencies
+will be expected when the component is used. You can tweak _which_ exact version is expected by using version
+constraints.
 
 ```toml title="aica-package.toml"
 [build.dependencies]
@@ -168,7 +184,9 @@ Because `package-builder` will use your dependencies in the metadata of the comp
 ```
 
 :::note
-By default, the version constraint is derived from the given version. It will be `~> X.Y` where `X` and `Y` are the major and minor versions of the given version. This means that any version with the same major version and a minor version greater than or equal to the given minor version will be accepted.
+By default, the version constraint is derived from the given version. It will be `~> X.Y` where `X` and `Y` are the
+major and minor versions of the given version. This means that any version with the same major version and a minor
+version greater than or equal to the given minor version will be accepted.
 :::
 
 :::note
@@ -177,7 +195,9 @@ You can find more information about version constraints and their syntax [here](
 
 ##### Adding build-time dependencies
 
-Sometimes you might want to add a library but not require it in the metadata of your component. We call those dependencies build-only dependencies. This might be useful when using a static library that is built into your component and thus is not needed at runtime.
+Sometimes you might want to add a library but not require it in the metadata of your component. We call those
+dependencies build-only dependencies. This might be useful when using a static library that is built into your component
+and thus is not needed at runtime.
 
 ```toml title="aica-package.toml"
 [build.dependencies]
@@ -190,7 +210,10 @@ You can also add version constraints to build-only dependencies.
 
 #### `[build.run-dependencies]`
 
-Optional. This field is similar to `[build.dependencies]` but its content is not downloaded and added to the image during the build. Instead, the information contained there is used in the metadata of your component. When someone uses your component, they will be notified that they need to use a specific version of the added dependencies matching the one specified in this section.
+Optional. This field is similar to `[build.dependencies]` but its content is not downloaded and added to the image
+during the build. Instead, the information contained there is used in the metadata of your component. When someone uses
+your component, they will be notified that they need to use a specific version of the added dependencies matching the
+one specified in this section.
 
 ```toml title="aica-package.toml"
 [build.run-dependencies]
@@ -198,7 +221,8 @@ Optional. This field is similar to `[build.dependencies]` but its content is not
 ```
 
 :::note
-The value expected for each entry is not a version but a version constraint. You can find more information about this concept and its syntax in the corresponding section [here](#version-constraints).
+The value expected for each entry is not a version but a version constraint. You can find more information about this
+concept and its syntax in the corresponding section [here](#version-constraints).
 :::
 
 #### `[build.packages]`
@@ -229,9 +253,11 @@ source = "different-folder/event-more"
 Optional. This category allows you to specify the APT packages that will be installed in the image. This is useful if
 you need to install some system dependencies.
 
-By default, available packages are based on the Ubuntu version used by the specified version of ROS2. You can find the list of
+By default, available packages are based on the Ubuntu version used by the specified version of ROS2. You can find the
+list of
 packages [here](https://packages.ubuntu.com/) and the Ubuntu version used by the ROS2
-distribution [here](https://docs.ros.org/en/iron/Installation/Ubuntu-Install-Debians.html). See [this section](#buildapt-repos) to learn how to add extra APT repositories.
+distribution [here](https://docs.ros.org/en/iron/Installation/Ubuntu-Install-Debians.html).
+See [this section](#buildapt-repos) to learn how to add extra APT repositories.
 
 :::tip
 You can either provide a version to be installed or `*` to install the latest available version.
@@ -342,11 +368,13 @@ description = "My awesome component"
 
 #### `[metadata.collection]`
 
-Required when using multiple `[build.packages]`, otherwise ignored. This must contain the names of the collection being built (the set of multiple components).
+Required when using multiple `[build.packages]`, otherwise ignored. This must contain the names of the collection being
+built (the set of multiple components).
 
 `[metadata.collection.name]` is required. It is the name of the collection.
 
-`[metadata.collection.ros-name]` is optional. This must be specified if `[metadata.collection.name]` is not a valid ROS package name.
+`[metadata.collection.ros-name]` is optional. This must be specified if `[metadata.collection.name]` is not a valid ROS
+package name.
 
 ```toml title="aica-package.toml"
 [metadata.collection]
@@ -395,15 +423,20 @@ source = "build-context://my_source"
 
 ##### Version constraints
 
-Version constraints follow the syntax of the [Terraform version constraints](https://www.terraform.io/docs/language/expressions/version-constraints.html) which is similar to syntax used by NPM, yarn or pip. Here is a quick summary:
+Version constraints follow the syntax of
+the [Terraform version constraints](https://www.terraform.io/docs/language/expressions/version-constraints.html) which
+is similar to syntax used by NPM, yarn or pip. Here is a quick summary:
 
 - Versions constraints are composed of one or more conditions separated by commas, e.g. `>= 1.0.0, < 2.0.0`.
 - Each version specified must be a valid [semver](https://semver.org/) version, e.g. `1.0.0`.
 - The following operators are supported:
-  - `=` or no operator: allow only the exact version, cannot be combined with other conditions.
-  - `!=`: exclude a specific version.
-  - `>`, `>=`, `<`, `<=`: comparison against a specific version, allowing any version matching the operator. `>` allows newer version and `<` allows older version.
-  - `~>`: allows only the right most number of the version to increase. This is useful to allow only patch or minor versions to increase, e.g. `~> 1.0` allows `1.1`, `1.2`, etc. but not `2.0` and `~> 1.0.0` allows `1.0.1`, `1.0.2`, etc. but not `1.1.0`.
+    - `=` or no operator: allow only the exact version, cannot be combined with other conditions.
+    - `!=`: exclude a specific version.
+    - `>`, `>=`, `<`, `<=`: comparison against a specific version, allowing any version matching the operator. `>`
+      allows newer version and `<` allows older version.
+    - `~>`: allows only the right most number of the version to increase. This is useful to allow only patch or minor
+      versions to increase, e.g. `~> 1.0` allows `1.1`, `1.2`, etc. but not `2.0` and `~> 1.0.0` allows `1.0.1`,
+      `1.0.2`, etc. but not `1.1.0`.
 
 ### Examples
 

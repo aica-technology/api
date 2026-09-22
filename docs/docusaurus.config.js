@@ -6,12 +6,12 @@ const darkCodeTheme = require("prism-react-renderer").themes.vsDark;
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 
-const url = "https://docs.aica.tech";
+const url = "https://docs.ai-can-change.tech";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "AICA for Developers",
-  tagline: "Documentation for the AICA System and robotics software framework",
+  title: "Developer Docs",
+  tagline: "Documentation for the Adaptive & Intelligent Control System and robotics software framework",
   favicon: "img/favicon.ico",
 
   url: url,
@@ -62,8 +62,8 @@ const config = {
         rehypePlugins: [rehypeKatex],
         lastVersion: "current",
         versions: {
-          current: { label: "AICA Core v5", path: "", banner: "none" },
-          v4: { label: "AICA Core v4", path: "v4", banner: "none" },
+          current: { label: "Core v5", path: "", banner: "none" },
+          v4: { label: "Core v4", path: "v4", banner: "none" },
         },
       },
     ],
@@ -78,13 +78,21 @@ const config = {
           autoCollapseCategories: false,
         },
       },
+      announcementBar: {
+        id: 'rebranding-announcement',
+        content:
+            'This organization and its content are not affiliated, associated, authorized, endorsed by, or in any way officially connected with aicas GmbH, Karlsruhe, Germany (www.aicas.com and https://github.com/aicas). Any references to “AICA” are strictly historic.',
+        backgroundColor: '#fafbfc',
+        textColor: '#091E42',
+        isCloseable: true,
+      },
       // TODO: add a social media card
       // image: "img/docusaurus-social-card.jpg",
       navbar: {
-        title: "AICA Documentation",
+        title: "Documentation",
 
         logo: {
-          alt: "AICA Logo",
+          alt: "Logo",
           src: "img/aica-logo-black-square-small.svg",
           srcDark: "img/aica-logo-white-square-small.svg",
           width: 22,
@@ -104,7 +112,7 @@ const config = {
             position: "left",
           },
           {
-            label: "AICA Studio",
+            label: "Studio",
             type: "docSidebar",
             docsPluginId: "core",
             sidebarId: "studioSidebar",
@@ -130,9 +138,9 @@ const config = {
       },
       footer: {
         logo: {
-          alt: "AICA Logo",
-          src: "img/logo.svg",
-          srcDark: "img/logo_dark.svg",
+          alt: "Logo",
+          src: "img/aica-logo-black-square-small.svg",
+          srcDark: "img/aica-logo-white-square-small.svg",
           width: 42,
           height: 42,
         },
@@ -163,10 +171,10 @@ const config = {
             ],
           },
           {
-            title: "AICA Studio",
+            title: "Studio",
             items: [
               {
-                label: "Tour of AICA Studio",
+                label: "Tour of Studio",
                 href: "/core/studio/",
               },
               {
@@ -179,11 +187,11 @@ const config = {
             title: "Resources",
             items: [
               {
-                label: "AICA API",
+                label: "API",
                 href: "https://link.aica.tech/api",
               },
               {
-                label: "AICAdemy",
+                label: "AI Academy",
                 href: "https://link.aica.tech/aicademy",
               },
               {
@@ -193,19 +201,19 @@ const config = {
             ],
           },
           {
-            title: "AICA",
+            title: "Company",
             items: [
               {
-                label: "AICA Community",
+                label: "Community",
                 href: "https://github.com/aica-technology/community",
               },
               {
                 label: "Website",
-                href: "https://www.aica.tech",
+                href: "https://www.ai-can-change.tech",
               },
               {
-                label: "contact@aica.tech",
-                href: "mailto:contact@aica.tech",
+                label: "contact@ai-can-change.tech",
+                href: "mailto:contact@ai-can-change.tech",
               },
               // {
               //     label: "Private Training & Support",
@@ -222,7 +230,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} AICA SA`,
+        // copyright: `Copyright © ${new Date().getFullYear()} AICA SA`,
       },
       prism: {
         theme: lightCodeTheme,

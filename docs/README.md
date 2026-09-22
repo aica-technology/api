@@ -1,6 +1,6 @@
-# AICA Documentation
+# Documentation
 
-## [https://docs.aica.tech](https://docs.aica.tech)
+## [https://docs.ai-can-change.tech](https://docs.ai-can-change.tech)
 
 The documentation is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
@@ -53,8 +53,8 @@ const config = {
             {
                 //...
                 versions: {
-                    current: {label: "AICA Core v5", path: "", banner: "none"},
-                    v4: {label: "AICA Core v4", path: "v4", banner: "none"},
+                    current: {label: "Core v5", path: "", banner: "none"},
+                    v4: {label: "Core v4", path: "v4", banner: "none"},
                 }
             }
         ]
@@ -73,9 +73,9 @@ const config = {
             {
                 //...
                 versions: {
-                    current: {label: "AICA Core v6", path: "", banner: "none"},
-                    v5: {label: "AICA Core v5", path: "v5", banner: "none"},
-                    v4: {label: "AICA Core v4", path: "v4", banner: "none"},
+                    current: {label: "Core v6", path: "", banner: "none"},
+                    v5: {label: "Core v5", path: "v5", banner: "none"},
+                    v4: {label: "Core v4", path: "v4", banner: "none"},
                 }
             }
         ]

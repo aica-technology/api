@@ -15,7 +15,7 @@ changes into a Stop button to stop the running application.
 
 ## Main view
 
-The main view shows the iconic AICA dataflow graph by default, which is explained more in the next section, while the
+The main view shows the iconic dataflow graph by default, which is explained more in the next section, while the
 mini-view shows a preview of 3D scene view. The left and right panels as well as the mini-view switcher can be minimized
 with the respective icon buttons to provide more screen space for the main view.
 

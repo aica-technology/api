@@ -1,9 +1,9 @@
 ---
 sidebar_position: 3
-title: AICA applications
+title: Applications
 ---
 
-# AICA applications
+# Applications
 
 The ROS 2 concepts of managed lifecycle nodes and dynamic composition (and by extension, lifecycle components) enable
 more stateful and modular building blocks for complex applications. A lifecycle component can be flexibly instantiated
@@ -30,15 +30,15 @@ to be modular or re-usable for other applications. If, instead, the application 
 executable program, usually according to some state machine paradigm, this in turn generally undermines the modern
 concepts of abstraction and dynamic reconfiguration that ROS 2 tools provide.
 
-To address this challenge, AICA Core includes a generalized execution process known as the Event Engine which
+To address this challenge, Core includes a generalized execution process known as the Event Engine which
 dynamically manages component and controller states according to a declarative and easily reconfigurable application
 description.
 
 ## The Event Engine
 
-The Event Engine (EE) is responsible for managing the states of all the elements of an AICA application.
+The Event Engine (EE) is responsible for managing the states of all the elements of a System application.
 
-An AICA application is an interconnected graph of **components**, **controllers** and **hardware interfaces**.
+a System application is an interconnected graph of **components**, **controllers** and **hardware interfaces**.
 Components process data in a periodic step function and transfer data as **signals** to other components and
 controllers. Hardware interfaces are drivers that connect controllers to robots.
 
@@ -56,8 +56,8 @@ For example, some component A might be loaded when the application starts. Then,
 loaded after component A is finalized. Finally, controller X should be started when component B is active, and
 stopped if component C has an error.
 
-In AICA System, applications are formally described in a YAML file. An application description can also be
+In the System, applications are formally described in a YAML file. An application description can also be
 represented as a graph of building blocks (components, controllers, hardware interfaces) connected by signals and
 events.
 
-The next sections describe the key elements of an AICA application in more detail.
+The next sections describe the key elements of a System application in more detail.

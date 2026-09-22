@@ -5,7 +5,7 @@ title: Describing a component
 
 # Describing a component
 
-To fully support custom components in the AICA System, it is crucial to have a consistent means of
+To fully support custom components in the System, it is crucial to have a consistent means of
 describing individual components and the interfaces they provide. A machine-readable component description should
 contain all necessary information to procedurally generate documentation, frontend visualisations and backend services
 for any new component.
@@ -26,8 +26,8 @@ the [Component Description JSON schema](../../../static/schemas/1-1-1/component.
 
 :::info
 
-JSON schemas for public AICA structures and syntax can be found in the `schemas` directory of
-the [API repository](https://github.com/aica-technology/api) on AICA GitHub.
+JSON schemas for public structures and syntax can be found in the `schemas` directory of
+the [API repository](https://github.com/aica-technology/api) on GitHub.
 
 :::
 

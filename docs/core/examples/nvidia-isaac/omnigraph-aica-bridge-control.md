@@ -16,16 +16,16 @@ This guide builds directly on
 [Using Isaac Sim as a visualizer](/core/examples/nvidia-isaac/omnigraph-aica-bridge-visualization), where we configured
 the first use case: using Isaac Sim to mirror robot motion for visualization.
 
-Here, we focus on the second use case: **controlling a simulated robot in Isaac Sim from an AICA application**. Isaac
-Sim hosts the robot with full physics simulation, and AICA Studio interacts with it as if it were real hardware. The
+Here, we focus on the second use case: **controlling a simulated robot in Isaac Sim from a System application**. Isaac
+Sim hosts the robot with full physics simulation, and Studio interacts with it as if it were real hardware. The
 data flow is bidirectional:
 
-- **AICA Studio -> Isaac Sim**: AICA Studio sends joint commands (positions, velocities, or efforts) to Isaac Sim via
+- **Studio -> Isaac Sim**: Studio sends joint commands (positions, velocities, or efforts) to Isaac Sim via
   ROS 2.
-- **Isaac Sim -> AICA Studio**: Isaac Sim simulates the robot's physical response and publishes the resulting joint
-  states back to AICA Studio via ROS 2.
+- **Isaac Sim -> Studio**: Isaac Sim simulates the robot's physical response and publishes the resulting joint
+  states back to Studio via ROS 2.
 
-From AICA Studio's perspective, the simulated robot in Isaac Sim behaves like real hardware. This setup is well suited
+From Studio's perspective, the simulated robot in Isaac Sim behaves like real hardware. This setup is well suited
 for validating and debugging control algorithms in a physics-based environment before deploying them to a physical
 robot.
 
@@ -75,19 +75,19 @@ All other nodes, settings, and connections remain the same as in the visualizer 
 Your OmniGraph should look similar to the image below:
 
 <div class="text--center">
-  <img src={graph} style={{ height: "auto" }} alt="OmniGraph for AICA Bridge Control" />
+  <img src={graph} style={{ height: "auto" }} alt="OmniGraph for Bridge Control" />
 </div>
 
-## Configuring the AICA Application
+## Configuring the System application
 
-On the AICA side, the key difference from the visualizer setup is the **hardware interface**. Instead of using a mock
+On the System side, the key difference from the visualizer setup is the **hardware interface**. Instead of using a mock
 interface and a separate component to publish joint states, we use a **topic-based ROS 2 hardware interface** that
 communicates directly with Isaac Sim over ROS 2 topics. This interface:
 
 - **Subscribes** to the `/joint_states` topic to read the simulated robot's state from Isaac Sim
 - **Publishes** to the `/joint_commands` topic to send commands to Isaac Sim
 
-Use AICA Launcher to create a configuration that uses the latest AICA Studio version. Set the ROS 2 `Domain ID` to `30`
+Use Launcher to create a configuration that uses the latest Studio version. Set the ROS 2 `Domain ID` to `30`
 to match the one configured in Isaac Sim, and include the custom community package that provides the
 `topic_based_ros2_control/TopicBasedSystem` hardware interface plugin
 
@@ -98,15 +98,15 @@ ghcr.io/aica-technology/topic-based-ros2-control:v0.1.0
 Your launcher configuration should look similar to the image below:
 
 <div class="text--center">
-  <img src={launcherConfig} style={{ height: "70%", width: "70%" }} alt="AICA Launcher Configuration" />
+  <img src={launcherConfig} style={{ height: "70%", width: "70%" }} alt="Launcher Configuration" />
 </div>
 
 ### Creating a new Hardware with a Topic-Based ROS 2 Interface
 
-First, create a new URDF in AICA Studio to communicate with Isaac Sim. This involves duplicating an existing hardware
+First, create a new URDF in Studio to communicate with Isaac Sim. This involves duplicating an existing hardware
 and swapping out the plugin in the URDF.
 
-1. In AICA Studio, go to the **Hardware** tab.
+1. In Studio, go to the **Hardware** tab.
 2. Click on the `Generic six-axis robot arm` to open it and use **Save As** to create a copy with a new name. Name it
    `Generic six-axis robot arm (Topic-Based Interface)`.
 3. In the URDF editor, replace the content of the URDF with the following and click **Save**.
@@ -387,7 +387,7 @@ subscribes to `/joint_states` (published by the `ROS2 Publish Joint State` node)
 
 ### Creating the application
 
-Copy the YAML content below into a new application in AICA Studio and save it. This application uses the Joint
+Copy the YAML content below into a new application in Studio and save it. This application uses the Joint
 Trajectory Controller to move the `Generic` robot between three waypoints.
 
 <details>
@@ -504,21 +504,21 @@ communication with Isaac Sim directly through the configured ROS 2 topics.
 Your application should look similar to the image below:
 
 <div class="text--center">
-  <img src={application} style={{ height: "auto" }} alt="AICA Application for AICA Bridge Control" />
+  <img src={application} style={{ height: "auto" }} alt="System application for Bridge Control" />
 </div>
 
-## Interfacing Isaac Sim with AICA Studio
+## Interfacing Isaac Sim with Studio
 
-With both Isaac Sim and AICA Studio configured, you can run the full simulation loop:
+With both Isaac Sim and Studio configured, you can run the full simulation loop:
 
-1. **Start the AICA application**: Press the `Start` button in AICA Studio. The application will begin sending joint
+1. **Start the System application**: Press the `Start` button in Studio. The application will begin sending joint
    commands to the `/joint_commands` topic and reading joint states from the `/joint_states` topic.
 
 2. **Start Isaac Sim**: Press the `Play` button in Isaac Sim. The OmniGraph will begin executing: it subscribes to
-   commands from AICA, applies them to the simulated robot, and publishes the resulting joint states back.
+   commands from the System, applies them to the simulated robot, and publishes the resulting joint states back.
 
 You should see the `Generic` robot in Isaac Sim moving between the three waypoints defined in the application. Unlike
-the visualizer setup, the robot's motion is driven by actual physics simulation; AICA Studio is sending commands
+the visualizer setup, the robot's motion is driven by actual physics simulation; Studio is sending commands
 directly to the simulated robot, and Isaac Sim is computing the physical response in real time rather than simply
 mirroring state from a mock interface.
 
@@ -534,11 +534,11 @@ mirroring state from a mock interface.
 
 If the robot does not move or behaves unexpectedly, verify the following:
 
-- The ROS 2 Domain ID is the same in both Isaac Sim (ROS2 Context node) and AICA Studio (Launcher configuration).
+- The ROS 2 Domain ID is the same in both Isaac Sim (ROS2 Context node) and Studio (Launcher configuration).
 - The topic names match: `/joint_states` for state and `/joint_commands` for commands.
 - The `Generic` robot is selected as the target in both the `ROS2 Publish Joint State` and `Articulation Controller`
   nodes.
-- The hardware rate in AICA Studio matches the simulation tick rate in Isaac Sim.
+- The hardware rate in Studio matches the simulation tick rate in Isaac Sim.
 :::
  
 <br/>

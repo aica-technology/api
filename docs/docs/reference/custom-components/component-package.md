@@ -15,7 +15,8 @@ A lot of the information in this page is also available in the README of the tem
 
 :::
 
-Custom components can be defined in ROS 2 packages and used alongside the standard library of AICA components in AICA Core. Components can be implemented in C++ or Python. A component package can contain multiple
+Custom components can be defined in ROS 2 packages and used alongside the standard library of components in Core.
+Components can be implemented in C++ or Python. A component package can contain multiple
 components in either language.
 
 ## Package infrastructure
@@ -135,7 +136,7 @@ Any changes to the standard directory structure must be reflected in the `CMakeL
 
 ### Component descriptions
 
-To fully support custom components in AICA Core, each new component should be fully described
-by a JSON file according to the component description schema.
+To fully support custom components in Core, a JSON file should fully describe each new component
+according to the component description schema.
 
 <!-- TODO: link to the description schema page -->

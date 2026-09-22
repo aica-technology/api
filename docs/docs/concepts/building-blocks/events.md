@@ -5,7 +5,7 @@ title: Events
 
 # Events
 
-Events are discrete actions that change the dynamic state of an AICA application. They are handled and executed by the
+Events are discrete actions that change the dynamic state of a System application. They are handled and executed by the
 Event Engine. For this reason, they are sometimes referred to as "state events".
 
 ## Event types
@@ -20,17 +20,17 @@ The following events can be used to dynamically update the state of a running ap
 
 ## Triggering events
 
-Events can be triggered externally by a user through interactions with AICA Studio or via the REST API.
+Events can be triggered externally by a user through interactions with Studio or via the REST API.
 They can also be triggered internally by the Event Engine according to the application description as a result
 of **predicates**, **transitions**, **sequences** or **conditions**.
 
 ### Predicates
 
 Predicates are logical statements that evaluate to true or false and are used to indicate key states for either a
-component or controller. AICA components and controllers broadcast any changes to their predicates to a global channel
+component or controller. Components and controllers broadcast any changes to their predicates to a global channel
 in a message containing the source name, the predicate name, and the current value (true or false) of the predicate.
 
-While the term "predicate" has several formal definitions in grammar, logic and mathematics, at AICA the [grammatical
+While the term "predicate" has several formal definitions in grammar, logic and mathematics, here the [grammatical
 definition](https://en.wikipedia.org/wiki/Predicate_(grammar)) is used when naming predicates.
 
 Components define predicates depending on their function. A component that calculates if a given input state is within
@@ -56,7 +56,7 @@ the case of setting up an application, where a controller might need to be loade
 interface is loaded. It often also applies to the case of handling errors, such that when a component is unloaded or
 enters into an error state, a controller or other component should be deactivated accordingly.
 
-Every valid state transition on any component, controller or hardware interface in an AICA application can be easily
+Every valid state transition on any component, controller or hardware interface in a System application can be easily
 associated with one or more events to be triggered when that state transition occurs.
 
 ### Sequences
@@ -76,7 +76,7 @@ can be manipulated with logical operators in conditional statements to create mo
 
 > When component A _is active_ **and** component B _is **not** in bounds_, do ...
 
-AICA conditions support the "not", "all", "any", and "one of" operators (also known as the NOT, AND, OR and XOR
+Conditions support the "not", "all", "any", and "one of" operators (also known as the NOT, AND, OR and XOR
 operators, respectively). If a condition does not trigger an event directly, it can still be used as the input to
 another condition or to a conditional sequence step.
 

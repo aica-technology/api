@@ -6,15 +6,15 @@ title: Frames
 # Frames
 
 The page on [TF in ROS](../ros-concepts/tf) discusses the importance of spatial transforms for robotic applications.
-TF can be thought of as a live database that keeps track of coordinate frames and their relationships over time. The AICA
+TF can be thought of as a live database that keeps track of coordinate frames and their relationships over time. The
 System leverages this framework internally and facilitates interaction with TF. In particular, user-defined
-frames are directly included in an AICA application and are available to all components at runtime. These so-called
+frames are directly included in a System application and are available to all components at runtime. These so-called
 **application frames** can be created and modified in the 3D scene view, and their poses will be updated in real time.
 
 :::tip
 
 [This guide](/core/examples/guides/application-frames) contains an in-depth review of methods to create, edit, and
-record application frames in AICA Studio.
+record application frames in Studio.
 
 :::
 
@@ -25,7 +25,7 @@ publish that information as a continuous signal.
 
 For instance, a vision component might publish the pose of a detected object to TF, while a motion generator component
 requires the target pose to be received as a signal. Ideally, the vision component would output the pose as a signal,
-but this is not always the case. For these situations, the AICA Core provides components that can extract the pose of a
+but this is not always the case. For these situations, the Core provides components that can extract the pose of a
 desired frame from TF and publish it as a signal, or conversely, receive a pose from a signal and send it to TF.
 
 ### Frame to Signal
@@ -51,6 +51,6 @@ rate. The component has two additional parameters to configure its behavior:
 :::tip
 
 See [this page](/core/examples/core-components/point-attractor) for an example that uses the Frame to Signal
-component in AICA Studio.
+component in Studio.
 
 :::
