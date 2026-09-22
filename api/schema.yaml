@@ -10,7 +10,7 @@ info:
     email: support@aica.tech
   version: 5.2.0
 servers:
-  - url: http://localhost:8080/api
+  - url: __AICA_LOCAL_SERVER__
     description: Local AICA Core server
 tags:
   - name: API
@@ -37,6 +37,8 @@ tags:
     description: User-related operations
   - name: Licensing
     description: Licensing operations
+  - name: Recordings
+    description: Resources for managing ROS bag recordings
   - name: AI
     description: AI resources
 paths:
@@ -705,7 +707,7 @@ paths:
         - token: [control]
   /v3/engine/variables:
     put:
-      tags: [ Engine ]
+      tags: [Engine]
       summary: Set a variable
       operationId: setVariable
       requestBody:
@@ -717,7 +719,7 @@ paths:
       responses:
         "204":
           description: The variable change request is accepted
-          content: { }
+          content: {}
         "400":
           description: The variable change request is invalid
           content:
@@ -729,7 +731,7 @@ paths:
         "403":
           $ref: "#/components/responses/MissingScopeError"
       security:
-        - token: [ control ]
+        - token: [control]
   /v3/engine/state:
     get:
       tags: [Engine]
@@ -1322,6 +1324,48 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Hardware"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Hardware not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+  /v3/hardware/{id}/expand:
+    put:
+      tags: [Hardware]
+      summary: Expand URDF with parameter overrides
+      description: |
+        Read-only operation that resolves the hardware URDF by `hardware_id` (path parameter),
+        applies the requested modifications (parameters, reference frame, tf_prefix, plugin),
+        and returns the resulting URDF XML.
+      operationId: expandHardwareURDF
+      parameters:
+        - $ref: "#/components/parameters/ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HardwareExpandRequest"
+        required: true
+      responses:
+        "200":
+          description: Fully expanded URDF content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareExpandResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "403":
@@ -2519,6 +2563,119 @@ paths:
           $ref: "#/components/responses/UnknownResourceError"
       security:
         - token: [control]
+  /v3/recordings/configuration:
+    get:
+      tags: [Recordings]
+      summary: Get the current recording configuration
+      operationId: getRecordingConfiguration
+      responses:
+        "200":
+          description: Returns the current recording configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecordingConfiguration"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+    put:
+      tags: [Recordings]
+      summary: Set recording configuration
+      description: |
+        Update the recording configuration. Cannot be changed while an application is running.
+      operationId: setRecordingConfiguration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecordingConfiguration"
+        required: true
+      responses:
+        "204":
+          description: Configuration updated successfully
+        "400":
+          description: Invalid configuration or configuration change blocked while an application is running
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [control]
+  /v3/recordings:
+    get:
+      tags: [Recordings]
+      summary: List available recordings
+      operationId: getRecordingList
+      responses:
+        "200":
+          description: Returns all available recordings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecordingList"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+      security:
+        - token: [monitor]
+  /v3/recordings/{recording_name}:
+    delete:
+      tags: [Recordings]
+      summary: Delete a recording
+      operationId: deleteRecording
+      parameters:
+        - $ref: "#/components/parameters/RecordingName"
+      responses:
+        "204":
+          description: Recording deleted
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Recording not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [control]
+  /v3/recordings/{recording_name}/export:
+    get:
+      tags: [Recordings]
+      summary: Export a recording as a zip archive
+      operationId: exportRecording
+      parameters:
+        - $ref: "#/components/parameters/RecordingName"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/MissingScopeError"
+        "404":
+          description: Recording not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - token: [monitor]
+        - cookie: [monitor]
 components:
   schemas:
     UUID:
@@ -2558,10 +2715,24 @@ components:
           type: array
           items:
             type: string
+        time_limit:
+          $ref: "#/components/schemas/LicensingTimeLimit"
       required:
         - online
         - signed_packages
         - entitlements
+    LicensingTimeLimit:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+      required:
+        - start
+        - end
     ComponentDescriptions:
       type: object
       additionalProperties:
@@ -3316,6 +3487,30 @@ components:
         labels:
           $ref: "#/components/schemas/Labels"
       required: [name, urdf]
+    HardwareExpandRequest:
+      type: object
+      properties:
+        hardware_parameters:
+          type: object
+          additionalProperties:
+            type: string
+          description: A collection of parameters by name used to overwrite the content of ros2_control hardware param tags with matching name attributes.
+        reference_frame:
+          type: string
+          description: If set, rewrites/creates the URDF root link to use this reference frame.
+        tf_prefix:
+          type: string
+          description: If set, prefixes all link names (except `world`) and updates references.
+        plugin:
+          type: string
+          description: If set, overrides `<ros2_control><hardware><plugin>`.
+    HardwareExpandResponse:
+      type: object
+      properties:
+        urdf:
+          type: string
+          description: The expanded and modified URDF XML.
+      required: [urdf]
     UpdateHardwareRequest:
       type: object
       properties:
@@ -3798,6 +3993,44 @@ components:
           type: string
         color:
           type: string
+    RecordingConfiguration:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether recording auto-starts with app runs
+        topics:
+          type: array
+          items:
+            type: string
+          description: Topics to record. Empty records all topics.
+        name_prefix:
+          type: string
+          description: Optional prefix prepended to ros bag directory names.
+      required: [enabled]
+    Recording:
+      type: object
+      properties:
+        name:
+          type: string
+        creation_date:
+          type: string
+          format: date-time
+        last_modified_date:
+          type: string
+          format: date-time
+        size_bytes:
+          type: integer
+          format: int64
+      required: [name, creation_date, last_modified_date, size_bytes]
+    RecordingList:
+      type: object
+      properties:
+        recordings:
+          type: array
+          items:
+            $ref: "#/components/schemas/Recording"
+      required: [recordings]
     MCPMessage:
       type: object
       description: See official documentation
@@ -3823,6 +4056,13 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/UUID"
+    RecordingName:
+      name: recording_name
+      in: path
+      description: The name of the recording directory
+      required: true
+      schema:
+        type: string
     PackageName:
       name: package_name
       in: query
