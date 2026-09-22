@@ -4,12 +4,6 @@ title: Tour of Studio
 
 import DocCardList from '@theme/DocCardList';
 
-:::important
-This organization and its content are not affiliated, associated, authorized, endorsed by, or in any way officially
-connected with aicas GmbH, Karlsruhe, Germany (www.aicas.com and https://github.com/aicas). Any references to “AICA” are
-strictly historic.
-:::
-
 # Studio
 
 This section will give a brief, high-level tour of Studio to help situate new users. Underlying concepts and

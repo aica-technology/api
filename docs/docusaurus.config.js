@@ -81,7 +81,7 @@ const config = {
       announcementBar: {
         id: 'rebranding-announcement',
         content:
-            '<b>We are currently updating our brand name and logo! Any references to "AICA" are strictly historic. <i><a target="_blank" rel="noopener noreferrer" href="https://ai-can-change.tech">Learn more here</a></i></b>',
+            'This organization and its content are not affiliated, associated, authorized, endorsed by, or in any way officially connected with aicas GmbH, Karlsruhe, Germany (www.aicas.com and https://github.com/aicas). Any references to “AICA” are strictly historic.',
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: true,
@@ -209,7 +209,7 @@ const config = {
               },
               {
                 label: "Website",
-                href: "https://www.aica.tech",
+                href: "https://www.ai-can-change.tech",
               },
               {
                 label: "contact@ai-can-change.tech",
