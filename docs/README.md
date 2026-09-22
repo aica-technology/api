@@ -1,6 +1,6 @@
-# AICA Documentation
+# Documentation
 
-## [https://docs.aica.tech](https://docs.aica.tech)
+## [https://docs.ai-can-change.tech](https://docs.ai-can-change.tech)
 
 The documentation is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
